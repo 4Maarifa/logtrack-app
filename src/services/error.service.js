@@ -1,0 +1,60 @@
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
+
+toastr.options = {
+    hideDuration: 300
+};
+
+const ErrorService = {
+    error: (message, title) => {
+        toastr.error(message, title);
+    },
+    info: (message, title) => {
+        toastr.info(message, title);
+    },
+    success: (message, title) => {
+        toastr.success(message, title);
+    },
+    warning: (message, title) => {
+        toastr.warning(message, title);
+    },
+    clear: () => {
+        toastr.clear();
+    },
+
+    manageError: error => {
+        console.error(error);
+
+        if (!!error && error.hasOwnProperty('code')) {
+            let errorMessage = '';
+            switch(error.code) {
+                case 'auth/user-not-found':
+                    errorMessage = 'Sign in failed. Please retry.';
+                    break;
+                case 'auth/passwords-not-match':
+                    errorMessage = 'The two passwords don\'ont match';
+                    break;
+                case 'form/missing-fields':
+                    errorMessage = 'Please enter details in fields : ' + error.details.join(', ');
+                    break;
+                case 'entity/missing-fields':
+                    errorMessage = 'Entity is missing fields : ' + error.details.join(', ');
+                    break;
+                case 'entity/prototype-not-match':
+                    errorMessage = 'Entity must be of prototype : ' + error.details;
+                    break;
+                case 'entity/not-found':
+                    errorMessage = 'Can\'t found entity ' + error.details;
+                    break;
+                default :
+                    errorMessage = 'An unknown error occured. Please contact the administrator providing details.';
+                    break;
+            }
+            ErrorService.error(errorMessage);
+        } else {
+            ErrorService.error(error);
+        }
+    }
+};
+
+export default ErrorService;

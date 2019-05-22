@@ -1,0 +1,88 @@
+.Specs ul {
+    width: 100%;
+    display: block;
+    padding-left: 0;
+}
+
+.Specs li {
+    padding: .3em;
+    font-size: 160%;
+    color: white;
+    background-color: #FFBA00;
+    display: inline-block;
+    margin-left: 1em;
+    margin-top: 1em;
+}
+
+.color {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4em;
+    width: 20em;
+}
+
+.color:before {
+    color: white;
+}
+
+.clr-a {
+    background-color: #222A4E;
+}
+.clr-a:before {content: '#222A4E';}
+
+.clr-b {
+    background-color: #414163;
+}
+.clr-b:before {content: '#414163';}
+
+.clr-c {
+    background-color: #674E78;
+}
+.clr-c:before {content: '#674E78';}
+
+.clr-d {
+    background-color: #934B79;
+}
+.clr-d:before {content: '#934B79';}
+
+.clr-e {
+    background-color: #B84B74;
+}
+.clr-e:before {content: '#B84B74';}
+
+.clr-f {
+    background-color: #D05B72;
+}
+.clr-f:before {content: '#D05B72';}
+
+.clr-g {
+    background-color: #D9706F;
+}
+.clr-g:before {content: '#D9706F';}
+
+.clr-h {
+    background-color: #E4866D;
+}
+.clr-h:before {content: '#E4866D';}
+
+.clr-i {
+    background-color: #EE9C6A;
+}
+.clr-i:before {content: '#EE9C6A';}
+
+.clr-j {
+    background-color: #F5AA64;
+}
+.clr-j:before {content: '#F5AA64';}
+
+.clr-k {
+    background-color: #FCBA5C;
+}
+.clr-k:before {content: '#FCBA5C';}
+
+.clr-l {
+    background-color: #FFDA65;
+}
+.clr-l:before {content: '#FFDA65';}
+
