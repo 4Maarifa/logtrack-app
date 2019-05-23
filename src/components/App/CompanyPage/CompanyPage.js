@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import './CompanyPage.css';
 import DataService from '../../../services/data.service';
 import ErrorService from '../../../services/error.service';
+import UtilsService from '../../../services/utils.service';
 
 class CompanyPage extends Component {
   constructor () {
@@ -11,7 +12,8 @@ class CompanyPage extends Component {
     this.state = {
       companyId: null,
       company: null,
-      rolesByEmployee: {}
+      roles: {},
+      rolesEmployees: {}
     }
   }
 
@@ -21,56 +23,39 @@ class CompanyPage extends Component {
 
   fetchCompanyInfos = () => {
     DataService.company.get(this.state.companyId)
-      .then((companyDoc) => {
-        this.setState({company: companyDoc.data()});
-      })
+      .then((companyDoc) => this.setState({company: companyDoc.data()}))
       .catch(ErrorService.manageError);
 
     DataService.role.getRolesForCompanyId(this.state.companyId)
-      .then((querySnaphot) => {
-        var rolesByEmployee = {};
-        querySnaphot.forEach((roleDoc) => {
-          const employeeId = roleDoc.data().employeeId;
+      .then((roles) => {
+        this.setState({roles: roles});
 
-          if(!rolesByEmployee[employeeId]) {
-            rolesByEmployee[employeeId] = {roles: {}};
-
-            DataService.employee.get(employeeId)
-              .then((employeeDoc) => {
-                rolesByEmployee[employeeId].employee = employeeDoc.data();
-                this.setState({rolesByEmployee: rolesByEmployee});
-              })
-              .catch(ErrorService.manageError);
-          }
-
-          rolesByEmployee[employeeId].roles[roleDoc.id] = roleDoc.data();
-        });
-        this.setState({rolesByEmployee: rolesByEmployee});
+        var employeesIds = UtilsService.removeDuplicateFromArray(
+          Object.keys(roles).map((roleKey) => roles[roleKey].employeeId)
+        );
+        DataService.employee.getAllForIdList(employeesIds)
+          .then((employees) => this.setState({rolesEmployees: employees}))
+          .catch(ErrorService.manageError);
       })
       .catch(ErrorService.manageError);
   }
 
   renderRolesByEmployee = () => {
-    if(!this.state.rolesByEmployee) {
+    if(!this.state.roles || !this.state.rolesEmployees) {
       return (<div></div>);
     }
     var roles = [];
-    Object.keys(this.state.rolesByEmployee).forEach((employeeId) => {
-      if(!!this.state.rolesByEmployee[employeeId].employee) {
-        var rolesForEmployee = [];
-        Object.keys(this.state.rolesByEmployee[employeeId].roles).forEach((roleKey) => {
-          rolesForEmployee.push(this.state.rolesByEmployee[employeeId].roles[roleKey].role);
-        });
-
-        roles.push(<li key={employeeId}>
-          <img width="20" height="20" src={this.state.rolesByEmployee[employeeId].employee.profilePictureUrl} alt={this.state.rolesByEmployee[employeeId].employee.firstname + ' ' + this.state.rolesByEmployee[employeeId].employee.lastname + '\'s photo'} />
-          <Link to={`/employee/${employeeId}`}>
-            {this.state.rolesByEmployee[employeeId].employee.firstname + ' ' + this.state.rolesByEmployee[employeeId].employee.lastname}
-          </Link> =>
-          {rolesForEmployee}
-        </li>);
-      }
+    
+    Object.keys(this.state.rolesEmployees).forEach((employeeId) => {
+      roles.push(<li key={employeeId}>
+        <img width="20" height="20" src={this.state.rolesEmployees[employeeId].profilePictureUrl} alt={this.state.rolesEmployees[employeeId].firstname + ' ' + this.state.rolesEmployees[employeeId].lastname + '\'s photo'} />
+        <Link to={`/employee/${employeeId}`}>
+          {this.state.rolesEmployees[employeeId].firstname + ' ' + this.state.rolesEmployees[employeeId].lastname}
+        </Link> =>
+        {UtilsService.filterObjectsOnPropertyValue(this.state.roles, (predicate) => predicate.employeeId === employeeId).map((role) => role.role).join(',')}
+      </li>);
     });
+
     return roles;
   }
 

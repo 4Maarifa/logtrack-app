@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
-import Utils from '../../../utils';
-
 import './ExTable.css';
+import UtilsService from '../../../services/utils.service';
 
 class ExTable extends Component {
   constructor() {
@@ -30,7 +29,7 @@ class ExTable extends Component {
   }
 
   activateItem = (e) => {
-    var target = Utils.getClosestElement(e.target, 'item');
+    var target = UtilsService.getClosestElement(e.target, 'item');
     this.setState({activeItem: target.getAttribute('data-item-id')});
   }
   

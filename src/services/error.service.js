@@ -54,6 +54,10 @@ const ErrorService = {
         } else {
             ErrorService.error(error);
         }
+    },
+    manageErrorThenReject(e, reject) {
+        ErrorService.manageError(e);
+        reject(e);
     }
 };
 

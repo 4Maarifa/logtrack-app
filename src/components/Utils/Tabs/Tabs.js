@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
-import Utils from '../../../utils';
-
 import './Tabs.css';
+import UtilsService from '../../../services/utils.service';
 
 class Tabs extends Component {
   constructor() {
@@ -17,7 +16,7 @@ class Tabs extends Component {
   }
 
   activateTab = (e) => {
-    var target = Utils.getClosestElement(e.target, 'tab');
+    var target = UtilsService.getClosestElement(e.target, 'tab');
     this.setState({activeTab: target.getAttribute('data-tab-id')});
   }
 

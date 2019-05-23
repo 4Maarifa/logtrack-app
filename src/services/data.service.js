@@ -139,16 +139,31 @@ const DataService = {
         get(employeeId) {
             return FirebaseService.getDb().collection('employees').doc(employeeId).get();
         },
+        getAllForIdList(idList) {
+            var promises = [];
+            var employees = {};
+
+            return new Promise((resolve, reject) => {
+                idList.forEach((employeeId) => promises.push(DataService.employee.get(employeeId)));
+
+                Promise.all(promises)
+                    .then((employeeDocs) => {
+                        employeeDocs.forEach((employeeDoc) => employees[employeeDoc.id] = employeeDoc.data())
+                        resolve(employees);
+                    })
+                    .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+            });            
+        },
         updateField(employeeId, employeeField) {
             return FirebaseService.getDb().collection('employees').doc(employeeId).update(employeeField);
         },
         activateRole(roleId) {
-            return DataService.employee.updateField(this.state.user.uid, {activeRoleId: roleId})
+            return DataService.employee.updateField(DataService.computed.user.uid, {activeRoleId: roleId})
                 .then(DataService.computed.notifyChanges)
                 .catch(ErrorService.manageError);
         },
         unactivateRole() {
-            return DataService.employee.updateField(this.state.user.uid, {activeRoleId: null})
+            return DataService.employee.updateField(DataService.computed.user.uid, {activeRoleId: null})
                 .then(DataService.computed.notifyChanges)
                 .catch(ErrorService.manageError);
         }
@@ -174,6 +189,21 @@ const DataService = {
         get(companyId) {
             return FirebaseService.getDb().collection('companies').doc(companyId).get();
         },
+        getAllForIdList(idList) {
+            var promises = [];
+            var companies = {};
+
+            return new Promise((resolve, reject) => {
+                idList.forEach((companyId) => promises.push(DataService.company.get(companyId)));
+
+                Promise.all(promises)
+                    .then((companyDocs) => {
+                        companyDocs.forEach((companyDoc) => companies[companyDoc.id] = companyDoc.data());
+                        resolve(companies);
+                    })
+                    .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+            });            
+        },
         search(term) {
             return FirebaseService.getDb().collection('companies').orderBy('name').startAt(term.toUpperCase()).endAt(term.toLowerCase() + "\uf8ff").get();
         }
@@ -183,9 +213,17 @@ const DataService = {
             return FirebaseService.getDb().collection('equipments').doc(equipmentId).get();
         },
         getAllForCompanyId(companyId) {
-            return FirebaseService.getDb().collection('equipments')
+            var equipments = {};
+            return new Promise((resolve, reject) => {
+                FirebaseService.getDb().collection('equipments')
                 .where('companyId', '==', companyId)
-                .get();
+                .get()
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((equipmentDoc) => equipments[equipmentDoc.id] = equipmentDoc.data());
+                    resolve(equipments);
+                })
+                .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+            });
         },
         create(equipment) {
             if(!equipment instanceof Equipment) {
@@ -227,7 +265,31 @@ const DataService = {
             return FirebaseService.getDb().collection('equipmentModels').doc(equipmentModelId).get();
         },
         getAll() {
-            return FirebaseService.getDb().collection('equipmentModels').get();
+            var equipmentModels = {};
+            return new Promise((resolve, reject) => {
+                FirebaseService.getDb().collection('equipmentModels').get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((equipmentModelDoc) => equipmentModels[equipmentModelDoc.id] = equipmentModelDoc.data());
+                        resolve(equipmentModels);
+                    })
+                    .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+            });
+        },
+        getAllByType() {
+            var equipmentModelsByType = {}, type = '';
+            return new Promise((resolve, reject) => {
+                DataService.equipmentModel.getAll()
+                    .then((equipmentModels) => {
+                        Object.keys(equipmentModels).forEach((equipmentModelKey) => {
+                            type = equipmentModels[equipmentModelKey].type;
+                            if(!equipmentModelsByType[type]) {  equipmentModelsByType[type] = {}};
+
+                            equipmentModelsByType[type][equipmentModelKey] = equipmentModels[equipmentModelKey];
+                        });
+                        resolve(equipmentModelsByType);
+                    })
+                    .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+            });
         }
     },
     brand: {
@@ -235,7 +297,15 @@ const DataService = {
             return FirebaseService.getDb().collection('brands').doc(brandId).get();
         },
         getAll() {
-            return FirebaseService.getDb().collection('brands').get();
+            var brands = {};
+            return new Promise((resolve, reject) => {
+                FirebaseService.getDb().collection('brands').get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((brandDoc) => brands[brandDoc.id] = brandDoc.data());
+                        resolve(brands);
+                    })
+                    .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+            });
         }
     },
     role: {
@@ -278,27 +348,51 @@ const DataService = {
                         reject();
                     }
                 })
-                .catch((error) => ErrorService.manageError(error) && reject());
+                .catch((e) => {ErrorService.manageErrorThenReject(e, reject)});
             });
         },
         getDraftRolesForCompanyId(companyId) {
-            return FirebaseService.getDb().collection('roles')
-                .where('companyId', '==', companyId)
-                .where('status', '==', ERoleStatus.DRAFT)
-                .get();
+            var roles = {};
+            return new Promise((resolve, reject) => {
+                FirebaseService.getDb().collection('roles')
+                    .where('companyId', '==', companyId)
+                    .where('status', '==', ERoleStatus.DRAFT)
+                    .get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((roleDoc) => roles[roleDoc.id] = roleDoc.data());
+                        resolve(roles);
+                    })
+                    .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+            })
         },
         get(roleId) {
             return FirebaseService.getDb().collection('roles').doc(roleId).get();
         },
         getRolesForEmployeeId(employeeId) {
-            return FirebaseService.getDb().collection('roles')
-                .where('employeeId', '==', employeeId)
-                .get();
+            var roles = {};
+            return new Promise((resolve, reject) => {
+                FirebaseService.getDb().collection('roles')
+                    .where('employeeId', '==', employeeId)
+                    .get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((roleDoc) => roles[roleDoc.id] = roleDoc.data());
+                        resolve(roles);
+                    })
+                    .catch((e) => {ErrorService.manageErrorThenReject(e, reject)});
+            });
         },
         getRolesForCompanyId(companyId) {
-            return FirebaseService.getDb().collection('roles')
-                .where('companyId', '==', companyId)
-                .get();
+            var roles = {};
+            return new Promise((resolve, reject) => {
+                FirebaseService.getDb().collection('roles')
+                    .where('companyId', '==', companyId)
+                    .get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((roleDoc) => roles[roleDoc.id] = roleDoc.data());
+                        resolve(roles);
+                    })
+                    .catch((e) => {ErrorService.manageErrorThenReject(e, reject)});
+            });
         },
         updateField(roleId, roleField) {
             return FirebaseService.getDb().collection('roles').doc(roleId).update(roleField);
