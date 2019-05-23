@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import './EquipmentAdd.css';
+
 import DataService from '../../../services/data.service';
 import ErrorService from '../../../services/error.service';
+import UtilsService from '../../../services/utils.service';
 
-import Utils from '../../../utils';
 import Equipment from '../../../classes/Equipment';
 
 class EquipmentAdd extends Component {
@@ -40,30 +41,12 @@ class EquipmentAdd extends Component {
 
   computeModels = () => {
     DataService.brand.getAll()
-        .then((querySnapshot) => {
-            var brands = {};
-            querySnapshot.forEach((brandDoc) => {
-                brands[brandDoc.id] = brandDoc.data();
-            });
-            this.setState({brands: brands});
-        })
-        .catch(ErrorService.manageError);
+      .then((brands) => this.setState({brands: brands}))
+      .catch(ErrorService.manageError);
 
-    DataService.equipmentModel.getAll()
-        .then((querySnapshot) => {
-            var modelsByType = {};
-            querySnapshot.forEach((equipmentModelDoc) => {
-                var modelType = equipmentModelDoc.data().type;
-
-                if(!modelsByType[modelType]) {
-                    modelsByType[modelType] = {};
-                }
-                
-                modelsByType[modelType][equipmentModelDoc.id] = equipmentModelDoc.data();
-            });
-            this.setState({modelsByType: modelsByType});
-        })
-        .catch(ErrorService.manageError);
+    DataService.equipmentModel.getAllByType()
+      .then((equipmentModels) => this.setState({modelsByType: equipmentModels}))
+      .catch(ErrorService.manageError);
   }
 
   handleChange = event => {
@@ -153,7 +136,7 @@ class EquipmentAdd extends Component {
   }
 
   handleClickOnModel = (e) => {
-    var target = Utils.getClosestElement(e.target, 'model');
+    var target = UtilsService.getClosestElement(e.target, 'model');
     this.setState({
       equipmentModelId: target.getAttribute('data-model-id'),
       equipmentModelType: target.getAttribute('data-model-type')
