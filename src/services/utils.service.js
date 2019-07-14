@@ -19,6 +19,15 @@ const UtilsService = {
         return UtilsService
             .filterKeysOnPropertyValue(obj, predicate)
             .map((key) => obj[key]);
+    },
+    filterKeyValueOnPropertyValue(obj, predicate) {
+        var result = {};
+        UtilsService.filterKeysOnPropertyValue(obj, predicate)
+            .forEach((key) => result[key] = obj[key]);
+        return result;
+    },
+    mergeObjects(...obj) {
+        return Object.assign({}, ...obj);
     }
 };
 

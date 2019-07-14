@@ -3,13 +3,18 @@ import { Link } from 'react-router-dom';
 
 import './Dashboard.css';
 
-import DataService from '../../../services/data.service';
-import ErrorService from '../../../services/error.service';
-import Tabs from '../../Utils/Tabs/Tabs';
-import ExTable from '../../Utils/ExTable/ExTable';
-import ERoleStatus from '../../../classes/enums/ERoleStatus';
-import ERole from '../../../classes/enums/ERole';
-import UtilsService from '../../../services/utils.service';
+import DataService from './../../../services/data.service';
+import ErrorService from './../../../services/error.service';
+import UtilsService from './../../../services/utils.service';
+
+import Tabs from './../../Utils/Tabs/Tabs';
+import ExTable from './../../Utils/ExTable/ExTable';
+
+import RoleCompany from './../../Entities/RoleCompany/RoleCompany';
+import RoleEmployee from './../../Entities/RoleEmployee/RoleEmployee';
+import Equipment from '../../Entities/Equipment/Equipment';
+
+import ERole from './../../../classes/enums/ERole';
 
 class Dashboard extends Component {
   constructor() {
@@ -52,16 +57,18 @@ class Dashboard extends Component {
    * EMPLOYEES
    */
   computeEmployeesRoles = () => {
-    DataService.role.getRolesForCompanyId(this.state.activeRole.companyId)
-      .then((roles) => {
-        this.setState({rolesOfCompanyEmployees: roles});
-
-        var employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(roles).map((roleKey) => roles[roleKey].employeeId));
-        DataService.employee.getAllForIdList(employeesIds)
-          .then((employees) => this.setState({companyEmployees: employees}))
-          .catch(ErrorService.manageError);
-      })
-      .catch(ErrorService.manageError);
+    if(!!this.state.activeRole) {
+      DataService.role.getRolesForCompanyId(this.state.activeRole.companyId)
+        .then((roles) => {
+          this.setState({rolesOfCompanyEmployees: roles});
+  
+          var employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(roles).map((roleKey) => roles[roleKey].employeeId));
+          DataService.employee.getAllForIdList(employeesIds)
+            .then((employees) => this.setState({companyEmployees: employees}))
+            .catch(ErrorService.manageError);
+        })
+        .catch(ErrorService.manageError);
+    }
   }
 
   /**
@@ -76,9 +83,11 @@ class Dashboard extends Component {
       .then((equipmentModels => this.setState({equipmentModels: equipmentModels})))
       .catch(ErrorService.manageError);
 
-    DataService.equipment.getAllForCompanyId(this.state.activeRole.companyId)
-      .then((equipments) => this.setState({equipments: equipments}))
-      .catch(ErrorService.manageError);
+    if(!!this.state.activeRole) {
+      DataService.equipment.getAllForCompanyId(this.state.activeRole.companyId)
+        .then((equipments) => this.setState({equipments: equipments}))
+        .catch(ErrorService.manageError);
+    }
   }
 
   /**
@@ -100,76 +109,40 @@ class Dashboard extends Component {
     if (!!this.state.activeRole && this.state.activeRole.role === ERole.MANAGER) {
       DataService.role.getDraftRolesForCompanyId(this.state.activeRole.companyId)
         .then((roles) => {
-          this.setState({requestedRoles: roles});
-
           var employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(roles).map((roleKey) => roles[roleKey].employeeId));
           DataService.employee.getAllForIdList(employeesIds)
-            .then((employees) => this.setState({requestedRolesEmployees: employees}))
+            .then((employees) => this.setState({requestedRoles: roles, requestedRolesEmployees: employees}))
             .catch(ErrorService.manageError);
         })
         .catch(ErrorService.manageError);
     }
   }
 
-  activateRole = (roleId) => DataService.employee.activateRole(roleId);
-  unactivateRole = () => DataService.employee.unactivateRole();
-  confirmRole = (roleId) => DataService.confirmRole(roleId);
-
   /**
    * RENDER
    */
-  renderUserRoles() {
-    var userRoles = [];
-    Object.keys(this.state.userRoles).forEach((docRoleKey) => {
-      userRoles.push(
-        <li key={docRoleKey}>
-          Role: {this.state.userRoles[docRoleKey].role + ' at '}
-          <Link to={`/company/${this.state.userRoles[docRoleKey].companyId}`}>Company: {this.state.userRolesCompanies[this.state.userRoles[docRoleKey].companyId].name}</Link>
-          
-          <img width="20" height="20" alt={this.state.userRolesCompanies[this.state.userRoles[docRoleKey].companyId].name + '\'s logo'} src={this.state.userRolesCompanies[this.state.userRoles[docRoleKey].companyId].logoURL} /><br/>
+  renderUserRole = (mode, itemKey, itemData) => {
+    var company = {};
+    company[itemKey] = itemData;
 
-          {(this.state.userRoles[docRoleKey].status === ERoleStatus.DRAFT) ? 
-          (<span>Draft</span>) : 
-            (docRoleKey === this.state.employee.activeRoleId) ? 
-            (<span>Active. <button onClick={() => this.unactivateRole()}>Unactivate ?</button></span>) : 
-            (<span>Unactive. <button onClick={() => this.activateRole(docRoleKey)}>Activate ?</button></span>)
-          }
-        </li>
-      );
-      
-    });
-
-    return (Object.keys(this.state.userRoles).length > 0) ? (
-      <div>
-        <h1>Roles</h1>
-        <ul>{userRoles}</ul>
-      </div>
-    ) : <div></div>;
+    return <RoleCompany key={itemKey} 
+      company={company} 
+      roles={UtilsService.filterKeyValueOnPropertyValue(this.state.userRoles, (predicate) => predicate.companyId === itemKey)}
+      options={ {showDraft: true} } />;
   }
 
-  renderRequestedRoles() {
-    var requestedRoles = [];
-    Object.keys(this.state.requestedRoles).forEach((docRoleKey) => {
-      requestedRoles.push(
-        <li key={docRoleKey}>
-          Employee id: {this.state.requestedRoles[docRoleKey].employeeId}<br/>
-          Role: {this.state.requestedRoles[docRoleKey].role}<br/>
-          Employee: {this.state.requestedRolesEmployees[this.state.requestedRoles[docRoleKey].employeeId].firstname + ' ' + this.state.requestedRolesEmployees[this.state.requestedRoles[docRoleKey].employeeId].lastname}<br/>
-          <button onClick={() => this.confirmRole(docRoleKey)}>Confirm ?</button>
-        </li>
-      );
-    });
+  renderRequestedRole = (mode, itemKey, itemData) => {
+    var employee = {};
+    employee[itemData.employeeId] = this.state.requestedRolesEmployees[itemData.employeeId];
 
-    return (Object.keys(this.state.requestedRoles).length > 0) ? (
-      <div>
-        <h1>Requested Roles</h1>
-        <ul>{requestedRoles}</ul>
-      </div>
-    ) : <div></div>;
+    return <RoleEmployee key={itemKey}
+      employee={employee}
+      roles={ { [itemKey]: itemData } }
+      options={ {showDraft: true} } />
   }
 
   renderProfile() {
-    if (!!this.state.employee) {
+    if (!!this.state.employee && !!this.state.user) {
       return (
         <div>
           Welcome back, <Link to={`/employee/${this.state.user.uid}`}>
@@ -200,37 +173,25 @@ class Dashboard extends Component {
   }
 
   renderEquipment = (mode, itemKey, itemData) => {
-    var brand = (!!this.state.brands[this.state.equipmentModels[itemData.equipmentModelId].brand]) ? 
-      <img width="40" height="20" 
-        alt={this.state.equipmentModels[itemData.equipmentModelId].brand + '\'s logo'} 
-        src={this.state.brands[this.state.equipmentModels[itemData.equipmentModelId].brand].logoUrl} />
-      : this.state.equipmentModels[itemData.equipmentModelId].brand;
+    var equipmentModel = {}, brand = {}, equipment = {};
+    equipmentModel[itemData.equipmentModelId] = this.state.equipmentModels[itemData.equipmentModelId];
+    brand[equipmentModel[itemData.equipmentModelId].brand] = this.state.brands[equipmentModel[itemData.equipmentModelId].brand];
+    equipment[itemKey] = itemData;
 
-    return (<div>
-      {itemData.identification}<br/>
-      {brand}<br/>
-      <img width="100" height="100" 
-        alt={this.state.equipmentModels[itemData.equipmentModelId].name} 
-        src={this.state.equipmentModels[itemData.equipmentModelId].photoUrl} /><br/>
-      
-      {(mode === 'active') ? this.state.equipmentModels[itemData.equipmentModelId].name : ''}
-    </div>);
+    return <Equipment key={itemKey}
+      equipment={equipment}
+      brand={brand}
+      equipmentModel={equipmentModel} />
   }
 
-  renderCompanyEmployee = (mode, itemKey, itemData) => {
-    var employeeName = itemData.firstname + ' ' + itemData.lastname;
-    var roles = Object.keys(this.state.rolesOfCompanyEmployees)
-      .map((roleKey) => this.state.rolesOfCompanyEmployees[roleKey])
-      .filter((role) => role.employeeId === itemKey)
-      .map((role) => role.role)
-      .join(',');
-      
-    return (
-      <div>
-        {employeeName}<br/>
-        {roles + ' at ' + this.state.activeRoleCompany.name}
-      </div>
-    );
+  renderRoleEmployee = (mode, itemKey, itemData) => {
+    var employee = {};
+    employee[itemKey] = itemData;
+
+    return <RoleEmployee key={itemKey} 
+      employee={employee} 
+      roles={UtilsService.filterKeyValueOnPropertyValue(this.state.rolesOfCompanyEmployees, (predicate) => predicate.employeeId === itemKey)}
+      options={ {showDraft: false} } />;
   }
 
   renderManagerPart = () => {
@@ -238,12 +199,14 @@ class Dashboard extends Component {
     return (
       <div>
         Manager Part
-        {this.renderRequestedRoles()}
+        <h1>Requested roles</h1>
+        <ExTable items={this.state.requestedRoles} renderItem={this.renderRequestedRole}></ExTable>
+
         <Tabs default="equipments" tabs={
           {
             employees: {
               name: () => 'Employees',
-              content: () => <ExTable key="employees" items={this.state.companyEmployees} renderItem={this.renderCompanyEmployee}></ExTable>
+              content: () => <ExTable key="employees" items={this.state.companyEmployees} renderItem={this.renderRoleEmployee}></ExTable>
             },
             equipments: {
               name: () => 'Equipments',
@@ -264,17 +227,30 @@ class Dashboard extends Component {
     return (<div>Mechanic Part</div>);
   }
 
+  renderTopLinks() {
+    if(!this.state.activeRole || this.state.activeRole.role !== ERole.MANAGER) {
+      return <div>
+        <Link to={`/company/add`}>Add a company</Link>
+        <Link to={`/role/add`}>Request a role</Link>
+      </div>;
+    }
+    return <div>
+      <Link to={`/company/add`}>Add a company</Link>
+      <Link to={`/role/add`}>Request a role</Link>
+      <Link to={`/equipment/add`}>Add an equipment</Link>
+      <Link to={`/contract/add`}>Add a contract</Link>
+    </div>;
+  }
+
   render() {
     return (
       <div>
         Dashboard<br/>
         
-        <Link to={`/company/add`}>Add a company</Link>
-        <Link to={`/role/add`}>Request a role</Link>
-        <Link to={`/equipment/add`}>Add an equipment</Link>
+        {this.renderTopLinks()}
 
         {this.renderProfile()}
-        {this.renderUserRoles()}
+        <ExTable items={this.state.userRolesCompanies} renderItem={this.renderUserRole}></ExTable>
 
         {this.renderRoleDependingPart()}
       </div>

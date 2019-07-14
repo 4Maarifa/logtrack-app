@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 import './EmployeePage.css';
+
 import DataService from '../../../services/data.service';
 import ErrorService from '../../../services/error.service';
 import UtilsService from '../../../services/utils.service';
+
+import RoleCompany from '../../Entities/RoleCompany/RoleCompany';
+
+import ExTable from '../../Utils/ExTable/ExTable';
 
 class EmployeePage extends Component {
   constructor () {
@@ -15,7 +19,7 @@ class EmployeePage extends Component {
 
       roles: {},
       rolesCompanies: {}
-    }
+    };
   }
 
   componentDidMount = () => {
@@ -40,22 +44,14 @@ class EmployeePage extends Component {
       .catch(ErrorService.manageError);
   }
 
-  renderRolesByCompany = () => {
-    if (!this.state.rolesCompanies) {
-      return (<div></div>);
-    }
-    var roles = [];
-    Object.keys(this.state.rolesCompanies).forEach((companyId) => {
-      roles.push(<li key={companyId}>
-        <img width="20" height="20" alt={this.state.rolesCompanies[companyId].name + '\'s logo'} src={this.state.rolesCompanies[companyId].logoURL} /><br/>
-        <Link to={`/company/${companyId}`}>
-          {this.state.rolesCompanies[companyId].name}
-        </Link> =>
-        {UtilsService.filterObjectsOnPropertyValue(this.state.roles, (predicate) => predicate.companyId === companyId).map((role) => role.role).join(',')}
-      </li>);
-      
-    });
-    return roles;
+  renderRoleCompany = (mode, itemKey, itemData) => {
+    var company = {};
+    company[itemKey] = itemData;
+
+    return <RoleCompany key={itemKey} 
+      company={company} 
+      roles={UtilsService.filterKeyValueOnPropertyValue(this.state.roles, (predicate) => predicate.companyId === itemKey)}
+      options={{}} />;
   }
 
   render() {
@@ -66,7 +62,7 @@ class EmployeePage extends Component {
       <div>
         <img width="20" height="20" src={this.state.employee.profilePictureUrl} alt={this.state.employee.firstname + ' ' + this.state.employee.lastname + '\'s photo'} />
         <h1>{this.state.employee.firstname + ' ' + this.state.employee.lastname}</h1>
-        {this.renderRolesByCompany()}
+        <ExTable items={this.state.rolesCompanies} renderItem={this.renderRoleCompany}></ExTable>
       </div>
     );
   }

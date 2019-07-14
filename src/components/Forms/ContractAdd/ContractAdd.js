@@ -2,19 +2,21 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Autosuggest from 'react-autosuggest';
 
-import './RoleAdd.css';
+import './ContractAdd.css';
 import '../../../assets/react-autosuggest.css';
 import DataService from '../../../services/data.service';
 import ErrorService from '../../../services/error.service';
-import Role from '../../../classes/Role';
-import ERoleStatus from '../../../classes/enums/ERoleStatus';
-import ERole from '../../../classes/enums/ERole';
+import Contract from '../../../classes/Contract';
 import Company from '../../Entities/Company/Company';
+import EContractType from '../../../classes/enums/EContractType';
+import EContractStatus from '../../../classes/enums/EContractStatus';
+import ChooseLoadType from './../ChooseLoadType/ChooseLoadType';
 
-class RoleAdd extends Component {
+class ContractAdd extends Component {
   constructor () {
     super();
-    this.state = Object.assign({roleId: null, roleType: '', possibleCompanies: [], selectedCompany: null, companyName: ''},
+    this.state = Object.assign({
+      contractId: null, possibleCompanies: [], isExecutor: true, selectedCompany: null, companyName: '', contractType: ''},
       DataService.computed.getDefaultComputedValues());
   }
 
@@ -58,45 +60,67 @@ class RoleAdd extends Component {
 
   printSelectedCompany = () => {
     if (!!this.state.selectedCompany) {
-      return (<span>
-        Selected company:
+      if(!!this.state.isExecutor) {
+        return <span>
+          <Company company={ { [this.state.activeRole.companyId]: this.state.activeRoleCompany } } />
+          (You) will execute the {this.state.contractType} for
+          <Company company={ { [this.state.selectedCompany.id]: this.state.selectedCompany } } />
+        </span>;
+      }
+
+      return <span>
         <Company company={ { [this.state.selectedCompany.id]: this.state.selectedCompany } } />
-      </span>);
+        (You) will execute the {this.state.contractType} for
+        <Company company={ { [this.state.activeRole.companyId]: this.state.activeRoleCompany } } />
+      </span>;
     }
     return (<span></span>);
   }
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log('RoleAdd : submitting...');
+    console.log('ContractAdd : submitting...');
 
     if(!this.state.selectedCompany) {
       ErrorService.error('Please pick a company !');
       return;
     }
 
-    if(!this.state.roleType) {
-      ErrorService.error('Please pick a role !');
+    if(!this.state.contractType) {
+      ErrorService.error('Please pick a contract type !');
       return;
     }
-    
-    const roleStatus = (this.state.selectedCompany.creator === this.state.user.uid) ? ERoleStatus.CONFIRMED : ERoleStatus.DRAFT;
-    DataService.role.create(new Role(this.state.user.uid, this.state.selectedCompany.id, roleStatus, this.state.roleType))
-      .then((docRole) => {
-        this.setState({roleId: docRole.id});
+
+    // TODO
+
+    var companyOrderId = (!!this.state.isExecutor && this.state.selectedCompany.id) || this.state.activeRole.companyId;
+    var companyExecId = (!!this.state.isExecutor && this.state.activeRole.companyId) || this.state.selectedCompany.id;
+    DataService.contract.create(new Contract([], companyOrderId, companyExecId, this.state.contractType, EContractStatus.DRAFT))
+      .then((docContract) => {
+        this.setState({contractId: docContract.id});
       })
       .catch(ErrorService.manageError);
   }
 
   render() {
-    if (!!this.state.roleId) {
+    if (!!this.state.contractId) {
       let dashboardUrl = '/dashboard';
       return <Redirect to={dashboardUrl} />;
     } else {
       return (
         <div>
-          Request a role
+          Add a contract
           <form onSubmit={this.handleSubmit}>
+            {/* Role field */}
+            <label>
+              Type of contract:
+              <select value={this.state.contractType} onChange={this.handleChange} data-field="contractType">
+                <option disabled value=""></option>
+                <option value={EContractType.MAINTENANCE}>Maintenance</option>
+                <option value={EContractType.TRANSPORTATION}>Transportation</option>
+              </select>
+            </label><br/>
+
             {/* Company field */}
             <label>
               Name of the company:
@@ -110,16 +134,7 @@ class RoleAdd extends Component {
             </label>
             {this.printSelectedCompany()}<br/>
 
-            {/* Role field */}
-            <label>
-              Role to request:
-              <select value={this.state.roleType} onChange={this.handleChange} data-field="roleType">
-                <option disabled value=""></option>
-                <option value={ERole.MANAGER}>Manager</option>
-                <option value={ERole.DRIVER}>Driver</option>
-                <option value={ERole.MECHANIC}>Mechanic</option>
-              </select>
-            </label>
+            {(this.state.contractType === EContractType.TRANSPORTATION) ? <ChooseLoadType></ChooseLoadType> : ''}
 
             <input type="submit" />
           </form>
@@ -129,4 +144,4 @@ class RoleAdd extends Component {
   }
 }
 
-export default RoleAdd;
+export default ContractAdd;

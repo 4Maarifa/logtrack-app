@@ -2,7 +2,7 @@
 const ERole = Object.freeze({
     DRIVER: 'DRIVER',
     MANAGER: 'MANAGER',
-    VIEWER: 'VIEWER',
+    OBSERVER: 'OBSERVER',
     MECHANIC: 'MECHANIC'
 });
 

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import ErrorService from './error.service';
 import FirebaseService from './firebase.service';
 
@@ -6,7 +8,9 @@ import Company from './../classes/Company';
 import Role from './../classes/Role';
 import EquipmentModel from '../classes/EquipmentModel';
 import Equipment from '../classes/Equipment';
+import ERole from '../classes/enums/ERole';
 import ERoleStatus from '../classes/enums/ERoleStatus';
+import Contract from '../classes/Contract';
 
 const uuidv4 = require('uuid/v4');
 
@@ -92,6 +96,7 @@ const DataService = {
                     activeRoleCompany: DataService.computed.activeRoleCompany
                 });
             });
+            DataService.role.notifyObservers();
         },
         getDefaultComputedValues() {
             return {
@@ -116,7 +121,8 @@ const DataService = {
 
         user: null,
         activeRole: null,
-        activeRoleCompany: null
+        activeRoleCompany: null,
+        employee: null,
     },
     employee: {
         create(employee) {
@@ -208,6 +214,54 @@ const DataService = {
             return FirebaseService.getDb().collection('companies').orderBy('name').startAt(term.toUpperCase()).endAt(term.toLowerCase() + "\uf8ff").get();
         }
     },
+    contract: {
+        get(contractId) {
+            return FirebaseService.getDb().collection('contracts').doc(contractId).get();
+        },
+        getAllForCompanyExecId(companyExecId) {
+            var contracts = {};
+            return new Promise((resolve, reject) => {
+                FirebaseService.getDb().collection('contracts')
+                    .where('companyExecId', '==', companyExecId)
+                    .get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((contractDoc) => contracts[contractDoc.id] = contractDoc.data());
+                        resolve(contracts);
+                    })
+                    .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+            });
+        },
+        getAllForCompanyOrderId(companyOrderId) {
+            var contracts = {};
+            return new Promise((resolve, reject) => {
+                FirebaseService.getDb().collection('contracts')
+                    .where('companyOrderId', '==', companyOrderId)
+                    .get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((contractDoc) => contracts[contractDoc.id] = contractDoc.data());
+                        resolve(contracts);
+                    })
+                    .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+            });
+        },
+        create(contract){
+            if(!contract instanceof Contract) {
+                ErrorService.manageError({
+                    code: 'entity/prototype-not-match',
+                    details: 'Contract'
+                });
+                return;
+            }
+            if(!ensureFilledFields(contract, ['contractType', 'companyOrderId', 'companyExecId', 'status'])) {
+                ErrorService.manageError({
+                    code: 'entity/missing-fields',
+                    details: ['contractType', 'companyOrderId', 'companyExecId', 'status']
+                });
+                return;
+            }
+            return FirebaseService.getDb().collection('contracts').add(migratePrototype(contract));
+        }
+    },
     equipment: {
         get(equipmentId) {
             return FirebaseService.getDb().collection('equipments').doc(equipmentId).get();
@@ -235,7 +289,7 @@ const DataService = {
             }
             if(!ensureFilledFields(equipment, ['companyId', 'identification', 'equipmentModelId'])) {
                 ErrorService.manageError({
-                    code: 'entity/prototype-not-match',
+                    code: 'entity/missing-fields',
                     details: ['companyId', 'identification', 'equipmentModelId']
                 });
                 return;
@@ -309,6 +363,7 @@ const DataService = {
         }
     },
     role: {
+        observers: [],
         create(role) {
             if (!role instanceof Role) {
                 ErrorService.manageError({
@@ -401,6 +456,35 @@ const DataService = {
             return DataService.role.updateField(roleId, {status: ERoleStatus.CONFIRMED})
                 .then(DataService.computed.notifyChanges)
                 .catch(ErrorService.manageError);
+        },
+        observeActions(role, observer) {
+            DataService.role.observers.push({
+                role: role,
+                observer: observer
+            });
+            observer(DataService.role.getActions(role));
+        },
+        notifyObservers() {
+            DataService.role.observers.forEach((observer) => observer.observer(DataService.role.getActions(observer.role)));
+        },
+        getActions(role) {
+            var roleId = Object.keys(role)[0];
+            if(!!DataService.computed.activeRole && role[roleId].status === ERoleStatus.DRAFT && role[roleId].companyId === DataService.computed.activeRole.companyId && DataService.computed.activeRole.role === ERole.MANAGER) {
+                return <div>
+                    <button onClick={() => DataService.role.confirmRole(roleId)}>Confirm ?</button>
+                </div>;
+            }
+            if(!!DataService.computed.user && role[roleId].status === ERoleStatus.CONFIRMED && role[roleId].employeeId === DataService.computed.user.uid) {
+                if(roleId === DataService.computed.employee.activeRoleId) {
+                    return <div>
+                        <button onClick={() => DataService.employee.unactivateRole()}>Unactivate ?</button>
+                    </div>;
+                }
+                return <div>
+                    <button onClick={() => DataService.employee.activateRole(roleId)}>Activate ?</button>
+                </div>;
+            }
+            return <></>;
         }
     }
 };

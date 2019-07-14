@@ -24,7 +24,7 @@ import {
     faFish, faHamburger, faIceCream, faLemon, faMeat, faPie, faPizza, faPizzaSlice, faPumpkin,faSalad, faSoup, faSteak, 
     faTurkey, faWheat, faCow, faPig, faElephant, faHorse, faHippo, faDuck, faMonkey, faRabbit, faRam, faSheep, faSnake, faTurtle, 
     faBoxAlt, faBoxesAlt, faContainerStorage, faCouch, faCapsules, faWater, faFlowerTulip, faPallet, faPalletAlt, faPills, 
-    faPrescriptionBottle, faPrescriptionBottleAlt, faRecycle, faSandwich,
+    faPrescriptionBottle, faPrescriptionBottleAlt, faRecycle, faTrash, faSandwich, faTshirt, faCogs,
     // Places
     faMap, faMapMarker, faMapMarkerAlt, faMapMarkerCheck, faMapMarkerExclamation, faMapMarkerQuestion, faMapMarkerTimes, 
     faMapSigns, faRoute, faMapMarked, faMapMarkedAlt, faAtlas, faGlobe, faLocationArrow, faRouteInterstate, faRouteHighway, 
@@ -59,6 +59,8 @@ import RoleAdd from './components/Forms/RoleAdd/RoleAdd';
 
 import EquipmentAdd from './components/Forms/EquipmentAdd/EquipmentAdd';
 
+import ContractAdd from './components/Forms/ContractAdd/ContractAdd';
+
 // SERVICES
 import FirebaseService from './services/firebase.service';
 import DataService from './services/data.service';
@@ -83,7 +85,7 @@ library.add(faArchive, faCarrot, faCookie, faLaptop, faTv, faAppleAlt, faBacon, 
     faFish, faHamburger, faIceCream, faLemon, faMeat, faPie, faPizza, faPizzaSlice, faPumpkin,faSalad, faSoup, faSteak, 
     faTurkey, faWheat, faCow, faPig, faElephant, faHorse, faHippo, faDuck, faMonkey, faRabbit, faRam, faSheep, faSnake, faTurtle, 
     faBoxAlt, faBoxesAlt, faContainerStorage, faCouch, faCapsules, faWater, faFlowerTulip, faPallet, faPalletAlt, faPills, 
-    faPrescriptionBottle, faPrescriptionBottleAlt, faRecycle, faSandwich);
+    faPrescriptionBottle, faPrescriptionBottleAlt, faRecycle, faTrash, faSandwich, faTshirt, faCogs);
 // Places
 library.add(faMap, faMapMarker, faMapMarkerAlt, faMapMarkerCheck, faMapMarkerExclamation, faMapMarkerQuestion, faMapMarkerTimes, 
     faMapSigns, faRoute, faMapMarked, faMapMarkedAlt, faAtlas, faGlobe, faLocationArrow, faRouteInterstate, faRouteHighway, 
@@ -130,6 +132,8 @@ DataService.initialize().then(() => {
                 <PrivateRoute exact path="/role/add" component={RoleAdd} />
 
                 <PrivateRoute exact path="/equipment/add" component={EquipmentAdd} />
+
+                <PrivateRoute exact path="/contract/add" component={ContractAdd} />
             </div>
         </Router>,
         document.getElementById('root'));

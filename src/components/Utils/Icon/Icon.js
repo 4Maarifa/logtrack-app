@@ -10,6 +10,8 @@ import { ReactComponent as Brake } from '../../../assets/svg-sprites/brake.svg';
 import { ReactComponent as Engine } from '../../../assets/svg-sprites/engine.svg';
 import { ReactComponent as Gearbox } from '../../../assets/svg-sprites/gearbox.svg';
 import { ReactComponent as FifthWheel } from '../../../assets/svg-sprites/fifth-wheel.svg';
+import { ReactComponent as ConstructionMaterial } from '../../../assets/svg-sprites/construction.svg';
+import { ReactComponent as Rocks } from '../../../assets/svg-sprites/rocks.svg';
 
 import './Icon.css';
 
@@ -24,6 +26,8 @@ class Icon extends Component {
     Engine: Engine,
     Gearbox: Gearbox,
     FifthWheel: FifthWheel,
+    ConstructionMaterial: ConstructionMaterial,
+    Rocks: Rocks,
   };
 
   render() {

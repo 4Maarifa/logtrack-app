@@ -153,6 +153,7 @@ class Specs extends Component {
             <li><Icon source="fa" withLabel={true} icon="box-alt"/></li>
             <li><Icon source="fa" withLabel={true} icon="boxes-alt"/></li>
             <li><Icon source="fa" withLabel={true} icon="container-storage"/></li>
+            <li><Icon source="fa" withLabel={true} icon="car-side"/></li>
             <li><Icon source="fa" withLabel={true} icon="couch"/></li>
             <li><Icon source="fa" withLabel={true} icon="capsules"/></li>
             <li><Icon source="fa" withLabel={true} icon="water"/></li>
@@ -163,7 +164,10 @@ class Specs extends Component {
             <li><Icon source="fa" withLabel={true} icon="prescription-bottle"/></li>
             <li><Icon source="fa" withLabel={true} icon="prescription-bottle-alt"/></li>
             <li><Icon source="fa" withLabel={true} icon="recycle"/></li>
+            <li><Icon source="fa" withLabel={true} icon="trash"/></li>
             <li><Icon source="fa" withLabel={true} icon="sandwich"/></li>
+            <li><Icon source="fa" withLabel={true} icon="tshirt"/></li>
+            <li><Icon source="fa" withLabel={true} icon="cogs"/></li>
         </ul>
         <h2>Places</h2>
         <ul>

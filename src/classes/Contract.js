@@ -8,19 +8,17 @@
  * Invoices are stored inside the contract.
  * The status of the contract can be : 'proposed', 'in progress' (the contract is accepted), 'declined' or 'finished'.
  * 
- * id: string | The auto-generated id of the contract
  * invoices: array[{//TODO : to be defined}] | The invoices array linked to this contract
- * company1Id: string | The company that proposes the contract
- * company2Id: string | The company that accepted or declined the contract. The company will execute the contract
+ * companyOrderId: string | The company that proposes the contract
+ * companyExecId: string | The company will execute the contract
  * contractType: string | The type of contract
  * status: string | The status of contract
  */
 class Contract {
-    constructor(id, invoices, company1Id, company2Id, contractType, status) {
-        this.id = id;
+    constructor(invoices, companyOrderId, companyExecId, contractType, status) {
         this.invoices = invoices;
-        this.company1Id = company1Id;
-        this.company2Id = company2Id;
+        this.companyOrderId = companyOrderId;
+        this.companyExecId = companyExecId;
         this.contractType = contractType;
         this.status = status;
     }
