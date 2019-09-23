@@ -1,0 +1,11 @@
+.Profile {
+
+  .signout {
+    float: right;
+
+    &, &:hover, &:active, &:focus, &:visited, &:link {
+      color: #DD3333;
+      text-decoration: none;
+    }
+  }
+}

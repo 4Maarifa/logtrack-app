@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './Equipment.css';
+import './Equipment.scss';
 
 class Equipment extends Component {
   constructor () {

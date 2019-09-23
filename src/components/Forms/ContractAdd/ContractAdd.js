@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Autosuggest from 'react-autosuggest';
 
-import './ContractAdd.css';
-import '../../../assets/react-autosuggest.css';
-import DataService from '../../../services/data.service';
-import ErrorService from '../../../services/error.service';
 import Contract from '../../../classes/Contract';
 import Company from '../../Entities/Company/Company';
 import EContractType from '../../../classes/enums/EContractType';
 import EContractStatus from '../../../classes/enums/EContractStatus';
 import ChooseLoadType from './../ChooseLoadType/ChooseLoadType';
+
+import DataService from '../../../services/data.service';
+import ErrorService from '../../../services/error.service';
+
+import '../../../assets/react-autosuggest.css';
+import './ContractAdd.scss';
 
 class ContractAdd extends Component {
   constructor () {

@@ -50,20 +50,26 @@ import SignIn from './components/Forms/SignIn/SignIn';
 import SignUp from './components/Forms/SignUp/SignUp';
 import SignOut from './components/Forms/SignOut/SignOut';
 
+import Profile from './components/App/Profile/Profile';
+
 import CompanyAdd from './components/Forms/CompanyAdd/CompanyAdd';
-import CompanyPage from './components/App/CompanyPage/CompanyPage';
 
-import EmployeePage from './components/App/EmployeePage/EmployeePage';
+import Employees from './components/App/Employees/Employees';
 
+import Roles from './components/App/Roles/Roles';
 import RoleAdd from './components/Forms/RoleAdd/RoleAdd';
 
+import Equipments from './components/App/Equipments/Equipments';
 import EquipmentAdd from './components/Forms/EquipmentAdd/EquipmentAdd';
 
+import Contracts from './components/App/Contracts/Contracts';
 import ContractAdd from './components/Forms/ContractAdd/ContractAdd';
 
 // SERVICES
 import FirebaseService from './services/firebase.service';
 import DataService from './services/data.service';
+
+import './index.scss';
 
 // Vehicles
 library.add(faTruck, faTruckMoving, faTruckPickup, faTruckContainer, faCarSide, faHelicopter, faPlane, faShip, faTrain, faShippingFast);
@@ -110,29 +116,34 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 
 
 // Service Initialization
+// TODO: render a loader
 DataService.initialize().then(() => {
     ReactDOM.render(
         <Router>
             <Navigation></Navigation>
-            <div>
+            <div id="page_content">
                 <Route exact path="/" component={Splash} />
                 <Route exact path="/specs" component={Specs} />
 
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
+                <PrivateRoute exact path="/profile" component={Profile} />
+
                 <Route exact path="/signin" component={SignIn} />
                 <Route exact path="/signup" component={SignUp} />
                 <PrivateRoute exact path="/signout" component={SignOut} />
                 
-                <PrivateRoute path="/employee/:id" component={EmployeePage} />
+                <PrivateRoute exact path="/employees" component={Employees} />
     
                 <PrivateRoute exact path="/company/add" component={CompanyAdd} />
-                <PrivateRoute path="/company/:id" component={CompanyPage} />
 
+                <PrivateRoute exact path="/roles" component={Roles} />
                 <PrivateRoute exact path="/role/add" component={RoleAdd} />
 
+                <PrivateRoute exact path="/equipments" component={Equipments} />
                 <PrivateRoute exact path="/equipment/add" component={EquipmentAdd} />
 
+                <PrivateRoute exact path="/contracts" component={Contracts} />
                 <PrivateRoute exact path="/contract/add" component={ContractAdd} />
             </div>
         </Router>,

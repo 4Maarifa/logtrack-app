@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 
-import './ExTable.css';
 import UtilsService from '../../../services/utils.service';
 
+import Loader from './../Loader/Loader';
+
+import './ExTable.scss';
+
 class ExTable extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      activeItem: null,
-      items: {},
-      renderItem: null
+      activeItem: (!!props.default) ? props.default : null,
+      items: (!!props.items) ? props.items : {},
+      header: (!!props.header) ? props.header : [],
+      renderItem: (!!props.renderItem) ? props.renderItem : null,
+      loading: props.loading
     };
   }
 
@@ -18,14 +23,11 @@ class ExTable extends Component {
       this.setState({items: nextProps.items});
       return true;
     }
-    return (nextState.activeItem !== this.state.activeItem);
-  }
-
-  componentWillMount() {
-    if(!!this.props.default && this.state.activeItem !== this.props.default) {
-      this.setState({activeItem: this.props.default});
+    if(nextProps.loading !== this.state.loading) {
+      this.setState({loading: nextProps.loading});
+      return true;
     }
-    this.setState({items: this.props.items, renderItem: this.props.renderItem});
+    return (nextState.activeItem !== this.state.activeItem);
   }
 
   activateItem = (e) => {
@@ -35,9 +37,16 @@ class ExTable extends Component {
   
   render() {
     return (
-      <div>
-        EXTABLE
+      <div className="ExTable">
+        {!!this.state.header && !!this.state.header.length &&
+          <div className="header">
+            {this.state.header.map(header =>
+              <span key={header}>{header}</span>  
+            )}
+          </div>
+        }
         <ul>
+          {!!this.state.loading && <li className="loader"><Loader></Loader></li>}
           {
             Object.keys(this.state.items).map((itemKey) => 
               <li key={itemKey} className={'item ' + ((itemKey === this.state.activeItem) ? 'selected' : '')} data-item-id={itemKey} onClick={this.activateItem}>

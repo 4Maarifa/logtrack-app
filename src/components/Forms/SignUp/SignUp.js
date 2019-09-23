@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import FirebaseService from '../../../services/firebase.service';
-import ErrorService from '../../../services/error.service';
 import { Redirect } from 'react-router-dom';
 
-import './SignUp.css';
+import FirebaseService from '../../../services/firebase.service';
+import ErrorService from '../../../services/error.service';
 import FileService from '../../../services/file.service';
 import DataService from '../../../services/data.service';
+
 import Employee from '../../../classes/Employee';
+
+import './SignUp.scss';
 
 class SignUp extends Component {
   constructor() {

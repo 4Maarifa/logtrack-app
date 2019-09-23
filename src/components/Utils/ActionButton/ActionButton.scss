@@ -1,0 +1,87 @@
+.ActionButton {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+
+  .button {
+    height: 3rem;
+    width: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFFFFF;
+    background-color: var(--second);
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    float: right;
+
+    svg {
+      transition: transform .5s;
+    }
+  }
+
+  ul {
+    position: relative;
+    right: -1rem;
+    margin: 0;
+    padding: 0 1rem 0 0;
+    list-style-type: none;
+    overflow-y: hidden;
+    overflow-x: visible;
+    height: 0;
+    max-height: 0;
+    transition: max-height .5s;
+
+    li {
+      margin: 1rem 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+
+      a,
+      a:hover,
+      a:focus,
+      a:visited,
+      a:link,
+      a:active {
+        color: #000000;
+        text-decoration: none;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+      }
+
+      .action-title {
+        color: #000000;
+        margin-right: .5rem;
+      }
+
+      .action-icon {
+        height: 2.5rem;
+        width: 2.5rem;
+        background-color: var(--second);
+        border-radius: 1.25rem;
+        box-shadow: var(--shadow);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #FFFFFF;
+        margin: .25rem;
+      }
+    }
+  }
+
+  &--deployed {
+    ul {
+      height: auto;
+      max-height: 50vh;
+    }
+
+    .button svg {
+      transform: rotate(45deg);
+    }
+  }
+}

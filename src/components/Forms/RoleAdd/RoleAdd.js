@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Autosuggest from 'react-autosuggest';
 
-import './RoleAdd.css';
-import '../../../assets/react-autosuggest.css';
 import DataService from '../../../services/data.service';
 import ErrorService from '../../../services/error.service';
+
 import Role from '../../../classes/Role';
 import ERoleStatus from '../../../classes/enums/ERoleStatus';
 import ERole from '../../../classes/enums/ERole';
 import Company from '../../Entities/Company/Company';
+
+import '../../../assets/react-autosuggest.css';
+import './RoleAdd.scss';
 
 class RoleAdd extends Component {
   constructor () {

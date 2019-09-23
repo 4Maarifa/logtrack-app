@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-
-import './RoleCompany.css';
 
 import Role from '../Role/Role';
+
+import './RoleCompany.scss';
 
 class RoleCompany extends Component {
   constructor () {
@@ -26,15 +25,13 @@ class RoleCompany extends Component {
     var companyId = Object.keys(this.state.company)[0];
     
     return (
-      <div>
+      <div className="RoleCompany">
         <img width="20" height="20" alt={this.state.company[companyId].name + '\'s logo'} 
             src={this.state.company[companyId].logoURL} /><br/>
         
-        <Link to={`/company/${companyId}`}>
-          {this.state.company[companyId].name}
-        </Link> =>
+        {this.state.company[companyId].name} =>
         {Object.keys(this.state.roles).map((roleKey) => 
-          <Role key={roleKey} role={ { [roleKey]: this.state.roles[roleKey] } }></Role>
+          <Role key={roleKey} role={ { [roleKey]: this.state.roles[roleKey] } } options={this.state.options}></Role>
         )}
       </div>
     );

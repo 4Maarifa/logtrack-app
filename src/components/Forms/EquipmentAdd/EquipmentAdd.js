@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import './EquipmentAdd.css';
-
 import DataService from '../../../services/data.service';
 import ErrorService from '../../../services/error.service';
 import UtilsService from '../../../services/utils.service';
 
 import Equipment from '../../../classes/Equipment';
+
+import './EquipmentAdd.scss';
 
 class EquipmentAdd extends Component {
   constructor () {

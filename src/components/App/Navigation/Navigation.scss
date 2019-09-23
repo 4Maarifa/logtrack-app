@@ -1,0 +1,126 @@
+.Navigation {
+  background-color: var(--second);
+  display: flex;
+  flex-direction: column;
+  color: white;
+  padding: .7rem 0;
+  height: calc(100% - 1.4rem);
+  position: relative;
+  z-index: 2;
+  flex: 0 0 3.5rem;
+  transition: flex .5s;
+  min-width: 0;
+
+  .indicator {
+    position: absolute;
+    top: calc(50% - 10px);
+    left: calc(100% + 5px);
+    width: 10px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 2;
+    display: block;
+
+    i {
+      width: 0;
+      height: 0;
+      display: block;
+      border-top: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+      border-right: none;
+      border-left: 7px solid var(--light-gray);
+      opacity: .6;
+      transition: opacity .5s;
+    }
+
+    &:hover i {
+      opacity: 1;
+    }
+  }
+
+  nav {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 0;
+    width: calc(100% - 1rem);
+    margin-left: .7rem;
+
+    .nav-clearfix {
+      flex: 1;
+    }
+
+    .nav-title {
+      min-width: 0;
+      display: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    a,
+    a:hover,
+    a:focus,
+    a:visited,
+    a:active,
+    a:link {
+      color: #FFFFFF;
+      text-decoration: none;
+      height: 2.5rem;
+      flex-basis: 2.5rem;
+      display: flex;
+      align-items: center;
+      padding: 0 .5rem;
+      width: calc(100% - .7rem);
+      position: relative;
+
+      &.nav--active {
+        background-color: #FFFFFF;
+        border-radius: 8px 0 0 8px;
+        border-right: 2px solid #FFFFFF;
+        color: var(--second);
+
+        &:before {
+          content: '';
+          position: absolute;
+          bottom: calc(100% - 1px);
+          right: -1px;
+          height: 1rem;
+          width: 1rem;
+          display: block;
+          background-color: #FFFFFF;
+          clip-path: polygon(100% 0, 100% 100%, 0 100%, 60% 90%, 80% 80%, 90% 60%);
+        }
+
+        &:after {
+          content: '';
+          position: absolute;
+          top: calc(100% - 1px);
+          right: -1px;
+          height: 1rem;
+          width: 1rem;
+          display: block;
+          background-color: #FFFFFF;
+          clip-path: polygon(0 0, 100% 0, 100% 100%, 90% 40%, 80% 20%, 60% 10%);
+        }
+      }
+
+      svg {
+        margin-right: .5rem;
+      }
+    }
+  }
+
+  &--deployed {
+    flex: 1 0 3.5rem;
+
+    nav .nav-title {
+      display: block;
+    }
+
+    .indicator i {
+      border-left: none;
+      border-right: 7px solid var(--light-gray);
+    }
+  }
+}

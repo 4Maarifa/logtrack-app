@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import FirebaseService from '../../../services/firebase.service';
 
-import './SignOut.css';
+import './SignOut.scss';
 
 class SignOut extends Component {
 

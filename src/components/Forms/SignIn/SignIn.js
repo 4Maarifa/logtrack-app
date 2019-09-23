@@ -5,7 +5,7 @@ import FirebaseService from '../../../services/firebase.service';
 import ErrorService from '../../../services/error.service';
 import DataService from '../../../services/data.service';
 
-import './SignIn.css';
+import './SignIn.scss';
 
 class SignIn extends Component {
 

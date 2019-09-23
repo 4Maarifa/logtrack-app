@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Icon from '../Icon/Icon';
 import TestMap from './TestMap/TestMap';
 
-import './Specs.css';
+import './Specs.scss';
 
 class Specs extends Component {
 

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import './ChooseLoadType.css';
-
 import ELoadType from './../../../classes/enums/ELoadType';
 import ExTable from './../../Utils/ExTable/ExTable';
 import Tabs from './../../Utils/Tabs/Tabs';
+
+import './ChooseLoadType.scss';
 
 class ChooseLoadType extends Component {
   constructor () {

@@ -9,6 +9,13 @@ const UtilsService = {
         }
         return el;
     },
+
+    // STRINGS
+    capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    },
+
+    // ARRAYS & OBJECTS
     removeDuplicateFromArray(array) {
         return array.filter((item, pos) => array.indexOf(item) === pos);
     },

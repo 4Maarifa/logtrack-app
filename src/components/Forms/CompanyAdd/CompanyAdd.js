@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import './CompanyAdd.css';
 import DataService from '../../../services/data.service';
 import ErrorService from '../../../services/error.service';
 import FileService from '../../../services/file.service';
@@ -11,6 +10,8 @@ import Role from '../../../classes/Role';
 
 import ERoleStatus from '../../../classes/enums/ERoleStatus';
 import ERole from '../../../classes/enums/ERole';
+
+import './CompanyAdd.scss';
 
 class CompanyAdd extends Component {
   constructor () {

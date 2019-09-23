@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 
-import './Tabs.css';
 import UtilsService from '../../../services/utils.service';
 
-class Tabs extends Component {
-  constructor() {
-    super();
-    this.state = {activeTab: null};
-  }
+import './Tabs.scss';
 
-  componentWillMount() {
-    if(!!this.props.default && this.state.activeTab !== this.props.default) {
-      this.setState({activeTab: this.props.default});
-    }
+class Tabs extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeTab: (!!props.default) ? props.default : null
+    };
   }
 
   activateTab = (e) => {

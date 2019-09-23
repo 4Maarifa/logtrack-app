@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faTimes } from '@fortawesome/pro-solid-svg-icons';
 
 import ErrorService from './error.service';
 import FirebaseService from './firebase.service';
@@ -279,6 +281,18 @@ const DataService = {
                 .catch((e) => ErrorService.manageErrorThenReject(e, reject));
             });
         },
+        countAllForCompanyId(companyId) {
+            console.log('COUNT');
+            return new Promise((resolve, reject) => {
+                FirebaseService.getDb().collection('equipments')
+                .where('companyId', '==', companyId)
+                .get()
+                .then((querySnapshot) => {
+                    resolve(querySnapshot.size);
+                })
+                .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+            });
+        },
         create(equipment) {
             if(!equipment instanceof Equipment) {
                 ErrorService.manageError({
@@ -428,6 +442,7 @@ const DataService = {
             return new Promise((resolve, reject) => {
                 FirebaseService.getDb().collection('roles')
                     .where('employeeId', '==', employeeId)
+                    .where('status', '==', ERoleStatus.CONFIRMED)
                     .get()
                     .then((querySnapshot) => {
                         querySnapshot.forEach((roleDoc) => roles[roleDoc.id] = roleDoc.data());
@@ -470,18 +485,27 @@ const DataService = {
         getActions(role) {
             var roleId = Object.keys(role)[0];
             if(!!DataService.computed.activeRole && role[roleId].status === ERoleStatus.DRAFT && role[roleId].companyId === DataService.computed.activeRole.companyId && DataService.computed.activeRole.role === ERole.MANAGER) {
-                return <div>
-                    <button onClick={() => DataService.role.confirmRole(roleId)}>Confirm ?</button>
+                return <div className="Role-actions">
+                    <button onClick={() => DataService.role.confirmRole(roleId)}>
+                        <FontAwesomeIcon icon={faCheck} />
+                        Confirm ?
+                    </button>
                 </div>;
             }
             if(!!DataService.computed.user && role[roleId].status === ERoleStatus.CONFIRMED && role[roleId].employeeId === DataService.computed.user.uid) {
                 if(roleId === DataService.computed.employee.activeRoleId) {
-                    return <div>
-                        <button onClick={() => DataService.employee.unactivateRole()}>Unactivate ?</button>
+                    return <div className="Role-actions">
+                        <button onClick={() => DataService.employee.unactivateRole()}>
+                            <FontAwesomeIcon icon={faTimes} />
+                            Disable?
+                        </button>
                     </div>;
                 }
-                return <div>
-                    <button onClick={() => DataService.employee.activateRole(roleId)}>Activate ?</button>
+                return <div className="Role-actions">
+                    <button onClick={() => DataService.employee.activateRole(roleId)}>
+                        <FontAwesomeIcon icon={faCheck} />
+                        Enable?
+                    </button>
                 </div>;
             }
             return <></>;

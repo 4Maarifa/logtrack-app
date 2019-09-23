@@ -13,7 +13,7 @@ import { ReactComponent as FifthWheel } from '../../../assets/svg-sprites/fifth-
 import { ReactComponent as ConstructionMaterial } from '../../../assets/svg-sprites/construction.svg';
 import { ReactComponent as Rocks } from '../../../assets/svg-sprites/rocks.svg';
 
-import './Icon.css';
+import './Icon.scss';
 
 class Icon extends Component {
   icons = {

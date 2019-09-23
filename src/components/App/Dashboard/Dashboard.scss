@@ -1,0 +1,55 @@
+.Dashboard {
+  
+
+  .stat-container {
+    margin-top: 1.5rem;
+    width: 100%;
+    display: block;
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-between;
+
+    .stat {
+      height: 9rem;
+      width: 48%;
+      box-shadow: var(--shadow);
+      display: flex;
+      border-radius: 2px;
+      transform: scale(1);
+      transition: transform .5s;
+
+      &, &:hover, &:focus, &:active, &:link, &:visited {
+        text-decoration: none;
+        color: #000000;
+      }
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      .stat-image {
+        flex: 1;
+        height: 100%;
+      
+        img {
+          height: 100%;
+        }
+      }
+
+      .stat-description {
+        flex: 1;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .stat-number {
+          font-weight: bold;
+          font-size: 200%;
+          color: var(--second);
+        }
+      }
+    }
+  }
+}

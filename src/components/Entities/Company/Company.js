@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './Company.css';
+import './Company.scss';
 
 class Company extends Component {
   constructor () {

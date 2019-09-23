@@ -1,11 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
-
-import './RoleEmployee.css';
 
 import Role from '../Role/Role';
 
 import ERoleStatus from '../../../classes/enums/ERoleStatus';
+
+import './RoleEmployee.scss';
 
 class RoleEmployee extends Component {
   constructor () {
@@ -33,7 +32,7 @@ class RoleEmployee extends Component {
     if(!this.state.options.showDraft && this.state.roles[roleKey].status === ERoleStatus.DRAFT) {
       return <Fragment key={roleKey}></Fragment>;
     }
-    return <Role key={roleKey} role={ { [roleKey]: this.state.roles[roleKey] } }></Role>;
+    return <Role key={roleKey} role={ { [roleKey]: this.state.roles[roleKey] } } options={this.state.options}></Role>;
   }
 
   render() {
@@ -48,15 +47,16 @@ class RoleEmployee extends Component {
     }
 
     return (
-      <div>
-        {this.renderProfilePicture(employeeId)}
-        
-        <Link to={`/employee/${employeeId}`}>
+      <div className="RoleEmployee">
+        <span>
+          {this.renderProfilePicture(employeeId)}
           {this.state.employee[employeeId].firstname + ' ' + this.state.employee[employeeId].lastname}
-        </Link> =>
-        {Object.keys(this.state.roles).map((roleKey) => 
-          this.renderRole(roleKey)
-        )}
+        </span>
+        <div className="roles">
+          {Object.keys(this.state.roles).map((roleKey) => 
+            this.renderRole(roleKey)
+          )}
+        </div>
       </div>
     );
   }
