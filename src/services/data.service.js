@@ -162,6 +162,13 @@ const DataService = {
                     .catch((e) => ErrorService.manageErrorThenReject(e, reject));
             });            
         },
+        countAllForCompanyId(companyId) {
+            return new Promise((resolve, reject) => {
+                FirebaseService.getFirebaseObject().functions().httpsCallable('computeStat')({type: 'employee-count', companyId: companyId})
+                    .then(result => resolve(result.data.employeeCount))
+                    .catch(e => ErrorService.manageErrorThenReject(e, reject));
+            });
+        },
         updateField(employeeId, employeeField) {
             return FirebaseService.getDb().collection('employees').doc(employeeId).update(employeeField);
         },
@@ -282,15 +289,10 @@ const DataService = {
             });
         },
         countAllForCompanyId(companyId) {
-            console.log('COUNT');
             return new Promise((resolve, reject) => {
-                FirebaseService.getDb().collection('equipments')
-                .where('companyId', '==', companyId)
-                .get()
-                .then((querySnapshot) => {
-                    resolve(querySnapshot.size);
-                })
-                .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+                FirebaseService.getFirebaseObject().functions().httpsCallable('computeStat')({type: 'equipment-count', companyId: companyId})
+                    .then(result => resolve(result.data.equipmentCount))
+                    .catch(e => ErrorService.manageErrorThenReject(e, reject));
             });
         },
         create(equipment) {

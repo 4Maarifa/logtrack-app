@@ -4,6 +4,7 @@ const firebase = require('firebase/app');
 require('firebase/firestore');
 require('firebase/auth');
 require('firebase/storage');
+require('firebase/functions');
 
 const FirebaseService = {
     connection: null,

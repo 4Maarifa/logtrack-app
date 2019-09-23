@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 
 import DataService from './../../../services/data.service';
 import ErrorService from './../../../services/error.service';
-import UtilsService from './../../../services/utils.service';
 
 import EquipmentImage from './../../../assets/equipment.png';
 import EmployeeImage from './../../../assets/employee.png';
@@ -41,8 +40,8 @@ class Dashboard extends Component {
         .then((equipmentCount) => this.setState({equipmentCount: equipmentCount}))
         .catch(ErrorService.manageError);
 
-      DataService.role.getRolesForCompanyId(this.state.activeRole.companyId)
-        .then((roles) => this.setState({employeeCount: UtilsService.removeDuplicateFromArray(Object.keys(roles).map((roleKey) => roles[roleKey].employeeId)).length}))
+      DataService.employee.countAllForCompanyId(this.state.activeRole.companyId)
+        .then((employeeCount) => this.setState({employeeCount: employeeCount}))
         .catch(ErrorService.manageError);
     }
   }
