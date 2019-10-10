@@ -1,72 +1,68 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 import Autosuggest from 'react-autosuggest';
 
-import DataService from '../../../services/data.service';
-import ErrorService from '../../../services/error.service';
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
-import Role from '../../../classes/Role';
-import ERoleStatus from '../../../classes/enums/ERoleStatus';
-import ERole from '../../../classes/enums/ERole';
-import Company from '../../Entities/Company/Company';
+import DataService from './../../../services/data.service';
+import ErrorService from './../../../services/error.service';
+import CompanyService from './../../../services/entities/company.service';
+import RoleService from './../../../services/entities/role.service';
 
-import '../../../assets/react-autosuggest.css';
+import Role from './../../../classes/Role';
+import ERoleStatus from './../../../classes/enums/ERoleStatus';
+import ERole from './../../../classes/enums/ERole';
+import Company from './../../Entities/Company/Company';
+
+import './../../../assets/react-autosuggest.css';
 import './RoleAdd.scss';
 
-class RoleAdd extends Component {
+class RoleAdd extends ComponentSafeUpdate {
   constructor () {
     super();
     this.state = Object.assign({roleId: null, roleType: '', possibleCompanies: [], selectedCompany: null, companyName: ''},
       DataService.computed.getDefaultComputedValues());
   }
 
-  observeComputedValues = (computedValues) => {
-    this.setState(computedValues, this.computeRoles);
+  componentDidMount = () => {
+    super.componentDidMount();
+    this.setStateSafe({observerKey: 
+      DataService.computed.observeComputedValues((computedValues) => {
+        this.setStateSafe(computedValues);
+      })
+    });
   }
 
-  componentDidMount = () => {
-    DataService.computed.observeComputedValues(this.observeComputedValues);
+  componentWillUnmount = () => {
+    super.componentWillUnmount();
   }
 
   handleChange = event => {
     let newState = {};
     newState[event.target.getAttribute('data-field')] = event.target.value;
-    this.setState(newState);
+    this.setStateSafe(newState);
   }
 
   onAutocompleteChange = (_, valueWrapper) => {
     if(typeof(valueWrapper.newValue) === 'string') {
-      this.setState({companyName: valueWrapper.newValue, selectedCompany: null});
+      this.setStateSafe({companyName: valueWrapper.newValue, selectedCompany: null});
     } else {
-      this.setState({companyName: valueWrapper.newValue.name, selectedCompany: valueWrapper.newValue});
+      this.setStateSafe({companyName: valueWrapper.newValue.name, selectedCompany: valueWrapper.newValue});
     }
   }
 
   autoCompleteCompanies = valueWrapper => {
     if (valueWrapper.value.trim().length === 0) {
-        this.setState({possibleCompanies: [], selectedCompany: null});
+        this.setStateSafe({possibleCompanies: [], selectedCompany: null});
     }
-    DataService.company.search(valueWrapper.value.trim().toLowerCase()).then((querySnapshot) => {
+    CompanyService.search(valueWrapper.value.trim().toLowerCase()).then((querySnapshot) => {
         let companies = [];
         querySnapshot.forEach((result) => companies.push(Object.assign(result.data(), {id: result.id})));
-        this.setState({possibleCompanies: companies, selectedCompany: null});
+        this.setStateSafe({possibleCompanies: companies, selectedCompany: null});
     });
   }
 
-  clearAutocomplete = () => this.setState( {possibleCompanies: []} );
-
-  getCompany = company => company ;
-  renderCompany = company => <Company company={ { [company.id]: company } } />;
-
-  printSelectedCompany = () => {
-    if (!!this.state.selectedCompany) {
-      return (<span>
-        Selected company:
-        <Company company={ { [this.state.selectedCompany.id]: this.state.selectedCompany } } />
-      </span>);
-    }
-    return (<span></span>);
-  }
+  clearAutocomplete = () => this.setStateSafe( {possibleCompanies: []} );
 
   handleSubmit = event => {
     event.preventDefault();
@@ -83,11 +79,27 @@ class RoleAdd extends Component {
     }
     
     const roleStatus = (this.state.selectedCompany.creator === this.state.user.uid) ? ERoleStatus.CONFIRMED : ERoleStatus.DRAFT;
-    DataService.role.create(new Role(this.state.user.uid, this.state.selectedCompany.id, roleStatus, this.state.roleType))
+    RoleService.create(new Role(this.state.user.uid, this.state.selectedCompany.id, roleStatus, this.state.roleType))
       .then((docRole) => {
-        this.setState({roleId: docRole.id});
+        this.setStateSafe({roleId: docRole.id});
       })
       .catch(ErrorService.manageError);
+  }
+
+  /**
+   * RENDER
+   */
+  getCompany = company => company ;
+  renderCompany = company => <Company company={ { [company.id]: company } } />;
+
+  printSelectedCompany = () => {
+    if (!!this.state.selectedCompany) {
+      return (<span>
+        Selected company:
+        <Company company={ { [this.state.selectedCompany.id]: this.state.selectedCompany } } />
+      </span>);
+    }
+    return (<span></span>);
   }
 
   render() {

@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
+
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import './ActionButton.scss';
 
-class ActionButton extends Component {
+class ActionButton extends ComponentSafeUpdate {
   constructor () {
     super();
     this.state = {
@@ -15,13 +17,21 @@ class ActionButton extends Component {
   }
 
   componentDidMount = () => {
-    this.setState({icon: this.props.icon, actions: this.props.actions});
+    super.componentDidMount();
+    this.setStateSafe({icon: this.props.icon, actions: this.props.actions});
+  }
+
+  componentWillUnmount = () => {
+    super.componentWillUnmount();
   }
 
   toggleDisplay = () => {
-    this.setState({deployed: !this.state.deployed});
+    this.setStateSafe({deployed: !this.state.deployed});
   }
 
+  /**
+   * RENDER
+   */
   render() {
     return (
       <div className={'ActionButton ' + (!!this.state.deployed ? 'ActionButton--deployed':'')}>

@@ -1,38 +1,55 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { faBuilding, faUser, faImage } from '@fortawesome/pro-solid-svg-icons';
 
-import DataService from '../../../services/data.service';
-import ErrorService from '../../../services/error.service';
-import FileService from '../../../services/file.service';
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
-import Company from '../../../classes/Company';
-import Role from '../../../classes/Role';
+import DataService from './../../../services/data.service';
+import ErrorService from './../../../services/error.service';
+import FileService from './../../../services/file.service';
+import RoleService from './../../../services/entities/role.service';
+import CompanyService from './../../../services/entities/company.service';
 
-import ERoleStatus from '../../../classes/enums/ERoleStatus';
-import ERole from '../../../classes/enums/ERole';
+import Company from './../../../classes/Company';
+import Role from './../../../classes/Role';
+
+import ERoleStatus from './../../../classes/enums/ERoleStatus';
+import ERole from './../../../classes/enums/ERole';
+
+import Icon from './../../Utils/Icon/Icon';
+import FormInput from './../../Utils/FormInput/FormInput';
+import FormInputFile from '../../Utils/FormInputFile/FormInputFile';
 
 import './CompanyAdd.scss';
 
-class CompanyAdd extends Component {
+class CompanyAdd extends ComponentSafeUpdate {
   constructor () {
     super();
 
-    this.state = Object.assign({companyId: null, name: ''}, DataService.computed.getDefaultComputedValues());
-    this.logo = React.createRef();
-  }
-
-  observeComputedValues = (computedValues) => {
-    this.setState(computedValues, this.computeRoles);
+    this.state = Object.assign({
+      companyId: null, 
+      name: '', 
+      logo: null}, 
+      DataService.computed.getDefaultComputedValues());
   }
 
   componentDidMount = () => {
-    DataService.computed.observeComputedValues(this.observeComputedValues);
+    super.componentDidMount();
+    this.setStateSafe({observerKey: 
+      DataService.computed.observeComputedValues((computedValues) => {
+        this.setStateSafe(computedValues);
+      })
+    });
+  }
+
+  componentWillUnmount = () => {
+    super.componentWillUnmount();
   }
 
   handleChange = event => {
     let newState = {};
     newState[event.target.getAttribute('data-field')] = event.target.value;
-    this.setState(newState);
+    this.setStateSafe(newState);
   }
 
   handleSubmit = event => {
@@ -40,16 +57,16 @@ class CompanyAdd extends Component {
     console.log('CompanyAdd : submitting...');
 
     this.uploadLogo()
-      .then((logoUrl) => {
+      .then(logoUrl => {
 
-        DataService.company.create(new Company(this.state.name, logoUrl, this.state.user.uid))
+        CompanyService.create(new Company(this.state.name, logoUrl, this.state.user.uid))
           .then(docRef => {
             console.log('CompanyAdd : Company added, creating Role...')
 
-            DataService.role.create(new Role(this.state.user.uid, docRef.id, ERoleStatus.CONFIRMED, ERole.MANAGER))
+            RoleService.create(new Role(this.state.user.uid, docRef.id, ERoleStatus.CONFIRMED, ERole.MANAGER))
               .then(() => {
                 console.log('CompanyAdd : successful');
-                this.setState({companyId: docRef.id});
+                this.setStateSafe({companyId: docRef.id});
               })
               .catch(ErrorService.manageError);
           })
@@ -58,15 +75,19 @@ class CompanyAdd extends Component {
       .catch(ErrorService.manageError);
   }
 
+  onLogoChange = file => {
+    this.setStateSafe({logo: !!file ? file[0] : null});
+  }
+
   uploadLogo = () => {
     return new Promise((resolve, reject) => {
       // Logo is mandatory
-      if (!this.logo.current.files.length) {
-        reject();
+      if (!this.state.logo) {
+        reject('You must upload a logo!');
       }
 
       console.log('CompanyAdd: uploading logo...');
-      FileService.uploadCompanyLogo(this.logo.current.files[0])
+      FileService.uploadCompanyLogo(this.state.logo)
         .then((fileRef) => {
           console.log('CompanyAdd : Company logo saved, getting logo company URL...');
 
@@ -82,6 +103,13 @@ class CompanyAdd extends Component {
     });
   }
 
+  onFormInputChange = (value, fieldName) => {
+    this.setStateSafe({[fieldName]: value});
+  }
+
+  /**
+   * RENDER
+   */
   render() {
     if (!this.state.employee) {
       return (<div></div>);
@@ -90,34 +118,42 @@ class CompanyAdd extends Component {
       return <Redirect to={companyUrl} />;
     } else {
       return (
-        <div>
-          Add a company
+        <div className="CompanyAdd">
+          <h1>Add a company</h1>
           <form onSubmit={this.handleSubmit}>
+
             {/* Name field */}
-            <label>
-              Name of the company:
-              <input
-                type="text"
-                data-field="name"
-                placeholder="Corporation Inc."
-                value={this.state.name}
-                onChange={this.handleChange}
-                required />
-            </label>
+            <FormInput 
+              inputType="text"
+              fieldName="name"
+              label={
+                <span>
+                  <Icon source="fa" icon={faBuilding} />
+                  Name
+                </span>}
+              onValueChange={this.onFormInputChange} />
 
             {/* Logo field */}
-            <label>
-              Logo:
-              <input
-                type="file"
-                ref={this.logo}
-                required />
-            </label>
+            <FormInputFile
+              onValueChange={this.onLogoChange}
+              label={
+                <span>
+                  <Icon source="fa" icon={faImage} />
+                  Logo
+                </span>
+              }
+              accept="image/*" />
 
             {/* Creator */}
-            <label>
-              Creator: {this.state.employee.firstname + ' ' + this.state.employee.lastname}
-            </label>
+            <div className="input-creator">
+              <label>
+                <Icon source="fa" icon={faUser} />
+                Creator
+              </label>
+              <span>
+                {this.state.employee.firstname + ' ' + this.state.employee.lastname}
+              </span>
+            </div>
 
             <input type="submit" />
           </form>

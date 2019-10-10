@@ -1,36 +1,45 @@
-import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 import { faTruck, faPlus } from '@fortawesome/pro-solid-svg-icons';
 
-import DataService from '../../../services/data.service';
-import ErrorService from '../../../services/error.service';
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
-import Equipment from '../../Entities/Equipment/Equipment';
+import DataService from './../../../services/data.service';
+import ErrorService from './../../../services/error.service';
+import BrandService from './../../../services/entities/brand.service';
+import EquipmentModelService from './../../../services/entities/equipmentModel.service';
+import EquipmentService from './../../../services/entities/equipment.service';
 
-import ActionButton from '../../Utils/ActionButton/ActionButton';
-import ExTable from '../../Utils/ExTable/ExTable';
+import Equipment from './../../Entities/Equipment/Equipment';
+import Map from './../../Utils/Map/Map';
+import Icon from './../../Utils/Icon/Icon';
+
+import ActionButton from './../../Utils/ActionButton/ActionButton';
+import ExTable from './../../Utils/ExTable/ExTable';
 
 import './Equipments.scss';
 
-class Equipments extends Component {
+class Equipments extends ComponentSafeUpdate {
   constructor() {
     super();
     this.state = Object.assign({
       equipments: {},
+      equipmentsLoading: true,
       equipmentModels: {},
       brands: {}}, 
       DataService.computed.getDefaultComputedValues());
   }
 
   componentDidMount = () => {
-    this.setState({observerKey: 
+    super.componentDidMount();
+    this.setStateSafe({observerKey: 
       DataService.computed.observeComputedValues((computedValues) => {
-        this.setState(computedValues, this.computeValues);
+        this.setStateSafe(computedValues, this.computeValues);
       })
     });
   }
 
   componentWillUnmount = () => {
+    super.componentWillUnmount();
     DataService.computed.unobserveComputedValues(this.state.observerKey);
   }
 
@@ -42,17 +51,17 @@ class Equipments extends Component {
    * EQUIPMENTS
    */
   computeEquipments = () => {
-    DataService.brand.getAll()
-      .then((brands) => this.setState({brands: brands}))
+    BrandService.list()
+      .then((brands) => this.setStateSafe({brands: brands}))
       .catch(ErrorService.manageError);
 
-    DataService.equipmentModel.getAll()
-      .then((equipmentModels => this.setState({equipmentModels: equipmentModels})))
+    EquipmentModelService.list()
+      .then((equipmentModels => this.setStateSafe({equipmentModels: equipmentModels})))
       .catch(ErrorService.manageError);
 
     if(!!this.state.activeRole) {
-      DataService.equipment.getAllForCompanyId(this.state.activeRole.companyId)
-        .then((equipments) => this.setState({equipments: equipments}))
+      EquipmentService.getAllForCompanyId(this.state.activeRole.companyId)
+        .then((equipments) => this.setStateSafe({equipments: equipments, equipmentsLoading: false}))
         .catch(ErrorService.manageError);
     }
   }
@@ -69,15 +78,18 @@ class Equipments extends Component {
     return <Equipment key={itemKey}
       equipment={equipment}
       brand={brand}
-      equipmentModel={equipmentModel} />
+      equipmentModel={equipmentModel}
+      options={ {} }
+      showDetails={mode === 'active'} />
   }
 
   render() {
     return (
-      <div>
-        <ExTable key="equipments" items={this.state.equipments} renderItem={this.renderEquipment}></ExTable>
-        <ActionButton icon={<FontAwesomeIcon icon={faPlus} />} actions={[
-          {title: 'Add an equipment', icon: <FontAwesomeIcon icon={faTruck} />, link: `/equipment/add`}
+      <div className="Equipments">
+        <Map></Map>
+        <ExTable key="equipments" items={this.state.equipments} renderItem={this.renderEquipment} header={['Identification', 'Model']} loading={this.state.equipmentsLoading}></ExTable>
+        <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[
+          {title: 'Add an equipment', icon: <Icon source="fa" icon={faTruck} />, link: `/equipment-add`}
         ]} />
       </div>
     );

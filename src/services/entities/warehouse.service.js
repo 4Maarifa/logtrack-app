@@ -1,0 +1,113 @@
+import ERights from './../../classes/enums/ERights';
+
+import DataService, { ensureFilledFields, migratePrototype } from './../data.service';
+import FirebaseService from './../firebase.service';
+import ErrorService from './../error.service';
+
+import Warehouse from './../../classes/Warehouse';
+
+import ERole from './../../classes/enums/ERole';
+
+const WarehouseService = {
+  rights: {
+    [ERights.RIGHT_WAREHOUSE_CREATE]: () => DataService.computed.isConnected(),
+    [ERights.RIGHT_WAREHOUSE_GET]: () => DataService.computed.isConnected(),
+    [ERights.RIGHT_WAREHOUSE_LIST]: () => DataService.computed.isConnected(),
+    [ERights.RIGHT_WAREHOUSE_UPDATE]: () => DataService.computed.isConnected(),
+    [ERights.RIGHT_WAREHOUSE_DELETE]: () => false
+  },
+  create(warehouse) {
+    if (!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_CREATE]()) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create a Warehouse' });
+    }
+
+    if (!warehouse instanceof Warehouse) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'Warehouse' });
+    }
+
+    if (!ensureFilledFields(warehouse, ['name', 'latitude', 'longitude', 'companyId', 'creator'])) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['name', 'latitude', 'longitude', 'companyId', 'creator'] });
+    }
+
+    if (warehouse.creator !== DataService.computed.employee.id || DataService.computed.activeRole.role !== ERole.MANAGER || warehouse.companyId !== DataService.computed.activeRole.companyId) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
+    }
+
+    return FirebaseService.getDb().collection('warehouses').add(migratePrototype(warehouse));
+  },
+  get(warehouseId) {
+    if (!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_GET]()) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Warehouse' });
+    }
+    return FirebaseService.getDb().collection('warehouses').doc(warehouseId).get();
+  },
+  list() {
+    if (!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_LIST]()) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Warehouses' });
+    }
+
+    var warehouses = {};
+    return new Promise((resolve, reject) => {
+        FirebaseService.getDb().collection('warehouses').get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((warehouseDoc) => warehouses[warehouseDoc.id] = warehouseDoc.data());
+                resolve(warehouses);
+            })
+            .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+    });
+  },
+  update(warehouse) {
+    if (!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_UPDATE]()) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Warehouse' });
+    }
+
+    if (!ensureFilledFields(warehouse, ['name', 'latitude', 'longitude', 'companyId', 'creator'])) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['name', 'latitude', 'longitude', 'companyId', 'creator'] });
+    }
+
+    if (!warehouse instanceof Warehouse) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'Warehouse' });
+    }
+
+    if (DataService.computed.activeRole.role !== ERole.MANAGER || warehouse.companyId !== DataService.computed.activeRole.companyId) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
+    }
+
+    return FirebaseService.getDb().collection('warehouses').doc(warehouse.id).set(migratePrototype(warehouse));
+  },
+  updateField(warehouseId, warehouseField) {
+    if (!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_UPDATE]()) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Warehouse' });
+    }
+    
+    return FirebaseService.getDb().collection('warehouses').doc(warehouseId).update(warehouseField);
+  },
+  delete(warehouseId) {
+    if (!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_DELETE]()) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Warehouse' });
+    }
+    
+    return FirebaseService.getDb().collection('warehouses').doc(warehouseId).delete();
+  },
+
+  // CUSTOM FUNCTIONS
+  getAllForCompanyId(companyId) {
+    if (!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_LIST]()) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Warehouses' });
+    }
+
+    var warehouses = {};
+    return new Promise((resolve, reject) => {
+      FirebaseService.getDb().collection('warehouses')
+      .where('companyId', '==', companyId)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((warehosueDoc) => warehouses[warehosueDoc.id] = warehosueDoc.data());
+        resolve(warehouses);
+      })
+      .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+    });
+  }
+};
+
+export default WarehouseService;

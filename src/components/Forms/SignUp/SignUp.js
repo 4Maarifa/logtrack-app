@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-import FirebaseService from '../../../services/firebase.service';
-import ErrorService from '../../../services/error.service';
-import FileService from '../../../services/file.service';
-import DataService from '../../../services/data.service';
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
-import Employee from '../../../classes/Employee';
+import FirebaseService from './../../../services/firebase.service';
+import ErrorService from './../../../services/error.service';
+import FileService from './../../../services/file.service';
+import EmployeeService from './../../../services/entities/employee.service';
+
+import Employee from './../../../classes/Employee';
 
 import './SignUp.scss';
 
-class SignUp extends Component {
+class SignUp extends ComponentSafeUpdate {
   constructor() {
     super();
     this.state = {
@@ -24,10 +26,18 @@ class SignUp extends Component {
     this.profilePicture = React.createRef();
   }
 
+  componentDidMount = () => {
+    super.componentDidMount();
+  }
+
+  componentWillUnmount = () => {
+    super.componentWillUnmount();
+  }
+
   handleChange = event => {
     let newState = {};
     newState[event.target.getAttribute('data-field')] = event.target.value;
-    this.setState(newState);
+    this.setStateSafe(newState);
   }
 
   handleSubmit = event => {
@@ -41,20 +51,20 @@ class SignUp extends Component {
 
     FirebaseService.signUp(this.state.email, this.state.password)
       .then((user) => {
-        DataService.employee.create(new Employee(user.user.uid, this.state.firstname, this.state.lastname, [], null, null))
+        EmployeeService.create(new Employee(user.user.uid, this.state.firstname, this.state.lastname, [], null, null))
           .then(() => {
             this.uploadProfilePhoto()
               .then(employeeProperties => {
                 if(!!employeeProperties) {
-                  DataService.employee.updateField(user.user.uid, employeeProperties)
+                  EmployeeService.updateField(user.user.uid, employeeProperties)
                     .then(() => {
                       console.log('SignUp : successful. Redirecting to Dashboard...');
-                      this.setState({user: user});
+                      this.setStateSafe({user: user});
                     })
                     .catch(ErrorService.manageError);
                 } else {
                   console.log('SignUp : successful. Redirecting to Dashboard...');
-                  this.setState({user: user});
+                  this.setStateSafe({user: user});
                 }
               })
               .catch(ErrorService.manageError);
@@ -73,7 +83,7 @@ class SignUp extends Component {
             console.log('SignUp : Profile Picture saved, getting profile picture URL...');
 
             FileService.getDownloadURLForProfilePicture()
-              .then((url) => {
+              .then(url => {
                 console.log('SignUp : Profile Picture URL got...');
 
                 resolve({
@@ -90,6 +100,9 @@ class SignUp extends Component {
     });
   }
 
+  /**
+   * RENDER
+   */
   render() {
     if (!!this.state.user) {
       return <Redirect to='/dashboard' />;

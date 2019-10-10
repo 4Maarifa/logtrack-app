@@ -1,6 +1,7 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSteeringWheel, faUserTie, faEye, faWrench } from '@fortawesome/pro-solid-svg-icons';
+import { faUserTie, faSteeringWheel, faEye, faWrench } from '@fortawesome/pro-solid-svg-icons';
+
+import Icon from './../../components/Utils/Icon/Icon';
 
 const ERole = Object.freeze({
     DRIVER: 'DRIVER',
@@ -10,10 +11,10 @@ const ERole = Object.freeze({
 });
 
 export const RoleIcons = {
-    [ERole.DRIVER]: <FontAwesomeIcon icon={faSteeringWheel} />,
-    [ERole.MANAGER]: <FontAwesomeIcon icon={faUserTie} />,
-    [ERole.OBSERVER]: <FontAwesomeIcon icon={faEye} />,
-    [ERole.MECHANIC]: <FontAwesomeIcon icon={faWrench} />
+    [ERole.DRIVER]: <Icon source="fa" icon={faSteeringWheel} />,
+    [ERole.MANAGER]: <Icon source="fa" icon={faUserTie} />,
+    [ERole.OBSERVER]: <Icon source="fa" icon={faEye} />,
+    [ERole.MECHANIC]: <Icon source="fa" icon={faWrench} />
 };
 
 export default ERole;

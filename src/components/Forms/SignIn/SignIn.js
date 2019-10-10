@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
+
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import FirebaseService from '../../../services/firebase.service';
 import ErrorService from '../../../services/error.service';
@@ -7,25 +9,31 @@ import DataService from '../../../services/data.service';
 
 import './SignIn.scss';
 
-class SignIn extends Component {
+class SignIn extends ComponentSafeUpdate {
 
   constructor() {
     super();
     this.state = Object.assign({email: '', password: ''}, DataService.computed.getDefaultComputedValues());
   }
 
-  observeComputedValues = (computedValues) => {
-    this.setState(computedValues, this.computeRoles);
+  componentDidMount = () => {
+    super.componentDidMount();
+    this.setStateSafe({observerKey: 
+      DataService.computed.observeComputedValues((computedValues) => {
+        this.setStateSafe(computedValues);
+      })
+    });
   }
 
-  componentDidMount = () => {
-    DataService.computed.observeComputedValues(this.observeComputedValues);
+  componentWillUnmount = () => {
+    super.componentWillUnmount();
+    DataService.computed.unobserveComputedValues(this.state.observerKey);
   }
 
   handleChange = event => {
     let newState = {};
     newState[event.target.getAttribute('data-field')] = event.target.value;
-    this.setState(newState);
+    this.setStateSafe(newState);
   }
 
   handleSubmit = event => {
@@ -35,11 +43,14 @@ class SignIn extends Component {
     FirebaseService.signIn(this.state.email, this.state.password)
       .then((user) => {
         console.log('SignIn : successful. Redirecting to Dashboard...');
-        this.setState({user: user});
+        this.setStateSafe({user: user});
       })
       .catch(ErrorService.manageError);
   }
 
+  /**
+   * RENDER
+   */
   render() {
     if(!!this.state.user) {
       return <Redirect to='/dashboard' />;

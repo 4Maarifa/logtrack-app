@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
+
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import Role from '../Role/Role';
 
 import './RoleCompany.scss';
 
-class RoleCompany extends Component {
+class RoleCompany extends ComponentSafeUpdate {
   constructor () {
     super();
     this.state = {
@@ -15,7 +17,16 @@ class RoleCompany extends Component {
   }
 
   componentDidMount = () => {
-    this.setState({company: this.props.company, roles: this.props.roles, options: this.props.options});
+    super.componentDidMount();
+    this.setStateSafe({
+      company: this.props.company, 
+      roles: this.props.roles, 
+      options: this.props.options
+    });
+  }
+
+  componentWillUnmount = () => {
+    super.componentWillUnmount();
   }
 
   render() {

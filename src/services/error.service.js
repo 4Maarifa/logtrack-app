@@ -46,6 +46,9 @@ const ErrorService = {
                 case 'entity/not-found':
                     errorMessage = 'Can\'t found entity ' + error.details;
                     break;
+                case 'entity/right':
+                    errorMessage = 'You don\'t have the right for this : ' + error.details;
+                    break;
                 default :
                     errorMessage = 'An unknown error occured. Please contact the administrator providing details.';
                     break;
@@ -58,6 +61,10 @@ const ErrorService = {
     manageErrorThenReject(e, reject) {
         ErrorService.manageError(e);
         reject(e);
+    },
+    manageErrorThenPromiseRejection(e) {
+        ErrorService.manageError(e);
+        return Promise.reject(e);
     }
 };
 

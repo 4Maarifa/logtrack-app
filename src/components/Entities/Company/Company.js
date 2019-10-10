@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
+
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import './Company.scss';
 
-class Company extends Component {
+class Company extends ComponentSafeUpdate {
   constructor () {
     super();
     this.state = {
@@ -11,7 +13,12 @@ class Company extends Component {
   }
 
   componentDidMount = () => {
-    this.setState({company: this.props.company});
+    super.componentDidMount();
+    this.setStateSafe({company: this.props.company});
+  }
+
+  componentWillUnmount = () => {
+    super.componentWillUnmount();
   }
 
   render() {

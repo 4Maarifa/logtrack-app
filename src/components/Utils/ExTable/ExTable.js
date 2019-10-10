@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
+
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import UtilsService from '../../../services/utils.service';
 
@@ -6,7 +8,7 @@ import Loader from './../Loader/Loader';
 
 import './ExTable.scss';
 
-class ExTable extends Component {
+class ExTable extends ComponentSafeUpdate {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,13 +20,21 @@ class ExTable extends Component {
     };
   }
 
+  componentDidMount = () => {
+    super.componentDidMount();
+  }
+
+  componentWillUnmount = () => {
+    super.componentWillUnmount();
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     if(Object.keys(nextProps.items).length !== Object.keys(this.state.items).length) {
-      this.setState({items: nextProps.items});
+      this.setStateSafe({items: nextProps.items});
       return true;
     }
     if(nextProps.loading !== this.state.loading) {
-      this.setState({loading: nextProps.loading});
+      this.setStateSafe({loading: nextProps.loading});
       return true;
     }
     return (nextState.activeItem !== this.state.activeItem);
@@ -32,7 +42,8 @@ class ExTable extends Component {
 
   activateItem = (e) => {
     var target = UtilsService.getClosestElement(e.target, 'item');
-    this.setState({activeItem: target.getAttribute('data-item-id')});
+    this.setStateSafe({
+      activeItem: (this.state.activeItem === target.getAttribute('data-item-id') ? null : target.getAttribute('data-item-id'))});
   }
   
   render() {
@@ -46,13 +57,18 @@ class ExTable extends Component {
           </div>
         }
         <ul>
-          {!!this.state.loading && <li className="loader"><Loader></Loader></li>}
+          {!!this.state.loading && <li className="loader">
+            <Loader></Loader>
+          </li>}
           {
             Object.keys(this.state.items).map((itemKey) => 
-              <li key={itemKey} className={'item ' + ((itemKey === this.state.activeItem) ? 'selected' : '')} data-item-id={itemKey} onClick={this.activateItem}>
+              <li key={itemKey} className={'item ' + ((itemKey === this.state.activeItem) ? 'item--selected' : '')} data-item-id={itemKey} onClick={this.activateItem}>
                 {this.state.renderItem((itemKey === this.state.activeItem) ? 'active' : 'unactive', itemKey, this.state.items[itemKey])}
               </li>
             )
+          }
+          {!this.state.loading && !Object.keys(this.state.items).length && 
+            <li className="no-item">Nothing to show!</li>
           }
         </ul>
       </div>

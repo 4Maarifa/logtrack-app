@@ -11,7 +11,7 @@
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid var(--light-gray);
-    color: var(--light-gray);
+    color: var(--gray);
   }
 
   ul {
@@ -19,11 +19,18 @@
     margin: 0;
     padding: 0;
 
-    li {
+    li.item {
       padding: 0 .5rem;
-      height: 2rem;
+      min-height: 2rem;
+      width: calc(100% - 1rem);
       display: flex;
       flex-direction: row;
+      cursor: pointer;
+      transition: height .5s, min-height .5s;
+
+      &.item--selected {
+        min-height: 8rem;
+      }
 
       &.loader {
         justify-content: center;
@@ -32,6 +39,13 @@
       &:not(:last-child) {
         border-bottom: 1px solid var(--light-gray);
       }
+    }
+
+    li.no-item {
+      display: flex;
+      height: 2rem;
+      justify-content: center;
+      align-items: center;
     }
   }
 }

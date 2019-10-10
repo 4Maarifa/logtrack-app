@@ -1,14 +1,16 @@
-import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 import { faFileSignature, faPlus } from '@fortawesome/pro-solid-svg-icons';
 
-import DataService from '../../../services/data.service';
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
-import ActionButton from '../../Utils/ActionButton/ActionButton';
+import DataService from './../../../services/data.service';
+
+import ActionButton from './../../Utils/ActionButton/ActionButton';
+import Icon from './../../Utils/Icon/Icon';
 
 import './Contracts.scss';
 
-class Contracts extends Component {
+class Contracts extends ComponentSafeUpdate {
   constructor() {
     super();
     this.state = Object.assign({
@@ -17,19 +19,17 @@ class Contracts extends Component {
   }
 
   componentDidMount = () => {
-    this.setState({observerKey: 
+    super.componentDidMount();
+    this.setStateSafe({observerKey: 
       DataService.computed.observeComputedValues((computedValues) => {
-        this.setState(computedValues, this.computeValues);
+        this.setStateSafe(computedValues);
       })
     });
   }
 
   componentWillUnmount = () => {
+    super.componentWillUnmount();
     DataService.computed.unobserveComputedValues(this.state.observerKey);
-  }
-
-  computeValues() {
-    
   }
 
   /**
@@ -37,10 +37,10 @@ class Contracts extends Component {
    */
   render() {
     return (
-      <div>
+      <div className="Contracts">
         Contracts
-        <ActionButton icon={<FontAwesomeIcon icon={faPlus} />} actions={[
-          {title: 'Add a contract', icon: <FontAwesomeIcon icon={faFileSignature} />, link: `/contract/add`}
+        <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[
+          {title: 'Add a contract', icon: <Icon source="fa" icon={faFileSignature} />, link: `/contract-add`}
         ]} />
       </div>
     );

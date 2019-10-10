@@ -1,0 +1,16 @@
+.Employees {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  .Map {
+    height: 12rem;
+    flex: 0 0 12rem;
+    border-radius: 8px 8px 0 0;
+    box-shadow: var(--shadow);
+  }
+
+  .ExTable {
+    flex: 1;
+  }
+}

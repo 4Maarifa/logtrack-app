@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import { ReactComponent as Spring } from '../../../assets/svg-sprites/spring.svg';
 import { ReactComponent as Fuel } from '../../../assets/svg-sprites/fuel.svg';
@@ -15,7 +17,7 @@ import { ReactComponent as Rocks } from '../../../assets/svg-sprites/rocks.svg';
 
 import './Icon.scss';
 
-class Icon extends Component {
+class Icon extends ComponentSafeUpdate {
   icons = {
     Spring: Spring,
     Fuel: Fuel,
@@ -34,8 +36,9 @@ class Icon extends Component {
     if (this.props.source === 'fa') {
       return (
         <FontAwesomeIcon {...(!!this.props.withLabel ? {title: this.props.icon} : {})} 
+          {...this.props}
           icon={this.props.icon} 
-          fixedWidth={true} />
+          fixedWidth />
       );
     } else if (this.props.source === 'custom') {
       const IconTag = this.icons[this.props.icon];

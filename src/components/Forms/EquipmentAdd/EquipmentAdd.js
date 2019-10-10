@@ -1,15 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-import DataService from '../../../services/data.service';
-import ErrorService from '../../../services/error.service';
-import UtilsService from '../../../services/utils.service';
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
-import Equipment from '../../../classes/Equipment';
+import DataService from './../../../services/data.service';
+import ErrorService from './../../../services/error.service';
+import UtilsService from './../../../services/utils.service';
+import BrandService from './../../../services/entities/brand.service';
+import EquipmentModelService from './../../../services/entities/equipmentModel.service';
+import EquipmentService from './../../../services/entities/equipment.service';
+
+import Equipment from './../../../classes/Equipment';
 
 import './EquipmentAdd.scss';
 
-class EquipmentAdd extends Component {
+class EquipmentAdd extends ComponentSafeUpdate {
   constructor () {
     super();
 
@@ -27,32 +32,37 @@ class EquipmentAdd extends Component {
     }, DataService.computed.getDefaultComputedValues());
   }
 
-  observeComputedValues = (computedValues) => {
-    if(!computedValues.activeRole) {
-      ErrorService.warning('Please activate a role to add an equipment!');
-      this.setState({forceRedirect: true});
-    }
-    this.setState(computedValues, this.computeModels);
+  componentDidMount = () => {
+    super.componentDidMount();
+    this.setStateSafe({observerKey: 
+      DataService.computed.observeComputedValues((computedValues) => {
+        if(!computedValues.activeRole) {
+          ErrorService.warning('Please activate a role to add an equipment!');
+          this.setStateSafe({forceRedirect: true});
+        }
+        this.setStateSafe(computedValues);
+      })
+    });
   }
 
-  componentDidMount = () => {
-    DataService.computed.observeComputedValues(this.observeComputedValues);
+  componentWillUnmount = () => {
+    super.componentWillUnmount();
   }
 
   computeModels = () => {
-    DataService.brand.getAll()
-      .then((brands) => this.setState({brands: brands}))
+    BrandService.list()
+      .then((brands) => this.setStateSafe({brands: brands}))
       .catch(ErrorService.manageError);
 
-    DataService.equipmentModel.getAllByType()
-      .then((equipmentModels) => this.setState({modelsByType: equipmentModels}))
+    EquipmentModelService.getAllByType()
+      .then((equipmentModels) => this.setStateSafe({modelsByType: equipmentModels}))
       .catch(ErrorService.manageError);
   }
 
   handleChange = event => {
     let newState = {};
     newState[event.target.getAttribute('data-field')] = event.target.value;
-    this.setState(newState);
+    this.setStateSafe(newState);
   }
 
   handleSubmit = event => {
@@ -64,13 +74,24 @@ class EquipmentAdd extends Component {
       return;
     }
     
-    DataService.equipment.create(new Equipment(this.state.activeRole.companyId, this.state.identification, this.state.equipmentModelId))
+    EquipmentService.create(new Equipment(this.state.activeRole.companyId, this.state.identification, this.state.equipmentModelId))
       .then((docEquipment) => {
-        this.setState({equipmentId: docEquipment.id});
+        this.setStateSafe({equipmentId: docEquipment.id});
       })
       .catch(ErrorService.manageError);
   }
 
+  handleClickOnModel = (e) => {
+    var target = UtilsService.getClosestElement(e.target, 'model');
+    this.setStateSafe({
+      equipmentModelId: target.getAttribute('data-model-id'),
+      equipmentModelType: target.getAttribute('data-model-type')
+    });
+  }
+
+  /** 
+   * RENDER
+   */
   renderModels = () => {
     if(!this.state.modelsByType) {
       return (<div></div>);
@@ -133,14 +154,6 @@ class EquipmentAdd extends Component {
       return (<div></div>);
     }
     return this.renderModelViaType(this.state.equipmentModelType, this.state.equipmentModelId);
-  }
-
-  handleClickOnModel = (e) => {
-    var target = UtilsService.getClosestElement(e.target, 'model');
-    this.setState({
-      equipmentModelId: target.getAttribute('data-model-id'),
-      equipmentModelType: target.getAttribute('data-model-type')
-    });
   }
 
   render() {

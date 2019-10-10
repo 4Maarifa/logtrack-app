@@ -1,0 +1,38 @@
+.Gps {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  .gps-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow);
+    border-radius: 4px;
+    
+    .Map {
+      width: 100%;
+      flex: 1;
+    }
+
+    .indications {
+      height: 5rem;
+      width: 100%;
+      flex: 0 0 5rem;
+      display: flex;
+      flex-direction: row;
+      padding: .5rem;
+
+      .active-logtrack {
+        flex: 1;
+        height: 100%;
+        border-right: 1px solid var(--light-gray);
+      }
+
+      .gps-indicator {
+        flex: 1;
+        height: 100%;
+      }
+    }
+  }
+}

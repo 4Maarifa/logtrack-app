@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 import FirebaseService from '../../../services/firebase.service';
 
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+
 import './SignOut.scss';
 
-class SignOut extends Component {
+class SignOut extends ComponentSafeUpdate {
 
   componentDidMount() {
     FirebaseService.signOut();

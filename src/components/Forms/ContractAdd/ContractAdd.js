@@ -1,62 +1,111 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 import Autosuggest from 'react-autosuggest';
 
-import Contract from '../../../classes/Contract';
-import Company from '../../Entities/Company/Company';
-import EContractType from '../../../classes/enums/EContractType';
-import EContractStatus from '../../../classes/enums/EContractStatus';
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+
+import Contract from './../../../classes/Contract';
+import Company from './../../Entities/Company/Company';
+import EContractType from './../../../classes/enums/EContractType';
+import EContractStatus from './../../../classes/enums/EContractStatus';
 import ChooseLoadType from './../ChooseLoadType/ChooseLoadType';
 
-import DataService from '../../../services/data.service';
-import ErrorService from '../../../services/error.service';
+import DataService from './../../../services/data.service';
+import ErrorService from './../../../services/error.service';
+import CompanyService from './../../../services/entities/company.service';
+import ContractService from './../../../services/entities/contract.service';
 
-import '../../../assets/react-autosuggest.css';
+import './../../../assets/react-autosuggest.css';
 import './ContractAdd.scss';
 
-class ContractAdd extends Component {
+class ContractAdd extends ComponentSafeUpdate{
   constructor () {
     super();
     this.state = Object.assign({
-      contractId: null, possibleCompanies: [], isExecutor: true, selectedCompany: null, companyName: '', contractType: ''},
+      contractId: null, 
+      possibleCompanies: [], 
+      isExecutor: true, 
+      selectedCompany: null, 
+      companyName: '', 
+      contractType: '',
+    
+      forceRedirect: false
+    },
       DataService.computed.getDefaultComputedValues());
   }
 
-  observeComputedValues = (computedValues) => {
-    this.setState(computedValues, this.computeRoles);
+  componentDidMount = () => {
+    super.componentDidMount();
+    this.setStateSafe({observerKey: 
+      DataService.computed.observeComputedValues((computedValues) => {
+        if(!computedValues.activeRole) {
+          ErrorService.warning('Please activate a role to add an equipment!');
+          this.setStateSafe({forceRedirect: true});
+        }
+        this.setStateSafe(computedValues);
+      })
+    });
   }
 
-  componentDidMount = () => {
-    DataService.computed.observeComputedValues(this.observeComputedValues);
+  componentWillUnmount = () => {
+    super.componentWillUnmount();
   }
 
   handleChange = event => {
     let newState = {};
     newState[event.target.getAttribute('data-field')] = event.target.value;
-    this.setState(newState);
+    this.setStateSafe(newState);
   }
 
   onAutocompleteChange = (_, valueWrapper) => {
     if(typeof(valueWrapper.newValue) === 'string') {
-      this.setState({companyName: valueWrapper.newValue, selectedCompany: null});
+      this.setStateSafe({companyName: valueWrapper.newValue, selectedCompany: null});
     } else {
-      this.setState({companyName: valueWrapper.newValue.name, selectedCompany: valueWrapper.newValue});
+      this.setStateSafe({companyName: valueWrapper.newValue.name, selectedCompany: valueWrapper.newValue});
     }
   }
 
   autoCompleteCompanies = valueWrapper => {
     if (valueWrapper.value.trim().length === 0) {
-        this.setState({possibleCompanies: [], selectedCompany: null});
+        this.setStateSafe({possibleCompanies: [], selectedCompany: null});
     }
-    DataService.company.search(valueWrapper.value.trim().toLowerCase()).then((querySnapshot) => {
+    CompanyService.search(valueWrapper.value.trim().toLowerCase()).then((querySnapshot) => {
         let companies = [];
         querySnapshot.forEach((result) => companies.push(Object.assign(result.data(), {id: result.id})));
-        this.setState({possibleCompanies: companies, selectedCompany: null});
+        this.setStateSafe({possibleCompanies: companies, selectedCompany: null});
     });
   }
 
-  clearAutocomplete = () => this.setState( {possibleCompanies: []} );
+  clearAutocomplete = () => this.setStateSafe( {possibleCompanies: []} );
 
+  handleSubmit = event => {
+    event.preventDefault();
+    console.log('ContractAdd : submitting...');
+
+    if(!this.state.selectedCompany) {
+      ErrorService.error('Please pick a company !');
+      return;
+    }
+
+    if(!this.state.contractType) {
+      ErrorService.error('Please pick a contract type !');
+      return;
+    }
+
+    // TODO
+
+    var companyOrderId = (!!this.state.isExecutor && this.state.selectedCompany.id) || this.state.activeRole.companyId;
+    var companyExecId = (!!this.state.isExecutor && this.state.activeRole.companyId) || this.state.selectedCompany.id;
+    ContractService.create(new Contract([], companyOrderId, companyExecId, this.state.contractType, EContractStatus.DRAFT))
+      .then((docContract) => {
+        this.setStateSafe({contractId: docContract.id});
+      })
+      .catch(ErrorService.manageError);
+  }
+
+  /**
+   * RENDER
+   */
   getCompany = company => company ;
   renderCompany = company => <Company company={ { [company.id]: company } } />;
 
@@ -79,32 +128,11 @@ class ContractAdd extends Component {
     return (<span></span>);
   }
 
-  handleSubmit = event => {
-    event.preventDefault();
-    console.log('ContractAdd : submitting...');
-
-    if(!this.state.selectedCompany) {
-      ErrorService.error('Please pick a company !');
-      return;
-    }
-
-    if(!this.state.contractType) {
-      ErrorService.error('Please pick a contract type !');
-      return;
-    }
-
-    // TODO
-
-    var companyOrderId = (!!this.state.isExecutor && this.state.selectedCompany.id) || this.state.activeRole.companyId;
-    var companyExecId = (!!this.state.isExecutor && this.state.activeRole.companyId) || this.state.selectedCompany.id;
-    DataService.contract.create(new Contract([], companyOrderId, companyExecId, this.state.contractType, EContractStatus.DRAFT))
-      .then((docContract) => {
-        this.setState({contractId: docContract.id});
-      })
-      .catch(ErrorService.manageError);
-  }
-
   render() {
+    if(!!this.state.forceRedirect) {
+      return <Redirect to={`/dashboard`} />;
+    }
+
     if (!!this.state.contractId) {
       let dashboardUrl = '/dashboard';
       return <Redirect to={dashboardUrl} />;

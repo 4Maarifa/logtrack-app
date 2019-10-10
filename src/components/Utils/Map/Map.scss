@@ -1,11 +1,31 @@
 .Map {
-  height: 12rem;
-  border-radius: 8px 8px 0 0;
-  box-shadow: var(--shadow);
+  //
+}
 
-  .leaflet-container {
-    display: block;
+.leaflet-custom-control {
+  border-top: 1px solid #ccc;
+  background-color: #FFFFFF;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: #f4f4f4;
+  }
+
+  button {
+    background-color: transparent;
+    border: 0;
+    flex: 1;
+    width: 100%;
     height: 100%;
-    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    padding: 0;
+    cursor: pointer;
   }
 }

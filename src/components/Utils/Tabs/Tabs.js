@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
+
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import UtilsService from '../../../services/utils.service';
 
 import './Tabs.scss';
 
-class Tabs extends Component {
+class Tabs extends ComponentSafeUpdate {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,15 +14,22 @@ class Tabs extends Component {
     };
   }
 
+  componentDidMount = () => {
+    super.componentDidMount();
+  }
+
+  componentWillUnmount = () => {
+    super.componentWillUnmount();
+  }
+
   activateTab = (e) => {
     var target = UtilsService.getClosestElement(e.target, 'tab');
-    this.setState({activeTab: target.getAttribute('data-tab-id')});
+    this.setStateSafe({activeTab: target.getAttribute('data-tab-id')});
   }
 
   render() {
     return (
-      <div>
-        TABS
+      <div className="Tabs">
         <ul>
           {
             Object.keys(this.props.tabs).map((tabKey) => 
@@ -31,9 +40,9 @@ class Tabs extends Component {
           }
         </ul>
 
-        {(!!this.state.activeTab) ? <div>
+        {(!!this.state.activeTab) ? <div className="tab-container">
           {this.props.tabs[this.state.activeTab].content()}
-        </div> : <div></div>}
+        </div> : <div className="tab-container"></div>}
       </div>
     );
   }

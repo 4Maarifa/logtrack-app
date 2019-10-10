@@ -1,21 +1,26 @@
-import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 import { faPlus, faUserTag, faBuilding } from '@fortawesome/pro-solid-svg-icons';
+
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import ActionButton from './../../Utils/ActionButton/ActionButton';
 
-import DataService from '../../../services/data.service';
-import ErrorService from '../../../services/error.service';
-import UtilsService from '../../../services/utils.service';
+import DataService from './../../../services/data.service';
+import ErrorService from './../../../services/error.service';
+import UtilsService from './../../../services/utils.service';
+import RoleService from './../../../services/entities/role.service';
+import CompanyService from './../../../services/entities/company.service';
+import EmployeeService from './../../../services/entities/employee.service';
 
-import RoleCompany from '../../Entities/RoleCompany/RoleCompany';
+import RoleCompany from './../../Entities/RoleCompany/RoleCompany';
 import RoleEmployee from './../../Entities/RoleEmployee/RoleEmployee';
 
-import ExTable from '../../Utils/ExTable/ExTable';
+import ExTable from './../../Utils/ExTable/ExTable';
+import Icon from './../../Utils/Icon/Icon';
 
 import './Roles.scss';
 
-class Roles extends Component {
+class Roles extends ComponentSafeUpdate {
   constructor() {
     super();
     this.state = Object.assign({
@@ -28,19 +33,17 @@ class Roles extends Component {
   }
 
   componentDidMount = () => {
-    this.setState({observerKey: 
+    super.componentDidMount();
+    this.setStateSafe({observerKey: 
       DataService.computed.observeComputedValues((computedValues) => {
-        this.setState(computedValues, this.computeValues);
+        this.setStateSafe(computedValues, this.computeRoles);
       })
     });
   }
 
   componentWillUnmount = () => {
+    super.componentWillUnmount();
     DataService.computed.unobserveComputedValues(this.state.observerKey);
-  }
-
-  computeValues() {
-    this.computeRoles();
   }
 
   /**
@@ -49,22 +52,22 @@ class Roles extends Component {
   computeRoles = () => {
     if (!this.state.user) return;
     // USER ROLES
-    DataService.role.getRolesForEmployeeId(this.state.user.uid)
+    RoleService.getRolesForEmployeeId(this.state.user.uid)
       .then((roles)=> {
         var companiesIds = UtilsService.removeDuplicateFromArray(Object.keys(roles).map((roleKey) => roles[roleKey].companyId));
-        DataService.company.getAllForIdList(companiesIds)
-          .then((companies) => this.setState({userRolesCompanies: companies, userRoles: roles}))
+        CompanyService.getAllForIdList(companiesIds)
+          .then((companies) => this.setStateSafe({userRolesCompanies: companies, userRoles: roles}))
           .catch(ErrorService.manageError);
       })
       .catch(ErrorService.manageError);
 
     // REQUESTED ROLES
     if (!!this.state.activeRole) {
-      DataService.role.getDraftRolesForCompanyId(this.state.activeRole.companyId)
+      RoleService.getDraftRolesForCompanyId(this.state.activeRole.companyId)
         .then((roles) => {
           var employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(roles).map((roleKey) => roles[roleKey].employeeId));
-          DataService.employee.getAllForIdList(employeesIds)
-            .then((employees) => this.setState({requestedRoles: roles, requestedRolesEmployees: employees}))
+          EmployeeService.getAllForIdList(employeesIds)
+            .then((employees) => this.setStateSafe({requestedRoles: roles, requestedRolesEmployees: employees}))
             .catch(ErrorService.manageError);
         })
         .catch(ErrorService.manageError);
@@ -106,13 +109,13 @@ class Roles extends Component {
 
   render() {
     return (
-      <div>
+      <div className="Roles">
         <ExTable items={this.state.userRolesCompanies} renderItem={this.renderUserRole}></ExTable>
         <h1>Requested roles</h1>
         <ExTable items={this.state.requestedRoles} renderItem={this.renderRequestedRole}></ExTable>
-        <ActionButton icon={<FontAwesomeIcon icon={faPlus} />} actions={[
-          {title: 'Request a role', icon: <FontAwesomeIcon icon={faUserTag} />, link: `/role/add`},
-          {title: 'Add a company', icon: <FontAwesomeIcon icon={faBuilding} />, link: `/company/add`}
+        <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[
+          {title: 'Request a role', icon: <Icon source="fa" icon={faUserTag} />, link: `/role-add`},
+          {title: 'Add a company', icon: <Icon source="fa" icon={faBuilding} />, link: `/company-add`}
         ]} />
       </div>
     );

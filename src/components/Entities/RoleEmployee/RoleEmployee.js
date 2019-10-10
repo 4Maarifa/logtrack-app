@@ -1,4 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
+
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import Role from '../Role/Role';
 
@@ -6,22 +8,51 @@ import ERoleStatus from '../../../classes/enums/ERoleStatus';
 
 import './RoleEmployee.scss';
 
-class RoleEmployee extends Component {
+class RoleEmployee extends ComponentSafeUpdate{
   constructor () {
     super();
     this.state = {
       roles: [],
       employee: null,
-      options: {}
+
+      options: {},
+      showDetails: false
     };
   }
 
   componentDidMount = () => {
-    this.setState({employee: this.props.employee, roles: this.props.roles, options: this.props.options});
+    super.componentDidMount();
+    this.setStateSafe({
+      employee: this.props.employee, 
+      roles: this.props.roles, 
+
+      options: this.props.options, 
+      showDetails: this.props.showDetails
+    });
   }
 
+  componentWillUnmount = () => {
+    super.componentWillUnmount();
+  }
+
+  shouldComponentUpdate(nextProps, _) {
+    if (!this.state.employee || nextProps.employee.employeeId !== this.state.employee.employeeId) {
+      this.setStateSafe({employee: nextProps.employee});
+    }
+    if(nextProps.roles.length !== this.state.roles.length) {
+      this.setStateSafe({roles: nextProps.roles});
+    }
+    if(nextProps.showDetails !== this.state.showDetails) {
+      this.setStateSafe({showDetails: nextProps.showDetails});
+    }
+    return true;
+  }
+
+  /**
+   * RENDER
+   */
   renderProfilePicture(employeeId) {
-    if(!!this.state.employee && !!this.state.employee.profilePictureUrl) {
+    if(!!this.state.employee && !!this.state.employee[employeeId].profilePictureUrl) {
       return <img width="20" height="20" src={this.state.employee[employeeId].profilePictureUrl} 
         alt={this.state.employee[employeeId].firstname + ' ' + this.state.employee[employeeId].lastname + '\'s photo'} />
     }
@@ -48,15 +79,20 @@ class RoleEmployee extends Component {
 
     return (
       <div className="RoleEmployee">
-        <span>
-          {this.renderProfilePicture(employeeId)}
-          {this.state.employee[employeeId].firstname + ' ' + this.state.employee[employeeId].lastname}
-        </span>
-        <div className="roles">
-          {Object.keys(this.state.roles).map((roleKey) => 
-            this.renderRole(roleKey)
-          )}
+        <div className="base">
+          <span>
+            {this.renderProfilePicture(employeeId)}
+            {this.state.employee[employeeId].firstname + ' ' + this.state.employee[employeeId].lastname}
+          </span>
+          <div className="roles">
+            {Object.keys(this.state.roles).map((roleKey) => 
+              this.renderRole(roleKey)
+            )}
+          </div>
         </div>
+        {!!this.state.showDetails && <div className="details">
+          DETAILS
+        </div>}
       </div>
     );
   }

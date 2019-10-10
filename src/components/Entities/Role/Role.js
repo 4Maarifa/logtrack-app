@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import DataService from '../../../services/data.service';
-import UtilsService from '../../../services/utils.service';
+import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
-import { RoleIcons } from '../../../classes/enums/ERole';
+import RoleService from './../../../services/entities/role.service';
+import UtilsService from './../../../services/utils.service';
+
+import { RoleIcons } from './../../../classes/enums/ERole';
 
 import './Role.scss';
 
-class Role extends Component {
+class Role extends ComponentSafeUpdate {
   constructor () {
     super();
     this.state = {
@@ -19,12 +21,15 @@ class Role extends Component {
   }
 
   componentDidMount = () => {
-    this.setState({role: this.props.role, options: this.props.options});
-    DataService.role.observeActions(this.props.role, this.observeActions);
+    super.componentDidMount();
+    this.setStateSafe({role: this.props.role, options: this.props.options});
+    RoleService.observeActions(this.props.role, (actions) => {
+      this.setStateSafe({actions: actions});
+    });
   }
 
-  observeActions = (actions) => {
-    this.setState({actions: actions})
+  componentWillUnmount = () => {
+    super.componentWillUnmount();
   }
 
   render() {
