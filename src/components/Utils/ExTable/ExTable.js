@@ -1,9 +1,6 @@
 import React from 'react';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
-
-import UtilsService from '../../../services/utils.service';
-
+import ComponentSafeUpdate from './../ComponentSafeUpdate/ComponentSafeUpdate';
 import Loader from './../Loader/Loader';
 
 import './ExTable.scss';
@@ -12,39 +9,42 @@ class ExTable extends ComponentSafeUpdate {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: (!!props.default) ? props.default : null,
-      items: (!!props.items) ? props.items : {},
       header: (!!props.header) ? props.header : [],
+      
+      items: (!!props.items) ? props.items : {},
+
+      activeItem: (!!props.default) ? props.default : null,
       renderItem: (!!props.renderItem) ? props.renderItem : null,
+      onActivateItem: props.onActivateItem,
+
       loading: props.loading
     };
   }
 
   componentDidMount = () => {
     super.componentDidMount();
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
-  }
+  };
 
   shouldComponentUpdate(nextProps, nextState) {
     if(Object.keys(nextProps.items).length !== Object.keys(this.state.items).length) {
-      this.setStateSafe({items: nextProps.items});
+      this.setState({items: nextProps.items});
       return true;
     }
     if(nextProps.loading !== this.state.loading) {
-      this.setStateSafe({loading: nextProps.loading});
+      this.setState({loading: nextProps.loading});
       return true;
     }
     return (nextState.activeItem !== this.state.activeItem);
-  }
+  };
 
-  activateItem = (e) => {
-    var target = UtilsService.getClosestElement(e.target, 'item');
-    this.setStateSafe({
-      activeItem: (this.state.activeItem === target.getAttribute('data-item-id') ? null : target.getAttribute('data-item-id'))});
-  }
+  activateItem = itemKey => {
+    this.setState({activeItem: (itemKey === this.state.activeItem ? null : itemKey)});
+    !!this.state.onActivateItem && this.state.onActivateItem(itemKey);
+  };
   
   render() {
     return (
@@ -62,7 +62,7 @@ class ExTable extends ComponentSafeUpdate {
           </li>}
           {
             Object.keys(this.state.items).map((itemKey) => 
-              <li key={itemKey} className={'item ' + ((itemKey === this.state.activeItem) ? 'item--selected' : '')} data-item-id={itemKey} onClick={this.activateItem}>
+              <li key={itemKey} className={'item ' + ((itemKey === this.state.activeItem) ? 'item--selected' : '')} onClick={() => this.activateItem(itemKey)}>
                 {this.state.renderItem((itemKey === this.state.activeItem) ? 'active' : 'unactive', itemKey, this.state.items[itemKey])}
               </li>
             )

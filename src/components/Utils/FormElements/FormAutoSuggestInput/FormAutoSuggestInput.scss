@@ -1,0 +1,158 @@
+.FormAutoSuggestInput {
+  display: flex;
+  position: relative;
+  margin: 1rem 0;
+  height: 2rem;
+  border: 1px solid var(--gray);
+  border-radius: var(--border-radius);
+  transition: border-color .5s;
+
+  &.input--valid {
+    border: 1px solid var(--green);
+
+    .indicator {
+      background-color: var(--green);
+
+      .valid {
+        display: block;
+        opacity: 1;
+      }
+    }
+  }
+
+  &.input--invalid {
+    border: 1px solid var(--red);
+
+    .indicator {
+      background-color: var(--red);
+
+      .invalid {
+        display: block;
+        opacity: 1;
+      }
+    }
+  }
+
+  ul.items {
+    background-color: #FFFFFF;
+    position: absolute;
+    top: 100%;
+    box-sizing: border-box;
+    left: 0;
+    width: 100%;
+    display: block;
+    border: 1px solid var(--gray);
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    z-index: 9;
+
+    li {
+      margin: 0;
+      cursor: pointer;
+      padding: .5rem;
+    }
+  }
+
+  label {
+    position: absolute;
+    z-index: 1;
+    color: var(--gray);
+    top: .4rem;
+    left: .5rem;
+    font-size: 100%;
+    transition: font-size .5s, top .5s, left .5s, color .5s;
+
+    svg {
+      margin-right: .2rem;
+    }
+  }
+
+  .indicator {
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    height: 1.5rem;
+    width: 1.5rem;
+    clip-path: polygon(100% 0%, 100% 100%, 0% 100%);
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    color: #FFFFFF;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    transition: background-color .5s;
+    z-index: 3;
+
+    .valid, .invalid {
+      display: none;
+      opacity: 0;
+      transition: opacity .5s;
+    }
+
+    svg {
+      font-size: .85rem;
+    }
+  }
+
+  .selected-item {
+    flex: 1;
+    height: 2rem;
+    position: relative;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    padding: 0 .5rem;
+
+    *:first-child {
+      flex: 1;
+    }
+
+    .action {
+      flex: 0 0 2rem;
+      height: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      svg {
+        color: var(--second);
+      }
+    }
+  }
+
+  input:not([type="hidden"]) {
+    flex: 1;
+    position: relative;
+    height: 2rem;
+    box-sizing: border-box;
+    padding: 0 .5rem;
+    border: 1px solid transparent;
+    z-index: 2;
+    background-color: transparent;
+    transition: color .5s;
+
+    &:active ~ label,
+    &:focus ~ label,
+    &:not(.input--empty) ~ label {
+      top: -1.2rem;
+      left: 0;
+      font-size: 85%;
+      color: var(--second);
+      z-index: 1;
+    }
+  }
+
+  input[type=hidden] {
+
+    &:not(.input--empty) ~ label {
+      top: -1.2rem;
+      left: 0;
+      font-size: 85%;
+      color: var(--second);
+      z-index: 1;
+    }
+  }
+}

@@ -1,39 +1,36 @@
 import React from 'react';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import RoleService from './../../../services/entities/role.service';
 import UtilsService from './../../../services/utils.service';
 
-import { RoleIcons } from './../../../classes/enums/ERole';
+import { RoleIcons } from './../../../classes/Role';
 
 import './Role.scss';
 
 class Role extends ComponentSafeUpdate {
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
     this.state = {
-      role: null,
+      role: props.role,
       actions: null,
 
-      options: null
+      options: props.options
     };
   }
 
   componentDidMount = () => {
     super.componentDidMount();
-    this.setStateSafe({role: this.props.role, options: this.props.options});
-    RoleService.observeActions(this.props.role, (actions) => {
-      this.setStateSafe({actions: actions});
-    });
-  }
+    RoleService.observeActions(this.props.role, actions => this.setState({actions}));
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
-  }
+  };
 
   render() {
-    if (!this.state.role) {
+    if(!this.state.role) {
       return (<div></div>);
     }
     var roleId = Object.keys(this.state.role)[0];

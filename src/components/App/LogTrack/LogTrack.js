@@ -1,8 +1,7 @@
 import React from 'react';
 import { faPlus, faMapPin } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
-
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import ActionButton from './../../Utils/ActionButton/ActionButton';
 import Icon from './../../Utils/Icon/Icon';
 
@@ -12,7 +11,6 @@ class LogTrack extends ComponentSafeUpdate {
   constructor(props) {
     super(props);
     this.state = {
-      
     };
   }
 

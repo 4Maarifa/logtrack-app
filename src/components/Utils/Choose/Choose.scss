@@ -1,0 +1,42 @@
+.Choose {
+
+  ul {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    list-style-type: none;
+    display: flex;
+    flex-flow: wrap;
+
+    li {
+      padding: .25rem;
+      margin: .25rem;
+      border: 1px solid var(--second);
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #FFFFFF;
+      color: var(--second);
+      transition: color .5s, background-color .5s;
+      cursor: pointer;
+      border-radius: var(--border-radius);
+
+      &.li--active {
+        background-color: var(--second);
+        color: #FFFFFF;
+      }
+
+      &.li--disabled {
+        cursor: not-allowed;
+        border: 1px solid var(--gray);
+        color: var(--gray);
+      }
+
+      img {
+        width: 5rem;
+        height: 5rem;
+        display: block;
+      }
+    }
+  }
+}

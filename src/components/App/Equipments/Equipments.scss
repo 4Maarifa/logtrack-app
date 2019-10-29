@@ -6,8 +6,12 @@
   .Map {
     height: 12rem;
     flex: 0 0 12rem;
-    border-radius: 8px 8px 0 0;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
     box-shadow: var(--shadow);
+
+    .leaflet-container {
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
   }
 
   .ExTable {

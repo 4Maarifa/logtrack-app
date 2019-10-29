@@ -25,7 +25,7 @@ const ErrorService = {
     manageError: error => {
         console.error(error);
 
-        if (!!error && error.hasOwnProperty('code')) {
+        if(!!error && error.hasOwnProperty('code')) {
             let errorMessage = '';
             switch(error.code) {
                 case 'auth/user-not-found':

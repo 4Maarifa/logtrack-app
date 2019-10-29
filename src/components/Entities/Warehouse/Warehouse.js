@@ -1,49 +1,45 @@
 import React from 'react';
+import { faWarehouse } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import Icon from './../../Utils/Icon/Icon';
 
 import './Warehouse.scss';
 
 class Warehouse extends ComponentSafeUpdate {
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
     this.state = {
-      warehouse: null,
+      warehouse: props.warehouse,
 
-      options: {},
-      showDetails: false
+      options: props.options,
+      showDetails: props.showDetails
     };
   }
 
   componentDidMount = () => {
     super.componentDidMount();
-    this.setStateSafe({
-      warehouse: this.props.warehouse,
-
-      options: this.props.options,
-      showDetails: this.props.showDetails
-    });
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
-  }
+  };
 
   shouldComponentUpdate(nextProps, _) {
     if(!this.state.warehouse || nextProps.warehouse.warehouseKey !== this.state.warehouse.warehouseKey) {
-      this.setStateSafe({warehouse: nextProps.warehouse});
+      this.setState({warehouse: nextProps.warehouse});
     }
     if(nextProps.showDetails !== this.state.showDetails) {
-      this.setStateSafe({showDetails: nextProps.showDetails});
+      this.setState({showDetails: nextProps.showDetails});
     }
     return true;
-  }
+  };
 
   /**
    * RENDER
    */
   render() {
-    if (!this.state.warehouse) {
+    if(!this.state.warehouse) {
       return (<></>);
     }
 
@@ -53,6 +49,7 @@ class Warehouse extends ComponentSafeUpdate {
       <div className="Warehouse">
         <div className="base">
           <span>
+            <Icon source="fa" icon={faWarehouse} />
             {this.state.warehouse[warehouseKey].name}
           </span>
         </div>

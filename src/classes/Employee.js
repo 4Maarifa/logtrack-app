@@ -10,9 +10,10 @@
  * activeRoleId: string | The id of the active role of the employee
  * profilePictureUrl: string | The picture URL of the employee
  * settings: object | The settings customed by the employee
+ * cretionDate: string | The creation date, as iso string
  */
 class Employee {
-    constructor(id, firstname, lastname, certificates, activeRoleId, profilePictureUrl, settings) {
+    constructor(id, firstname, lastname, certificates, activeRoleId, profilePictureUrl, settings, creationIsoDate) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -20,6 +21,7 @@ class Employee {
         this.activeRoleId = activeRoleId;
         this.profilePictureUrl = profilePictureUrl;
         this.settings = settings;
+        this.creationIsoDate = creationIsoDate;
     }
 }
 

@@ -1,47 +1,46 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { faTachometerFast, faHome, faSignIn, faUserPlus, faUserCog, faUsers, faTruck, faFileSignature, faTag, faCompass, faAnalytics, faMapPin, faBuilding, faSearch, faWarehouse } from '@fortawesome/pro-solid-svg-icons';
+import { faTachometerFast, faHome, faSignIn, faUserPlus, faUserCog, faUsers, faTruck, faFileSignature, faTag, faCompass, faAnalytics, faMapPin, faBuilding, faSearch, faWarehouse, faComments } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import Icon from './../../Utils/Icon/Icon';
 
 import DataService from './../../../services/data.service';
 import UtilsService from './../../../services/utils.service';
 import RightService from './../../../services/right.service';
+import SettingsService, { ESettings } from './../../../services/settings.service';
+import { ERights } from './../../../services/right.service';
 
-import { RoleIcons } from './../../../classes/enums/ERole';
-import ESettings, { ESettingsDetails } from './../../../classes/enums/ESettings';
-import ERights from './../../../classes/enums/ERights';
-
-import Icon from './../../Utils/Icon/Icon';
+import { RoleIcons } from './../../../classes/Role';
 
 import './Navigation.scss';
 
 class Navigation extends ComponentSafeUpdate {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = Object.assign({}, 
       DataService.computed.getDefaultComputedValues());
   }
 
   componentDidMount = () => {
     super.componentDidMount();
-    this.setStateSafe({observerKey: 
+    this.setState({observerKey: 
       DataService.computed.observeComputedValues((computedValues) => {
-        this.setStateSafe(computedValues, this.computeValues);
+        this.setState(computedValues, this.computeValues);
       })
     });
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
     DataService.computed.unobserveComputedValues(this.state.observerKey);
-  }
+  };
 
   /**
    * RENDER
    */
   renderActiveRole = () => {
-    if (this.state.activeRole == null) {
+    if(this.state.activeRole == null) {
       return (<NavLink activeClassName="nav--active" to={`/roles`} exact={true}>
         <Icon source="fa" icon={faTag} />
         <span className="nav-title">No active role</span>
@@ -49,21 +48,22 @@ class Navigation extends ComponentSafeUpdate {
     }
     return (<NavLink activeClassName="nav--active" to={`/roles`} exact={true}>
       {RoleIcons[this.state.activeRole.role]}
-      <span className="nav-title">
-        {UtilsService.capitalize(this.state.activeRole.role)} / {this.state.activeRoleCompany.name}
+      <span className="nav-title nav-title-role">
+        {UtilsService.capitalize(this.state.activeRole.role)}<br/>
+        {this.state.activeRoleCompany.name}
       </span>
     </NavLink>);
-  }
+  };
 
   renderProfilePicture = () => {
     if(!!this.state.employee && this.state.employee.profilePictureUrl) {
       return (<img width="20" height="20" src={this.state.employee.profilePictureUrl} alt={this.state.employee.firstname + ' ' + this.state.employee.lastname + '\'s photo'} />);
     }
     return (<div></div>);
-  }
+  };
 
   renderUsername = () => {
-    if (!!this.state.employee) {
+    if(!!this.state.employee) {
       return (
         <NavLink activeClassName="nav--active" to={`/profile`} exact={true}>
           <Icon source="fa" icon={faUserCog} />
@@ -76,17 +76,7 @@ class Navigation extends ComponentSafeUpdate {
     return (<NavLink activeClassName="nav--active" to={`/profile`} exact={true}>
       <Icon source="fa" icon={faUserCog} />
     </NavLink>);
-  }
-
-  getSettingValue = (settingKey) => {
-    if (!this.state.employee) {
-      return;
-    }
-    if (!!this.state.employee.settings && !!this.state.employee.settings[settingKey]) {
-      return this.state.employee.settings[settingKey];
-    }
-    return ESettingsDetails[settingKey].default;
-  }
+  };
 
   getNavigationTabs = () => {
     const tabs = {
@@ -128,11 +118,11 @@ class Navigation extends ComponentSafeUpdate {
     };
 
     return Object.keys(tabs).filter(key => !!RightService.hasAppRight(key)).map(key => tabs[key]);
-  }
+  };
 
   render() {
     return (
-      <div className={'Navigation ' + (this.getSettingValue(ESettings.SETTINGS_NAV_COLLAPSED) === 'COLLAPSED' ? '' : 'Navigation--deployed')}>
+      <div className={'Navigation ' + (SettingsService.getSettingValue(ESettings.SETTINGS_NAV_COLLAPSED) === 'COLLAPSED' ? '' : 'Navigation--deployed')}>
         {!!this.state.user && 
           <nav>
             <NavLink activeClassName="nav--active" to={`/dashboard`}>
@@ -140,14 +130,16 @@ class Navigation extends ComponentSafeUpdate {
               <span className="nav-title">Dashboard</span>
             </NavLink>
 
-            {this.getNavigationTabs().map(tab => tab)}
+            {this.getNavigationTabs()}
             <span className="nav-clearfix"></span>
-            {!!this.state.activeRole &&
-              <NavLink activeClassName="nav--active" to={`/search`}>
-                <Icon source="fa" icon={faSearch} />
-                <span className="nav-title">Search</span>
-              </NavLink>
-            }
+            <NavLink activeClassName="nav--active" to={`/chat`}>
+              <Icon source="fa" icon={faComments} />
+              <span className="nav-title">Chat</span>
+            </NavLink>
+            <NavLink activeClassName="nav--active" to={`/search`}>
+              <Icon source="fa" icon={faSearch} />
+              <span className="nav-title">Search</span>
+            </NavLink>
             {!!this.state.activeRole &&
               <NavLink activeClassName="nav--active" to={`/company/${this.state.activeRole.companyId}`}>
                 <Icon source="fa" icon={faBuilding} />

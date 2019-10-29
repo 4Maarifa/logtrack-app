@@ -1,4 +1,4 @@
-import ERights from './../../classes/enums/ERights';
+import { ERights } from './../right.service';
 
 import DataService, { ensureFilledFields } from './../data.service';
 import FirebaseService from './../firebase.service';
@@ -13,24 +13,24 @@ const WeatherService = {
     [ERights.RIGHT_WEATHER_DELETE]: () => false
   },
   create(weather) {
-    if (!WeatherService.rights[ERights.RIGHT_WEATHER_CREATE]()) {
+    if(!WeatherService.rights[ERights.RIGHT_WEATHER_CREATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create a Weather' });
     }
 
-    if (!ensureFilledFields(weather, ['date', 'latitude', 'longitude', 'main', 'name', 'temp', 'icon'])) {
+    if(!ensureFilledFields(weather, ['date', 'latitude', 'longitude', 'main', 'name', 'temp', 'icon'])) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['date', 'latitude', 'longitude', 'main', 'name', 'temp', 'icon'] });
     }
 
     return FirebaseService.getDb().collection('weather').add(weather);
   },
   get(weatherId) {
-    if (!WeatherService.rights[ERights.RIGHT_WEATHER_GET]()) {
+    if(!WeatherService.rights[ERights.RIGHT_WEATHER_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Weather' });
     }
     return FirebaseService.getDb().collection('weather').doc(weatherId).get();
   },
   list() {
-    if (!WeatherService.rights[ERights.RIGHT_WEATHER_LIST]()) {
+    if(!WeatherService.rights[ERights.RIGHT_WEATHER_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Weathers' });
     }
 
@@ -45,25 +45,25 @@ const WeatherService = {
     });
   },
   update(weather) {
-    if (!WeatherService.rights[ERights.RIGHT_WEATHER_UPDATE]()) {
+    if(!WeatherService.rights[ERights.RIGHT_WEATHER_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Weather' });
     }
 
-    if (!ensureFilledFields(weather, ['date', 'latitude', 'longitude', 'main', 'name', 'temp', 'icon'])) {
+    if(!ensureFilledFields(weather, ['date', 'latitude', 'longitude', 'main', 'name', 'temp', 'icon'])) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['date', 'latitude', 'longitude', 'main', 'name', 'temp', 'icon'] });
     }
 
     return FirebaseService.getDb().collection('weather').doc(weather.id).set(weather);
   },
   updateField(weatherId, weatherField) {
-    if (!WeatherService.rights[ERights.RIGHT_WEATHER_UPDATE]()) {
+    if(!WeatherService.rights[ERights.RIGHT_WEATHER_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Weather' });
     }
     
     return FirebaseService.getDb().collection('weather').doc(weatherId).update(weatherField);
   },
   delete(weatherId) {
-    if (!WeatherService.rights[ERights.RIGHT_WEATHER_DELETE]()) {
+    if(!WeatherService.rights[ERights.RIGHT_WEATHER_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Weather' });
     }
     
@@ -72,7 +72,7 @@ const WeatherService = {
 
   // CUSTOM FUNCTIONS
   getByLatAndLon(lon, lat) {
-    if (!WeatherService.rights[ERights.RIGHT_WEATHER_LIST]()) {
+    if(!WeatherService.rights[ERights.RIGHT_WEATHER_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Weathers' });
     }
 

@@ -1,58 +1,50 @@
 import React from 'react';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
-import { EEquipmentModelSubTypeIcon } from '../../../classes/enums/EEquipmentModelType';
+import { EEquipmentModelSubTypeDetails } from './../../../classes/EquipmentModel';
 
 import './Equipment.scss';
 
 class Equipment extends ComponentSafeUpdate {
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
     this.state = {
-      equipment: null,
-      brand: null,
-      equipmentModel: null,
+      equipment: props.equipment,
+      brand: props.brand,
+      equipmentModel: props.equipmentModel,
 
-      options: {},
-      showDetails: false
+      options: props.options,
+      showDetails: props.showDetails
     };
   }
 
   componentDidMount = () => {
     super.componentDidMount();
-    this.setStateSafe({
-      equipment: this.props.equipment, 
-      brand: this.props.brand, 
-      equipmentModel: this.props.equipmentModel,
-
-      options: this.props.options,
-      showDetails: this.props.showDetails
-    });
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
-  }
+  };
 
   shouldComponentUpdate(nextProps, _) {
     if(!this.state.equipment || nextProps.equipment.equipmentKey !== this.state.equipment.equipmentKey) {
-      this.setStateSafe({equipment: nextProps.equipment});
+      this.setState({equipment: nextProps.equipment});
     }
     if(!this.state.equipmentModel || nextProps.equipmentModel.equipmentModelKey !== this.state.equipmentModel.equipmentModelKey) {
-      this.setStateSafe({equipmentModel: nextProps.equipmentModel});
+      this.setState({equipmentModel: nextProps.equipmentModel});
     }
     if(nextProps.showDetails !== this.state.showDetails) {
-      this.setStateSafe({showDetails: nextProps.showDetails});
+      this.setState({showDetails: nextProps.showDetails});
     }
     return true;
-  }
+  };
 
   /**
    * RENDER
    */
   render() {
-    if (!this.state.equipment) {
+    if(!this.state.equipment) {
       return (<></>);
     }
 
@@ -64,7 +56,7 @@ class Equipment extends ComponentSafeUpdate {
       <div className="Equipment">
         <div className="base">
           <span>
-            {EEquipmentModelSubTypeIcon[this.state.equipmentModel[equipmentModelKey].type][this.state.equipmentModel[equipmentModelKey].subType]}
+            {EEquipmentModelSubTypeDetails[this.state.equipmentModel[equipmentModelKey].type][this.state.equipmentModel[equipmentModelKey].subType].icon}
             {this.state.equipment[equipmentKey].identification}
           </span>
           <span>

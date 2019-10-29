@@ -2,23 +2,24 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { faThermometerFull, faMapMarker } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import DataService from './../../../services/data.service';
 import ErrorService from './../../../services/error.service';
 import UtilsService from './../../../services/utils.service';
 import WeatherService from './../../../services/weather.service';
 import PermissionService from './../../../services/permission.service';
+import SettingsService, { ESettings } from './../../../services/settings.service';
 
 import LogTrack from './../LogTrack/LogTrack';
+
 import Loader from './../../Utils/Loader/Loader';
 import Map from './../../Utils/Map/Map';
 import Icon from './../../Utils/Icon/Icon';
 
 import EStat from './../../../classes/enums/EStat';
 import EWeatherIcons from './../../../classes/enums/EWeatherIcons';
-import ERole, { RoleIcons } from './../../../classes/enums/ERole';
-import ESettings, { ESettingsDetails } from './../../../classes/enums/ESettings';
+import { ERole, RoleIcons } from './../../../classes/Role';
 
 import EquipmentImage from './../../../assets/equipment.png';
 import EmployeeImage from './../../../assets/employee.png';
@@ -26,9 +27,13 @@ import WarehouseImage from './../../../assets/warehouse.png';
 
 import './Dashboard.scss';
 
+/**
+ * Component: Dashboard
+ * Used by everyone to show stats and link to other views
+ */
 class Dashboard extends ComponentSafeUpdate {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = Object.assign({
 
       userPosition: null,
@@ -43,37 +48,27 @@ class Dashboard extends ComponentSafeUpdate {
 
   componentDidMount = () => {
     super.componentDidMount();
-    this.setStateSafe({observerKey: 
+    this.setState({observerKey: 
       DataService.computed.observeComputedValues((computedValues) => {
-        this.setStateSafe(computedValues, this.computeValues);
+        this.setState(computedValues, this.computeValues);
       })
     });
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
     DataService.computed.unobserveComputedValues(this.state.observerKey);
-  }
-
-  getSettingValue = (settingKey) => {
-    if (!this.state.employee) {
-      return;
-    }
-    if (!!this.state.employee.settings && !!this.state.employee.settings[settingKey]) {
-      return this.state.employee.settings[settingKey];
-    }
-    return ESettingsDetails[settingKey].default;
-  }
+  };
 
   computeValues() {
-    if (this.getSettingValue(ESettings.SETTINGS_DASHBOARD_WEATHER) === 'ON') {
+    if(SettingsService.getSettingValue(ESettings.SETTINGS_DASHBOARD_WEATHER) === 'ON') {
       PermissionService.location.askPermission()
         .then(() => {
           PermissionService.location.getLocation()
             .then(location => {
-              this.setStateSafe({userPosition: location});
+              this.setState({userPosition: location});
               WeatherService.getWeather(location.longitude, location.latitude)
-                .then(weather => this.setStateSafe({weather: weather}))
+                .then(weather => this.setState({weather: weather}))
                 .catch(ErrorService.manageError);
             })
             .catch(ErrorService.manageError);
@@ -88,13 +83,13 @@ class Dashboard extends ComponentSafeUpdate {
         DataService.computed.conputeStat([EStat.equipmentCount, EStat.employeeCount, EStat.warehouseCount], {companyId: this.state.activeRole.companyId})
           .then(statData => {
             if(typeof statData.equipmentCount === 'number') {
-              this.setStateSafe({equipmentCount: statData.equipmentCount});
+              this.setState({equipmentCount: statData.equipmentCount});
             }
             if(typeof statData.employeeCount === 'number') {
-              this.setStateSafe({employeeCount: statData.employeeCount});
+              this.setState({employeeCount: statData.employeeCount});
             }
             if(typeof statData.warehouseCount === 'number') {
-              this.setStateSafe({warehouseCount: statData.warehouseCount});
+              this.setState({warehouseCount: statData.warehouseCount});
             }
           })
           .catch(ErrorService.manageError);
@@ -102,7 +97,7 @@ class Dashboard extends ComponentSafeUpdate {
       default: 
         break;
     }
-  }
+  };
 
   /**
    * RENDER
@@ -178,6 +173,20 @@ class Dashboard extends ComponentSafeUpdate {
               </span>
             </NavLink>
           }
+          {!this.state.activeRole && 
+            <NavLink className="dash dash-sm" to={`/roles`}>
+              <span className="dash-left dash-bg">
+                <span className="dash-text">
+                  No active role
+                </span>
+              </span>
+              <span className="dash-right">
+                <span className="dash-text">
+                  Click to request / change!
+                </span>
+              </span>
+            </NavLink>
+          }
           {!!this.state.weather &&
             <div className="dash dash-sm">
               <span className="dash-left">
@@ -199,11 +208,6 @@ class Dashboard extends ComponentSafeUpdate {
                 </span>
               </span>
             </div>
-          }
-          {!this.state.activeRole &&
-            <NavLink className="dash dash-sm" to={`/roles`}>
-
-            </NavLink>
           }
         </div>
         {this.renderRolePart()}

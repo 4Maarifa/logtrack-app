@@ -1,33 +1,39 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
-import Autosuggest from 'react-autosuggest';
+import { faBuilding } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import Icon from './../../Utils/Icon/Icon';
+import Choose from './../../Utils/Choose/Choose';
+import FormAutoSuggestInput from './../../Utils/FormElements/FormAutoSuggestInput/FormAutoSuggestInput';
 
 import Contract from './../../../classes/Contract';
 import Company from './../../Entities/Company/Company';
-import EContractType from './../../../classes/enums/EContractType';
-import EContractStatus from './../../../classes/enums/EContractStatus';
+import { EContractStatus, EContractType, ContractTypeDetails } from './../../../classes/Contract';
+
 import ChooseLoadType from './../ChooseLoadType/ChooseLoadType';
 
 import DataService from './../../../services/data.service';
+import DateService from './../../../services/date.service';
 import ErrorService from './../../../services/error.service';
 import CompanyService from './../../../services/entities/company.service';
 import ContractService from './../../../services/entities/contract.service';
 
-import './../../../assets/react-autosuggest.css';
 import './ContractAdd.scss';
 
 class ContractAdd extends ComponentSafeUpdate{
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
     this.state = Object.assign({
       contractId: null, 
+
       possibleCompanies: [], 
-      isExecutor: true, 
-      selectedCompany: null, 
-      companyName: '', 
+      selectedCompanyId: null,
+      selectedCompanyItem: null,
+
       contractType: '',
+
+      isExecutor: true, 
     
       forceRedirect: false
     },
@@ -36,53 +42,43 @@ class ContractAdd extends ComponentSafeUpdate{
 
   componentDidMount = () => {
     super.componentDidMount();
-    this.setStateSafe({observerKey: 
-      DataService.computed.observeComputedValues((computedValues) => {
+    this.setState({observerKey: 
+      DataService.computed.observeComputedValues(computedValues => {
         if(!computedValues.activeRole) {
           ErrorService.warning('Please activate a role to add an equipment!');
-          this.setStateSafe({forceRedirect: true});
+          this.setState({forceRedirect: true});
         }
-        this.setStateSafe(computedValues);
+        this.setState(computedValues);
       })
     });
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
-  }
+  };
 
-  handleChange = event => {
-    let newState = {};
-    newState[event.target.getAttribute('data-field')] = event.target.value;
-    this.setStateSafe(newState);
-  }
+  handleChange = event => this.setState({[event.target.getAttribute('data-field')]: event.target.value});
+  handleSelection = (value, fieldName) => this.setState({[fieldName]: value});
 
-  onAutocompleteChange = (_, valueWrapper) => {
-    if(typeof(valueWrapper.newValue) === 'string') {
-      this.setStateSafe({companyName: valueWrapper.newValue, selectedCompany: null});
-    } else {
-      this.setStateSafe({companyName: valueWrapper.newValue.name, selectedCompany: valueWrapper.newValue});
+  onCompanyAutoCompleteChange = value => {
+    if(value.trim().length < 3) {
+      this.setState({possibleCompanies: [], selectedCompanyId: null, selectedCompanyItem: null});
+    } 
+    else {
+      CompanyService.search(value.trim().toLowerCase()).then((querySnapshot) => {
+        let companies = {};
+        querySnapshot.forEach(result => companies[result.id] = {
+          content: <Company company={ { [result.id]: result.data() } } />
+        });
+        this.setState({possibleCompanies: companies, selectedCompanyId: null, selectedCompanyItem: null});
+      });
     }
-  }
-
-  autoCompleteCompanies = valueWrapper => {
-    if (valueWrapper.value.trim().length === 0) {
-        this.setStateSafe({possibleCompanies: [], selectedCompany: null});
-    }
-    CompanyService.search(valueWrapper.value.trim().toLowerCase()).then((querySnapshot) => {
-        let companies = [];
-        querySnapshot.forEach((result) => companies.push(Object.assign(result.data(), {id: result.id})));
-        this.setStateSafe({possibleCompanies: companies, selectedCompany: null});
-    });
-  }
-
-  clearAutocomplete = () => this.setStateSafe( {possibleCompanies: []} );
+  };
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log('ContractAdd : submitting...');
 
-    if(!this.state.selectedCompany) {
+    if(!this.state.selectedCompanyId) {
       ErrorService.error('Please pick a company !');
       return;
     }
@@ -94,75 +90,85 @@ class ContractAdd extends ComponentSafeUpdate{
 
     // TODO
 
-    var companyOrderId = (!!this.state.isExecutor && this.state.selectedCompany.id) || this.state.activeRole.companyId;
-    var companyExecId = (!!this.state.isExecutor && this.state.activeRole.companyId) || this.state.selectedCompany.id;
-    ContractService.create(new Contract([], companyOrderId, companyExecId, this.state.contractType, EContractStatus.DRAFT))
+    var companyOrderId = (!!this.state.isExecutor && this.state.selectedCompanyId) || this.state.activeRole.companyId;
+    var companyExecId = (!!this.state.isExecutor && this.state.activeRole.companyId) || this.state.selectedCompanyId;
+    
+    ContractService.create(new Contract([], companyOrderId, companyExecId, this.state.contractType, EContractStatus.DRAFT, DateService.getCurrentIsoDateString()))
       .then((docContract) => {
-        this.setStateSafe({contractId: docContract.id});
+        this.setState({contractId: docContract.id});
       })
       .catch(ErrorService.manageError);
-  }
+  };
 
   /**
    * RENDER
    */
-  getCompany = company => company ;
-  renderCompany = company => <Company company={ { [company.id]: company } } />;
-
-  printSelectedCompany = () => {
-    if (!!this.state.selectedCompany) {
-      if(!!this.state.isExecutor) {
-        return <span>
-          <Company company={ { [this.state.activeRole.companyId]: this.state.activeRoleCompany } } />
-          (You) will execute the {this.state.contractType} for
-          <Company company={ { [this.state.selectedCompany.id]: this.state.selectedCompany } } />
-        </span>;
-      }
-
-      return <span>
-        <Company company={ { [this.state.selectedCompany.id]: this.state.selectedCompany } } />
-        (You) will execute the {this.state.contractType} for
-        <Company company={ { [this.state.activeRole.companyId]: this.state.activeRoleCompany } } />
-      </span>;
-    }
-    return (<span></span>);
-  }
-
   render() {
     if(!!this.state.forceRedirect) {
       return <Redirect to={`/dashboard`} />;
     }
 
-    if (!!this.state.contractId) {
+    let contractDetails = {};
+    Object.keys(ContractTypeDetails).forEach(contractTypeKey => {
+      contractDetails[contractTypeKey] = {
+        content: <Fragment>
+          {ContractTypeDetails[contractTypeKey].icon}
+          {ContractTypeDetails[contractTypeKey].name}
+        </Fragment>
+      }
+    });
+
+    if(!this.state.employee || !this.state.activeRoleCompany) {
+      return (<div></div>);
+    } 
+    else if(!!this.state.contractId) {
       let dashboardUrl = '/dashboard';
       return <Redirect to={dashboardUrl} />;
-    } else {
+    } 
+    else {
       return (
-        <div>
-          Add a contract
+        <div className="ContractAdd">
+          <h1>Add a contract</h1>
           <form onSubmit={this.handleSubmit}>
-            {/* Role field */}
-            <label>
-              Type of contract:
-              <select value={this.state.contractType} onChange={this.handleChange} data-field="contractType">
-                <option disabled value=""></option>
-                <option value={EContractType.MAINTENANCE}>Maintenance</option>
-                <option value={EContractType.TRANSPORTATION}>Transportation</option>
-              </select>
-            </label><br/>
+            {/* Company */}
+            <div className="input-company">
+              <span className="fake-label">
+                <Icon source="fa" icon={faBuilding} />
+                Company
+              </span>
+              <span>
+                {this.state.activeRoleCompany.name}
+              </span>
+            </div>
 
             {/* Company field */}
-            <label>
-              Name of the company:
-              <Autosuggest
-                suggestions={this.state.possibleCompanies}
-                onSuggestionsFetchRequested={this.autoCompleteCompanies}
-                onSuggestionsClearRequested={this.clearAutocomplete}
-                getSuggestionValue={this.getCompany}
-                renderSuggestion={this.renderCompany}
-                inputProps={ {placeholder: 'Name of the company', value: this.state.companyName, onChange: this.onAutocompleteChange} } />
-            </label>
-            {this.printSelectedCompany()}<br/>
+            <FormAutoSuggestInput
+              label={
+                <span>
+                  <Icon source="fa" icon={faBuilding} />
+                  Company
+                </span>
+              }
+              possibleItems={this.state.possibleCompanies}
+              onValueChange={this.onCompanyAutoCompleteChange}
+              onSelectedItemChange={(selectedCompanyId, _, selectedCompanyItem) => this.setState({selectedCompanyId, selectedCompanyItem})}
+              inputAutoComplete="off"
+              inputRequired
+              instructions={
+                <span>Pick a company</span>
+              } />
+
+            {/* Role field */}
+            <div className="type-selection">
+              <span className="fake-label">
+                Contract Type
+              </span>
+              <Choose
+                items={contractDetails}
+                multiple={false} 
+                fieldName="contractType"
+                onSelectionChange={this.handleSelection} />
+            </div>
 
             {(this.state.contractType === EContractType.TRANSPORTATION) ? <ChooseLoadType></ChooseLoadType> : ''}
 

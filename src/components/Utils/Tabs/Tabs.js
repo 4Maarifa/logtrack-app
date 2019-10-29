@@ -1,8 +1,6 @@
 import React from 'react';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
-
-import UtilsService from '../../../services/utils.service';
+import ComponentSafeUpdate from './../ComponentSafeUpdate/ComponentSafeUpdate';
 
 import './Tabs.scss';
 
@@ -16,31 +14,28 @@ class Tabs extends ComponentSafeUpdate {
 
   componentDidMount = () => {
     super.componentDidMount();
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
-  }
+  };
 
-  activateTab = (e) => {
-    var target = UtilsService.getClosestElement(e.target, 'tab');
-    this.setStateSafe({activeTab: target.getAttribute('data-tab-id')});
-  }
+  activateTab = activeTab => this.setState({activeTab});
 
   render() {
     return (
       <div className="Tabs">
         <ul>
           {
-            Object.keys(this.props.tabs).map((tabKey) => 
-              <li key={tabKey} className={'tab ' + ((tabKey === this.state.activeTab) ? 'selected' : '')} data-tab-id={tabKey} onClick={this.activateTab}>
+            Object.keys(this.props.tabs).map(tabKey => 
+              <li key={tabKey} className={'tab ' + ((tabKey === this.state.activeTab) ? 'selected' : '')} onClick={() => this.activateTab(tabKey)}>
                 {this.props.tabs[tabKey].name()} 
               </li>
             )
           }
         </ul>
 
-        {(!!this.state.activeTab) ? <div className="tab-container">
+        {!!this.state.activeTab ? <div className="tab-container">
           {this.props.tabs[this.state.activeTab].content()}
         </div> : <div className="tab-container"></div>}
       </div>

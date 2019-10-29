@@ -1,10 +1,15 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { faUser, faEnvelope, faKey, faImage } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import Icon from './../../Utils/Icon/Icon';
+import FormInput from './../../Utils/FormElements/FormInput/FormInput';
+import FormInputFile from './../../Utils/FormElements/FormInputFile/FormInputFile';
 
 import FirebaseService from './../../../services/firebase.service';
 import ErrorService from './../../../services/error.service';
+import DateService from './../../../services/date.service';
 import FileService from './../../../services/file.service';
 import EmployeeService from './../../../services/entities/employee.service';
 
@@ -13,83 +18,69 @@ import Employee from './../../../classes/Employee';
 import './SignUp.scss';
 
 class SignUp extends ComponentSafeUpdate {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       firstname: '',
       lastname: '',
       email: '',
       password: '',
       secondpassword: '',
+      profilePicture: null,
       user: FirebaseService.getCurrentUser()
     };
-    this.profilePicture = React.createRef();
   }
 
   componentDidMount = () => {
     super.componentDidMount();
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
-  }
+  };
 
-  handleChange = event => {
-    let newState = {};
-    newState[event.target.getAttribute('data-field')] = event.target.value;
-    this.setStateSafe(newState);
-  }
+  handleChange = event => this.setState({[event.target.getAttribute('data-field')]: event.target.value});
+  onFormInputChange = (value, fieldName) => this.setState({[fieldName]: value});
+
+  onProfilePictureChange = file => this.setState({profilePicture: !!file ? file[0] : null});
 
   handleSubmit = event => {
-    console.log('SignUp : submitting...');
     event.preventDefault();
 
-    if (this.state.password !== this.state.secondpassword) {
+    if(this.state.password !== this.state.secondpassword) {
       ErrorService.manageError({code: 'auth/passwords-not-match'});
       return;
     }
 
     FirebaseService.signUp(this.state.email, this.state.password)
       .then((user) => {
-        EmployeeService.create(new Employee(user.user.uid, this.state.firstname, this.state.lastname, [], null, null))
+        EmployeeService.create(new Employee(user.user.uid, this.state.firstname, this.state.lastname, [], null, null, null, DateService.getCurrentIsoDateString()))
           .then(() => {
             this.uploadProfilePhoto()
               .then(employeeProperties => {
                 if(!!employeeProperties) {
                   EmployeeService.updateField(user.user.uid, employeeProperties)
-                    .then(() => {
-                      console.log('SignUp : successful. Redirecting to Dashboard...');
-                      this.setStateSafe({user: user});
-                    })
+                    .then(() => this.setState({user}))
                     .catch(ErrorService.manageError);
                 } else {
-                  console.log('SignUp : successful. Redirecting to Dashboard...');
-                  this.setStateSafe({user: user});
+                  this.setState({user});
                 }
               })
               .catch(ErrorService.manageError);
           })
           .catch(ErrorService.manageError);
     });
-  }
+  };
 
   uploadProfilePhoto = () => {
     return new Promise ((resolve, reject) => {
       // If profile picture is known, then first upload it then update the user
-      if (!!this.profilePicture.current.files.length) {
-        console.log('SignUp: Saving profile picture...');
-        FileService.uploadProfilePhoto(this.profilePicture.current.files[0])
+      if(!!this.state.profilePicture) {
+        FileService.uploadProfilePhoto(this.state.profilePicture)
           .then(() => {
-            console.log('SignUp : Profile Picture saved, getting profile picture URL...');
 
             FileService.getDownloadURLForProfilePicture()
-              .then(url => {
-                console.log('SignUp : Profile Picture URL got...');
-
-                resolve({
-                  profilePictureUrl: url
-                });
-              })
+              .then(profilePictureUrl => resolve({profilePictureUrl}))
               .catch(reject);
           })
           .catch(reject);
@@ -98,91 +89,133 @@ class SignUp extends ComponentSafeUpdate {
         resolve();
       }
     });
-  }
+  };
 
   /**
    * RENDER
    */
   render() {
-    if (!!this.state.user) {
+    if(!!this.state.user) {
       return <Redirect to='/dashboard' />;
     } else {
       return (
-        <div>
-          Sign Up
+        <div className="SignUp">
+          <h1>Sign Up</h1>
           <form onSubmit={this.handleSubmit}>
+
             {/* Firstname field */}
-            <label>
-              Firstname:
-              <input 
-                type="text"
-                data-field="firstname"
-                placeholder="John"
-                name="fname"
-                value={this.state.firstname}
-                onChange={this.handleChange}
-                required />
-            </label>
+            <FormInput
+              inputType="text"
+              fieldName="firstname"
+              label={
+                <span>
+                  <Icon source="fa" icon={faUser} />
+                  Firstname
+                </span>
+              }
+              inputName="fname"
+              inputRequired
+              instructions={
+                <span>
+                  Your firstname, required
+                </span>
+              }
+              onValueChange={this.onFormInputChange} />
 
             {/* Lastname field */}
-            <label>
-              Lastname:
-              <input 
-                type="text"
-                data-field="lastname"
-                placeholder="Doe"
-                name="lname"
-                value={this.state.lastname}
-                onChange={this.handleChange}
-                required />
-            </label>
+            <FormInput
+              inputType="text"
+              fieldName="lastname"
+              label={
+                <span>
+                  <Icon source="fa" icon={faUser} />
+                  Lastname
+                </span>
+              }
+              inputName="lname"
+              inputRequired
+              instructions={
+                <span>
+                  Your lastname, required
+                </span>
+              }
+              onValueChange={this.onFormInputChange} />
 
             {/* Email field */}
-            <label>
-              E-Mail:
-              <input 
-                type="email" 
-                data-field="email"
-                name="email"
-                placeholder="john.doe@mail.com"
-                value={this.state.email} 
-                onChange={this.handleChange} 
-                required />
-            </label>
+            <FormInput
+              inputType="email"
+              fieldName="email"
+              label={
+                <span>
+                  <Icon source="fa" icon={faEnvelope} />
+                  E-Mail
+                </span>
+              }
+              inputName="email"
+              inputRequired
+              instructions={
+                <span>
+                  Your e-mail, required
+                </span>
+              }
+              onValueChange={this.onFormInputChange} />
 
             {/* Password field */}
-            <label>
-              Password:
-              <input 
-                type="password"
-                data-field="password" 
-                name="password"
-                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
-                value={this.state.password} 
-                onChange={this.handleChange} 
-                required />
-            </label>
+            <FormInput
+              inputType="password"
+              fieldName="password"
+              label={
+                <span>
+                  <Icon source="fa" icon={faKey} />
+                  Password
+                </span>
+              }
+              instructions={
+                <span>
+                  Choose a password<br/>
+                  5 characters minimum
+                </span>
+              }
+              inputPattern=".{5,}"
+              inputName="password"
+              inputRequired
+              onValueChange={this.onFormInputChange} />
 
             {/* Second Password field */}
-            <label>
-              Repeat your password:
-              <input 
-                type="password"
-                data-field="secondpassword" 
-                autoComplete="off"
-                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
-                value={this.state.secondpassword} 
-                onChange={this.handleChange} 
-                required />
-            </label>
+            <FormInput
+              inputType="password"
+              fieldName="secondpassword"
+              label={
+                <span>
+                  <Icon source="fa" icon={faKey} />
+                  Repeat your password
+                </span>
+              }
+              instructions={
+                <span>
+                  Repeat the password
+                </span>
+              }
+              inputAutoComplete="off"
+              inputRequired
+              onValueChange={this.onFormInputChange} />
 
             {/* Profile Photo */}
-            <label>
-              Profile picture (Optional):
-              <input
-                type="file"
-                ref={this.profilePicture} />
-            </label>
+            <FormInputFile
+              imagePreview
+              onValueChange={this.onProfilePictureChange}
+              label={
+                <span>
+                  <Icon source="fa" icon={faImage} />
+                  Profile Picture (optional)
+                </span>
+              }
+              instructions={
+                <span>
+                  Choose a Profile Picture (Optional)
+                </span>
+              }
+              accept="image/*" />
 
             <input type="submit" />
           </form>

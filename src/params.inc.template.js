@@ -6,5 +6,6 @@ export default {
         projectId: "-- YOUR FIREBASE PROJECT ID --"
     },
     thunderforest: '-- YOUR THUNDERFOREST TILE LAYER API KEY --',
+    bingMaps: '-- YOUR BING MAPS PORTAL API KEY --',
     openWeatherMapAPIKey: '-- YOUR OPEN WEATHER MAP API KEY --'
 };

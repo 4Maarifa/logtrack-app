@@ -1,6 +1,8 @@
 import React from 'react';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import Map from './../../Utils/Map/Map';
+import ExTable from './../../Utils/ExTable/ExTable';
 
 import DataService from './../../../services/data.service';
 import ErrorService from './../../../services/error.service';
@@ -9,15 +11,13 @@ import RoleService from './../../../services/entities/role.service';
 import EmployeeService from './../../../services/entities/employee.service';
 
 import RoleEmployee from './../../Entities/RoleEmployee/RoleEmployee';
-import Map from './../../Utils/Map/Map';
 
-import ExTable from '../../Utils/ExTable/ExTable';
 
 import './Employees.scss';
 
 class Employees extends ComponentSafeUpdate {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = Object.assign({
 
       companyEmployees: {},
@@ -28,21 +28,21 @@ class Employees extends ComponentSafeUpdate {
 
   componentDidMount = () => {
     super.componentDidMount();
-    this.setStateSafe({observerKey: 
+    this.setState({observerKey: 
       DataService.computed.observeComputedValues((computedValues) => {
-        this.setStateSafe(computedValues, this.computeValues);
+        this.setState(computedValues, this.computeValues);
       })
     });
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
     DataService.computed.unobserveComputedValues(this.state.observerKey);
-  }
+  };
 
-  computeValues() {
+  computeValues = () => {
     this.computeEmployeesRoles();
-  }
+  };
 
   /**
    * EMPLOYEES
@@ -51,16 +51,16 @@ class Employees extends ComponentSafeUpdate {
     if(!!this.state.activeRole) {
       RoleService.getRolesForCompanyId(this.state.activeRole.companyId)
         .then((roles) => {
-          this.setStateSafe({rolesOfCompanyEmployees: roles});
+          this.setState({rolesOfCompanyEmployees: roles});
   
           var employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(roles).map((roleKey) => roles[roleKey].employeeId));
           EmployeeService.getAllForIdList(employeesIds)
-            .then((employees) => this.setStateSafe({companyEmployees: employees, companyEmployeesLoading: false}))
+            .then((employees) => this.setState({companyEmployees: employees, companyEmployeesLoading: false}))
             .catch(ErrorService.manageError);
         })
         .catch(ErrorService.manageError);
     }
-  }
+  };
 
   /**
    * RENDER
@@ -74,7 +74,7 @@ class Employees extends ComponentSafeUpdate {
       roles={UtilsService.filterKeyValueOnPropertyValue(this.state.rolesOfCompanyEmployees, (predicate) => predicate.employeeId === itemKey)}
       options={ {showDraft: false, showActions: false} }
       showDetails={mode === 'active'} />;
-  }
+  };
 
   render() {
     return (

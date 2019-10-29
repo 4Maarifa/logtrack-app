@@ -1,4 +1,4 @@
-import ERights from './../../classes/enums/ERights';
+import { ERights } from './../right.service';
 
 import DataService, { ensureFilledFields, migratePrototype } from './../data.service';
 import FirebaseService from './../firebase.service';
@@ -15,28 +15,28 @@ const BrandService = {
     [ERights.RIGHT_BRAND_DELETE]: () => false
   },
   create(brand) {
-    if (!BrandService.rights[ERights.RIGHT_BRAND_CREATE]()) {
+    if(!BrandService.rights[ERights.RIGHT_BRAND_CREATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create a Brand' });
     }
 
-    if (!brand instanceof Brand) {
+    if(!brand instanceof Brand) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'Brand' });
     }
 
-    if (!ensureFilledFields(brand, ['name'])) {
+    if(!ensureFilledFields(brand, ['name'])) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['name'] });
     }
 
     return FirebaseService.getDb().collection('brands').doc(brand.id).set(migratePrototype(brand));
   },
   get(brandId) {
-    if (!BrandService.rights[ERights.RIGHT_BRAND_GET]()) {
+    if(!BrandService.rights[ERights.RIGHT_BRAND_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Brand' });
     }
     return FirebaseService.getDb().collection('brands').doc(brandId).get();
   },
   list() {
-    if (!BrandService.rights[ERights.RIGHT_BRAND_LIST]()) {
+    if(!BrandService.rights[ERights.RIGHT_BRAND_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Brands' });
     }
 
@@ -51,29 +51,29 @@ const BrandService = {
     });
   },
   update(brand) {
-    if (!BrandService.rights[ERights.RIGHT_BRAND_UPDATE]()) {
+    if(!BrandService.rights[ERights.RIGHT_BRAND_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Brand' });
     }
 
-    if (!brand instanceof Brand) {
+    if(!brand instanceof Brand) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'Brand' });
     }
 
-    if (!ensureFilledFields(brand, ['name'])) {
+    if(!ensureFilledFields(brand, ['name'])) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['name'] });
     }
 
     return FirebaseService.getDb().collection('brands').doc(brand.id).set(migratePrototype(brand));
   },
   updateField(brandId, brandField) {
-    if (!BrandService.rights[ERights.RIGHT_BRAND_UPDATE]()) {
+    if(!BrandService.rights[ERights.RIGHT_BRAND_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Brand' });
     }
     
     return FirebaseService.getDb().collection('brands').doc(brandId).update(brandField);
   },
   delete(brandId) {
-    if (!BrandService.rights[ERights.RIGHT_BRAND_DELETE]()) {
+    if(!BrandService.rights[ERights.RIGHT_BRAND_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Brand' });
     }
     

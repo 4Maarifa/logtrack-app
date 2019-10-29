@@ -12,8 +12,8 @@ class ComponentSafeUpdate extends Component {
     this._isMounted = false;
   }
 
-  setStateSafe = (obj, callback) => {
-    !!this._isMounted && this.setState(obj, callback);
+  setState = (obj, callback) => {
+    !!this._isMounted && super.setState(obj, callback);
   }
 }
 

@@ -69,6 +69,7 @@ import Contracts from './components/App/Contracts/Contracts';
 import ContractAdd from './components/Forms/ContractAdd/ContractAdd';
 
 import Warehouses from './components/App/Warehouses/Warehouses';
+import WarehouseAdd from './components/Forms/WarehouseAdd/WarehouseAdd';
 
 import Gps from './components/App/Gps/Gps';
 
@@ -78,12 +79,13 @@ import Analytics from './components/App/Analytics/Analytics';
 
 import Search from './components/App/Search/Search';
 
+import Chat from './components/App/Chat/Chat';
+
 // SERVICES
 import FirebaseService from './services/firebase.service';
 import DataService from './services/data.service';
 import ResizeService from './services/resize.service';
-
-import ESettings, { ESettingsDetails } from './classes/enums/ESettings';
+import SettingsService, { ESettings } from './services/settings.service';
 
 import './index.scss';
 
@@ -130,20 +132,23 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     )} />
 );
 
-const getSettingValue = (employee, settingKey) => {
-    if (!employee) {
-        return;
+const styleOverride = () => {
+    if(SettingsService.getSettingValue(ESettings.SETTINGS_CUSTOM_COLORS) === 'BASIC' || 
+        !DataService.computed.activeRoleCompany || !DataService.computed.activeRoleCompany.color) {
+        
+        return null;
     }
-    if (!!employee.settings && !!employee.settings[settingKey]) {
-        return employee.settings[settingKey];
-    }
-    return ESettingsDetails[settingKey].default;
+    return <style>
+        {`:root {
+            --second: ${DataService.computed.activeRoleCompany.color} !important;
+        }`}
+    </style>;
 };
 
 const renderApp = () => {
     ReactDOM.render(
         <Router>
-            <div className={'app-container ' + (getSettingValue(DataService.computed.employee, ESettings.SETTINGS_FULL_PAGE_LAYOUT) === 'FULL' ? 'app-container--full' : '')}>
+            <div className={'app-container ' + (SettingsService.getSettingValue(ESettings.SETTINGS_FULL_PAGE_LAYOUT) === 'FULL' ? 'app-container--full' : '')}>
                 <Navigation></Navigation>
                 <div className="page_content">
                     <Route exact path="/" component={Splash} />
@@ -172,6 +177,7 @@ const renderApp = () => {
                     <PrivateRoute exact path="/contract-add" component={ContractAdd} />
 
                     <PrivateRoute exact path="/warehouses" component={Warehouses} />
+                    <PrivateRoute exact path="/warehouse-add" component={WarehouseAdd} />
 
                     <PrivateRoute exact path="/gps" component={Gps} />
                     
@@ -180,21 +186,25 @@ const renderApp = () => {
                     <PrivateRoute exact path="/analytics" component={Analytics} />
 
                     <PrivateRoute exact path="/search" component={Search} />
+
+                    <PrivateRoute exact path="/chat" component={Chat} />
+                    <PrivateRoute exact path="/chat/:chatid" component={Chat} />
                 </div>
             </div>
+            {styleOverride()}
         </Router>,
         document.getElementById('root'),
         () => {
-            setTimeout(() => ResizeService.updateObservers(), 550);
+            setTimeout(ResizeService.updateObservers, 550);
         });
 };
 
 
 // Service Initialization
-DataService.initialize().then(() => {
-    renderApp();
+DataService.initialize();
+
+DataService.computed.observeComputedValues(computedValues => {
+    if(!!computedValues.initialized) {
+        renderApp();
+    }
 });
-const observeComputedValues = _ => renderApp();
-
-DataService.computed.observeComputedValues(observeComputedValues);
-

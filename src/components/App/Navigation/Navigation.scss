@@ -2,7 +2,7 @@
   background-color: var(--second);
   display: flex;
   flex-direction: column;
-  color: white;
+  color: #FFFFFF;
   padding: 1rem 0;
   height: calc(100% - 2rem);
   position: relative;
@@ -10,6 +10,7 @@
   flex: 0 0 3.5rem;
   transition: flex .5s;
   min-width: 0;
+  transition: background-color .5s;
 
   nav {
     display: flex;
@@ -40,9 +41,9 @@
       position: relative;
 
       &.nav--active {
-        background-color: #FFFFFF;
-        border-radius: 8px 0 0 8px;
-        border-right: 2px solid #FFFFFF;
+        background-color: var(--light-gray);
+        border-radius: var(--border-radius) 0 0 var(--border-radius);
+        border-right: 2px solid var(--light-gray);
         color: var(--second);
 
         &:before {
@@ -53,7 +54,7 @@
           height: 1rem;
           width: 1rem;
           display: block;
-          background-color: #FFFFFF;
+          background-color: var(--light-gray);
           clip-path: polygon(100% 0, 100% 100%, 0 100%, 60% 90%, 80% 80%, 90% 60%);
         }
 
@@ -65,7 +66,7 @@
           height: 1rem;
           width: 1rem;
           display: block;
-          background-color: #FFFFFF;
+          background-color: var(--light-gray);
           clip-path: polygon(0 0, 100% 0, 100% 100%, 90% 40%, 80% 20%, 60% 10%);
         }
       }
@@ -102,7 +103,7 @@
   }
 
   &--deployed {
-    flex: 1 0 3.5rem;
+    flex: 0 0 12rem;
 
     nav {
       a,
@@ -120,9 +121,16 @@
           text-overflow: ellipsis;
           position: relative;
           left: 0;
-          white-space: normal;
+          white-space: nowrap;
           width: auto;
           background-color: transparent;
+
+          &-role {
+            display: block;
+            overflow: visible;
+            font-size: 85%;
+            line-height: 1;
+          }
         }
 
         &:not(.nav--active):hover {

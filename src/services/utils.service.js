@@ -3,7 +3,7 @@ const UtilsService = {
     getClosestElement(el, classs) {
         while (!el.classList.contains(classs)) {
             el = el.parentNode;
-            if (!el) {
+            if(!el) {
                 return null;
             }
         }

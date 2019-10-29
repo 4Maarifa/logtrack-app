@@ -1,31 +1,276 @@
 .Map {
-  //
-}
+  overflow: hidden;
+  position: relative;
 
-.leaflet-custom-control {
-  border-top: 1px solid #ccc;
-  background-color: #FFFFFF;
-  height: 30px;
-  width: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &:hover {
-    background-color: #f4f4f4;
-  }
-
-  button {
-    background-color: transparent;
-    border: 0;
-    flex: 1;
-    width: 100%;
+  #map {
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    outline: none;
-    padding: 0;
-    cursor: pointer;
+    width: 100%;
+    display: block;
+    cursor: grab;
+
+    .ol-attributions {
+      position: absolute;
+      bottom: .5rem;
+      right: .5rem;
+      border-radius: var(--border-radius);
+      font-size: 80%;
+      display: flex;
+      flex-direction: row-reverse;
+
+      .ol-attributions-button {
+        height: 1.5rem;
+        width: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 0 0 1.5rem;
+        background-color: #FFFFFF;
+        border-radius: .75rem;
+        color: var(--second);
+      }
+
+      .ol-attributions-content {
+        max-width: 0;
+        height: 1.5rem;
+        padding: 0;
+        overflow: hidden;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        white-space: nowrap;
+        background-color: #FFFFFF;
+        transition: max-width .5s, padding .5s;
+        border-radius: .75rem;
+
+        a, a:hover, a:focus, a:active, a:visited, a:link {
+          color: #000000;
+          text-decoration: none;
+        }
+      }
+
+      .ol-attributions-button:hover + .ol-attributions-content,
+      .ol-attributions-content:hover {
+        max-width: 100%;
+        padding: 0 .3rem;
+      }
+    }
+
+    .ol-layer-selector {
+      position: absolute;
+      bottom: .5rem;
+      left: .5rem;
+      padding: 0;
+      margin: 0;
+      display: flex;
+
+      .ol-layer-selector-selected {
+        padding: .2rem;
+        background-color: #FFFFFF;
+        border-radius: 2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: auto;
+        color: var(--second);
+      }
+
+      .ol-layer-selector-others {
+        padding: .2rem 0;
+        background-color: #FFFFFF;
+        max-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        transition: max-width .5s, padding .5s;
+        cursor: auto;
+      }
+
+      .ol-layer-selector-selected:hover + .ol-layer-selector-others,
+      .ol-layer-selector-others:hover {
+        max-width: 100%;
+        padding: .2rem;
+      }
+
+      button {
+        font-size: 200%;
+        display: inline;
+        overflow: hidden;
+        position: static;
+        vertical-align: top;
+        border-radius: 0;
+        color: var(--second);
+        background-color: var(--gray);
+        color: #FFFFFF;
+        transition: background-color .5s, color .5s, opacity .5s;
+
+        &.layer--active {
+          background-color: var(--second);
+          opacity: 1;
+        }
+
+        &:first-child {
+          border-radius: 2px 0 0 2px;
+        }
+
+        &:last-child {
+          border-radius: 0 2px 2px 0;
+        }
+
+        img {
+          height: 100%;
+          width: 100%;
+          display: block;
+        }
+      }
+    }
+
+    .ol-control {
+      background-color: transparent;
+
+      &.ol-attribution {
+        background-color: #FFFFFF;
+        border-top-left-radius: 5px;
+
+        a,
+        a:hover,
+        a:focus,
+        a:active,
+        a:visited,
+        a:link {
+          color: #000000;
+          text-decoration: none;
+        }
+      }
+
+      &#additional-controls {
+        left: .5em;
+        top: 4.135em;
+        display: block;
+
+        .ol-additional-control + .ol-additional-control {
+          margin-top: .5rem;
+        }
+
+        .ol-gps-mode {
+          button {
+            color: var(--second);
+            background-color: var(--gray);
+            color: #FFFFFF;
+            opacity: .6;
+            transition: background-color .5s, color .5s, opacity .5s;
+            
+            &.ol-gps-mode--active {
+              background-color: var(--second);
+              opacity: 1;
+            }
+
+            span {
+              font-size: 80%;
+            }
+
+            &.ol-gps-mode-2d {
+              border-bottom-left-radius: 0;
+              border-bottom-right-radius: 0;
+            }
+
+            &.ol-gps-mode-3d {
+              border-top-left-radius: 0;
+              border-top-right-radius: 0;
+            }
+          }
+        }
+      }
+
+      button,
+      button:hover {
+        background-color: var(--second);
+        cursor: pointer;
+
+        svg {
+          font-size: 80%;
+        }
+      }
+    }
+
+    #popup {
+      width: 8rem;
+      height: 2rem;
+      padding: .25rem .5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #FFFFFF;
+      color: #000000;
+      border-radius: var(--border-radius);
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: calc(50% - 5px);
+        height: 0;
+        width: 0;
+        border-style: solid solid none solid;
+        border-color: #FFFFFF transparent transparent transparent;
+        border-width: 10px 10px 0 10px;
+      }
+    }
+
+    .ol-viewport {
+      perspective: 0;
+      transition: perspective .5s;
+
+      .ol-layers.ol-unselectable {
+        transform: rotateX(0deg) scale(1);
+        transition: transform .5s;
+      }
+
+      .ol-overlaycontainer-stopevent {
+        & > * {
+          position: absolute;
+        }
+
+        #overlay-3d {
+          opacity: 0;
+          visibility: hidden;
+          transition: visibility .5s, opacity .5s;
+        }
+      }
+    }
+
+    &.map-3d {
+      .ol-viewport {
+        transform-style: preserve-3d;
+        perspective: 1200px;
+
+        .ol-layers.ol-unselectable {
+          transform: rotateX(50deg) scale(2);
+        }
+
+        .ol-overlaycontainer-stopevent {
+          #overlay-3d {
+            position: absolute;
+            top: 0;
+            z-index: -1;
+            width: 100%;
+            display: block;
+            visibility: visible;
+            opacity: 1;
+            height: 15%;
+            background-color: transparent;
+            background-repeat: repeat-x;
+            background-size: auto 100%;
+          }
+          
+          .ol-rotate.ol-hidden {
+            visibility: visible;
+            opacity: 1;
+          }
+        }
+      }
+    }
   }
 }

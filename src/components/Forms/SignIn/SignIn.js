@@ -1,52 +1,47 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { faEnvelope, faKey } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import FormInput from './../../Utils/FormElements/FormInput/FormInput';
+import Icon from './../../Utils/Icon/Icon';
 
-import FirebaseService from '../../../services/firebase.service';
-import ErrorService from '../../../services/error.service';
-import DataService from '../../../services/data.service';
+import FirebaseService from './../../../services/firebase.service';
+import ErrorService from './../../../services/error.service';
+import DataService from './../../../services/data.service';
 
 import './SignIn.scss';
 
 class SignIn extends ComponentSafeUpdate {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = Object.assign({email: '', password: ''}, DataService.computed.getDefaultComputedValues());
   }
 
   componentDidMount = () => {
     super.componentDidMount();
-    this.setStateSafe({observerKey: 
+    this.setState({observerKey: 
       DataService.computed.observeComputedValues((computedValues) => {
-        this.setStateSafe(computedValues);
+        this.setState(computedValues);
       })
     });
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
     DataService.computed.unobserveComputedValues(this.state.observerKey);
-  }
-
-  handleChange = event => {
-    let newState = {};
-    newState[event.target.getAttribute('data-field')] = event.target.value;
-    this.setStateSafe(newState);
-  }
+  };
 
   handleSubmit = event => {
-    console.log('SignIn : submitting...');
     event.preventDefault();
 
     FirebaseService.signIn(this.state.email, this.state.password)
-      .then((user) => {
-        console.log('SignIn : successful. Redirecting to Dashboard...');
-        this.setStateSafe({user: user});
-      })
+      .then((user) => this.setState({user}))
       .catch(ErrorService.manageError);
-  }
+  };
+
+  onFormInputChange = (value, fieldName) => this.setState({[fieldName]: value});
 
   /**
    * RENDER
@@ -56,34 +51,47 @@ class SignIn extends ComponentSafeUpdate {
       return <Redirect to='/dashboard' />;
     } else {
       return (
-        <div>
-          Sign In
+        <div className="SignIn">
+          <h1>Sign In</h1>
           <form onSubmit={this.handleSubmit}>
+
             {/* E-Mail field */}
-            <label>
-              E-Mail:
-              <input 
-                type="email" 
-                data-field="email"
-                placeholder="john.doe@mail.com"
-                name="email"
-                value={this.state.email} 
-                onChange={this.handleChange} 
-                required />
-            </label>
+            <FormInput
+              inputType="email"
+              fieldName="email"
+              label={
+                <span>
+                  <Icon source="fa" icon={faEnvelope} />
+                  E-Mail
+                </span>
+              }
+              inputName="email"
+              inputRequired
+              instructions={
+                <span>
+                  Your account e-mail
+                </span>
+              }
+              onValueChange={this.onFormInputChange} />
 
             {/* Password field */}
-            <label>
-              Password:
-              <input 
-                type="password"
-                data-field="password" 
-                name="password"
-                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
-                value={this.state.password} 
-                onChange={this.handleChange} 
-                required />
-            </label>
+            <FormInput
+              inputType="password"
+              fieldName="password"
+              label={
+                <span>
+                  <Icon source="fa" icon={faKey} />
+                  Password
+                </span>
+              }
+              instructions={
+                <span>
+                  Your account password
+                </span>
+              }
+              inputRequired
+              onValueChange={this.onFormInputChange} />
+
             <input type="submit" />
           </form>
         </div>

@@ -7,7 +7,7 @@
   form {
     display: flex;
     flex-direction: column;
-    width: 20rem;
+    width: var(--form-width);
 
     .FormInput, .FormInputFile {
       width: 100%;
@@ -16,16 +16,47 @@
     .input-creator {
       position: relative;
       margin: 1.5rem 0 1rem 0;
-      border-radius: 4px;
+      width: 100%;
+    }
+
+    .input-color {
+      position: relative;
+      margin: 1.5rem 0 1rem 0;
       width: 100%;
 
-      label {
-        position: absolute;
-        top: -1.2rem;
-        left: 0;
+      .Choose ul li {
+        height: 5rem;
+        width: 5rem;
+        display: inline-block;
+        padding: 0;
+        color: #FFFFFF;
+        position: relative;
+
+        svg {
+          display: none;
+        }
+
+        &.li--active {
+          svg {
+            height: 3rem;
+            width: 3rem;
+            display: block;
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+          }
+        }
+
+        .input-color-choice {
+          height: 5rem;
+          width: 5rem;
+          display: block;
+        }
+      }
+
+      &-info {
+        color: var(--gray);
         font-size: 85%;
-        color: var(--second);
-        z-index: 1;
       }
     }
   }

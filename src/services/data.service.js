@@ -24,7 +24,6 @@ export const migratePrototype = object => {
 
 const DataService = {
     initialize() {
-        console.log('Data service initializing...');
         return DataService.__computeValues();
     },
     __computeValues() {
@@ -45,27 +44,25 @@ const DataService = {
 
             if(!!user) {
                 EmployeeService.get(this.computed.user.uid)
-                    .then((employee) => {
+                    .then(employee => {
                         DataService.computed.employee = employee.data();
 
                         RoleService.getActiveRoleForEmployeeId(this.computed.user.uid)
-                            .then((activeRole) => {
+                            .then(activeRole => {
                                 DataService.computed.activeRole = activeRole;
             
                                 if(!!activeRole) {
                                     CompanyService.get(activeRole.companyId)
                                         .then((activeRoleCompany) => {
+                                            DataService.computed.initialized = true;
                                             DataService.computed.activeRoleCompany = activeRoleCompany.data();
                                             DataService.computed.notifyObservers();
-            
-                                            console.log('Data service initialized');
                                             resolve();
                                         }).catch(ErrorService.manageError);
                                 } else {
+                                    DataService.computed.initialized = true;
                                     DataService.computed.activeRoleCompany = null;
                                     DataService.computed.notifyObservers();
-            
-                                    console.log('Data service initialized');
                                     resolve();
                                 }
                             })
@@ -73,6 +70,7 @@ const DataService = {
                     })
                     .catch(ErrorService.manageError);
             } else {
+                DataService.computed.initialized = true;
                 DataService.computed.notifyObservers();
                 resolve();
             }
@@ -112,7 +110,8 @@ const DataService = {
                     employee: DataService.computed.employee,
                     user: DataService.computed.user,
                     activeRole: DataService.computed.activeRole,
-                    activeRoleCompany: DataService.computed.activeRoleCompany
+                    activeRoleCompany: DataService.computed.activeRoleCompany,
+                    initialized: DataService.computed.initialized
                 });
             });
             RoleService.notifyObservers();
@@ -123,7 +122,8 @@ const DataService = {
                 user: null,
                 activeRole: null,
                 activeRoleCompany: null,
-                observerKey: null
+                observerKey: null,
+                initialized: null
             }
         },
         observeComputedValues(callback) {
@@ -142,6 +142,7 @@ const DataService = {
         activeRole: null,
         activeRoleCompany: null,
         employee: null,
+        initialized: false
     }
 };
 

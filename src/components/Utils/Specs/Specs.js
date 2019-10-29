@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Icon from '../Icon/Icon';
-import TestMap from './TestMap/TestMap';
+
+import Icon from './../Icon/Icon';
 
 import './Specs.scss';
 
@@ -237,8 +237,6 @@ class Specs extends Component {
             <li><Icon source="fa" withLabel={true} icon="wind-warning"/></li>
             <li><Icon source="fa" withLabel={true} icon="windsock"/></li>
         </ul>
-        <h1>Map</h1>
-        <TestMap></TestMap>
       </div>
     );
   }

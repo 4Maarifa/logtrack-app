@@ -1,9 +1,10 @@
 import React from 'react';
 import { faPlus, faUserTag, faBuilding } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
-
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import ActionButton from './../../Utils/ActionButton/ActionButton';
+import ExTable from './../../Utils/ExTable/ExTable';
+import Icon from './../../Utils/Icon/Icon';
 
 import DataService from './../../../services/data.service';
 import ErrorService from './../../../services/error.service';
@@ -15,14 +16,11 @@ import EmployeeService from './../../../services/entities/employee.service';
 import RoleCompany from './../../Entities/RoleCompany/RoleCompany';
 import RoleEmployee from './../../Entities/RoleEmployee/RoleEmployee';
 
-import ExTable from './../../Utils/ExTable/ExTable';
-import Icon from './../../Utils/Icon/Icon';
-
 import './Roles.scss';
 
 class Roles extends ComponentSafeUpdate {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = Object.assign({
       userRoles: {},
       userRolesCompanies: {},
@@ -34,45 +32,45 @@ class Roles extends ComponentSafeUpdate {
 
   componentDidMount = () => {
     super.componentDidMount();
-    this.setStateSafe({observerKey: 
+    this.setState({observerKey: 
       DataService.computed.observeComputedValues((computedValues) => {
-        this.setStateSafe(computedValues, this.computeRoles);
+        this.setState(computedValues, this.computeRoles);
       })
     });
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
     DataService.computed.unobserveComputedValues(this.state.observerKey);
-  }
+  };
 
   /**
    * ROLES
    */
   computeRoles = () => {
-    if (!this.state.user) return;
+    if(!this.state.user) return;
     // USER ROLES
     RoleService.getRolesForEmployeeId(this.state.user.uid)
       .then((roles)=> {
         var companiesIds = UtilsService.removeDuplicateFromArray(Object.keys(roles).map((roleKey) => roles[roleKey].companyId));
         CompanyService.getAllForIdList(companiesIds)
-          .then((companies) => this.setStateSafe({userRolesCompanies: companies, userRoles: roles}))
+          .then((companies) => this.setState({userRolesCompanies: companies, userRoles: roles}))
           .catch(ErrorService.manageError);
       })
       .catch(ErrorService.manageError);
 
     // REQUESTED ROLES
-    if (!!this.state.activeRole) {
+    if(!!this.state.activeRole) {
       RoleService.getDraftRolesForCompanyId(this.state.activeRole.companyId)
         .then((roles) => {
           var employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(roles).map((roleKey) => roles[roleKey].employeeId));
           EmployeeService.getAllForIdList(employeesIds)
-            .then((employees) => this.setStateSafe({requestedRoles: roles, requestedRolesEmployees: employees}))
+            .then((employees) => this.setState({requestedRoles: roles, requestedRolesEmployees: employees}))
             .catch(ErrorService.manageError);
         })
         .catch(ErrorService.manageError);
     }
-  }
+  };
 
   /**
    * RENDER
@@ -85,7 +83,7 @@ class Roles extends ComponentSafeUpdate {
       company={company} 
       roles={UtilsService.filterKeyValueOnPropertyValue(this.state.userRoles, (predicate) => predicate.companyId === itemKey)}
       options={ {showDraft: true, showActions: true} } />;
-  }
+  };
 
   renderRequestedRole = (mode, itemKey, itemData) => {
     var employee = {};
@@ -95,7 +93,7 @@ class Roles extends ComponentSafeUpdate {
       employee={employee}
       roles={ { [itemKey]: itemData } }
       options={ {showDraft: true, showActions: true} } />
-  }
+  };
 
   renderRoleEmployee = (mode, itemKey, itemData) => {
     var employee = {};
@@ -105,7 +103,7 @@ class Roles extends ComponentSafeUpdate {
       employee={employee} 
       roles={UtilsService.filterKeyValueOnPropertyValue(this.state.rolesOfCompanyEmployees, (predicate) => predicate.employeeId === itemKey)}
       options={ {showDraft: false} } />;
-  }
+  };
 
   render() {
     return (

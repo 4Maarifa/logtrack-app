@@ -15,7 +15,7 @@ computeStatApp.use(bodyParser.json());
 
 const computeStat = {
   api: functions.https.onRequest((request, response) => {
-    if (!request.path) {
+    if(!request.path) {
       request.url = `/${request.url}`
     }
     return computeStatApp(request, response);
@@ -24,7 +24,7 @@ const computeStat = {
     var promises = [];
   
     req.body.data.types.forEach(reqType => {
-      if (computeStat.fns[reqType]) {
+      if(computeStat.fns[reqType]) {
         promises.push(computeStat.fns[reqType](req));
       } 
       else {
@@ -48,7 +48,7 @@ const computeStat = {
   },
   fns: {
     'equipment-count': req => new Promise((resolve, reject) => {
-      if (!req.body.data.companyId) {
+      if(!req.body.data.companyId) {
         handleError(reject, 'The equipment-count request needs the companyId param');
       }
   
@@ -59,7 +59,7 @@ const computeStat = {
         .catch(e => handleError(reject, e));
     }),
     'employee-count': req => new Promise((resolve, reject) => {
-      if (!req.body.data.companyId) {
+      if(!req.body.data.companyId) {
         handleError(reject, 'The employee-count request needs the companyId param');
       }
   
@@ -76,7 +76,7 @@ const computeStat = {
         .catch(e => handleError(reject, e));
     }),
     'warehouse-count': req => new Promise((resolve, reject) => {
-      if (!req.body.data.companyId) {
+      if(!req.body.data.companyId) {
         handleError(reject, 'The warehouse-count request needs the companyId param');
       }
 

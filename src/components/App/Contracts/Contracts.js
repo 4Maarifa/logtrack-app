@@ -1,7 +1,7 @@
 import React from 'react';
 import { faFileSignature, faPlus } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import DataService from './../../../services/data.service';
 
@@ -10,9 +10,13 @@ import Icon from './../../Utils/Icon/Icon';
 
 import './Contracts.scss';
 
+/**
+ * Component: Contracts
+ * Used by managers to list contracts that link to other companies
+ */
 class Contracts extends ComponentSafeUpdate {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = Object.assign({
       }, 
       DataService.computed.getDefaultComputedValues());
@@ -20,17 +24,17 @@ class Contracts extends ComponentSafeUpdate {
 
   componentDidMount = () => {
     super.componentDidMount();
-    this.setStateSafe({observerKey: 
+    this.setState({observerKey: 
       DataService.computed.observeComputedValues((computedValues) => {
-        this.setStateSafe(computedValues);
+        this.setState(computedValues);
       })
     });
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
     DataService.computed.unobserveComputedValues(this.state.observerKey);
-  }
+  };
 
   /**
    * RENDER

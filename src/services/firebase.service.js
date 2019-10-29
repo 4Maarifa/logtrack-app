@@ -1,4 +1,4 @@
-import Credentials from '../params.inc';
+import Credentials from './../params.inc';
 
 const firebase = require('firebase/app');
 require('firebase/firestore');
@@ -11,11 +11,10 @@ const FirebaseService = {
     db: null,
 
     initialize() {
-        if (FirebaseService.connection == null) {
+        if(FirebaseService.connection == null) {
             FirebaseService.connection = firebase.initializeApp(Credentials.firebase);
-            console.log('Firebase service initialized');
         }
-        if (FirebaseService.db == null) {
+        if(FirebaseService.db == null) {
             FirebaseService.db = firebase.firestore();
         }
     },

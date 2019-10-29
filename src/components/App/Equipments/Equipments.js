@@ -1,7 +1,11 @@
 import React from 'react';
 import { faTruck, faPlus } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import ActionButton from './../../Utils/ActionButton/ActionButton';
+import ExTable from './../../Utils/ExTable/ExTable';
+import Map from './../../Utils/Map/Map';
+import Icon from './../../Utils/Icon/Icon';
 
 import DataService from './../../../services/data.service';
 import ErrorService from './../../../services/error.service';
@@ -10,17 +14,12 @@ import EquipmentModelService from './../../../services/entities/equipmentModel.s
 import EquipmentService from './../../../services/entities/equipment.service';
 
 import Equipment from './../../Entities/Equipment/Equipment';
-import Map from './../../Utils/Map/Map';
-import Icon from './../../Utils/Icon/Icon';
-
-import ActionButton from './../../Utils/ActionButton/ActionButton';
-import ExTable from './../../Utils/ExTable/ExTable';
 
 import './Equipments.scss';
 
 class Equipments extends ComponentSafeUpdate {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = Object.assign({
       equipments: {},
       equipmentsLoading: true,
@@ -31,40 +30,40 @@ class Equipments extends ComponentSafeUpdate {
 
   componentDidMount = () => {
     super.componentDidMount();
-    this.setStateSafe({observerKey: 
+    this.setState({observerKey: 
       DataService.computed.observeComputedValues((computedValues) => {
-        this.setStateSafe(computedValues, this.computeValues);
+        this.setState(computedValues, this.computeValues);
       })
     });
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
     DataService.computed.unobserveComputedValues(this.state.observerKey);
-  }
+  };
 
-  computeValues() {
+  computeValues = () => {
     this.computeEquipments();
-  }
+  };
 
   /**
    * EQUIPMENTS
    */
   computeEquipments = () => {
     BrandService.list()
-      .then((brands) => this.setStateSafe({brands: brands}))
+      .then((brands) => this.setState({brands: brands}))
       .catch(ErrorService.manageError);
 
     EquipmentModelService.list()
-      .then((equipmentModels => this.setStateSafe({equipmentModels: equipmentModels})))
+      .then((equipmentModels => this.setState({equipmentModels: equipmentModels})))
       .catch(ErrorService.manageError);
 
     if(!!this.state.activeRole) {
       EquipmentService.getAllForCompanyId(this.state.activeRole.companyId)
-        .then((equipments) => this.setStateSafe({equipments: equipments, equipmentsLoading: false}))
+        .then((equipments) => this.setState({equipments: equipments, equipmentsLoading: false}))
         .catch(ErrorService.manageError);
     }
-  }
+  };
 
   /**
    * RENDER
@@ -81,7 +80,7 @@ class Equipments extends ComponentSafeUpdate {
       equipmentModel={equipmentModel}
       options={ {} }
       showDetails={mode === 'active'} />
-  }
+  };
 
   render() {
     return (

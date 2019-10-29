@@ -1,19 +1,17 @@
 import React from 'react';
 import { faSearch } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
-
-import DataService from '../../../services/data.service';
-
-import FormInput from '../../Utils/FormInput/FormInput';
-
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Icon from './../../Utils/Icon/Icon';
+import FormDebounceInput from './../../Utils/FormElements/FormDebounceInput/FormDebounceInput';
+
+import DataService from './../../../services/data.service';
 
 import './Search.scss';
 
 class Search extends ComponentSafeUpdate {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = Object.assign({
         searchInput: null
       }, 
@@ -22,21 +20,19 @@ class Search extends ComponentSafeUpdate {
 
   componentDidMount = () => {
     super.componentDidMount();
-    this.setStateSafe({observerKey: 
+    this.setState({observerKey: 
       DataService.computed.observeComputedValues((computedValues) => {
-        this.setStateSafe(computedValues);
+        this.setState(computedValues);
       })
     });
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
     DataService.computed.unobserveComputedValues(this.state.observerKey);
-  }
+  };
 
-  onSearchInputChange = value => {
-    this.setStateSafe({searchInput: value});
-  }
+  onSearchInputChange = value => this.setState({searchInput: value});
 
   /**
    * RENDER
@@ -44,8 +40,16 @@ class Search extends ComponentSafeUpdate {
   render() {
     return (
       <div className="Search">
-        <FormInput 
-          inputType="text" 
+        <FormDebounceInput 
+          inputType="text"
+          inputPattern=".{2,}"
+          inputRequired
+          instructions={
+            <span>
+              Please enter your search
+            </span>
+          }
+          value={this.state.searchInput}
           label={
             <span>
               <Icon source="fa" icon={faSearch} />

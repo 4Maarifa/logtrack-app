@@ -12,7 +12,7 @@ const WeatherService = {
     return new Promise((resolve, reject) => {
       WeatherDataService.getByLatAndLon(longitudeLitteral, latitudeLitteral)
         .then(result => {
-          if (!!result) {
+          if(!!result) {
             resolve(result);
           }
           else {

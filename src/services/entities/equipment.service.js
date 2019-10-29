@@ -1,4 +1,4 @@
-import ERights from './../../classes/enums/ERights';
+import { ERights } from './../right.service';
 
 import DataService, { ensureFilledFields, migratePrototype } from './../data.service';
 import FirebaseService from './../firebase.service';
@@ -15,32 +15,32 @@ const EquipmentService = {
     [ERights.RIGHT_EQUIPMENT_DELETE]: () => false
   },
   create(equipment) {
-    if (!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_CREATE]()) {
+    if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_CREATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create an Equipment' });
     }
 
-    if (!equipment instanceof Equipment) {
+    if(!equipment instanceof Equipment) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'Equipment' });
     }
 
-    if (!ensureFilledFields(equipment, ['companyId', 'identification', 'equipmentModelId'])) {
+    if(!ensureFilledFields(equipment, ['companyId', 'identification', 'equipmentModelId'])) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['companyId', 'identification', 'equipmentModelId'] });
     }
 
-    if (equipment.companyId !== DataService.computed.activeRole.companyId) {
+    if(equipment.companyId !== DataService.computed.activeRole.companyId) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
     return FirebaseService.getDb().collection('equipments').add(migratePrototype(equipment));
   },
   get(equipmentId) {
-    if (!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_GET]()) {
+    if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get an Equipment' });
     }
     return FirebaseService.getDb().collection('equipments').doc(equipmentId).get();
   },
   list() {
-    if (!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_LIST]()) {
+    if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Equipments' });
     }
 
@@ -55,33 +55,33 @@ const EquipmentService = {
     });
   },
   update(equipment) {
-    if (!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_UPDATE]()) {
+    if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update an Equipment' });
     }
 
-    if (!equipment instanceof Equipment) {
+    if(!equipment instanceof Equipment) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'Equipment' });
     }
 
-    if (!ensureFilledFields(equipment, ['companyId', 'identification', 'equipmentModelId'])) {
+    if(!ensureFilledFields(equipment, ['companyId', 'identification', 'equipmentModelId'])) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['companyId', 'identification', 'equipmentModelId'] });
     }
 
-    if (equipment.companyId !== DataService.computed.activeRole.companyId) {
+    if(equipment.companyId !== DataService.computed.activeRole.companyId) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
     return FirebaseService.getDb().collection('equipments').doc(equipment.id).set(migratePrototype(equipment));
   },
   updateField(equipmentId, equipmentField) {
-    if (!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_UPDATE]()) {
+    if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update an Equipment' });
     }
     
     return FirebaseService.getDb().collection('equipments').doc(equipmentId).update(equipmentField);
   },
   delete(equipmentId) {
-    if (!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_DELETE]()) {
+    if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete an Equipment' });
     }
     
@@ -90,7 +90,7 @@ const EquipmentService = {
 
   // CUSTOM FUNCTIONS
   getAllForCompanyId(companyId) {
-    if (!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_LIST]()) {
+    if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Equipments' });
     }
 

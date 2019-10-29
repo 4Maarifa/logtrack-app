@@ -3,35 +3,31 @@ import { NavLink } from 'react-router-dom';
 import { faSignOut, faUser, faCog, faImage, faIdCardAlt, faUserHeadset, faPlus, faAward,
     faPhoneAlt, faInfoCircle, faExclamationCircle, faTimes, faUpload, faExclamationTriangle, faEnvelope } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
-
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Tabs from './../../Utils/Tabs/Tabs';
 import Loader from './../../Utils/Loader/Loader';
 import Icon from './../../Utils/Icon/Icon';
 
-import ESettings, { ESettingsDetails } from './../../../classes/enums/ESettings';
-
 import DataService from './../../../services/data.service';
+import DateService from './../../../services/date.service';
 import ErrorService from './../../../services/error.service';
 import FileService from './../../../services/file.service';
-import ResizeService from './../../../services/resize.service';
 import EmployeeService from './../../../services/entities/employee.service';
 import SupportService from './../../../services/entities/support.service';
+import SettingsService, { ESettings, ESettingsDetails } from './../../../services/settings.service';
 
 import './Profile.scss';
 
 class Profile extends ComponentSafeUpdate {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = Object.assign({
       profilePictureLoading: false,
 
       certificate: '',
 
       supportMessage: '',
-      supportMetadata: {},
-
-      settingChangeLoading: false
+      supportMetadata: {}
     }, DataService.computed.getDefaultComputedValues());
 
     this.profilePicture = React.createRef();
@@ -39,68 +35,63 @@ class Profile extends ComponentSafeUpdate {
 
   componentDidMount = () => {
     super.componentDidMount();
-    this.setStateSafe({observerKey: 
+    this.setState({observerKey: 
       DataService.computed.observeComputedValues((computedValues) => {
-        this.setStateSafe(computedValues, this.computeValues);
+        this.setState(computedValues, this.computeValues);
       })
     });
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
     DataService.computed.unobserveComputedValues(this.state.observerKey);
-  }
+  };
 
-  computeValues() {
-    this.setStateSafe({supportMetadata: {
+  computeValues = () => {
+    this.setState({supportMetadata: {
       userId: this.state.user.uid,
       userName: this.state.employee.firstname + ' ' + this.state.employee.lastname,
       userEmail: this.state.user.email,
       activeRoleId: this.state.employee.activeRoleId,
-      activeRoleCompanyId: this.state.activeRole.companyId,
-      activeRole: this.state.activeRole.role,
-      date: (new Date()).toISOString()
+      activeRoleCompanyId: !!this.state.activeRole ? this.state.activeRole.companyId : null,
+      activeRole: !!this.state.activeRole ? this.state.activeRole.role : null,
+      date: DateService.getCurrentIsoDateString()
     }});
-  }
+  };
 
   removeProfilePicture = () => {
-    this.setStateSafe({profilePictureLoading: true}, () => {
+    this.setState({profilePictureLoading: true}, () => {
       EmployeeService.updateField(this.state.user.uid, { profilePictureUrl: null })
         .then(() => DataService.computed.notifyChanges()
-          .then(() => this.setStateSafe({profilePictureLoading: false})))
+          .then(() => this.setState({profilePictureLoading: false})))
         .catch(ErrorService.manageError);
     });
-  }
+  };
 
   uploadProfilePicture = () => {
-    if (!!this.profilePicture.current.files.length) {
-      this.setStateSafe({profilePictureLoading: true});
+    if(!!this.profilePicture.current.files.length) {
+      this.setState({profilePictureLoading: true});
       FileService.uploadProfilePhoto(this.profilePicture.current.files[0])
         .then(() => {
           FileService.getDownloadURLForProfilePicture()
             .then(url => {
               EmployeeService.updateField(this.state.user.uid, { profilePictureUrl: url })
                 .then(() => DataService.computed.notifyChanges()
-                  .then(() => this.setStateSafe({profilePictureLoading: false})))
+                  .then(() => this.setState({profilePictureLoading: false})))
                 .catch(ErrorService.manageError);
             })
             .catch(ErrorService.manageError);
         })
         .catch(ErrorService.manageError);
     }
-  }
+  };
 
-  handleChange = event => {
-    let newState = {};
-    newState[event.target.getAttribute('data-field')] = event.target.value;
-    this.setStateSafe(newState);
-  }
+  handleChange = event => this.setState({[event.target.getAttribute('data-field')]: event.target.value});
 
   handleSubmitCertificate = event => {
-    console.log('Adding certificate...');
     event.preventDefault();
 
-    if (this.state.employee.certificates.includes(this.state.certificate)) {
+    if(this.state.employee.certificates.includes(this.state.certificate)) {
       ErrorService.warning('You already have this certificate!');
       return;
     }
@@ -110,21 +101,20 @@ class Profile extends ComponentSafeUpdate {
 
     EmployeeService.updateField(this.state.user.uid, {certificates})
       .then(() => DataService.computed.notifyChanges()
-        .then(() => this.setStateSafe({certificate: ''})))
+        .then(() => this.setState({certificate: ''})))
       .catch(ErrorService.manageError);
-  }
+  };
 
   handleSubmitSupport = event => {
-    console.log('Adding support...');
     event.preventDefault();
 
     SupportService.createWithData(this.state.supportMessage, this.state.user.uid, this.state.supportMetadata)
       .then(() => {
-        this.setStateSafe({supportMessage: ''});
+        this.setState({supportMessage: ''});
         ErrorService.success('Your message was received successfully!');
       })
       .catch(ErrorService.manageError);
-  }
+  };
 
   deleteCertificate = index => {
     let certificates = this.state.employee.certificates;
@@ -132,33 +122,7 @@ class Profile extends ComponentSafeUpdate {
     EmployeeService.updateField(this.state.user.uid, {certificates})
       .then(() => DataService.computed.notifyChanges())
       .catch(ErrorService.manageError);
-  }
-
-  getSettingValue = (settingKey) => {
-    if (!!this.state.employee.settings && !!this.state.employee.settings[settingKey]) {
-      return this.state.employee.settings[settingKey];
-    }
-    return ESettingsDetails[settingKey].default;
-  }
-
-  updateSetting = (settingKey, settingValue) => {
-    if (!!this.state.settingChangeLoading) {
-      ErrorService.warning('Settings are already updating. Please wait and repeat your operation.');
-      return;
-    }
-    this.setStateSafe({settingChangeLoading: true});
-
-    let settings = this.state.employee.settings || {};
-    settings[settingKey] = settingValue;
-
-    EmployeeService.updateField(this.state.user.uid, {settings})
-      .then(() => DataService.computed.notifyChanges()
-        .then(() => {
-          this.setStateSafe({settingChangeLoading: false});
-          ResizeService.updateObservers();
-        }))
-      .catch(ErrorService.manageError);
-  }
+  };
 
   /**
    * RENDER
@@ -182,7 +146,7 @@ class Profile extends ComponentSafeUpdate {
               Profile
             </span>,
             content: () => {
-              if (!this.state.user) {
+              if(!this.state.user) {
                 return <div className="tab-content">
                   <Loader></Loader>
                 </div>;
@@ -366,12 +330,6 @@ class Profile extends ComponentSafeUpdate {
               Settings
             </span>,
             content: () => <div className="tab-content">
-              {!!this.state.settingChangeLoading &&
-                <h2 className="settings-loading">
-                  <Loader></Loader>
-                  Settings are updating...
-                </h2>
-              }
               <div className="settings-container">
                 {Object.keys(ESettings).map(settingKey => 
                   <div className="setting-container" key={settingKey}>
@@ -381,8 +339,8 @@ class Profile extends ComponentSafeUpdate {
                     }
                     <ul>
                       {ESettingsDetails[settingKey].options.map(settingOption =>
-                        <li key={settingOption.value} className={(this.getSettingValue(settingKey) === settingOption.value ? 'selected' : '')}
-                          onClick={() => this.updateSetting(settingKey, settingOption.value)}>
+                        <li key={settingOption.value} className={(SettingsService.getSettingValue(settingKey) === settingOption.value ? 'selected' : '')}
+                          onClick={() => SettingsService.updateSetting(settingKey, settingOption.value)}>
                           {settingOption.print()}
                         </li>
                       )}

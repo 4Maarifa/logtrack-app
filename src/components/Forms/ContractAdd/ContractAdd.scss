@@ -1,0 +1,32 @@
+.ContractAdd {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: var(--complex-form-width);
+
+    .FormInput, .FormAutoSuggestInput {
+      width: 100%;
+    }
+
+    .type-selection {
+      margin-top: 1rem;
+      position: relative;
+      width: 100%;
+    }
+
+    .ChooseLoadType {
+      width: 100%;
+    }
+
+    .input-company {
+      width: 100%;
+      position: relative;
+      margin: 1.5rem 0 1rem 0;
+    }
+  }
+}

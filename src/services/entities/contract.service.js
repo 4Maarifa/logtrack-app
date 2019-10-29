@@ -1,4 +1,4 @@
-import ERights from './../../classes/enums/ERights';
+import { ERights } from './../right.service';
 
 import DataService, { ensureFilledFields, migratePrototype } from './../data.service';
 import FirebaseService from './../firebase.service';
@@ -6,8 +6,8 @@ import ErrorService from './../error.service';
 
 import Contract from './../../classes/Contract';
 
-import EContractStatus from './../../classes/enums/EContractStatus';
-import ERole from './../../classes/enums/ERole';
+import { EContractStatus } from './../../classes/Contract';
+import { ERole } from './../../classes/Role';
 
 const ContractService = {
   rights: {
@@ -18,19 +18,19 @@ const ContractService = {
     [ERights.RIGHT_CONTRACT_DELETE]: () => false
   },
   create(contract) {
-    if (!ContractService.rights[ERights.RIGHT_CONTRACT_CREATE]()) {
+    if(!ContractService.rights[ERights.RIGHT_CONTRACT_CREATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create a Contract' });
     }
 
-    if (!contract instanceof Contract) {
+    if(!contract instanceof Contract) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'Contract' });
     }
 
-    if (!ensureFilledFields(contract, ['companyOrderId', 'companyExecId', 'contractType', 'status'])) {
+    if(!ensureFilledFields(contract, ['companyOrderId', 'companyExecId', 'contractType', 'status'])) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['companyOrderId', 'companyExecId', 'contractType', 'status'] });
     }
 
-    if (contract.status !== EContractStatus.DRAFT || DataService.computed.activeRole.role !== ERole.MANAGER ||
+    if(contract.status !== EContractStatus.DRAFT || DataService.computed.activeRole.role !== ERole.MANAGER ||
         (DataService.computed.activeRole.companyId !== contract.companyOrderId && DataService.computed.activeRole.companyId !== contract.companyExecId)) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
@@ -38,14 +38,14 @@ const ContractService = {
     return FirebaseService.getDb().collection('contracts').add(migratePrototype(contract));
   },
   get(contractId) {
-    if (!ContractService.rights[ERights.RIGHT_CONTRACT_GET]()) {
+    if(!ContractService.rights[ERights.RIGHT_CONTRACT_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Contract' });
     }
 
     return FirebaseService.getDb().collection('contracts').doc(contractId).get();
   },
   list() {
-    if (!ContractService.rights[ERights.RIGHT_CONTRACT_LIST]()) {
+    if(!ContractService.rights[ERights.RIGHT_CONTRACT_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Contracts' });
     }
 
@@ -60,19 +60,19 @@ const ContractService = {
     });
   },
   update(contract) {
-    if (!ContractService.rights[ERights.RIGHT_CONTRACT_UPDATE]()) {
+    if(!ContractService.rights[ERights.RIGHT_CONTRACT_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Contract' });
     }
 
-    if (!contract instanceof Contract) {
+    if(!contract instanceof Contract) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'Contract' });
     }
 
-    if (!ensureFilledFields(contract, ['companyOrderId', 'companyExecId', 'contractType', 'status'])) {
+    if(!ensureFilledFields(contract, ['companyOrderId', 'companyExecId', 'contractType', 'status'])) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['companyOrderId', 'companyExecId', 'contractType', 'status'] });
     }
 
-    if (contract.status !== EContractStatus.DRAFT || DataService.computed.activeRole.role !== ERole.MANAGER ||
+    if(contract.status !== EContractStatus.DRAFT || DataService.computed.activeRole.role !== ERole.MANAGER ||
       (DataService.computed.activeRole.companyId !== contract.companyOrderId && DataService.computed.activeRole.companyId !== contract.companyExecId)) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
@@ -80,14 +80,14 @@ const ContractService = {
     return FirebaseService.getDb().collection('contracts').doc(contract.id).set(migratePrototype(contract));
   },
   updateField(contractId, contractField) {
-    if (!ContractService.rights[ERights.RIGHT_CONTRACT_UPDATE]()) {
+    if(!ContractService.rights[ERights.RIGHT_CONTRACT_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Contract' });
     }
     
     return FirebaseService.getDb().collection('contracts').doc(contractId).update(contractField);
   },
   delete(contractId) {
-    if (!ContractService.rights[ERights.RIGHT_CONTRACT_DELETE]()) {
+    if(!ContractService.rights[ERights.RIGHT_CONTRACT_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Contract' });
     }
     
@@ -96,7 +96,7 @@ const ContractService = {
 
   // CUSTOM FUNCTIONS
   getAllForCompanyExecId(companyExecId) {
-    if (!ContractService.rights[ERights.RIGHT_CONTRACT_LIST]()) {
+    if(!ContractService.rights[ERights.RIGHT_CONTRACT_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Contracts' });
     }
 
@@ -113,7 +113,7 @@ const ContractService = {
     });
   },
   getAllForCompanyOrderId(companyOrderId) {
-    if (!ContractService.rights[ERights.RIGHT_CONTRACT_LIST]()) {
+    if(!ContractService.rights[ERights.RIGHT_CONTRACT_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Contracts' });
     }
     

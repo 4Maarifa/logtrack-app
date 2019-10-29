@@ -14,7 +14,7 @@ const ResizeService = {
     observers[observerKey] = null;
   },
   updateObservers() {
-    for (const value of Object.values(observers)) {
+    for(const value of Object.values(observers)) {
       !!value && (typeof value === 'function') && value();
     }
   }

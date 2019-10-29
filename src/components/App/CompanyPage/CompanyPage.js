@@ -1,7 +1,7 @@
 import React from 'react';
-import { faUsers, faTruck } from '@fortawesome/pro-solid-svg-icons';
+import { faUsers, faTruck, faWarehouse } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import DataService from './../../../services/data.service';
 import CompanyService from './../../../services/entities/company.service';
@@ -12,6 +12,7 @@ import EmployeeService from './../../../services/entities/employee.service';
 import BrandService from './../../../services/entities/brand.service';
 import EquipmentModelService from './../../../services/entities/equipmentModel.service';
 import EquipmentService from './../../../services/entities/equipment.service';
+import WarehouseService from './../../../services/entities/warehouse.service';
 
 import Loader from './../../Utils/Loader/Loader';
 import Tabs from './../../Utils/Tabs/Tabs';
@@ -20,15 +21,23 @@ import ExTable from './../../Utils/ExTable/ExTable';
 
 import RoleEmployee from './../../Entities/RoleEmployee/RoleEmployee';
 import Equipment from './../../Entities/Equipment/Equipment';
+import Warehouse from './../../Entities/Warehouse/Warehouse';
 
 import './CompanyPage.scss';
 
+/**
+ * Component: CompanyPage
+ * Use by everyone to see details about a company (warehouses / equipments / employees)
+ */
 class CompanyPage extends ComponentSafeUpdate {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = Object.assign({
-      companyId: null,
+      companyId: this.props.match.params.companyid,
       company: null,
+
+      warehouses: {},
+      warehousesLoading: true,
 
       companyEmployees: {},
       companyEmployeesLoading: true,
@@ -43,48 +52,55 @@ class CompanyPage extends ComponentSafeUpdate {
 
   componentDidMount = () => {
     super.componentDidMount();
-    this.setStateSafe({companyId: this.props.match.params.companyid, observerKey: 
+    this.setState({observerKey: 
       DataService.computed.observeComputedValues((computedValues) => {
-        this.setStateSafe(computedValues, this.computeValues);
+        this.setState(computedValues, this.computeValues);
       })
     }, () => {
+      // Compute all data
+      this.computeWarehouses();
       this.computeEmployeesRoles();
       this.computeEquipments();
     });
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
     DataService.computed.unobserveComputedValues(this.state.observerKey);
-  }
+  };
 
   computeValues() {
     CompanyService.get(this.props.match.params.companyid)
-      .then(companyDoc => this.setStateSafe({company: companyDoc.data()}))
+      .then(companyDoc => this.setState({company: companyDoc.data()}))
       .catch(ErrorService.manageError);
-  }
+  };
 
-  /**
-   * EMPLOYEES
-   */
+  computeWarehouses = () => {
+    if(!!this.state.companyId) {
+      WarehouseService.getAllForCompanyId(this.state.companyId)
+        .then(warehouses => this.setState({warehouses: warehouses, warehousesLoading: false}))
+        .catch(ErrorService.manageError);
+    }
+  };
+
   computeEmployeesRoles = () => {
     if(!!this.state.companyId) {
       RoleService.getRolesForCompanyId(this.state.companyId)
-        .then((roles) => {
-          this.setStateSafe({rolesOfCompanyEmployees: roles});
+        .then(roles => {
+          this.setState({rolesOfCompanyEmployees: roles});
   
           var employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(roles).map((roleKey) => roles[roleKey].employeeId));
           EmployeeService.getAllForIdList(employeesIds)
-            .then((employees) => this.setStateSafe({companyEmployees: employees, companyEmployeesLoading: false}))
+            .then((employees) => this.setState({companyEmployees: employees, companyEmployeesLoading: false}))
             .catch(ErrorService.manageError);
         })
         .catch(ErrorService.manageError);
     }
-  }
+  };
 
   computeEquipments = () => {
     BrandService.list()
-      .then((brands) => this.setStateSafe({brands: brands}))
+      .then(brands => this.setState({brands: brands}))
       .catch(ErrorService.manageError);
 
     EquipmentModelService.list()
@@ -93,11 +109,14 @@ class CompanyPage extends ComponentSafeUpdate {
 
     if(!!this.state.activeRole) {
       EquipmentService.getAllForCompanyId(this.state.activeRole.companyId)
-        .then((equipments) => this.setStateSafe({equipments: equipments, equipmentsLoading: false}))
+        .then(equipments => this.setState({equipments: equipments, equipmentsLoading: false}))
         .catch(ErrorService.manageError);
     }
-  }
+  };
 
+  /**
+   * RENDER
+   */
   renderRoleEmployee = (mode, itemKey, itemData) => {
     var employee = {};
     employee[itemKey] = itemData;
@@ -107,7 +126,7 @@ class CompanyPage extends ComponentSafeUpdate {
       roles={UtilsService.filterKeyValueOnPropertyValue(this.state.rolesOfCompanyEmployees, (predicate) => predicate.employeeId === itemKey)}
       options={ {showDraft: false, showActions: false} }
       showDetails={mode === 'active'} />;
-  }
+  };
 
   renderEquipment = (mode, itemKey, itemData) => {
     var equipmentModel = {}, brand = {}, equipment = {};
@@ -121,13 +140,20 @@ class CompanyPage extends ComponentSafeUpdate {
       equipmentModel={equipmentModel}
       options={ {} }
       showDetails={mode === 'active'} />
-  }
+  };
 
-  /**
-   * RENDER
-   */
+  renderWarehouse = (mode, itemKey, itemData) => {
+    var warehouse = {};
+    warehouse[itemKey] = itemData;
+
+    return <Warehouse key={itemKey}
+      warehouse={warehouse}
+      options={ {} }
+      showDetails={mode === 'active'} />
+  };
+
   render() {
-    if (!this.state.company) {
+    if(!this.state.company) {
       return (
         <div className="CompanyPage">
           <Loader></Loader>
@@ -144,20 +170,27 @@ class CompanyPage extends ComponentSafeUpdate {
           }
           <span>{this.state.company.name}</span>
         </div>
-        <Tabs default="employees" tabs={{
+        <Tabs default="warehouses" tabs={{
+          warehouses: {
+            name: () => <span>
+              <Icon source="fa" icon={faWarehouse} />
+              Warehouses
+            </span>,
+            content: () => <ExTable key="warehouses" items={this.state.warehouses} renderItem={this.renderWarehouse} header={['Name', '']} loading={this.state.warehousesLoading} />
+          },
           employees: {
             name: () => <span>
               <Icon source="fa" icon={faUsers} />
               Employees
             </span>,
-            content: () => <ExTable key="employees" items={this.state.companyEmployees} renderItem={this.renderRoleEmployee} header={['Name', 'Roles']} loading={this.state.companyEmployeesLoading}></ExTable>
+            content: () => <ExTable key="employees" items={this.state.companyEmployees} renderItem={this.renderRoleEmployee} header={['Name', 'Roles']} loading={this.state.companyEmployeesLoading}/>
           },
           equipments: {
             name: () => <span>
               <Icon source="fa" icon={faTruck} />
               Equipments
             </span>,
-            content: () => <ExTable key="equipments" items={this.state.equipments} renderItem={this.renderEquipment} header={['Identification', 'Model']} loading={this.state.equipmentsLoading}></ExTable>
+            content: () => <ExTable key="equipments" items={this.state.equipments} renderItem={this.renderEquipment} header={['Identification', 'Model']} loading={this.state.equipmentsLoading}/>
           }
         }}></Tabs>
       </div>

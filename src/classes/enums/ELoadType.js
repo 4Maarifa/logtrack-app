@@ -19,11 +19,12 @@ const ELoadType = Object.freeze({
     RAW_MATERIALS: {
         code: 'RAW_MATERIALS', 
         name: 'Raw Materials', 
+        icon: <Icon source="custom" icon="Rocks" />,
         subTypes: {
             WATER: {code: 'WATER', name: 'Water', icon: <Icon source="fa" icon={faWater} />, 
                 cooled: [ELoadCool.NONE], 
                 measures: [ELoadMeasure.CONTAINER, ELoadMeasure.VOLUME, ELoadMeasure.WEIGHT]},
-            PLANTS: {code: 'PLANTS', name: 'PLANTS', icon: <Icon source="fa" icon={faSeedling} />, 
+            PLANTS: {code: 'PLANTS', name: 'Plants', icon: <Icon source="fa" icon={faSeedling} />, 
                 cooled: [ELoadCool.NONE, ELoadCool.REFRIGERATED, ELoadCool.STABLE],  
                 measures: [ELoadMeasure.CONTAINER, ELoadMeasure.PALLET, ELoadMeasure.WEIGHT]},
             WOOD: {code: 'WOOD', name: 'Wood', icon: <Icon source="fa" icon={faTrees} />, 
@@ -42,6 +43,7 @@ const ELoadType = Object.freeze({
     RAW_FOOD: {
         code: 'RAW_FOOD',
         name: 'Raw Food',
+        icon: <Icon source="fa" icon={faCarrot} />,
         subTypes: {
             CEREALS: {code: 'CEREALS', name: 'Cereals', icon: <Icon source="fa" icon={faWheat} />, 
                 cooled: [ELoadCool.NONE],  
@@ -68,6 +70,7 @@ const ELoadType = Object.freeze({
     TRANSFORMED_FOOD: {
         code: 'TRANSFORMED_FOOD',
         name: 'Transformed Food',
+        icon: <Icon source="fa" icon={faPizzaSlice} />,
         subTypes: {
             BISCUITS: {code: 'BISCUITS', name: 'Biscuits', icon: <Icon source="fa" icon={faCookie} />, 
                 cooled: [ELoadCool.NONE, ELoadCool.STABLE],  
@@ -112,6 +115,7 @@ const ELoadType = Object.freeze({
     MANUFACTURED_PRODUCTS: {
         code: 'MANUFACTURED_PRODUCTS',
         name: 'Manufactured Products',
+        icon: <Icon source="fa" icon={faCouch} />,
         subTypes: {
             ELECTRONICS: {code: 'ELECTRONICS', name: 'Electronics', icon: <Icon source="fa" icon={faTv} />, 
                 cooled: [ELoadCool.NONE, ELoadCool.STABLE],  
@@ -156,6 +160,7 @@ const ELoadType = Object.freeze({
     TRANSPORT: {
         code: 'TRANSPORT',
         name: 'Transport',
+        icon: <Icon source="fa" icon={faContainerStorage} />,
         subTypes: {
             CONTAINER: {code: 'CONTAINER', name: 'Container', icon: <Icon source="fa" icon={faContainerStorage} />,
                 cooled: [ELoadCool.NONE],
@@ -168,6 +173,7 @@ const ELoadType = Object.freeze({
     EQUIPMENT: {
         code: 'EQUIPMENT',
         name: 'Equipment',
+        icon: <Icon source="fa" icon={faPlug} />,
         subTypes: {
             SPORTS_EQUIPMENT: {code: 'SPORTS_EQUIPMENT', name: 'Sports Equipment', icon: <Icon source="fa" icon={faBaseball} />, 
                 cooled: [ELoadCool.NONE, ELoadCool.STABLE],  
@@ -206,6 +212,7 @@ const ELoadType = Object.freeze({
     LIVE_ANIMALS: {
         code: 'LIVE_ANIMALS',
         name: 'Live Animals',
+        icon: <Icon source="fa" icon={faElephant} />,
         subTypes: {
             BARN_LIVE_ANIMALS: {code: 'BARN_LIVE_ANIMALS', name: 'Barn Animals', icon: <Icon source="fa" icon={faPig} />, 
                 cooled: [ELoadCool.NONE, ELoadCool.STABLE],  
@@ -223,6 +230,7 @@ const ELoadType = Object.freeze({
     HAZARD: {
         code: 'HAZARD',
         name: 'Hazard',
+        icon: <Icon source="fa" icon={faSkullCrossbones} />,
         subTypes: {
             BIOHAZARD: {code: 'BIOHAZARD', name: 'Biohazard', icon: <Icon source="fa" icon={faBiohazard} />, 
                 cooled: [ELoadCool.FROZEN, ELoadCool.HEATED, ELoadCool.NONE, ELoadCool.REFRIGERATED, ELoadCool.STABLE],  
@@ -249,6 +257,7 @@ const ELoadType = Object.freeze({
     TRASH: {
         code: 'TRASH',
         name: 'Trash',
+        icon: <Icon source="fa" icon={faTrash} />,
         subTypes: {
             TRASH: {code: 'TRASH', name: 'Trash', icon: <Icon source="fa" icon={faTrash} />, 
                 cooled: [ELoadCool.NONE],  
@@ -260,6 +269,7 @@ const ELoadType = Object.freeze({
     MEDICAL: {
         code: 'MEDICAL',
         name: 'Medical',
+        icon: <Icon source="fa" icon={faSyringe} />,
         subTypes: {
             PHARMACEUTICALS: {code: 'PHARMACEUTICALS', name: 'Pharmaceuticals', icon: <Icon source="fa" icon={faPills} />, 
                 cooled: [ELoadCool.NONE, ELoadCool.REFRIGERATED, ELoadCool.STABLE],  

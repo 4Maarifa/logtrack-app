@@ -1,35 +1,34 @@
 import React from 'react';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import './Company.scss';
 
 class Company extends ComponentSafeUpdate {
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
     this.state = {
-      company: null,
+      company: this.props.company,
     };
   }
 
   componentDidMount = () => {
     super.componentDidMount();
-    this.setStateSafe({company: this.props.company});
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
-  }
+  };
 
   render() {
-    if (!this.state.company) {
+    if(!this.state.company) {
       return (<></>);
     }
 
     var companyKey = Object.keys(this.state.company)[0];
     
     return (
-      <div>
+      <div className="Company">
         <img width="20" height="20" alt={this.state.company[companyKey].name + '\'s logo'} src={this.state.company[companyKey].logoURL} />
         {this.state.company[companyKey].name}
       </div>

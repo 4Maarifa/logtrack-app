@@ -1,36 +1,34 @@
 import React from 'react';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
-import Role from '../Role/Role';
+import Role from './../Role/Role';
 
 import './RoleCompany.scss';
 
 class RoleCompany extends ComponentSafeUpdate {
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
     this.state = {
-      roles: [],
-      company: null,
-      options: {}
+      roles: props.roles,
+      company: props.company,
+      options: props.options
     };
   }
 
   componentDidMount = () => {
     super.componentDidMount();
-    this.setStateSafe({
-      company: this.props.company, 
-      roles: this.props.roles, 
-      options: this.props.options
-    });
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
-  }
+  };
 
+  /**
+   * RENDER
+   */
   render() {
-    if (!this.state.company || !Object.keys(this.state.roles).length) {
+    if(!this.state.company || !Object.keys(this.state.roles).length) {
       return (<></>);
     }
     var companyId = Object.keys(this.state.company)[0];

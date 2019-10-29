@@ -1,16 +1,16 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import ComponentSafeUpdate from '../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import './ActionButton.scss';
 
 class ActionButton extends ComponentSafeUpdate {
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
     this.state = {
-      icon: null,
-      actions: [],
+      icon: props.icon,
+      actions: props.actions,
 
       deployed: false
     };
@@ -18,16 +18,13 @@ class ActionButton extends ComponentSafeUpdate {
 
   componentDidMount = () => {
     super.componentDidMount();
-    this.setStateSafe({icon: this.props.icon, actions: this.props.actions});
-  }
+  };
 
   componentWillUnmount = () => {
     super.componentWillUnmount();
-  }
+  };
 
-  toggleDisplay = () => {
-    this.setStateSafe({deployed: !this.state.deployed});
-  }
+  toggleDisplay = () => this.setState({deployed: !this.state.deployed});
 
   /**
    * RENDER
