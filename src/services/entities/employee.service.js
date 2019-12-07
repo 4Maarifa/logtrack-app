@@ -5,6 +5,7 @@ import FirebaseService from './../firebase.service';
 import ErrorService from './../error.service';
 
 import Employee from './../../classes/Employee';
+import ESearchType from './../../classes/enums/ESearchType';
 
 const EmployeeService = {
   rights: {
@@ -47,11 +48,11 @@ const EmployeeService = {
     var employees = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getDb().collection('employees').get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((employeeDoc) => employees[employeeDoc.id] = employeeDoc.data());
+            .then(querySnapshot => {
+                querySnapshot.forEach(employeeDoc => employees[employeeDoc.id] = employeeDoc.data());
                 resolve(employees);
             })
-            .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+            .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
   update(employee) {
@@ -102,14 +103,14 @@ const EmployeeService = {
     var employees = {};
 
     return new Promise((resolve, reject) => {
-      idList.forEach((employeeId) => promises.push(EmployeeService.get(employeeId)));
+      idList.forEach(employeeId => promises.push(EmployeeService.get(employeeId)));
 
       Promise.all(promises)
-        .then((employeeDocs) => {
-          employeeDocs.forEach((employeeDoc) => employees[employeeDoc.id] = employeeDoc.data())
+        .then(employeeDocs => {
+          employeeDocs.forEach(employeeDoc => employees[employeeDoc.id] = employeeDoc.data())
           resolve(employees);
         })
-        .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });            
   },
   activateRole(roleId) {
@@ -130,19 +131,12 @@ const EmployeeService = {
       .then(DataService.computed.notifyChanges)
       .catch(ErrorService.manageError);
   },
-  searchOnFirstname(term) {
-    if(!EmployeeService.rights[ERights.RIGHT_EMPLOYEE_LIST]()) {
-      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Employees' });
-    }
-
-    return FirebaseService.getDb().collection('employees').orderBy('firstname').startAt(term.toUpperCase()).endAt(term.toLowerCase() + "\uf8ff").get();
-  },
-  searchOnLastname(term) {
-    if(!EmployeeService.rights[ERights.RIGHT_EMPLOYEE_LIST]()) {
-      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Employees' });
-    }
-
-    return FirebaseService.getDb().collection('employees').orderBy('lastname').startAt(term.toUpperCase()).endAt(term.toLowerCase() + "\uf8ff").get();
+  search(term) {
+    return new Promise((resolve, reject) => {
+      DataService.computed.search([ESearchType.EMPLOYEES], term, null)
+        .then(results => resolve(results.data.employees))
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
+    });
   }
 };
 

@@ -14,19 +14,8 @@ class FormDebounceInput extends ComponentSafeUpdate {
   constructor (props) {
     super(props);
     this.state = {
-      onValueChange: props.onValueChange,
-
-      inputType: this.props.inputType ? this.props.inputType : 'text',
-      fieldName: props.fieldName,
-      inputName: props.inputName,
-      inputAutoComplete: props.inputAutoComplete,
-      inputRequired: props.inputRequired,
-      inputPattern: props.inputPattern,
-
-      value: !!this.props.value ? this.props.value : '',
-      label: props.label,
-
-      instructions: props.instructions,
+      value: props.value || '',
+      lastPropValue: props.value,
 
       hover: false
     };
@@ -40,9 +29,21 @@ class FormDebounceInput extends ComponentSafeUpdate {
     super.componentWillUnmount();
   };
 
-  onChange = event => {
-    this.setState({value: event.target.value});
-    !!this.state.onValueChange && this.state.onValueChange(event.target.value, this.state.fieldName);
+  shouldComponentUpdate = (nextProps, nextState) => {
+    if(nextProps.value !== this.state.lastPropValue) {
+      this.setState({lastPropValue: nextProps.value}, () => {
+        this.onChange(nextProps.value);
+      });
+    }
+    else if(nextState.value !== this.state.value) {
+      this.setState({value: nextState.value});
+    }
+    return true;
+  };
+
+  onChange = value => {
+    this.setState({value});
+    !!this.props.onValueChange && this.props.onValueChange(value, this.props.fieldName);
   };
 
   /**
@@ -52,34 +53,34 @@ class FormDebounceInput extends ComponentSafeUpdate {
     const inputId = uuidv4();
     return (
       <div className={'FormDebounceInput '
-        + (!!this.state.fieldName ? 'input-' + this.state.fieldName : '')}>
+        + (!!this.props.fieldName ? 'input-' + this.props.fieldName : '')}>
 
         <DelayInput
           id={inputId}
           delayTimeout={1100}
           className={'input ' + (!this.state.value ? 'input--empty' : '')}
-          type={this.state.inputType}
+          type={this.state.inputType || 'text'}
           value={this.state.value}
-          name={this.state.inputName}
-          autoComplete={this.state.inputAutoComplete}
-          pattern={this.state.inputPattern}
-          onChange={this.onChange}
-          required={this.state.inputRequired} />
+          name={this.props.inputName}
+          autoComplete={this.props.inputAutoComplete}
+          pattern={this.props.inputPattern}
+          onChange={e => this.onChange(e.target.value)}
+          required={this.props.inputRequired} />
         <span className="indicator"
           onMouseOver={() => this.setState({ hover: true })}
           onMouseOut={() => this.setState({ hover: false })}>
 
-          <Icon className="valid" source="fa" icon={faCheck} />
-          <Icon className="invalid" source="fa" icon={faTimes} />
+          <Icon containerclassname="valid" source="fa" icon={faCheck} />
+          <Icon containerclassname="invalid" source="fa" icon={faTimes} />
         </span>
-        {!!this.state.label && 
+        {!!this.props.label && 
           <label htmlFor={inputId}>
-            {this.state.label}
+            {this.props.label}
           </label>
         }
-        {!!this.state.instructions && <Tooltip 
+        {!!this.props.instructions && <Tooltip 
           show={this.state.hover} 
-          label={this.state.instructions}
+          label={this.props.instructions}
           tooltipPosition={ETooltipPosition.BOTTOM} 
           tooltipTrianglePosition={ETooltipTrianglePosition.END} />}
       </div>

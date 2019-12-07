@@ -1,7 +1,9 @@
 import React from 'react';
+import { faThLarge, faAlignJustify } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../ComponentSafeUpdate/ComponentSafeUpdate';
 import Loader from './../Loader/Loader';
+import Icon from './../Icon/Icon';
 
 import './ExTable.scss';
 
@@ -9,15 +11,7 @@ class ExTable extends ComponentSafeUpdate {
   constructor(props) {
     super(props);
     this.state = {
-      header: (!!props.header) ? props.header : [],
-      
-      items: (!!props.items) ? props.items : {},
-
-      activeItem: (!!props.default) ? props.default : null,
-      renderItem: (!!props.renderItem) ? props.renderItem : null,
-      onActivateItem: props.onActivateItem,
-
-      loading: props.loading
+      view: 'ITEMS'
     };
   }
 
@@ -29,45 +23,45 @@ class ExTable extends ComponentSafeUpdate {
     super.componentWillUnmount();
   };
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if(Object.keys(nextProps.items).length !== Object.keys(this.state.items).length) {
-      this.setState({items: nextProps.items});
-      return true;
+  shouldComponentUpdate(_, nextState) {
+    if(nextState.view !== this.state.view) {
+      this.setState({view: nextState.view});
     }
-    if(nextProps.loading !== this.state.loading) {
-      this.setState({loading: nextProps.loading});
-      return true;
-    }
-    return (nextState.activeItem !== this.state.activeItem);
+    return true;
   };
 
-  activateItem = itemKey => {
-    this.setState({activeItem: (itemKey === this.state.activeItem ? null : itemKey)});
-    !!this.state.onActivateItem && this.state.onActivateItem(itemKey);
-  };
+  setView = view => this.setState({view});
   
   render() {
     return (
-      <div className="ExTable">
-        {!!this.state.header && !!this.state.header.length &&
-          <div className="header">
-            {this.state.header.map(header =>
-              <span key={header}>{header}</span>  
-            )}
+      <div className={'ExTable ' + (this.state.view === 'LIST' ? 'ExTable--list' : 'ExTable--items')}>
+        <div className="header-container">
+          {!!this.props.header && !!this.props.header.length &&
+            <div className="header">
+              {this.props.header.map(header =>
+                <span key={header}>{header}</span>  
+              )}
+            </div>
+          }
+          <div className="view-switcher">
+            <span className={'view ' + (this.state.view === 'ITEMS' ? 'view--active' : '')} onClick={() => this.setView('ITEMS')}>
+              <Icon source="fa" icon={faThLarge} />
+            </span>
+            <span className={'view ' + (this.state.view === 'LIST' ? 'view--active' : '')} onClick={() => this.setView('LIST')}>
+              <Icon source="fa" icon={faAlignJustify} />
+            </span>
           </div>
-        }
+        </div>
         <ul>
-          {!!this.state.loading && <li className="loader">
+          {!!this.props.loading && <li className="loader">
             <Loader></Loader>
           </li>}
-          {
-            Object.keys(this.state.items).map((itemKey) => 
-              <li key={itemKey} className={'item ' + ((itemKey === this.state.activeItem) ? 'item--selected' : '')} onClick={() => this.activateItem(itemKey)}>
-                {this.state.renderItem((itemKey === this.state.activeItem) ? 'active' : 'unactive', itemKey, this.state.items[itemKey])}
-              </li>
-            )
+          {!this.props.loading && Object.keys(this.props.items).map(itemKey => 
+            <li key={itemKey} className="item">
+              {this.props.renderItem(itemKey, this.props.items[itemKey])}
+            </li>)
           }
-          {!this.state.loading && !Object.keys(this.state.items).length && 
+          {!this.props.loading && !Object.keys(this.props.items).length && 
             <li className="no-item">Nothing to show!</li>
           }
         </ul>

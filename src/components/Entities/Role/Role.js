@@ -2,10 +2,11 @@ import React from 'react';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
+import DataService from './../../../services/data.service';
 import RoleService from './../../../services/entities/role.service';
-import UtilsService from './../../../services/utils.service';
+import DateService from './../../../services/date.service';
 
-import { RoleIcons } from './../../../classes/Role';
+import { RoleDetails } from './../../../classes/Role';
 
 import './Role.scss';
 
@@ -13,10 +14,7 @@ class Role extends ComponentSafeUpdate {
   constructor (props) {
     super(props);
     this.state = {
-      role: props.role,
-      actions: null,
-
-      options: props.options
+      actions: null
     };
   }
 
@@ -30,16 +28,24 @@ class Role extends ComponentSafeUpdate {
   };
 
   render() {
-    if(!this.state.role) {
+    if(!this.props.role) {
       return (<div></div>);
     }
-    var roleId = Object.keys(this.state.role)[0];
+    var roleId = Object.keys(this.props.role)[0];
 
     return (
-      <div className="Role">
-        {RoleIcons[this.state.role[roleId].role]}
-        {UtilsService.capitalize(this.state.role[roleId].role)}<br/>
-        {!!this.state.options.showActions && this.state.actions}
+      <div
+       className={'Role ' + (!!DataService.computed.employee && DataService.computed.employee.activeRoleId === roleId ? 'Role--active' : '')} 
+       title={'' + (!this.props.role[roleId].revokedIsoDate ? 
+        'Requested on ' + DateService.getMonthYearString(DateService.getDateFromIsoString(this.props.role[roleId].creationIsoDate)) : 
+        'Revoked on ' + DateService.getMonthYearString(DateService.getDateFromIsoString(this.props.role[roleId].revokedIsoDate))) }
+       data-id={roleId}>
+        <span>
+          {RoleDetails[this.props.role[roleId].role].icon}
+          {RoleDetails[this.props.role[roleId].role].name}
+          {!!DataService.computed.employee && DataService.computed.employee.activeRoleId === roleId && <span className="badge">active</span> }
+        </span>
+        {this.state.actions}
       </div>
     );
   }

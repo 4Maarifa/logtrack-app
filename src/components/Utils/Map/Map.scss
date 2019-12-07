@@ -27,9 +27,9 @@
         justify-content: center;
         align-items: center;
         flex: 0 0 1.5rem;
-        background-color: #FFFFFF;
+        background-color: var(--second);
         border-radius: .75rem;
-        color: var(--second);
+        color: #FFFFFF;
       }
 
       .ol-attributions-content {
@@ -68,13 +68,13 @@
 
       .ol-layer-selector-selected {
         padding: .2rem;
-        background-color: #FFFFFF;
+        background-color: var(--second);
         border-radius: 2px;
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: auto;
-        color: var(--second);
+        color: #FFFFFF;
       }
 
       .ol-layer-selector-others {

@@ -34,10 +34,8 @@ class Tooltip extends ComponentSafeUpdate {
   constructor (props) {
     super(props);
     this.state = {
-      label: props.label,
       tooltipPosition: (!!this.props.tooltipPosition && !!ETooltipPosition[this.props.tooltipPosition]) ? ETooltipPosition[this.props.tooltipPosition] : 'BOTTOM',
       tooltipTrianglePosition: (!!this.props.tooltipTrianglePosition && !!ETooltipTrianglePosition[this.props.tooltipTrianglePosition]) ? ETooltipTrianglePosition[this.props.tooltipTrianglePosition] : 'MIDDLE',
-      show: props.show
     };
   }
 
@@ -49,24 +47,17 @@ class Tooltip extends ComponentSafeUpdate {
     super.componentWillUnmount();
   };
 
-  shouldComponentUpdate(nextProps, _) {
-    if(nextProps.show !== this.state.show) {
-      this.setState({ show: nextProps.show });
-    }
-    return true;
-  };
-
   /**
    * RENDER
    */
   render() {
-    if(!this.state.show) {
+    if(!this.props.show) {
       return null;
     }
     return (
       <div className={'Tooltip ' + ETooptipPositionCss[this.state.tooltipPosition]}>
         <span className={'triangle ' + ETooptipTrianglePositionCss[this.state.tooltipTrianglePosition]}></span>
-        <span className="label">{this.state.label}</span>
+        <span className="label">{this.props.label}</span>
       </div>
     );
   }

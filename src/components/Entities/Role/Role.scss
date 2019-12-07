@@ -1,21 +1,22 @@
 .Role {
   display: flex;
   flex-direction: row;
-  background-color: var(--second);
-  height: 1.8rem;
-  border-radius: var(--border-radius);
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  color: #FFFFFF;
-  margin: 0 .5rem;
-  padding: 0 .5rem;
+  padding: .2rem;
 
-  & > svg {
-    margin-right: .25rem;
+  & + .Role {
+    border-top: 1px solid #DDDDDD;
+  }
+
+  & > .Icon {
+    margin: 0 .25rem;
   }
 
   .Role-actions {
     margin: 0 0 0 .5rem;
+    display: flex;
+    flex-direction: row;
 
     svg {
       margin-right: .25rem;
@@ -23,12 +24,26 @@
 
     button {
       cursor: pointer;
-      border: 0;
-      background-color: #FFFFFF;
+      border: none;
+      background-color: transparent;
       height: 1.4rem;
+      box-shadow: none;
       padding: 0 .5rem;
-      border-radius: var(--border-radius);
-      color: var(--second);
+      color: #000000;
+      transition: color .5s;
+
+      &:hover {
+        color: var(--second)
+      }
+    }
+  }
+
+  .Role-dates {
+    font-size: 80%;
+    color: var(--gray);
+
+    span + span {
+      margin-left: .5rem;
     }
   }
 }

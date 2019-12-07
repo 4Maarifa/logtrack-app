@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import { faRectangleWide, faEdit, faTruck, faUser, faBuilding } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
@@ -238,6 +238,9 @@ class EquipmentAdd extends ComponentSafeUpdate {
           }
         </Fragment>
       }
+
+      <NavLink className="equipment-model-add-link" to={`/equipment-model-add`}>Can't find what you're looking for? Add yours now!</NavLink>
+
       <span className="fake-label">
         <Icon source="fa" icon={faTruck} />
         Model

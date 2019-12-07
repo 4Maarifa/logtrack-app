@@ -1,5 +1,6 @@
 import React from 'react';
-import { faUsers, faTruck, faWarehouse } from '@fortawesome/pro-solid-svg-icons';
+import { NavLink } from 'react-router-dom';
+import { faUsers, faTruck, faWarehouse, faUserTag } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
@@ -18,10 +19,13 @@ import Loader from './../../Utils/Loader/Loader';
 import Tabs from './../../Utils/Tabs/Tabs';
 import Icon from './../../Utils/Icon/Icon';
 import ExTable from './../../Utils/ExTable/ExTable';
+import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 
 import RoleEmployee from './../../Entities/RoleEmployee/RoleEmployee';
 import Equipment from './../../Entities/Equipment/Equipment';
 import Warehouse from './../../Entities/Warehouse/Warehouse';
+
+import Colors from './../../../assets/Colors';
 
 import './CompanyPage.scss';
 
@@ -46,14 +50,14 @@ class CompanyPage extends ComponentSafeUpdate {
       equipments: {},
       equipmentsLoading: true,
       equipmentModels: {},
-      brands: {}}, 
-      DataService.computed.getDefaultComputedValues());
+      brands: {}
+    }, DataService.computed.getDefaultComputedValues());
   }
 
   componentDidMount = () => {
     super.componentDidMount();
     this.setState({observerKey: 
-      DataService.computed.observeComputedValues((computedValues) => {
+      DataService.computed.observeComputedValues(computedValues => {
         this.setState(computedValues, this.computeValues);
       })
     }, () => {
@@ -70,15 +74,15 @@ class CompanyPage extends ComponentSafeUpdate {
   };
 
   computeValues() {
-    CompanyService.get(this.props.match.params.companyid)
-      .then(companyDoc => this.setState({company: companyDoc.data()}))
+    CompanyService.get(this.state.companyId)
+      .then(companyDoc => this.setState({company: companyDoc.data()}, this.computeEmployeesRoles))
       .catch(ErrorService.manageError);
   };
 
   computeWarehouses = () => {
     if(!!this.state.companyId) {
       WarehouseService.getAllForCompanyId(this.state.companyId)
-        .then(warehouses => this.setState({warehouses: warehouses, warehousesLoading: false}))
+        .then(warehouses => this.setState({warehouses, warehousesLoading: false}))
         .catch(ErrorService.manageError);
     }
   };
@@ -86,12 +90,12 @@ class CompanyPage extends ComponentSafeUpdate {
   computeEmployeesRoles = () => {
     if(!!this.state.companyId) {
       RoleService.getRolesForCompanyId(this.state.companyId)
-        .then(roles => {
-          this.setState({rolesOfCompanyEmployees: roles});
+        .then(rolesOfCompanyEmployees => {
+          this.setState({rolesOfCompanyEmployees});
   
-          var employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(roles).map((roleKey) => roles[roleKey].employeeId));
+          var employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(rolesOfCompanyEmployees).map(roleKey => rolesOfCompanyEmployees[roleKey].employeeId));
           EmployeeService.getAllForIdList(employeesIds)
-            .then((employees) => this.setState({companyEmployees: employees, companyEmployeesLoading: false}))
+            .then(companyEmployees => this.setState({companyEmployees, companyEmployeesLoading: false}))
             .catch(ErrorService.manageError);
         })
         .catch(ErrorService.manageError);
@@ -100,16 +104,16 @@ class CompanyPage extends ComponentSafeUpdate {
 
   computeEquipments = () => {
     BrandService.list()
-      .then(brands => this.setState({brands: brands}))
+      .then(brands => this.setState({brands}))
       .catch(ErrorService.manageError);
 
     EquipmentModelService.list()
-      .then((equipmentModels => this.setState({equipmentModels: equipmentModels})))
+      .then((equipmentModels => this.setState({equipmentModels})))
       .catch(ErrorService.manageError);
 
-    if(!!this.state.activeRole) {
-      EquipmentService.getAllForCompanyId(this.state.activeRole.companyId)
-        .then(equipments => this.setState({equipments: equipments, equipmentsLoading: false}))
+    if(!!this.state.companyId) {
+      EquipmentService.getAllForCompanyId(this.state.companyId)
+        .then(equipments => this.setState({equipments, equipmentsLoading: false}))
         .catch(ErrorService.manageError);
     }
   };
@@ -117,40 +121,32 @@ class CompanyPage extends ComponentSafeUpdate {
   /**
    * RENDER
    */
-  renderRoleEmployee = (mode, itemKey, itemData) => {
-    var employee = {};
-    employee[itemKey] = itemData;
-
-    return <RoleEmployee key={itemKey} 
-      employee={employee} 
+  renderRoleEmployee = (itemKey, itemData) => (
+    <RoleEmployee key={itemKey} 
+      employee={ {[itemKey]: itemData} } 
       roles={UtilsService.filterKeyValueOnPropertyValue(this.state.rolesOfCompanyEmployees, (predicate) => predicate.employeeId === itemKey)}
       options={ {showDraft: false, showActions: false} }
-      showDetails={mode === 'active'} />;
-  };
+      showDetails={true} />
+  );
 
-  renderEquipment = (mode, itemKey, itemData) => {
-    var equipmentModel = {}, brand = {}, equipment = {};
-    equipmentModel[itemData.equipmentModelId] = this.state.equipmentModels[itemData.equipmentModelId];
-    brand[equipmentModel[itemData.equipmentModelId].brand] = this.state.brands[equipmentModel[itemData.equipmentModelId].brand];
-    equipment[itemKey] = itemData;
+  renderEquipment = (itemKey, itemData) => {
+    var equipmentModel = { [itemData.equipmentModelId]: this.state.equipmentModels[itemData.equipmentModelId] }, 
+      brand = { [equipmentModel[itemData.equipmentModelId].brand]: this.state.brands[equipmentModel[itemData.equipmentModelId].brand] };
 
     return <Equipment key={itemKey}
-      equipment={equipment}
+      equipment={ {[itemKey]: itemData} }
       brand={brand}
       equipmentModel={equipmentModel}
       options={ {} }
-      showDetails={mode === 'active'} />
+      showDetails={true} />
   };
 
-  renderWarehouse = (mode, itemKey, itemData) => {
-    var warehouse = {};
-    warehouse[itemKey] = itemData;
-
-    return <Warehouse key={itemKey}
-      warehouse={warehouse}
+  renderWarehouse = (itemKey, itemData) => (
+    <Warehouse key={itemKey}
+      warehouse={ {[itemKey]: itemData} }
       options={ {} }
-      showDetails={mode === 'active'} />
-  };
+      showDetails />
+  );
 
   render() {
     if(!this.state.company) {
@@ -163,12 +159,17 @@ class CompanyPage extends ComponentSafeUpdate {
     return (
       <div className="CompanyPage">
         <div className="company-header" style={{
-          backgroundColor: (this.state.company.color ? this.state.company.color : '#DDDDDD')
+          backgroundColor: (this.state.company.color || Colors.gray)
         }}>
-          {!!this.state.company.logoURL && 
-            <img src={this.state.company.logoURL} alt={this.state.company.name + '\'s logo'} />
-          }
-          <span>{this.state.company.name}</span>
+          <h1>
+            <PageLink type={PageLinkType.COMPANY} entityId={this.state.companyId} entityData={this.state.company} white />
+          </h1>
+          <div className="actions">
+            <NavLink className="action" to={`/role-add/${this.state.companyId}`}>
+              <Icon source="fa" icon={faUserTag} />
+              Request a role
+            </NavLink>
+          </div>
         </div>
         <Tabs default="warehouses" tabs={{
           warehouses: {

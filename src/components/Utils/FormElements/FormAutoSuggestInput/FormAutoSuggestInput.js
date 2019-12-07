@@ -13,21 +13,11 @@ class FormAutoSuggestInput extends ComponentSafeUpdate {
   constructor (props) {
     super(props);
     this.state = {
-      onValueChange: props.onValueChange,
-      onSelectedItemChange: props.onSelectedItemChange,
-      possibleItems: props.possibleItems,
+      value: props.value || '',
+      lastPropValue: props.value,
 
-      fieldName: props.fieldName,
-      inputName: props.inputName,
-      inputAutoComplete: props.inputAutoComplete,
-      inputRequired: props.inputRequired,
-
-      value: !!this.props.value ? this.props.value : '',
-      selectedItemKey: '',
-      selectedItem: null,
-      label: props.label,
-
-      instructions: props.instructions,
+      selectedItemKey: props.selectedItemKey || '',
+      selectedItem: props.selectedItem,
 
       hover: false
     };
@@ -41,46 +31,45 @@ class FormAutoSuggestInput extends ComponentSafeUpdate {
     super.componentWillUnmount();
   }
 
-  shouldComponentUpdate = (nextProps, _) => {
-    if(!!nextProps.possibleItems && 
-        Object.keys(nextProps.possibleItems).length !== Object.keys(this.state.possibleItems).length) {
-      this.setState({possibleItems: nextProps.possibleItems});
+  shouldComponentUpdate = (nextProps, nextState) => {
+    if(nextProps.value !== this.state.lastPropValue) {
+      this.setState({lastPropValue: nextProps.value}, () => {
+        this.onChange(nextProps.value);
+      });
     }
-    if(nextProps.value !== this.state.value) {
-      this.setState({value: nextProps.value});
+    else if(nextState.value !== this.state.value) {
+      this.setState({value: nextState.value});
     }
     return true;
   }
 
-  onChange = event => {
-    this.setState({value: event.target.value});
-    !!this.state.onValueChange && this.state.onValueChange(event.target.value, this.state.fieldName);
+  onChange = value => {
+    this.setState({value});
+    !!this.props.onValueChange && this.props.onValueChange(value, this.props.fieldName);
   }
 
   onItemChange = itemKey => {
     this.setState({
       selectedItemKey: itemKey,
-      selectedItem: this.state.possibleItems[itemKey],
-      possibleItems: {},
+      selectedItem: this.props.possibleItems[itemKey],
       value: ''
     });
-    !!this.state.onValueChange && this.state.onValueChange('', this.state.fieldName);
-    !!this.state.onSelectedItemChange && this.state.onSelectedItemChange(itemKey, this.state.fieldName, this.state.possibleItems[itemKey]);
+    !!this.state.onValueChange && this.state.onValueChange('', this.props.fieldName);
+    !!this.props.onSelectedItemChange && this.props.onSelectedItemChange(itemKey, this.props.fieldName, this.props.possibleItems[itemKey]);
   }
 
   reset = () => {
     this.setState({
       selectedItemKey: '',
       selectedItem: null,
-      possibleItems: {},
       value: ''
     });
-    !!this.state.onSelectedItemChange && this.state.onSelectedItemChange(null, this.state.fieldName);
-    !!this.state.onValueChange && this.state.onValueChange('', this.state.fieldName, null);
+    !!this.props.onSelectedItemChange && this.props.onSelectedItemChange(null, this.props.fieldName);
+    !!this.props.onValueChange && this.props.onValueChange('', this.props.fieldName, null);
   }
 
   isValid = () => {
-    return !this.state.inputRequired || !!this.state.selectedItem;
+    return !this.props.inputRequired || !!this.state.selectedItem;
   }
 
   /**
@@ -91,7 +80,7 @@ class FormAutoSuggestInput extends ComponentSafeUpdate {
     return (
       <div className={'FormAutoSuggestInput ' 
         + (this.isValid() ? 'input--valid ' : 'input--invalid ')
-        + (!!this.state.fieldName ? 'input-' + this.state.fieldName : '')}>
+        + (!!this.props.fieldName ? 'input-' + this.props.fieldName : '')}>
         
         {!this.state.selectedItemKey &&
           <input
@@ -99,9 +88,9 @@ class FormAutoSuggestInput extends ComponentSafeUpdate {
             className={'input ' + (!this.state.value ? 'input--empty' : '')}
             type="text"
             value={this.state.value}
-            name={this.state.inputName}
-            autoComplete={this.state.inputAutoComplete}
-            onChange={this.onChange} />
+            name={this.props.inputName}
+            autoComplete={this.props.inputAutoComplete}
+            onChange={e => this.onChange(e.target.value)} />
         }
 
         {!!this.state.selectedItemKey && !!this.state.selectedItem && 
@@ -116,14 +105,14 @@ class FormAutoSuggestInput extends ComponentSafeUpdate {
         <input 
           className={(!this.state.selectedItem ? 'input--empty' : '')}
           type="hidden" 
-          required={this.state.inputRequired} 
+          required={this.props.inputRequired} 
           value={this.state.selectedItemKey} />
 
-        {!!this.state.possibleItems && !!Object.keys(this.state.possibleItems).length && 
+        {!this.state.selectedItemKey && !!this.props.possibleItems && !!Object.keys(this.props.possibleItems).length && 
           <ul className="items">
-            {Object.keys(this.state.possibleItems).map(key =>
+            {Object.keys(this.props.possibleItems).map(key =>
               <li key={key} onClick={() => this.onItemChange(key)}>
-                {this.state.possibleItems[key].content}
+                {this.props.possibleItems[key].content}
               </li>
             )}
           </ul>
@@ -133,17 +122,17 @@ class FormAutoSuggestInput extends ComponentSafeUpdate {
           onMouseOver={() => this.setState({ hover: true })}
           onMouseOut={() => this.setState({ hover: false })}>
 
-          <Icon className="valid" source="fa" icon={faCheck} />
-          <Icon className="invalid" source="fa" icon={faTimes} />
+          <Icon containerclassname="valid" source="fa" icon={faCheck} />
+          <Icon containerclassname="invalid" source="fa" icon={faTimes} />
         </span>
-        {!!this.state.label && 
+        {!!this.props.label && 
           <label htmlFor={inputId}>
-            {this.state.label}
+            {this.props.label}
           </label>
         }
-        {!!this.state.instructions && <Tooltip 
+        {!!this.props.instructions && <Tooltip 
           show={this.state.hover} 
-          label={this.state.instructions}
+          label={this.props.instructions}
           tooltipPosition={ETooltipPosition.BOTTOM} 
           tooltipTrianglePosition={ETooltipTrianglePosition.END} />}
       </div>

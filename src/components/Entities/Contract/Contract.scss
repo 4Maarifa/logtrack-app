@@ -1,0 +1,14 @@
+.Contract {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  position: relative;
+
+  .contract-status {
+    position: absolute;
+    font-size: 100%;
+    top: -.5rem;
+    right: 1rem;
+    box-shadow: var(--shadow);
+  }
+}

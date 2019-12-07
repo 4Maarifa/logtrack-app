@@ -1,7 +1,8 @@
 .ActionButton {
-  position: absolute;
+  position: fixed;
   bottom: 1rem;
   right: 1rem;
+  z-index: 999;
 
   .button {
     height: 3rem;

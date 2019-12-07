@@ -21,15 +21,16 @@ class Warehouses extends ComponentSafeUpdate {
     super(props);
     this.state = Object.assign({
       warehouses: {},
-      warehousesLoading: true}, 
-      DataService.computed.getDefaultComputedValues());
+      warehousesLoading: true
+    }, DataService.computed.getDefaultComputedValues());
+
     this.map = React.createRef();
   }
 
   componentDidMount = () => {
     super.componentDidMount();
     this.setState({observerKey: 
-      DataService.computed.observeComputedValues((computedValues) => {
+      DataService.computed.observeComputedValues(computedValues => {
         this.setState(computedValues, this.computeWarehouses);
       })
     });
@@ -47,19 +48,18 @@ class Warehouses extends ComponentSafeUpdate {
     if(!!this.state.activeRole) {
       WarehouseService.getAllForCompanyId(this.state.activeRole.companyId)
         .then(warehouses => {
-          Object.keys(warehouses).forEach(warehouseKey => {
-            warehouses[warehouseKey].markerId = this.map.current.addMarker(
-              warehouses[warehouseKey].latitude,
-              warehouses[warehouseKey].longitude,
-              warehouses[warehouseKey].name
-            );
-          });
-          this.map.current.centerOnAllMarkers();
+          if(!!this.map.current) {
+            Object.keys(warehouses).forEach(warehouseKey => {
+              warehouses[warehouseKey].markerId = this.map.current.addMarker(
+                warehouses[warehouseKey].latitude,
+                warehouses[warehouseKey].longitude,
+                warehouses[warehouseKey].name
+              );
+            });
+            this.map.current.centerOnAllMarkers();
+          }
           
-          this.setState({
-            warehouses: warehouses, 
-            warehousesLoading: false
-          });
+          this.setState({warehouses: warehouses, warehousesLoading: false});
         })
         .catch(ErrorService.manageError);
     }
@@ -79,15 +79,12 @@ class Warehouses extends ComponentSafeUpdate {
   /**
    * RENDER
    */
-  renderWarehouse = (mode, itemKey, itemData) => {
-    var warehouse = {};
-    warehouse[itemKey] = itemData;
-
-    return <Warehouse key={itemKey}
-      warehouse={warehouse}
+  renderWarehouse = (itemKey, itemData) => (
+    <Warehouse key={itemKey}
+      warehouse={ {[itemKey]: itemData} }
       options={ {} }
-      showDetails={mode === 'active'} />
-  }
+      showDetails={true} />
+  );
 
   render() {
     return (

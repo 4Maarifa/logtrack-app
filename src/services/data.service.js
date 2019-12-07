@@ -7,6 +7,8 @@ import RoleService from './entities/role.service';
 import CompanyService from './entities/company.service';
 import EmployeeService from './entities/employee.service';
 
+import { ERoleStatus } from './../classes/Role';
+
 const uuidv4 = require('uuid/v4');
 
 export const ensureFilledFields = (object, fields) => {
@@ -49,17 +51,24 @@ const DataService = {
 
                         RoleService.getActiveRoleForEmployeeId(this.computed.user.uid)
                             .then(activeRole => {
-                                DataService.computed.activeRole = activeRole;
-            
                                 if(!!activeRole) {
+                                    if(activeRole.status !== ERoleStatus.CONFIRMED) {
+                                        ErrorService.warning('Your active role was revoked!');
+                                        EmployeeService.unactivateRole()
+                                            .then(() => DataService.computed.notifyChanges())
+                                            .catch(ErrorService.manageError);
+                                    }
+
+                                    DataService.computed.activeRole = activeRole;
                                     CompanyService.get(activeRole.companyId)
-                                        .then((activeRoleCompany) => {
+                                        .then(activeRoleCompany => {
                                             DataService.computed.initialized = true;
                                             DataService.computed.activeRoleCompany = activeRoleCompany.data();
                                             DataService.computed.notifyObservers();
                                             resolve();
                                         }).catch(ErrorService.manageError);
                                 } else {
+                                    DataService.computed.activeRole = null;
                                     DataService.computed.initialized = true;
                                     DataService.computed.activeRoleCompany = null;
                                     DataService.computed.notifyObservers();
@@ -87,6 +96,13 @@ const DataService = {
                     .then(result => resolve(result.data))
                     .catch(e => ErrorService.manageErrorThenReject(e, reject));
             });
+        },
+        search(searchTypeArray, term, companyId) {
+            if(!Array.isArray(searchTypeArray)) {
+                ErrorService.error('The search types passed are not in an array');
+                return;
+            }
+            return FirebaseService.getFirebaseObject().functions().httpsCallable('search')({types: searchTypeArray, term: term.toLowerCase(), companyId});
         },
         getWeatherViaAPI(lon, lat) {
             return new Promise((resolve, reject) => {

@@ -4,7 +4,7 @@ import DataService, { ensureFilledFields, migratePrototype } from './../data.ser
 import FirebaseService from './../firebase.service';
 import ErrorService from './../error.service';
 
-import Chat from '../../classes/Chat';
+import Chat from './../../classes/Chat';
 
 const ChatService = {
   rights: {
@@ -99,7 +99,7 @@ const ChatService = {
       FirebaseService.getDb().collection('chats')
       .where('users', 'array-contains', userId)
       .get()
-      .then((querySnapshot) => {
+      .then(querySnapshot => {
         querySnapshot.forEach(chatDoc => chats[chatDoc.id] = chatDoc.data());
         resolve(chats);
       })

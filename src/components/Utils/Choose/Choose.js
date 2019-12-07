@@ -9,14 +9,7 @@ class Choose extends ComponentSafeUpdate {
   constructor(props) {
     super(props);
     this.state = {
-      items: props.items,
-      multiple: props.multiple,
-
-      onSelectionChange: props.onSelectionChange,
       selection: props.defaultSelection || [],
-      selectionRequired: props.selectionRequired,
-
-      fieldName: props.fieldName
     };
   }
 
@@ -28,22 +21,15 @@ class Choose extends ComponentSafeUpdate {
     super.componentWillUnmount();
   };
 
-  shouldComponentUpdate = (nextProps, _) => {
-    if(Object.keys(nextProps.items).length !== Object.keys(this.state.items).length) {
-      this.setState({items: nextProps.items});
-    }
-    return true;
-  };
-
   onValueChange = itemKey => {
-    if(!!this.state.items[itemKey].disabled) {
+    if(!!this.props.items[itemKey].disabled) {
       return;
     }
 
     var selection = this.state.selection;
-    if(!!this.state.multiple) {
+    if(!!this.props.multiple) {
       if(this.state.selection.includes(itemKey)) {
-        if(!!this.state.selectionRequired && this.state.selection.length <= 1) {
+        if(!!this.props.selectionRequired && this.state.selection.length <= 1) {
           return;
         }
         selection.splice(selection.indexOf(itemKey), 1);
@@ -54,7 +40,7 @@ class Choose extends ComponentSafeUpdate {
       this.setState({selection}, this.notifyParent);
     }
     else {
-      if(!!this.state.selectionRequired && itemKey === selection) {
+      if(!!this.props.selectionRequired && itemKey === selection) {
         return;
       }
       this.setState({selection: null}, () => {
@@ -66,10 +52,10 @@ class Choose extends ComponentSafeUpdate {
     }
   };
 
-  notifyParent = () => !!this.state.onSelectionChange && this.state.onSelectionChange(this.state.selection, this.state.fieldName);
+  notifyParent = () => !!this.props.onSelectionChange && this.props.onSelectionChange(this.state.selection, this.props.fieldName);
 
   isItemActive = itemKey => {
-    if(!!this.state.multiple) {
+    if(!!this.props.multiple) {
       return this.state.selection.includes(itemKey);
     }
     return this.state.selection === itemKey;
@@ -81,13 +67,16 @@ class Choose extends ComponentSafeUpdate {
   render() {
     return (
       <div className="Choose">
-        <ul>
-          {Object.keys(this.state.items).map(key =>
+        <ul role="listbox" tabIndex="0" aria-activedescendant={this.state.selection} aria-multiselectable={this.state.multiple}>
+          {Object.keys(this.props.items).map(key =>
             <li key={key} 
-              className={'' + (this.isItemActive(key) ? 'li--active ' : '') + (!!this.state.items[key].disabled ? 'li--disabled' : '')} 
+              id={key}
+              role="option"
+              aria-selected={this.isItemActive(key)}
+              className={'' + (this.isItemActive(key) ? 'li--active ' : '') + (!!this.props.items[key].disabled ? 'li--disabled' : '')} 
               onClick={() => this.onValueChange(key)}>
                 
-              {this.state.items[key].content}
+              {this.props.items[key].content}
             </li>
           )}
         </ul>

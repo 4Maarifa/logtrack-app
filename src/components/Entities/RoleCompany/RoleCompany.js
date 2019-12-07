@@ -1,47 +1,38 @@
 import React from 'react';
+import { faUserTag } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
+import Icon from './../../Utils/Icon/Icon';
 
 import Role from './../Role/Role';
 
 import './RoleCompany.scss';
 
 class RoleCompany extends ComponentSafeUpdate {
-  constructor (props) {
-    super(props);
-    this.state = {
-      roles: props.roles,
-      company: props.company,
-      options: props.options
-    };
-  }
-
-  componentDidMount = () => {
-    super.componentDidMount();
-  };
-
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-  };
 
   /**
    * RENDER
    */
   render() {
-    if(!this.state.company || !Object.keys(this.state.roles).length) {
-      return (<></>);
+    if(!this.props.company || !Object.keys(this.props.roles).length) {
+      return (<div></div>);
     }
-    var companyId = Object.keys(this.state.company)[0];
+    var companyId = Object.keys(this.props.company)[0];
     
     return (
       <div className="RoleCompany">
-        <img width="20" height="20" alt={this.state.company[companyId].name + '\'s logo'} 
-            src={this.state.company[companyId].logoURL} /><br/>
-        
-        {this.state.company[companyId].name} =>
-        {Object.keys(this.state.roles).map((roleKey) => 
-          <Role key={roleKey} role={ { [roleKey]: this.state.roles[roleKey] } } options={this.state.options}></Role>
-        )}
+        <Icon source="fa" icon={faUserTag} containerclassname="item-icon" />
+        <span className="item-content">
+          <PageLink type={PageLinkType.COMPANY} entityId={companyId} entityData={this.props.company[companyId]} />
+        </span>
+        <div className="item-actions">
+          <div className="roles">
+            {Object.keys(this.props.roles).map(roleKey => 
+              <Role key={roleKey} role={ { [roleKey]: this.props.roles[roleKey] } } options={this.props.options}></Role>
+            )}
+          </div>
+        </div>
       </div>
     );
   }

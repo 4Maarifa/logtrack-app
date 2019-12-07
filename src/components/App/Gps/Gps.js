@@ -26,14 +26,14 @@ class Gps extends ComponentSafeUpdate {
   componentDidMount = () => {
     super.componentDidMount();
     this.setState({observerKey: 
-      DataService.computed.observeComputedValues((computedValues) => {
+      DataService.computed.observeComputedValues(computedValues => {
         this.setState(computedValues);
       })
     });
 
     PermissionService.location.askPermission()
       .then(() => {
-        PermissionService.location.addLocationObserver(this.onUserPositionChanged)
+        PermissionService.location.addLocationObserver(currentUserPosition => this.setState({currentUserPosition}))
           .then(locationObserverKey => this.setState({locationObserverKey}))
           .catch(ErrorService.manageError);
       })
@@ -44,10 +44,6 @@ class Gps extends ComponentSafeUpdate {
     super.componentWillUnmount();
     DataService.computed.unobserveComputedValues(this.state.observerKey);
   };
-
-  onUserPositionChanged = userPosition => {
-    this.setState({currentUserPosition: userPosition});
-  }
 
   /**
    * RENDER

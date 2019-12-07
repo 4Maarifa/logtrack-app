@@ -1,0 +1,53 @@
+.Splash {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  .top-select {
+    display: flex;
+    width: 100%;
+    box-shadow: var(--shadow);
+
+    &-item {
+      flex: 1;
+      height: 100%;
+      cursor: pointer;
+      position: relative;
+      transition: transform .5s, box-shadow .5s;
+
+      &:first-child img {
+        border-radius: var(--border-radius) 0 0 var(--border-radius);
+      }
+      
+      &:last-child img {
+        border-radius: 0 var(--border-radius) var(--border-radius) 0;
+      }
+
+      &.top-select-item--active {
+        box-shadow: var(--shadow);
+        transform: scale(1.1);
+        z-index: 2;
+
+        img {
+          border-radius: var(--border-radius);
+          filter: grayscale(0%);
+        }
+      }
+
+      img {
+        height: 100%;
+        width: 100%;
+        filter: grayscale(100%);
+        transition: border-radius .5s, filter .5s;
+      }
+
+      h2 {
+        position: absolute;
+        bottom: .5rem;
+        left: .2rem;
+        color: #FFFFFF;
+        text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+      }
+    }
+  }
+}

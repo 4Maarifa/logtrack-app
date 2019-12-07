@@ -26,6 +26,13 @@ const DateService = {
     !withYear && delete DATE_TRANSFORM_OPTIONS.year;
     return date.toLocaleDateString([], DATE_TRANSFORM_OPTIONS);
   },
+  getMonthYearString(date) {
+    let DATE_TRANSFORM_OPTIONS = {
+      year: 'numeric',
+      month: '2-digit'
+    };
+    return date.toLocaleDateString([], DATE_TRANSFORM_OPTIONS);
+  },
   getTimeString(date) {
     const TIME_TRANSFORM_OPTIONS = {
       hour: '2-digit',

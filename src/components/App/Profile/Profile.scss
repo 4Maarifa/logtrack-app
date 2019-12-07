@@ -2,6 +2,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 
   input[type="file"] {
     display: none;
@@ -12,7 +13,6 @@
 
     &, &:hover, &:active, &:focus, &:visited, &:link {
       color: var(--red);
-      text-decoration: none;
     }
 
     svg {
@@ -22,11 +22,10 @@
 
   .profile-title {
     font-size: 120%;
-    font-weight: normal;
     display: flex;
     align-items: center;
     margin-bottom: .5rem;
-    margin-top: 2rem;
+    margin-top: 1.1rem;
 
     svg {
       margin-right: .5rem;
@@ -35,7 +34,7 @@
     &:after {
       content: '';
       height: 3px;
-      margin: 0 .5rem;
+      margin: 0 0 0 1rem;
       background-color: var(--second);
       display: block;
       flex: 1;
@@ -45,6 +44,7 @@
 
   .profile-picture-container {
     height: 7rem;
+    flex: 0 0 7rem;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -100,11 +100,6 @@
         display: flex;
         flex-direction: row;
       }
-
-      h3 {
-        margin: 0;
-        font-weight: normal;
-      }
     }
   }
 
@@ -157,102 +152,256 @@
 
         input {
           padding: .5rem;
-          border-radius: var(--border-radius) var(--border-radius) 0 0;
+          border-radius: var(--border-radius);
           border: 0;
-          border-bottom: 1px solid var(--second);
+          cursor: not-allowed;
         }
       }
     }
   }
 
-  .certificates-container {
+  .bottom-container {
     flex: 1;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 
-    ul.certificates {
+    .certificates-container {
       display: flex;
+      flex-direction: column;
       flex: 1;
-      flex-direction: row;
-      flex-flow: wrap;
-      padding: 0;
-      margin: 0;
-      align-content: flex-start;
-      list-style-type: none;
-  
-      .certificate {
-        width: calc(100% - 1rem);
-        height: 1.5rem;
-        margin: 0;
-        padding: .5rem;
-        background-color: #FFFFFF;
-        transition: background-color .5s;
-        position: relative;
-  
-        button {
-          overflow: hidden;
-          position: absolute;
-          top: 0;
-          right: 0;
-          width: 0;
-          height: 2.5rem;
-          padding: 0;
-          margin: 0;
-          color: #FFFFFF;
-          background-color: var(--red);
-          transition: width .5s;
-          border: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          cursor: pointer;
-  
-          svg {
-            min-width: 0;
-          }
-        }
-  
-        &:hover {
-          background-color: var(--light-gray);
-  
-          button {
-            width: 2.5rem;
-          }
-        }
-      }
-    }
-  
-    .certificate-add {
-      display: flex;
-      flex-direction: row;
-      height: 1.5rem;
-      margin: .5rem 0;
-      width: 100%;
-  
-      input {
-        flex: 1 1 80%;
-        height: 24px;
-        box-sizing: border-box;
-        padding: 0 .5rem;
-        margin: 0;
-        border: 0;
-        border-bottom: 1px solid var(--second);
-        border-radius: var(--border-radius) 0 0 0;
+      height: 100%;
+
+      .profile-title {
+        flex: 0 0 2rem;
       }
   
-      button {
-        height: 24px;
-        box-sizing: border-box;
-        flex: 1 1 20%;
-        margin: 0;
+      div.certificates {
+        display: block;
+        flex: 1;
         padding: 0;
-        background-color: var(--second);
-        color: #FFFFFF;
-        border: 1px solid var(--second);
-        cursor: pointer;
+        margin: 0;
+        min-height: 4rem;
+        overflow: auto;
+
+        .certificates-list {
+          height: 100%;
+          display: block;
+          max-height: 0;
+          min-height: 4rem;
+
+          .certificate {
+            width: calc(100% - 1rem);
+            height: 1.5rem;
+            margin: 0;
+            display: block;
+            padding: .5rem;
+            transition: background-color .5s;
+            position: relative;
+  
+            .certificate-date {
+              margin: 0 1rem;
+              font-size: 80%;
+              color: var(--gray);
+            }
+      
+            button {
+              overflow: hidden;
+              position: absolute;
+              top: 0;
+              right: 0;
+              width: 0;
+              height: 2.5rem;
+              padding: 0;
+              margin: 0;
+              color: #FFFFFF;
+              background-color: var(--red);
+              transition: width .5s;
+              border: 0;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              cursor: pointer;
+      
+              svg {
+                min-width: 0;
+              }
+            }
+      
+            &:hover {
+              background-color: var(--light-gray);
+      
+              button {
+                width: 2.5rem;
+              }
+            }
+          }
+        }
+      }
+    
+      .certificate-add {
+        display: flex;
+        flex-direction: row;
+        height: 1.5rem;
+        flex: 0 0 1.5rem;
+        margin: .5rem 0;
+        width: 100%;
+    
+        input.certificate-add-name-input {
+          flex: 1 1 60%;
+          height: 24px;
+          box-sizing: border-box;
+          padding: 0 .5rem;
+          margin: 0;
+          border: 0;
+          border-bottom: 1px solid var(--second);
+          border-radius: var(--border-radius) 0 0 0;
+        }
+
+        .react-datetime-picker {
+          flex: 1 1 20%;
+
+          .react-datetime-picker__wrapper {
+            width: 100%;
+          }
+        }
+    
+        button.certificate-add-submit {
+          height: 24px;
+          box-sizing: border-box;
+          flex: 1 1 20%;
+          margin: 0;
+          padding: 0;
+          background-color: var(--second);
+          color: #FFFFFF;
+          border: 1px solid var(--second);
+          cursor: pointer;
+        }
       }
     }
-  }
+
+    .experience-container {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      margin-left: 2rem;
+      flex-direction: column;
+
+      div.experience {
+        display: block;
+        flex: 1;
+        padding: 0;
+        margin: 0;
+        min-height: 4rem;
+        overflow: auto;
+
+        .experience-list {
+          height: 100%;
+          display: block;
+          max-height: 0;
+          min-height: 4rem;
+
+          .experience-item {
+            width: calc(100% - 1rem);
+            height: 1.5rem;
+            margin: 0;
+            display: block;
+            padding: .5rem;
+            transition: background-color .5s;
+            position: relative;
+  
+            .experienceItem-date {
+              margin: 0 1rem;
+              font-size: 80%;
+              color: var(--gray);
+            }
+      
+            button {
+              overflow: hidden;
+              position: absolute;
+              top: 0;
+              right: 0;
+              width: 0;
+              height: 2.5rem;
+              padding: 0;
+              margin: 0;
+              color: #FFFFFF;
+              background-color: var(--red);
+              transition: width .5s;
+              border: 0;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              cursor: pointer;
+      
+              svg {
+                min-width: 0;
+              }
+            }
+      
+            &:hover {
+              background-color: var(--light-gray);
+      
+              button {
+                width: 2.5rem;
+              }
+            }
+          }
+        }
+      }
+
+      .experience-add {
+        display: flex;
+        flex-direction: row;
+        height: 1.5rem;
+        margin: .5rem 0;
+        width: 100%;
+    
+        input.experience-add-name-input {
+          flex: 1 1 20%;
+          height: 24px;
+          min-width: 5rem;
+          box-sizing: border-box;
+          padding: 0 .5rem;
+          margin: 0;
+          border: 0;
+          border-bottom: 1px solid var(--second);
+          border-radius: var(--border-radius) 0 0 0;
+        }
+
+        input.experience-add-company-input {
+          flex: 1 1 20%;
+          height: 24px;
+          box-sizing: border-box;
+          min-width: 5rem;
+          padding: 0 .5rem;
+          margin: 0;
+          border: 0;
+          border-bottom: 1px solid var(--second);
+          border-radius: var(--border-radius) 0 0 0;
+        }
+
+        .react-datetime-picker {
+          flex: 1 1 20%;
+
+          .react-datetime-picker__wrapper {
+            width: 100%;
+          }
+        }
+    
+        button.experience-add-submit {
+          height: 24px;
+          box-sizing: border-box;
+          flex: 1 1 20%;
+          margin: 0;
+          padding: 0;
+          background-color: var(--second);
+          color: #FFFFFF;
+          border: 1px solid var(--second);
+          cursor: pointer;
+        }
+      }
+    }
+  }  
 
   .tab-support {
 
@@ -285,11 +434,6 @@
         align-items: center;
         margin-top: -2px;
         margin-left: .5rem;
-
-        &, &:hover, &:active, &:focus, &:link, &:visited {
-          color: #000000;
-          text-decoration: none;
-        }
       }
     }
 
@@ -341,7 +485,6 @@
   }
 
   .settings-loading {
-    font-weight: normal;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -419,6 +562,23 @@
           }
         }
       }
+    }
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .Profile {
+
+    .bottom-container {
+      flex-direction: column;
+
+      .experience-container {
+        margin-left: 0;
+      }
+    }
+
+    .profile-title {
+      margin-top: .5rem;
     }
   }
 }

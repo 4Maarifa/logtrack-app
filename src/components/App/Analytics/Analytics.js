@@ -33,6 +33,23 @@ class Analytics extends ComponentSafeUpdate {
               data: [30, 40, 45, 50, 49, 60, 70, 91]
             }
           ]
+        },
+        gauge: {
+          options: {
+            plotOptions: {
+              radialBar: {
+                startAngle: -45,
+                endAngle: 45,
+                dataLabels: {
+                  value: {
+                    show: false
+                  }
+                }
+              }
+            },
+            colors: [ColorService.getSecondColor()]
+          },
+          series: [70]
         }
       }
     }, 
@@ -42,7 +59,7 @@ class Analytics extends ComponentSafeUpdate {
   componentDidMount = () => {
     super.componentDidMount();
     this.setState({observerKey: 
-      DataService.computed.observeComputedValues((computedValues) => {
+      DataService.computed.observeComputedValues(computedValues => {
         this.setState(computedValues);
       })
     });
@@ -65,6 +82,12 @@ class Analytics extends ComponentSafeUpdate {
           series={this.state.graphs.logtrack.series}
           type="line"
           width="500" />
+          
+        <Chart
+          options={this.state.graphs.gauge.options}
+          series={this.state.graphs.gauge.series}
+          type="radialBar"
+          width="200" />
       </div>
     );
   }

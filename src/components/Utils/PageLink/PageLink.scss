@@ -1,0 +1,38 @@
+.PageLink {
+  margin: 0 .5rem;
+  height: 2rem;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  vertical-align: middle;
+
+  &.white-link {
+    color: #FFFFFF;
+
+    span.you {
+      color: var(--second);
+      background-color: #FFFFFF;
+    }
+  }
+
+  img {
+    height: 2rem;
+    width: 2rem;
+    margin-right: .5rem;
+    display: block;
+    border-radius: 2px;
+  }
+
+  span:not(.badge) {
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .company-plan {
+    font-size: 50%;
+  }
+}

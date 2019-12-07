@@ -40,25 +40,27 @@ class Icon extends ComponentSafeUpdate {
   render() {
     if(this.props.source === 'fa') {
       return (
-        <FontAwesomeIcon {...(!!this.props.withLabel ? {title: this.props.icon} : {})} 
-          {...this.props}
-          icon={this.props.icon} 
-          fixedWidth />
+        <div className={'Icon ' + (this.props.containerclassname || '')}>
+          {!!this.props.icon && <FontAwesomeIcon icon={this.props.icon} fixedWidth {...this.props} />}
+          {!!this.props.additional && <div className="icon-2">
+            <FontAwesomeIcon icon={this.props.additional} fixedWidth />
+          </div>}
+        </div>
       );
     }
-    else if(this.props.source === 'custom') {
+    if(this.props.source === 'custom') {
       const IconTag = this.icons[this.props.icon];
       return (
-        <IconTag className="custom-icon">Icon</IconTag>
+        <div className="Icon">
+          <IconTag className="custom-icon">Icon</IconTag>
+        </div>
       );
     }
-    else {
-      ErrorService.manageError('Icon was requested to render with invalid source', {
-        source: this.props.source,
-        icon: this.props.icon
-      });
-      return null;
-    }
+    ErrorService.manageError('Icon was requested to render with invalid source', {
+      source: this.props.source,
+      icon: this.props.icon
+    });
+    return null;
   }
 }
 

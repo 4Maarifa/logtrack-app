@@ -6,6 +6,7 @@ import ErrorService from './../error.service';
 
 import Company from './../../classes/Company';
 
+import ESearchType from './../../classes/enums/ESearchType';
 import { ERole } from './../../classes/Role';
 
 const CompanyService = {
@@ -45,8 +46,8 @@ const CompanyService = {
     var companies = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getDb().collection('companies').get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((companyDoc) => companies[companyDoc.id] = companyDoc.data());
+            .then(querySnapshot => {
+                querySnapshot.forEach(companyDoc => companies[companyDoc.id] = companyDoc.data());
                 resolve(companies);
             })
             .catch((e) => ErrorService.manageErrorThenReject(e, reject));
@@ -96,22 +97,22 @@ const CompanyService = {
     var companies = {};
 
     return new Promise((resolve, reject) => {
-      idList.forEach((companyId) => promises.push(CompanyService.get(companyId)));
+      idList.forEach(companyId => promises.push(CompanyService.get(companyId)));
 
       Promise.all(promises)
-        .then((companyDocs) => {
-            companyDocs.forEach((companyDoc) => companies[companyDoc.id] = companyDoc.data());
+        .then(companyDocs => {
+            companyDocs.forEach(companyDoc => companies[companyDoc.id] = companyDoc.data());
             resolve(companies);
         })
-        .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });            
   },
   search(term) {
-    if(!CompanyService.rights[ERights.RIGHT_COMPANY_LIST]()) {
-      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Companies' });
-    }
-
-    return FirebaseService.getDb().collection('companies').orderBy('name').startAt(term.toUpperCase()).endAt(term.toLowerCase() + "\uf8ff").get();
+    return new Promise((resolve, reject) => {
+      DataService.computed.search([ESearchType.COMPANIES], term, null)
+        .then(results => resolve(results.data.companies))
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
+    });
   }
 };
 

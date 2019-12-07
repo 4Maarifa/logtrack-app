@@ -1,0 +1,48 @@
+.Modal {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background-color: var(--tooltip-background);
+
+  &--show {
+    display: flex;
+  }
+
+  &-content {
+    height: auto;
+    width: 50%;
+    background-color: #FFFFFF;
+    border-radius: var(--border-radius);
+    display: block;
+    padding: .5rem;
+
+    .actions {
+      margin-top: .5rem;
+
+      button {
+        border: 0;
+        background-color: var(--second);
+        border-radius: var(--border-radius);
+        border: 1px solid var(--second);
+        color: #FFFFFF;
+        padding: .5rem;
+        cursor: pointer;
+  
+        &[value="CANCEL"] {
+          background-color: #FFFFFF;
+          color: var(--second);
+        }
+  
+        & + button {
+          margin-left: .5rem;
+        }
+      }
+    }
+  }
+}

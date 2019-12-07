@@ -24,14 +24,14 @@ class Equipments extends ComponentSafeUpdate {
       equipments: {},
       equipmentsLoading: true,
       equipmentModels: {},
-      brands: {}}, 
-      DataService.computed.getDefaultComputedValues());
+      brands: {}
+    }, DataService.computed.getDefaultComputedValues());
   }
 
   componentDidMount = () => {
     super.componentDidMount();
     this.setState({observerKey: 
-      DataService.computed.observeComputedValues((computedValues) => {
+      DataService.computed.observeComputedValues(computedValues => {
         this.setState(computedValues, this.computeValues);
       })
     });
@@ -51,16 +51,16 @@ class Equipments extends ComponentSafeUpdate {
    */
   computeEquipments = () => {
     BrandService.list()
-      .then((brands) => this.setState({brands: brands}))
+      .then(brands => this.setState({brands}))
       .catch(ErrorService.manageError);
 
     EquipmentModelService.list()
-      .then((equipmentModels => this.setState({equipmentModels: equipmentModels})))
+      .then((equipmentModels => this.setState({equipmentModels})))
       .catch(ErrorService.manageError);
 
     if(!!this.state.activeRole) {
       EquipmentService.getAllForCompanyId(this.state.activeRole.companyId)
-        .then((equipments) => this.setState({equipments: equipments, equipmentsLoading: false}))
+        .then(equipments => this.setState({equipments, equipmentsLoading: false}))
         .catch(ErrorService.manageError);
     }
   };
@@ -68,18 +68,16 @@ class Equipments extends ComponentSafeUpdate {
   /**
    * RENDER
    */
-  renderEquipment = (mode, itemKey, itemData) => {
-    var equipmentModel = {}, brand = {}, equipment = {};
-    equipmentModel[itemData.equipmentModelId] = this.state.equipmentModels[itemData.equipmentModelId];
-    brand[equipmentModel[itemData.equipmentModelId].brand] = this.state.brands[equipmentModel[itemData.equipmentModelId].brand];
-    equipment[itemKey] = itemData;
+  renderEquipment = (itemKey, itemData) => {
+    const equipmentModel = { [itemData.equipmentModelId]: this.state.equipmentModels[itemData.equipmentModelId] },
+      brand = { [equipmentModel[itemData.equipmentModelId].brand]: this.state.brands[equipmentModel[itemData.equipmentModelId].brand] };
 
     return <Equipment key={itemKey}
-      equipment={equipment}
+      equipment={ {[itemKey]: itemData} }
       brand={brand}
       equipmentModel={equipmentModel}
       options={ {} }
-      showDetails={mode === 'active'} />
+      showDetails={true} />
   };
 
   render() {

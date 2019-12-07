@@ -1,29 +1,24 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { faThermometerFull, faMapMarker } from '@fortawesome/pro-solid-svg-icons';
+import { faCog, faClock, faCalendarAlt, faCommentDots, faMapMarker, faBuilding, faTag, faExclamationTriangle } from '@fortawesome/pro-light-svg-icons';
+import { faChevronRight, faTruck, faUsers, faWarehouse, faThermometerHalf } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import Icon from './../../Utils/Icon/Icon';
 
 import DataService from './../../../services/data.service';
 import ErrorService from './../../../services/error.service';
-import UtilsService from './../../../services/utils.service';
-import WeatherService from './../../../services/weather.service';
+import WeatherService, { EWeatherIcons } from './../../../services/weather.service';
 import PermissionService from './../../../services/permission.service';
 import SettingsService, { ESettings } from './../../../services/settings.service';
-
-import LogTrack from './../LogTrack/LogTrack';
-
-import Loader from './../../Utils/Loader/Loader';
-import Map from './../../Utils/Map/Map';
-import Icon from './../../Utils/Icon/Icon';
+import DateService from './../../../services/date.service';
 
 import EStat from './../../../classes/enums/EStat';
-import EWeatherIcons from './../../../classes/enums/EWeatherIcons';
-import { ERole, RoleIcons } from './../../../classes/Role';
+import { ERole, RoleDetails } from './../../../classes/Role';
 
-import EquipmentImage from './../../../assets/equipment.png';
-import EmployeeImage from './../../../assets/employee.png';
-import WarehouseImage from './../../../assets/warehouse.png';
+import LogTrack from './../LogTrack/LogTrack';
+import Map from './../../Utils/Map/Map';
+import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 
 import './Dashboard.scss';
 
@@ -42,14 +37,16 @@ class Dashboard extends ComponentSafeUpdate {
       //MANAGER
       equipmentCount: null,
       employeeCount: null,
-      warehouseCount: null}, 
-      DataService.computed.getDefaultComputedValues());
+      warehouseCount: null,
+      requestedRolesCount: null,
+      chatCount: null
+    }, DataService.computed.getDefaultComputedValues());
   }
 
   componentDidMount = () => {
     super.componentDidMount();
     this.setState({observerKey: 
-      DataService.computed.observeComputedValues((computedValues) => {
+      DataService.computed.observeComputedValues(computedValues => {
         this.setState(computedValues, this.computeValues);
       })
     });
@@ -65,10 +62,10 @@ class Dashboard extends ComponentSafeUpdate {
       PermissionService.location.askPermission()
         .then(() => {
           PermissionService.location.getLocation()
-            .then(location => {
-              this.setState({userPosition: location});
-              WeatherService.getWeather(location.longitude, location.latitude)
-                .then(weather => this.setState({weather: weather}))
+            .then(userPosition => {
+              this.setState({userPosition});
+              WeatherService.getWeather(userPosition.longitude, userPosition.latitude)
+                .then(weather => this.setState({weather}))
                 .catch(ErrorService.manageError);
             })
             .catch(ErrorService.manageError);
@@ -76,140 +73,188 @@ class Dashboard extends ComponentSafeUpdate {
         .catch(ErrorService.manageError);
     }
 
-    if(!this.state.activeRole) {return;}
+    if(!this.state.activeRole || !this.state.user || !this.state.user.uid) { return; }
     
-    switch(this.state.activeRole.role) {
-      case ERole.MANAGER:
-        DataService.computed.conputeStat([EStat.equipmentCount, EStat.employeeCount, EStat.warehouseCount], {companyId: this.state.activeRole.companyId})
-          .then(statData => {
-            if(typeof statData.equipmentCount === 'number') {
-              this.setState({equipmentCount: statData.equipmentCount});
-            }
-            if(typeof statData.employeeCount === 'number') {
-              this.setState({employeeCount: statData.employeeCount});
-            }
-            if(typeof statData.warehouseCount === 'number') {
-              this.setState({warehouseCount: statData.warehouseCount});
-            }
-          })
-          .catch(ErrorService.manageError);
-        break;
-      default: 
-        break;
-    }
+    DataService.computed.conputeStat([EStat.equipmentCount, EStat.employeeCount, EStat.warehouseCount, EStat.chatCount, EStat.requestedRolesCount], {
+      companyId: this.state.activeRole.companyId,
+      userId: this.state.user.uid
+    })
+      .then(statData => {
+        let newState = {};
+        if(typeof statData.equipmentCount === 'number') {
+          newState['equipmentCount'] = statData.equipmentCount;
+        }
+        if(typeof statData.employeeCount === 'number') {
+          newState['employeeCount'] = statData.employeeCount;
+        }
+        if(typeof statData.warehouseCount === 'number') {
+          newState['warehouseCount'] = statData.warehouseCount;
+        }
+        if(typeof statData.requestedRolesCount === 'number') {
+          newState['requestedRolesCount'] = statData.requestedRolesCount;
+        }
+        if(typeof statData.chatCount === 'number') {
+          newState['chatCount'] = statData.chatCount;
+        }
+
+        this.setState(newState);
+      })
+      .catch(ErrorService.manageError);
   };
 
   /**
    * RENDER
    */
   renderRolePart() {
-    if(!this.state.activeRole) {return;}
-
-    switch(this.state.activeRole.role) {
-      case ERole.MANAGER:
-        return <div className="role-container">
-          <div className="dash-container">
-            <NavLink className="dash dash-33" to={`/warehouses`}>
-              <span className="dash-left">
-                <img src={WarehouseImage} alt="Warehouse overlay" />
+    return <div className="role-container">
+      <div className="line">
+        {!this.state.activeRole && <div className="card card company-link">
+          <NavLink to={`/roles`}>
+            <h2>No active role</h2>
+            <span>Click here to select or request a role.</span>
+          </NavLink>
+          <Icon containerclassname="icon-overlay" source="fa" icon={faBuilding} />
+        </div>}
+        {!!this.state.activeRole && <div className="card card company-link">
+          <NavLink to={`/roles`}>
+            <h2>
+              {RoleDetails[this.state.activeRole.role].icon}
+              {RoleDetails[this.state.activeRole.role].name}
+            </h2>
+            <span>Click here to change or request a role.</span>
+          </NavLink>
+          <h1 className="company-details-name-container">
+            <PageLink type={PageLinkType.COMPANY} entityId={this.state.activeRole.companyId} entityData={this.state.activeRoleCompany} />
+          </h1>
+          <div className="company-details-stats-container">
+            <div className="company-details-stat">
+              <span className="company-details-stat-icon">
+                <Icon source="fa" icon={faWarehouse} />
               </span>
-              <span className="dash-right dash-bg">
-                {typeof this.state.warehouseCount === 'number' && <span className="dash-main">{this.state.warehouseCount}</span>}
-                {typeof this.state.warehouseCount !== 'number' && <Loader light={true}></Loader>}
-                <span className="dash-title">Warehouses</span>
+              <span className="company-details-stat-content">
+                {!!this.state.warehouseCount ? <span>{this.state.warehouseCount} Warehouses</span> : <span>Warehouses</span>}
+                {this.state.activeRole.role === ERole.MANAGER && <NavLink className="manage-link" to={`/warehouses`}>
+                  Manage
+                  <Icon source="fa" icon={faChevronRight} />
+                </NavLink>}
               </span>
-            </NavLink>
-            <NavLink className="dash dash-33" to={`/equipments`}>
-              <span className="dash-left">
-                <img src={EquipmentImage} alt="Equipment overlay" />
+            </div>
+            <div className="company-details-stat">
+              <span className="company-details-stat-icon">
+                <Icon source="fa" icon={faUsers} />
               </span>
-              <span className="dash-right dash-bg">
-                {typeof this.state.equipmentCount === 'number' && <span className="dash-main">{this.state.equipmentCount}</span>}
-                {typeof this.state.equipmentCount !== 'number' && <Loader light={true}></Loader>}
-                <span className="dash-title">Equipments</span>
+              <span className="company-details-stat-content">
+                {!!this.state.employeeCount ? <span>{this.state.employeeCount} Employees</span> : <span>Employees</span>}
+                {this.state.activeRole.role === ERole.MANAGER && <NavLink className="manage-link" to={`/employees`}>
+                  Manage
+                  <Icon source="fa" icon={faChevronRight} />
+                </NavLink>}
               </span>
-            </NavLink>
-            <NavLink className="dash dash-33" to={`/employees`}>
-              <span className="dash-left">
-                <img src={EmployeeImage} alt="Employee overlay" />
+            </div>
+            <div className="company-details-stat">
+              <span className="company-details-stat-icon">
+                <Icon source="fa" icon={faTruck} />
               </span>
-              <span className="dash-right dash-bg">
-                {typeof this.state.employeeCount === 'number' && <span className="dash-main">{this.state.employeeCount}</span>}
-                {typeof this.state.employeeCount !== 'number' && <Loader light={true}></Loader>}
-                <span className="dash-title">Employees</span>
+              <span className="company-details-stat-content">
+                {!!this.state.equipmentCount ? <span>{this.state.equipmentCount} Equipments</span> : <span>Equipments</span>}
+                {this.state.activeRole.role === ERole.MANAGER && <NavLink className="manage-link" to={`/equipments`}>
+                  Manage
+                  <Icon source="fa" icon={faChevronRight} />
+                </NavLink>}
               </span>
-            </NavLink>
+            </div>
           </div>
-          <div className="role-content">
-            <Map></Map>
-            <LogTrack></LogTrack>
-          </div>
-        </div>;
-      default:
-        return <div></div>;
-    }
+          <Icon containerclassname="icon-overlay" source="fa" icon={faBuilding} />
+        </div>}
+      </div>
+      <div className="line line-small">
+        <NavLink className="card card-inverse card-w profile-link" to={`/profile`}>
+          <h2>Profile and Settings</h2>
+          <Icon containerclassname="icon-overlay" source="fa" icon={faCog} />
+        </NavLink>
+        <NavLink className="card chat" to={`/chat`}>
+          <h2>Chat</h2>
+          {!!this.state.chatCount && <span>{this.state.chatCount} active conversations</span>}
+          <Icon containerclassname="icon-overlay" source="fa" icon={faCommentDots} />
+        </NavLink>
+        {!!this.state.activeRole && this.state.activeRole.role === ERole.MANAGER && <NavLink className="card card-inverse card-w alerts" to={`/`}>
+          <h2>Alerts</h2>
+          <span></span>
+          <Icon containerclassname="icon-overlay" source="fa" icon={faExclamationTriangle} />
+        </NavLink>}
+        {!!this.state.activeRole && this.state.activeRole.role === ERole.MANAGER && <NavLink className="card card-w roles-link desktop-only" to={`/roles`}>
+          <h2>Requested Roles</h2>
+          {!!this.state.requestedRolesCount && <span>{this.state.requestedRolesCount} to confirm</span>}
+          <Icon containerclassname="icon-overlay" source="fa" icon={faTag} />
+        </NavLink>}
+        <div className="card card-w hour desktop-only">
+          <h2>{DateService.getDateString(new Date(), false)}</h2>
+          <span>{DateService.getTimeString(new Date())}</span>
+          <Icon containerclassname="icon-overlay" source="fa" icon={faClock} />
+        </div>
+        {!!this.state.weather && <div className="card card-w weather desktop-only">
+          <h2>Weather</h2>
+          <span>
+            {this.state.weather.main}<br/>
+            <Icon source="fa" icon={faThermometerHalf} />
+            {Math.floor(this.state.weather.temp)}°C
+          </span>
+          <Icon containerclassname="icon-overlay" source="fa" icon={EWeatherIcons[this.state.weather.icon]} />
+        </div>}
+          {!!this.state.weather && <div className="card card-w location desktop-only">
+          <h2>Location</h2>
+          <span>
+            {this.state.weather.name}
+          </span>
+          <Icon containerclassname="icon-overlay" source="fa" icon={faMapMarker} />
+        </div>}
+      </div>
+      <div className="line line-small mobile-only">
+        {!!this.state.activeRole && this.state.activeRole.role === ERole.MANAGER && <NavLink className="card card-w roles-link" to={`/roles`}>
+          <h2>Requested Roles</h2>
+          {!!this.state.requestedRolesCount && <span>{this.state.requestedRolesCount} to confirm</span>}
+          <Icon containerclassname="icon-overlay" source="fa" icon={faTag} />
+        </NavLink>}
+        <div className="card card-w hour">
+          <h2>{DateService.getDateString(new Date(), false)}</h2>
+          <span>{DateService.getTimeString(new Date())}</span>
+          <Icon containerclassname="icon-overlay" source="fa" icon={faClock} />
+        </div>
+        {!!this.state.weather && <div className="card card-w weather">
+          <h2>Weather</h2>
+          <span>
+            {this.state.weather.main}<br/>
+            <Icon source="fa" icon={faThermometerHalf} />
+            {Math.floor(this.state.weather.temp)}°C
+          </span>
+          <Icon containerclassname="icon-overlay" source="fa" icon={EWeatherIcons[this.state.weather.icon]} />
+        </div>}
+          {!!this.state.weather && <div className="card card-w location">
+          <h2>Location</h2>
+          <span>
+            {this.state.weather.name}
+          </span>
+          <Icon containerclassname="icon-overlay" source="fa" icon={faMapMarker} />
+        </div>}
+      </div>
+      <div className="line line-big">
+        <div className="card map">
+          <Map></Map>
+        </div>
+        <div className={'card card-stick logtrack ' + (!!this.state.activeRole && this.state.activeRole.role !== ERole.MANAGER ? 'logtrack-with-button' : '')}>
+          <LogTrack></LogTrack>
+          <Icon containerclassname="icon-overlay" source="fa" icon={faCalendarAlt} />
+        </div>
+      </div>
+    </div>;
   }
 
   render() {
     return (
       <div className="Dashboard">
-        {!!this.state.employee && !!this.state.user && <div>
-          Welcome back, {this.state.employee.firstname + ' ' + this.state.employee.lastname}!
-        </div>}
-        <div className="dash-container">
-          {!!this.state.activeRole && 
-            <NavLink className="dash dash-sm" to={`/roles`}>
-              <span className="dash-left dash-bg">
-                <span className="dash-text">
-                  {RoleIcons[this.state.activeRole.role]}
-                  {UtilsService.capitalize(this.state.activeRole.role)}
-                </span>
-              </span>
-              <span className="dash-right">
-                <span className="dash-text">
-                  <img src={this.state.activeRoleCompany.logoURL} alt={this.state.activeRoleCompany.name + '\'s company'} />
-                  <span>{this.state.activeRoleCompany.name}</span>
-                </span>
-              </span>
-            </NavLink>
-          }
-          {!this.state.activeRole && 
-            <NavLink className="dash dash-sm" to={`/roles`}>
-              <span className="dash-left dash-bg">
-                <span className="dash-text">
-                  No active role
-                </span>
-              </span>
-              <span className="dash-right">
-                <span className="dash-text">
-                  Click to request / change!
-                </span>
-              </span>
-            </NavLink>
-          }
-          {!!this.state.weather &&
-            <div className="dash dash-sm">
-              <span className="dash-left">
-                <span className="dash-text">
-                  <Icon source="fa" icon={faMapMarker} />
-                  {this.state.weather.name}
-                </span>
-              </span>
-              <span className="dash-right dash-bg">
-                <span className="dash-text">
-                  <span>{EWeatherIcons[this.state.weather.icon]}</span>
-                  <span className="dash-weather">
-                    {this.state.weather.main}<br/>
-                    <span>
-                      <Icon source="fa" icon={faThermometerFull} />
-                      {Math.floor(this.state.weather.temp)}°C
-                    </span>
-                  </span>
-                </span>
-              </span>
-            </div>
-          }
-        </div>
+        {!!this.state.employee && !!this.state.user && <h1>
+          Welcome back, <PageLink type={PageLinkType.EMPLOYEE} entityId={this.state.user.uid} entityData={this.state.employee} />!
+        </h1>}
         {this.renderRolePart()}
       </div>
     );

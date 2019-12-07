@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
-import { faCommentPlus, faUser, faTimes, faComment, faPaperPlane, faCaretDown, faCheck } from '@fortawesome/pro-solid-svg-icons';
+import { faCommentPlus, faUser, faTimes, faComment, faPaperPlane, faCaretDown, faCheck, faChevronRight, faChevronLeft } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Icon from './../../Utils/Icon/Icon';
@@ -14,7 +14,7 @@ import UtilsService from './../../../services/utils.service';
 import EmployeeService from './../../../services/entities/employee.service';
 import DateService from './../../../services/date.service';
 
-import ChatClass, { EChatType } from '../../../classes/Chat';
+import ChatClass, { EChatType } from './../../../classes/Chat';
 
 import './Chat.scss';
 
@@ -77,7 +77,7 @@ class Chat extends ComponentSafeUpdate {
     return true;
   };
 
-  onMessageInputChange = value => this.setState({inputValue: value});
+  onMessageInputChange = inputValue => this.setState({inputValue});
 
   onUserAutoCompleteChange = value => {
     if(value.trim().length < 3) {
@@ -104,12 +104,11 @@ class Chat extends ComponentSafeUpdate {
   };
 
   onSelectedUserItemChange = (selectedUserId, _, selectedUserItem) => {
-    if(!selectedUserItem) {
-      return;
-    }
+    if(!selectedUserItem) { return; }
+    
     var selectedUsers = this.state.selectedUsers;
     selectedUsers[selectedUserId] = selectedUserItem.value;
-    this.setState({selectedUsers, autoSuggestValue: {key: '', item: null}});
+    this.setState({ selectedUsers, autoSuggestValue: { key: '', item: null } });
   };
 
   handleSubmit = event => {
@@ -159,7 +158,7 @@ class Chat extends ComponentSafeUpdate {
             userIds.push(...chatDocs[chatDocKey].users);
           });
           this.computeUsers(UtilsService.removeDuplicateFromArray(userIds))
-            .then(() => resolve())
+            .then(resolve)
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
 
           this.setState({chats}, this.updateScrollOfChatContainer);
@@ -176,11 +175,11 @@ class Chat extends ComponentSafeUpdate {
     }
   };
 
-  computeUsers = userIds => {
-    return EmployeeService.getAllForIdList(userIds)
+  computeUsers = userIds => (
+    EmployeeService.getAllForIdList(userIds)
       .then(users => this.setState({users}))
-      .catch(ErrorService.manageError);
-  };
+      .catch(ErrorService.manageError)
+  );
 
   deleteSelectedUser = userId => {
     let selectedUsers = this.state.selectedUsers;
@@ -197,9 +196,11 @@ class Chat extends ComponentSafeUpdate {
     }
 
     let users = Object.keys(this.state.selectedUsers);
+    // We push current user in conversation users : he's part of the conversation too!
     users.push(this.state.user.uid);
     users = UtilsService.removeDuplicateFromArray(users);
 
+    // Create a CHAT_START message to indicate this is the start of the conversation
     ChatService.create(new ChatClass(
         conversationId,
         this.state.user.uid,
@@ -211,8 +212,7 @@ class Chat extends ComponentSafeUpdate {
         this.computeChats()
           .then(() => this.setState({creationFormChatId: conversationId}))
           .catch(ErrorService.manageError);
-      })
-      .catch(ErrorService.manageError);
+      }).catch(ErrorService.manageError);
   };
 
   getUsersOfConversation = conversationId => {
@@ -220,6 +220,7 @@ class Chat extends ComponentSafeUpdate {
       return [];
     }
     const conversationLength = Object.keys(this.state.chats[conversationId]).length;
+    // Return users of the last message of the conversation
     return this.state.chats[conversationId][
       Object.keys(this.state.chats[conversationId])[conversationLength - 1]
     ].users;
@@ -235,7 +236,7 @@ class Chat extends ComponentSafeUpdate {
     }
     let messageDateTime = new Date(0);
     return (
-      <div className="Chat">
+      <div className={'Chat ' + (!!this.state.selectedChatId ? 'chat-selected' : '')}>
         <div className="selection">
           <ul>
             {Object.keys(this.state.chats).map(chatKey =>
@@ -246,13 +247,14 @@ class Chat extends ComponentSafeUpdate {
                     .map(userId => this.state.users[userId].firstname + ' ' + this.state.users[userId].lastname)
                     .join(', ')}
                 </NavLink>
+                <Icon source="fa" icon={faChevronRight} />
               </li>
             )}
           </ul>
           <span className={'conversation-create ' + (this.state.createFormDeployed ? 'conversation-create--deployed' : '')} onClick={this.toggleCreateFormDeployed}>
             <Icon source="fa" icon={faCommentPlus} />
             Create a new conversation
-            <Icon className="arrow-icon" source="fa" icon={faCaretDown} />
+            <Icon containerclassname="arrow-icon" source="fa" icon={faCaretDown} />
           </span>
           <div className={'conversation-create-form ' + (this.state.createFormDeployed ? 'conversation-create-form--deployed' : '')}>
             <FormDebounceAutoSuggestInput
@@ -291,6 +293,10 @@ class Chat extends ComponentSafeUpdate {
         </div>
         <div className="conversation">
           {!!this.state.selectedChatId && !!this.state.chats[this.state.selectedChatId] && <span className="conversation-top">
+            <NavLink className="return-link" to={`/chat`}>
+              <Icon source="fa" icon={faChevronLeft} />
+              Return
+            </NavLink>
             {this.getUsersOfConversation(this.state.selectedChatId)
               .filter(userId => userId !== this.state.user.uid && !!this.state.users[userId])
               .map(userId => this.state.users[userId].firstname + ' ' + this.state.users[userId].lastname)

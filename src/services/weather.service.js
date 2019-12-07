@@ -1,3 +1,13 @@
+import { 
+  faSun, faMoon, 
+  faCloudSun, faCloudMoon,
+  faCloud, 
+  faCloudsSun, faCloudsMoon, 
+  faCloudShowers, 
+  faCloudRain, 
+  faThunderstormSun, faThunderstormMoon, 
+  faSnowflake, 
+  faFog } from '@fortawesome/pro-light-svg-icons';
 
 import ErrorService from './error.service';
 import DataService from './data.service';
@@ -48,6 +58,35 @@ const WeatherService = {
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   }
+};
+
+export const EWeatherIcons = {
+  '01d': faSun,
+  '01n': faMoon,
+
+  '02d': faCloudSun,
+  '02n': faCloudMoon,
+
+  '03d': faCloud,
+  '03n': faCloud,
+
+  '04d': faCloudsSun,
+  '04n': faCloudsMoon,
+
+  '09d': faCloudShowers,
+  '09n': faCloudShowers,
+
+  '10d': faCloudRain,
+  '10n': faCloudRain,
+
+  '11d': faThunderstormSun,
+  '11n': faThunderstormMoon,
+
+  '13d': faSnowflake,
+  '13n': faSnowflake,
+
+  '50d': faFog,
+  '50n': faFog,
 };
 
 export default WeatherService;

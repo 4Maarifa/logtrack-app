@@ -1,4 +1,22 @@
 .RoleCompany {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  flex: 1;
+
+  h2 {
+    flex: 1;
+  }
+
+  .roles {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .RoleCompany {
+    flex-direction: column;
+  }
 }

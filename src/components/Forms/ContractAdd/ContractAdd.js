@@ -1,17 +1,16 @@
 import React, { Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
-import { faBuilding } from '@fortawesome/pro-solid-svg-icons';
+import { faBuilding, faRectangleWide, faExchange } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Icon from './../../Utils/Icon/Icon';
 import Choose from './../../Utils/Choose/Choose';
-import FormAutoSuggestInput from './../../Utils/FormElements/FormAutoSuggestInput/FormAutoSuggestInput';
+import FormInput from './../../Utils/FormElements/FormInput/FormInput';
+import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
+import FormDebounceAutoSuggestInput from './../../Utils/FormElements/FormDebounceAutoSuggestInput/FormDebounceAutoSuggestInput';
 
 import Contract from './../../../classes/Contract';
-import Company from './../../Entities/Company/Company';
-import { EContractStatus, EContractType, ContractTypeDetails } from './../../../classes/Contract';
-
-import ChooseLoadType from './../ChooseLoadType/ChooseLoadType';
+import { EContractStatus, ContractTypeDetails } from './../../../classes/Contract';
 
 import DataService from './../../../services/data.service';
 import DateService from './../../../services/date.service';
@@ -27,13 +26,15 @@ class ContractAdd extends ComponentSafeUpdate{
     this.state = Object.assign({
       contractId: null, 
 
+      identification: '',
+
       possibleCompanies: [], 
       selectedCompanyId: null,
       selectedCompanyItem: null,
 
       contractType: '',
 
-      isExecutor: true, 
+      isExecutor: false, 
     
       forceRedirect: false
     },
@@ -57,6 +58,8 @@ class ContractAdd extends ComponentSafeUpdate{
     super.componentWillUnmount();
   };
 
+  toggleIsExecutor = () => this.setState({isExecutor: !this.state.isExecutor});
+
   handleChange = event => this.setState({[event.target.getAttribute('data-field')]: event.target.value});
   handleSelection = (value, fieldName) => this.setState({[fieldName]: value});
 
@@ -65,10 +68,10 @@ class ContractAdd extends ComponentSafeUpdate{
       this.setState({possibleCompanies: [], selectedCompanyId: null, selectedCompanyItem: null});
     } 
     else {
-      CompanyService.search(value.trim().toLowerCase()).then((querySnapshot) => {
-        let companies = {};
-        querySnapshot.forEach(result => companies[result.id] = {
-          content: <Company company={ { [result.id]: result.data() } } />
+      CompanyService.search(value.trim().toLowerCase()).then(companies => {
+        Object.keys(companies).forEach(companyKey => companies[companyKey] = {
+          content: <PageLink noLink type={PageLinkType.COMPANY} entityId={companyKey} entityData={companies[companyKey]} />,
+          value: companies[companyKey]
         });
         this.setState({possibleCompanies: companies, selectedCompanyId: null, selectedCompanyItem: null});
       });
@@ -93,9 +96,9 @@ class ContractAdd extends ComponentSafeUpdate{
     var companyOrderId = (!!this.state.isExecutor && this.state.selectedCompanyId) || this.state.activeRole.companyId;
     var companyExecId = (!!this.state.isExecutor && this.state.activeRole.companyId) || this.state.selectedCompanyId;
     
-    ContractService.create(new Contract([], companyOrderId, companyExecId, this.state.contractType, EContractStatus.DRAFT, DateService.getCurrentIsoDateString()))
-      .then((docContract) => {
-        this.setState({contractId: docContract.id});
+    ContractService.create(new Contract(this.state.identification, [], companyOrderId, companyExecId, this.state.activeRole.companyId, this.state.contractType, EContractStatus.DRAFT, DateService.getCurrentIsoDateString(), null))
+      .then(contractDoc => {
+        this.setState({contractId: contractDoc.id});
       })
       .catch(ErrorService.manageError);
   };
@@ -111,10 +114,11 @@ class ContractAdd extends ComponentSafeUpdate{
     let contractDetails = {};
     Object.keys(ContractTypeDetails).forEach(contractTypeKey => {
       contractDetails[contractTypeKey] = {
-        content: <Fragment>
+        content: <span title={ContractTypeDetails[contractTypeKey].disabled ? 'Not available in your plan' : 'Choose this type'}>
           {ContractTypeDetails[contractTypeKey].icon}
           {ContractTypeDetails[contractTypeKey].name}
-        </Fragment>
+        </span>,
+        disabled: ContractTypeDetails[contractTypeKey].disabled
       }
     });
 
@@ -122,31 +126,60 @@ class ContractAdd extends ComponentSafeUpdate{
       return (<div></div>);
     } 
     else if(!!this.state.contractId) {
-      let dashboardUrl = '/dashboard';
-      return <Redirect to={dashboardUrl} />;
+      let contractsUrl = '/contracts';
+      return <Redirect to={contractsUrl} />;
     } 
     else {
       return (
         <div className="ContractAdd">
           <h1>Add a contract</h1>
           <form onSubmit={this.handleSubmit}>
+
+            <FormInput
+              inputType="text"
+              fieldName="identification"
+              label={
+                <span>
+                  <Icon source="fa" icon={faRectangleWide} />
+                  Identification
+                </span>
+              }
+              inputRequired
+              inputPattern=".{3,}"
+              instructions={
+                <span>
+                  The identification is required<br/>
+                  The identification must be 3 characters minimum<br/>
+                  It can be the number plate, serial number...
+                </span>
+              }
+              onValueChange={this.handleSelection} />
+
             {/* Company */}
-            <div className="input-company">
-              <span className="fake-label">
-                <Icon source="fa" icon={faBuilding} />
-                Company
-              </span>
-              <span>
-                {this.state.activeRoleCompany.name}
-              </span>
-            </div>
+            {!this.state.isExecutor && 
+            <Fragment>
+              <div className="input-company">
+                <span className="fake-label">
+                  <Icon source="fa" icon={faBuilding} />
+                  Company ordering the contract
+                </span>
+                <PageLink type={PageLinkType.COMPANY} entityId={this.state.activeRole.companyId} entityData={this.state.activeRoleCompany} />
+              </div>
+              <div className="company-swap">
+                <button onClick={this.toggleIsExecutor}>
+                  <Icon source="fa" icon={faExchange} style={{transform: 'rotate(90deg)'}} />
+                  Swap executing and ordering companies
+                </button>
+              </div>
+            </Fragment>
+            }
 
             {/* Company field */}
-            <FormAutoSuggestInput
+            <FormDebounceAutoSuggestInput
               label={
                 <span>
                   <Icon source="fa" icon={faBuilding} />
-                  Company
+                  Company {!!this.state.isExecutor ? 'ordering' : 'executing'} the contract
                 </span>
               }
               possibleItems={this.state.possibleCompanies}
@@ -157,6 +190,25 @@ class ContractAdd extends ComponentSafeUpdate{
               instructions={
                 <span>Pick a company</span>
               } />
+
+            {/* Company */}
+            {!!this.state.isExecutor && 
+            <Fragment>
+              <div className="company-swap">
+                <button onClick={this.toggleIsExecutor}>
+                  <Icon source="fa" icon={faExchange} style={{transform: 'rotate(90deg)'}} />
+                  Swap executing and ordering companies
+                </button>
+              </div>
+              <div className="input-company">
+                <span className="fake-label">
+                  <Icon source="fa" icon={faBuilding} />
+                  Company executing the contract
+                </span>
+                <PageLink type={PageLinkType.COMPANY} entityId={this.state.activeRole.companyId} entityData={this.state.activeRoleCompany} />
+              </div>
+            </Fragment>
+            }
 
             {/* Role field */}
             <div className="type-selection">
@@ -169,8 +221,6 @@ class ContractAdd extends ComponentSafeUpdate{
                 fieldName="contractType"
                 onSelectionChange={this.handleSelection} />
             </div>
-
-            {(this.state.contractType === EContractType.TRANSPORTATION) ? <ChooseLoadType></ChooseLoadType> : ''}
 
             <input type="submit" />
           </form>

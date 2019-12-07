@@ -9,9 +9,6 @@ class ActionButton extends ComponentSafeUpdate {
   constructor (props) {
     super(props);
     this.state = {
-      icon: props.icon,
-      actions: props.actions,
-
       deployed: false
     };
   }
@@ -33,7 +30,7 @@ class ActionButton extends ComponentSafeUpdate {
     return (
       <div className={'ActionButton ' + (!!this.state.deployed ? 'ActionButton--deployed':'')}>
         <ul>
-          {this.state.actions.map(action =>
+          {this.props.actions.map(action =>
               <li key={action.title}>
                 <NavLink to={action.link}>
                   <span className="action-title">
@@ -47,7 +44,7 @@ class ActionButton extends ComponentSafeUpdate {
           )}
         </ul>
         <span className="button" onClick={() => this.toggleDisplay()}>
-          {!!this.state.icon && this.state.icon}
+          {!!this.props.icon && this.props.icon}
         </span>
       </div>
     );

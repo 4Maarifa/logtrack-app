@@ -5,8 +5,8 @@ import FirebaseService from './../firebase.service';
 import ErrorService from './../error.service';
 
 import Warehouse from './../../classes/Warehouse';
-
 import { ERole } from './../../classes/Role';
+import ESearchType from './../../classes/enums/ESearchType';
 
 const WarehouseService = {
   rights: {
@@ -49,11 +49,11 @@ const WarehouseService = {
     var warehouses = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getDb().collection('warehouses').get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((warehouseDoc) => warehouses[warehouseDoc.id] = warehouseDoc.data());
+            .then(querySnapshot => {
+                querySnapshot.forEach(warehouseDoc => warehouses[warehouseDoc.id] = warehouseDoc.data());
                 resolve(warehouses);
             })
-            .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+            .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
   update(warehouse) {
@@ -101,11 +101,21 @@ const WarehouseService = {
       FirebaseService.getDb().collection('warehouses')
       .where('companyId', '==', companyId)
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((warehouseDoc) => warehouses[warehouseDoc.id] = warehouseDoc.data());
+      .then(querySnapshot => {
+        querySnapshot.forEach(warehouseDoc => warehouses[warehouseDoc.id] = warehouseDoc.data());
         resolve(warehouses);
       })
-      .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+      .catch(e => ErrorService.manageErrorThenReject(e, reject));
+    });
+  },
+  search(term) {
+    return new Promise((resolve, reject) => {
+      if(!DataService.computed.activeRole) {
+        reject('Cannot search warehouses : No active role');
+      }
+      DataService.computed.search([ESearchType.WAREHOUSES], term, DataService.computed.activeRole.companyId)
+        .then(results => resolve(results.data.warehouses))
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   }
 };

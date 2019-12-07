@@ -32,29 +32,22 @@ export const ERole = Object.freeze({
     MECHANIC: 'MECHANIC'
 });
 
-export const RoleIcons = {
-    [ERole.DRIVER]: <Icon source="fa" icon={faSteeringWheel} />,
-    [ERole.MANAGER]: <Icon source="fa" icon={faUserTie} />,
-    [ERole.OBSERVER]: <Icon source="fa" icon={faEye} />,
-    [ERole.MECHANIC]: <Icon source="fa" icon={faWrench} />
-};
-
 export const RoleDetails = {
     [ERole.DRIVER]: {
         name: 'Driver',
-        icon: RoleIcons[ERole.DRIVER]
+        icon: <Icon source="fa" icon={faSteeringWheel} />
     },
     [ERole.MANAGER]: {
         name: 'Manager',
-        icon: RoleIcons[ERole.MANAGER]
+        icon: <Icon source="fa" icon={faUserTie} />
     },
     [ERole.OBSERVER]: {
         name: 'Observer',
-        icon: RoleIcons[ERole.OBSERVER]
+        icon: <Icon source="fa" icon={faEye} />
     },
     [ERole.MECHANIC]: {
         name: 'Mechanic',
-        icon: RoleIcons[ERole.MECHANIC]
+        icon: <Icon source="fa" icon={faWrench} />
     },
 };
 

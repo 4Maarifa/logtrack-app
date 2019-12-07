@@ -5,6 +5,7 @@ import FirebaseService from './../firebase.service';
 import ErrorService from './../error.service';
 
 import Equipment from './../../classes/Equipment';
+import ESearchType from './../../classes/enums/ESearchType';
 
 const EquipmentService = {
   rights: {
@@ -46,12 +47,12 @@ const EquipmentService = {
 
     var equipments = {};
     return new Promise((resolve, reject) => {
-        FirebaseService.getDb().collection('equipments').get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((equipmentDoc) => equipments[equipmentDoc.id] = equipmentDoc.data());
-                resolve(equipments);
-            })
-            .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+      FirebaseService.getDb().collection('equipments').get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(equipmentDoc => equipments[equipmentDoc.id] = equipmentDoc.data());
+            resolve(equipments);
+        })
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
   update(equipment) {
@@ -99,13 +100,40 @@ const EquipmentService = {
       FirebaseService.getDb().collection('equipments')
       .where('companyId', '==', companyId)
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((equipmentDoc) => equipments[equipmentDoc.id] = equipmentDoc.data());
+      .then(querySnapshot => {
+        querySnapshot.forEach(equipmentDoc => equipments[equipmentDoc.id] = equipmentDoc.data());
         resolve(equipments);
       })
-      .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+      .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
+  getAllForWarehouseId(warehouseId) {
+    if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_LIST]()) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Equipments' });
+    }
+
+    var equipments = {};
+    return new Promise((resolve, reject) => {
+      FirebaseService.getDb().collection('equipments')
+      .where('warehouseId', '==', warehouseId)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(equipmentDoc => equipments[equipmentDoc.id] = equipmentDoc.data());
+        resolve(equipments);
+      })
+      .catch(e => ErrorService.manageErrorThenReject(e, reject));
+    });
+  },
+  search(term) {
+    return new Promise((resolve, reject) => {
+      if(!DataService.computed.activeRole) {
+        reject('Cannot search equipments : No active role');
+      }
+      DataService.computed.search([ESearchType.EQUIPMENTS], term, DataService.computed.activeRole.companyId)
+        .then(results => resolve(results.data.equipments))
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
+    });
+  }
 };
 
 export default EquipmentService;

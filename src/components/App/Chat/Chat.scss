@@ -37,6 +37,10 @@
         &--active {
           background-color: #FFFFFF;
 
+          svg {
+            display: none;
+          }
+
           &:before {
             content: '';
             position: absolute;
@@ -70,11 +74,6 @@
           display: flex;
           justify-content: flex-start;
           align-items: center;
-          
-          &, &:hover, &:focus, &:active, &:visited, &:link {
-            color: #000000;
-            text-decoration: none;
-          }
         }
       }
     }
@@ -207,12 +206,22 @@
     .conversation-top {
       height: 4rem;
       width: calc(100% - 1rem);
-      border-top-right-radius: 8px;
+      border-top-right-radius: var(--border-radius);
       border-bottom: 1px solid var(--light-gray);
       padding: 0 .5rem;
       background-color: #FFFFFF;
       display: flex;
       align-items: center;
+
+      .return-link {
+        display: none;
+        margin-right: 1rem;
+
+        &, &:hover, &:active, &:focus, &:link, &:visited {
+          text-decoration: none;
+          color: var(--second);
+        }
+      }
     }
 
     .conversation-content {
@@ -382,6 +391,38 @@
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .Chat:not(.chat-selected) {
+    .conversation {
+      display: none;
+    }
+
+    .selection {
+      border-radius: var(--border-radius);
+    }
+  }
+
+  .Chat.chat-selected {
+    .selection {
+      display: none;
+    }
+    
+    .conversation {
+      .conversation-top {
+        border-top-left-radius: var(--border-radius);
+
+        .return-link {
+          display: inline-block;
+        }
+      }
+
+      .conversation-bottom {
+        border-bottom-left-radius: var(--border-radius);
+      }
     }
   }
 }

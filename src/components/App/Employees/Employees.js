@@ -22,14 +22,14 @@ class Employees extends ComponentSafeUpdate {
 
       companyEmployees: {},
       companyEmployeesLoading: true,
-      rolesOfCompanyEmployees: {}}, 
-      DataService.computed.getDefaultComputedValues());
+      rolesOfCompanyEmployees: {}
+    }, DataService.computed.getDefaultComputedValues());
   }
 
   componentDidMount = () => {
     super.componentDidMount();
     this.setState({observerKey: 
-      DataService.computed.observeComputedValues((computedValues) => {
+      DataService.computed.observeComputedValues(computedValues => {
         this.setState(computedValues, this.computeValues);
       })
     });
@@ -50,12 +50,12 @@ class Employees extends ComponentSafeUpdate {
   computeEmployeesRoles = () => {
     if(!!this.state.activeRole) {
       RoleService.getRolesForCompanyId(this.state.activeRole.companyId)
-        .then((roles) => {
-          this.setState({rolesOfCompanyEmployees: roles});
+        .then(rolesOfCompanyEmployees => {
+          this.setState({rolesOfCompanyEmployees});
   
-          var employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(roles).map((roleKey) => roles[roleKey].employeeId));
+          var employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(rolesOfCompanyEmployees).map(roleKey => rolesOfCompanyEmployees[roleKey].employeeId));
           EmployeeService.getAllForIdList(employeesIds)
-            .then((employees) => this.setState({companyEmployees: employees, companyEmployeesLoading: false}))
+            .then(companyEmployees => this.setState({companyEmployees, companyEmployeesLoading: false}))
             .catch(ErrorService.manageError);
         })
         .catch(ErrorService.manageError);
@@ -65,16 +65,13 @@ class Employees extends ComponentSafeUpdate {
   /**
    * RENDER
    */
-  renderRoleEmployee = (mode, itemKey, itemData) => {
-    var employee = {};
-    employee[itemKey] = itemData;
-
-    return <RoleEmployee key={itemKey} 
-      employee={employee} 
-      roles={UtilsService.filterKeyValueOnPropertyValue(this.state.rolesOfCompanyEmployees, (predicate) => predicate.employeeId === itemKey)}
+  renderRoleEmployee = (itemKey, itemData) => (
+    <RoleEmployee key={itemKey} 
+      employee={ {[itemKey]: itemData} } 
+      roles={UtilsService.filterKeyValueOnPropertyValue(this.state.rolesOfCompanyEmployees, predicate => predicate.employeeId === itemKey)}
       options={ {showDraft: false, showActions: false} }
-      showDetails={mode === 'active'} />;
-  };
+      showDetails={true} />
+  );
 
   render() {
     return (

@@ -44,6 +44,8 @@ import 'transportation-font/dist/transportation-font.css';
 // COMPONENTS
 import Specs from './components/Utils/Specs/Specs';
 
+import Modal from './components/Utils/Modal/Modal';
+
 import Dashboard from './components/App/Dashboard/Dashboard';
 import Splash from './components/App/Splash/Splash';
 import Navigation from './components/App/Navigation/Navigation';
@@ -58,22 +60,27 @@ import CompanyAdd from './components/Forms/CompanyAdd/CompanyAdd';
 import CompanyPage from './components/App/CompanyPage/CompanyPage';
 
 import Employees from './components/App/Employees/Employees';
+import EmployeePage from './components/App/EmployeePage/EmployeePage';
 
 import Roles from './components/App/Roles/Roles';
 import RoleAdd from './components/Forms/RoleAdd/RoleAdd';
+import RoleOffer from './components/Forms/RoleOffer/RoleOffer';
 
 import Equipments from './components/App/Equipments/Equipments';
 import EquipmentAdd from './components/Forms/EquipmentAdd/EquipmentAdd';
+import EquipmentModelAdd from './components/Forms/EquipmentModelAdd/EquipmentModelAdd';
 
 import Contracts from './components/App/Contracts/Contracts';
 import ContractAdd from './components/Forms/ContractAdd/ContractAdd';
 
 import Warehouses from './components/App/Warehouses/Warehouses';
 import WarehouseAdd from './components/Forms/WarehouseAdd/WarehouseAdd';
+import WarehousePage from './components/App/WarehousePage/WarehousePage';
 
 import Gps from './components/App/Gps/Gps';
 
 import LogTrack from './components/App/LogTrack/LogTrack';
+import LogTrackAdd from './components/Forms/LogTrackAdd/LogTrackAdd';
 
 import Analytics from './components/App/Analytics/Analytics';
 
@@ -86,6 +93,8 @@ import FirebaseService from './services/firebase.service';
 import DataService from './services/data.service';
 import ResizeService from './services/resize.service';
 import SettingsService, { ESettings } from './services/settings.service';
+
+import { ERole } from './classes/Role';
 
 import './index.scss';
 
@@ -125,9 +134,22 @@ library.add(faUsers, faWrench, faSteeringWheel);
 
 // Private route
 const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={(props) => (
+    <Route {...rest} render={props => (
         FirebaseService.isUserConnected()
         ? <Component {...props} />
+        : <Redirect to='/signin' />
+    )} />
+);
+
+// Role-limited Route
+const RoleLimitedRoute = ({ component: Component, ...rest }) => (
+    <Route {...rest} render={props => (
+        FirebaseService.isUserConnected()
+        ? (
+            (!!DataService.computed.activeRole && rest.roles.includes(DataService.computed.activeRole.role))
+            ? <Component {...props} />
+            : <Redirect to='dashboard' />
+        )
         : <Redirect to='/signin' />
     )} />
 );
@@ -162,34 +184,44 @@ const renderApp = () => {
                     <Route exact path="/signup" component={SignUp} />
                     <PrivateRoute exact path="/signout" component={SignOut} />
                     
-                    <PrivateRoute exact path="/employees" component={Employees} />
+                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/employees" component={Employees} />
+                    <PrivateRoute exact path="/employee/:employeeid" component={EmployeePage} />
         
                     <PrivateRoute exact path="/company/:companyid" component={CompanyPage} />
                     <PrivateRoute exact path="/company-add" component={CompanyAdd} />
 
                     <PrivateRoute exact path="/roles" component={Roles} />
+
                     <PrivateRoute exact path="/role-add" component={RoleAdd} />
-
-                    <PrivateRoute exact path="/equipments" component={Equipments} />
-                    <PrivateRoute exact path="/equipment-add" component={EquipmentAdd} />
-
-                    <PrivateRoute exact path="/contracts" component={Contracts} />
-                    <PrivateRoute exact path="/contract-add" component={ContractAdd} />
-
-                    <PrivateRoute exact path="/warehouses" component={Warehouses} />
-                    <PrivateRoute exact path="/warehouse-add" component={WarehouseAdd} />
-
-                    <PrivateRoute exact path="/gps" component={Gps} />
+                    <PrivateRoute exact path="/role-add/:companyid" component={RoleAdd} />
                     
-                    <PrivateRoute exact path="/logtrack" component={LogTrack} />
+                    <PrivateRoute exact path="/role-offer" component={RoleOffer} />
+                    <PrivateRoute exact path="/role-offer/:userid" component={RoleOffer} />
 
-                    <PrivateRoute exact path="/analytics" component={Analytics} />
+                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/equipments" component={Equipments} />
+                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/equipment-add" component={EquipmentAdd} />
+                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/equipment-model-add" component={EquipmentModelAdd} />
+
+                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contracts" component={Contracts} />
+                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contract-add" component={ContractAdd} />
+
+                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/warehouses" component={Warehouses} />
+                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/warehouse-add" component={WarehouseAdd} />
+                    <PrivateRoute exact path="/warehouse/:warehouseid" component={WarehousePage} />
+
+                    <RoleLimitedRoute roles={[ERole.DRIVER]} exact path="/gps" component={Gps} />
+                    
+                    <RoleLimitedRoute roles={[ERole.DRIVER, ERole.MECHANIC]} exact path="/logtrack" component={LogTrack} />
+                    <RoleLimitedRoute roles={[ERole.DRIVER, ERole.MECHANIC]} exact path="/logtrack-add" component={LogTrackAdd} />
+
+                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/analytics" component={Analytics} />
 
                     <PrivateRoute exact path="/search" component={Search} />
 
                     <PrivateRoute exact path="/chat" component={Chat} />
                     <PrivateRoute exact path="/chat/:chatid" component={Chat} />
                 </div>
+                <Modal></Modal>
             </div>
             {styleOverride()}
         </Router>,

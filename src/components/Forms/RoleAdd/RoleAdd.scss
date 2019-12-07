@@ -12,6 +12,18 @@
     .role-selection {
       margin-top: 1rem;
       position: relative;
+
+      .info {
+        font-size: 80%;
+        color: var(--gray);
+      }
+    }
+
+    .input-user {
+      position: relative;
+      display: block;
+      margin: 1.5rem 0 1rem 0;
+      width: 100%;
     }
   }
 }

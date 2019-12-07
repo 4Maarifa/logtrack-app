@@ -1,3 +1,47 @@
 .Contracts {
   flex: 1;
+  display: flex;
+  flex-direction: row;
+
+  .toggle-button {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    background-color: #FFFFFF;
+    box-shadow: var(--shadow);
+    border-radius: 1rem;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 2rem;
+    width: 15rem;
+
+    .Icon {
+      font-size: 150%;
+
+      & svg {
+        transition: color .5s;
+      }
+    }
+
+    &--active {
+      .Icon svg {
+        color: var(--second);
+      }
+    }
+  }
+
+  .Tabs {
+
+    .tab-container {
+      margin: 0;
+      width: 100%;
+
+      .ExTable {
+        flex: 1;
+        box-shadow: none;
+      }
+    }
+  }
 }

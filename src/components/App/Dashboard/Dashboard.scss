@@ -3,147 +3,287 @@
   flex-direction: column;
   flex: 1;
 
+  h1 {
+    display: inline-flex;
+    align-items: center;
+  }
+
   .role-container {
     flex: 1;
+    width: 100%;
     display: flex;
     flex-direction: column;
 
-    .role-content {
-      margin: .5rem 0 0 0;
-      flex: 1;
+    .line {
+      flex: 2;
       width: 100%;
-      box-shadow: var(--shadow);
-      border-radius: var(--border-radius);
       display: flex;
       flex-direction: row;
 
-      .LogTrack {
-        height: 100%;
+      &.mobile-only {
+        display: none;
+      }
+
+      & + .line {
+        margin-top: 1rem;
+      }
+
+      &.line-small {
         flex: 1;
       }
 
-      .Map {
-        height: 100%;
+      &.line-big {
+        flex: 5;
+      }
+
+      .card {
         flex: 1;
-        border-radius: var(--border-radius) 0 0 var(--border-radius);
-      }
-    }
-  }
-
-  .dash-container {
-    width: 100%;
-    display: block;
-    display: flex;
-    flex-flow: wrap;
-    justify-content: space-between;
-
-    .dash {
-      height: 8rem;
-      width: 100%;
-      background-color: #FFFFFF;
-      display: flex;
-      border-radius: var(--border-radius);
-      overflow: hidden;
-      transform: scale(1);
-      transition: transform .5s;
-      margin: .5rem 0 1rem 0;
-
-      &-33 {
-        width: calc(33% - 1rem);
-      }
-
-      &-weather {
-        display: inline-block;
-      }
-
-      &.dash-sm {
-        height: 4.5rem;
-
-        .dash-left.dash-bg {
-          clip-path: polygon(0% 0%, 100% 0%, 97.5% 100%, 0% 100%);
-        }
-
-        .dash-right.dash-bg {
-          clip-path: polygon(2.5% 0%, 100% 0%, 100% 100%, 0% 100%);
-        }
-      }
-
-      &, &:hover, &:focus, &:active, &:link, &:visited {
-        text-decoration: none;
+        height: calc(100% - 1rem);
+        display: block;
+        background-color: #FFFFFF;
         color: #000000;
-      }
+        position: relative;
+        padding: .5rem;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--small-shadow);
+        transition: box-shadow .5s;
 
-      &:hover {
-        /*transform: scale(1.02);*/
-
-        .dash-bg {
-          flex: 3;
-        }
-      }
-
-      .dash-bg {
-        background-color: var(--second);
-      }
-
-      .dash-text {
-        width: 100%;
-        text-align: center;
-
-        img {
-          height: 1.5rem;
-          vertical-align: middle;
-          margin-right: .5rem;
-        }
-      }
-
-      .dash-left {
-        flex: 2;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        transition: flex .5s;
-        min-width: 0;
-
-        &.dash-bg {
-          clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 0% 100%);
-          color: #FFFFFF;
-        }
-      
-        img {
-          height: 100%;
+        &:hover {
+          box-shadow: var(--shadow);
         }
 
-        svg {
-          font-size: 150%;
-          margin-right: .5rem;
+        &.mobile-only {
+          display: none;
         }
-      }
 
-      .dash-right {
-        flex: 2;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transition: flex .5s;
-        min-width: 0;
+        &-w {
+          flex: 0 0 8rem;
+        }
 
-        &.dash-bg {
-          clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
-          color: #FFFFFF;
+        &-inverse {
+          background-color: var(--second);
 
-          .dash-main {
+          &, &:hover, &:focus, &:visited, &:link, &:active {
             color: #FFFFFF;
           }
         }
 
-        .dash-main {
-          font-weight: bold;
-          font-size: 200%;
-          color: var(--second);
+        .icon-overlay {
+          font-size: 300%;
+          position: absolute;
+          bottom: -.02em;
+          right: -.12em;
+          opacity: var(--opacity-overlay);
+          transition: all .33s;
+        }
+
+        & + .card:not(.card-stick) {
+          margin-left: 1rem;
+        }
+
+        &.profile-link {
+
+          &:hover .icon-overlay {
+            transform: rotate(100deg);
+          }
+        }
+
+        &.company-link {
+          flex: 8;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+
+          h2 {
+            color: var(--second);
+          }
+
+          & > a {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .company-details-name-container {
+            height: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .company-details-stats-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            
+            .company-details-stat {
+              height: 2.2rem;
+              display: flex;
+              flex-direction: row;
+              margin: .5rem 0;
+              justify-content: center;
+              align-items: center;
+              width: 12rem;
+
+              .company-details-stat-icon {
+                height: 2.2rem;
+                width: 2.2rem;
+                margin-right: .6rem;
+                flex: 0 0 2.2rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: var(--second);
+                border-radius: var(--border-radius);
+                color: #FFFFFF;
+                vertical-align: middle;
+              }
+
+              .company-details-stat-content {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+              }
+
+              .manage-link {
+                color: var(--gray);
+              }
+            }
+          }
+
+          &:hover .icon-overlay {
+            color: var(--second);
+            opacity: .9;
+          }
+        }
+
+        &.alerts {
+          background-color: var(--orange);
+        }
+
+        &.hour {
+
+          &:hover .icon-overlay {
+            transform: rotate(100deg);
+          }
+        }
+
+        &.weather {
+
+          .icon-overlay {
+            right: -.1em;
+            bottom: -.1em;
+          }
+        }
+
+        &.location {
+
+          &:hover .icon-overlay {
+            transform: translateY(-20px);
+          }
+        }
+
+        &.map {
+          padding: 0;
+          height: 100%;
+
+          .Map {
+            border-radius: var(--border-radius);
+            height: 100%;
+          }
+        }
+
+        &.logtrack {
+          margin: .5rem 0;
+          height: calc(100% - 2rem);
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+
+          .ActionButton {
+            display: none;
+          }
+
+          &.logtrack-with-button {
+
+            .ActionButton {
+              display: block;
+            }
+          }
         }
       }
     }
   }
 }
+
+@media screen and (orientation: portrait) {
+  .Dashboard {
+
+    h1 {
+      font-size: 135%;
+    }
+
+    .role-container {
+
+      .line {
+
+        & + .line {
+          margin-top: .5rem;
+        }
+
+        &.mobile-only {
+          display: flex;
+        }
+
+        &.line-big {
+          flex-direction: column;
+        }
+
+        .card {
+
+          &-w {
+            flex: 1;
+
+            h2 {
+              font-size: 120%;
+            }
+          }
+
+          &.mobile-only {
+            display: block;
+          }
+
+          &.desktop-only {
+            display: none;
+          }
+
+          & + .card:not(.card-stick) {
+            margin-left: .5rem;
+          }
+
+          .icon-overlay {
+            font-size: 200%;
+          }
+
+          &.map {
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+          }
+
+          &.logtrack {
+            margin: 0;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+          }
+        }
+      }
+
+    }
+  }
+}
+

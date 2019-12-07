@@ -11,7 +11,7 @@ import RightService from './../../../services/right.service';
 import SettingsService, { ESettings } from './../../../services/settings.service';
 import { ERights } from './../../../services/right.service';
 
-import { RoleIcons } from './../../../classes/Role';
+import { RoleDetails } from './../../../classes/Role';
 
 import './Navigation.scss';
 
@@ -25,7 +25,7 @@ class Navigation extends ComponentSafeUpdate {
   componentDidMount = () => {
     super.componentDidMount();
     this.setState({observerKey: 
-      DataService.computed.observeComputedValues((computedValues) => {
+      DataService.computed.observeComputedValues(computedValues => {
         this.setState(computedValues, this.computeValues);
       })
     });
@@ -47,21 +47,14 @@ class Navigation extends ComponentSafeUpdate {
       </NavLink>);
     }
     return (<NavLink activeClassName="nav--active" to={`/roles`} exact={true}>
-      {RoleIcons[this.state.activeRole.role]}
+      {RoleDetails[this.state.activeRole.role].icon}
       <span className="nav-title nav-title-role">
         {UtilsService.capitalize(this.state.activeRole.role)}<br/>
         {this.state.activeRoleCompany.name}
       </span>
     </NavLink>);
   };
-
-  renderProfilePicture = () => {
-    if(!!this.state.employee && this.state.employee.profilePictureUrl) {
-      return (<img width="20" height="20" src={this.state.employee.profilePictureUrl} alt={this.state.employee.firstname + ' ' + this.state.employee.lastname + '\'s photo'} />);
-    }
-    return (<div></div>);
-  };
-
+  
   renderUsername = () => {
     if(!!this.state.employee) {
       return (

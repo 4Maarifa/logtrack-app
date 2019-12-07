@@ -8,7 +8,7 @@ class Tabs extends ComponentSafeUpdate {
   constructor(props) {
     super(props);
     this.state = {
-      activeTab: (!!props.default) ? props.default : null
+      activeTab: props.default
     };
   }
 
@@ -20,7 +20,7 @@ class Tabs extends ComponentSafeUpdate {
     super.componentWillUnmount();
   };
 
-  activateTab = activeTab => this.setState({activeTab});
+  activateTab = activeTab => !this.props.tabs[activeTab].disabled && this.setState({activeTab});
 
   render() {
     return (
@@ -28,7 +28,10 @@ class Tabs extends ComponentSafeUpdate {
         <ul>
           {
             Object.keys(this.props.tabs).map(tabKey => 
-              <li key={tabKey} className={'tab ' + ((tabKey === this.state.activeTab) ? 'selected' : '')} onClick={() => this.activateTab(tabKey)}>
+              <li key={tabKey} 
+                  className={'tab ' + (tabKey === this.state.activeTab ? 'tab--selected ' : '') + (!!this.props.tabs[tabKey].disabled ? 'tab--disabled' : '')} 
+                  onClick={() => this.activateTab(tabKey)}>
+
                 {this.props.tabs[tabKey].name()} 
               </li>
             )

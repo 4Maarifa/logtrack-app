@@ -4,17 +4,15 @@
   flex-direction: column;
 
   .Map {
-    height: 12rem;
-    flex: 0 0 12rem;
-    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    height: 25rem;
+    flex: 0 0 25rem;
+    border-radius: var(--border-radius);
     box-shadow: var(--shadow);
-    
-    .leaflet-container {
-      border-radius: var(--border-radius) var(--border-radius) 0 0;
-    }
   }
 
   .ExTable {
+    margin-top: 1rem;
+    border-radius: var(--border-radius);
     flex: 1;
   }
 }

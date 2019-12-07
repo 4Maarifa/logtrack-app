@@ -4,10 +4,9 @@ import DataService, { ensureFilledFields, migratePrototype } from './../data.ser
 import FirebaseService from './../firebase.service';
 import ErrorService from './../error.service';
 
-import Contract from './../../classes/Contract';
-
-import { EContractStatus } from './../../classes/Contract';
+import Contract, { EContractStatus } from './../../classes/Contract';
 import { ERole } from './../../classes/Role';
+import ESearchType from './../../classes/enums/ESearchType';
 
 const ContractService = {
   rights: {
@@ -95,7 +94,7 @@ const ContractService = {
   },
 
   // CUSTOM FUNCTIONS
-  getAllForCompanyExecId(companyExecId) {
+  getAllForCompanyExecId(companyExecId, statusArray = [EContractStatus.DRAFT, EContractStatus.EXECUTION, EContractStatus.FINISHED, EContractStatus.PAID]) {
     if(!ContractService.rights[ERights.RIGHT_CONTRACT_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Contracts' });
     }
@@ -104,15 +103,16 @@ const ContractService = {
     return new Promise((resolve, reject) => {
       FirebaseService.getDb().collection('contracts')
         .where('companyExecId', '==', companyExecId)
+        .where('status', 'in', statusArray)
         .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((contractDoc) => contracts[contractDoc.id] = contractDoc.data());
+        .then(querySnapshot => {
+            querySnapshot.forEach(contractDoc => contracts[contractDoc.id] = contractDoc.data());
             resolve(contracts);
         })
-        .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  getAllForCompanyOrderId(companyOrderId) {
+  getAllForCompanyOrderId(companyOrderId, statusArray = [EContractStatus.DRAFT, EContractStatus.EXECUTION, EContractStatus.FINISHED, EContractStatus.PAID]) {
     if(!ContractService.rights[ERights.RIGHT_CONTRACT_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Contracts' });
     }
@@ -121,14 +121,25 @@ const ContractService = {
     return new Promise((resolve, reject) => {
       FirebaseService.getDb().collection('contracts')
         .where('companyOrderId', '==', companyOrderId)
+        .where('status', 'in', statusArray)
         .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((contractDoc) => contracts[contractDoc.id] = contractDoc.data());
+        .then(querySnapshot => {
+            querySnapshot.forEach(contractDoc => contracts[contractDoc.id] = contractDoc.data());
             resolve(contracts);
         })
-        .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
+  search(term) {
+    return new Promise((resolve, reject) => {
+      if(!DataService.computed.activeRole) {
+        reject('Cannot search contracts : No active role');
+      }
+      DataService.computed.search([ESearchType.CONTRACTS], term, DataService.computed.activeRole.companyId)
+        .then(results => resolve(results.data.contracts))
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
+    });
+  }
 };
 
 export default ContractService;

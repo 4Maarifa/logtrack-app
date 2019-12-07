@@ -34,6 +34,7 @@
 
     .valid, .invalid {
       display: none;
+      justify-content: flex-end;
       opacity: 0;
       transition: opacity .5s;
     }
@@ -61,7 +62,7 @@
         background-color: var(--green);
   
         .valid {
-          display: block;
+          display: flex;
           opacity: 1;
         }
       }
@@ -74,7 +75,7 @@
         background-color: var(--red);
   
         .invalid {
-          display: block;
+          display: flex;
           opacity: 1;
         }
       }

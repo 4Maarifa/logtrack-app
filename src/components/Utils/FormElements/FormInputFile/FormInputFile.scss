@@ -6,6 +6,7 @@
     position: relative;
     border: 1px solid var(--gray);
     border-radius: var(--border-radius);
+    background-color: #FFFFFF;
     display: flex;
     height: 5rem;
     width: 100%;
@@ -50,6 +51,7 @@
       .valid, .invalid {
         display: none;
         opacity: 0;
+        justify-content: flex-end;
         transition: opacity .5s;
       }
   
@@ -69,7 +71,7 @@
         background-color: var(--green);
   
         .valid {
-          display: block;
+          display: flex;
           opacity: 1;
         }
       }
@@ -82,7 +84,7 @@
         background-color: var(--red);
   
         .invalid {
-          display: block;
+          display: flex;
           opacity: 1;
         }
       }

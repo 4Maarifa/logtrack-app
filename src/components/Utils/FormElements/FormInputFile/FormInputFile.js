@@ -13,18 +13,9 @@ class FormInputFile extends ComponentSafeUpdate {
   constructor (props) {
     super(props);
     this.state = {
-      onValueChange: props.onValueChange,
-
-      fieldName: props.fieldName,
-      inputRequired: props.inputRequired,
       accept: this.props.accept || '*/*',
 
-      label: props.label,
       fileValues: null,
-
-      instructions: props.instructions,
-
-      imagePreview: props.imagePreview,
 
       hover: false
     };
@@ -43,7 +34,7 @@ class FormInputFile extends ComponentSafeUpdate {
   onChange = () => {
     if(!!this.file.current.files && !!this.file.current.files.length) {
       this.setState({fileValues: this.file.current.files});
-      !!this.state.onValueChange && this.state.onValueChange(this.file.current.files, this.state.fieldName);
+      !!this.props.onValueChange && this.props.onValueChange(this.file.current.files, this.props.fieldName);
     }
   };
 
@@ -60,9 +51,9 @@ class FormInputFile extends ComponentSafeUpdate {
           ref={this.file}
           onChange={this.onChange}
           accept={this.state.accept}
-          required={this.state.inputRequired} />
+          required={this.props.inputRequired} />
         <label htmlFor={inputId}>
-          {!!this.state.imagePreview && !!this.state.fileValues && !!this.state.fileValues.length &&
+          {!!this.props.imagePreview && !!this.state.fileValues && !!this.state.fileValues.length &&
             <img src={URL.createObjectURL(this.state.fileValues[0])} alt="Upload Preview" />
           }
           <span className="input-title">
@@ -73,16 +64,16 @@ class FormInputFile extends ComponentSafeUpdate {
             onMouseOver={() => this.setState({ hover: true })}
             onMouseOut={() => this.setState({ hover: false })}>
 
-            <Icon className="valid" source="fa" icon={faCheck} />
-            <Icon className="invalid" source="fa" icon={faTimes} />
+            <Icon containerclassname="valid" source="fa" icon={faCheck} />
+            <Icon containerclassname="invalid" source="fa" icon={faTimes} />
           </span>
         </label>
-        {!!this.state.label && <span className="fake-label">
-          {this.state.label}
+        {!!this.props.label && <span className="fake-label">
+          {this.props.label}
         </span>}
-        {!!this.state.instructions && <Tooltip 
+        {!!this.props.instructions && <Tooltip 
           show={this.state.hover} 
-          label={this.state.instructions}
+          label={this.props.instructions}
           tooltipPosition={ETooltipPosition.BOTTOM} 
           tooltipTrianglePosition={ETooltipTrianglePosition.END} />}
       </div>

@@ -1,6 +1,9 @@
 import React, { Fragment } from 'react';
+import { faUser } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
+import Icon from './../../Utils/Icon/Icon';
 
 import Role from './../Role/Role';
 
@@ -9,83 +12,47 @@ import { ERoleStatus } from './../../../classes/Role';
 import './RoleEmployee.scss';
 
 class RoleEmployee extends ComponentSafeUpdate{
-  constructor (props) {
-    super(props);
-    this.state = {
-      roles: props.roles,
-      employee: props.employee,
-
-      options: props.options,
-      showDetails: props.showDetails
-    };
-  }
-
-  componentDidMount = () => {
-    super.componentDidMount();
-  };
-
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-  };
-
-  shouldComponentUpdate(nextProps, _) {
-    if(!this.state.employee || nextProps.employee.employeeId !== this.state.employee.employeeId) {
-      this.setState({employee: nextProps.employee});
-    }
-    if(nextProps.roles.length !== this.state.roles.length) {
-      this.setState({roles: nextProps.roles});
-    }
-    if(nextProps.showDetails !== this.state.showDetails) {
-      this.setState({showDetails: nextProps.showDetails});
-    }
-    return true;
-  };
 
   /**
    * RENDER
    */
   renderProfilePicture = employeeId => {
-    if(!!this.state.employee && !!this.state.employee[employeeId].profilePictureUrl) {
-      return <img width="20" height="20" src={this.state.employee[employeeId].profilePictureUrl} 
-        alt={this.state.employee[employeeId].firstname + ' ' + this.state.employee[employeeId].lastname + '\'s photo'} />
+    if(!!this.props.employee && !!this.props.employee[employeeId].profilePictureUrl) {
+      return <img width="20" height="20" src={this.props.employee[employeeId].profilePictureUrl} 
+        alt={this.props.employee[employeeId].firstname + ' ' + this.props.employee[employeeId].lastname + '\'s photo'} />
     }
-    return <></>;
+    return <Fragment></Fragment>;
   };
 
   renderRole = roleKey => {
-    if(!this.state.options.showDraft && this.state.roles[roleKey].status === ERoleStatus.DRAFT) {
+    if(!this.props.options.showDraft && this.props.roles[roleKey].status === ERoleStatus.DRAFT) {
       return <Fragment key={roleKey}></Fragment>;
     }
-    return <Role key={roleKey} role={ { [roleKey]: this.state.roles[roleKey] } } options={this.state.options}></Role>;
+    return <Role key={roleKey} role={ { [roleKey]: this.props.roles[roleKey] } } options={this.props.options}></Role>;
   };
 
   render() {
-    if(!this.state.employee || !Object.keys(this.state.roles).length) {
-      return (<></>);
+    if(!this.props.employee || !Object.keys(this.props.roles).length) {
+      return (<Fragment></Fragment>);
     }
-    var employeeId = Object.keys(this.state.employee)[0];
+    var employeeId = Object.keys(this.props.employee)[0];
 
-    if(!this.state.options.showDraft && 
-        Object.keys(this.state.roles).map((roleKey) => this.state.roles[roleKey].status).reduce((total, role) => total + (role.status === ERoleStatus.CONFIRMED) ? 1 : 0) === 0) {
-        return <></>;
+    if(!this.props.options.showDraft && 
+        Object.keys(this.props.roles).map((roleKey) => this.props.roles[roleKey].status).reduce((total, role) => total + (role.status === ERoleStatus.CONFIRMED) ? 1 : 0) === 0) {
+        return <Fragment></Fragment>;
     }
 
     return (
       <div className="RoleEmployee">
-        <div className="base">
-          <span>
-            {this.renderProfilePicture(employeeId)}
-            {this.state.employee[employeeId].firstname + ' ' + this.state.employee[employeeId].lastname}
-          </span>
+        <Icon source="fa" icon={faUser} containerclassname="item-icon" />
+        <div className="item-content">
+          <PageLink type={PageLinkType.EMPLOYEE} entityId={employeeId} entityData={this.props.employee[employeeId]} />
+        </div>
+        <div className="item-actions">
           <div className="roles">
-            {Object.keys(this.state.roles).map((roleKey) => 
-              this.renderRole(roleKey)
-            )}
+            {Object.keys(this.props.roles).map(this.renderRole)}
           </div>
         </div>
-        {!!this.state.showDetails && <div className="details">
-          DETAILS
-        </div>}
       </div>
     );
   }

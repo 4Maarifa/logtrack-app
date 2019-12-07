@@ -1,12 +1,14 @@
 import React from 'react';
+import DateTimePicker from 'react-datetime-picker';
 import { NavLink } from 'react-router-dom';
 import { faSignOut, faUser, faCog, faImage, faIdCardAlt, faUserHeadset, faPlus, faAward,
-    faPhoneAlt, faInfoCircle, faExclamationCircle, faTimes, faUpload, faExclamationTriangle, faEnvelope } from '@fortawesome/pro-solid-svg-icons';
+    faPhoneAlt, faInfoCircle, faExclamationCircle, faTimes, faUpload, faExclamationTriangle, faEnvelope, faClipboardUser, faCalendarAlt } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Tabs from './../../Utils/Tabs/Tabs';
 import Loader from './../../Utils/Loader/Loader';
 import Icon from './../../Utils/Icon/Icon';
+import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 
 import DataService from './../../../services/data.service';
 import DateService from './../../../services/date.service';
@@ -24,7 +26,13 @@ class Profile extends ComponentSafeUpdate {
     this.state = Object.assign({
       profilePictureLoading: false,
 
-      certificate: '',
+      certificateName: '',
+      certificateDate: null,
+
+      experienceName: '',
+      experienceCompamyName: '',
+      experienceStartDate: null,
+      experienceEndDate: null,
 
       supportMessage: '',
       supportMetadata: {}
@@ -36,7 +44,7 @@ class Profile extends ComponentSafeUpdate {
   componentDidMount = () => {
     super.componentDidMount();
     this.setState({observerKey: 
-      DataService.computed.observeComputedValues((computedValues) => {
+      DataService.computed.observeComputedValues(computedValues => {
         this.setState(computedValues, this.computeValues);
       })
     });
@@ -87,21 +95,44 @@ class Profile extends ComponentSafeUpdate {
   };
 
   handleChange = event => this.setState({[event.target.getAttribute('data-field')]: event.target.value});
+  handleDateChange = (field, value) => this.setState({[field]: value});
 
   handleSubmitCertificate = event => {
     event.preventDefault();
 
-    if(this.state.employee.certificates.includes(this.state.certificate)) {
+    if(!!this.state.employee.certificates.filter(certificate => certificate.name === this.state.certificateName).length) {
       ErrorService.warning('You already have this certificate!');
       return;
     }
 
-    let certificates = this.state.employee.certificates;
-    certificates.push(this.state.certificate);
+    let certificates = this.state.employee.certificates || [];
+    certificates.push({name: this.state.certificateName, date: DateService.getMonthYearString(this.state.certificateDate)});
 
     EmployeeService.updateField(this.state.user.uid, {certificates})
       .then(() => DataService.computed.notifyChanges()
-        .then(() => this.setState({certificate: ''})))
+        .then(() => this.setState({certificateName: '', certificateDate: null})))
+      .catch(ErrorService.manageError);
+  };
+
+  handleSubmitExperience = event => {
+    event.preventDefault();
+
+    if(this.state.experienceStartDate > this.state.experienceEndDate) {
+      ErrorService.manageError('Experience start date muse be before end date!');
+      return;
+    }
+
+    let experience = this.state.employee.experience || [];
+    experience.push({
+      name: this.state.experienceName,
+      company: this.state.experienceCompamyName,
+      start: DateService.getMonthYearString(this.state.experienceStartDate),
+      end: DateService.getMonthYearString(this.state.experienceEndDate)
+    });
+
+    EmployeeService.updateField(this.state.user.uid, {experience})
+      .then(() => DataService.computed.notifyChanges()
+        .then(() => this.setState({experienceCompamyName: '', experienceName: '', experienceStartDate: null, experienceEndDate: null})))
       .catch(ErrorService.manageError);
   };
 
@@ -120,7 +151,15 @@ class Profile extends ComponentSafeUpdate {
     let certificates = this.state.employee.certificates;
     certificates.splice(index, 1);
     EmployeeService.updateField(this.state.user.uid, {certificates})
-      .then(() => DataService.computed.notifyChanges())
+      .then(DataService.computed.notifyChanges)
+      .catch(ErrorService.manageError);
+  };
+
+  deleteExperience = index => {
+    let experience = this.state.employee.experience;
+    experience.splice(index, 1);
+    EmployeeService.updateField(this.state.user.uid, {experience})
+      .then(DataService.computed.notifyChanges)
       .catch(ErrorService.manageError);
   };
 
@@ -132,7 +171,7 @@ class Profile extends ComponentSafeUpdate {
       <div className="Profile">
         {!!this.state.employee && !!this.state.user &&
           <div>
-            Welcome back, {this.state.employee.firstname + ' ' + this.state.employee.lastname}!
+            Welcome back, <PageLink type={PageLinkType.EMPLOYEE} entityId={this.state.user.uid} entityData={this.state.employee} />!
             <NavLink to={`/signout`} className="signout">
               <Icon source="fa" icon={faSignOut} />
               Sign Out
@@ -208,13 +247,11 @@ class Profile extends ComponentSafeUpdate {
                     <div className="personal-info-line">
                       <div className="personal-info-input-container">
                         <label htmlFor="personal-info-firstname">Firstname</label>
-                        <input type="text" disabled 
-                          id="personal-info-firstname" name="personal-info-firstname" value={this.state.employee.firstname} />
+                        <input type="text" disabled id="personal-info-firstname" name="personal-info-firstname" value={this.state.employee.firstname} />
                       </div>
                       <div className="personal-info-input-container">
                         <label htmlFor="personal-info-lastname">Lastname</label>
-                        <input type="text" disabled 
-                          id="personal-info-lastname" name="personal-info-lastname" value={this.state.employee.lastname} />
+                        <input type="text" disabled id="personal-info-lastname" name="personal-info-lastname" value={this.state.employee.lastname} />
                       </div>
                     </div>
                     <div className="personal-info-line">
@@ -223,39 +260,118 @@ class Profile extends ComponentSafeUpdate {
                         Please contact the support to edit your firstname or lastname.
                       </span>
                     </div>
-                    <div className="personal-info-line personal-info-line-main">
-                      
-                    </div>
                   </div>
-                  <h2 className="profile-title">
-                    <Icon source="fa" icon={faAward} />
-                    Certificates
-                  </h2>
-                  <div className="certificates-container">
-                    <ul className="certificates">
-                      {this.state.employee.certificates.map((certificate, index) => 
-                        <li key={certificate} className="certificate">
-                          {certificate}
-                          <button onClick={() => this.deleteCertificate(index)}>
-                            <Icon source="fa" icon={faTimes} />
-                          </button>
-                        </li>  
-                      )}
-                    </ul>
-                    <form className="certificate-add" onSubmit={this.handleSubmitCertificate}>
-                      <input 
-                        type="text" 
-                        placeholder="Certificate" 
-                        data-field="certificate"
-                        value={this.state.certificate}
-                        onChange={this.handleChange}
-                        autoComplete="false"
-                        required />
-                      <button>
-                        <Icon source="fa" icon={faPlus} />
-                        Add
-                      </button>
-                    </form>
+                  <div className="bottom-container">
+                    <div className="certificates-container">
+                      <h2 className="profile-title">
+                        <Icon source="fa" icon={faAward} />
+                        Certificates
+                      </h2>
+                      <div className="certificates">
+                        <div className="certificates-list">
+                          {!!this.state.employee.certificates && this.state.employee.certificates.map((certificate, index) => 
+                            <span key={certificate.name} className="certificate">
+                              {certificate.name}
+                              <span className="certificate-date">{certificate.date}</span>
+                              <button onClick={() => this.deleteCertificate(index)}>
+                                <Icon source="fa" icon={faTimes} />
+                              </button>
+                            </span>  
+                          )}
+                        </div>
+                      </div>
+                      <form className="certificate-add" onSubmit={this.handleSubmitCertificate}>
+                        <input 
+                          className="certificate-add-name-input"
+                          type="text" 
+                          placeholder="Certificate" 
+                          data-field="certificateName"
+                          value={this.state.certificateName}
+                          onChange={this.handleChange}
+                          autoComplete="false"
+                          required />
+                        <DateTimePicker
+                          onChange={value => this.handleDateChange('certificateDate', value)}
+                          value={this.state.certificateDate}
+                          clearIcon={null}
+                          calendarIcon={<Icon source="fa" icon={faCalendarAlt} />}
+                          format="y-MM"
+                          maxDate={new Date()}
+                          minDetail="year"
+                          required
+                          showLeadingZeros={true} />
+                        <button className="certificate-add-submit">
+                          <Icon source="fa" icon={faPlus} />
+                          Add
+                        </button>
+                      </form>
+                    </div><div className="experience-container">
+                      <h2 className="profile-title">
+                        <Icon source="fa" icon={faClipboardUser} />
+                        Experience
+                      </h2>
+                      <div className="experience">
+                        <div className="experience-list">
+                          {!!this.state.employee.experience && this.state.employee.experience.map((experienceItem, index) => 
+                            <span key={experienceItem.name} className="experience-item">
+                              {experienceItem.name} @ {experienceItem.company}
+                              <span className="experienceItem-date">
+                                {experienceItem.start}
+                                {!!experienceItem.end && 
+                                  <span> - {experienceItem.end}</span>
+                                }
+                              </span>
+                              <button onClick={() => this.deleteExperience(index)}>
+                                <Icon source="fa" icon={faTimes} />
+                              </button>
+                            </span>  
+                          )}
+                        </div>
+                      </div>
+                      <form className="experience-add" onSubmit={this.handleSubmitExperience}>
+                        <input 
+                          className="experience-add-name-input"
+                          type="text" 
+                          placeholder="Experience" 
+                          data-field="experienceName"
+                          value={this.state.experienceName}
+                          onChange={this.handleChange}
+                          autoComplete="false"
+                          required />
+                        <input 
+                          className="experience-add-company-input"
+                          type="text" 
+                          placeholder="Company" 
+                          data-field="experienceCompamyName"
+                          value={this.state.experienceCompamyName}
+                          onChange={this.handleChange}
+                          autoComplete="false"
+                          required />
+                        <DateTimePicker
+                          onChange={value => this.handleDateChange('experienceStartDate', value)}
+                          value={this.state.experienceStartDate}
+                          clearIcon={null}
+                          calendarIcon={<Icon source="fa" icon={faCalendarAlt} />}
+                          format="y-MM"
+                          maxDate={new Date()}
+                          minDetail="year"
+                          required
+                          showLeadingZeros={true} />
+                        <DateTimePicker
+                          onChange={value => this.handleDateChange('experienceEndDate', value)}
+                          value={this.state.experienceEndDate}
+                          clearIcon={null}
+                          calendarIcon={<Icon source="fa" icon={faCalendarAlt} />}
+                          format="y-MM"
+                          maxDate={new Date()}
+                          minDetail="year"
+                          showLeadingZeros={true} />
+                        <button className="experience-add-submit">
+                          <Icon source="fa" icon={faPlus} />
+                          Add
+                        </button>
+                      </form>
+                    </div>
                   </div>
                 </div>;
               }
