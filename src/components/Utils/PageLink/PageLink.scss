@@ -11,7 +11,8 @@
   &.white-link {
     color: #FFFFFF;
 
-    span.you {
+    span.you,
+    span.company-plan {
       color: var(--second);
       background-color: #FFFFFF;
     }

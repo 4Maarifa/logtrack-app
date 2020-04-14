@@ -23,6 +23,8 @@
       .ol-attributions-button {
         height: 1.5rem;
         width: 1.5rem;
+        position: relative;
+        z-index: 3;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -36,6 +38,8 @@
         max-width: 0;
         height: 1.5rem;
         padding: 0;
+        position: relative;
+        right: -1rem;
         overflow: hidden;
         display: inline-flex;
         justify-content: center;
@@ -43,7 +47,7 @@
         white-space: nowrap;
         background-color: #FFFFFF;
         transition: max-width .5s, padding .5s;
-        border-radius: .75rem;
+        border-radius: .75rem 0 0 .75rem;
 
         a, a:hover, a:focus, a:active, a:visited, a:link {
           color: #000000;
@@ -54,7 +58,7 @@
       .ol-attributions-button:hover + .ol-attributions-content,
       .ol-attributions-content:hover {
         max-width: 100%;
-        padding: 0 .3rem;
+        padding: 0 1.2rem 0 .3rem;
       }
     }
 

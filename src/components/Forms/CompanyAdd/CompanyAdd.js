@@ -226,7 +226,7 @@ class CompanyAdd extends ComponentSafeUpdate {
                 onSelectionChange={this.onFormInputChange} />
               <span className="input-color-info">
                 <Icon source="fa" icon={faInfoCircle} />
-                The dominant color of your company is used to customize employee's experience.
+                The dominant color of your company is used to customize employees' experience.
               </span>
             </div>
 

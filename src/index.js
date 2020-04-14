@@ -5,10 +5,10 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { 
     // Vehicles
-    faTruck, faTruckMoving, faTruckPickup, faTruckContainer, faCarSide, faHelicopter, faPlane, faShip, faTrain, faShippingFast,
+    faTruck, faTruckMoving, faTruckPickup, faTruckContainer, faCarSide, faHelicopter, faPlane, faShip, faTrain, faShippingFast, faShippingTimed,
     // Loading
     faTruckRamp, faTruckLoading, faTruckCouch, faPersonDollyEmpty, faPersonDolly, faPersonCarry, faDolly, faDollyEmpty, faPeopleCarry,
-    faRampLoading, faConveyorBelt, faConveyorBeltAlt, faForklift, faInventory,
+    faRampLoading, faConveyorBelt, faConveyorBeltAlt, faForklift, faInventory, faShare, faReply,
     // Problems
     faCarBattery, faCarBump, faCarCrash, faCarGarage, faCarMechanic, faCarTilt, faEngineWarning, faOilCan, faOilTemp, 
     faTireFlat, faTirePressureWarning, faGasPumpSlash, faTrafficCone,
@@ -16,8 +16,10 @@ import {
     faTire, faMicrochip, faLightbulbOn,
     // Pause
     faChargingStation, faGasPump, faPause, faBed, faUtensils, faWeight, faParking, faWeightHanging, faCarWash,
+    // Service
+    faArrowAltFromLeft, faArrowAltToRight, faToolbox,
     // Date / Monitoring
-    faCalendar, faCalendarAlt, faCalendarCheck, faCalendarTimes, faCalendarExclamation, faDigitalTachograph, faTemperatureLow, 
+    faCalendar, faCalendarAlt, faCalendarCheck, faCalendarTimes, faClock, faCalendarExclamation, faDigitalTachograph, faTemperatureLow, 
     faTemperatureHigh, faAnalytics, faCalendarDay, faReceipt,
     // Merchandise
     faArchive, faCarrot, faCookie, faLaptop, faTv, faAppleAlt, faBacon, faBreadLoaf, faCheese, faCheeseburger, faCorn, faEgg, 
@@ -99,10 +101,10 @@ import { ERole } from './classes/Role';
 import './index.scss';
 
 // Vehicles
-library.add(faTruck, faTruckMoving, faTruckPickup, faTruckContainer, faCarSide, faHelicopter, faPlane, faShip, faTrain, faShippingFast);
+library.add(faTruck, faTruckMoving, faTruckPickup, faTruckContainer, faCarSide, faHelicopter, faPlane, faShip, faTrain, faShippingFast, faShippingTimed);
 // Loading
 library.add(faTruckRamp, faTruckLoading, faTruckCouch, faPersonDollyEmpty, faPersonDolly, faPersonCarry, faDolly, faDollyEmpty, faPeopleCarry,
-    faRampLoading, faConveyorBelt, faConveyorBeltAlt, faForklift, faInventory);
+    faRampLoading, faConveyorBelt, faConveyorBeltAlt, faForklift, faInventory, faShare, faReply);
 // Problems
 library.add(faCarBattery, faCarBump, faCarCrash, faCarCrash, faCarGarage, faCarMechanic, faCarTilt,faEngineWarning, faOilCan, faOilTemp, 
     faTireFlat, faTirePressureWarning, faGasPumpSlash, faTrafficCone);
@@ -110,8 +112,10 @@ library.add(faCarBattery, faCarBump, faCarCrash, faCarCrash, faCarGarage, faCarM
 library.add(faTire, faMicrochip, faLightbulbOn);
 // Pause
 library.add(faChargingStation, faGasPump, faPause, faBed, faUtensils, faWeight, faParking, faWeightHanging, faCarWash);
+// Service
+library.add(faArrowAltFromLeft, faArrowAltToRight, faToolbox);
 // Date / Monitoring
-library.add(faCalendar, faCalendarAlt, faCalendarCheck, faCalendarTimes, faCalendarExclamation, faDigitalTachograph, faTemperatureLow, 
+library.add(faCalendar, faCalendarAlt, faCalendarCheck, faCalendarTimes, faClock, faCalendarExclamation, faDigitalTachograph, faTemperatureLow, 
     faTemperatureHigh, faAnalytics, faCalendarDay, faReceipt);
 // Merchandise
 library.add(faArchive, faCarrot, faCookie, faLaptop, faTv, faAppleAlt, faBacon, faBreadLoaf, faCheese, faCheeseburger, faCorn, faEgg, 
