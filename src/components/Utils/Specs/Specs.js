@@ -35,6 +35,7 @@ class Specs extends Component {
             <li><Icon source="fa" withLabel={true} icon="ship"/></li>
             <li><Icon source="fa" withLabel={true} icon="train"/></li>
             <li><Icon source="fa" withLabel={true} icon="shipping-fast"/></li>
+            <li><Icon source="fa" withLabel={true} icon="shipping-timed"/></li>
         </ul>
         <h2>Loading</h2>
         <ul>
@@ -95,6 +96,15 @@ class Specs extends Component {
             <li><Icon source="fa" withLabel={true} icon="parking"/></li>
             <li><Icon source="fa" withLabel={true} icon="weight-hanging"/></li>
             <li><Icon source="fa" withLabel={true} icon="car-wash"/></li>
+            <li><Icon source="fa" withLabel={true} icon="truck" additional="share" /></li>
+            <li><Icon source="fa" withLabel={true} icon="truck" additional="reply" /></li>
+        </ul>
+        <h2>Service</h2>
+        <ul>
+            <li><Icon source="fa" withLabel={true} icon="wrench"/></li>
+            <li><Icon source="fa" withLabel={true} icon="arrow-alt-from-left"/></li>
+            <li><Icon source="fa" withLabel={true} icon="arrow-alt-to-right"/></li>
+            <li><Icon source="fa" withLabel={true} icon="toolbox"/></li>
         </ul>
         <h2>Date / Monitoring</h2>
         <ul>
@@ -102,6 +112,7 @@ class Specs extends Component {
             <li><Icon source="fa" withLabel={true} icon="calendar-alt"/></li>
             <li><Icon source="fa" withLabel={true} icon="calendar-check"/></li>
             <li><Icon source="fa" withLabel={true} icon="calendar-times"/></li>
+            <li><Icon source="fa" withLabel={true} icon="clock"/></li>
             <li><Icon source="fa" withLabel={true} icon="calendar-exclamation"/></li>
             <li><Icon source="fa" withLabel={true} icon="digital-tachograph"/></li>
             <li><Icon source="fa" withLabel={true} icon="temperature-low"/></li>
