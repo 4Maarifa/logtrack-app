@@ -54,6 +54,7 @@
     z-index: 2;
     background-color: transparent;
     transition: color .5s, border-color .5s;
+    min-width: 0;
 
     &:valid {
       border-color: var(--green);

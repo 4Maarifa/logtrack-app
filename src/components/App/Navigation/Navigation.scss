@@ -12,6 +12,10 @@
   min-width: 0;
   transition: background-color .5s;
 
+  &-mobile {
+    display: none;
+  }
+
   nav {
     display: flex;
     flex: 1;
@@ -158,13 +162,68 @@
   }
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (orientation: portrait) {
   .Navigation {
-    flex: 0 0 2rem;
+    height: 3rem;
+    flex: 0 0 3rem;
+    padding: 0;
+    z-index: 9999;
+    box-shadow: var(--shadow);
+
+    &.Navigation--opened {
+      nav {
+        height: 100vh;
+        width: 100vw;
+        justify-content: center;
+
+        a,
+        a:hover,
+        a:focus,
+        a:visited,
+        a:active,
+        a:link {
+          &:not(.nav--active) {
+            display: flex;
+
+            .nav-title {
+              display: flex;
+              align-items: center;
+              color: #FFFFFF;
+              width: auto;
+              position: static;
+            }
+          }
+        }
+      }
+    }
+
+    &-mobile {
+      position: absolute;
+      z-index: 10000;
+      top: 0;
+      left: 0;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      font-size: 120%;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
 
     nav {
-      margin-left: .1rem;
-      width: calc(100% - .1rem);
+      margin-left: 0;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      background-color: var(--second);
+      left: 0;
+      height: 100%;
+      transition: height .5s;
+
+      .nav-clearfix {
+        display: none;
+      }
 
       a,
       a:hover,
@@ -172,9 +231,29 @@
       a:visited,
       a:active,
       a:link {
-        padding: 0;
-        width: 100%;
-        justify-content: center;
+        &.nav--active {
+          background-color: transparent;
+          color: #FFFFFF;
+          border: 0;
+          height: 3rem;
+          flex: 0 0 3rem;
+
+          &:before, &:after {
+            display: none;
+          }
+
+          .nav-title {
+            display: flex;
+            align-items: center;
+            color: #FFFFFF;
+            width: auto;
+            position: static;
+          }
+        }
+
+        &:not(.nav--active) {
+          display: none;
+        }
       }
     }
   }

@@ -66,3 +66,12 @@
     }
   }
 }
+
+@media screen and (orientation: portrait) {
+  .CompanyPage {
+    .company-header {
+      flex-direction: column;
+      padding: 1rem .5rem;
+    }
+  }
+}

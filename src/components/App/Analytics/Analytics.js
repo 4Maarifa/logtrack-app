@@ -76,7 +76,6 @@ class Analytics extends ComponentSafeUpdate {
   render() {
     return (
       <div className="Analytics">
-        Analytics
         <Chart
           options={this.state.graphs.logtrack.options}
           series={this.state.graphs.logtrack.series}

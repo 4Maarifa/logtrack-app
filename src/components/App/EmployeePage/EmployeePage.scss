@@ -212,6 +212,11 @@
 
 @media screen and (orientation: portrait) {
   .EmployeePage {
+
+    .employee-header {
+      flex-direction: column;
+      padding: 1rem .5rem;
+    }
     
     .employee-content {
       flex-direction: column;
