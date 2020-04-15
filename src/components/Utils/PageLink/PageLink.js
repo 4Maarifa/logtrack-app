@@ -22,7 +22,7 @@ class PageLink extends ComponentSafeUpdate {
               <img src={this.props.entityData.profilePictureUrl} alt="" />
             }
             <span>{this.props.entityData.firstname + ' ' + this.props.entityData.lastname}</span>
-            {!!DataService.computed.user && this.props.entityId === DataService.computed.user.uid && <span className="badge">you</span>}
+            {!!DataService.computed.user && this.props.entityId === DataService.computed.user.uid && <span className="badge you">you</span>}
           </Fragment>
         };
       case PageLinkType.COMPANY:

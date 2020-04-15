@@ -134,6 +134,7 @@
     border-radius: var(--border-radius);
     z-index: 2;
     transition: color .5s;
+    min-width: 0;
 
     &:active ~ label,
     &:focus ~ label,

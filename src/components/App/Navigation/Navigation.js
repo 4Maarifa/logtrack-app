@@ -1,6 +1,6 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { faTachometerFast, faHome, faSignIn, faUserPlus, faUserCog, faUsers, faTruck, faFileSignature, faTag, faCompass, faAnalytics, faMapPin, faBuilding, faSearch, faWarehouse, faComments } from '@fortawesome/pro-solid-svg-icons';
+import React, { useEffect } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { faTachometerFast, faHome, faSignIn, faUserPlus, faUserCog, faUsers, faTruck, faFileSignature, faTag, faCompass, faAnalytics, faMapPin, faBuilding, faSearch, faWarehouse, faComments, faBars, faTimes } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Icon from './../../Utils/Icon/Icon';
@@ -15,11 +15,20 @@ import { RoleDetails } from './../../../classes/Role';
 
 import './Navigation.scss';
 
+const TrackRouteChange = props => {
+  const location = useLocation();
+
+  useEffect(() => props.onChange(), [location]);
+
+  return null;
+}
+
 class Navigation extends ComponentSafeUpdate {
   constructor(props) {
     super(props);
-    this.state = Object.assign({}, 
-      DataService.computed.getDefaultComputedValues());
+    this.state = Object.assign({
+      openedOnMobile: false
+    }, DataService.computed.getDefaultComputedValues());
   }
 
   componentDidMount = () => {
@@ -71,6 +80,12 @@ class Navigation extends ComponentSafeUpdate {
     </NavLink>);
   };
 
+  renderMobileNavigation = () => {
+   return <div className="Navigation-mobile" onClick={() => this.setState({openedOnMobile: !this.state.openedOnMobile})}>
+     <Icon source="fa" icon={this.state.openedOnMobile ? faTimes : faBars} />
+   </div>;
+  }
+
   getNavigationTabs = () => {
     const tabs = {
       [ERights.APP_CAN_USE_GPS]: 
@@ -115,7 +130,12 @@ class Navigation extends ComponentSafeUpdate {
 
   render() {
     return (
-      <div className={'Navigation ' + (SettingsService.getSettingValue(ESettings.SETTINGS_NAV_COLLAPSED) === 'COLLAPSED' ? '' : 'Navigation--deployed')}>
+      <div className={'Navigation ' 
+        + (SettingsService.getSettingValue(ESettings.SETTINGS_NAV_COLLAPSED) === 'COLLAPSED' ? '' : 'Navigation--deployed')
+        + (!!this.state.openedOnMobile ? ' Navigation--opened' : '')}>
+
+        <TrackRouteChange onChange={() => this.setState({openedOnMobile: false})} />
+        
         {!!this.state.user && 
           <nav>
             <NavLink activeClassName="nav--active" to={`/dashboard`}>
@@ -141,6 +161,7 @@ class Navigation extends ComponentSafeUpdate {
             }
             {this.renderActiveRole()}
             {this.renderUsername()}
+            {this.renderMobileNavigation()}
           </nav>
         }
         {!this.state.user &&
@@ -157,6 +178,7 @@ class Navigation extends ComponentSafeUpdate {
               <Icon source="fa" icon={faUserPlus} />
               <span className="nav-title">Sign up</span>
             </NavLink>
+            {this.renderMobileNavigation()}
           </nav>
         }
       </div>
