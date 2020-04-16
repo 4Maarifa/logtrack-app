@@ -1,5 +1,5 @@
 import React from 'react';
-import { faWarehouse } from '@fortawesome/pro-solid-svg-icons';
+import { faWarehouseAlt } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
@@ -118,7 +118,7 @@ class WarehousePage extends ComponentSafeUpdate {
           backgroundColor: (this.state.company.color || Colors.gray)
         }}>
           <h1>
-            <Icon source="fa" icon={faWarehouse} />
+            <Icon source="fa" icon={faWarehouseAlt} />
             <PageLink type={PageLinkType.WAREHOUSE} entityId={this.state.warehouseId} entityData={this.state.warehouse} white />
           </h1>
           <div className="actions">

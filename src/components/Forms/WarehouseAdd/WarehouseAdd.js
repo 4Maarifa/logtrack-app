@@ -1,11 +1,12 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { faRectangleWide, faMapMarker, faUser, faBuilding } from '@fortawesome/pro-solid-svg-icons';
+import { faRectangleWide, faMapMarker, faUser, faBuilding, faWarehouse } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Map from './../../Utils/Map/Map';
 import Icon from './../../Utils/Icon/Icon';
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
+import Range from './../../Utils/Range/Range';
 import FormDebouceAutoSuggestInput from './../../Utils/FormElements/FormDebounceAutoSuggestInput/FormDebounceAutoSuggestInput';
 
 import DataService from './../../../services/data.service';
@@ -26,6 +27,7 @@ class WarehouseAdd extends ComponentSafeUpdate{
       warehouseId: null,
 
       identification: '',
+      nbLoadingDocks: 0,
 
       possibleLocations: {},
       selectedLocationItem: null,
@@ -121,7 +123,8 @@ class WarehouseAdd extends ComponentSafeUpdate{
         this.state.selectedLocationItem.value.coordinates[1],
         this.state.activeRole.companyId, 
         this.state.user.uid, 
-        DateService.getCurrentIsoDateString()))
+        DateService.getCurrentIsoDateString(),
+        this.state.nbLoadingDocks))
       .then(warehouseDoc => {
         this.setState({warehouseId: warehouseDoc.id});
       })
@@ -185,6 +188,15 @@ class WarehouseAdd extends ComponentSafeUpdate{
                 <span>Pick a location</span>
               } />
             <Map ref={this.map} />
+
+            {/* Nb Loading Docks */}
+            <div className="input-nbloadingdocks">
+              <span className="fake-label">
+                <Icon source="fa" icon={faWarehouse} />
+                Number of Loading Docks
+              </span>
+              <Range min={0} max={100} step={1} fieldName="nbLoadingDocks" onChange={this.onFormInputChange} />
+            </div>
 
             {/* Company */}
             <div className="input-company">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { faUsers, faTruck, faWarehouse, faUserTag } from '@fortawesome/pro-solid-svg-icons';
+import { faUsers, faTruck, faWarehouseAlt, faUserTag } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
@@ -174,7 +174,7 @@ class CompanyPage extends ComponentSafeUpdate {
         <Tabs default="warehouses" tabs={{
           warehouses: {
             name: () => <span>
-              <Icon source="fa" icon={faWarehouse} />
+              <Icon source="fa" icon={faWarehouseAlt} />
               Warehouses
             </span>,
             content: () => <ExTable key="warehouses" items={this.state.warehouses} renderItem={this.renderWarehouse} header={['Name', '']} loading={this.state.warehousesLoading} />

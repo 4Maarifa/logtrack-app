@@ -57,7 +57,7 @@ class ExTable extends ComponentSafeUpdate {
             <Loader></Loader>
           </li>}
           {!this.props.loading && Object.keys(this.props.items).map(itemKey => 
-            <li key={itemKey} className="item">
+            <li key={itemKey} className={'Element Element--' + (this.state.view === 'LIST' ? 'row' : 'tile')}>
               {this.props.renderItem(itemKey, this.props.items[itemKey])}
             </li>)
           }

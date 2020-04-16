@@ -21,10 +21,15 @@
     .input-location {
       margin-bottom: 0;
       border-radius: var(--border-radius) var(--border-radius) 0 0;
+
+      .indicator {
+        border-radius: 0;
+      }
     }
 
     .input-creator,
-    .input-company {
+    .input-company,
+    .input-nbloadingdocks {
       position: relative;
       margin: 1.5rem 0 1rem 0;
       width: 100%;

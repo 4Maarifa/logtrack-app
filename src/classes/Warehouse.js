@@ -9,15 +9,17 @@
  * companyId: string | The id of the company
  * creator: string | The id of the creator (employeeId)
  * creationIsoDate: string | The creation date, as iso string
+ * nbLoadingDocks: number | The number of loading docks of this warehouse
  */
 class Warehouse {
-  constructor(name, latitude, longitude, companyId, creator, creationIsoDate) {
+  constructor(name, latitude, longitude, companyId, creator, creationIsoDate, nbLoadingDocks) {
       this.name = name;
       this.latitude = latitude;
       this.longitude = longitude;
       this.companyId = companyId;
       this.creator = creator;
       this.creationIsoDate = creationIsoDate;
+      this.nbLoadingDocks = nbLoadingDocks;
   }
 }
 

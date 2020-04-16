@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { faWarehouse } from '@fortawesome/pro-solid-svg-icons';
+import { faWarehouseAlt, faWarehouse } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Icon from './../../Utils/Icon/Icon';
@@ -20,14 +20,19 @@ class Warehouse extends ComponentSafeUpdate {
     var warehouseKey = Object.keys(this.props.warehouse)[0];
     
     return (
-      <div className="Warehouse">
-        <Icon containerclassname="item-icon" source="fa" icon={faWarehouse} />
-        <span className="item-content">
-          <PageLink type={PageLinkType.WAREHOUSE} entityId={warehouseKey} entityData={this.props.warehouse[warehouseKey]} />
-        </span>
-        <span className="item-actions">
-          
-        </span>
+      <div className="Warehouse Element-content">
+        <div className="Element-base">
+          <Icon containerclassname="Element-icon" source="fa" icon={faWarehouseAlt} />
+          <div className="Element-data">
+            <span className="Element-title">
+              <PageLink type={PageLinkType.WAREHOUSE} entityId={warehouseKey} entityData={this.props.warehouse[warehouseKey]} />
+            </span>
+            {!!this.props.warehouse[warehouseKey].nbLoadingDocks ? <span>
+              {this.props.warehouse[warehouseKey].nbLoadingDocks}
+              <Icon source="fa" icon={faWarehouse} />
+            </span> : null}
+          </div>
+        </div>
       </div>
     );
   }

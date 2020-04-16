@@ -13,14 +13,6 @@ class Choose extends ComponentSafeUpdate {
     };
   }
 
-  componentDidMount = () => {
-    super.componentDidMount();
-  };
-
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-  };
-
   onValueChange = itemKey => {
     if(!!this.props.items[itemKey].disabled) {
       return;
