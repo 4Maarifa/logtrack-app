@@ -43,14 +43,16 @@ class RoleEmployee extends ComponentSafeUpdate{
     }
 
     return (
-      <div className="RoleEmployee">
-        <Icon source="fa" icon={faUser} containerclassname="item-icon" />
-        <div className="item-content">
-          <PageLink type={PageLinkType.EMPLOYEE} entityId={employeeId} entityData={this.props.employee[employeeId]} />
-        </div>
-        <div className="item-actions">
-          <div className="roles">
-            {Object.keys(this.props.roles).map(this.renderRole)}
+      <div className="RoleEmployee Element-content">
+        <div className="Element-base">
+          <Icon source="fa" icon={faUser} containerclassname="Element-icon" />
+          <div className="Element-data">
+            <span className="Element-title">
+              <PageLink type={PageLinkType.EMPLOYEE} entityId={employeeId} entityData={this.props.employee[employeeId]} />
+            </span>
+            <div className="roles">
+              {Object.keys(this.props.roles).map(this.renderRole)}
+            </div>
           </div>
         </div>
       </div>

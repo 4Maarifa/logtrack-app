@@ -1,10 +1,9 @@
 import React from 'react';
-import { faSearch, faUsers, faBuilding, faTruck, faFileSignature, faWarehouse } from '@fortawesome/pro-solid-svg-icons';
+import { faSearch, faUsers, faBuilding, faTruck, faFileSignature, faWarehouseAlt } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Icon from './../../Utils/Icon/Icon';
 import Tabs from './../../Utils/Tabs/Tabs';
-import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import ExTable from './../../Utils/ExTable/ExTable';
 import FormDebounceInput from './../../Utils/FormElements/FormDebounceInput/FormDebounceInput';
 
@@ -19,6 +18,8 @@ import ESearchType from './../../../classes/enums/ESearchType';
 
 import Warehouse from './../../Entities/Warehouse/Warehouse';
 import Contract from './../../Entities/Contract/Contract';
+import Company from './../../Entities/Company/Company';
+import Employee from './../../Entities/Employee/Employee';
 
 import './Search.scss';
 
@@ -70,7 +71,6 @@ class Search extends ComponentSafeUpdate {
 
   searchEntities = () => {
     if(this.state.searchInput.length <= 3) { return; }
-    console.log(this.state.searchInput);
     DataService.computed.search([ESearchType.EMPLOYEES, ESearchType.COMPANIES, ESearchType.WAREHOUSES, ESearchType.CONTRACTS, ESearchType.EQUIPMENTS], 
         this.state.searchInput, this.state.activeRole.companyId)
       .then(results => {
@@ -83,11 +83,11 @@ class Search extends ComponentSafeUpdate {
   };
 
   renderEmployee = (itemKey, itemData) => {
-    return <PageLink type={PageLinkType.EMPLOYEE} entityId={itemKey} entityData={itemData} />;
+    return <Employee employee={{[itemKey]: itemData}} />;
   };
 
   renderCompany = (itemKey, itemData) => {
-    return <PageLink type={PageLinkType.COMPANY} entityId={itemKey} entityData={itemData} />;
+    return <Company company={{[itemKey]: itemData}} />;
   };
 
   renderWarehouse = (itemKey, itemData) => {
@@ -161,7 +161,7 @@ class Search extends ComponentSafeUpdate {
           },
           warehouses: {
             name: () => <span>
-              <Icon source="fa" icon={faWarehouse} />
+              <Icon source="fa" icon={faWarehouseAlt} />
               Warehouses
               <span className="badge-inverse">{Object.keys(this.state.warehouses).length}</span>
             </span>,

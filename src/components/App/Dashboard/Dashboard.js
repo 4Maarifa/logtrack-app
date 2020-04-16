@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { faCog, faClock, faCalendarAlt, faCommentDots, faMapMarker, faBuilding, faTag, faExclamationTriangle } from '@fortawesome/pro-light-svg-icons';
-import { faChevronRight, faTruck, faUsers, faWarehouse, faThermometerHalf } from '@fortawesome/pro-solid-svg-icons';
+import { faChevronRight, faTruck, faUsers, faWarehouseAlt, faThermometerHalf } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Icon from './../../Utils/Icon/Icon';
@@ -129,7 +129,7 @@ class Dashboard extends ComponentSafeUpdate {
           <div className="company-details-stats-container">
             <div className="company-details-stat">
               <span className="company-details-stat-icon">
-                <Icon source="fa" icon={faWarehouse} />
+                <Icon source="fa" icon={faWarehouseAlt} />
               </span>
               <span className="company-details-stat-content">
                 {!!this.state.warehouseCount ? <span>{this.state.warehouseCount} Warehouses</span> : <span>Warehouses</span>}

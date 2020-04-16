@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { faTachometerFast, faHome, faSignIn, faUserPlus, faUserCog, faUsers, faTruck, faFileSignature, faTag, faCompass, faAnalytics, faMapPin, faBuilding, faSearch, faWarehouse, faComments, faBars, faTimes } from '@fortawesome/pro-solid-svg-icons';
+import { faTachometerFast, faHome, faSignIn, faUserPlus, faUserCog, faUsers, faTruck, faFileSignature, faTag, faCompass, faAnalytics, faMapPin, faBuilding, faSearch, faWarehouseAlt, faComments, faBars, faTimes } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Icon from './../../Utils/Icon/Icon';
@@ -100,7 +100,7 @@ class Navigation extends ComponentSafeUpdate {
         </NavLink>,
       [ERights.APP_CAN_USE_WAREHOUSE_MANAGEMENT]: 
         <NavLink key="warehouses" activeClassName="nav--active" to={`/warehouses`}>
-          <Icon source="fa" icon={faWarehouse} />
+          <Icon source="fa" icon={faWarehouseAlt} />
           <span className="nav-title">Warehouses</span>
         </NavLink>,
       [ERights.APP_CAN_USE_EMPLOYEE_MANAGEMENT]: 

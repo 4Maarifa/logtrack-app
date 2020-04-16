@@ -250,7 +250,7 @@ class EquipmentAdd extends ComponentSafeUpdate {
 
   render() {
     if(!!this.state.forceRedirect) {
-      return <Redirect to={`/dashboard`} />;
+      return <Redirect to={`/equipments`} />;
     }
 
     if(!this.state.employee || !this.state.activeRoleCompany) {

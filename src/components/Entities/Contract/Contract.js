@@ -78,20 +78,23 @@ class Contract extends ComponentSafeUpdate {
     const isExecutor = (Object.keys(this.props.companyExec)[0] === DataService.computed.activeRole.companyId);
     
     return (
-      <div className="Contract" key={contractKey}>
-        <Icon containerclassname="item-icon" source="fa" icon={faFileSignature} />
-        <span className="item-content">
-          <h3>{this.props.contract[contractKey].identification}</h3>
-          <span>
-            {!!isExecutor ? 'You execute the contract for' : 'You ordered the contract from'}
-            <PageLink type={PageLinkType.COMPANY} entityId={otherCompanyId} entityData={otherCompany[otherCompanyId]} />
-          </span>
-        </span>
-        <span className="contract-status badge">
-          {EContractStatusDetails[this.props.contract[contractKey].status].icon}
-          {EContractStatusDetails[this.props.contract[contractKey].status].name}
-        </span>
-        <span className="item-actions">
+      <div className="Contract Element-content" key={contractKey}>
+        <div className="Element-base">
+          <Icon containerclassname="Element-icon" source="fa" icon={faFileSignature} />
+          <div className="Element-data">
+            <span className="Element-title">{this.props.contract[contractKey].identification}</span>
+            <span>
+              {!!isExecutor ? 'You execute the contract for' : 'You ordered the contract from'}
+              <PageLink type={PageLinkType.COMPANY} entityId={otherCompanyId} entityData={otherCompany[otherCompanyId]} />
+            </span>
+            <span className="Element-badge badge">
+              {EContractStatusDetails[this.props.contract[contractKey].status].icon}
+              {EContractStatusDetails[this.props.contract[contractKey].status].name}
+            </span>
+          </div>
+        </div>
+        
+        <span className="Element-actions">
           {this.computeAction()}
         </span>
       </div>

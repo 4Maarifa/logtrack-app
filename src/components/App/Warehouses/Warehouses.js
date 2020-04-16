@@ -1,5 +1,5 @@
 import React from 'react';
-import { faPlus, faWarehouse } from '@fortawesome/pro-solid-svg-icons';
+import { faPlus, faWarehouseAlt } from '@fortawesome/pro-solid-svg-icons';
 
 import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Map from './../../Utils/Map/Map';
@@ -97,7 +97,7 @@ class Warehouses extends ComponentSafeUpdate {
                 onActivateItem={this.onSelectedItemChanged}
                 loading={this.state.warehousesLoading}></ExTable>
         <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[
-          {title: 'Add a warehouse', icon: <Icon source="fa" icon={faWarehouse} />, link: `/warehouse-add`}
+          {title: 'Add a warehouse', icon: <Icon source="fa" icon={faWarehouseAlt} />, link: `/warehouse-add`}
         ]} />
       </div>
     );

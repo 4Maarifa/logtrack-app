@@ -21,16 +21,18 @@ class RoleCompany extends ComponentSafeUpdate {
     var companyId = Object.keys(this.props.company)[0];
     
     return (
-      <div className="RoleCompany">
-        <Icon source="fa" icon={faUserTag} containerclassname="item-icon" />
-        <span className="item-content">
-          <PageLink type={PageLinkType.COMPANY} entityId={companyId} entityData={this.props.company[companyId]} />
-        </span>
-        <div className="item-actions">
-          <div className="roles">
-            {Object.keys(this.props.roles).map(roleKey => 
-              <Role key={roleKey} role={ { [roleKey]: this.props.roles[roleKey] } } options={this.props.options}></Role>
-            )}
+      <div className="RoleCompany Element-content">
+        <div className="Element-base">
+          <Icon source="fa" icon={faUserTag} containerclassname="Element-icon" />
+          <div className="Element-data">
+            <span className="Element-title">
+              <PageLink type={PageLinkType.COMPANY} entityId={companyId} entityData={this.props.company[companyId]} />
+            </span>
+            <div className="roles">
+              {Object.keys(this.props.roles).map(roleKey => 
+                <Role key={roleKey} role={ { [roleKey]: this.props.roles[roleKey] } } options={this.props.options}></Role>
+              )}
+            </div>
           </div>
         </div>
       </div>
