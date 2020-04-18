@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { faEnvelope, faKey } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
 import Icon from './../../Utils/Icon/Icon';
 
@@ -10,94 +9,91 @@ import FirebaseService from './../../../services/firebase.service';
 import ErrorService from './../../../services/error.service';
 import DataService from './../../../services/data.service';
 
+import { v4 as uuid } from 'uuid';
+
 import './SignIn.scss';
 
-class SignIn extends ComponentSafeUpdate {
+const SignIn = () => {
 
-  constructor(props) {
-    super(props);
-    this.state = Object.assign({email: '', password: ''}, DataService.computed.getDefaultComputedValues());
+  const [user, setUser] = useState(null);
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const observerKey = uuid();
+  
+  const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
+
+  useEffect(() => {
+    DataService.computed.observeComputedValues(setComputed, observerKey);
+    return () => DataService.computed.unobserveComputedValues(observerKey)
+  }, []);
+  
+  if(!computed.initialized) { return null; }
+
+  if(computed.user || user) {
+    return <Redirect to='/dashboard' />;
   }
 
-  componentDidMount = () => {
-    super.componentDidMount();
-    this.setState({observerKey: 
-      DataService.computed.observeComputedValues((computedValues) => {
-        this.setState(computedValues);
-      })
-    });
-  };
-
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-    DataService.computed.unobserveComputedValues(this.state.observerKey);
-  };
-
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
 
-    FirebaseService.signIn(this.state.email, this.state.password)
-      .then((user) => this.setState({user}))
+    FirebaseService.signIn(email, password)
+      .then(setUser)
       .catch(ErrorService.manageError);
   };
-
-  onFormInputChange = (value, fieldName) => this.setState({[fieldName]: value});
 
   /**
    * RENDER
    */
-  render() {
-    if(!!this.state.user) {
-      return <Redirect to='/dashboard' />;
-    } else {
-      return (
-        <div className="SignIn">
-          <h1>Sign In</h1>
-          <form onSubmit={this.handleSubmit}>
+  return (
+    <div className="SignIn">
+      <h1>Sign In</h1>
+      <form onSubmit={handleSubmit}>
 
-            {/* E-Mail field */}
-            <FormInput
-              inputType="email"
-              fieldName="email"
-              label={
-                <span>
-                  <Icon source="fa" icon={faEnvelope} />
-                  E-Mail
-                </span>
-              }
-              inputName="email"
-              inputRequired
-              instructions={
-                <span>
-                  Your account e-mail
-                </span>
-              }
-              onValueChange={this.onFormInputChange} />
+        {/* E-Mail field */}
+        <FormInput
+          value={email}
+          inputType="email"
+          fieldName="email"
+          label={
+            <span>
+              <Icon source="fa" icon={faEnvelope} />
+              E-Mail
+            </span>
+          }
+          inputName="email"
+          inputRequired
+          instructions={
+            <span>
+              Your account e-mail
+            </span>
+          }
+          onValueChange={setEmail} />
 
-            {/* Password field */}
-            <FormInput
-              inputType="password"
-              fieldName="password"
-              label={
-                <span>
-                  <Icon source="fa" icon={faKey} />
-                  Password
-                </span>
-              }
-              instructions={
-                <span>
-                  Your account password
-                </span>
-              }
-              inputRequired
-              onValueChange={this.onFormInputChange} />
+        {/* Password field */}
+        <FormInput
+          value={password}
+          inputType="password"
+          fieldName="password"
+          label={
+            <span>
+              <Icon source="fa" icon={faKey} />
+              Password
+            </span>
+          }
+          instructions={
+            <span>
+              Your account password
+            </span>
+          }
+          inputRequired
+          onValueChange={setPassword} />
 
-            <input type="submit" />
-          </form>
-        </div>
-      );
-    }
-  }
-}
+        <input type="submit" />
+      </form>
+    </div>
+  );
+};
 
 export default SignIn;

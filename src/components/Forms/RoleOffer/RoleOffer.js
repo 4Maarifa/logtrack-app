@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { faBuilding, faTag, faUser, faInfoCircle } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Choose from './../../Utils/Choose/Choose';
 import Icon from './../../Utils/Icon/Icon';
 import Loader from './../../Utils/Loader/Loader';
@@ -18,202 +17,198 @@ import RoleService from './../../../services/entities/role.service';
 import Role, { ERole } from './../../../classes/Role';
 import { ERoleStatus, RoleDetails } from './../../../classes/Role';
 
+import { v4 as uuid } from 'uuid';
+
 import './RoleOffer.scss';
 
-class RoleOffer extends ComponentSafeUpdate {
-  constructor (props) {
-    super(props);
-    this.state = Object.assign({
-      roleId: null, 
+const RoleOffer = ({ match }) => {
+  const userId = match.params.userid;
 
-      roleType: '', 
+  const [roleId, setRoleId] = useState(null);
 
-      currentRoles: [],
-      currentRolesLoading: false,
+  const [roleType, setRoleType] = useState('');
 
-      possibleUsers: {}, 
-      selectedUserId: null,
-      selectedUserItem: null,
+  const [currentRoles, setCurrentRoles] = useState([]);
+  const [isCurrentRolesLoading, setCurrentRolesLoading] = useState(false);
 
-      forceRedirect: false
-    },
-    DataService.computed.getDefaultComputedValues());
-  }
+  const [possibleUsersInput, setPossibleUsersInput] = useState('');
+  const [possibleUsers, setPossibleUsers] = useState({});
+  const [selectedUserId, setSelectedUserId] = useState('');
+  const [selectedUserItem, setSelectedUserItem] = useState(null);
 
-  componentDidMount = () => {
-    super.componentDidMount();
-    this.setState({
-      observerKey: DataService.computed.observeComputedValues(computedValues => {
-        if(computedValues.activeRole.role !== ERole.MANAGER) {
-          this.setState({forceRedirect: true});
-        }
-        this.setState(computedValues, this.computeValues);
-      })
-    });
-  };
+  const observerKey = uuid();
+  
+  const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-    DataService.computed.unobserveComputedValues(this.state.observerKey);
-  };
-
-  computeValues = () => {
-    if(this.props.match.params.userid) {
-      EmployeeService.get(this.props.match.params.userid)
+  const computeValues = () => {
+    if(userId) {
+      EmployeeService.get(userId)
         .then(employeeDoc => {
-          this.setState({
-            selectedUserId: employeeDoc.id,
-            selectedUserItem: {
-              content: <PageLink noLink type={PageLinkType.EMPLOYEE} entityId={employeeDoc.id} entityData={employeeDoc.data()} />,
-              value: employeeDoc.data()
-            }
-          }, this.computeCurrentRoles)
+          setSelectedUserId(employeeDoc.id);
+          setSelectedUserItem({
+            content: <PageLink noLink type={PageLinkType.EMPLOYEE} entityId={employeeDoc.id} entityData={employeeDoc.data()} />,
+            value: employeeDoc.data()
+          });
         })
         .catch(ErrorService.manageError);
     }
-    this.computeCurrentRoles();
   };
 
-  handleSelection = (value, fieldName) => this.setState({[fieldName]: value});
-
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
 
-    if(!this.state.selectedUserId) {
+    if(!selectedUserId) {
       ErrorService.error('Please pick a user !');
       return;
     }
 
-    if(!this.state.roleType) {
+    if(!roleType) {
       ErrorService.error('Please pick a role !');
       return;
     }
 
-    RoleService.create(new Role(this.state.selectedUserId, this.state.activeRole.companyId, ERoleStatus.CONFIRMED, this.state.roleType, DateService.getCurrentIsoDateString(), null))
-      .then(docRole => {
-        this.setState({roleId: docRole.id});
-      })
+    RoleService.create(new Role(selectedUserId, computed.activeRole.companyId, ERoleStatus.CONFIRMED, roleType, DateService.getCurrentIsoDateString(), null))
+      .then(docRole => setRoleId(docRole.id))
       .catch(ErrorService.manageError);
   };
 
-  onUserAutoCompleteChange = value => {
+  const onUserAutoCompleteChange = value => {
+    setPossibleUsersInput(value);
+
     if(value.trim().length < 3) {
-      this.setState({possibleUsers: {}, selectedUserId: null, selectedUserItem: null});
+      setPossibleUsers({});
     } 
     else {
       EmployeeService.search(value)
-        .then(possibleUsers => {
-          Object.keys(possibleUsers).forEach(employeeKey => {
-            possibleUsers[employeeKey] = {
-              content: <PageLink noLink type={PageLinkType.EMPLOYEE} entityId={employeeKey} entityData={possibleUsers[employeeKey]} />,
-              value: possibleUsers[employeeKey]
+        .then(newPossibleUsers => {
+          Object.keys(newPossibleUsers).forEach(employeeKey => {
+            newPossibleUsers[employeeKey] = {
+              content: <PageLink noLink type={PageLinkType.EMPLOYEE} entityId={employeeKey} entityData={newPossibleUsers[employeeKey]} />,
+              value: newPossibleUsers[employeeKey]
             };
           });
-          this.setState({possibleUsers});
+          setPossibleUsers(newPossibleUsers);
         }).catch(ErrorService.manageError);
     }
   };
 
-  computeCurrentRoles = () => {
-    console.log(this.state.selectedUserId);
-    RoleService.getRolesForEmployeeIdAndCompanyId(this.state.selectedUserId, this.state.activeRole.companyId, [ERoleStatus.DRAFT, ERoleStatus.CONFIRMED])
+  const computeCurrentRoles = () => {
+    if(!selectedUserId) { return; }
+    RoleService.getRolesForEmployeeIdAndCompanyId(selectedUserId, computed.activeRole.companyId, [ERoleStatus.DRAFT, ERoleStatus.CONFIRMED])
       .then(currentRoles => {
-        this.setState({
-          currentRoles: Object.keys(currentRoles).map(roleKey => currentRoles[roleKey].role), 
-          currentRolesLoading: false
-        });
-        console.log(currentRoles);
+        setCurrentRoles(Object.keys(currentRoles).map(roleKey => currentRoles[roleKey].role));
+        setCurrentRolesLoading(false);
       }).catch(ErrorService.manageError);
   };
+
+  useEffect(() => computeCurrentRoles(), [selectedUserId]);
+
+  useEffect(() => {
+    if(computed.initialized) {
+      computeValues();
+    }
+  }, [computed]);
+
+  useEffect(() => {
+    DataService.computed.observeComputedValues(setComputed, observerKey);
+    return () => DataService.computed.unobserveComputedValues(observerKey)
+  }, []);
+  
+  if(!computed.initialized) { return null; }
+
+  if(roleId) {
+    let dashboardUrl = '/dashboard';
+    return <Redirect to={dashboardUrl} />;
+  }
+
+  if(computed.activeRole.role !== ERole.MANAGER) {
+    ErrorService.manageError('You can\'t offer a role if you\'re not a manager!');
+    let dashboardUrl = '/dashboard';
+    return <Redirect to={dashboardUrl} />;
+  }
 
   /**
    * RENDER
    */
-  render() {
-    let roleDetails = {};
-    Object.keys(RoleDetails).forEach(roleKey => {
-      roleDetails[roleKey] = {
-        content: <Fragment>
-          {RoleDetails[roleKey].icon}
-          {RoleDetails[roleKey].name}
-        </Fragment>,
-        disabled: this.state.currentRoles.includes(roleKey)
-      }
-    }); 
-    
-    if(!!this.state.forceRedirect) {
-      ErrorService.manageError('You can\'t offer a role if you\'re not a manager!');
-      let dashboardUrl = '/dashboard';
-      return <Redirect to={dashboardUrl} />;
+  let roleDetails = {};
+  Object.keys(RoleDetails).forEach(roleKey => {
+    roleDetails[roleKey] = {
+      content: <Fragment>
+        {RoleDetails[roleKey].icon}
+        {RoleDetails[roleKey].name}
+      </Fragment>,
+      disabled: currentRoles.includes(roleKey)
     }
-    if(!!this.state.roleId) {
-      let dashboardUrl = '/dashboard';
-      return <Redirect to={dashboardUrl} />;
-    }
-    return (
-      <div className="RoleOffer">
-        <h1>Offer a role</h1>
-        <form onSubmit={this.handleSubmit}>
-          {/* User field */}
-          <FormDebounceAutoSuggestInput
-            label={
-              <span>
-                <Icon source="fa" icon={faUser} />
-                User
-              </span>
-            }
-            possibleItems={this.state.possibleUsers}
-            onValueChange={this.onUserAutoCompleteChange}
-            onSelectedItemChange={(selectedUserId, _, selectedUserItem) => {console.log(selectedUserId);this.setState({selectedUserId, selectedUserItem, currentRolesLoading: true}, this.computeCurrentRoles)}}
-            inputAutoComplete="off"
-            inputRequired
-            selectedItemKey={this.state.selectedUserId}
-            selectedItem={this.state.selectedUserItem}
-            instructions={
-              <span>Pick a user</span>
-            } />
+  });
 
-          {/* Role field */}
-          <div className="role-selection">
-            <span className="fake-label">
-              <Icon source="fa" icon={faTag} />
-              Role to request
+  return (
+    <div className="RoleOffer">
+      <h1>Offer a role</h1>
+      <form onSubmit={handleSubmit}>
+        {/* User field */}
+        <FormDebounceAutoSuggestInput
+          value={possibleUsersInput}
+          label={
+            <span>
+              <Icon source="fa" icon={faUser} />
+              User
             </span>
-            {!!this.state.selectedUserId && !this.state.currentRolesLoading &&
-              <Fragment>
-                {!!this.state.currentRoles.length && <span className="info">
-                  <Icon source="fa" icon={faInfoCircle} />
-                  Some roles are already owned or requested by the user.
-                </span>}
-                <Choose
-                  items={roleDetails}
-                  multiple={false} 
-                  fieldName="roleType"
-                  onSelectionChange={this.handleSelection} />
-              </Fragment>
-            }
-            {!!this.state.selectedUserId && !!this.state.currentRolesLoading &&
-              <Loader></Loader>
-            }
-            {!this.state.selectedUserId &&
-              <span>Please select a user first!</span>
-            }
-          </div>
+          }
+          possibleItems={possibleUsers}
+          onValueChange={onUserAutoCompleteChange}
+          onSelectedItemChange={(selectedUserId, _, selectedUserItem) => {
+            setSelectedUserId(selectedUserId);
+            setSelectedUserItem(selectedUserItem);
+            setCurrentRolesLoading(true);
+          }}
+          inputAutoComplete="off"
+          inputRequired
+          selectedItemKey={selectedUserId}
+          selectedItem={selectedUserItem}
+          instructions={
+            <span>Pick a user</span>
+          } />
 
-          {/* Company */}
-          {!!this.state.activeRoleCompany && <div className="input-company">
-            <span className="fake-label">
-              <Icon source="fa" icon={faBuilding} />
-              Company
-            </span>
-            <PageLink type={PageLinkType.COMPANY} entityId={this.state.activeRole.companyId} entityData={this.state.activeRoleCompany} />
-          </div>}
+        {/* Role field */}
+        <div className="role-selection">
+          <span className="fake-label">
+            <Icon source="fa" icon={faTag} />
+            Role to request
+          </span>
+          {selectedUserId && !isCurrentRolesLoading &&
+            <Fragment>
+              {currentRoles.length ? <span className="info">
+                <Icon source="fa" icon={faInfoCircle} />
+                Some roles are already owned or requested by the user.
+              </span> : null}
+              <Choose
+                items={roleDetails}
+                multiple={false} 
+                fieldName="roleType"
+                onSelectionChange={setRoleType} />
+            </Fragment>
+          }
+          {selectedUserId && isCurrentRolesLoading &&
+            <Loader></Loader>
+          }
+          {!selectedUserId &&
+            <span>Please select a user first!</span>
+          }
+        </div>
 
-          <input type="submit" />
-        </form>
-      </div>
-    );
-  }
-}
+        {/* Company */}
+        {computed.activeRoleCompany && <div className="input-company">
+          <span className="fake-label">
+            <Icon source="fa" icon={faBuilding} />
+            Company
+          </span>
+          <PageLink type={PageLinkType.COMPANY} entityId={computed.activeRole.companyId} entityData={computed.activeRoleCompany} />
+        </div>}
+
+        <input type="submit" />
+      </form>
+    </div>
+  );
+};
 
 export default RoleOffer;

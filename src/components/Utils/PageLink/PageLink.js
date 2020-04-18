@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
-
 import ErrorService from './../../../services/error.service';
 import DataService from './../../../services/data.service';
 
@@ -10,30 +8,32 @@ import { ECompanyPlan } from './../../../classes/Company';
 
 import './PageLink.scss';
 
-class PageLink extends ComponentSafeUpdate {
+const PageLink = ({ type, entityId, entityData, noLink, white }) => {
 
-  getPageLink = () => {
-    switch(this.props.type) {
+  if(!entityData) { return null; }
+
+  const getPageLink = () => {
+    switch(type) {
       case PageLinkType.EMPLOYEE:
         return {
-          link: `/employee/${this.props.entityId}`,
+          link: `/employee/${entityId}`,
           content: <Fragment>
-            {!!this.props.entityData.profilePictureUrl && 
-              <img src={this.props.entityData.profilePictureUrl} alt="" />
+            {entityData.profilePictureUrl && 
+              <img src={entityData.profilePictureUrl} alt="" />
             }
-            <span>{this.props.entityData.firstname + ' ' + this.props.entityData.lastname}</span>
-            {!!DataService.computed.user && this.props.entityId === DataService.computed.user.uid && <span className="badge you">you</span>}
+            <span>{entityData.firstname + ' ' + entityData.lastname}</span>
+            {DataService.computed.user && entityId === DataService.computed.user.uid && <span className="badge you">you</span>}
           </Fragment>
         };
       case PageLinkType.COMPANY:
         return {
-          link: `/company/${this.props.entityId}`,
+          link: `/company/${entityId}`,
           content: <Fragment>
-            {!!this.props.entityData.logoURL &&
-              <img src={this.props.entityData.logoURL} alt="" />
+            {entityData.logoURL &&
+              <img src={entityData.logoURL} alt="" />
             }
-            <span>{this.props.entityData.name}</span>
-            <span className="mention badge company-plan" title={ECompanyPlan[this.props.entityData.plan].name + ' Plan'}>{ECompanyPlan[this.props.entityData.plan].solidIcon}</span>
+            <span>{entityData.name}</span>
+            <span className="mention badge company-plan" title={ECompanyPlan[entityData.plan].name + ' Plan'}>{ECompanyPlan[entityData.plan].solidIcon}</span>
           </Fragment>
         };
       case PageLinkType.EQUIPMENT:
@@ -45,34 +45,32 @@ class PageLink extends ComponentSafeUpdate {
         };
       case PageLinkType.WAREHOUSE:
         return {
-          link: `/warehouse/${this.props.entityId}`,
+          link: `/warehouse/${entityId}`,
           content: <Fragment>
-            <span>{this.props.entityData.name}</span>
+            <span>{entityData.name}</span>
           </Fragment>
         };
       default:
-        ErrorService.manageError('PageLink: The type ' + this.props.type + ' is not recognized');
+        ErrorService.manageError('PageLink: The type ' + type + ' is not recognized');
         return null;
     }
   };
 
-  /** 
+  /**
    * RENDER
    */
-  render() {
-    const pageLink = this.getPageLink();
-    if(!!this.props.noLink) {
-      return <span className={'PageLink ' + (!!this.props.white ? 'PageLink-white' : '')}>
-        {pageLink.content}
-      </span>;
-    }
-    return (
-      <NavLink className={'PageLink ' + (!!this.props.white ? 'white-link' : '')} to={pageLink.link} title="Visit Page">
-        {pageLink.content}
-      </NavLink>
-    );
+  const pageLink = getPageLink();
+  if(noLink) {
+    return <span className={'PageLink ' + (white ? 'PageLink-white' : '')}>
+      {pageLink.content}
+    </span>;
   }
-}
+  return (
+    <NavLink className={'PageLink ' + (white ? 'white-link' : '')} to={pageLink.link} title="Visit Page">
+      {pageLink.content}
+    </NavLink>
+  );
+};
 
 export const PageLinkType = {
   EMPLOYEE: 'EMPLOYEE',

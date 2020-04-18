@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { faTruck, faPlus } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import ActionButton from './../../Utils/ActionButton/ActionButton';
 import ExTable from './../../Utils/ExTable/ExTable';
 import Map from './../../Utils/Map/Map';
@@ -15,62 +14,55 @@ import EquipmentService from './../../../services/entities/equipment.service';
 
 import Equipment from './../../Entities/Equipment/Equipment';
 
+import { v4 as uuid } from 'uuid';
+
 import './Equipments.scss';
 
-class Equipments extends ComponentSafeUpdate {
-  constructor(props) {
-    super(props);
-    this.state = Object.assign({
-      equipments: {},
-      equipmentsLoading: true,
-      equipmentModels: {},
-      brands: {}
-    }, DataService.computed.getDefaultComputedValues());
-  }
+const Equipments = () => {
 
-  componentDidMount = () => {
-    super.componentDidMount();
-    this.setState({observerKey: 
-      DataService.computed.observeComputedValues(computedValues => {
-        this.setState(computedValues, this.computeValues);
-      })
-    });
-  };
+  const [equipments, setEquipments] = useState({});
+  const [isEquipmentsLoading, setEquipmentsLoading] = useState(true);
+  const [equipmentModels, setEquipmentModels] = useState({});
+  const [brands, setBrands] = useState({});
 
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-    DataService.computed.unobserveComputedValues(this.state.observerKey);
-  };
+  const observerKey = uuid();
+  
+  const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  computeValues = () => {
-    this.computeEquipments();
-  };
-
-  /**
-   * EQUIPMENTS
-   */
-  computeEquipments = () => {
+  const computeEquipments = () => {
     BrandService.list()
-      .then(brands => this.setState({brands}))
+      .then(setBrands)
       .catch(ErrorService.manageError);
 
     EquipmentModelService.list()
-      .then((equipmentModels => this.setState({equipmentModels})))
+      .then(setEquipmentModels)
       .catch(ErrorService.manageError);
 
-    if(!!this.state.activeRole) {
-      EquipmentService.getAllForCompanyId(this.state.activeRole.companyId)
-        .then(equipments => this.setState({equipments, equipmentsLoading: false}))
+    if(!!computed.activeRole) {
+      EquipmentService.getAllForCompanyId(computed.activeRole.companyId)
+        .then(equipments => {
+          setEquipments(equipments);
+          setEquipmentsLoading(false);
+        })
         .catch(ErrorService.manageError);
     }
   };
 
+  useEffect(() => computeEquipments(), [computed]);
+
+  useEffect(() => {
+    DataService.computed.observeComputedValues(setComputed, observerKey);
+    return () => DataService.computed.unobserveComputedValues(observerKey)
+  }, []);
+  
+  if(!computed.initialized) { return null; }
+
   /**
    * RENDER
    */
-  renderEquipment = (itemKey, itemData) => {
-    const equipmentModel = { [itemData.equipmentModelId]: this.state.equipmentModels[itemData.equipmentModelId] },
-      brand = { [equipmentModel[itemData.equipmentModelId].brand]: this.state.brands[equipmentModel[itemData.equipmentModelId].brand] };
+  const renderEquipment = (itemKey, itemData) => {
+    const equipmentModel = { [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] },
+      brand = { [equipmentModel[itemData.equipmentModelId].brand]: brands[equipmentModel[itemData.equipmentModelId].brand] };
 
     return <Equipment key={itemKey}
       equipment={ {[itemKey]: itemData} }
@@ -80,17 +72,19 @@ class Equipments extends ComponentSafeUpdate {
       showDetails={true} />
   };
 
-  render() {
-    return (
-      <div className="Equipments">
-        <Map></Map>
-        <ExTable key="equipments" items={this.state.equipments} renderItem={this.renderEquipment} header={['Identification', 'Model']} loading={this.state.equipmentsLoading}></ExTable>
-        <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[
-          {title: 'Add an equipment', icon: <Icon source="fa" icon={faTruck} />, link: `/equipment-add`}
-        ]} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="Equipments">
+      <Map></Map>
+      <ExTable key="equipments" 
+                items={equipments}
+                renderItem={renderEquipment}
+                header={['Identification', 'Model']}
+                loading={isEquipmentsLoading}></ExTable>
+      <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[
+        {title: 'Add an equipment', icon: <Icon source="fa" icon={faTruck} />, link: `/equipment-add`}
+      ]} />
+    </div>
+  );
+};
 
 export default Equipments;

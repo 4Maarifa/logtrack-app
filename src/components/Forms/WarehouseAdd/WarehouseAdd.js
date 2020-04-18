@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { faRectangleWide, faMapMarker, faUser, faBuilding, faWarehouse } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Map from './../../Utils/Map/Map';
 import Icon from './../../Utils/Icon/Icon';
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
 import Range from './../../Utils/Range/Range';
+import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import FormDebouceAutoSuggestInput from './../../Utils/FormElements/FormDebounceAutoSuggestInput/FormDebounceAutoSuggestInput';
 
 import DataService from './../../../services/data.service';
@@ -18,214 +18,207 @@ import GeoService from './../../../services/geo.service';
 
 import Warehouse from './../../../classes/Warehouse';
 
+import { v4 as uuid } from 'uuid';
+
 import './WarehouseAdd.scss';
 
-class WarehouseAdd extends ComponentSafeUpdate{
-  constructor (props) {
-    super(props);
-    this.state = Object.assign({
-      warehouseId: null,
+const WarehouseAdd = () => {
 
-      identification: '',
-      nbLoadingDocks: 0,
+  const [warehouseId, setWarehouseId] = useState(null);
 
-      possibleLocations: {},
-      selectedLocationItem: null,
+  const [identification, setIdentification] = useState('');
+  const [nbLoadingDocks, setNbLoadingDocks] = useState(0);
 
-      locationMarkerId: null,
+  const [possibleLocationsInput, setPossibleLocationsInput] = useState('');
+  const [possibleLocations, setPossibleLocations] = useState({});
+  const [selectedLocationKey, setSelectedLocationKey] = useState('');
+  const [selectedLocationItem, setSelectedLocationItem] = useState(null);
 
-      forceRedirect: false
-    },
-    DataService.computed.getDefaultComputedValues());
-    this.map = React.createRef();
-  }
+  const [locationMarkerId, setLocationMarkerId] = useState(null);
 
-  componentDidMount = () => {
-    super.componentDidMount();
-    this.setState({observerKey: 
-      DataService.computed.observeComputedValues(computedValues => {
-        if(!computedValues.activeRole) {
-          ErrorService.warning('Please activate a role to add an equipment!');
-          this.setState({forceRedirect: true});
-        }
-        this.setState(computedValues);
-      })
-    });
-  };
+  const map = useRef(null);
 
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-    DataService.computed.unobserveComputedValues(this.state.observerKey);
-  };
+  const observerKey = uuid();
+  
+  const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  onFormInputChange = (value, fieldName) => this.setState({[fieldName]: value});
+  const onLocationAutoCompleteChange = inputValue => {
+    setPossibleLocationsInput(inputValue);
 
-  onLocationAutoCompleteChange = value => {
-    PlacesService.search(value, { addressdetails: 0 })
+    PlacesService.search(inputValue, { addressdetails: 0 })
       .then(values => {
-        var possibleLocations = {};
+        let newPossibleLocations = {};
         values.forEach(value => {
           value.coordinates = GeoService.transformCoordinates([
             parseFloat(value.lon),
             parseFloat(value.lat)
           ]);
-          possibleLocations[value.osm_id] = {
+          newPossibleLocations[value.osm_id] = {
             content: <span>
               {value.display_name}
             </span>,
             value: value
           };
         });
-        this.setState({possibleLocations});
+        setPossibleLocations(newPossibleLocations);
       })
       .catch(ErrorService.manageError);
   };
 
-  onSelectedLocationItem = (_, __, selectedLocationItem) => {
-    this.setState({selectedLocationItem});
+  const onSelectedLocationItem = (selectedLocationKey, _, selectedLocationItem) => {
+    setSelectedLocationKey(selectedLocationKey);
+    setSelectedLocationItem(selectedLocationItem);
+
     if(!selectedLocationItem) {
-      this.map.current.deleteMarker(this.state.locationMarkerId);
-      this.setState({locationMarkerId: null});
+      map.current.deleteMarker(locationMarkerId);
+      setLocationMarkerId(null);
       return;
     }
-    if(!!this.state.locationMarkerId) {
-      this.map.current.switchMarker(
-        this.state.locationMarkerId, 
+    if(locationMarkerId) {
+      map.current.switchMarker(
+        locationMarkerId, 
         selectedLocationItem.value.coordinates[0], 
         selectedLocationItem.value.coordinates[1], 
         selectedLocationItem.value.display_name);
-      this.centerOnLocationMarker();
+      centerOnLocationMarker();
     }
     else {
-      this.setState({
-        locationMarkerId: this.map.current.addMarker(
-          selectedLocationItem.value.coordinates[0], 
-          selectedLocationItem.value.coordinates[1], 
-          selectedLocationItem.value.display_name)
-      }, this.centerOnLocationMarker);
+      setLocationMarkerId(map.current.addMarker(
+        selectedLocationItem.value.coordinates[0], 
+        selectedLocationItem.value.coordinates[1], 
+        selectedLocationItem.value.display_name));
     }
   };
 
-  centerOnLocationMarker = () => this.map.current.centerOnMarker(this.state.locationMarkerId);
+  const centerOnLocationMarker = () => locationMarkerId && map.current.centerOnMarker(locationMarkerId);
 
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
 
-    if(!this.state.selectedLocationItem) {
+    if(!selectedLocationItem) {
       ErrorService.error('Please select a location!');
       return;
     }
 
     WarehouseService.create(
       new Warehouse(
-        this.state.identification, 
-        this.state.selectedLocationItem.value.coordinates[0], 
-        this.state.selectedLocationItem.value.coordinates[1],
-        this.state.activeRole.companyId, 
-        this.state.user.uid, 
+        identification, 
+        selectedLocationItem.value.coordinates[0], 
+        selectedLocationItem.value.coordinates[1],
+        computed.activeRole.companyId, 
+        computed.user.uid, 
         DateService.getCurrentIsoDateString(),
-        this.state.nbLoadingDocks))
-      .then(warehouseDoc => {
-        this.setState({warehouseId: warehouseDoc.id});
-      })
+        nbLoadingDocks))
+      .then(warehouseDoc => setWarehouseId(warehouseDoc.id))
       .catch(ErrorService.manageError);
   };
+  
+  useEffect(() => {
+    centerOnLocationMarker()
+  }, [locationMarkerId]);
 
+  useEffect(() => {
+    DataService.computed.observeComputedValues(setComputed, observerKey);
+    return () => DataService.computed.unobserveComputedValues(observerKey);
+  }, []);
+  
+  if(!computed.initialized) { return null; }
+
+  if(!computed.activeRole) {
+    ErrorService.warning('Please activate a role to add an equipment!');
+    return <Redirect to={`/dashboard`} />;
+  }
+  
   /**
    * RENDER
    */
-  render() {
-    if(!!this.state.forceRedirect) {
-      return <Redirect to={`/dashboard`} />;
-    }
-    if(!this.state.employee || !this.state.activeRoleCompany) {
-      return (<div></div>);
-    }
-    else if(!!this.state.warehouseId) {
-      let dashboardUrl = '/dashboard';
-      return <Redirect to={dashboardUrl} />;
-    } 
-    else {
-      return (
-        <div className="WarehouseAdd">
-          <h1>Add a Warehouse</h1>
-          <form onSubmit={this.handleSubmit}>
-            
-            <FormInput
-              inputType="text"
-              fieldName="identification"
-              label={
-                <span>
-                  <Icon source="fa" icon={faRectangleWide} />
-                  Identification
-                </span>
-              }
-              inputRequired
-              inputPattern=".{3,}"
-              instructions={
-                <span>
-                  The identification is required<br/>
-                  The identification must be 3 characters minimum<br/>
-                  It can be the location, building info...
-                </span>
-              }
-              onValueChange={this.onFormInputChange} />
-
-            <FormDebouceAutoSuggestInput
-              label={
-                <span>
-                  <Icon source="fa" icon={faMapMarker} />
-                  Location
-                </span>
-              }
-              possibleItems={this.state.possibleLocations}
-              onValueChange={this.onLocationAutoCompleteChange}
-              onSelectedItemChange={this.onSelectedLocationItem}
-              inputAutoComplete="off"
-              inputRequired
-              fieldName="location"
-              instructions={
-                <span>Pick a location</span>
-              } />
-            <Map ref={this.map} />
-
-            {/* Nb Loading Docks */}
-            <div className="input-nbloadingdocks">
-              <span className="fake-label">
-                <Icon source="fa" icon={faWarehouse} />
-                Number of Loading Docks
-              </span>
-              <Range min={0} max={100} step={1} fieldName="nbLoadingDocks" onChange={this.onFormInputChange} />
-            </div>
-
-            {/* Company */}
-            <div className="input-company">
-              <span className="fake-label">
-                <Icon source="fa" icon={faBuilding} />
-                Company
-              </span>
-              <span>
-                {this.state.activeRoleCompany.name}
-              </span>
-            </div>
-
-            {/* Creator */}
-            <div className="input-creator">
-              <span className="fake-label">
-                <Icon source="fa" icon={faUser} />
-                Creator
-              </span>
-              <span>
-                {this.state.employee.firstname + ' ' + this.state.employee.lastname}
-              </span>
-            </div>
-
-            <input type="submit" />
-          </form>
-        </div>
-      );
-    }
+  if(!computed.employee || !computed.activeRoleCompany) {
+    return null;
   }
-}
+
+  if(warehouseId) {
+    let dashboardUrl = '/dashboard';
+    return <Redirect to={dashboardUrl} />;
+  }
+
+  return (
+    <div className="WarehouseAdd">
+      <h1>Add a Warehouse</h1>
+      <form onSubmit={handleSubmit}>
+        
+        <FormInput
+          value={identification}
+          inputType="text"
+          fieldName="identification"
+          label={
+            <span>
+              <Icon source="fa" icon={faRectangleWide} />
+              Identification
+            </span>
+          }
+          inputRequired
+          inputPattern=".{3,}"
+          instructions={
+            <span>
+              The identification is required<br/>
+              The identification must be 3 characters minimum<br/>
+              It can be the location, building info...
+            </span>
+          }
+          onValueChange={setIdentification} />
+
+        <FormDebouceAutoSuggestInput
+          value={possibleLocationsInput}
+          label={
+            <span>
+              <Icon source="fa" icon={faMapMarker} />
+              Location
+            </span>
+          }
+          possibleItems={possibleLocations}
+          onValueChange={onLocationAutoCompleteChange}
+          onSelectedItemChange={onSelectedLocationItem}
+          inputAutoComplete="off"
+          inputRequired
+          fieldName="location"
+          selectedItemKey={selectedLocationKey}
+          selectedItem={selectedLocationItem}
+          instructions={
+            <span>Pick a location</span>
+          } />
+        <Map ref={map} />
+
+        {/* Nb Loading Docks */}
+        <div className="input-nbloadingdocks">
+          <span className="fake-label">
+            <Icon source="fa" icon={faWarehouse} />
+            Number of Loading Docks
+          </span>
+          <Range min={0} max={100} step={1} value={nbLoadingDocks} fieldName="nbLoadingDocks" onChange={setNbLoadingDocks} />
+        </div>
+
+        {/* Company */}
+        <div className="input-company">
+          <span className="fake-label">
+            <Icon source="fa" icon={faBuilding} />
+            Company
+          </span>
+          <PageLink type={PageLinkType.COMPANY} entityId={computed.activeRole.companyId} entityData={computed.activeRoleCompany} />
+        </div>
+
+        {/* Creator */}
+        <div className="input-creator">
+          <span className="fake-label">
+            <Icon source="fa" icon={faUser} />
+            Creator
+          </span>
+          <PageLink type={PageLinkType.EMPLOYEE} entityId={computed.user.uid} entityData={computed.employee} />
+        </div>
+
+        <input type="submit" />
+      </form>
+    </div>
+  );
+};
 
 export default WarehouseAdd;

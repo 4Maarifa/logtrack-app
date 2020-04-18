@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { faLocation, faCompress, faInfo, faChevronRight } from '@fortawesome/pro-solid-svg-icons';
 
 import OlMap from 'ol/Map';
@@ -13,7 +13,6 @@ import { fromLonLat } from 'ol/proj';
 import { boundingExtent, buffer } from 'ol/extent';
 import { Feature, Overlay } from 'ol';
 
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Icon from './../../Utils/Icon/Icon';
 
 import ResizeService from './../../../services/resize.service';
@@ -23,18 +22,21 @@ import GeoService, { MarkerStyles, TileLayersDetails } from './../../../services
 
 import overlayClouds from './../../../assets/overlay-clouds.png';
 
+import { v4 as uuid } from 'uuid';
+
 import 'ol/ol.css';
 import './Map.scss';
 
-const uuidv4 = require('uuid/v4');
+/**
+ * Map component used in the app
+ * /!\ Cannot be converted to function component due to ref utilization
+ */
+class Map extends Component {
+  observerKey = uuid();
 
-class Map extends ComponentSafeUpdate {
   constructor (props) {
     super(props);
     this.state = {
-      resizeObserverKey: null,
-
-      locationObserverKey: null,
       userPosition: null,
       locationMarkerId: null,
 
@@ -56,24 +58,16 @@ class Map extends ComponentSafeUpdate {
   }
 
   componentDidMount = () => {
-    super.componentDidMount();
-    this.setState({
-      resizeObserverKey: ResizeService.addObserver(this.invalidateMap)
-    });
+    ResizeService.addObserver(this.invalidateMap, this.observerKey);
 
     PermissionService.location.askPermission()
-      .then(() => {
-        PermissionService.location.addLocationObserver(this.onUserPositionChanged)
-          .then(locationObserverKey => this.setState({locationObserverKey}))
-          .catch(ErrorService.manageError);
-      })
+      .then(() => PermissionService.location.addLocationObserver(this.onUserPositionChanged, this.observerKey))
       .catch(ErrorService.manageError);
   };
 
   componentWillUnmount = () => {
-    super.componentWillUnmount();
-    ResizeService.removeObserver(this.state.resizeObserverKey);
-    !!this.state.locationObserverKey && PermissionService.location.removeLocationObserver(this.state.locationObserverKey);
+    ResizeService.removeObserver(this.observerKey);
+    PermissionService.location.removeLocationObserver(this.observerKey);
     this.map.dispose();
   };
 
@@ -168,7 +162,7 @@ class Map extends ComponentSafeUpdate {
       marker.setGeometry(position);
     }
     else {
-      const locationMarkerId = uuidv4();
+      const locationMarkerId = uuid();
 
       const marker = new Feature({
         geometry: position,
@@ -202,22 +196,22 @@ class Map extends ComponentSafeUpdate {
     this.map.updateSize();
 
     /* CONTROLS */
-    this.map.addControl(new Control({
+    this.overlay3DRef.current && this.map.addControl(new Control({
       element: this.overlay3DRef.current
     }));
-    this.map.addControl(new Control({
+    this.additionalControlsDomRef.current && this.map.addControl(new Control({
       element: this.additionalControlsDomRef.current
     }));
-    this.map.addControl(new Control({
+    this.layerControlsDomRef.current && this.map.addControl(new Control({
       element: this.layerControlsDomRef.current
     }));
-    this.map.addControl(new Control({
+    this.attributionsDomRef.current && this.map.addControl(new Control({
       element: this.attributionsDomRef.current
     }));
   };
 
   addMarker = (lat, lon, popup) => {
-    const markerId = uuidv4();
+    const markerId = uuid();
 
     const marker = new Feature({
       geometry: new Point([lat, lon]),
@@ -237,7 +231,7 @@ class Map extends ComponentSafeUpdate {
     let featuresToAddToSource = [];
 
     markersToAdd.forEach(markerToAdd => {
-      const markerId = uuidv4();
+      const markerId = uuid();
       let marker = new Feature({
         geometry: new Point([markerToAdd.lat, markerToAdd.lon]),
         popupContent: markerToAdd.popup
@@ -262,7 +256,7 @@ class Map extends ComponentSafeUpdate {
 
   deleteMarker = markerId => {
     this.markerVectorSource.removeFeature(this.markerVectorSource.getFeatureById(markerId));
-    this.setState({nbFeatures: this.state.nbFeatures--});
+    this.setState({nbFeatures: this.state.nbFeatures - 1});
   };
 
   centerOnMarker = markerId => {

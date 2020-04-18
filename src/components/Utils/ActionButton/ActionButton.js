@@ -1,54 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import './ActionButton.scss';
 
-class ActionButton extends ComponentSafeUpdate {
-  constructor (props) {
-    super(props);
-    this.state = {
-      deployed: false
-    };
-  }
+const ActionButton = ({ icon, actions }) => {
 
-  componentDidMount = () => {
-    super.componentDidMount();
-  };
-
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-  };
-
-  toggleDisplay = () => this.setState({deployed: !this.state.deployed});
+  const [isDeployed, setDeployed] = useState(false);
 
   /**
    * RENDER
    */
-  render() {
-    return (
-      <div className={'ActionButton ' + (!!this.state.deployed ? 'ActionButton--deployed':'')}>
-        <ul>
-          {this.props.actions.map(action =>
-              <li key={action.title}>
-                <NavLink to={action.link}>
-                  <span className="action-title">
-                    {action.title}
-                  </span>
-                  <span className="action-icon">
-                    {action.icon}
-                  </span>
-                </NavLink>
-              </li>
-          )}
-        </ul>
-        <span className="button" onClick={() => this.toggleDisplay()}>
-          {!!this.props.icon && this.props.icon}
-        </span>
-      </div>
-    );
-  }
+  return (
+    <div className={'ActionButton ' + (isDeployed ? 'ActionButton--deployed' : '')}>
+      <ul>
+        {actions.map(action =>
+            <li key={action.title}>
+              <NavLink to={action.link}>
+                <span className="action-title">
+                  {action.title}
+                </span>
+                <span className="action-icon">
+                  {action.icon}
+                </span>
+              </NavLink>
+            </li>
+        )}
+      </ul>
+      <span className="button" onClick={() => setDeployed(!isDeployed)}>
+        {icon}
+      </span>
+    </div>
+  );
 }
 
 export default ActionButton;

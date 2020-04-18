@@ -1,80 +1,71 @@
-import React from 'react';
-
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import React, { useEffect, useState } from 'react';
 
 import './Choose.scss';
 
-class Choose extends ComponentSafeUpdate {
+const Choose = ({ defaultSelection, items, multiple, selectionRequired, onSelectionChange, fieldName }) => {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      selection: props.defaultSelection || [],
-    };
-  }
+  const [selection, setSelection] = useState(defaultSelection || (multiple ? [] : ''));
 
-  onValueChange = itemKey => {
-    if(!!this.props.items[itemKey].disabled) {
+  useEffect(() => {
+    onSelectionChange && onSelectionChange(selection, fieldName);
+  }, [selection]);
+
+  const onValueChange = itemKey => {
+    if(items[itemKey].disabled) {
       return;
     }
 
-    var selection = this.state.selection;
-    if(!!this.props.multiple) {
-      if(this.state.selection.includes(itemKey)) {
-        if(!!this.props.selectionRequired && this.state.selection.length <= 1) {
+    let newSelection = selection;
+    if(multiple) {
+      if(newSelection.includes(itemKey)) {
+        if(selectionRequired && newSelection.length <= 1) {
           return;
         }
-        selection.splice(selection.indexOf(itemKey), 1);
+        newSelection.splice(newSelection.indexOf(itemKey), 1);
       }
       else {
-        selection.push(itemKey);
+        newSelection.push(itemKey);
       }
-      this.setState({selection}, this.notifyParent);
+      setSelection(newSelection);
     }
     else {
-      if(!!this.props.selectionRequired && itemKey === selection) {
+      if(selectionRequired && itemKey === selection) {
         return;
       }
-      this.setState({selection: null}, () => {
-        this.notifyParent();
-        if(itemKey !== selection) {
-          this.setState({selection: itemKey}, this.notifyParent);
-        }
-      });
+
+      if(itemKey === selection) {
+        setSelection(null);
+      }
+      else {
+        setSelection(itemKey);
+      }
     }
   };
 
-  notifyParent = () => !!this.props.onSelectionChange && this.props.onSelectionChange(this.state.selection, this.props.fieldName);
-
-  isItemActive = itemKey => {
-    if(!!this.props.multiple) {
-      return this.state.selection.includes(itemKey);
+  const isItemActive = itemKey => {
+    if(multiple) {
+      return selection.includes(itemKey);
     }
-    return this.state.selection === itemKey;
+    return selection === itemKey;
   };
 
-  /** 
-   * RENDER
-   */
-  render() {
-    return (
-      <div className="Choose">
-        <ul role="listbox" tabIndex="0" aria-activedescendant={this.state.selection} aria-multiselectable={this.state.multiple}>
-          {Object.keys(this.props.items).map(key =>
-            <li key={key} 
-              id={key}
-              role="option"
-              aria-selected={this.isItemActive(key)}
-              className={'' + (this.isItemActive(key) ? 'li--active ' : '') + (!!this.props.items[key].disabled ? 'li--disabled' : '')} 
-              onClick={() => this.onValueChange(key)}>
-                
-              {this.props.items[key].content}
-            </li>
-          )}
-        </ul>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="Choose">
+      <ul role="listbox" tabIndex="0" aria-activedescendant={selection} aria-multiselectable={multiple}>
+        {Object.keys(items).map(key =>
+          <li key={key} 
+            id={key}
+            role="option"
+            aria-selected={isItemActive(key)}
+            className={'' + (isItemActive(key) ? 'li--active ' : '') + (items[key].disabled ? 'li--disabled' : '')} 
+            onClick={() => onValueChange(key)}>
+              
+            {items[key].content}
+          </li>
+        )}
+      </ul>
+    </div>
+  );
+};
 
 export default Choose;

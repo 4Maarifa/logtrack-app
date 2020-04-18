@@ -1,8 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
-
 import { ReactComponent as Spring } from './../../../assets/svg-sprites/spring.svg';
 import { ReactComponent as Fuel } from './../../../assets/svg-sprites/fuel.svg';
 import { ReactComponent as Exhaust } from './../../../assets/svg-sprites/exhaust-pipe.svg';
@@ -21,8 +19,8 @@ import ErrorService from './../../../services/error.service';
 
 import './Icon.scss';
 
-class Icon extends ComponentSafeUpdate {
-  icons = {
+const Icon = ({ source, containerclassname, icon, additional, ...otherProps }) => {
+  const icons = {
     Spring,
     Fuel,
     Exhaust,
@@ -37,31 +35,32 @@ class Icon extends ComponentSafeUpdate {
     EnterKey
   };
 
-  render() {
-    if(this.props.source === 'fa') {
-      return (
-        <div className={'Icon ' + (this.props.containerclassname || '')}>
-          {!!this.props.icon && <FontAwesomeIcon icon={this.props.icon} fixedWidth {...this.props} />}
-          {!!this.props.additional && <div className="icon-2">
-            <FontAwesomeIcon icon={this.props.additional} fixedWidth />
-          </div>}
-        </div>
-      );
-    }
-    if(this.props.source === 'custom') {
-      const IconTag = this.icons[this.props.icon];
-      return (
-        <div className="Icon">
-          <IconTag className="custom-icon">Icon</IconTag>
-        </div>
-      );
-    }
-    ErrorService.manageError('Icon was requested to render with invalid source', {
-      source: this.props.source,
-      icon: this.props.icon
-    });
-    return null;
+  /**
+   * RENDER
+   */
+  if(source === 'fa') {
+    return (
+      <div className={'Icon ' + (containerclassname || '')}>
+        {icon && <FontAwesomeIcon icon={icon} fixedWidth {...otherProps} />}
+        {additional && <div className="icon-2">
+          <FontAwesomeIcon icon={additional} fixedWidth />
+        </div>}
+      </div>
+    );
   }
-}
+  if(source === 'custom') {
+    const IconTag = icons[icon];
+    return (
+      <div className="Icon">
+        <IconTag className="custom-icon">Icon</IconTag>
+      </div>
+    );
+  }
+  ErrorService.manageError('Icon was requested to render with invalid source', {
+    source: source,
+    icon: icon
+  });
+  return null;
+};
 
 export default Icon;

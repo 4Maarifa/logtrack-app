@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { faTachometerFast, faHome, faSignIn, faUserPlus, faUserCog, faUsers, faTruck, faFileSignature, faTag, faCompass, faAnalytics, faMapPin, faBuilding, faSearch, faWarehouseAlt, faComments, faBars, faTimes } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Icon from './../../Utils/Icon/Icon';
 
 import DataService from './../../../services/data.service';
@@ -13,64 +12,58 @@ import { ERights } from './../../../services/right.service';
 
 import { RoleDetails } from './../../../classes/Role';
 
+import { v4 as uuid } from 'uuid';
+
 import './Navigation.scss';
 
-const TrackRouteChange = props => {
+const TrackRouteChange = ({ onChange }) => {
   const location = useLocation();
-
-  useEffect(() => props.onChange(), [location]);
-
+  useEffect(() => onChange(), [location]);
   return null;
-}
+};
 
-class Navigation extends ComponentSafeUpdate {
-  constructor(props) {
-    super(props);
-    this.state = Object.assign({
-      openedOnMobile: false
-    }, DataService.computed.getDefaultComputedValues());
-  }
+const Navigation = () => {
 
-  componentDidMount = () => {
-    super.componentDidMount();
-    this.setState({observerKey: 
-      DataService.computed.observeComputedValues(computedValues => {
-        this.setState(computedValues, this.computeValues);
-      })
-    });
-  };
+  const [isOpenedOnMobile, setOpenedOnMobile] = useState(false);
 
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-    DataService.computed.unobserveComputedValues(this.state.observerKey);
-  };
+  const observerKey = uuid();
+  
+  const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
+
+  useEffect(() => {
+    DataService.computed.observeComputedValues(setComputed, observerKey);
+    return () => DataService.computed.unobserveComputedValues(observerKey)
+  }, []);
+  
+  if(!computed.initialized) { return null; }
 
   /**
    * RENDER
-   */
-  renderActiveRole = () => {
-    if(this.state.activeRole == null) {
+   */ 
+
+  const renderActiveRole = () => {
+    if(!computed.activeRole) {
       return (<NavLink activeClassName="nav--active" to={`/roles`} exact={true}>
         <Icon source="fa" icon={faTag} />
         <span className="nav-title">No active role</span>
       </NavLink>);
     }
     return (<NavLink activeClassName="nav--active" to={`/roles`} exact={true}>
-      {RoleDetails[this.state.activeRole.role].icon}
+      {RoleDetails[computed.activeRole.role].icon}
       <span className="nav-title nav-title-role">
-        {UtilsService.capitalize(this.state.activeRole.role)}<br/>
-        {this.state.activeRoleCompany.name}
+        {UtilsService.capitalize(computed.activeRole.role)}<br/>
+        {computed.activeRoleCompany.name}
       </span>
     </NavLink>);
   };
   
-  renderUsername = () => {
-    if(!!this.state.employee) {
+  const renderUsername = () => {
+    if(computed.employee) {
       return (
         <NavLink activeClassName="nav--active" to={`/profile`} exact={true}>
           <Icon source="fa" icon={faUserCog} />
           <span className="nav-title">
-            {this.state.employee.firstname + ' ' + this.state.employee.lastname}
+            {computed.employee.firstname + ' ' + computed.employee.lastname}
           </span>
         </NavLink>
       );
@@ -80,13 +73,13 @@ class Navigation extends ComponentSafeUpdate {
     </NavLink>);
   };
 
-  renderMobileNavigation = () => {
-   return <div className="Navigation-mobile" onClick={() => this.setState({openedOnMobile: !this.state.openedOnMobile})}>
-     <Icon source="fa" icon={this.state.openedOnMobile ? faTimes : faBars} />
+  const renderMobileNavigation = () => {
+   return <div className="Navigation-mobile" onClick={() => setOpenedOnMobile(!isOpenedOnMobile)}>
+     <Icon source="fa" icon={isOpenedOnMobile ? faTimes : faBars} />
    </div>;
   }
 
-  getNavigationTabs = () => {
+  const getNavigationTabs = () => {
     const tabs = {
       [ERights.APP_CAN_USE_GPS]: 
         <NavLink key="gps" activeClassName="nav--active" to={`/gps`}>
@@ -128,62 +121,60 @@ class Navigation extends ComponentSafeUpdate {
     return Object.keys(tabs).filter(key => !!RightService.hasAppRight(key)).map(key => tabs[key]);
   };
 
-  render() {
-    return (
-      <div className={'Navigation ' 
-        + (SettingsService.getSettingValue(ESettings.SETTINGS_NAV_COLLAPSED) === 'COLLAPSED' ? '' : 'Navigation--deployed')
-        + (!!this.state.openedOnMobile ? ' Navigation--opened' : '')}>
+  return (
+    <div className={'Navigation ' 
+      + (SettingsService.getSettingValue(ESettings.SETTINGS_NAV_COLLAPSED) === 'COLLAPSED' ? '' : 'Navigation--deployed')
+      + (isOpenedOnMobile ? ' Navigation--opened' : '')}>
 
-        <TrackRouteChange onChange={() => this.setState({openedOnMobile: false})} />
-        
-        {!!this.state.user && 
-          <nav>
-            <NavLink activeClassName="nav--active" to={`/dashboard`}>
-              <Icon source="fa" icon={faTachometerFast} />
-              <span className="nav-title">Dashboard</span>
-            </NavLink>
+      <TrackRouteChange onChange={() => setOpenedOnMobile(false)} />
+      
+      {computed.user && 
+        <nav>
+          <NavLink activeClassName="nav--active" to={`/dashboard`}>
+            <Icon source="fa" icon={faTachometerFast} />
+            <span className="nav-title">Dashboard</span>
+          </NavLink>
 
-            {this.getNavigationTabs()}
-            <span className="nav-clearfix"></span>
-            <NavLink activeClassName="nav--active" to={`/chat`}>
-              <Icon source="fa" icon={faComments} />
-              <span className="nav-title">Chat</span>
+          {getNavigationTabs()}
+          <span className="nav-clearfix"></span>
+          <NavLink activeClassName="nav--active" to={`/chat`}>
+            <Icon source="fa" icon={faComments} />
+            <span className="nav-title">Chat</span>
+          </NavLink>
+          <NavLink activeClassName="nav--active" to={`/search`}>
+            <Icon source="fa" icon={faSearch} />
+            <span className="nav-title">Search</span>
+          </NavLink>
+          {computed.activeRole &&
+            <NavLink activeClassName="nav--active" to={`/company/${computed.activeRole.companyId}`}>
+              <Icon source="fa" icon={faBuilding} />
+              <span className="nav-title">Company</span>
             </NavLink>
-            <NavLink activeClassName="nav--active" to={`/search`}>
-              <Icon source="fa" icon={faSearch} />
-              <span className="nav-title">Search</span>
-            </NavLink>
-            {!!this.state.activeRole &&
-              <NavLink activeClassName="nav--active" to={`/company/${this.state.activeRole.companyId}`}>
-                <Icon source="fa" icon={faBuilding} />
-                <span className="nav-title">Company</span>
-              </NavLink>
-            }
-            {this.renderActiveRole()}
-            {this.renderUsername()}
-            {this.renderMobileNavigation()}
-          </nav>
-        }
-        {!this.state.user &&
-          <nav>
-            <NavLink activeClassName="nav--active" to={`/`} exact={true}>
-              <Icon source="fa" icon={faHome} />
-              <span className="nav-title">Home</span>
-            </NavLink>
-            <NavLink activeClassName="nav--active" to={`/signin`}>
-              <Icon source="fa" icon={faSignIn} />
-              <span className="nav-title">Sign in</span>
-            </NavLink>
-            <NavLink activeClassName="nav--active" to={`/signup`}>
-              <Icon source="fa" icon={faUserPlus} />
-              <span className="nav-title">Sign up</span>
-            </NavLink>
-            {this.renderMobileNavigation()}
-          </nav>
-        }
-      </div>
-    );
-  }
-}
+          }
+          {renderActiveRole()}
+          {renderUsername()}
+          {renderMobileNavigation()}
+        </nav>
+      }
+      {!computed.user &&
+        <nav>
+          <NavLink activeClassName="nav--active" to={`/`} exact={true}>
+            <Icon source="fa" icon={faHome} />
+            <span className="nav-title">Home</span>
+          </NavLink>
+          <NavLink activeClassName="nav--active" to={`/signin`}>
+            <Icon source="fa" icon={faSignIn} />
+            <span className="nav-title">Sign in</span>
+          </NavLink>
+          <NavLink activeClassName="nav--active" to={`/signup`}>
+            <Icon source="fa" icon={faUserPlus} />
+            <span className="nav-title">Sign up</span>
+          </NavLink>
+          {renderMobileNavigation()}
+        </nav>
+      }
+    </div>
+  );
+};
 
 export default Navigation;

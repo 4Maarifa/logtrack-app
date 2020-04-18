@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { faBuilding, faRectangleWide, faExchange } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Icon from './../../Utils/Icon/Icon';
 import Choose from './../../Utils/Choose/Choose';
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
@@ -18,54 +17,33 @@ import ErrorService from './../../../services/error.service';
 import CompanyService from './../../../services/entities/company.service';
 import ContractService from './../../../services/entities/contract.service';
 
+import { v4 as uuid } from 'uuid';
+
 import './ContractAdd.scss';
 
-class ContractAdd extends ComponentSafeUpdate{
-  constructor (props) {
-    super(props);
-    this.state = Object.assign({
-      contractId: null, 
+const ContractAdd = () => {
 
-      identification: '',
+  const [contractId, setContractId] = useState(null);
 
-      possibleCompanies: [], 
-      selectedCompanyId: null,
-      selectedCompanyItem: null,
+  const [identification, setIdentification] = useState('');
 
-      contractType: '',
+  const [possibleCompaniesInput, setPossibleCompaniesInput] = useState('');
+  const [possibleCompanies, setPossibleCompanies] = useState([]);
+  const [selectedCompanyId, setSelectedCompanyId] = useState('');
+  const [selectedCompanyItem, setSelectedCompanyItem] = useState(null);
 
-      isExecutor: false, 
-    
-      forceRedirect: false
-    },
-      DataService.computed.getDefaultComputedValues());
-  }
+  const [contractType, setContractType] = useState('');
 
-  componentDidMount = () => {
-    super.componentDidMount();
-    this.setState({observerKey: 
-      DataService.computed.observeComputedValues(computedValues => {
-        if(!computedValues.activeRole) {
-          ErrorService.warning('Please activate a role to add an equipment!');
-          this.setState({forceRedirect: true});
-        }
-        this.setState(computedValues);
-      })
-    });
-  };
+  const [isExecutor, setExecutor] = useState(false);
 
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-  };
+  const observerKey = uuid();
+  
+  const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  toggleIsExecutor = () => this.setState({isExecutor: !this.state.isExecutor});
-
-  handleChange = event => this.setState({[event.target.getAttribute('data-field')]: event.target.value});
-  handleSelection = (value, fieldName) => this.setState({[fieldName]: value});
-
-  onCompanyAutoCompleteChange = value => {
+  const onCompanyAutoCompleteChange = value => {
+    setPossibleCompaniesInput(value);
     if(value.trim().length < 3) {
-      this.setState({possibleCompanies: [], selectedCompanyId: null, selectedCompanyItem: null});
+      setPossibleCompanies({});
     } 
     else {
       CompanyService.search(value.trim().toLowerCase()).then(companies => {
@@ -73,161 +51,169 @@ class ContractAdd extends ComponentSafeUpdate{
           content: <PageLink noLink type={PageLinkType.COMPANY} entityId={companyKey} entityData={companies[companyKey]} />,
           value: companies[companyKey]
         });
-        this.setState({possibleCompanies: companies, selectedCompanyId: null, selectedCompanyItem: null});
+        setPossibleCompanies(companies);
       });
     }
   };
 
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
 
-    if(!this.state.selectedCompanyId) {
+    if(!selectedCompanyId) {
       ErrorService.error('Please pick a company !');
       return;
     }
 
-    if(!this.state.contractType) {
+    if(!contractType) {
       ErrorService.error('Please pick a contract type !');
       return;
     }
 
     // TODO
 
-    var companyOrderId = (!!this.state.isExecutor && this.state.selectedCompanyId) || this.state.activeRole.companyId;
-    var companyExecId = (!!this.state.isExecutor && this.state.activeRole.companyId) || this.state.selectedCompanyId;
+    const companyOrderId = (isExecutor && selectedCompanyId) || computed.activeRole.companyId;
+    const companyExecId = (isExecutor && computed.activeRole.companyId) || selectedCompanyId;
     
-    ContractService.create(new Contract(this.state.identification, [], companyOrderId, companyExecId, this.state.activeRole.companyId, this.state.contractType, EContractStatus.DRAFT, DateService.getCurrentIsoDateString(), null))
-      .then(contractDoc => {
-        this.setState({contractId: contractDoc.id});
-      })
+    ContractService.create(new Contract(identification, [], companyOrderId, companyExecId, computed.activeRole.companyId, contractType, EContractStatus.DRAFT, DateService.getCurrentIsoDateString(), null))
+      .then(contractDoc => setContractId(contractDoc.id))
       .catch(ErrorService.manageError);
   };
 
-  /**
-   * RENDER
-   */
-  render() {
-    if(!!this.state.forceRedirect) {
-      return <Redirect to={`/dashboard`} />;
-    }
+  useEffect(() => {
+    DataService.computed.observeComputedValues(setComputed, observerKey);
+    return () => DataService.computed.unobserveComputedValues(observerKey)
+  }, []);
+  
+  if(!computed.initialized) { return null; }
 
-    let contractDetails = {};
-    Object.keys(ContractTypeDetails).forEach(contractTypeKey => {
-      contractDetails[contractTypeKey] = {
-        content: <span title={ContractTypeDetails[contractTypeKey].disabled ? 'Not available in your plan' : 'Choose this type'}>
-          {ContractTypeDetails[contractTypeKey].icon}
-          {ContractTypeDetails[contractTypeKey].name}
-        </span>,
-        disabled: ContractTypeDetails[contractTypeKey].disabled
-      }
-    });
-
-    if(!this.state.employee || !this.state.activeRoleCompany) {
-      return (<div></div>);
-    } 
-    else if(!!this.state.contractId) {
-      let contractsUrl = '/contracts';
-      return <Redirect to={contractsUrl} />;
-    } 
-    else {
-      return (
-        <div className="ContractAdd">
-          <h1>Add a contract</h1>
-          <form onSubmit={this.handleSubmit}>
-
-            <FormInput
-              inputType="text"
-              fieldName="identification"
-              label={
-                <span>
-                  <Icon source="fa" icon={faRectangleWide} />
-                  Identification
-                </span>
-              }
-              inputRequired
-              inputPattern=".{3,}"
-              instructions={
-                <span>
-                  The identification is required<br/>
-                  The identification must be 3 characters minimum<br/>
-                  It can be the number plate, serial number...
-                </span>
-              }
-              onValueChange={this.handleSelection} />
-
-            {/* Company */}
-            {!this.state.isExecutor && 
-            <Fragment>
-              <div className="input-company">
-                <span className="fake-label">
-                  <Icon source="fa" icon={faBuilding} />
-                  Company ordering the contract
-                </span>
-                <PageLink type={PageLinkType.COMPANY} entityId={this.state.activeRole.companyId} entityData={this.state.activeRoleCompany} />
-              </div>
-              <div className="company-swap">
-                <button onClick={this.toggleIsExecutor}>
-                  <Icon source="fa" icon={faExchange} style={{transform: 'rotate(90deg)'}} />
-                  Swap executing and ordering companies
-                </button>
-              </div>
-            </Fragment>
-            }
-
-            {/* Company field */}
-            <FormDebounceAutoSuggestInput
-              label={
-                <span>
-                  <Icon source="fa" icon={faBuilding} />
-                  Company {!!this.state.isExecutor ? 'ordering' : 'executing'} the contract
-                </span>
-              }
-              possibleItems={this.state.possibleCompanies}
-              onValueChange={this.onCompanyAutoCompleteChange}
-              onSelectedItemChange={(selectedCompanyId, _, selectedCompanyItem) => this.setState({selectedCompanyId, selectedCompanyItem})}
-              inputAutoComplete="off"
-              inputRequired
-              instructions={
-                <span>Pick a company</span>
-              } />
-
-            {/* Company */}
-            {!!this.state.isExecutor && 
-            <Fragment>
-              <div className="company-swap">
-                <button onClick={this.toggleIsExecutor}>
-                  <Icon source="fa" icon={faExchange} style={{transform: 'rotate(90deg)'}} />
-                  Swap executing and ordering companies
-                </button>
-              </div>
-              <div className="input-company">
-                <span className="fake-label">
-                  <Icon source="fa" icon={faBuilding} />
-                  Company executing the contract
-                </span>
-                <PageLink type={PageLinkType.COMPANY} entityId={this.state.activeRole.companyId} entityData={this.state.activeRoleCompany} />
-              </div>
-            </Fragment>
-            }
-
-            {/* Role field */}
-            <div className="type-selection">
-              <span className="fake-label">
-                Contract Type
-              </span>
-              <Choose
-                items={contractDetails}
-                multiple={false} 
-                fieldName="contractType"
-                onSelectionChange={this.handleSelection} />
-            </div>
-
-            <input type="submit" />
-          </form>
-        </div>
-      );
-    }
+  if(!computed.activeRole) {
+    ErrorService.warning('Please activate a role to add an equipment!');
+    return <Redirect to={`/dashboard`} />;
   }
-}
+
+  let contractDetails = {};
+  Object.keys(ContractTypeDetails).forEach(contractTypeKey => {
+    contractDetails[contractTypeKey] = {
+      content: <span title={ContractTypeDetails[contractTypeKey].disabled ? 'Not available in your plan' : 'Choose this type'}>
+        {ContractTypeDetails[contractTypeKey].icon}
+        {ContractTypeDetails[contractTypeKey].name}
+      </span>,
+      disabled: ContractTypeDetails[contractTypeKey].disabled
+    }
+  });
+
+  if(!computed.employee || !computed.activeRoleCompany) {
+    return null;
+  }
+
+  if(contractId) {
+    let contractsUrl = '/contracts';
+    return <Redirect to={contractsUrl} />;
+  }
+
+  return (
+    <div className="ContractAdd">
+      <h1>Add a contract</h1>
+      <form onSubmit={handleSubmit}>
+
+        <FormInput
+          value={identification}
+          inputType="text"
+          fieldName="identification"
+          label={
+            <span>
+              <Icon source="fa" icon={faRectangleWide} />
+              Identification
+            </span>
+          }
+          inputRequired
+          inputPattern=".{3,}"
+          instructions={
+            <span>
+              The identification is required<br/>
+              The identification must be 3 characters minimum<br/>
+              It can be the number plate, serial number...
+            </span>
+          }
+          onValueChange={setIdentification} />
+
+        {/* Company */}
+        {!isExecutor && 
+        <Fragment>
+          <div className="input-company">
+            <span className="fake-label">
+              <Icon source="fa" icon={faBuilding} />
+              Company ordering the contract
+            </span>
+            <PageLink type={PageLinkType.COMPANY} entityId={computed.activeRole.companyId} entityData={computed.activeRoleCompany} />
+          </div>
+          <div className="company-swap">
+            <button onClick={() => setExecutor(!isExecutor)}>
+              <Icon source="fa" icon={faExchange} style={{transform: 'rotate(90deg)'}} />
+              Swap executing and ordering companies
+            </button>
+          </div>
+        </Fragment>
+        }
+
+        {/* Company field */}
+        <FormDebounceAutoSuggestInput
+          value={possibleCompaniesInput}
+          label={
+            <span>
+              <Icon source="fa" icon={faBuilding} />
+              Company {isExecutor ? 'ordering' : 'executing'} the contract
+            </span>
+          }
+          possibleItems={possibleCompanies}
+          onValueChange={onCompanyAutoCompleteChange}
+          onSelectedItemChange={(selectedCompanyId, _, selectedCompanyItem) => {
+            setSelectedCompanyId(selectedCompanyId);
+            setSelectedCompanyItem(selectedCompanyItem);
+          }}
+          inputAutoComplete="off"
+          inputRequired
+          selectedItemKey={selectedCompanyId}
+          selectedItem={selectedCompanyItem}
+          instructions={
+            <span>Pick a company</span>
+          } />
+
+        {/* Company */}
+        {isExecutor && 
+        <Fragment>
+          <div className="company-swap">
+            <button onClick={() => setExecutor(!isExecutor)}>
+              <Icon source="fa" icon={faExchange} style={{transform: 'rotate(90deg)'}} />
+              Swap executing and ordering companies
+            </button>
+          </div>
+          <div className="input-company">
+            <span className="fake-label">
+              <Icon source="fa" icon={faBuilding} />
+              Company executing the contract
+            </span>
+            <PageLink type={PageLinkType.COMPANY} entityId={computed.activeRole.companyId} entityData={computed.activeRoleCompany} />
+          </div>
+        </Fragment>
+        }
+
+        {/* Role field */}
+        <div className="type-selection">
+          <span className="fake-label">
+            Contract Type
+          </span>
+          <Choose
+            items={contractDetails}
+            multiple={false} 
+            fieldName="contractType"
+            onSelectionChange={setContractType} />
+        </div>
+
+        <input type="submit" />
+      </form>
+    </div>
+  );
+};
 
 export default ContractAdd;

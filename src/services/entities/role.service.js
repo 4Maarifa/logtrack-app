@@ -16,7 +16,7 @@ import { ERole, ERoleStatus } from './../../classes/Role';
 import Icon from './../../components/Utils/Icon/Icon';
 
 const RoleService = {
-  observers: [],
+  observers: {},
   rights: {
     [ERights.RIGHT_ROLE_CREATE]: () => DataService.computed.isConnected(),
     [ERights.RIGHT_ROLE_GET]: () => DataService.computed.isConnected(),
@@ -115,14 +115,16 @@ const RoleService = {
                 .then(activeRole => {
                   if(activeRole.exists) {
                     resolve(activeRole.data());
-                  } else {
+                  }
+                  else {
                     resolve(null);
                   }
                 })
                 .catch(error => ErrorService.manageError(error) && reject());
             }
             return resolve(null);
-          } else {
+          }
+          else {
             ErrorService.manageError({code: 'entity/not-found', details: 'Employee #' + employeeId});
             reject();
           }
@@ -214,15 +216,20 @@ const RoleService = {
       .then(DataService.computed.notifyChanges)
       .catch(ErrorService.manageError);
   },
-  observeActions(role, observer) {
-    RoleService.observers.push({
-        role: role,
-        observer: observer
-    });
-    observer(RoleService.getActions(role));
+  observeActions(role, callback, observerKey) {
+    RoleService.observers[observerKey] = {
+      role: role,
+      callback: callback
+    };
+    callback(RoleService.getActions(role));
+  },
+  unobserveActions(observerKey) {
+    delete RoleService.observers[observerKey];
   },
   notifyObservers() {
-    RoleService.observers.forEach(observer => observer.observer(RoleService.getActions(observer.role)));
+    Object.keys(RoleService.observers).forEach(observerKey => {
+      RoleService.observers[observerKey].callback(RoleService.getActions(RoleService.observers[observerKey].role))
+    });
   },
   getActions(role) {
     var roleId = Object.keys(role)[0];

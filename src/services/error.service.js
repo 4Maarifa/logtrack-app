@@ -54,7 +54,8 @@ const ErrorService = {
                     break;
             }
             ErrorService.error(errorMessage);
-        } else {
+        }
+        else {
             ErrorService.error(error);
         }
     },

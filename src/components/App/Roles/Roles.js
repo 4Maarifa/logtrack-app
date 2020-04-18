@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { faPlus, faUserTag, faBuilding, faUserPlus } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import ActionButton from './../../Utils/ActionButton/ActionButton';
 import ExTable from './../../Utils/ExTable/ExTable';
 import Icon from './../../Utils/Icon/Icon';
@@ -19,65 +18,34 @@ import RoleEmployee from './../../Entities/RoleEmployee/RoleEmployee';
 
 import { ERole, ERoleStatus } from './../../../classes/Role';
 
+import { v4 as uuid } from 'uuid';
+
 import './Roles.scss';
 
-class Roles extends ComponentSafeUpdate {
-  constructor(props) {
-    super(props);
-    this.state = Object.assign({
-      userRoles: {},
-      userRolesCompanies: {},
+const Roles = () => {
 
-      userRevokedRoles: {},
-      userRevokedRolesCompanies: {},
+  const [userRoles, setUserRoles] = useState({});
+  const [userRolesCompanies, setUserRolesCompanies] = useState({});
 
-      userDraftRoles: {},
-      userDraftRolesCompanies: {},
+  const [userRevokedRoles, setUserRevokedRoles] = useState({});
+  const [userRevokedRolesCompanies, setUserRevokedRolesCompanies] = useState({});
 
-      requestedRoles: {},
-      requestedRolesEmployees: {}
-    }, DataService.computed.getDefaultComputedValues());
-  }
+  const [userDraftRoles, setUserDraftRoles] = useState({});
+  const [userDraftRolesCompanies, setUserDraftRolesCompanies] = useState({});
 
-  componentDidMount = () => {
-    super.componentDidMount();
-    this.setState({observerKey: 
-      DataService.computed.observeComputedValues(computedValues => {
-        this.setState(computedValues, this.computeRoles);
-      })
-    });
-  };
+  const [requestedRoles, setRequestedRoles] = useState({});
+  const [requestedRolesEmployees, setRequestedRolesEmployees] = useState({});
 
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-    DataService.computed.unobserveComputedValues(this.state.observerKey);
-  };
-
-  shouldComponentUpdate = (_, nextState) => {
-    if(Object.keys(nextState.userRoles).length !== Object.keys(this.state.userRoles).length) {
-      this.setState({userRoles: nextState.userRoles});
-    }
-    if(Object.keys(nextState.userRolesCompanies).length !== Object.keys(this.state.userRolesCompanies).length) {
-      this.setState({userRolesCompanies: nextState.userRolesCompanies});
-    }
-    if(Object.keys(nextState.requestedRoles).length !== Object.keys(this.state.requestedRoles).length) {
-      this.setState({requestedRoles: nextState.requestedRoles});
-    }
-    if(Object.keys(nextState.requestedRolesEmployees).length !== Object.keys(this.state.requestedRolesEmployees).length) {
-      this.setState({requestedRolesEmployees: nextState.requestedRolesEmployees});
-    }
-    return true;
-  };
-
-  /**
-   * ROLES
-   */
-  computeRoles = () => {
-    if(!this.state.user) return;
+  const observerKey = uuid();
+  
+  const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
+  
+  const computeRoles = () => {
+    if(!computed.user) return;
     // USER ROLES
-    RoleService.getRolesForEmployeeId(this.state.user.uid, [ERoleStatus.CONFIRMED, ERoleStatus.DRAFT, ERoleStatus.REVOKED])
+    RoleService.getRolesForEmployeeId(computed.user.uid, [ERoleStatus.CONFIRMED, ERoleStatus.DRAFT, ERoleStatus.REVOKED])
       .then(roles => {
-        var userRoles = {}, userRevokedRoles = {}, userDraftRoles = {}, 
+        let userRoles = {}, userRevokedRoles = {}, userDraftRoles = {}, 
           userRolesCompanyKeys = [], userRevokedRolesCompanyKeys = [], userDraftRolesCompanyKeys = [];
 
         Object.keys(roles).forEach(roleKey => {
@@ -97,38 +65,48 @@ class Roles extends ComponentSafeUpdate {
 
         CompanyService.getAllForIdList(UtilsService.removeDuplicateFromArray(Object.keys(roles).map(roleKey => roles[roleKey].companyId)))
           .then(allCompanies => {
-            var userRolesCompanies = {}, userDraftRolesCompanies = {}, userRevokedRolesCompanies = {};
+            let userRolesCompanies = {}, userDraftRolesCompanies = {}, userRevokedRolesCompanies = {};
 
             userRolesCompanyKeys.forEach(companyKey => userRolesCompanies[companyKey] = allCompanies[companyKey]);
             userRevokedRolesCompanyKeys.forEach(companyKey => userRevokedRolesCompanies[companyKey] = allCompanies[companyKey]);
             userDraftRolesCompanyKeys.forEach(companyKey => userDraftRolesCompanies[companyKey] = allCompanies[companyKey]);
-            this.setState({userDraftRolesCompanies, userRevokedRolesCompanies, userRolesCompanies, userRevokedRoles, userDraftRoles, userRoles});
+
+            setUserDraftRolesCompanies(userDraftRolesCompanies);
+            setUserRevokedRolesCompanies(userRevokedRolesCompanies);
+            setUserRolesCompanies(userRolesCompanies);
+
+            setUserDraftRoles(userDraftRoles);
+            setUserRevokedRoles(userRevokedRoles);
+            setUserRoles(userRoles);
           })
           .catch(ErrorService.manageError);
       })
       .catch(ErrorService.manageError);
 
     // REQUESTED ROLES
-    if(!!this.state.activeRole) {
-      RoleService.getRolesForCompanyId(this.state.activeRole.companyId, [ERoleStatus.DRAFT])
+    if(computed.activeRole) {
+      RoleService.getRolesForCompanyId(computed.activeRole.companyId, [ERoleStatus.DRAFT])
         .then(requestedRoles => {
-          var employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(requestedRoles).map(roleKey => requestedRoles[roleKey].employeeId));
+          let employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(requestedRoles).map(roleKey => requestedRoles[roleKey].employeeId));
 
           EmployeeService.getAllForIdList(employeesIds)
-            .then(requestedRolesEmployees => this.setState({requestedRoles, requestedRolesEmployees}))
+            .then(requestedRolesEmployees => {
+              setRequestedRoles(requestedRoles);
+              setRequestedRolesEmployees(requestedRolesEmployees);
+            })
             .catch(ErrorService.manageError);
         })
         .catch(ErrorService.manageError);
     }
   };
 
-  computeActions = () => {
+  const computeActions = () => {
     var defaultActions = [
       {title: 'Request a role', icon: <Icon source="fa" icon={faUserTag} />, link: `/role-add`},
       {title: 'Add a company', icon: <Icon source="fa" icon={faBuilding} />, link: `/company-add`}
     ];
 
-    if(!!this.state.activeRole && this.state.activeRole.role === ERole.MANAGER) {
+    if(computed.activeRole && computed.activeRole.role === ERole.MANAGER) {
       defaultActions.unshift({
         title: 'Offer a role', 
         icon: <Icon source="fa" icon={faUserPlus} />, 
@@ -138,73 +116,80 @@ class Roles extends ComponentSafeUpdate {
     return defaultActions;
   };
 
+  useEffect(() => computeRoles(), [computed]);
+
+  useEffect(() => {
+    DataService.computed.observeComputedValues(setComputed, observerKey);
+    return () => DataService.computed.unobserveComputedValues(observerKey)
+  }, []);
+  
+  if(!computed.initialized) { return null; }
+
   /**
    * RENDER
    */
-  renderUserRole = (itemKey, itemData) => (
+  const renderUserRole = (itemKey, itemData) => (
     <RoleCompany key={itemKey} 
       company={ {[itemKey]: itemData} } 
-      roles={UtilsService.filterKeyValueOnPropertyValue(this.state.userRoles, predicate => predicate.companyId === itemKey)}
+      roles={UtilsService.filterKeyValueOnPropertyValue(userRoles, predicate => predicate.companyId === itemKey)}
       options={ {showActions: true} } />
   );
 
-  renderDraftUserRole = (itemKey, itemData) => (
+  const renderDraftUserRole = (itemKey, itemData) => (
     <RoleCompany key={itemKey} 
       company={ {[itemKey]: itemData} } 
-      roles={UtilsService.filterKeyValueOnPropertyValue(this.state.userDraftRoles, predicate => predicate.companyId === itemKey)}
+      roles={UtilsService.filterKeyValueOnPropertyValue(userDraftRoles, predicate => predicate.companyId === itemKey)}
       options={ {showActions: true, showDates: true} } />
   );
 
-  renderRevokedUserRole = (itemKey, itemData) => (
+  const renderRevokedUserRole = (itemKey, itemData) => (
     <RoleCompany key={itemKey} 
       company={ {[itemKey]: itemData} } 
-      roles={UtilsService.filterKeyValueOnPropertyValue(this.state.userRevokedRoles, predicate => predicate.companyId === itemKey)}
+      roles={UtilsService.filterKeyValueOnPropertyValue(userRevokedRoles, predicate => predicate.companyId === itemKey)}
       options={ {showActions: true, showDates: true} } />
   );
 
-  renderRequestedRole = (itemKey, itemData) => (
+  const renderRequestedRole = (itemKey, itemData) => (
     <RoleEmployee key={itemKey}
-      employee={ {[itemData.employeeId]: this.state.requestedRolesEmployees[itemData.employeeId]} }
+      employee={ {[itemData.employeeId]: requestedRolesEmployees[itemData.employeeId]} }
       roles={ { [itemKey]: itemData } }
       options={ {showDraft: true, showActions: true} } />
   );
 
-  render() {
-    return (
-      <div className="Roles">
-        {!!this.state.activeRole && 
-          <Fragment>
-            <h1>Your Current Role</h1>
-            <div className="activeRole">
-              <RoleCompany company={ {[this.state.activeRole.companyId]: this.state.activeRoleCompany} }
-                roles={ {[this.state.employee.activeRoleId]: this.state.activeRole} } />
-            </div>
-          </Fragment>
-        }
+  return (
+    <div className="Roles">
+      {computed.activeRole && 
+        <Fragment>
+          <h1>Your Current Role</h1>
+          <div className="activeRole">
+            <RoleCompany company={ {[computed.activeRole.companyId]: computed.activeRoleCompany} }
+              roles={ {[computed.employee.activeRoleId]: computed.activeRole} } />
+          </div>
+        </Fragment>
+      }
 
-        <h1>Your Roles</h1>
-        <ExTable items={this.state.userRolesCompanies} renderItem={this.renderUserRole}></ExTable>
+      <h1>Your Roles</h1>
+      <ExTable items={userRolesCompanies} renderItem={renderUserRole}></ExTable>
 
-        {!!this.state.activeRole && this.state.activeRole.role === ERole.MANAGER &&
-          <Fragment>
-            <h1>
-              Requests to join 
-              <PageLink type={PageLinkType.COMPANY} entityId={this.state.employee.activeRoleId} entityData={this.state.activeRoleCompany} />
-            </h1>
-            <ExTable items={this.state.requestedRoles} renderItem={this.renderRequestedRole}></ExTable>
-          </Fragment>
-        }
+      {computed.activeRole && computed.activeRole.role === ERole.MANAGER &&
+        <Fragment>
+          <h1>
+            Requests to join 
+            <PageLink type={PageLinkType.COMPANY} entityId={computed.employee.activeRoleId} entityData={computed.activeRoleCompany} />
+          </h1>
+          <ExTable items={requestedRoles} renderItem={renderRequestedRole}></ExTable>
+        </Fragment>
+      }
 
-        <h1>Pending Requests</h1>
-        <ExTable items={this.state.userDraftRolesCompanies} renderItem={this.renderDraftUserRole}></ExTable>
+      <h1>Pending Requests</h1>
+      <ExTable items={userDraftRolesCompanies} renderItem={renderDraftUserRole}></ExTable>
 
-        <h1>Revoked Roles</h1>
-        <ExTable items={this.state.userRevokedRolesCompanies} renderItem={this.renderRevokedUserRole}></ExTable>
+      <h1>Revoked Roles</h1>
+      <ExTable items={userRevokedRolesCompanies} renderItem={renderRevokedUserRole}></ExTable>
 
-        <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={this.computeActions()} />
-      </div>
-    );
-  }
-}
+      <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={computeActions()} />
+    </div>
+  );
+};
 
 export default Roles;

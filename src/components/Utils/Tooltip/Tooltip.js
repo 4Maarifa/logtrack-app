@@ -1,7 +1,5 @@
 import React from 'react';
 
-import ComponentSafeUpdate from './../ComponentSafeUpdate/ComponentSafeUpdate';
-
 import './Tooltip.scss';
 
 export const ETooltipPosition = {
@@ -30,37 +28,22 @@ const ETooptipTrianglePositionCss = {
   [ETooltipTrianglePosition.END]: 'triangle-end',
 };
 
-class Tooltip extends ComponentSafeUpdate {
-  constructor (props) {
-    super(props);
-    this.state = {
-      tooltipPosition: (!!this.props.tooltipPosition && !!ETooltipPosition[this.props.tooltipPosition]) ? ETooltipPosition[this.props.tooltipPosition] : 'BOTTOM',
-      tooltipTrianglePosition: (!!this.props.tooltipTrianglePosition && !!ETooltipTrianglePosition[this.props.tooltipTrianglePosition]) ? ETooltipTrianglePosition[this.props.tooltipTrianglePosition] : 'MIDDLE',
-    };
-  }
-
-  componentDidMount = () => {
-    super.componentDidMount();
-  };
-
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-  };
+const Tooltip = ({ defaultTooltipPosition, defaultTooltipTrianglePosition, show, label }) => {
+  const tooltipPosition = (defaultTooltipPosition && ETooltipPosition[defaultTooltipPosition]) ? ETooltipPosition[defaultTooltipPosition] : 'BOTTOM';
+  const tooltipTrianglePosition = (defaultTooltipTrianglePosition && ETooltipTrianglePosition[defaultTooltipTrianglePosition]) ? ETooltipTrianglePosition[defaultTooltipTrianglePosition] : 'MIDDLE';
 
   /**
    * RENDER
    */
-  render() {
-    if(!this.props.show) {
-      return null;
-    }
-    return (
-      <div className={'Tooltip ' + ETooptipPositionCss[this.state.tooltipPosition]}>
-        <span className={'triangle ' + ETooptipTrianglePositionCss[this.state.tooltipTrianglePosition]}></span>
-        <span className="label">{this.props.label}</span>
-      </div>
-    );
+  if(!show) {
+    return null;
   }
-}
+  return (
+    <div className={'Tooltip ' + ETooptipPositionCss[tooltipPosition]}>
+      <span className={'triangle ' + ETooptipTrianglePositionCss[tooltipTrianglePosition]}></span>
+      <span className="label">{label}</span>
+    </div>
+  );
+};
 
 export default Tooltip;

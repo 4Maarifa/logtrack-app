@@ -1,6 +1,4 @@
-import React from 'react';
-
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
+import React, { useEffect, useState } from 'react';
 
 import DataService from './../../../services/data.service';
 import RoleService from './../../../services/entities/role.service';
@@ -8,47 +6,46 @@ import DateService from './../../../services/date.service';
 
 import { RoleDetails } from './../../../classes/Role';
 
+import { v4 as uuid } from 'uuid';
+
 import './Role.scss';
 
-class Role extends ComponentSafeUpdate {
-  constructor (props) {
-    super(props);
-    this.state = {
-      actions: null
-    };
-  }
 
-  componentDidMount = () => {
-    super.componentDidMount();
-    RoleService.observeActions(this.props.role, actions => this.setState({actions}));
-  };
+const Role = ({ role }) => {
+  if(!role) { return null; }
 
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-  };
+  const roleKey = Object.keys(role)[0];
+  const observerKey = uuid();
+  const [actions, setActions] = useState(null);
+  const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  render() {
-    if(!this.props.role) {
-      return (<div></div>);
+  useEffect(() => {
+    DataService.computed.observeComputedValues(setComputed, observerKey);
+    RoleService.observeActions(role, setActions, observerKey);
+    return () => {
+      DataService.computed.unobserveComputedValues(observerKey);
+      RoleService.unobserveActions(observerKey);
     }
-    var roleId = Object.keys(this.props.role)[0];
+  }, []);
 
-    return (
-      <div
-       className={'Role ' + (!!DataService.computed.employee && DataService.computed.employee.activeRoleId === roleId ? 'Role--active' : '')} 
-       title={'' + (!this.props.role[roleId].revokedIsoDate ? 
-        'Requested on ' + DateService.getMonthYearString(DateService.getDateFromIsoString(this.props.role[roleId].creationIsoDate)) : 
-        'Revoked on ' + DateService.getMonthYearString(DateService.getDateFromIsoString(this.props.role[roleId].revokedIsoDate))) }
-       data-id={roleId}>
-        <span>
-          {RoleDetails[this.props.role[roleId].role].icon}
-          {RoleDetails[this.props.role[roleId].role].name}
-          {!!DataService.computed.employee && DataService.computed.employee.activeRoleId === roleId && <span className="badge">active</span> }
-        </span>
-        {this.state.actions}
-      </div>
-    );
-  }
+  if(!computed.initialized) { return null; }
+
+  return (
+    <div
+     className={'Role ' + (!!computed.employee && computed.employee.activeRoleId === roleKey ? 'Role--active' : '')} 
+     title={'' + (!role[roleKey].revokedIsoDate ? 
+      'Requested on ' + DateService.getMonthYearString(DateService.getDateFromIsoString(role[roleKey].creationIsoDate)) : 
+      'Revoked on ' + DateService.getMonthYearString(DateService.getDateFromIsoString(role[roleKey].revokedIsoDate))) }
+     data-id={roleKey}>
+
+      <span>
+        {RoleDetails[role[roleKey].role].icon}
+        {RoleDetails[role[roleKey].role].name}
+        {!!computed.employee && computed.employee.activeRoleId === roleKey && <span className="badge">active</span> }
+      </span>
+      {actions}
+    </div>
+  );
 }
 
 export default Role;
