@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { faUser } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import Icon from './../../Utils/Icon/Icon';
 
@@ -11,53 +10,43 @@ import { ERoleStatus } from './../../../classes/Role';
 
 import './RoleEmployee.scss';
 
-class RoleEmployee extends ComponentSafeUpdate{
+const RoleEmployee = ({ employee, options, roles }) => {
 
   /**
    * RENDER
    */
-  renderProfilePicture = employeeId => {
-    if(!!this.props.employee && !!this.props.employee[employeeId].profilePictureUrl) {
-      return <img width="20" height="20" src={this.props.employee[employeeId].profilePictureUrl} 
-        alt={this.props.employee[employeeId].firstname + ' ' + this.props.employee[employeeId].lastname + '\'s photo'} />
+  const renderRole = roleKey => {
+    if(!options.showDraft && roles[roleKey].status === ERoleStatus.DRAFT) {
+      return null;
     }
-    return <Fragment></Fragment>;
+    return <Role key={roleKey} role={ { [roleKey]: roles[roleKey] } } options={options}></Role>;
   };
 
-  renderRole = roleKey => {
-    if(!this.props.options.showDraft && this.props.roles[roleKey].status === ERoleStatus.DRAFT) {
-      return <Fragment key={roleKey}></Fragment>;
-    }
-    return <Role key={roleKey} role={ { [roleKey]: this.props.roles[roleKey] } } options={this.props.options}></Role>;
-  };
+  if(!employee || !Object.keys(roles).length) {
+    return null;
+  }
+  let employeeId = Object.keys(employee)[0];
 
-  render() {
-    if(!this.props.employee || !Object.keys(this.props.roles).length) {
-      return (<Fragment></Fragment>);
-    }
-    var employeeId = Object.keys(this.props.employee)[0];
+  if(!options.showDraft && 
+      Object.keys(roles).map((roleKey) => roles[roleKey].status).reduce((total, role) => total + (role.status === ERoleStatus.CONFIRMED) ? 1 : 0) === 0) {
+      return null;
+  }
 
-    if(!this.props.options.showDraft && 
-        Object.keys(this.props.roles).map((roleKey) => this.props.roles[roleKey].status).reduce((total, role) => total + (role.status === ERoleStatus.CONFIRMED) ? 1 : 0) === 0) {
-        return <Fragment></Fragment>;
-    }
-
-    return (
-      <div className="RoleEmployee Element-content">
-        <div className="Element-base">
-          <Icon source="fa" icon={faUser} containerclassname="Element-icon" />
-          <div className="Element-data">
-            <span className="Element-title">
-              <PageLink type={PageLinkType.EMPLOYEE} entityId={employeeId} entityData={this.props.employee[employeeId]} />
-            </span>
-            <div className="roles">
-              {Object.keys(this.props.roles).map(this.renderRole)}
-            </div>
+  return (
+    <div className="RoleEmployee Element-content">
+      <div className="Element-base">
+        <Icon source="fa" icon={faUser} containerclassname="Element-icon" />
+        <div className="Element-data">
+          <span className="Element-title">
+            <PageLink type={PageLinkType.EMPLOYEE} entityId={employeeId} entityData={employee[employeeId]} />
+          </span>
+          <div className="roles">
+            {Object.keys(roles).map(renderRole)}
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default RoleEmployee;

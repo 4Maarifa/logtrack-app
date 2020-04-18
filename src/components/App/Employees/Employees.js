@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Map from './../../Utils/Map/Map';
 import ExTable from './../../Utils/ExTable/ExTable';
 
@@ -12,75 +11,66 @@ import EmployeeService from './../../../services/entities/employee.service';
 
 import RoleEmployee from './../../Entities/RoleEmployee/RoleEmployee';
 
+import { v4 as uuid } from 'uuid';
 
 import './Employees.scss';
 
-class Employees extends ComponentSafeUpdate {
-  constructor(props) {
-    super(props);
-    this.state = Object.assign({
+const Employees = () => {
 
-      companyEmployees: {},
-      companyEmployeesLoading: true,
-      rolesOfCompanyEmployees: {}
-    }, DataService.computed.getDefaultComputedValues());
-  }
+  const [companyEmployees, setCompanyEmployees] = useState({});
+  const [isCompanyEmployeesLoading, setCompanyEmployeesLoading] = useState(true);
+  const [rolesOfCompanyEmployees, setRolesOfCompanyEmployees] = useState({});
 
-  componentDidMount = () => {
-    super.componentDidMount();
-    this.setState({observerKey: 
-      DataService.computed.observeComputedValues(computedValues => {
-        this.setState(computedValues, this.computeValues);
-      })
-    });
-  };
-
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-    DataService.computed.unobserveComputedValues(this.state.observerKey);
-  };
-
-  computeValues = () => {
-    this.computeEmployeesRoles();
-  };
-
-  /**
-   * EMPLOYEES
-   */
-  computeEmployeesRoles = () => {
-    if(!!this.state.activeRole) {
-      RoleService.getRolesForCompanyId(this.state.activeRole.companyId)
-        .then(rolesOfCompanyEmployees => {
-          this.setState({rolesOfCompanyEmployees});
+  const observerKey = uuid();
   
-          var employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(rolesOfCompanyEmployees).map(roleKey => rolesOfCompanyEmployees[roleKey].employeeId));
+  const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
+
+  const computeEmployeesRoles = () => {
+    if(computed.activeRole) {
+      RoleService.getRolesForCompanyId(computed.activeRole.companyId)
+        .then(rolesOfCompanyEmployees => {
+          setRolesOfCompanyEmployees(rolesOfCompanyEmployees);
+  
+          let employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(rolesOfCompanyEmployees)
+            .map(roleKey => rolesOfCompanyEmployees[roleKey].employeeId));
+            
           EmployeeService.getAllForIdList(employeesIds)
-            .then(companyEmployees => this.setState({companyEmployees, companyEmployeesLoading: false}))
+            .then(companyEmployees => {
+              setCompanyEmployees(companyEmployees);
+              setCompanyEmployeesLoading(false);
+            })
             .catch(ErrorService.manageError);
         })
         .catch(ErrorService.manageError);
     }
   };
 
+  useEffect(() => computeEmployeesRoles(), [computed]);
+
+  useEffect(() => {
+    DataService.computed.observeComputedValues(setComputed, observerKey);
+    return () => DataService.computed.unobserveComputedValues(observerKey)
+  }, []);
+  
+  if(!computed.initialized) { return null; }
+
   /**
    * RENDER
    */
-  renderRoleEmployee = (itemKey, itemData) => (
+  const renderRoleEmployee = (itemKey, itemData) => (
     <RoleEmployee key={itemKey} 
       employee={ {[itemKey]: itemData} } 
-      roles={UtilsService.filterKeyValueOnPropertyValue(this.state.rolesOfCompanyEmployees, predicate => predicate.employeeId === itemKey)}
+      roles={UtilsService.filterKeyValueOnPropertyValue(rolesOfCompanyEmployees, predicate => predicate.employeeId === itemKey)}
       options={ {showDraft: false, showActions: false} }
       showDetails={true} />
   );
 
-  render() {
-    return (
-      <div className="Employees">
-        <Map></Map>
-        <ExTable key="employees" items={this.state.companyEmployees} renderItem={this.renderRoleEmployee} header={['Name', 'Roles']} loading={this.state.companyEmployeesLoading}></ExTable>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="Employees">
+      <Map></Map>
+      <ExTable key="employees" items={companyEmployees} renderItem={renderRoleEmployee} header={['Name', 'Roles']} loading={isCompanyEmployeesLoading}></ExTable>
+    </div>
+  );
+};
 
 export default Employees;

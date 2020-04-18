@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { faUsers, faTruck, faWarehouseAlt, faUserTag } from '@fortawesome/pro-solid-svg-icons';
-
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import DataService from './../../../services/data.service';
 import CompanyService from './../../../services/entities/company.service';
@@ -27,111 +25,120 @@ import Warehouse from './../../Entities/Warehouse/Warehouse';
 
 import Colors from './../../../assets/Colors';
 
+import { v4 as uuid } from 'uuid';
+
 import './CompanyPage.scss';
 
 /**
  * Component: CompanyPage
  * Use by everyone to see details about a company (warehouses / equipments / employees)
  */
-class CompanyPage extends ComponentSafeUpdate {
-  constructor(props) {
-    super(props);
-    this.state = Object.assign({
-      companyId: this.props.match.params.companyid,
-      company: null,
+const CompanyPage = ({ match }) => {
+  const companyId = match.params.companyid;
 
-      warehouses: {},
-      warehousesLoading: true,
+  const [company, setCompany] = useState(null);
+  
+  const [warehouses, setWarehouses] = useState({});
+  const [isWarehousesLoading, setWarehousesLoading] = useState(true);
 
-      companyEmployees: {},
-      companyEmployeesLoading: true,
-      rolesOfCompanyEmployees: null,
-    
-      equipments: {},
-      equipmentsLoading: true,
-      equipmentModels: {},
-      brands: {}
-    }, DataService.computed.getDefaultComputedValues());
-  }
+  const [companyEmployees, setCompanyEmployees] = useState({});
+  const [isCompanyEmployeesLoading, setCompanyEmployeesLoading] = useState(true);
+  const [rolesOfCompanyEmployees, setRolesOfCompanyEmployees] = useState(null);
 
-  componentDidMount = () => {
-    super.componentDidMount();
-    this.setState({observerKey: 
-      DataService.computed.observeComputedValues(computedValues => {
-        this.setState(computedValues, this.computeValues);
-      })
-    }, () => {
-      // Compute all data
-      this.computeWarehouses();
-      this.computeEmployeesRoles();
-      this.computeEquipments();
-    });
-  };
+  const [equipments, setEquipments] = useState({});
+  const [isEquipmentsLoading, setEquipmentsLoading] = useState(true);
+  const [equipmentModels, setEquipmentModels] = useState({});
+  const [brands, setBrands] = useState({});
 
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-    DataService.computed.unobserveComputedValues(this.state.observerKey);
-  };
+  const observerKey = uuid();
+  
+  const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  computeValues() {
-    CompanyService.get(this.state.companyId)
-      .then(companyDoc => this.setState({company: companyDoc.data()}, this.computeEmployeesRoles))
+  const computeCompany = () => {
+    CompanyService.get(companyId)
+      .then(companyDoc => setCompany(companyDoc.data()))
       .catch(ErrorService.manageError);
   };
 
-  computeWarehouses = () => {
-    if(!!this.state.companyId) {
-      WarehouseService.getAllForCompanyId(this.state.companyId)
-        .then(warehouses => this.setState({warehouses, warehousesLoading: false}))
+  const computeWarehouses = () => {
+    if(companyId) {
+      WarehouseService.getAllForCompanyId(companyId)
+        .then(warehouses => {
+          setWarehouses(warehouses);
+          setWarehousesLoading(false);
+        })
         .catch(ErrorService.manageError);
     }
   };
 
-  computeEmployeesRoles = () => {
-    if(!!this.state.companyId) {
-      RoleService.getRolesForCompanyId(this.state.companyId)
+  const computeEmployeesRoles = () => {
+    if(companyId) {
+      RoleService.getRolesForCompanyId(companyId)
         .then(rolesOfCompanyEmployees => {
-          this.setState({rolesOfCompanyEmployees});
+          setRolesOfCompanyEmployees(rolesOfCompanyEmployees);
   
-          var employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(rolesOfCompanyEmployees).map(roleKey => rolesOfCompanyEmployees[roleKey].employeeId));
+          const employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(rolesOfCompanyEmployees)
+            .map(roleKey => rolesOfCompanyEmployees[roleKey].employeeId));
+          
           EmployeeService.getAllForIdList(employeesIds)
-            .then(companyEmployees => this.setState({companyEmployees, companyEmployeesLoading: false}))
+            .then(companyEmployees => {
+              setCompanyEmployees(companyEmployees);
+              setCompanyEmployeesLoading(false);
+            })
             .catch(ErrorService.manageError);
         })
         .catch(ErrorService.manageError);
     }
   };
 
-  computeEquipments = () => {
+  const computeEquipments = () => {
     BrandService.list()
-      .then(brands => this.setState({brands}))
+      .then(setBrands)
       .catch(ErrorService.manageError);
 
     EquipmentModelService.list()
-      .then((equipmentModels => this.setState({equipmentModels})))
+      .then(setEquipmentModels)
       .catch(ErrorService.manageError);
 
-    if(!!this.state.companyId) {
-      EquipmentService.getAllForCompanyId(this.state.companyId)
-        .then(equipments => this.setState({equipments, equipmentsLoading: false}))
+    if(companyId) {
+      EquipmentService.getAllForCompanyId(companyId)
+        .then(equipments => {
+          setEquipments(equipments);
+          setEquipmentsLoading(false);
+        })
         .catch(ErrorService.manageError);
     }
   };
 
+  useEffect(() => computeEmployeesRoles(), [company]);
+
+  useEffect(() => computeCompany(), [computed]);
+
+  useEffect(() => {
+    DataService.computed.observeComputedValues(setComputed, observerKey);
+    computeWarehouses();
+    computeEmployeesRoles();
+    computeEquipments();
+    return () => DataService.computed.unobserveComputedValues(observerKey)
+  }, []);
+
+  if(!computed.initialized) { return null; }
+
+
   /**
    * RENDER
    */
-  renderRoleEmployee = (itemKey, itemData) => (
+  const renderRoleEmployee = (itemKey, itemData) => (
     <RoleEmployee key={itemKey} 
       employee={ {[itemKey]: itemData} } 
-      roles={UtilsService.filterKeyValueOnPropertyValue(this.state.rolesOfCompanyEmployees, (predicate) => predicate.employeeId === itemKey)}
+      roles={UtilsService.filterKeyValueOnPropertyValue(rolesOfCompanyEmployees, predicate => predicate.employeeId === itemKey)}
       options={ {showDraft: false, showActions: false} }
       showDetails={true} />
   );
 
-  renderEquipment = (itemKey, itemData) => {
-    var equipmentModel = { [itemData.equipmentModelId]: this.state.equipmentModels[itemData.equipmentModelId] }, 
-      brand = { [equipmentModel[itemData.equipmentModelId].brand]: this.state.brands[equipmentModel[itemData.equipmentModelId].brand] };
+  const renderEquipment = (itemKey, itemData) => {
+    const equipmentModel = { [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] }, 
+      brand = { [equipmentModel[itemData.equipmentModelId].brand]: brands[equipmentModel[itemData.equipmentModelId].brand] };
 
     return <Equipment key={itemKey}
       equipment={ {[itemKey]: itemData} }
@@ -141,62 +148,59 @@ class CompanyPage extends ComponentSafeUpdate {
       showDetails={true} />
   };
 
-  renderWarehouse = (itemKey, itemData) => (
+  const renderWarehouse = (itemKey, itemData) => (
     <Warehouse key={itemKey}
       warehouse={ {[itemKey]: itemData} }
       options={ {} }
       showDetails />
   );
 
-  render() {
-    if(!this.state.company) {
-      return (
-        <div className="CompanyPage">
-          <Loader></Loader>
-        </div>
-      );
-    }
-    return (
-      <div className="CompanyPage">
-        <div className="company-header" style={{
-          backgroundColor: (this.state.company.color || Colors.gray)
-        }}>
-          <h1>
-            <PageLink type={PageLinkType.COMPANY} entityId={this.state.companyId} entityData={this.state.company} white />
-          </h1>
-          <div className="actions">
-            <NavLink className="action" to={`/role-add/${this.state.companyId}`}>
-              <Icon source="fa" icon={faUserTag} />
-              Request a role
-            </NavLink>
-          </div>
-        </div>
-        <Tabs default="warehouses" tabs={{
-          warehouses: {
-            name: () => <span>
-              <Icon source="fa" icon={faWarehouseAlt} />
-              Warehouses
-            </span>,
-            content: () => <ExTable key="warehouses" items={this.state.warehouses} renderItem={this.renderWarehouse} header={['Name', '']} loading={this.state.warehousesLoading} />
-          },
-          employees: {
-            name: () => <span>
-              <Icon source="fa" icon={faUsers} />
-              Employees
-            </span>,
-            content: () => <ExTable key="employees" items={this.state.companyEmployees} renderItem={this.renderRoleEmployee} header={['Name', 'Roles']} loading={this.state.companyEmployeesLoading}/>
-          },
-          equipments: {
-            name: () => <span>
-              <Icon source="fa" icon={faTruck} />
-              Equipments
-            </span>,
-            content: () => <ExTable key="equipments" items={this.state.equipments} renderItem={this.renderEquipment} header={['Identification', 'Model']} loading={this.state.equipmentsLoading}/>
-          }
-        }}></Tabs>
-      </div>
-    );
+  if(!company) {
+    return <div className="CompanyPage">
+      <Loader></Loader>
+    </div>
   }
-}
+
+  return (
+    <div className="CompanyPage">
+      <div className="company-header" style={{
+        backgroundColor: (company.color || Colors.gray)
+      }}>
+        <h1>
+          <PageLink type={PageLinkType.COMPANY} entityId={companyId} entityData={company} white />
+        </h1>
+        <div className="actions">
+          <NavLink className="action" to={`/role-add/${companyId}`}>
+            <Icon source="fa" icon={faUserTag} />
+            Request a role
+          </NavLink>
+        </div>
+      </div>
+      <Tabs default="warehouses" tabs={{
+        warehouses: {
+          name: () => <span>
+            <Icon source="fa" icon={faWarehouseAlt} />
+            Warehouses
+          </span>,
+          content: () => <ExTable key="warehouses" items={warehouses} renderItem={renderWarehouse} header={['Name', '']} loading={isWarehousesLoading} />
+        },
+        employees: {
+          name: () => <span>
+            <Icon source="fa" icon={faUsers} />
+            Employees
+          </span>,
+          content: () => <ExTable key="employees" items={companyEmployees} renderItem={renderRoleEmployee} header={['Name', 'Roles']} loading={isCompanyEmployeesLoading}/>
+        },
+        equipments: {
+          name: () => <span>
+            <Icon source="fa" icon={faTruck} />
+            Equipments
+          </span>,
+          content: () => <ExTable key="equipments" items={equipments} renderItem={renderEquipment} header={['Identification', 'Model']} loading={isEquipmentsLoading}/>
+        }
+      }}></Tabs>
+    </div>
+  );
+};
 
 export default CompanyPage;

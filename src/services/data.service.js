@@ -9,8 +9,6 @@ import EmployeeService from './entities/employee.service';
 
 import { ERoleStatus } from './../classes/Role';
 
-const uuidv4 = require('uuid/v4');
-
 export const ensureFilledFields = (object, fields) => {
     fields.forEach((field) => {
         if(object[field] == null) {
@@ -44,7 +42,7 @@ const DataService = {
         return new Promise((resolve, _) => {
             DataService.computed.user = user;
 
-            if(!!user) {
+            if(user) {
                 EmployeeService.get(this.computed.user.uid)
                     .then(employee => {
                         DataService.computed.employee = employee.data();
@@ -67,7 +65,8 @@ const DataService = {
                                             DataService.computed.notifyObservers();
                                             resolve();
                                         }).catch(ErrorService.manageError);
-                                } else {
+                                }
+                                else {
                                     DataService.computed.activeRole = null;
                                     DataService.computed.initialized = true;
                                     DataService.computed.activeRoleCompany = null;
@@ -78,7 +77,8 @@ const DataService = {
                             .catch(ErrorService.manageError);
                     })
                     .catch(ErrorService.manageError);
-            } else {
+            }
+            else {
                 DataService.computed.initialized = true;
                 DataService.computed.notifyObservers();
                 resolve();
@@ -121,7 +121,8 @@ const DataService = {
             return DataService.__computeValues();
         },
         notifyObservers() {
-            Object.keys(DataService.computed.observers).forEach((observerKey) => {
+            Object.keys(DataService.computed.observers).forEach(observerKey => {
+                if(!DataService.computed.observers[observerKey]) { return null; }
                 DataService.computed.observers[observerKey]({
                     employee: DataService.computed.employee,
                     user: DataService.computed.user,
@@ -138,18 +139,14 @@ const DataService = {
                 user: null,
                 activeRole: null,
                 activeRoleCompany: null,
-                observerKey: null,
                 initialized: null
             }
         },
-        observeComputedValues(callback) {
-            const observerKey = uuidv4();
+        observeComputedValues(callback, observerKey) {
             DataService.computed.observers[observerKey] = callback;
             DataService.computed.notifyObservers();
-            return observerKey;
         },
         unobserveComputedValues(observerKey) {
-            if(!observerKey) return;
             delete DataService.computed.observers[observerKey];
         },
         observers: {},

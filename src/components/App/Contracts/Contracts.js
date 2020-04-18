@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { faFileSignature, faPlus, faBagsShopping, faCog, faSignature, faToggleOn, faToggleOff } from '@fortawesome/pro-solid-svg-icons';
 
 import DataService from './../../../services/data.service';
@@ -7,7 +7,6 @@ import CompanyService from './../../../services/entities/company.service';
 import ErrorService from './../../../services/error.service';
 import UtilsService from './../../../services/utils.service';
 
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import ActionButton from './../../Utils/ActionButton/ActionButton';
 import Icon from './../../Utils/Icon/Icon';
 import ExTable from './../../Utils/ExTable/ExTable';
@@ -17,115 +16,128 @@ import { EContractStatus } from './../../../classes/Contract';
 
 import Contract from './../../Entities/Contract/Contract';
 
+import { v4 as uuid } from 'uuid';
+
 import './Contracts.scss';
 
 /**
  * Component: Contracts
  * Used by managers to list contracts that link to other companies
  */
-class Contracts extends ComponentSafeUpdate {
-  constructor(props) {
-    super(props);
-    this.state = Object.assign({
-      orderContracts: {},
-      executeContracts: {},
-      companies: null,
-      contractsLoading: true,
+const Contracts = () => {
 
-      showArchived: false
-    }, DataService.computed.getDefaultComputedValues());
-  }
+  const [orderContracts, setOrderContracts] = useState({});
+  const [executeContracts, setExecuteContracts] = useState({});
 
-  componentDidMount = () => {
-    super.componentDidMount();
-    this.setState({observerKey: 
-      DataService.computed.observeComputedValues(computedValues => {
-        this.setState(computedValues, this.computeValues);
-      })
-    });
-  };
+  const [companies, setCompanies] = useState(null);
 
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-    DataService.computed.unobserveComputedValues(this.state.observerKey);
-  };
+  const [isContractsLoading, setContractsLoading] = useState(true);
 
-  computeValues = () => {
-    if(!this.state.activeRole) { return; }
+  const [isShowArchived, setShowArchived] = useState(false);
+
+  const observerKey = uuid();
+  
+  const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
+
+  const computeValues = () => {
+    if(!computed.activeRole) { return null; }
     let statusArray = [EContractStatus.DRAFT, EContractStatus.EXECUTION, EContractStatus.FINISHED, EContractStatus.PAID];
-    if(!!this.state.showArchived) {
+    if(isShowArchived) {
       statusArray.push(EContractStatus.ARCHIVED);
     }
 
     Promise.all([
-      ContractService.getAllForCompanyExecId(this.state.activeRole.companyId, statusArray),
-      ContractService.getAllForCompanyOrderId(this.state.activeRole.companyId, statusArray)
+      ContractService.getAllForCompanyExecId(computed.activeRole.companyId, statusArray),
+      ContractService.getAllForCompanyOrderId(computed.activeRole.companyId, statusArray)
     ]).then(results => {
-      var companyIds = [];
+      let companyIds = [];
       Object.keys(results[0]).forEach(key => companyIds.push(results[0][key].companyExecId, results[0][key].companyOrderId));
       Object.keys(results[1]).forEach(key => companyIds.push(results[1][key].companyExecId, results[1][key].companyOrderId));
 
       CompanyService.getAllForIdList(UtilsService.removeDuplicateFromArray(companyIds))
-        .then(companies => this.setState({contractsLoading: false, companies, orderContracts: results[1], executeContracts: results[0]}))
+        .then(companies => {
+          setCompanies(companies);
+          setOrderContracts(results[1]);
+          setExecuteContracts(results[0]);
+          setContractsLoading(false);
+        })
         .catch(ErrorService.manageError);
     }).catch(ErrorService.manageError);
   };
 
-  toggleShowArchived = () => this.setState({
-    showArchived: !this.state.showArchived,
-    orderContracts: {},
-    executeContracts: {},
-    contractsLoading: true
-  }, this.computeValues);
+  useEffect(() => {
+    setOrderContracts({});
+    setExecuteContracts({});
+    setContractsLoading(true);
+    computeValues();
+  }, [isShowArchived]);
+
+
+  useEffect(() => {
+    computeValues();
+  }, [computed]);
+
+  useEffect(() => {
+    DataService.computed.observeComputedValues(setComputed, observerKey);
+    return () => DataService.computed.unobserveComputedValues(observerKey)
+  }, []);
+  
+  if(!computed.initialized) { return null; }
 
   /**
    * RENDER
    */
-  renderContract = (itemKey, itemData) => {
+  const renderContract = (itemKey, itemData) => {
     return <Contract
-      notifyContractChanges={this.computeValues}
+      notifyContractChanges={computeValues}
       contract={{[itemKey]: itemData}}
-      companyExec={{[itemData.companyExecId]: this.state.companies[itemData.companyExecId]}}
-      companyOrder={{[itemData.companyOrderId]: this.state.companies[itemData.companyOrderId]}}></Contract>
+      companyExec={{[itemData.companyExecId]: companies[itemData.companyExecId]}}
+      companyOrder={{[itemData.companyOrderId]: companies[itemData.companyOrderId]}}></Contract>
   };
 
-  render() {
-    return (
-      <div className="Contracts">
-        <Tabs default="execution" tabs={{
-          execution: {
-            name: () => <span>
-              <Icon source="fa" icon={faCog} />
-              Contracts to Execute
-            </span>,
-            content: () => <ExTable key="EXECUTION" items={this.state.executeContracts} renderItem={this.renderContract} header={['Type', 'Company']} loading={this.state.contractsLoading}></ExTable>
-          },
-          order: {
-            name: () => <span>
-              <Icon source="fa" icon={faSignature} />
-              Ordered Contracts
-            </span>,
-            content: () => <ExTable key="ORDER" items={this.state.orderContracts} renderItem={this.renderContract} header={['Type', 'Company']} loading={this.state.contractsLoading}></ExTable>
-          },
-          market: {
-            name: () => <span>
-              <Icon source="fa" icon={faBagsShopping} />
-              Market <span className="badge-inverse">soon</span>
-            </span>,
-            content: () => <div></div>,
-            disabled: true
-          }
-        }}></Tabs>
-        <span className={'toggle-button ' + (!!this.state.showArchived ? 'toggle-button--active' : '')} tabIndex="0" onClick={this.toggleShowArchived}>
-          <Icon source="fa" icon={!!this.state.showArchived ? faToggleOn : faToggleOff} />
-          Show archived contracts
-        </span>
-        <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[
-          {title: 'Add a contract', icon: <Icon source="fa" icon={faFileSignature} />, link: `/contract-add`}
-        ]} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="Contracts">
+      <Tabs default="execution" tabs={{
+        execution: {
+          name: () => <span>
+            <Icon source="fa" icon={faCog} />
+            Contracts to Execute
+          </span>,
+          content: () => <ExTable key="EXECUTION" 
+                                  items={executeContracts}
+                                  renderItem={renderContract}
+                                  header={['Type', 'Company']}
+                                  loading={isContractsLoading}></ExTable>
+        },
+        order: {
+          name: () => <span>
+            <Icon source="fa" icon={faSignature} />
+            Ordered Contracts
+          </span>,
+          content: () => <ExTable key="ORDER"
+                                  items={orderContracts}
+                                  renderItem={renderContract}
+                                  header={['Type', 'Company']}
+                                  loading={isContractsLoading}></ExTable>
+        },
+        market: {
+          name: () => <span>
+            <Icon source="fa" icon={faBagsShopping} />
+            Market <span className="badge-inverse">soon</span>
+          </span>,
+          content: () => null,
+          disabled: true
+        }
+      }}></Tabs>
+      <span className={'toggle-button ' + (isShowArchived ? 'toggle-button--active' : '')} tabIndex="0" onClick={() => setShowArchived(!isShowArchived)}>
+        <Icon source="fa" icon={isShowArchived ? faToggleOn : faToggleOff} />
+        Show archived contracts
+      </span>
+      <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[
+        {title: 'Add a contract', icon: <Icon source="fa" icon={faFileSignature} />, link: `/contract-add`}
+      ]} />
+    </div>
+  );
+};
 
 export default Contracts;

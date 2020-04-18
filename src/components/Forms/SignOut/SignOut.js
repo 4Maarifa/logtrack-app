@@ -1,28 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import FirebaseService from './../../../services/firebase.service';
 
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
-
 import './SignOut.scss';
 
-class SignOut extends ComponentSafeUpdate {
+const SignOut = () => {
 
-  componentDidMount = () => {
-    super.componentDidMount();
+  const [isSignOut, setSignOut] = useState(false);
+
+  useEffect(() => {
     FirebaseService.signOut();
-  };
+    setSignOut(true);
+  }, []);
 
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-  };
-
-  render() {
-    return (
-      <Redirect to='/' />
-    );
+  /**
+   * RENDER
+   */
+  if(isSignOut) {
+    return <Redirect to='/' />;
   }
-}
+  return null;
+};
 
 export default SignOut;

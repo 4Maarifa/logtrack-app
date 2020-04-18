@@ -98,6 +98,8 @@ import SettingsService, { ESettings } from './services/settings.service';
 
 import { ERole } from './classes/Role';
 
+import { v4 as uuid } from 'uuid';
+
 import './index.scss';
 
 // Vehicles
@@ -239,8 +241,10 @@ const renderApp = () => {
 // Service Initialization
 DataService.initialize();
 
+const observerKey = uuid();
+
 DataService.computed.observeComputedValues(computedValues => {
-    if(!!computedValues.initialized) {
+    if(computedValues.initialized) {
         renderApp();
     }
-});
+}, observerKey);

@@ -1,8 +1,6 @@
 
 import ErrorService from './error.service';
 
-const uuidv4 = require('uuid/v4');
-
 const PermissionService = {
   location: {
     __granted: false,
@@ -34,14 +32,13 @@ const PermissionService = {
         });
       });
     },
-    addLocationObserver: locationObserverCallback => {
+    addLocationObserver: (locationObserverCallback, observerKey) => {
       return new Promise((resolve, reject) => {
         
         if(!PermissionService.location.__granted) {
           return reject('Location Observation was asked before permission was given. Ask for location permission before trying to locate.');
         }
 
-        const observerKey = uuidv4();
         PermissionService.location.__observers[observerKey] = locationObserverCallback;
         if(PermissionService.location.__computeObserverNumber() > 1) {
           PermissionService.location.__watchLocation();
@@ -53,6 +50,7 @@ const PermissionService = {
       });
     },
     removeLocationObserver: observerKey => {
+      if(!PermissionService.location.__observers[observerKey]) { return; }
       delete PermissionService.location.__observers[observerKey];
       PermissionService.location.__observers[observerKey] = null;
       if(PermissionService.location.__computeObserverNumber() === 0) {

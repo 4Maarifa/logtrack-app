@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { faWarehouseAlt } from '@fortawesome/pro-solid-svg-icons';
-
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import DataService from './../../../services/data.service';
 import CompanyService from './../../../services/entities/company.service';
@@ -20,81 +18,82 @@ import Equipment from './../../Entities/Equipment/Equipment';
 
 import Colors from './../../../assets/Colors';
 
+import { v4 as uuid } from 'uuid';
+
 import './WarehousePage.scss';
 
 /**
  * Component: WarehousePage
  * Use by everyone to see details about a warehouse (linked equipments)
  */
-class WarehousePage extends ComponentSafeUpdate {
-  constructor(props) {
-    super(props);
-    this.state = Object.assign({
-      warehouseId: this.props.match.params.warehouseid,
-      warehouse: null,
-      company: null,
-    
-      equipments: {},
-      equipmentsLoading: true,
-      equipmentModels: {},
-      brands: {}
-    }, DataService.computed.getDefaultComputedValues());
-  }
+const WarehousePage = ({ match }) => {
+  const warehouseId = match.params.warehouseid;
 
-  componentDidMount = () => {
-    super.componentDidMount();
-    this.setState({observerKey: 
-      DataService.computed.observeComputedValues(computedValues => {
-        this.setState(computedValues, this.computeValues);
-      })
-    });
-  };
+  const [warehouse, setWarehouse] = useState(null);
+  const [company, setCompany] = useState(null);
 
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-    DataService.computed.unobserveComputedValues(this.state.observerKey);
-  };
+  const [equipments, setEquipments] = useState({});
+  const [isEquipmentsLoading, setEquipmentsLoading] = useState(true);
+  const [equipmentModels, setEquipmentsModels] = useState({});
+  const [brands, setBrands] = useState({});
 
-  computeValues() {
-    WarehouseService.get(this.state.warehouseId)
-      .then(warehouseDoc => this.setState({warehouse: warehouseDoc.data()}, () => {
-        // Compute all data
-        this.computeCompany();
-        this.computeEquipments();
-      }))
+  const observerKey = uuid();
+  
+  const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
+
+  const computeValues = () => {
+    WarehouseService.get(warehouseId)
+      .then(warehouseDoc => setWarehouse(warehouseDoc.data()))
       .catch(ErrorService.manageError);
   };
 
-  computeCompany = () => {
-    if(!!this.state.warehouse) {
-      CompanyService.get(this.state.warehouse.companyId)
-        .then(companyDoc => this.setState({company: companyDoc.data()}))
+  const computeCompany = () => {
+    if(warehouse) {
+      CompanyService.get(warehouse.companyId)
+        .then(companyDoc => setCompany(companyDoc.data()))
         .catch(ErrorService.manageError);
     }
   };
 
-  computeEquipments = () => {
+  const computeEquipments = () => {
     BrandService.list()
-      .then(brands => this.setState({brands}))
+      .then(setBrands)
       .catch(ErrorService.manageError);
 
     EquipmentModelService.list()
-      .then((equipmentModels => this.setState({equipmentModels})))
+      .then(setEquipmentsModels)
       .catch(ErrorService.manageError);
 
-    if(!!this.state.warehouseId) {
-      EquipmentService.getAllForWarehouseId(this.state.warehouseId)
-        .then(equipments => this.setState({equipments, equipmentsLoading: false}))
+    if(warehouseId) {
+      EquipmentService.getAllForWarehouseId(warehouseId)
+        .then(equipments => {
+          setEquipments(equipments);
+          setEquipmentsLoading(false);
+        })
         .catch(ErrorService.manageError);
     }
   };
+
+  useEffect(() => {
+    computeCompany();
+    computeEquipments();
+  }, [warehouse]);
+
+  useEffect(() => computeValues(), [computed]);
+
+  useEffect(() => {
+    DataService.computed.observeComputedValues(setComputed, observerKey);
+    return () => DataService.computed.unobserveComputedValues(observerKey)
+  }, []);
+  
+  if(!computed.initialized) { return null; }
 
   /**
    * RENDER
    */
-  renderEquipment = (itemKey, itemData) => {
-    var equipmentModel = { [itemData.equipmentModelId]: this.state.equipmentModels[itemData.equipmentModelId] }, 
-      brand = { [equipmentModel[itemData.equipmentModelId].brand]: this.state.brands[equipmentModel[itemData.equipmentModelId].brand] };
+  const renderEquipment = (itemKey, itemData) => {
+    const equipmentModel = { [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] }, 
+      brand = { [equipmentModel[itemData.equipmentModelId].brand]: brands[equipmentModel[itemData.equipmentModelId].brand] };
 
     return <Equipment key={itemKey}
       equipment={ {[itemKey]: itemData} }
@@ -104,31 +103,32 @@ class WarehousePage extends ComponentSafeUpdate {
       showDetails={true} />
   };
 
-  render() {
-    if(!this.state.warehouse || !this.state.company) {
-      return (
-        <div className="WarehousePage">
-          <Loader></Loader>
-        </div>
-      );
-    }
+  if(!warehouse || !company) {
     return (
       <div className="WarehousePage">
-        <div className="warehouse-header" style={{
-          backgroundColor: (this.state.company.color || Colors.gray)
-        }}>
-          <h1>
-            <Icon source="fa" icon={faWarehouseAlt} />
-            <PageLink type={PageLinkType.WAREHOUSE} entityId={this.state.warehouseId} entityData={this.state.warehouse} white />
-          </h1>
-          <div className="actions">
-            
-          </div>
-        </div>
-        <ExTable items={this.state.equipments} renderItem={this.renderEquipment} header={['Identification', 'Model']} loading={this.state.equipmentsLoading} />
+        <Loader></Loader>
       </div>
     );
   }
-}
+  return (
+    <div className="WarehousePage">
+      <div className="warehouse-header" style={{
+        backgroundColor: (company.color || Colors.gray)
+      }}>
+        <h1>
+          <Icon source="fa" icon={faWarehouseAlt} />
+          <PageLink type={PageLinkType.WAREHOUSE} entityId={warehouseId} entityData={warehouse} white />
+        </h1>
+        <div className="actions">
+          
+        </div>
+      </div>
+      <ExTable items={equipments}
+                renderItem={renderEquipment}
+                header={['Identification', 'Model']}
+                loading={isEquipmentsLoading} />
+    </div>
+  );
+};
 
 export default WarehousePage;

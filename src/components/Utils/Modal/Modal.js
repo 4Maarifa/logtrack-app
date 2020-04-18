@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import ModalService from './../../../services/modal.service';
-
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 
 import './Modal.scss';
 
@@ -10,73 +8,45 @@ import './Modal.scss';
  * Component: Modal
  * Used to confirm / information
  */
-class Modal extends ComponentSafeUpdate {
+const Modal = () => {
 
-  constructor(props) {
-    super(props);
-    this.state = Object.assign({
-      show: false,
+  const [isShow, setShow] = useState(false);
 
-      title: '',
-      content: '',
-      actions: [],
-      callback: null
-    });
-  }
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [actions, setActions] = useState([]);
+  const [callback, setCallback] = useState(null);
 
-  componentDidMount = () => {
-    super.componentDidMount();
-    ModalService.changeListener(this.listen);
+  const listen = (newTitle, newContent, newActions, newCallback) => {
+    setTitle(newTitle);
+    setContent(newContent);
+    setActions(newActions);
+    setCallback(newCallback);
   };
 
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
+  const onAction = value => {
+    callback && callback(value);
+    setShow(false);
   };
 
-  shouldComponentUpdate = (_, nextState) => {
-    if(this.state.title !== nextState.title) {
-      this.setState({title: nextState.title});
-    }
-    if(this.state.content !== nextState.content) {
-      this.setState({content: nextState.content});
-    }
-    if(this.state.actions !== nextState.actions) {
-      this.setState({actions: nextState.actions});
-    }
-    if(this.state.show !== nextState.show) {
-      this.setState({show: nextState.show});
-    }
-    if(this.state.callback !== nextState.callback) {
-      this.setState({callback: nextState.callback});
-    }
-    return true;
-  };
-
-  listen = (title, content, actions, callback) => this.setState({title, content, actions, callback, show: true});
-
-  onAction = value => {
-    !!this.state.callback && this.state.callback(value);
-    this.setState({show: false});
-  };
+  ModalService.changeListener(listen);
 
   /**
    * RENDER
    */
-  render() {
-    return (
-      <div className={'Modal ' + (!!this.state.show ? 'Modal--show' : '')}>
-        <div className="Modal-content">
-          <h1>{this.state.title}</h1>
-          <div>{this.state.content}</div>
-          <div className="actions">
-            {this.state.actions.map(action =>
-              <button key={action.value} value={action.value} onClick={() => this.onAction(action.value)}>{action.content}</button>  
-            )}
-          </div>
+  return (
+    <div className={'Modal ' + (isShow ? 'Modal--show' : '')}>
+      <div className="Modal-content">
+        <h1>{title}</h1>
+        <div>{content}</div>
+        <div className="actions">
+          {actions.map(action =>
+            <button key={action.value} value={action.value} onClick={() => onAction(action.value)}>{action.content}</button>  
+          )}
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Modal;

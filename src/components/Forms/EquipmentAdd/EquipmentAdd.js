@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Redirect, NavLink } from 'react-router-dom';
 import { faRectangleWide, faEdit, faTruck, faUser, faBuilding } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Icon from './../../Utils/Icon/Icon';
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
 import Choose from './../../Utils/Choose/Choose';
@@ -10,132 +9,104 @@ import Choose from './../../Utils/Choose/Choose';
 import DataService from './../../../services/data.service';
 import DateService from './../../../services/date.service';
 import ErrorService from './../../../services/error.service';
-import BrandService from './../../../services/entities/brand.service';
 import EquipmentModelService from './../../../services/entities/equipmentModel.service';
 import EquipmentService from './../../../services/entities/equipment.service';
 
 import Equipment from './../../../classes/Equipment';
 import { EEquipmentModelTypeDetails, EEquipmentModelSubTypeDetails } from './../../../classes/EquipmentModel';
 
+import { v4 as uuid } from 'uuid';
+
 import './EquipmentAdd.scss';
 
-class EquipmentAdd extends ComponentSafeUpdate {
-  constructor (props) {
-    super(props);
+const EquipmentAdd = () => {
 
-    this.state = Object.assign({
-        equipmentId: null, 
-        identification: '',
+  const [equipmentId, setEquipmentId] = useState(null);
 
-        equipmentModels: {},
-        brands: {},
+  const [identification, setIdentification] = useState('');
+  const [selectedEquipmentType, setSelectedEquipmentType] = useState(null);
+  const [selectedEquipmentSubType, setSelectedEquipmentSubType] = useState(null);
+  const [selectedEquipmentModelId, setSelectedEquipmentModelId] = useState(null);
 
-        selectedEquipmentType: null,
-        selectedEquipmentSubType: null,
-        selectedEquipmentModelId: null,
+  const [equipmentModels, setEquipmentModels] = useState({});
 
-        forceRedirect: false
-    }, DataService.computed.getDefaultComputedValues());
-  }
+  const observerKey = uuid();
+  
+  const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  componentDidMount = () => {
-    super.componentDidMount();
-    this.setState({observerKey: 
-      DataService.computed.observeComputedValues((computedValues) => {
-        if(!computedValues.activeRole) {
-          ErrorService.warning('Please activate a role to add an equipment!');
-          this.setState({forceRedirect: true});
-        }
-        this.setState(computedValues, this.computeModels);
-      })
-    });
-  };
-
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-    DataService.computed.unobserveComputedValues(this.state.observerKey);
-  };
-
-  shouldComponentUpdate = (_, nextState) => {
-    if(nextState.selectedEquipmentType !== this.state.selectedEquipmentType) {
-      this.setState({selectedEquipmentType: nextState.selectedEquipmentType});
-    }
-    if(nextState.selectedEquipmentSubType !== this.state.selectedEquipmentSubType) {
-      this.setState({selectedEquipmentSubType: nextState.selectedEquipmentSubType});
-    }
-    return true;
-  };
-
-  computeModels = () => {
-    BrandService.list()
-      .then(brands => this.setState({brands: brands}))
-      .catch(ErrorService.manageError);
-
+  const computeModels = () => {
     EquipmentModelService.list()
-      .then(equipmentModels => this.setState({equipmentModels: equipmentModels}))
+      .then(setEquipmentModels)
       .catch(ErrorService.manageError);
   };
 
-  onFormInputChange = (value, fieldName) => this.setState({[fieldName]: value});
-
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
 
-    if(!this.state.selectedEquipmentModelId) {
+    if(!selectedEquipmentModelId) {
       ErrorService.error('Please pick a model or create one!');
       return;
     }
     
-    EquipmentService.create(new Equipment(this.state.activeRole.companyId, this.state.identification, this.state.selectedEquipmentModelId, DateService.getCurrentIsoDateString()))
-      .then(equipmentDoc => {
-        this.setState({equipmentId: equipmentDoc.id});
-      })
+    EquipmentService.create(new Equipment(computed.activeRole.companyId, identification, selectedEquipmentModelId, DateService.getCurrentIsoDateString()))
+      .then(equipmentDoc => setEquipmentId(equipmentDoc.id))
       .catch(ErrorService.manageError);
   };
 
-  handleSelection = (value, fieldName) => {
-    if(fieldName === 'selectedEquipmentType' && !value) {
-      this.setState({
-        selectedEquipmentType: null, 
-        selectedEquipmentSubType: null,
-        selectedEquipmentModelId: null
-      });
-    } 
-    else if(fieldName === 'selectedEquipmentSubType' && !value) {
-      this.setState({
-        selectedEquipmentSubType: null,
-        selectedEquipmentModelId: null
-      });
+  const handleSelection = (value, fieldName) => {
+    if(fieldName === 'selectedEquipmentType') {
+      if(!value) {
+        setSelectedEquipmentSubType(null);
+        setSelectedEquipmentModelId(null);
+      }
+      setSelectedEquipmentType(value);
     }
-    else {
-      this.setState({[fieldName]: value});
+    else if(fieldName === 'selectedEquipmentSubType') {
+      if(!value) {
+        setSelectedEquipmentModelId(null);
+      }
+      setSelectedEquipmentSubType(value);
+    }
+    else if(fieldName === 'selectedEquipmentModelId') {
+      setSelectedEquipmentModelId(value);
     }
   };
 
-  filterEquipmentModels = (type, subType = null) => {
-    var equipmentModels = {};
+  const filterEquipmentModels = (type, subType = null) => {
+    let newEquipmentModels = {};
     if(!subType) {
-      Object.keys(this.state.equipmentModels)
-        .filter(key => this.state.equipmentModels[key].type === type)
-        .forEach(key => equipmentModels[key] = this.state.equipmentModels[key]);
+      Object.keys(equipmentModels)
+        .filter(key => equipmentModels[key].type === type)
+        .forEach(key => newEquipmentModels[key] = equipmentModels[key]);
     }
     else {
-      Object.keys(this.state.equipmentModels)
-        .filter(key => this.state.equipmentModels[key].type === type)
-        .filter(key => this.state.equipmentModels[key].subType === subType)
-        .forEach(key => equipmentModels[key] = this.state.equipmentModels[key]);
+      Object.keys(equipmentModels)
+        .filter(key => equipmentModels[key].type === type)
+        .filter(key => equipmentModels[key].subType === subType)
+        .forEach(key => newEquipmentModels[key] = equipmentModels[key]);
     }
-    return equipmentModels;
+    return newEquipmentModels;
   };
 
-  /** 
-   * RENDER
-   */
-  renderModels = () => {
-    if(!this.state.equipmentModels || !Object.keys(this.state.equipmentModels).length) {
-      return (<div></div>);
+  useEffect(() => computeModels(), [computed]);
+
+  useEffect(() => {
+    DataService.computed.observeComputedValues(setComputed, observerKey);
+    return () => DataService.computed.unobserveComputedValues(observerKey)
+  }, []);
+  
+  if(!computed.initialized) { return null; }
+
+  if(!computed.activeRole) {
+    ErrorService.warning('Please activate a role to add an equipment!');
+    return <Redirect to={`/equipments`} />;
+  }
+
+  const renderModels = () => {
+    if(!equipmentModels || !Object.keys(equipmentModels).length) {
+      return null;
     }
-    var equipmentTypes = {}, equipmentSubTypes = {}, equipmentModels = {};
+    let equipmentTypes = {}, equipmentSubTypes = {}, newEquipmentModels = {};
 
     Object.keys(EEquipmentModelTypeDetails).forEach(key => {
       equipmentTypes[key] = {
@@ -143,29 +114,29 @@ class EquipmentAdd extends ComponentSafeUpdate {
           {EEquipmentModelTypeDetails[key].icon}
           {EEquipmentModelTypeDetails[key].name}
         </Fragment>,
-        disabled: !Object.keys(this.filterEquipmentModels(key)).length
+        disabled: !Object.keys(filterEquipmentModels(key)).length
       };
     });
 
-    if(!!this.state.selectedEquipmentType) {
-      Object.keys(EEquipmentModelSubTypeDetails[this.state.selectedEquipmentType]).forEach(key => {
+    if(selectedEquipmentType) {
+      Object.keys(EEquipmentModelSubTypeDetails[selectedEquipmentType]).forEach(key => {
         equipmentSubTypes[key] = {
           content: <Fragment>
-            {EEquipmentModelSubTypeDetails[this.state.selectedEquipmentType][key].icon}
-            {EEquipmentModelSubTypeDetails[this.state.selectedEquipmentType][key].name}
+            {EEquipmentModelSubTypeDetails[selectedEquipmentType][key].icon}
+            {EEquipmentModelSubTypeDetails[selectedEquipmentType][key].name}
           </Fragment>,
-          disabled: !Object.keys(this.filterEquipmentModels(this.state.selectedEquipmentType, key)).length
+          disabled: !Object.keys(filterEquipmentModels(selectedEquipmentType, key)).length
         };
       });
     }
 
-    if(!!this.state.selectedEquipmentType && !!this.state.selectedEquipmentSubType) {
-      Object.keys(this.filterEquipmentModels(this.state.selectedEquipmentType, this.state.selectedEquipmentSubType)).forEach(key => {
-        equipmentModels[key] = {
+    if(selectedEquipmentType && selectedEquipmentSubType) {
+      Object.keys(filterEquipmentModels(selectedEquipmentType, selectedEquipmentSubType)).forEach(key => {
+        newEquipmentModels[key] = {
           content: <Fragment>
-            <img src={this.state.equipmentModels[key].photoUrl}
-              alt={this.state.equipmentModels[key].name + '\'s photo'} />
-            {this.state.equipmentModels[key].name}
+            <img src={equipmentModels[key].photoUrl}
+              alt={equipmentModels[key].name + '\'s photo'} />
+            {equipmentModels[key].name}
           </Fragment>
         }
       });
@@ -174,67 +145,66 @@ class EquipmentAdd extends ComponentSafeUpdate {
     return <div className="model-selection">
       <div className="model-result">
         <h3>Equipment Type</h3>
-        {!!this.state.selectedEquipmentType &&
+        {selectedEquipmentType &&
           <Fragment>
-            {EEquipmentModelTypeDetails[this.state.selectedEquipmentType].icon}
-            {EEquipmentModelTypeDetails[this.state.selectedEquipmentType].name}
-            <span className="action" onClick={() => this.handleSelection(null, 'selectedEquipmentType')}>
+            {EEquipmentModelTypeDetails[selectedEquipmentType].icon}
+            {EEquipmentModelTypeDetails[selectedEquipmentType].name}
+            <span className="action" onClick={() => handleSelection(null, 'selectedEquipmentType')}>
               <Icon source="fa" icon={faEdit} />
             </span>
           </Fragment>
         }
       </div>
       
-      {!this.state.selectedEquipmentType && 
+      {!selectedEquipmentType && 
         <Choose items={equipmentTypes} 
-          multiple={false} 
           fieldName="selectedEquipmentType"
-          onSelectionChange={this.handleSelection} />
+          onSelectionChange={handleSelection} />
       }
       
-      {!!this.state.selectedEquipmentType &&
+      {selectedEquipmentType &&
         <Fragment>
           <div className="model-result">
             <h3>Equipment Sub-type</h3>
-            {!!this.state.selectedEquipmentSubType &&
+            {selectedEquipmentSubType &&
               <Fragment>
-                {EEquipmentModelSubTypeDetails[this.state.selectedEquipmentType][this.state.selectedEquipmentSubType].icon}
-                {EEquipmentModelSubTypeDetails[this.state.selectedEquipmentType][this.state.selectedEquipmentSubType].name}
-                <span className="action" onClick={() => this.handleSelection(null, 'selectedEquipmentSubType')}>
+                {EEquipmentModelSubTypeDetails[selectedEquipmentType][selectedEquipmentSubType].icon}
+                {EEquipmentModelSubTypeDetails[selectedEquipmentType][selectedEquipmentSubType].name}
+                <span className="action" onClick={() => handleSelection(null, 'selectedEquipmentSubType')}>
                   <Icon source="fa" icon={faEdit} />
                 </span>
               </Fragment>
             }
           </div>
-          {!this.state.selectedEquipmentSubType &&
+          {!selectedEquipmentSubType &&
             <Choose items={equipmentSubTypes} 
               multiple={false} 
               fieldName="selectedEquipmentSubType"
-              onSelectionChange={this.handleSelection} />
+              onSelectionChange={handleSelection} />
           }
         </Fragment>
       }
 
-      {!!this.state.selectedEquipmentType && !!this.state.selectedEquipmentSubType &&
+      {selectedEquipmentType && selectedEquipmentSubType &&
         <Fragment>
           <div className="model-result">
             <h3>Equipment Model</h3>
-            {!!this.state.selectedEquipmentModelId &&
+            {selectedEquipmentModelId &&
               <Fragment>
-                <img src={this.state.equipmentModels[this.state.selectedEquipmentModelId].photoUrl}
-                  alt={this.state.equipmentModels[this.state.selectedEquipmentModelId].name + '\'s photo'} />
-                {this.state.equipmentModels[this.state.selectedEquipmentModelId].name}
-                <span className="action" onClick={() => this.handleSelection(null, 'selectedEquipmentModelId')}>
+                <img src={equipmentModels[selectedEquipmentModelId].photoUrl}
+                  alt={equipmentModels[selectedEquipmentModelId].name + '\'s photo'} />
+                {equipmentModels[selectedEquipmentModelId].name}
+                <span className="action" onClick={() => handleSelection(null, 'selectedEquipmentModelId')}>
                   <Icon source="fa" icon={faEdit} />
                 </span>
               </Fragment>
             }
           </div>
-          {!this.state.selectedEquipmentModelId &&
-            <Choose items={equipmentModels}
+          {!selectedEquipmentModelId &&
+            <Choose items={newEquipmentModels}
               multiple={false}
               fieldName="selectedEquipmentModelId"
-              onSelectionChange={this.handleSelection} />
+              onSelectionChange={handleSelection} />
           }
         </Fragment>
       }
@@ -248,74 +218,68 @@ class EquipmentAdd extends ComponentSafeUpdate {
     </div>;
   }
 
-  render() {
-    if(!!this.state.forceRedirect) {
-      return <Redirect to={`/equipments`} />;
-    }
-
-    if(!this.state.employee || !this.state.activeRoleCompany) {
-      return (<div></div>);
-    } 
-    else if(!!this.state.equipmentId) {
-      ErrorService.success('Equipment created!');
-      return <Redirect to={`/dashboard`} />;
-    } 
-    else {
-      return (
-        <div className="EquipmentAdd">
-          <h1>Add an equipment</h1>
-          <form onSubmit={this.handleSubmit}>
-            {/* Model */}
-            {this.renderModels()}
-
-            <FormInput
-              inputType="text"
-              fieldName="identification"
-              label={
-                <span>
-                  <Icon source="fa" icon={faRectangleWide} />
-                  Identification
-                </span>
-              }
-              inputRequired
-              inputPattern=".{3,}"
-              instructions={
-                <span>
-                  The identification is required<br/>
-                  The identification must be 3 characters minimum<br/>
-                  It can be the number plate, serial number...
-                </span>
-              }
-              onValueChange={this.onFormInputChange} />
-
-            {/* Company */}
-            <div className="input-company">
-              <span className="fake-label">
-                <Icon source="fa" icon={faBuilding} />
-                Company
-              </span>
-              <span>
-                {this.state.activeRoleCompany.name}
-              </span>
-            </div>
-
-            {/* Creator */}
-            <div className="input-creator">
-              <span className="fake-label">
-                <Icon source="fa" icon={faUser} />
-                Creator
-              </span>
-              <span>
-                {this.state.employee.firstname + ' ' + this.state.employee.lastname}
-              </span>
-            </div>
-
-            <input type="submit" />
-          </form>
-        </div>
-      );
-    }
+  if(!computed.employee || !computed.activeRoleCompany) {
+    return null;
   }
+  if(equipmentId) {
+    ErrorService.success('Equipment created!');
+    return <Redirect to={`/dashboard`} />;
+  }
+
+  return (
+    <div className="EquipmentAdd">
+      <h1>Add an equipment</h1>
+      <form onSubmit={handleSubmit}>
+        {/* Model */}
+        {renderModels()}
+
+        <FormInput
+          value={identification}
+          inputType="text"
+          fieldName="identification"
+          label={
+            <span>
+              <Icon source="fa" icon={faRectangleWide} />
+              Identification
+            </span>
+          }
+          inputRequired
+          inputPattern=".{3,}"
+          instructions={
+            <span>
+              The identification is required<br/>
+              The identification must be 3 characters minimum<br/>
+              It can be the number plate, serial number...
+            </span>
+          }
+          onValueChange={setIdentification} />
+
+        {/* Company */}
+        <div className="input-company">
+          <span className="fake-label">
+            <Icon source="fa" icon={faBuilding} />
+            Company
+          </span>
+          <span>
+            {computed.activeRoleCompany.name}
+          </span>
+        </div>
+
+        {/* Creator */}
+        <div className="input-creator">
+          <span className="fake-label">
+            <Icon source="fa" icon={faUser} />
+            Creator
+          </span>
+          <span>
+            {computed.employee.firstname + ' ' + computed.employee.lastname}
+          </span>
+        </div>
+
+        <input type="submit" />
+      </form>
+    </div>
+  );
 }
 
 export default EquipmentAdd;

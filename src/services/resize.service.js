@@ -1,10 +1,7 @@
-const uuidv4 = require('uuid/v4');
-
 var observers = {};
 
 const ResizeService = {
-  addObserver(observerCallback) {
-    const observerKey = uuidv4();
+  addObserver(observerCallback, observerKey) {
     observers[observerKey] = observerCallback;
     observerCallback();
     return observerKey;

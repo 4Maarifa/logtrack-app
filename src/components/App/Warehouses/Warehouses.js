@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { faPlus, faWarehouseAlt } from '@fortawesome/pro-solid-svg-icons';
 
-import ComponentSafeUpdate from './../../Utils/ComponentSafeUpdate/ComponentSafeUpdate';
 import Map from './../../Utils/Map/Map';
 import Icon from './../../Utils/Icon/Icon';
 import ActionButton from './../../Utils/ActionButton/ActionButton';
@@ -13,95 +12,88 @@ import WarehouseService from './../../../services/entities/warehouse.service';
 
 import Warehouse from './../../Entities/Warehouse/Warehouse';
 
+import { v4 as uuid } from 'uuid';
 
 import './Warehouses.scss';
 
-class Warehouses extends ComponentSafeUpdate {
-  constructor(props) {
-    super(props);
-    this.state = Object.assign({
-      warehouses: {},
-      warehousesLoading: true
-    }, DataService.computed.getDefaultComputedValues());
+const Warehouses = () => {
 
-    this.map = React.createRef();
-  }
+  const [warehouses, setWarehouses] = useState({});
+  const [isWarehousesLoading, setWarehousesLoading] = useState(true);
 
-  componentDidMount = () => {
-    super.componentDidMount();
-    this.setState({observerKey: 
-      DataService.computed.observeComputedValues(computedValues => {
-        this.setState(computedValues, this.computeWarehouses);
-      })
-    });
-  };
+  const map = useRef(null);
 
-  componentWillUnmount = () => {
-    super.componentWillUnmount();
-    DataService.computed.unobserveComputedValues(this.state.observerKey);
-  };
-
-  /**
-   * WAREHOUSES
-   */
-  computeWarehouses = () => {
-    if(!!this.state.activeRole) {
-      WarehouseService.getAllForCompanyId(this.state.activeRole.companyId)
+  const observerKey = uuid();
+  
+  const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
+  
+  const computeWarehouses = () => {
+    if(computed.activeRole) {
+      WarehouseService.getAllForCompanyId(computed.activeRole.companyId)
         .then(warehouses => {
-          if(!!this.map.current) {
+          if(map.current) {
             Object.keys(warehouses).forEach(warehouseKey => {
-              warehouses[warehouseKey].markerId = this.map.current.addMarker(
+              warehouses[warehouseKey].markerId = map.current.addMarker(
                 warehouses[warehouseKey].latitude,
                 warehouses[warehouseKey].longitude,
                 warehouses[warehouseKey].name
               );
             });
-            this.map.current.centerOnAllMarkers();
+            map.current.centerOnAllMarkers();
           }
           
-          this.setState({warehouses: warehouses, warehousesLoading: false});
+          setWarehouses(warehouses);
+          setWarehousesLoading(false);
         })
         .catch(ErrorService.manageError);
     }
   };
 
-  onSelectedItemChanged = itemId => {
+  const onSelectedItemChanged = itemId => {
     if(!itemId) {
-      this.map.current.centerOnAllMarkers();
+      map.current.centerOnAllMarkers();
       return;
     }
-    if(!!this.state.warehouses[itemId].markerId) {
-      this.map.current.centerOnMarker(this.state.warehouses[itemId].markerId);
-      this.map.current.triggerPopup(this.state.warehouses[itemId].markerId);
+    if(warehouses[itemId].markerId) {
+      map.current.centerOnMarker(warehouses[itemId].markerId);
+      map.current.triggerPopup(warehouses[itemId].markerId);
     }
   };
+
+
+  useEffect(() => computeWarehouses(), [computed]);
+
+  useEffect(() => {
+    DataService.computed.observeComputedValues(setComputed, observerKey);
+    return () => DataService.computed.unobserveComputedValues(observerKey)
+  }, []);
+  
+  if(!computed.initialized) { return null; }
 
   /**
    * RENDER
    */
-  renderWarehouse = (itemKey, itemData) => (
+  const renderWarehouse = (itemKey, itemData) => (
     <Warehouse key={itemKey}
       warehouse={ {[itemKey]: itemData} }
       options={ {} }
       showDetails={true} />
   );
 
-  render() {
-    return (
-      <div className="Warehouses">
-        <Map ref={this.map}></Map>
-        <ExTable key="warehouses" 
-                items={this.state.warehouses} 
-                renderItem={this.renderWarehouse} 
-                header={['Name', '']}
-                onActivateItem={this.onSelectedItemChanged}
-                loading={this.state.warehousesLoading}></ExTable>
-        <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[
-          {title: 'Add a warehouse', icon: <Icon source="fa" icon={faWarehouseAlt} />, link: `/warehouse-add`}
-        ]} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="Warehouses">
+      <Map ref={map}></Map>
+      <ExTable key="warehouses" 
+              items={warehouses} 
+              renderItem={renderWarehouse} 
+              header={['Name', '']}
+              onActivateItem={onSelectedItemChanged}
+              loading={isWarehousesLoading}></ExTable>
+      <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[
+        {title: 'Add a warehouse', icon: <Icon source="fa" icon={faWarehouseAlt} />, link: `/warehouse-add`}
+      ]} />
+    </div>
+  );
+};
 
 export default Warehouses;
