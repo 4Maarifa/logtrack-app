@@ -40,7 +40,7 @@ const PermissionService = {
         }
 
         PermissionService.location.__observers[observerKey] = locationObserverCallback;
-        if(PermissionService.location.__computeObserverNumber() > 1) {
+        if(PermissionService.location.__computeObserverNumber() >= 1) {
           PermissionService.location.__watchLocation();
         }
         PermissionService.location.getLocation()
@@ -95,15 +95,7 @@ const PermissionService = {
         !!reject && reject('Location permission was denied');
       }
     },
-    __computeObserverNumber: () => {
-      var nbObservers = 0;
-      Object.values(PermissionService.location.__observers).forEach(observer => {
-        if(!!observer) {
-          nbObservers++;
-        }
-      });
-      return nbObservers;
-    }
+    __computeObserverNumber: () => Object.values(PermissionService.location.__observers).filter(obs => !!obs).length
   }
 };
 

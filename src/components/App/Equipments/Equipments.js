@@ -69,7 +69,7 @@ const Equipments = () => {
       brand={brand}
       equipmentModel={equipmentModel}
       options={ {} }
-      showDetails={true} />
+      showDetails />
   };
 
   return (

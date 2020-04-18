@@ -1,7 +1,4 @@
-import React from 'react';
 import { faSteeringWheel, faUserTie, faEye, faWrench } from '@fortawesome/pro-solid-svg-icons';
-
-import Icon from './../components/Utils/Icon/Icon';
 
 /**
  * A role is authorization for an employee to access a company's data depending of its role
@@ -35,19 +32,19 @@ export const ERole = Object.freeze({
 export const RoleDetails = {
     [ERole.DRIVER]: {
         name: 'Driver',
-        icon: <Icon source="fa" icon={faSteeringWheel} />
+        icon: faSteeringWheel
     },
     [ERole.MANAGER]: {
         name: 'Manager',
-        icon: <Icon source="fa" icon={faUserTie} />
+        icon: faUserTie
     },
     [ERole.OBSERVER]: {
         name: 'Observer',
-        icon: <Icon source="fa" icon={faEye} />
+        icon: faEye
     },
     [ERole.MECHANIC]: {
         name: 'Mechanic',
-        icon: <Icon source="fa" icon={faWrench} />
+        icon: faWrench
     },
 };
 

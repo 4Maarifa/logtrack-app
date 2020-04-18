@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { faTachometerFast, faHome, faSignIn, faUserPlus, faUserCog, faUsers, faTruck, faFileSignature, faTag, faCompass, faAnalytics, faMapPin, faBuilding, faSearch, faWarehouseAlt, faComments, faBars, faTimes } from '@fortawesome/pro-solid-svg-icons';
+import { faTachometerFast, faHome, faSignIn, faUserPlus, faUserCog, faUsers, faTruck, faFileSignature, faTag, faCompass, faAnalytics, faMapPin, faBuilding, faSearch, faWarehouseAlt, faBars, faTimes } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 
@@ -43,13 +43,13 @@ const Navigation = () => {
 
   const renderActiveRole = () => {
     if(!computed.activeRole) {
-      return (<NavLink activeClassName="nav--active" to={`/roles`} exact={true}>
+      return (<NavLink activeClassName="nav--active" to={`/roles`} exact>
         <Icon source="fa" icon={faTag} />
         <span className="nav-title">No active role</span>
       </NavLink>);
     }
-    return (<NavLink activeClassName="nav--active" to={`/roles`} exact={true}>
-      {RoleDetails[computed.activeRole.role].icon}
+    return (<NavLink activeClassName="nav--active" to={`/roles`} exact>
+      <Icon source="fa" icon={RoleDetails[computed.activeRole.role].icon} />
       <span className="nav-title nav-title-role">
         {UtilsService.capitalize(computed.activeRole.role)}<br/>
         {computed.activeRoleCompany.name}
@@ -60,7 +60,7 @@ const Navigation = () => {
   const renderUsername = () => {
     if(computed.employee) {
       return (
-        <NavLink activeClassName="nav--active" to={`/profile`} exact={true}>
+        <NavLink activeClassName="nav--active" to={`/profile`} exact>
           <Icon source="fa" icon={faUserCog} />
           <span className="nav-title">
             {computed.employee.firstname + ' ' + computed.employee.lastname}
@@ -68,7 +68,7 @@ const Navigation = () => {
         </NavLink>
       );
     }
-    return (<NavLink activeClassName="nav--active" to={`/profile`} exact={true}>
+    return (<NavLink activeClassName="nav--active" to={`/profile`} exact>
       <Icon source="fa" icon={faUserCog} />
     </NavLink>);
   };
@@ -137,10 +137,6 @@ const Navigation = () => {
 
           {getNavigationTabs()}
           <span className="nav-clearfix"></span>
-          <NavLink activeClassName="nav--active" to={`/chat`}>
-            <Icon source="fa" icon={faComments} />
-            <span className="nav-title">Chat</span>
-          </NavLink>
           <NavLink activeClassName="nav--active" to={`/search`}>
             <Icon source="fa" icon={faSearch} />
             <span className="nav-title">Search</span>
@@ -158,7 +154,7 @@ const Navigation = () => {
       }
       {!computed.user &&
         <nav>
-          <NavLink activeClassName="nav--active" to={`/`} exact={true}>
+          <NavLink activeClassName="nav--active" to={`/`} exact>
             <Icon source="fa" icon={faHome} />
             <span className="nav-title">Home</span>
           </NavLink>

@@ -100,7 +100,7 @@ const WarehousePage = ({ match }) => {
       brand={brand}
       equipmentModel={equipmentModel}
       options={ {} }
-      showDetails={true} />
+      showDetails />
   };
 
   if(!warehouse || !company) {

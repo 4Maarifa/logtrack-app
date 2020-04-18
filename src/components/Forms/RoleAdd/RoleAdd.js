@@ -33,7 +33,7 @@ const RoleAdd = ({ match }) => {
 
   const [possibleCompaniesInput, setPossibleCompaniesInput] = useState('');
   const [possibleCompanies, setPossibleCompanies] = useState({});
-  const [selectedCompanyId, setSelectedCompanyId] = useState(companyId || '');
+  const [selectedCompanyId, setSelectedCompanyId] = useState('');
   const [selectedCompanyItem, setSelectedCompanyItem] = useState(null);
 
   const observerKey = uuid();
@@ -91,7 +91,7 @@ const RoleAdd = ({ match }) => {
   };
 
   const computeCurrentRoles = () => {
-    if(!selectedCompanyId) { return; }
+    if(!selectedCompanyId || !computed.initialized) { return; }
     RoleService.getRolesForEmployeeIdAndCompanyId(computed.user.uid, selectedCompanyId, [ERoleStatus.DRAFT, ERoleStatus.CONFIRMED])
       .then(currentRoles => {
         setCurrentRoles(Object.keys(currentRoles).map(roleKey => currentRoles[roleKey].role));
@@ -125,7 +125,7 @@ const RoleAdd = ({ match }) => {
   Object.keys(RoleDetails).forEach(roleKey => {
     roleDetails[roleKey] = {
       content: <Fragment>
-        {RoleDetails[roleKey].icon}
+        <Icon source="fa" icon={RoleDetails[roleKey].icon} />
         {RoleDetails[roleKey].name}
       </Fragment>,
       disabled: currentRoles.includes(roleKey)
@@ -169,18 +169,18 @@ const RoleAdd = ({ match }) => {
             <Icon source="fa" icon={faTag} />
             Role to request
           </span>
-          {selectedCompanyId && !isCurrentRolesLoading &&
+          {selectedCompanyId && !isCurrentRolesLoading ?
             <Fragment>
-              {currentRoles.length && <span className="info">
+              {currentRoles.length ? <span className="info">
                 <Icon source="fa" icon={faInfoCircle} />
                 Some roles are already owned or requested by the user.
-              </span>}
+              </span> : null}
               <Choose
                 items={roleDetails}
                 multiple={false} 
                 fieldName="roleType"
                 onSelectionChange={setRoleType} />
-            </Fragment>
+            </Fragment> : null
           }
           {selectedCompanyId && isCurrentRolesLoading &&
             <Loader></Loader>

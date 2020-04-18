@@ -20,10 +20,7 @@
       transition: color .5s, background-color .5s;
       cursor: pointer;
       border-radius: var(--border-radius);
-
-      & + li {
-        margin-left: .5rem;
-      }
+      margin-right: .5rem;
 
       &.li--active {
         background-color: var(--second);

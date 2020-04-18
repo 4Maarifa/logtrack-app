@@ -25,10 +25,7 @@ const Equipment = ({ equipment, equipmentModel }) => {
           <span className="Element-sub">{equipmentModel[equipmentModelKey].name}</span>
         </div>
       </div>
-      <div className="Element-details">
-
-        
-      </div>
+      <div className="Element-details"></div>
     </div>
   );
 }

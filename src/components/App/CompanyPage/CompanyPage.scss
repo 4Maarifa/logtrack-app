@@ -22,6 +22,7 @@
     h1 {
 
       img {
+        min-width: 4rem;
         height: 4rem;
         width: 4rem;
       }
@@ -70,6 +71,7 @@
 @media screen and (orientation: portrait) {
   .CompanyPage {
     .company-header {
+      justify-content: space-around;
       flex-direction: column;
       padding: 1rem .5rem;
     }

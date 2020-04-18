@@ -278,6 +278,7 @@ body, html {
 
   &-icon {
     height: 100%;
+    min-height: 7rem;
     width: 7rem;
     border-right: 1px solid var(--second);
     flex: 0 0 7rem;
@@ -288,16 +289,16 @@ body, html {
   }
 
   &-photo {
-    height: 6rem;
-    width: 6rem;
-    flex: 0 0 6rem;
-    margin: .5rem;
+    height: 100%;
+    min-height: 7rem;
+    width: calc(7rem + 1px);
+    flex: 0 0 7rem;
+    padding: .5rem;
     box-sizing: border-box;
+    border-right: 1px solid var(--second);
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: var(--border-radius);
-    background-color: var(--light-gray);
 
     img {
       height: 6rem;
@@ -310,14 +311,15 @@ body, html {
     display: inline-flex;
     flex-direction: row;
     width: 100%;
-    height: 7rem;
-    flex: 0 0 7rem;
+    min-height: 100%;
+    flex: 1 0 7rem;
     position: relative;
+    align-items: center;
   }
 
   &-data {
     flex: 1;
-    height: 100%;
+    min-height: 7rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -368,10 +370,18 @@ body, html {
     margin: 0;
     width: 100%;
     border-bottom: 1px solid var(--light-gray);
+
+    &:first-child {
+      border-top: 1px solid var(--light-gray);
+    }
+
+    .Element-badge {
+      top: .5rem;
+    }
   }
 
   &--tile, &--row {
-    height: 7rem;
+    min-height: 7rem;
     display: block;
     background-color: #FFFFFF;
 
@@ -385,6 +395,12 @@ body, html {
     width: 100%;
     display: flex;
     flex-direction: column;
+  }
+}
+
+:global(.react-datetime-picker) {
+  button:not(.react-calendar__month-view__days__day--weekend) {
+    color:var(--gray);
   }
 }
 
@@ -404,7 +420,7 @@ body, html {
     .page_content {
       width: calc(100% - .6rem);
       border-radius: 0;
-      padding: .3rem;
+      padding: .3rem .3rem 3rem .3rem;
       height: calc(100% - 2rem);
       max-height: calc(100% - 2rem);
 
@@ -425,5 +441,36 @@ body, html {
 
   :global(.mobile-only) {
     display: block;
+  }
+
+  :global(.Element) {
+    &--tile {
+      margin: 0;
+      width: 100%;
+      box-shadow: none;
+      border-radius: 0;
+      border-bottom: 1px solid var(--light-gray);
+
+      &:first-child {
+        border-top: 1px solid var(--light-gray);
+        border-top-left-radius: var(--border-radius);
+        border-top-right-radius: var(--border-radius);
+      }
+
+      &:last-child {
+        border-bottom-left-radius: var(--border-radius);
+        border-bottom-right-radius: var(--border-radius);
+      }
+
+      .Element-badge {
+        top: .5rem;
+      }
+    }
+
+    &--tile, &--row {
+      &:hover {
+        transform: none;
+      }
+    }
   }
 }

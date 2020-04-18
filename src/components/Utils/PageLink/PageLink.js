@@ -8,7 +8,7 @@ import { ECompanyPlan } from './../../../classes/Company';
 
 import './PageLink.scss';
 
-const PageLink = ({ type, entityId, entityData, noLink, white }) => {
+const PageLink = ({ type, entityId, entityData, noLink, white, noPhoto }) => {
 
   if(!entityData) { return null; }
 
@@ -18,7 +18,7 @@ const PageLink = ({ type, entityId, entityData, noLink, white }) => {
         return {
           link: `/employee/${entityId}`,
           content: <Fragment>
-            {entityData.profilePictureUrl && 
+            {!noPhoto && entityData.profilePictureUrl && 
               <img src={entityData.profilePictureUrl} alt="" />
             }
             <span>{entityData.firstname + ' ' + entityData.lastname}</span>
@@ -29,7 +29,7 @@ const PageLink = ({ type, entityId, entityData, noLink, white }) => {
         return {
           link: `/company/${entityId}`,
           content: <Fragment>
-            {entityData.logoURL &&
+            {!noPhoto && entityData.logoURL &&
               <img src={entityData.logoURL} alt="" />
             }
             <span>{entityData.name}</span>

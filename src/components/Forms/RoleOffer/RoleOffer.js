@@ -134,7 +134,7 @@ const RoleOffer = ({ match }) => {
   Object.keys(RoleDetails).forEach(roleKey => {
     roleDetails[roleKey] = {
       content: <Fragment>
-        {RoleDetails[roleKey].icon}
+        <Icon source="fa" icon={RoleDetails[roleKey].icon} />
         {RoleDetails[roleKey].name}
       </Fragment>,
       disabled: currentRoles.includes(roleKey)

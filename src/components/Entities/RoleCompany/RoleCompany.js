@@ -1,8 +1,6 @@
 import React from 'react';
-import { faUserTag } from '@fortawesome/pro-solid-svg-icons';
 
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
-import Icon from './../../Utils/Icon/Icon';
 
 import Role from './../Role/Role';
 
@@ -20,10 +18,14 @@ const RoleCompany = ({ company, roles, options }) => {
   return (
     <div className="RoleCompany Element-content">
       <div className="Element-base">
-        <Icon source="fa" icon={faUserTag} containerclassname="Element-icon" />
+      <div className="Element-photo">
+          <img
+            alt={company[companyId].name} 
+            src={company[companyId].logoURL} />
+        </div>
         <div className="Element-data">
           <span className="Element-title">
-            <PageLink type={PageLinkType.COMPANY} entityId={companyId} entityData={company[companyId]} />
+            <PageLink type={PageLinkType.COMPANY} entityId={companyId} entityData={company[companyId]} noPhoto />
           </span>
           <div className="roles">
             {Object.keys(roles).map(renderRole)}

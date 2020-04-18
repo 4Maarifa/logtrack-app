@@ -51,6 +51,7 @@ import Modal from './components/Utils/Modal/Modal';
 import Dashboard from './components/App/Dashboard/Dashboard';
 import Splash from './components/App/Splash/Splash';
 import Navigation from './components/App/Navigation/Navigation';
+import MenuBar from './components/App/MenuBar/MenuBar';
 
 import SignIn from './components/Forms/SignIn/SignIn';
 import SignUp from './components/Forms/SignUp/SignUp';
@@ -178,6 +179,7 @@ const renderApp = () => {
         <Router>
             <div className={'app-container ' + (SettingsService.getSettingValue(ESettings.SETTINGS_FULL_PAGE_LAYOUT) === 'FULL' ? 'app-container--full' : '')}>
                 <Navigation></Navigation>
+                <MenuBar></MenuBar>
                 <div className="page_content">
                     <Route exact path="/" component={Splash} />
                     <Route exact path="/specs" component={Specs} />
