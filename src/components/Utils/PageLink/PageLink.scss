@@ -23,6 +23,7 @@
     width: 2rem;
     margin-right: .5rem;
     display: block;
+    min-width: 2rem;
     border-radius: 2px;
   }
 
@@ -33,7 +34,7 @@
     align-items: center;
   }
 
-  .company-plan {
+  .company-plan, .you {
     font-size: 50%;
   }
 }

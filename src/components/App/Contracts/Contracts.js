@@ -101,7 +101,7 @@ const Contracts = () => {
         execution: {
           name: () => <span>
             <Icon source="fa" icon={faCog} />
-            Contracts to Execute
+            Execution
           </span>,
           content: () => <ExTable key="EXECUTION" 
                                   items={executeContracts}
@@ -112,7 +112,7 @@ const Contracts = () => {
         order: {
           name: () => <span>
             <Icon source="fa" icon={faSignature} />
-            Ordered Contracts
+            Orders
           </span>,
           content: () => <ExTable key="ORDER"
                                   items={orderContracts}

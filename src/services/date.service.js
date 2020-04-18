@@ -49,6 +49,28 @@ const DateService = {
   isToday: date => DateService.areDatesTheSameDay(date, new Date()),
 
   getDifference: (date1, date2) => Math.abs((+date2) - (+date1)),
+
+  _watcher: null,
+  _watchDate: () => DateService._watcher = setInterval(DateService.notifyNewDate, 20000),
+  _unwatchDate: () => DateService._watcher && clearInterval(DateService._watcher),
+
+  _observers: {},
+  addObserver(observerCallback, observerKey) {
+    DateService._observers[observerKey] = observerCallback;
+    observerCallback();
+    if(DateService._computeObserverNumber() >= 1) {
+      DateService._watchDate();
+    }
+  },
+  removeObserver(observerKey) {
+    delete DateService._observers[observerKey];
+    DateService._observers[observerKey] = null;
+    if(DateService._computeObserverNumber() === 0) {
+      DateService._unwatchDate();
+    }
+  },
+  notifyNewDate: () => Object.values(DateService._observers).filter(obs => !!obs && typeof obs === 'function').forEach(obs => obs()),
+  _computeObserverNumber: () => Object.values(DateService._observers).filter(obs => !!obs && typeof obs === 'function').length
 };
 
 export default DateService;

@@ -161,7 +161,7 @@ const Roles = () => {
       {computed.activeRole && 
         <Fragment>
           <h1>Your Current Role</h1>
-          <div className="activeRole">
+          <div className="Element Element--tile">
             <RoleCompany company={ {[computed.activeRole.companyId]: computed.activeRoleCompany} }
               roles={ {[computed.employee.activeRoleId]: computed.activeRole} } />
           </div>
@@ -169,23 +169,22 @@ const Roles = () => {
       }
 
       <h1>Your Roles</h1>
-      <ExTable items={userRolesCompanies} renderItem={renderUserRole}></ExTable>
+      <ExTable items={userRolesCompanies} renderItem={renderUserRole} isNoFrame></ExTable>
 
       {computed.activeRole && computed.activeRole.role === ERole.MANAGER &&
         <Fragment>
           <h1>
-            Requests to join 
-            <PageLink type={PageLinkType.COMPANY} entityId={computed.employee.activeRoleId} entityData={computed.activeRoleCompany} />
+            Requests to join <PageLink noPhoto type={PageLinkType.COMPANY} entityId={computed.employee.activeRoleId} entityData={computed.activeRoleCompany} />
           </h1>
-          <ExTable items={requestedRoles} renderItem={renderRequestedRole}></ExTable>
+          <ExTable items={requestedRoles} renderItem={renderRequestedRole} isNoFrame></ExTable>
         </Fragment>
       }
 
       <h1>Pending Requests</h1>
-      <ExTable items={userDraftRolesCompanies} renderItem={renderDraftUserRole}></ExTable>
+      <ExTable items={userDraftRolesCompanies} renderItem={renderDraftUserRole} isNoFrame></ExTable>
 
       <h1>Revoked Roles</h1>
-      <ExTable items={userRevokedRolesCompanies} renderItem={renderRevokedUserRole}></ExTable>
+      <ExTable items={userRevokedRolesCompanies} renderItem={renderRevokedUserRole} isNoFrame></ExTable>
 
       <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={computeActions()} />
     </div>

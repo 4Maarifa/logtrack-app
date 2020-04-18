@@ -77,7 +77,7 @@ const Warehouses = () => {
     <Warehouse key={itemKey}
       warehouse={ {[itemKey]: itemData} }
       options={ {} }
-      showDetails={true} />
+      showDetails />
   );
 
   return (

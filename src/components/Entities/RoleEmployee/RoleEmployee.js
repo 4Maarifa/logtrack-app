@@ -35,10 +35,16 @@ const RoleEmployee = ({ employee, options, roles }) => {
   return (
     <div className="RoleEmployee Element-content">
       <div className="Element-base">
-        <Icon source="fa" icon={faUser} containerclassname="Element-icon" />
+        {(employee[employeeId] && employee[employeeId].profilePictureUrl) ? 
+          <div className="Element-photo">
+            <img
+              alt={employee[employeeId].firstname + ' ' + employee[employeeId].lastname + '\'s profile picture'} 
+              src={employee[employeeId].profilePictureUrl} />
+          </div>
+        : <Icon source="fa" icon={faUser} containerclassname="Element-icon" /> }
         <div className="Element-data">
           <span className="Element-title">
-            <PageLink type={PageLinkType.EMPLOYEE} entityId={employeeId} entityData={employee[employeeId]} />
+            <PageLink type={PageLinkType.EMPLOYEE} entityId={employeeId} entityData={employee[employeeId]} noPhoto />
           </span>
           <div className="roles">
             {Object.keys(roles).map(renderRole)}

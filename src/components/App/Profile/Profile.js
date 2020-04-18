@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import DateTimePicker from 'react-datetime-picker';
 import { NavLink } from 'react-router-dom';
-import { faSignOut, faUser, faCog, faImage, faIdCardAlt, faUserHeadset, faPlus, faAward,
-    faPhoneAlt, faInfoCircle, faExclamationCircle, faTimes, faUpload, faExclamationTriangle, faEnvelope, faClipboardUser, faCalendarAlt } from '@fortawesome/pro-solid-svg-icons';
+import { faSignOut, faUser, faCog, faUserHeadset, faPlus, faPhoneAlt, faInfoCircle, 
+  faExclamationCircle, faTimes, faUpload, faExclamationTriangle, faEnvelope, faCalendarAlt } from '@fortawesome/pro-solid-svg-icons';
 
 import Tabs from './../../Utils/Tabs/Tabs';
 import Loader from './../../Utils/Loader/Loader';
@@ -102,7 +102,7 @@ const Profile = () => {
   const handleSubmitExperience = event => {
     event.preventDefault();
 
-    if(experienceStartDate > experienceEndDate) {
+    if(experienceEndDate && experienceStartDate > experienceEndDate) {
       ErrorService.manageError('Experience start date muse be before end date!');
       return;
     }
@@ -112,7 +112,7 @@ const Profile = () => {
       name: experienceName,
       company: experienceCompamyName,
       start: DateService.getMonthYearString(experienceStartDate),
-      end: DateService.getMonthYearString(experienceEndDate)
+      end: experienceEndDate ? DateService.getMonthYearString(experienceEndDate) : null
     });
 
     EmployeeService.updateField(computed.user.uid, {experience})
@@ -196,10 +196,7 @@ const Profile = () => {
             }
             else {
               return <div className="tab-content">
-                <h2 className="profile-title">
-                  <Icon source="fa" icon={faImage} />
-                  Profile Picture
-                </h2>
+                <h2 className="profile-title">Profile Picture</h2>
                 <div className="profile-picture-container">
                   {computed.employee.profilePictureUrl &&
                     <img src={computed.employee.profilePictureUrl} 
@@ -241,10 +238,7 @@ const Profile = () => {
                     </span>
                   </div>
                 </div>
-                <h2 className="profile-title">
-                  <Icon source="fa" icon={faIdCardAlt} />
-                  Profile Information
-                </h2>
+                <h2 className="profile-title">Profile Information</h2>
                 <div className="personal-info-container">
                   <div className="personal-info-line">
                     <div className="personal-info-input-container">
@@ -264,17 +258,14 @@ const Profile = () => {
                   </div>
                 </div>
                 <div className="bottom-container">
-                  <div className="certificates-container">
-                    <h2 className="profile-title">
-                      <Icon source="fa" icon={faAward} />
-                      Certificates
-                    </h2>
-                    <div className="certificates">
-                      <div className="certificates-list">
+                  <div className="certificate-container">
+                    <h2 className="profile-title">Certificates</h2>
+                    <div className="certificate">
+                      <div className="certificate-list">
                         {computed.employee.certificates && computed.employee.certificates.map((certificate, index) => 
-                          <span key={certificate.name} className="certificate">
+                          <span key={certificate.name} className="certificate-item">
                             {certificate.name}
-                            <span className="certificate-date">{certificate.date}</span>
+                            <span className="certificate-item-date">{certificate.date}</span>
                             <button onClick={() => deleteCertificate(index)}>
                               <Icon source="fa" icon={faTimes} />
                             </button>
@@ -301,27 +292,22 @@ const Profile = () => {
                         maxDate={new Date()}
                         minDetail="year"
                         required
-                        showLeadingZeros={true} />
+                        showLeadingZeros />
                       <button className="certificate-add-submit">
                         <Icon source="fa" icon={faPlus} />
-                        Add
+                        <span className="button-label">Add</span>
                       </button>
                     </form>
-                  </div><div className="experience-container">
-                    <h2 className="profile-title">
-                      <Icon source="fa" icon={faClipboardUser} />
-                      Experience
-                    </h2>
+                  </div>
+                  <div className="experience-container">
+                    <h2 className="profile-title">Experience</h2>
                     <div className="experience">
                       <div className="experience-list">
                         {computed.employee.experience && computed.employee.experience.map((experienceItem, index) => 
                           <span key={experienceItem.name} className="experience-item">
                             {experienceItem.name} @ {experienceItem.company}
-                            <span className="experienceItem-date">
-                              {experienceItem.start}
-                              {!!experienceItem.end && 
-                                <span> - {experienceItem.end}</span>
-                              }
+                            <span className="experience-item-date">
+                              {experienceItem.start} - {experienceItem.end ? experienceItem.end : 'Current'}
                             </span>
                             <button onClick={() => deleteExperience(index)}>
                               <Icon source="fa" icon={faTimes} />
@@ -331,47 +317,51 @@ const Profile = () => {
                       </div>
                     </div>
                     <form className="experience-add" onSubmit={handleSubmitExperience}>
-                      <input 
-                        className="experience-add-name-input"
-                        type="text" 
-                        placeholder="Experience" 
-                        data-field="experienceName"
-                        value={experienceName}
-                        onChange={e => setExperienceName(e.target.value)}
-                        autoComplete="false"
-                        required />
-                      <input 
-                        className="experience-add-company-input"
-                        type="text" 
-                        placeholder="Company" 
-                        data-field="experienceCompamyName"
-                        value={experienceCompamyName}
-                        onChange={e => setExperienceCompanyName(e.target.value)}
-                        autoComplete="false"
-                        required />
-                      <DateTimePicker
-                        onChange={setExperienceStartDate}
-                        value={experienceStartDate}
-                        clearIcon={null}
-                        calendarIcon={<Icon source="fa" icon={faCalendarAlt} />}
-                        format="y-MM"
-                        maxDate={new Date()}
-                        minDetail="year"
-                        required
-                        showLeadingZeros={true} />
-                      <DateTimePicker
-                        onChange={setExperienceEndDate}
-                        value={experienceEndDate}
-                        clearIcon={null}
-                        calendarIcon={<Icon source="fa" icon={faCalendarAlt} />}
-                        format="y-MM"
-                        maxDate={new Date()}
-                        minDetail="year"
-                        showLeadingZeros={true} />
-                      <button className="experience-add-submit">
-                        <Icon source="fa" icon={faPlus} />
-                        Add
-                      </button>
+                      <div className="experience-add-line">
+                        <input 
+                          className="experience-add-name-input"
+                          type="text" 
+                          placeholder="Experience" 
+                          data-field="experienceName"
+                          value={experienceName}
+                          onChange={e => setExperienceName(e.target.value)}
+                          autoComplete="false"
+                          required />
+                        <input 
+                          className="experience-add-company-input"
+                          type="text" 
+                          placeholder="Company" 
+                          data-field="experienceCompamyName"
+                          value={experienceCompamyName}
+                          onChange={e => setExperienceCompanyName(e.target.value)}
+                          autoComplete="false"
+                          required />
+                      </div>
+                      <div className="experience-add-line">
+                        <DateTimePicker
+                          onChange={setExperienceStartDate}
+                          value={experienceStartDate}
+                          clearIcon={null}
+                          calendarIcon={<Icon source="fa" icon={faCalendarAlt} />}
+                          format="y-MM"
+                          maxDate={new Date()}
+                          minDetail="year"
+                          required
+                          showLeadingZeros />
+                        <DateTimePicker
+                          onChange={setExperienceEndDate}
+                          value={experienceEndDate}
+                          clearIcon={null}
+                          calendarIcon={<Icon source="fa" icon={faCalendarAlt} />}
+                          format="y-MM"
+                          maxDate={new Date()}
+                          minDetail="year"
+                          showLeadingZeros />
+                        <button className="experience-add-submit">
+                          <Icon source="fa" icon={faPlus} />
+                          <span className="button-label">Add</span>
+                        </button>
+                      </div>
                     </form>
                   </div>
                 </div>

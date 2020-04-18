@@ -14,16 +14,6 @@
     .Icon {
       margin-right: .5rem;
     }
-
-    &:after {
-      content: '';
-      height: 3px;
-      margin: 0 0 0 1rem;
-      background-color: var(--second);
-      display: block;
-      flex: 1;
-      border-radius: var(--border-radius);
-    }
   }
 
   .employee-header {
@@ -47,6 +37,7 @@
       img {
         height: 4rem;
         width: 4rem;
+        min-width: 4rem;
       }
     }
 
@@ -78,134 +69,15 @@
 
   .employee-content {
     flex: 1;
-    margin-top: 1rem;
+    margin: 1rem 0;
     padding: .5rem;
-    display: flex;
-    flex-direction: row;
+    display: block;
     box-shadow: var(--shadow);
     border-radius: var(--border-radius);
     background-color: #FFFFFF;
 
-    .certificates {
-      display: block;
-      flex: 1;
-      padding: 0;
-      margin: 0;
-      min-height: min-content;
-      overflow: auto;
-
-      .certificates-list {
-        height: 100%;
-        display: block;
-        max-height: 0;
-        min-height: min-content;
-
-        .certificate {
-          width: calc(100% - 1rem);
-          height: 1.5rem;
-          margin: 0;
-          display: block;
-          padding: .5rem;
-          transition: background-color .5s;
-          position: relative;
-  
-          .certificate-date {
-            margin: 0 1rem;
-            font-size: 80%;
-            color: var(--gray);
-          }
-    
-          &:hover {
-            background-color: var(--light-gray);
-          }
-        }
-      }
-    }
-
-    .experience {
-      display: block;
-      flex: 1;
-      padding: 0;
-      margin: 0;
-      min-height: min-content;
-      overflow: auto;
-      margin-left: 2rem;
-
-      .experience-list {
-        height: 100%;
-        display: block;
-        max-height: 0;
-        min-height: min-content;
-
-        .experience-item {
-          width: calc(100% - 1rem);
-          height: 1.5rem;
-          margin: 0;
-          display: block;
-          padding: .5rem;
-          transition: background-color .5s;
-          position: relative;
-
-          .experienceItem-date {
-            margin: 0 1rem;
-            font-size: 80%;
-            color: var(--gray);
-          }
-    
-          &:hover {
-            background-color: var(--light-gray);
-          }
-        }
-      }
-    }
-
-    .roles {
-      display: block;
-      flex: 1;
-      padding: 0;
-      margin: 0;
-      min-height: min-content;
-      overflow: visible auto;
-      margin-left: 2rem;
-
-      .roles-list {
-        height: 100%;
-        display: block;
-        max-height: 0;
-        min-height: min-content;
-
-        .role {
-          width: calc(100% - 1rem);
-          height: 1.5rem;
-          margin: 0;
-          display: block;
-          padding: .5rem;
-          transition: background-color .5s;
-          position: relative;
-
-          .role-date {
-            margin: 0 1rem;
-            font-size: 80%;
-            color: var(--gray);
-          }
-
-          .Icon {
-            vertical-align: middle;
-          }
-    
-          &:hover {
-            background-color: var(--light-gray);
-          }
-        }
-
-        .role-separator {
-          margin: .5rem 0;
-          height: 1px;
-          width: 100%;
-          background-color: var(--gray);
-          display: block;
-        }
-      }
+    .PageLink {
+      margin: 0 .5rem;
     }
   }
 }
@@ -214,20 +86,9 @@
   .EmployeePage {
 
     .employee-header {
+      padding: 1rem 0;
       flex-direction: column;
-      padding: 1rem .5rem;
-    }
-    
-    .employee-content {
-      flex-direction: column;
-
-      .experience {
-        margin-left: 0;
-      }
-
-      .roles {
-        margin-left: 0;
-      }
+      justify-content: space-around;
     }
   }
 }

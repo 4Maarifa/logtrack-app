@@ -95,36 +95,43 @@
           flex-direction: row;
           justify-content: center;
           align-items: center;
+          padding: 0;
+          margin: .5rem 0;
+          width: 100%;
 
-          h2 {
-            color: var(--second);
-          }
-
-          & > a {
+          .change-role-link {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            height: 100%;
+            background-color: var(--second);
+            color: #FFFFFF;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
           }
 
-          .company-details-name-container {
-            height: 2rem;
-            flex: 1;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-          }
+          .company-details {
 
-          .company-details-stats-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            
-            .company-details-stat {
+            &-name-container {
+              height: 2rem;
+              flex: 1;
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+            }
+
+            &-stats-container {
+              flex: 1;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+            }
+
+            &-stat {
               height: 2.2rem;
               display: flex;
               flex-direction: row;
@@ -133,7 +140,7 @@
               align-items: center;
               width: 12rem;
 
-              .company-details-stat-icon {
+              &-icon {
                 height: 2.2rem;
                 width: 2.2rem;
                 margin-right: .6rem;
@@ -145,9 +152,14 @@
                 border-radius: var(--border-radius);
                 color: #FFFFFF;
                 vertical-align: middle;
+                position: relative;
+
+                .badge {
+                  display: none;
+                }
               }
 
-              .company-details-stat-content {
+              &-content {
                 display: flex;
                 flex-direction: column;
                 flex: 1;
@@ -223,6 +235,41 @@
   }
 }
 
+@media screen and (max-width: 600px) {
+  .Dashboard {
+    .role-container .line .card.company-link {
+      .company-details {
+
+        &-stat {
+          width: 5rem;
+          flex: 1 0 5rem;
+        }
+
+        &-stat-icon {
+          margin: 0;
+
+          .badge {
+            display: block;
+            position: absolute;
+            top: -.8rem;
+            right: -1.2rem;
+            font-size: 90%;
+            box-shadow: var(--shadow);
+            height: 1rem;
+          }
+        }
+
+        &-stat-content {
+          display: none;
+        }
+      }
+
+      .company-details-stat-content {
+      }
+    }
+  }
+}
+
 @media screen and (orientation: portrait) {
   .Dashboard {
 
@@ -283,6 +330,19 @@
 
           &.company-link {
             flex-direction: column;
+
+            .change-role-link {
+              width: 100%;
+            }
+
+            .company-details-name-container {
+              margin: 1rem 0;
+            }
+
+
+            .company-details-stats-container {
+              flex-direction: row;
+            }
           }
         }
       }

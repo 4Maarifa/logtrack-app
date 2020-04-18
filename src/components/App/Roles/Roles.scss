@@ -3,18 +3,9 @@
   overflow-y: auto;
 
   h1 {
-    background-color: #FFFFFF;
-    box-shadow: var(--shadow);
     margin: 1rem 0 0 0;
     position: relative;
     z-index: 2;
     padding: .2rem .5rem;
-  }
-
-  .activeRole {
-    padding: 0 .5rem;
-    display: block;
-    background-color: #FFFFFF;
-    box-shadow: var(--shadow);
   }
 }

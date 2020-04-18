@@ -19,9 +19,9 @@ const Warehouse = ({ warehouse }) => {
           <span className="Element-title">
             <PageLink type={PageLinkType.WAREHOUSE} entityId={warehouseKey} entityData={warehouse[warehouseKey]} />
           </span>
-          {warehouse[warehouseKey].nbLoadingDocks && <span>
-            {warehouse[warehouseKey].nbLoadingDocks}
+          {warehouse[warehouseKey].nbLoadingDocks && <span className="badge">
             <Icon source="fa" icon={faWarehouse} />
+            {warehouse[warehouseKey].nbLoadingDocks}
           </span>}
         </div>
       </div>

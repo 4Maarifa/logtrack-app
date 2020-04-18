@@ -1,18 +1,18 @@
-var observers = {};
 
 const ResizeService = {
+  _observers: {},
   addObserver(observerCallback, observerKey) {
-    observers[observerKey] = observerCallback;
+    ResizeService._observers[observerKey] = observerCallback;
     observerCallback();
     return observerKey;
   },
   removeObserver(observerKey) {
-    delete observers[observerKey];
-    observers[observerKey] = null;
+    delete ResizeService._observers[observerKey];
+    ResizeService._observers[observerKey] = null;
   },
   updateObservers() {
-    for(const value of Object.values(observers)) {
-      !!value && (typeof value === 'function') && value();
+    for(const value of Object.values(ResizeService._observers)) {
+      value && (typeof value === 'function') && value();
     }
   }
 };

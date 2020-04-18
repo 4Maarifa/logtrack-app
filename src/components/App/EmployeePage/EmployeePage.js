@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
-import { faAward, faClipboardUser, faTag, faCommentDots, faEdit, faUserTag, faUserPlus } from '@fortawesome/pro-solid-svg-icons';
+import { faAward, faClipboardUser, faCommentDots, faEdit, faUserTag, faUserPlus } from '@fortawesome/pro-solid-svg-icons';
 
 import DataService from './../../../services/data.service';
 import DateService from './../../../services/date.service';
@@ -14,6 +14,7 @@ import CompanyService from './../../../services/entities/company.service';
 import Loader from './../../Utils/Loader/Loader';
 import Icon from './../../Utils/Icon/Icon';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
+import ExTable from './../../Utils/ExTable/ExTable';
 
 import { ERoleStatus, RoleDetails, ERole } from './../../../classes/Role';
 import Chat, { EChatType } from './../../../classes/Chat';
@@ -104,6 +105,66 @@ const EmployeePage = ({ match }) => {
     return <Redirect to={chatId} />;
   }
 
+  const employeeCertificates = {};
+  employeeData.certificates.forEach(c => employeeCertificates[c.name] = c);
+
+  const renderCertificate = (_, certificate) => (
+    <div className="certificate Element-content">
+      <div className="Element-base">
+        <Icon containerclassname="Element-icon" source="fa" icon={faAward} />
+        <div className="Element-data">
+          <span className="Element-title">
+            {certificate.name}
+          </span>
+          <span className="Element-sub">{certificate.date}</span>
+        </div>
+      </div>
+    </div>);
+
+  const employeeExperience = {};
+  Object.keys(roles)
+    .filter(roleKey => roles[roleKey].status === ERoleStatus.CONFIRMED
+        || roles[roleKey].status === ERoleStatus.REVOKED)
+    .forEach(roleKey => employeeExperience[roleKey] = roles[roleKey]);
+
+  const renderExperience = (_, exp) => (
+    <div className="experience Element-content">
+      <div className="Element-base">
+        <Icon containerclassname="Element-icon" source="fa" icon={RoleDetails[exp.role].icon} />
+        <div className="Element-data">
+          <span className="Element-title">
+            {RoleDetails[exp.role].name} @
+            {companies[exp.companyId] &&
+              <PageLink type={PageLinkType.COMPANY} entityId={exp.companyId} entityData={companies[exp.companyId]} />
+            }
+          </span>
+          <span className="Element-sub">
+            {DateService.getMonthYearString(
+              DateService.getDateFromIsoString(exp.creationIsoDate)) + ' - ' + 
+              (exp.status === 'CONFIRMED' ? 'Current' : DateService.getMonthYearString(DateService.getDateFromIsoString(exp.revokedIsoDate)))}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+
+  const employeeOtherExperience = {};
+  employeeData.experience.forEach(e => employeeOtherExperience[e.name] = e);
+
+  const renderOtherExperience = (_, otherExp) => (
+    <div className="experience Element-content">
+      <div className="Element-base">
+        <Icon containerclassname="Element-icon" source="fa" icon={faClipboardUser} />
+        <div className="Element-data">
+          <span className="Element-title">{otherExp.name} @ {otherExp.company}</span>
+          <span className="Element-sub">
+            {otherExp.start} - {otherExp.end ? otherExp.end : 'Current'}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="EmployeePage">
       <div className="employee-header">
@@ -138,70 +199,30 @@ const EmployeePage = ({ match }) => {
         }
       </div>
       <div className="employee-content">
-        <div className="certificates">
-          <h2 className="profile-title">
-            <Icon source="fa" icon={faAward} />
-            Certificates
-          </h2>
-          <div className="certificates-list">
-            {employeeData.certificates && employeeData.certificates.map(certificate => 
-              <span key={certificate.name} className="certificate">
-                {certificate.name}
-                <span className="certificate-date">{certificate.date}</span>
-              </span>
-            )}
-          </div>
-        </div>
+        {employeeData.certificates && <div className="certificates">
+          <h2 className="profile-title">Certificates</h2>
+          <ExTable key="certificates" 
+              items={employeeCertificates} 
+              renderItem={renderCertificate} 
+              header={['Name', '']}
+              isNoFrame />
+        </div>}
         <div className="roles">
-          <h2 className="profile-title">
-            <Icon source="fa" icon={faTag} />
-            Experience
-          </h2>
-          <div className="roles-list">
-            {Object.keys(roles).filter(roleKey => roles[roleKey].status === ERoleStatus.CONFIRMED).map(roleKey => 
-              <span key={roleKey} className="role">
-                {RoleDetails[roles[roleKey].role].icon}
-                {RoleDetails[roles[roleKey].role].name} @
-                {companies[roles[roleKey].companyId] &&
-                  <PageLink type={PageLinkType.COMPANY} entityId={roles[roleKey].companyId} entityData={companies[roles[roleKey].companyId]} />
-                }
-                <span className="role-date">{DateService.getMonthYearString(DateService.getDateFromIsoString(roles[roleKey].creationIsoDate))}</span>
-              </span>
-            )}
-            <span className="role-separator"></span>
-            {Object.keys(roles).filter(roleKey => roles[roleKey].status === ERoleStatus.REVOKED).map(roleKey => 
-              <span key={roleKey} className="role">
-                {RoleDetails[roles[roleKey].role].icon}
-                {RoleDetails[roles[roleKey].role].name} @
-                {companies[roles[roleKey].companyId] &&
-                  <PageLink type={PageLinkType.COMPANY} entityId={roles[roleKey].companyId} entityData={companies[roles[roleKey].companyId]} />
-                }
-                <span className="role-date">
-                  {DateService.getMonthYearString(
-                    DateService.getDateFromIsoString(roles[roleKey].creationIsoDate)) + ' - ' + 
-                    DateService.getMonthYearString(DateService.getDateFromIsoString(roles[roleKey].revokedIsoDate))}
-                </span>
-              </span>
-            )}
-          </div>
+          <h2 className="profile-title">Experience</h2>
+          <ExTable key="experience" 
+              items={employeeExperience} 
+              renderItem={renderExperience} 
+              header={['Name', 'Company']}
+              isNoFrame />
         </div>
-        <div className="experience">
-          <h2 className="profile-title">
-            <Icon source="fa" icon={faClipboardUser} />
-            Other Experience
-          </h2>
-          <div className="experience-list">
-            {employeeData.experience && employeeData.experience.map(experienceItem => 
-              <span key={experienceItem.name} className="experience-item">
-                {experienceItem.name} @ {experienceItem.company}
-                <span className="experienceItem-date">
-                  {experienceItem.start}
-                  {!!experienceItem.end && <span> - {experienceItem.end}</span>}
-                </span>
-              </span>
-            )}
-          </div>
-        </div>
+        {employeeData.experience && <div className="experience">
+          <h2 className="profile-title">Other Experience</h2>
+          <ExTable key="otherExperience" 
+              items={employeeOtherExperience} 
+              renderItem={renderOtherExperience} 
+              header={['Name', 'Company']}
+              isNoFrame />
+        </div>}
       </div>
     </div>
   );

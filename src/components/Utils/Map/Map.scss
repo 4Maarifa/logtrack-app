@@ -20,7 +20,7 @@
       display: flex;
       flex-direction: row-reverse;
 
-      .ol-attributions-button {
+      &-button {
         height: 1.5rem;
         width: 1.5rem;
         position: relative;
@@ -34,7 +34,7 @@
         color: #FFFFFF;
       }
 
-      .ol-attributions-content {
+      &-content {
         max-width: 0;
         height: 1.5rem;
         padding: 0;
@@ -55,8 +55,8 @@
         }
       }
 
-      .ol-attributions-button:hover + .ol-attributions-content,
-      .ol-attributions-content:hover {
+      &-button:hover + .ol-attributions-content,
+      &-content:hover {
         max-width: 100%;
         padding: 0 1.2rem 0 .3rem;
       }
@@ -69,8 +69,9 @@
       padding: 0;
       margin: 0;
       display: flex;
+      max-width: 20rem;
 
-      .ol-layer-selector-selected {
+      &-selected {
         padding: .2rem;
         background-color: var(--second);
         border-radius: 2px;
@@ -81,7 +82,7 @@
         color: #FFFFFF;
       }
 
-      .ol-layer-selector-others {
+      &-others {
         padding: .2rem 0;
         background-color: #FFFFFF;
         max-width: 0;
@@ -89,12 +90,17 @@
         overflow: hidden;
         transition: max-width .5s, padding .5s;
         cursor: auto;
+
+        button.layer--active {
+          display: none;
+        }
       }
 
-      .ol-layer-selector-selected:hover + .ol-layer-selector-others,
-      .ol-layer-selector-others:hover {
+      &-selected:hover + .ol-layer-selector-others,
+      &-others:hover {
         max-width: 100%;
         padding: .2rem;
+        overflow: auto;
       }
 
       button {
@@ -276,5 +282,11 @@
         }
       }
     }
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .Map #map .ol-layer-selector .ol-layer-selector-selected {
+    display: none;
   }
 }

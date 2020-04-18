@@ -103,7 +103,7 @@ const Search = () => {
     return <Warehouse key={itemKey}
       warehouse={ {[itemKey]: itemData} }
       options={ {} }
-      showDetails={true} />;
+      showDetails />;
   };
 
   const renderContract = (itemKey, itemData) => {
@@ -122,7 +122,7 @@ const Search = () => {
       brand={brand}
       equipmentModel={equipmentModel}
       options={ {} }
-      showDetails={true} />
+      showDetails />
   };
 
   return (

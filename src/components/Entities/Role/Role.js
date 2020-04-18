@@ -6,6 +6,8 @@ import DateService from './../../../services/date.service';
 
 import { RoleDetails } from './../../../classes/Role';
 
+import Icon from './../../Utils/Icon/Icon';
+
 import { v4 as uuid } from 'uuid';
 
 import './Role.scss';
@@ -39,7 +41,7 @@ const Role = ({ role }) => {
      data-id={roleKey}>
 
       <span>
-        {RoleDetails[role[roleKey].role].icon}
+        <Icon source="fa" icon={RoleDetails[role[roleKey].role].icon} />
         {RoleDetails[role[roleKey].role].name}
         {!!computed.employee && computed.employee.activeRoleId === roleKey && <span className="badge">active</span> }
       </span>

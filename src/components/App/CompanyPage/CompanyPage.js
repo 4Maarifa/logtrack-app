@@ -133,7 +133,7 @@ const CompanyPage = ({ match }) => {
       employee={ {[itemKey]: itemData} } 
       roles={UtilsService.filterKeyValueOnPropertyValue(rolesOfCompanyEmployees, predicate => predicate.employeeId === itemKey)}
       options={ {showDraft: false, showActions: false} }
-      showDetails={true} />
+      showDetails />
   );
 
   const renderEquipment = (itemKey, itemData) => {
@@ -145,7 +145,7 @@ const CompanyPage = ({ match }) => {
       brand={brand}
       equipmentModel={equipmentModel}
       options={ {} }
-      showDetails={true} />
+      showDetails />
   };
 
   const renderWarehouse = (itemKey, itemData) => (
@@ -181,6 +181,7 @@ const CompanyPage = ({ match }) => {
           name: () => <span>
             <Icon source="fa" icon={faWarehouseAlt} />
             Warehouses
+            <span className="badge-inverse">{Object.keys(warehouses).length}</span>
           </span>,
           content: () => <ExTable key="warehouses" items={warehouses} renderItem={renderWarehouse} header={['Name', '']} loading={isWarehousesLoading} />
         },
@@ -188,6 +189,7 @@ const CompanyPage = ({ match }) => {
           name: () => <span>
             <Icon source="fa" icon={faUsers} />
             Employees
+            <span className="badge-inverse">{Object.keys(companyEmployees).length}</span>
           </span>,
           content: () => <ExTable key="employees" items={companyEmployees} renderItem={renderRoleEmployee} header={['Name', 'Roles']} loading={isCompanyEmployeesLoading}/>
         },
@@ -195,6 +197,7 @@ const CompanyPage = ({ match }) => {
           name: () => <span>
             <Icon source="fa" icon={faTruck} />
             Equipments
+            <span className="badge-inverse">{Object.keys(equipments).length}</span>
           </span>,
           content: () => <ExTable key="equipments" items={equipments} renderItem={renderEquipment} header={['Identification', 'Model']} loading={isEquipmentsLoading}/>
         }

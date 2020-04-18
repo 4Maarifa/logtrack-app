@@ -6,12 +6,12 @@ import Icon from './../Icon/Icon';
 
 import './ExTable.scss';
 
-const ExTable = ({ header, isLoading, items, renderItem }) => {
+const ExTable = ({ header, loading, items, renderItem, isNoFrame }) => {
   
   const [view, setView] = useState('ITEMS');
 
   return (
-    <div className={'ExTable ' + (view === 'LIST' ? 'ExTable--list' : 'ExTable--items')}>
+    <div className={'ExTable ' + (view === 'LIST' ? ' ExTable--list ' : ' ExTable--items ') + (isNoFrame ? ' ExTable--no-frame ' : '')}>
       <div className="header-container">
         {header && header.length &&
           <div className="header">
@@ -28,15 +28,15 @@ const ExTable = ({ header, isLoading, items, renderItem }) => {
         </div>
       </div>
       <ul>
-        {isLoading && <li className="loader">
+        {loading && <li className="loader">
           <Loader></Loader>
         </li>}
-        {!isLoading && Object.keys(items).map(itemKey => 
+        {!loading && Object.keys(items).map(itemKey => 
           <li key={itemKey} className={'Element Element--' + (view === 'LIST' ? 'row' : 'tile')}>
             {renderItem(itemKey, items[itemKey])}
           </li>)
         }
-        {!isLoading && !Object.keys(items).length && 
+        {!loading && !Object.keys(items).length && 
           <li className="no-item">Nothing to show!</li>
         }
       </ul>
