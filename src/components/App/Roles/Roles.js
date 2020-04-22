@@ -101,7 +101,7 @@ const Roles = () => {
   };
 
   const computeActions = () => {
-    var defaultActions = [
+    const defaultActions = [
       {title: 'Request a role', icon: <Icon source="fa" icon={faUserTag} />, link: `/role-add`},
       {title: 'Add a company', icon: <Icon source="fa" icon={faBuilding} />, link: `/company-add`}
     ];

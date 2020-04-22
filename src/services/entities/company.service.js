@@ -17,7 +17,7 @@ const CompanyService = {
     [ERights.RIGHT_COMPANY_UPDATE]: () => DataService.computed.isConnected(),
     [ERights.RIGHT_COMPANY_DELETE]: () => false
   },
-  create(company) {
+  create: company => {
     if(!CompanyService.rights[ERights.RIGHT_COMPANY_CREATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create a Compamy' });
     }
@@ -26,34 +26,34 @@ const CompanyService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'Company' });
     }
 
-    if(!ensureFilledFields(company, ['name', 'creator'])) {
-      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['name', 'creator'] });
+    if(!ensureFilledFields(company, ['name', 'creator', 'logoURL', 'color', 'creationIsoString', 'plan'])) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['name', 'creator', 'logoURL', 'color', 'creationIsoString', 'plan'] });
     }
 
     return FirebaseService.getDb().collection('companies').add(migratePrototype(company));
   },
-  get(companyId) {
+  get: companyId => {
     if(!CompanyService.rights[ERights.RIGHT_COMPANY_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Company' });
     }
     return FirebaseService.getDb().collection('companies').doc(companyId).get();
   },
-  list() {
+  list: () => {
     if(!CompanyService.rights[ERights.RIGHT_COMPANY_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Companies' });
     }
 
-    var companies = {};
+    const companies = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getDb().collection('companies').get()
             .then(querySnapshot => {
                 querySnapshot.forEach(companyDoc => companies[companyDoc.id] = companyDoc.data());
                 resolve(companies);
             })
-            .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+            .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  update(company) {
+  update: (companyId, company) => {
     if(!CompanyService.rights[ERights.RIGHT_COMPANY_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Company' });
     }
@@ -62,24 +62,24 @@ const CompanyService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'Company' });
     }
 
-    if(!ensureFilledFields(company, ['id', 'name', 'creator'])) {
-      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['id', 'name', 'creator'] });
+    if(!ensureFilledFields(company, ['name', 'creator', 'logoURL', 'color', 'creationIsoString', 'plan'])) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['name', 'creator', 'logoURL', 'color', 'creationIsoString', 'plan'] });
     }
 
-    if(DataService.computed.activeRole.companyId !== company.id || DataService.computed.activeRole.role !== ERole.MANAGER) {
+    if(DataService.computed.activeRole.companyId !== companyId || DataService.computed.activeRole.role !== ERole.MANAGER) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('companies').doc(company.id).set(migratePrototype(company));
+    return FirebaseService.getDb().collection('companies').doc(companyId).set(migratePrototype(company));
   },
-  updateField(companyId, companyField) {
+  updateField: (companyId, companyField) => {
     if(!CompanyService.rights[ERights.RIGHT_COMPANY_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Company' });
     }
     
     return FirebaseService.getDb().collection('companies').doc(companyId).update(companyField);
   },
-  delete(companyId) {
+  delete: companyId => {
     if(!CompanyService.rights[ERights.RIGHT_COMPANY_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Company' });
     }
@@ -88,13 +88,13 @@ const CompanyService = {
   },
 
   // CUSTOM FUNCTIONS
-  getAllForIdList(idList) {
+  getAllForIdList: idList => {
     if(!CompanyService.rights[ERights.RIGHT_COMPANY_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Companies' });
     }
 
-    var promises = [];
-    var companies = {};
+    const promises = [];
+    const companies = {};
 
     return new Promise((resolve, reject) => {
       idList.forEach(companyId => promises.push(CompanyService.get(companyId)));
@@ -107,13 +107,11 @@ const CompanyService = {
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });            
   },
-  search(term) {
-    return new Promise((resolve, reject) => {
+  search: term => new Promise((resolve, reject) => {
       DataService.computed.search([ESearchType.COMPANIES], term, null)
         .then(results => resolve(results.data.companies))
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
-    });
-  }
+    })
 };
 
 export default CompanyService;

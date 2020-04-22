@@ -14,7 +14,7 @@ const BrandService = {
     [ERights.RIGHT_BRAND_UPDATE]: () => false,
     [ERights.RIGHT_BRAND_DELETE]: () => false
   },
-  create(brand) {
+  create: brand => {
     if(!BrandService.rights[ERights.RIGHT_BRAND_CREATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create a Brand' });
     }
@@ -29,28 +29,28 @@ const BrandService = {
 
     return FirebaseService.getDb().collection('brands').doc(brand.id).set(migratePrototype(brand));
   },
-  get(brandId) {
+  get: brandId => {
     if(!BrandService.rights[ERights.RIGHT_BRAND_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Brand' });
     }
     return FirebaseService.getDb().collection('brands').doc(brandId).get();
   },
-  list() {
+  list: () => {
     if(!BrandService.rights[ERights.RIGHT_BRAND_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Brands' });
     }
 
-    var brands = {};
+    const brands = {};
     return new Promise((resolve, reject) => {
       FirebaseService.getDb().collection('brands').get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((brandDoc) => brands[brandDoc.id] = brandDoc.data());
+        .then(querySnapshot => {
+            querySnapshot.forEach(brandDoc => brands[brandDoc.id] = brandDoc.data());
             resolve(brands);
         })
-        .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  update(brand) {
+  update: (brandId, brand) => {
     if(!BrandService.rights[ERights.RIGHT_BRAND_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Brand' });
     }
@@ -63,16 +63,16 @@ const BrandService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['name'] });
     }
 
-    return FirebaseService.getDb().collection('brands').doc(brand.id).set(migratePrototype(brand));
+    return FirebaseService.getDb().collection('brands').doc(brandId).set(migratePrototype(brand));
   },
-  updateField(brandId, brandField) {
+  updateField: (brandId, brandField) => {
     if(!BrandService.rights[ERights.RIGHT_BRAND_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Brand' });
     }
     
     return FirebaseService.getDb().collection('brands').doc(brandId).update(brandField);
   },
-  delete(brandId) {
+  delete: brandId => {
     if(!BrandService.rights[ERights.RIGHT_BRAND_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Brand' });
     }

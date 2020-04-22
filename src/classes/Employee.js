@@ -13,8 +13,7 @@
  * cretionDate: string | The creation date, as iso string
  */
 class Employee {
-    constructor(id, firstname, lastname, certificates, activeRoleId, profilePictureUrl, settings, creationIsoDate) {
-        this.id = id;
+    constructor(firstname, lastname, certificates, activeRoleId, profilePictureUrl, settings, creationIsoDate) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.certificates = certificates;

@@ -1,29 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { faUsers, faTruck, faWarehouseAlt, faUserTag } from '@fortawesome/pro-solid-svg-icons';
+import { faUsers, faTruck, faWarehouseAlt } from '@fortawesome/pro-solid-svg-icons';
 
-import DataService from './../../../services/data.service';
-import CompanyService from './../../../services/entities/company.service';
-import ErrorService from './../../../services/error.service';
-import RoleService from './../../../services/entities/role.service';
-import UtilsService from './../../../services/utils.service';
-import EmployeeService from './../../../services/entities/employee.service';
-import BrandService from './../../../services/entities/brand.service';
-import EquipmentModelService from './../../../services/entities/equipmentModel.service';
-import EquipmentService from './../../../services/entities/equipment.service';
-import WarehouseService from './../../../services/entities/warehouse.service';
+import DataService from '../../../services/data.service';
+import CompanyService from '../../../services/entities/company.service';
+import ErrorService from '../../../services/error.service';
+import RoleService from '../../../services/entities/role.service';
+import UtilsService from '../../../services/utils.service';
+import EmployeeService from '../../../services/entities/employee.service';
+import BrandService from '../../../services/entities/brand.service';
+import EquipmentModelService from '../../../services/entities/equipmentModel.service';
+import EquipmentService from '../../../services/entities/equipment.service';
+import WarehouseService from '../../../services/entities/warehouse.service';
 
-import Loader from './../../Utils/Loader/Loader';
-import Tabs from './../../Utils/Tabs/Tabs';
-import Icon from './../../Utils/Icon/Icon';
-import ExTable from './../../Utils/ExTable/ExTable';
-import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
+import Loader from '../../Utils/Loader/Loader';
+import Tabs from '../../Utils/Tabs/Tabs';
+import Icon from '../../Utils/Icon/Icon';
+import ExTable from '../../Utils/ExTable/ExTable';
 
-import RoleEmployee from './../../Entities/RoleEmployee/RoleEmployee';
-import Equipment from './../../Entities/Equipment/Equipment';
-import Warehouse from './../../Entities/Warehouse/Warehouse';
-
-import Colors from './../../../assets/Colors';
+import RoleEmployee from '../../Entities/RoleEmployee/RoleEmployee';
+import Equipment from '../../Entities/Equipment/Equipment';
+import Warehouse from '../../Entities/Warehouse/Warehouse';
+import Company from '../../Entities/Company/Company';
 
 import { v4 as uuid } from 'uuid';
 
@@ -163,25 +160,15 @@ const CompanyPage = ({ match }) => {
 
   return (
     <div className="CompanyPage">
-      <div className="company-header" style={{
-        backgroundColor: (company.color || Colors.gray)
-      }}>
-        <h1>
-          <PageLink type={PageLinkType.COMPANY} entityId={companyId} entityData={company} white />
-        </h1>
-        <div className="actions">
-          <NavLink className="action" to={`/role-add/${companyId}`}>
-            <Icon source="fa" icon={faUserTag} />
-            Request a role
-          </NavLink>
-        </div>
+      <div className="Element Element--page">
+        <Company key={companyId} company={ {[companyId]: company} } options={{ }} showDetails isPage />
       </div>
       <Tabs default="warehouses" tabs={{
         warehouses: {
           name: () => <span>
             <Icon source="fa" icon={faWarehouseAlt} />
             Warehouses
-            <span className="badge-inverse">{Object.keys(warehouses).length}</span>
+            <span className="badge badge-inverse">{Object.keys(warehouses).length}</span>
           </span>,
           content: () => <ExTable key="warehouses" items={warehouses} renderItem={renderWarehouse} header={['Name', '']} loading={isWarehousesLoading} />
         },
@@ -189,7 +176,7 @@ const CompanyPage = ({ match }) => {
           name: () => <span>
             <Icon source="fa" icon={faUsers} />
             Employees
-            <span className="badge-inverse">{Object.keys(companyEmployees).length}</span>
+            <span className="badge badge-inverse">{Object.keys(companyEmployees).length}</span>
           </span>,
           content: () => <ExTable key="employees" items={companyEmployees} renderItem={renderRoleEmployee} header={['Name', 'Roles']} loading={isCompanyEmployeesLoading}/>
         },
@@ -197,11 +184,11 @@ const CompanyPage = ({ match }) => {
           name: () => <span>
             <Icon source="fa" icon={faTruck} />
             Equipments
-            <span className="badge-inverse">{Object.keys(equipments).length}</span>
+            <span className="badge badge-inverse">{Object.keys(equipments).length}</span>
           </span>,
           content: () => <ExTable key="equipments" items={equipments} renderItem={renderEquipment} header={['Identification', 'Model']} loading={isEquipmentsLoading}/>
         }
-      }}></Tabs>
+      }} />
     </div>
   );
 };

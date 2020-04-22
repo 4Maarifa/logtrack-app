@@ -11,7 +11,7 @@ import './PageLink.scss';
 const PageLink = ({ type, entityId, entityData, noLink, white, noPhoto }) => {
 
   if(!entityData) { return null; }
-
+ 
   const getPageLink = () => {
     switch(type) {
       case PageLinkType.EMPLOYEE:
@@ -22,7 +22,7 @@ const PageLink = ({ type, entityId, entityData, noLink, white, noPhoto }) => {
               <img src={entityData.profilePictureUrl} alt="" />
             }
             <span>{entityData.firstname + ' ' + entityData.lastname}</span>
-            {DataService.computed.user && entityId === DataService.computed.user.uid && <span className="badge you">you</span>}
+            {DataService.computed.user && entityId === DataService.computed.user.uid && <span className={'badge you ' + (white ? 'badge-inverse' : '')}>you</span>}
           </Fragment>
         };
       case PageLinkType.COMPANY:
@@ -33,14 +33,14 @@ const PageLink = ({ type, entityId, entityData, noLink, white, noPhoto }) => {
               <img src={entityData.logoURL} alt="" />
             }
             <span>{entityData.name}</span>
-            <span className="mention badge company-plan" title={ECompanyPlan[entityData.plan].name + ' Plan'}>{ECompanyPlan[entityData.plan].solidIcon}</span>
+            <span className={'badge company-plan ' + (white ? 'badge-inverse' : '')} title={ECompanyPlan[entityData.plan].name + ' Plan'}>{ECompanyPlan[entityData.plan].solidIcon}</span>
           </Fragment>
         };
       case PageLinkType.EQUIPMENT:
         return {
-          link: `/`,
+          link: `/equipment/${entityId}`,
           content: <Fragment>
-
+            <span>{entityData.identification}</span>
           </Fragment>
         };
       case PageLinkType.WAREHOUSE:
@@ -48,6 +48,13 @@ const PageLink = ({ type, entityId, entityData, noLink, white, noPhoto }) => {
           link: `/warehouse/${entityId}`,
           content: <Fragment>
             <span>{entityData.name}</span>
+          </Fragment>
+        };
+      case PageLinkType.CONTRACT:
+        return {
+          link: `/contract/${entityId}`,
+          content: <Fragment>
+            <span>{entityData.identification}</span>
           </Fragment>
         };
       default:
@@ -76,7 +83,8 @@ export const PageLinkType = {
   EMPLOYEE: 'EMPLOYEE',
   COMPANY: 'COMPANY',
   EQUIPMENT: 'EQUIPMENT',
-  WAREHOUSE: 'WAREHOUSE'
+  WAREHOUSE: 'WAREHOUSE',
+  CONTRACT: 'CONTRACT'
 };
 
 export default PageLink;

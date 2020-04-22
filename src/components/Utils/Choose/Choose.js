@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import './Choose.scss';
 
-const Choose = ({ defaultSelection, items, multiple, selectionRequired, onSelectionChange, fieldName }) => {
-
-  const [selection, setSelection] = useState(defaultSelection || (multiple ? [] : ''));
-
-  useEffect(() => {
-    onSelectionChange && onSelectionChange(selection, fieldName);
-  }, [selection]);
+const Choose = ({ selection,
+                  items,
+                  multiple,
+                  selectionRequired,
+                  onSelectionChange,
+                  fieldName }) => {
 
   const onValueChange = itemKey => {
     if(items[itemKey].disabled) {
@@ -26,7 +25,7 @@ const Choose = ({ defaultSelection, items, multiple, selectionRequired, onSelect
       else {
         newSelection.push(itemKey);
       }
-      setSelection(newSelection);
+      onSelectionChange && onSelectionChange(newSelection, fieldName);
     }
     else {
       if(selectionRequired && itemKey === selection) {
@@ -34,12 +33,13 @@ const Choose = ({ defaultSelection, items, multiple, selectionRequired, onSelect
       }
 
       if(itemKey === selection) {
-        setSelection(null);
+        onSelectionChange && onSelectionChange(null, fieldName);
       }
       else {
-        setSelection(itemKey);
+        onSelectionChange && onSelectionChange(itemKey, fieldName);
       }
     }
+
   };
 
   const isItemActive = itemKey => {

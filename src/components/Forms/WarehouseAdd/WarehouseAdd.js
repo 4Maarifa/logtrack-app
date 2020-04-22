@@ -12,7 +12,6 @@ import FormDebouceAutoSuggestInput from './../../Utils/FormElements/FormDebounce
 import DataService from './../../../services/data.service';
 import DateService from './../../../services/date.service';
 import ErrorService from './../../../services/error.service';
-import PlacesService from './../../../services/places.service';
 import WarehouseService from './../../../services/entities/warehouse.service';
 import GeoService from './../../../services/geo.service';
 
@@ -21,10 +20,17 @@ import Warehouse from './../../../classes/Warehouse';
 import { v4 as uuid } from 'uuid';
 
 import './WarehouseAdd.scss';
+import EmployeeService from '../../../services/entities/employee.service';
 
-const WarehouseAdd = () => {
+const WarehouseAdd = ({ match }) => {
+  const currentWarehouseId = match.params.warehouseid;
 
-  const [warehouseId, setWarehouseId] = useState(null);
+  const [currentWarehouse, setCurrentWarehouse] = useState(null);
+
+  const [creator, setCreator] = useState(null);
+  const [creatorId, setCreatorId] = useState(null);
+
+  const [newWarehouseId, setNewWarehouseId] = useState(null);
 
   const [identification, setIdentification] = useState('');
   const [nbLoadingDocks, setNbLoadingDocks] = useState(0);
@@ -42,10 +48,41 @@ const WarehouseAdd = () => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
+  const computeValues = () => {
+    if(currentWarehouseId) {
+      WarehouseService.get(currentWarehouseId)
+        .then(warehouseDoc => {
+          setCurrentWarehouse(warehouseDoc.data());
+          setIdentification(warehouseDoc.data().name);
+          setNbLoadingDocks(warehouseDoc.data().nbLoadingDocks);
+
+          onSelectedLocationItem('CURRENT', null, {
+            content: <span>{warehouseDoc.data().address}</span>,
+            value: {
+              display_name: warehouseDoc.data().address,
+              coordinates: [warehouseDoc.data().latitude, warehouseDoc.data().longitude]
+            }
+          });
+
+          EmployeeService.get(warehouseDoc.data().creator)
+            .then(employeeDoc => {
+              setCreatorId(employeeDoc.id);
+              setCreator(employeeDoc.data());
+            })
+            .catch(ErrorService.manageError);
+        })
+        .catch(ErrorService.manageError);
+    }
+    else {
+      setCreatorId(computed.user.uid);
+      setCreator(computed.user);
+    }
+  };
+
   const onLocationAutoCompleteChange = inputValue => {
     setPossibleLocationsInput(inputValue);
 
-    PlacesService.search(inputValue, { addressdetails: 0 })
+    GeoService.searchPlaces(inputValue, { addressdetails: 0 })
       .then(values => {
         let newPossibleLocations = {};
         values.forEach(value => {
@@ -76,16 +113,16 @@ const WarehouseAdd = () => {
     }
     if(locationMarkerId) {
       map.current.switchMarker(
-        locationMarkerId, 
-        selectedLocationItem.value.coordinates[0], 
-        selectedLocationItem.value.coordinates[1], 
+        locationMarkerId,
+        selectedLocationItem.value.coordinates[0],
+        selectedLocationItem.value.coordinates[1],
         selectedLocationItem.value.display_name);
       centerOnLocationMarker();
     }
     else {
       setLocationMarkerId(map.current.addMarker(
-        selectedLocationItem.value.coordinates[0], 
-        selectedLocationItem.value.coordinates[1], 
+        selectedLocationItem.value.coordinates[0],
+        selectedLocationItem.value.coordinates[1],
         selectedLocationItem.value.display_name));
     }
   };
@@ -100,22 +137,46 @@ const WarehouseAdd = () => {
       return;
     }
 
-    WarehouseService.create(
-      new Warehouse(
-        identification, 
-        selectedLocationItem.value.coordinates[0], 
+    if(currentWarehouse) {
+      const warehouse = new Warehouse(
+        identification,
+        selectedLocationItem.value.coordinates[0],
         selectedLocationItem.value.coordinates[1],
-        computed.activeRole.companyId, 
-        computed.user.uid, 
-        DateService.getCurrentIsoDateString(),
-        nbLoadingDocks))
-      .then(warehouseDoc => setWarehouseId(warehouseDoc.id))
-      .catch(ErrorService.manageError);
+        selectedLocationItem.value.display_name,
+        currentWarehouse.companyId,
+        currentWarehouse.creator,
+        currentWarehouse.creationIsoDate,
+        nbLoadingDocks
+      );
+      WarehouseService.update(currentWarehouseId, warehouse)
+        .then(() => setNewWarehouseId(currentWarehouseId))
+        .catch(ErrorService.manageError);        
+    }
+    else {
+      WarehouseService.create(
+        new Warehouse(
+          identification, 
+          selectedLocationItem.value.coordinates[0],
+          selectedLocationItem.value.coordinates[1],
+          selectedLocationItem.value.display_name,
+          computed.activeRole.companyId, 
+          computed.user.uid, 
+          DateService.getCurrentIsoDateString(),
+          nbLoadingDocks))
+        .then(warehouseDoc => setNewWarehouseId(warehouseDoc.id))
+        .catch(ErrorService.manageError);
+    }
   };
   
   useEffect(() => {
     centerOnLocationMarker()
   }, [locationMarkerId]);
+
+  useEffect(() => {
+    if(computed.initialized) {
+      computeValues();
+    }
+  }, [computed]);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, observerKey);
@@ -128,6 +189,11 @@ const WarehouseAdd = () => {
     ErrorService.warning('Please activate a role to add an equipment!');
     return <Redirect to={`/dashboard`} />;
   }
+
+  if(currentWarehouse && currentWarehouse.companyId !== computed.activeRole.companyId) {
+    ErrorService.warning('You don\'t have permission to edit this');
+    return <Redirect to={`/dashboard`} />;
+  }
   
   /**
    * RENDER
@@ -136,14 +202,14 @@ const WarehouseAdd = () => {
     return null;
   }
 
-  if(warehouseId) {
+  if(newWarehouseId) {
     let dashboardUrl = '/dashboard';
     return <Redirect to={dashboardUrl} />;
   }
 
   return (
     <div className="WarehouseAdd">
-      <h1>Add a Warehouse</h1>
+      <h1>{currentWarehouse ? `Edit "${currentWarehouse.name}" warehouse` : 'Add  a Warehouse'}</h1>
       <form onSubmit={handleSubmit}>
         
         <FormInput
@@ -212,7 +278,7 @@ const WarehouseAdd = () => {
             <Icon source="fa" icon={faUser} />
             Creator
           </span>
-          <PageLink type={PageLinkType.EMPLOYEE} entityId={computed.user.uid} entityData={computed.employee} />
+          <PageLink type={PageLinkType.EMPLOYEE} entityId={creatorId} entityData={creator} />
         </div>
 
         <input type="submit" />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faSearch, faUsers, faBuilding, faTruck, faFileSignature, faWarehouseAlt } from '@fortawesome/pro-solid-svg-icons';
+import { faSearch, faUsers, faBuilding, faTruck, faWarehouseAlt, faHandshakeAlt } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 import Tabs from './../../Utils/Tabs/Tabs';
@@ -148,7 +148,7 @@ const Search = () => {
           name: () => <span>
             <Icon source="fa" icon={faUsers} />
             Employees / Users
-            <span className="badge-inverse">{Object.keys(employees).length}</span>
+            <span className="badge badge-inverse">{Object.keys(employees).length}</span>
           </span>,
           content: () => <ExTable key="employees" 
                                   items={employees}
@@ -160,7 +160,7 @@ const Search = () => {
           name: () => <span>
             <Icon source="fa" icon={faBuilding} />
             Companies
-            <span className="badge-inverse">{Object.keys(companies).length}</span>
+            <span className="badge badge-inverse">{Object.keys(companies).length}</span>
           </span>,
           content: () => <ExTable key="companies"
                                   items={companies}
@@ -172,7 +172,7 @@ const Search = () => {
           name: () => <span>
             <Icon source="fa" icon={faTruck} />
             Equipments
-            <span className="badge-inverse">{Object.keys(equipments).length}</span>
+            <span className="badge badge-inverse">{Object.keys(equipments).length}</span>
           </span>,
           content: () => <ExTable key="equipments"
                                   items={equipments}
@@ -182,9 +182,9 @@ const Search = () => {
         },
         contracts: {
           name: () => <span>
-            <Icon source="fa" icon={faFileSignature} />
+            <Icon source="fa" icon={faHandshakeAlt} />
             Contracts
-            <span className="badge-inverse">{Object.keys(contracts).length}</span>
+            <span className="badge badge-inverse">{Object.keys(contracts).length}</span>
           </span>,
           content: () => <ExTable key="contracts"
                                   items={contracts}
@@ -196,7 +196,7 @@ const Search = () => {
           name: () => <span>
             <Icon source="fa" icon={faWarehouseAlt} />
             Warehouses
-            <span className="badge-inverse">{Object.keys(warehouses).length}</span>
+            <span className="badgebadge-inverse">{Object.keys(warehouses).length}</span>
           </span>,
           content: () => <ExTable key="warehouses"
                                   items={warehouses}

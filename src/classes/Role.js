@@ -1,4 +1,4 @@
-import { faSteeringWheel, faUserTie, faEye, faWrench } from '@fortawesome/pro-solid-svg-icons';
+import { faSteeringWheel, faUserTie, faEye, faWrench, faJoystick, faHands, faCalculator } from '@fortawesome/pro-solid-svg-icons';
 
 /**
  * A role is authorization for an employee to access a company's data depending of its role
@@ -26,7 +26,10 @@ export const ERole = Object.freeze({
     DRIVER: 'DRIVER',
     MANAGER: 'MANAGER',
     OBSERVER: 'OBSERVER',
-    MECHANIC: 'MECHANIC'
+    MECHANIC: 'MECHANIC',
+    OPERATOR: 'OPERATOR',
+    INSURER: 'INSURER',
+    ACCOUNTANT: 'ACCOUNTANT'
 });
 
 export const RoleDetails = {
@@ -46,6 +49,18 @@ export const RoleDetails = {
         name: 'Mechanic',
         icon: faWrench
     },
+    [ERole.OPERATOR]: {
+        name: 'Operator',
+        icon: faJoystick
+    },
+    [ERole.INSURER]: {
+        name: 'Insurer',
+        icon: faHands
+    },
+    [ERole.ACCOUNTANT]: {
+        name: 'Accountant',
+        icon: faCalculator
+    }
 };
 
 export const ERoleStatus = Object.freeze({

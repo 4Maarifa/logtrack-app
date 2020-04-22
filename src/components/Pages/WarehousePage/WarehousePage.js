@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { faWarehouseAlt } from '@fortawesome/pro-solid-svg-icons';
+import { faTruck } from '@fortawesome/pro-solid-svg-icons'
 
-import DataService from './../../../services/data.service';
-import CompanyService from './../../../services/entities/company.service';
-import ErrorService from './../../../services/error.service';
-import BrandService from './../../../services/entities/brand.service';
-import EquipmentModelService from './../../../services/entities/equipmentModel.service';
-import EquipmentService from './../../../services/entities/equipment.service';
-import WarehouseService from './../../../services/entities/warehouse.service';
+import DataService from '../../../services/data.service';
+import CompanyService from '../../../services/entities/company.service';
+import ErrorService from '../../../services/error.service';
+import BrandService from '../../../services/entities/brand.service';
+import EquipmentModelService from '../../../services/entities/equipmentModel.service';
+import EquipmentService from '../../../services/entities/equipment.service';
+import WarehouseService from '../../../services/entities/warehouse.service';
 
-import Loader from './../../Utils/Loader/Loader';
-import Icon from './../../Utils/Icon/Icon';
-import ExTable from './../../Utils/ExTable/ExTable';
-import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
+import Loader from '../../Utils/Loader/Loader';
+import ExTable from '../../Utils/ExTable/ExTable';
+import Icon from '../../Utils/Icon/Icon';
+import Tabs from '../../Utils/Tabs/Tabs';
 
-import Equipment from './../../Entities/Equipment/Equipment';
-
-import Colors from './../../../assets/Colors';
+import Equipment from '../../Entities/Equipment/Equipment';
+import Warehouse from '../../Entities/Warehouse/Warehouse';
 
 import { v4 as uuid } from 'uuid';
 
@@ -112,21 +111,21 @@ const WarehousePage = ({ match }) => {
   }
   return (
     <div className="WarehousePage">
-      <div className="warehouse-header" style={{
-        backgroundColor: (company.color || Colors.gray)
-      }}>
-        <h1>
-          <Icon source="fa" icon={faWarehouseAlt} />
-          <PageLink type={PageLinkType.WAREHOUSE} entityId={warehouseId} entityData={warehouse} white />
-        </h1>
-        <div className="actions">
-          
-        </div>
+      <div className="Element Element--page">
+        <Warehouse key={warehouseId} warehouse={ {[warehouseId]: warehouse} } options={{ }} showDetails isPage />
       </div>
-      <ExTable items={equipments}
-                renderItem={renderEquipment}
-                header={['Identification', 'Model']}
-                loading={isEquipmentsLoading} />
+      <Tabs default="equipments" tabs={{
+        equipments: {
+          name: () => <span>
+            <Icon source="fa" icon={faTruck} />
+            Equipments
+          </span>,
+          content: () => <ExTable items={equipments}
+            renderItem={renderEquipment}
+            header={['Identification', 'Model']}
+            loading={isEquipmentsLoading} />
+        }
+      }} />
     </div>
   );
 };

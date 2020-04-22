@@ -15,7 +15,7 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-    width: var(--form-width);
+    width: var(--complex-form-width);
 
     .FormInput, .FormInputFile {
       width: 100%;
@@ -42,8 +42,9 @@
       }
 
       &-content {
-        width: 150%;
+        width: 100%;
         display: flex;
+        flex-direction: row;
         padding: .5rem;
         margin-top: 1rem;
 
@@ -80,7 +81,7 @@
 
           .plan-price {
             width: calc(100% - 4rem);
-            margin: .5rem 2rem;
+            margin: .5rem 1rem;
             border-top: 2px solid var(--second);
 
             &-amount {
@@ -92,8 +93,8 @@
           }
 
           ul {
-            font-size: 90%;
-            margin: .5rem 2rem;
+            font-size: 85%;
+            margin: .5rem 1rem;
             padding: 0;
             list-style-type: none;
 
@@ -172,6 +173,53 @@
       &-info {
         color: var(--gray);
         font-size: 85%;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 500px) and (orientation: portrait) {
+  .CompanyAdd {
+    form {
+      .plan-selection {
+
+        &-content {
+
+          & > div {
+
+            ul {
+              width: 90%;
+              display: flex;
+              flex-flow: wrap;
+
+              li {
+                width: 50%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .CompanyAdd {
+    form {
+      .plan-selection {
+
+        &-content {
+          margin: 0;
+          flex-direction: column;
+
+          & > div {
+            margin: 1rem 0 0 0;
+
+            &:nth-child(2) {
+              transform: scale(1);
+            }
+          }
+        }
       }
     }
   }

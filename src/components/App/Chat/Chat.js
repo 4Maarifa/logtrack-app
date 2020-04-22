@@ -304,7 +304,7 @@ const Chat = ({ match }) => {
               return <li key={chatMessageKey} className={'message ' + 
                   (chats[selectedChatId][chatMessageKey].creator === computed.user.uid ? 'message-me' : 'message-others')}>
 
-                {!!printDate && <span className="message-date">{
+                {printDate && <span className="message-date">{
                   DateService.isToday(DateService.getDateFromTimeStampNumber(chats[selectedChatId][chatMessageKey].datetime)) ?
                     DateService.getTimeString(DateService.getDateFromTimeStampNumber(chats[selectedChatId][chatMessageKey].datetime))
                     : DateService.getDateTimeString(DateService.getDateFromTimeStampNumber(chats[selectedChatId][chatMessageKey].datetime), false)

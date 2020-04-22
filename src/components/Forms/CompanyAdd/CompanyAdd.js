@@ -15,6 +15,7 @@ import FileService from './../../../services/file.service';
 import RoleService from './../../../services/entities/role.service';
 import CompanyService from './../../../services/entities/company.service';
 import ColorService from './../../../services/color.service';
+import EmployeeService from './../../../services/entities/employee.service';
 
 import Company, { ECompanyPlan } from './../../../classes/Company';
 import Role from './../../../classes/Role';
@@ -25,34 +26,70 @@ import { v4 as uuid } from 'uuid';
 import './CompanyAdd.scss';
 
 const defaultColors = {
-  '#999999': {
+  '#444444': {
     content: <Fragment>
-        <i className="input-color-choice" style={{ backgroundColor: '#999999' }}></i>
+        <i className="input-color-choice" style={{ backgroundColor: '#444444' }}></i>
         <Icon source="fa" icon={faCheck} />
       </Fragment>
   }
 };
 
-const CompanyAdd = () => {
+const CompanyAdd = ({ match }) => {
+  const currentCompanyId = match.params.companyid;
 
-  const [companyId, setCompanyId] = useState(null);
+  const [currentCompany, setCurrentCompany] = useState(null);
+
+  const [newCompanyId, setNewCompanyId] = useState(null);
+
+  const [creatorId, setCreatorId] = useState(null);
+  const [creator, setCreator] = useState(null);
 
   const [name, setName] = useState('');
   const [plan, setPlan] = useState('');
   const [logo, setLogo] = useState(null);
   const [colors, setColors] = useState({ ...defaultColors });
-  const [selectedColor, setSelectedColor] = useState('#999999');
+  const [selectedColor, setSelectedColor] = useState('#444444');
 
   const observerKey = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
-  }, []);
-  
-  if(!computed.initialized) { return null; }
+  const computeValues = () => {
+    if(currentCompanyId) {
+      CompanyService.get(currentCompanyId)
+        .then(companyDoc => {
+          setCurrentCompany(companyDoc.data());
+          setName(companyDoc.data().name);
+          setPlan(companyDoc.data().plan);
+          setLogo({
+            file: null,
+            url: companyDoc.data().logoURL
+          });
+          
+          let currentColors = colors;
+          currentColors[companyDoc.data().color] = {
+            content: <Fragment>
+              <i className="input-color-choice" style={{ backgroundColor: companyDoc.data().color }}></i>
+              <Icon source="fa" icon={faCheck} />
+            </Fragment>
+          };
+          setColors(currentColors);
+          setSelectedColor(companyDoc.data().color);
+          
+          EmployeeService.get(companyDoc.data().creator)
+            .then(employeeDoc => {
+              setCreatorId(employeeDoc.id);
+              setCreator(employeeDoc.data());
+            })
+            .catch(ErrorService.manageError);
+        })
+        .catch(ErrorService.manageError);
+    }
+    else {
+      setCreatorId(computed.user.uid);
+      setCreator(computed.user);
+    }
+  };
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -62,26 +99,67 @@ const CompanyAdd = () => {
       return;
     }
 
-    uploadLogo()
-      .then(logoUrl => {
+    if(!logo) {
+      ErrorService.warning('You must upload a logo');
+      return;
+    }
 
-        CompanyService.create(new Company(name, logoUrl, computed.user.uid, DateService.getCurrentIsoDateString(), selectedColor, plan))
+    const endCompanyProcess = logoURL => {
+      if(currentCompanyId) {
+        const company = new Company(currentCompany.name,
+                                    logoURL,
+                                    currentCompany.creator,
+                                    currentCompany.creationIsoString,
+                                    selectedColor || '#444444',
+                                    currentCompany.plan
+        );
+        CompanyService.update(currentCompanyId, company)
+          .then(() => {
+            setNewCompanyId(currentCompanyId);
+            DataService.computed.notifyChanges();
+          })
+          .catch(ErrorService.manageError);
+      }
+      else {
+        CompanyService.create(
+          new Company(name,
+                      logoURL,
+                      computed.user.uid,
+                      DateService.getCurrentIsoDateString(),
+                      selectedColor || '#444444',
+                      plan))
+
           .then(docRef => {
-
             RoleService.create(new Role(computed.user.uid, docRef.id, ERoleStatus.CONFIRMED, ERole.MANAGER, DateService.getCurrentIsoDateString(), null))
-              .then(() => setCompanyId(docRef.id))
+              .then(() => setNewCompanyId(docRef.id))
               .catch(ErrorService.manageError);
           })
           .catch(ErrorService.manageError);
+      }
+    };
+
+    if(logo.file) {
+      FileService.uploadCompanyLogo(logo.file)
+      .then(fileRef => {
+
+        FileService.getDownloadURLForCompanyLogo(fileRef)
+          .then(endCompanyProcess)
+          .catch(ErrorService.manageError);
       })
       .catch(ErrorService.manageError);
+    }
+    else {
+      endCompanyProcess(currentCompany.logoURL);
+    }
+    
   };
 
-  const onLogoChange = file => {
-    !!file && ColorService.getMainColorsOfImage(URL.createObjectURL(file[0]))
+  const onLogoChange = newLogo => {
+    setLogo(newLogo);
+    setSelectedColor('');
+    newLogo && newLogo.file && ColorService.getMainColorsOfImage(newLogo.url)
       .then(computeColors)
       .catch(ErrorService.manageError);
-    setLogo(!!file ? file[0] : null);
   };
 
   const computeColors = colors => {
@@ -99,23 +177,18 @@ const CompanyAdd = () => {
     setColors(colorResults);
   };
 
-  const uploadLogo = () => {
-    return new Promise((resolve, reject) => {
-      // Logo is mandatory
-      if(!logo) {
-        reject('You must upload a logo!');
-      }
+  useEffect(() => {
+    if(computed.initialized) {
+      computeValues();
+    }
+  }, [computed]);
 
-      FileService.uploadCompanyLogo(logo)
-        .then(fileRef => {
-
-          FileService.getDownloadURLForCompanyLogo(fileRef)
-            .then(url => resolve(url))
-            .catch(reject);
-        })
-        .catch(reject);
-    });
-  };
+  useEffect(() => {
+    DataService.computed.observeComputedValues(setComputed, observerKey);
+    return () => DataService.computed.unobserveComputedValues(observerKey)
+  }, []);
+  
+  if(!computed.initialized) { return null; }
 
   /**
    * RENDER
@@ -123,9 +196,8 @@ const CompanyAdd = () => {
   if(!computed.employee) {
     return null;
   }
-  if(companyId) {
-    const companyUrl = '/company/' + companyId;
-    return <Redirect to={companyUrl} />;
+  if(newCompanyId) {
+    return <Redirect to={`/company/${newCompanyId}`} />;
   }
 
   return (
@@ -138,6 +210,7 @@ const CompanyAdd = () => {
           value={name}
           inputType="text"
           fieldName="name"
+          inputDisabled={currentCompanyId}
           label={
             <span>
               <Icon source="fa" icon={faBuilding} />
@@ -153,6 +226,11 @@ const CompanyAdd = () => {
             </span>
           }
           onValueChange={setName} />
+
+        {currentCompanyId ? <span className="input-color-info">
+          <Icon source="fa" icon={faInfoCircle} />
+          Please contact the support to edit your company's name.
+        </span> : null}
 
         {/* Plan field */}
         <div className="plan-selection">
@@ -172,7 +250,7 @@ const CompanyAdd = () => {
               <div className="plan-price">
                 {ECompanyPlan[planKey].price}
               </div>
-              <span className={'button ' + (!!ECompanyPlan[planKey].disabled ? 'disabled' : '')} onClick={() => !ECompanyPlan[planKey].disabled && setPlan(planKey)}>
+              <span className={'button ' + (ECompanyPlan[planKey].disabled ? 'disabled' : '')} onClick={() => !ECompanyPlan[planKey].disabled && setPlan(planKey)}>
                 {!ECompanyPlan[planKey].disabled ? (plan === planKey ? <span><Icon source="fa" icon={faCheck}/> Plan Selected</span> : 'Select this plan') : 'Not available yet'}
               </span>
               {!ECompanyPlan[planKey].disabled && <span className="plan-info">No Credit Card required</span>}
@@ -190,13 +268,14 @@ const CompanyAdd = () => {
         <FormInputFile
           imagePreview
           onValueChange={onLogoChange}
+          value={logo}
           label={
             <span>
               <Icon source="fa" icon={faImage} />
               Logo
             </span>
           }
-          inputRequired
+          inputRequired={!currentCompanyId}
           instructions={
             <span>
               The logo is required
@@ -212,8 +291,7 @@ const CompanyAdd = () => {
           </span>
           <Choose
             items={colors}
-            multiple={false} 
-            defaultSelection={selectedColor}
+            selection={selectedColor}
             fieldName="selectedColor"
             selectionRequired
             onSelectionChange={setSelectedColor} />
@@ -229,7 +307,7 @@ const CompanyAdd = () => {
             <Icon source="fa" icon={faUser} />
             Creator
           </span>
-          <PageLink type={PageLinkType.EMPLOYEE} entityId={computed.user.uid} entityData={computed.employee} />
+          <PageLink type={PageLinkType.EMPLOYEE} entityId={creatorId} entityData={creator} />
         </div>
 
         <input type="submit" />

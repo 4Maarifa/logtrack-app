@@ -9,7 +9,7 @@ const admin = require('firebase-admin');
 
 admin.initializeApp();
 
-var db = admin.firestore();
+const db = admin.firestore();
 
 const computeStatApp = express();
 computeStatApp.use(cors({origin: true}));
@@ -23,7 +23,7 @@ const computeStat = {
     return computeStatApp(request, response);
   }),
   app: (req, res) => {
-    var promises = [];
+    const promises = [];
   
     req.body.data.types.forEach(reqType => {
       if(computeStat.fns[reqType]) {
@@ -36,7 +36,7 @@ const computeStat = {
   
     Promise.all(promises)
       .then(values => {
-        var result = {data: {}};
+        const result = {data: {}};
         values.forEach(value => {
           Object.assign(result.data, value);
         });
@@ -65,7 +65,7 @@ const computeStat = {
         handleError(reject, 'The employee-count request needs the companyId param');
       }
   
-      var roles = {};
+      const roles = {};
       db.collection('roles')
         .where('companyId', '==', req.body.data.companyId)
         .get()
@@ -141,7 +141,7 @@ const search = {
       return res.status(500).end();
     }
 
-    var promises = [];
+    const promises = [];
 
     req.body.data.types.forEach(reqType => {
       if(search.fns[reqType]) {
@@ -153,7 +153,7 @@ const search = {
     });
 
     Promise.all(promises).then(values => {
-      var result = {data: {}};
+      const result = {data: {}};
       values.forEach(value => {
         Object.assign(result.data, value);
       });
@@ -166,7 +166,7 @@ const search = {
   },
   fns: {
     'search-companies': req => new Promise((resolve, reject) => {  
-      var companies = {};
+      const companies = {};
       db.collection('companies').get()
         .then(querySnapshot => {
           querySnapshot.forEach(companyDoc => {
@@ -179,7 +179,7 @@ const search = {
         .catch(e => handleError(reject, e));
     }),
     'search-employees': req => new Promise((resolve, reject) => {  
-      var employees = {};
+      const employees = {};
       db.collection('employees').get()
         .then(querySnapshot => {
           querySnapshot.forEach(employeeDoc => {
@@ -196,7 +196,7 @@ const search = {
         console.error('The search request needs the companyId param to search equipments');
         reject(new Error('The search request needs the companyId param to search equipments'));
       }
-      var equipments = {};
+      const equipments = {};
       db.collection('equipments').get()
         .then(querySnapshot => {
           querySnapshot.forEach(equipmentDoc => {
@@ -213,7 +213,7 @@ const search = {
         console.error('The search request needs the companyId param to search contracts');
         reject(new Error('The search request needs the companyId param to search contracts'));
       }
-      var contracts = {};
+      const contracts = {};
       Promise.all([
         db.collection('contracts').where('companyExecId', '==', req.body.data.companyId).get(),
         db.collection('contracts').where('companyOrderId', '==', req.body.data.companyId).get()
@@ -236,7 +236,7 @@ const search = {
         console.error('The search request needs the companyId param to search warehouses');
         reject(new Error('The search request needs the companyId param to search warehouses'));
       }
-      var warehouses = {};
+      const warehouses = {};
       db.collection('warehouses').get()
         .then(querySnapshot => {
           querySnapshot.forEach(warehouseDoc => {
@@ -258,7 +258,7 @@ handleError = (reject, message) => {
   reject(message);
 }
 
-removeDuplicateFromArray = (array) => {
+removeDuplicateFromArray = array => {
   return array.filter((item, pos) => array.indexOf(item) === pos);
 }
 

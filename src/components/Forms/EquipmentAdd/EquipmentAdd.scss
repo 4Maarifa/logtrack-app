@@ -20,6 +20,16 @@
       padding: .5rem;
       margin: 1.5rem 0 1rem 0;
 
+      &--done {
+        position: relative;
+        margin: 1.5rem 0 1rem 0;
+
+        .Element.Element--tile {
+          width: 100%;
+          margin: 0;
+        }
+      }
+
       .model-result {
         text-align: center;
         padding: .5rem 0;

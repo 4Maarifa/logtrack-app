@@ -25,7 +25,7 @@ const ErrorService = {
     manageError: error => {
         console.error(error);
 
-        if(!!error && error.hasOwnProperty('code')) {
+        if(error && error.hasOwnProperty('code')) {
             let errorMessage = '';
             switch(error.code) {
                 case 'auth/user-not-found':
@@ -59,11 +59,11 @@ const ErrorService = {
             ErrorService.error(error);
         }
     },
-    manageErrorThenReject(e, reject) {
+    manageErrorThenReject: (e, reject) => {
         ErrorService.manageError(e);
         reject(e);
     },
-    manageErrorThenPromiseRejection(e) {
+    manageErrorThenPromiseRejection: e => {
         ErrorService.manageError(e);
         return Promise.reject(e);
     }

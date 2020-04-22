@@ -60,10 +60,10 @@ import SignOut from './components/Forms/SignOut/SignOut';
 import Profile from './components/App/Profile/Profile';
 
 import CompanyAdd from './components/Forms/CompanyAdd/CompanyAdd';
-import CompanyPage from './components/App/CompanyPage/CompanyPage';
+import CompanyPage from './components/Pages/CompanyPage/CompanyPage';
 
 import Employees from './components/App/Employees/Employees';
-import EmployeePage from './components/App/EmployeePage/EmployeePage';
+import EmployeePage from './components/Pages/EmployeePage/EmployeePage';
 
 import Roles from './components/App/Roles/Roles';
 import RoleAdd from './components/Forms/RoleAdd/RoleAdd';
@@ -71,14 +71,16 @@ import RoleOffer from './components/Forms/RoleOffer/RoleOffer';
 
 import Equipments from './components/App/Equipments/Equipments';
 import EquipmentAdd from './components/Forms/EquipmentAdd/EquipmentAdd';
+import EquipmentPage from './components/Pages/EquipmentPage/EquipmentPage';
 import EquipmentModelAdd from './components/Forms/EquipmentModelAdd/EquipmentModelAdd';
 
 import Contracts from './components/App/Contracts/Contracts';
+import ContractPage from './components/Pages/ContractPage/ContractPage';
 import ContractAdd from './components/Forms/ContractAdd/ContractAdd';
 
 import Warehouses from './components/App/Warehouses/Warehouses';
 import WarehouseAdd from './components/Forms/WarehouseAdd/WarehouseAdd';
-import WarehousePage from './components/App/WarehousePage/WarehousePage';
+import WarehousePage from './components/Pages/WarehousePage/WarehousePage';
 
 import Gps from './components/App/Gps/Gps';
 
@@ -90,6 +92,7 @@ import Analytics from './components/App/Analytics/Analytics';
 import Search from './components/App/Search/Search';
 
 import Chat from './components/App/Chat/Chat';
+import ChatCreate from './components/App/ChatCreate/ChatCreate';
 
 // SERVICES
 import FirebaseService from './services/firebase.service';
@@ -153,7 +156,7 @@ const RoleLimitedRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => (
         FirebaseService.isUserConnected()
         ? (
-            (!!DataService.computed.activeRole && rest.roles.includes(DataService.computed.activeRole.role))
+            (DataService.computed.activeRole && rest.roles.includes(DataService.computed.activeRole.role))
             ? <Component {...props} />
             : <Redirect to='dashboard' />
         )
@@ -197,6 +200,7 @@ const renderApp = () => {
         
                     <PrivateRoute exact path="/company/:companyid" component={CompanyPage} />
                     <PrivateRoute exact path="/company-add" component={CompanyAdd} />
+                    <PrivateRoute exact path="/company-edit/:companyid" component={CompanyAdd} />
 
                     <PrivateRoute exact path="/roles" component={Roles} />
 
@@ -207,14 +211,19 @@ const renderApp = () => {
                     <PrivateRoute exact path="/role-offer/:userid" component={RoleOffer} />
 
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/equipments" component={Equipments} />
+                    <PrivateRoute exact path="/equipment/:equipmentid" component={EquipmentPage} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/equipment-add" component={EquipmentAdd} />
+                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/equipment-edit/:equipmentid" component={EquipmentAdd} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/equipment-model-add" component={EquipmentModelAdd} />
 
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contracts" component={Contracts} />
+                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contract/:contractid" component={ContractPage} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contract-add" component={ContractAdd} />
+                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contract-edit/:contractid" component={ContractAdd} />
 
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/warehouses" component={Warehouses} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/warehouse-add" component={WarehouseAdd} />
+                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/warehouse-edit/:warehouseid" component={WarehouseAdd} />
                     <PrivateRoute exact path="/warehouse/:warehouseid" component={WarehousePage} />
 
                     <RoleLimitedRoute roles={[ERole.DRIVER]} exact path="/gps" component={Gps} />
@@ -228,6 +237,7 @@ const renderApp = () => {
 
                     <PrivateRoute exact path="/chat" component={Chat} />
                     <PrivateRoute exact path="/chat/:chatid" component={Chat} />
+                    <PrivateRoute exact path="/chat-create/:userid" component={ChatCreate} />
                 </div>
                 <Modal></Modal>
             </div>

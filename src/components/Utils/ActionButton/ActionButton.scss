@@ -47,13 +47,15 @@
       a:focus,
       a:visited,
       a:link,
-      a:active {
+      a:active,
+      button {
         color: #000000;
         text-decoration: none;
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
         align-items: center;
+        border: 0;
       }
 
       .action-title {

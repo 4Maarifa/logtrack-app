@@ -14,7 +14,7 @@ const LogTrackService = {
     [ERights.RIGHT_LOGTRACK_UPDATE]: () => DataService.computed.isConnected(),
     [ERights.RIGHT_LOGTRACK_DELETE]: () => false
   },
-  create(logTrack) {
+  create: logTrack => {
     if(!LogTrackService.rights[ERights.RIGHT_LOGTRACK_CREATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create a LogTrack' }, reject);
     }
@@ -33,7 +33,7 @@ const LogTrackService = {
 
     return FirebaseService.getDb().collection('logtracks').add(migratePrototype(logTrack));
   },
-  get(logTrackId) {
+  get: logTrackId => {
     if(!LogTrackService.rights[ERights.RIGHT_LOGTRACK_GET]()) {
       return ErrorService.manageErrorThenReject({ code: 'entity/right', details: 'Get a LogTrack' }, reject);
     }
@@ -44,7 +44,7 @@ const LogTrackService = {
 
     return FirebaseService.getDb().collection('logtracks').doc(logTrackId).get();
   },
-  list() {
+  list: () => {
     if(!LogTrackService.rights[ERights.RIGHT_LOGTRACK_LIST]()) {
       return ErrorService.manageErrorThenReject({ code: 'entity/right', details: 'List LogTracks' }, reject);
     }
@@ -53,17 +53,17 @@ const LogTrackService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    var logTracks = {};
+    const logTracks = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getDb().collection('logtracks').get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((logTrackDoc) => logTracks[logTrackDoc.id] = logTrackDoc.data());
+            .then(querySnapshot => {
+                querySnapshot.forEach(logTrackDoc => logTracks[logTrackDoc.id] = logTrackDoc.data());
                 resolve(logTracks);
             })
-            .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+            .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  update(logTrack) {
+  update: (logTrackId, logTrack) => {
     if(!LogTrackService.rights[ERights.RIGHT_LOGTRACK_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a LogTrack' });
     }
@@ -80,9 +80,9 @@ const LogTrackService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('logtracks').doc(logTrack.id).set(migratePrototype(logTrack));
+    return FirebaseService.getDb().collection('logtracks').doc(logTrackId).set(migratePrototype(logTrack));
   },
-  updateField(logTrackId, logTrackField) {
+  updateField: (logTrackId, logTrackField) => {
     if(!LogTrackService.rights[ERights.RIGHT_LOGTRACK_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a LogTrack' });
     }
@@ -93,7 +93,7 @@ const LogTrackService = {
     
     return FirebaseService.getDb().collection('logtracks').doc(logTrackId).update(logTrackField);
   },
-  delete(logTrackId) {
+  delete: logTrackId => {
     if(!LogTrackService.rights[ERights.RIGHT_LOGTRACK_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a LogTrack' });
     }

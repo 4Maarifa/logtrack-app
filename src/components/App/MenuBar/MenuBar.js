@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { faComments, faExclamationTriangle, faBell, faCalendarAlt, faEnvelope } from '@fortawesome/pro-solid-svg-icons';
 
@@ -31,7 +31,7 @@ const MenuBar = () => {
    * RENDER
    */
   const renderRolePart = () => (
-    <div>
+    <Fragment>
       <NavLink className="nav-soon" activeClassName="nav--active" to={`/`} title="Calendar" exact>
         <Icon source="fa" icon={faCalendarAlt} />
       </NavLink>
@@ -48,7 +48,7 @@ const MenuBar = () => {
       <NavLink className="nav-soon" activeClassName="nav--active" to={`/`} title="Notifications" exact>
           <Icon source="fa" icon={faBell} />
       </NavLink>
-    </div>
+    </Fragment>
   );
 
   return (

@@ -63,7 +63,7 @@ export const ECompanyPlan = {
             <span><Icon containerclassname="optional" source="fa" icon={faCircle} /> Live Position Tracking<span className="plan-info">Optional<span className="mention">(2)</span>, via user's device<span className="mention">(3)</span></span></span>,
             <span><Icon containerclassname="included" source="fa" icon={faCheckCircle} /> Live Analytics</span>,
             <span><Icon containerclassname="included" source="fa" icon={faCheckCircle} /> Operation Contracts<span className="plan-info">Transportation, Maintenance</span></span>,
-            <span><Icon containerclassname="not-included" source="fa" icon={faTimesCircle} /> Other Contracts<span className="plan-info">Insurance, Accounting</span></span>
+            <span><Icon containerclassname="not-included" source="fa" icon={faTimesCircle} /> Other Contracts<span className="mention">(2)</span><span className="plan-info">Insurance, Accounting</span></span>
         ]
     },
     PREMIUM: {

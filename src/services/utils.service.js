@@ -1,6 +1,7 @@
 
 const UtilsService = {
-    getClosestElement(el, classs) {
+    getClosestElement: (el, classs) => {
+        console.warning('UtilsService.getClosestElement is DEPRECATED!');
         while (!el.classList.contains(classs)) {
             el = el.parentNode;
             if(!el) {
@@ -11,42 +12,31 @@ const UtilsService = {
     },
 
     // STRINGS
-    capitalize(str) {
-        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-    },
+    capitalize: str => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase(),
 
     // ARRAYS & OBJECTS
-    removeDuplicateFromArray(array) {
-        return array.filter((item, pos) => array.indexOf(item) === pos);
-    },
-    filterKeysOnPropertyValue(obj, predicate) {
-        return Object.keys(obj).filter(key => !!predicate(obj[key]));
-    },
-    filterObjectsOnPropertyValue(obj, predicate) {
-        return UtilsService
-            .filterKeysOnPropertyValue(obj, predicate)
-            .map((key) => obj[key]);
-    },
-    filterKeyValueOnPropertyValue(obj, predicate) {
-        var result = {};
+    removeDuplicateFromArray: array => array.filter((item, pos) => array.indexOf(item) === pos),
+    filterKeysOnPropertyValue: (obj, predicate) => Object.keys(obj).filter(key => predicate(obj[key])),
+    filterObjectsOnPropertyValue: (obj, predicate) => UtilsService.filterKeysOnPropertyValue(obj, predicate).map(key => obj[key]),
+    filterKeyValueOnPropertyValue: (obj, predicate) => {
+        const result = {};
         UtilsService.filterKeysOnPropertyValue(obj, predicate)
-            .forEach((key) => result[key] = obj[key]);
+            .forEach(key => result[key] = obj[key]);
         return result;
     },
-    mergeObjects(...obj) {
-        return Object.assign({}, ...obj);
-    },
-    compareArrays(arr1, arr2) {
+    mergeObjects: (...obj) => Object.assign({}, ...obj),
+    compareArrays: (arr1, arr2) => {
         if (!arr1 || !arr2)
             return false;
 
         if (arr1.length !== arr2.length)
             return false;
 
-        for (var i = 0, l=arr1.length; i < l; i++) {
+        for (let i = 0, l=arr1.length; i < l; i++) {
             if (arr1[i] instanceof Array && arr2[i] instanceof Array) {
-                if (!UtilsService.compareArrays(arr1[i], arr2[i]))
-                    return false;       
+                if (!UtilsService.compareArrays(arr1[i], arr2[i])) {
+                    return false;
+                }
             }           
             else if (arr1[i] !== arr2[i]) {
                 return false;   
