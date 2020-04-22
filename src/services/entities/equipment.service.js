@@ -15,7 +15,7 @@ const EquipmentService = {
     [ERights.RIGHT_EQUIPMENT_UPDATE]: () => DataService.computed.isConnected(),
     [ERights.RIGHT_EQUIPMENT_DELETE]: () => false
   },
-  create(equipment) {
+  create: equipment => {
     if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_CREATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create an Equipment' });
     }
@@ -34,18 +34,18 @@ const EquipmentService = {
 
     return FirebaseService.getDb().collection('equipments').add(migratePrototype(equipment));
   },
-  get(equipmentId) {
+  get: equipmentId => {
     if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get an Equipment' });
     }
     return FirebaseService.getDb().collection('equipments').doc(equipmentId).get();
   },
-  list() {
+  list: () => {
     if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Equipments' });
     }
 
-    var equipments = {};
+    const equipments = {};
     return new Promise((resolve, reject) => {
       FirebaseService.getDb().collection('equipments').get()
         .then(querySnapshot => {
@@ -55,7 +55,7 @@ const EquipmentService = {
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  update(equipment) {
+  update: (equpmentId, equipment) => {
     if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update an Equipment' });
     }
@@ -72,16 +72,16 @@ const EquipmentService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('equipments').doc(equipment.id).set(migratePrototype(equipment));
+    return FirebaseService.getDb().collection('equipments').doc(equpmentId).set(migratePrototype(equipment));
   },
-  updateField(equipmentId, equipmentField) {
+  updateField: (equipmentId, equipmentField) => {
     if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update an Equipment' });
     }
     
     return FirebaseService.getDb().collection('equipments').doc(equipmentId).update(equipmentField);
   },
-  delete(equipmentId) {
+  delete: equipmentId => {
     if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete an Equipment' });
     }
@@ -90,12 +90,12 @@ const EquipmentService = {
   },
 
   // CUSTOM FUNCTIONS
-  getAllForCompanyId(companyId) {
+  getAllForCompanyId: companyId => {
     if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Equipments' });
     }
 
-    var equipments = {};
+    const equipments = {};
     return new Promise((resolve, reject) => {
       FirebaseService.getDb().collection('equipments')
       .where('companyId', '==', companyId)
@@ -107,12 +107,12 @@ const EquipmentService = {
       .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  getAllForWarehouseId(warehouseId) {
+  getAllForWarehouseId: warehouseId => {
     if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Equipments' });
     }
 
-    var equipments = {};
+    const equipments = {};
     return new Promise((resolve, reject) => {
       FirebaseService.getDb().collection('equipments')
       .where('warehouseId', '==', warehouseId)
@@ -124,16 +124,14 @@ const EquipmentService = {
       .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  search(term) {
-    return new Promise((resolve, reject) => {
+  search: term => new Promise((resolve, reject) => {
       if(!DataService.computed.activeRole) {
         reject('Cannot search equipments : No active role');
       }
       DataService.computed.search([ESearchType.EQUIPMENTS], term, DataService.computed.activeRole.companyId)
         .then(results => resolve(results.data.equipments))
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
-    });
-  }
+    })
 };
 
 export default EquipmentService;

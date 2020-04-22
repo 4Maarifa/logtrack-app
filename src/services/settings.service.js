@@ -21,17 +21,17 @@ import { ReactComponent as SettingsNavCollapsedExtended } from './../assets/sett
 const SettingsService = {
   _settingsUpdating: false,
   // Get a specific settings from uers
-  getSettingValue(settingKey) {
+  getSettingValue: settingKey => {
     if(!DataService.computed.employee) {
       return null;
     }
-    if(!!DataService.computed.employee.settings && !!DataService.computed.employee.settings[settingKey]) {
+    if(DataService.computed.employee.settings && DataService.computed.employee.settings[settingKey]) {
       return DataService.computed.employee.settings[settingKey];
     }
     return ESettingsDetails[settingKey].default;
   },
-  updateSetting(settingKey, settingValue) {
-    if(!!SettingsService._settingsUpdating) {
+  updateSetting: (settingKey, settingValue) => {
+    if(SettingsService._settingsUpdating) {
       ErrorService.warning('Settings are already updating. Please wait and repeat your operation.');
       return;
     }
@@ -69,19 +69,15 @@ export const ESettingsDetails = {
     options: [
       {
         value: 'BASIC',
-        print: () => {
-          return <span>
+        print: () => (<span>
             <span>Basic Colors</span>
-          </span>;
-        }
+          </span>)
       },
       {
         value: 'CUSTOM',
-        print: () => {
-          return <span>
+        print: () => (<span>
             <span>Company Colors</span>
-          </span>;
-        }
+          </span>)
       }
     ],
     default: 'CUSTOM'
@@ -95,21 +91,17 @@ export const ESettingsDetails = {
     options: [
       {
         value: 'FULL',
-        print: () => {
-          return <span>
+        print: () => (<span>
             <SettingsFullPageLayoutFull />
             <span>Full Page</span>
-          </span>;
-        }
+          </span>)
       },
       {
         value: 'CLEAR',
-        print: () => {
-          return <span>
+        print: () => (<span>
             <SettingsFullPageLayoutClear />
             <span>Clear Layout</span>
-          </span>;
-        }
+          </span>)
       }
     ],
     default: 'CLEAR'
@@ -120,21 +112,17 @@ export const ESettingsDetails = {
     options: [
       {
         value: 'EXTENDED',
-        print: () => {
-          return <span>
+        print: () => (<span>
             <SettingsNavCollapsedExtended />
             <span>Extended Navigation</span>
-          </span>;
-        }
+          </span>)
       },
       {
         value: 'COLLAPSED',
-        print: () => {
-          return <span>
+        print: () => (<span>
             <SettingsNavCollapsedCollapsed />
             <span>Collapsed Navigation</span>
-          </span>;
-        }
+          </span>)
       }
     ],
     default: 'EXTENDED'
@@ -145,19 +133,15 @@ export const ESettingsDetails = {
     options: [
       {
         value: 'ON',
-        print: () => {
-          return <span>
+        print: () => (<span>
             <span>Show Weather</span>
-          </span>;
-        }
+          </span>)
       },
       {
         value: 'OFF',
-        print: () => {
-          return <span>
+        print: () => (<span>
             <span>Hide Weather</span>
-          </span>;
-        }
+          </span>)
       }
     ],
     default: 'OFF'

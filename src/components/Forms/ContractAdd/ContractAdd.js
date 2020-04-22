@@ -21,9 +21,12 @@ import { v4 as uuid } from 'uuid';
 
 import './ContractAdd.scss';
 
-const ContractAdd = () => {
+const ContractAdd = ({ match }) => {
+  const currentContractId = match.params.contractid;
 
-  const [contractId, setContractId] = useState(null);
+  const [currentContract, setCurrentContract] = useState(null);
+
+  const [newContractId, setNewContractId] = useState(null);
 
   const [identification, setIdentification] = useState('');
 
@@ -39,6 +42,31 @@ const ContractAdd = () => {
   const observerKey = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
+
+  const computeValues = () => {
+    if(currentContractId) {
+      ContractService.get(currentContractId)
+        .then(contractDoc => {
+          setContractType(contractDoc.data().contractType);
+          setIdentification(contractDoc.data().identification);
+          setCurrentContract(contractDoc.data());
+
+          const isCurrentExecutor = contractDoc.data().companyExecId === computed.activeRole.companyId;
+          setExecutor(isCurrentExecutor);
+          
+          CompanyService.get(isCurrentExecutor ? contractDoc.data().companyOrderId : contractDoc.data().companyExecId)
+            .then(companyDoc => {
+              setSelectedCompanyId(companyDoc.id);
+              setSelectedCompanyItem({
+                content: <PageLink noLink type={PageLinkType.COMPANY} entityId={companyDoc.id} entityData={companyDoc.data()} />,
+                value: companyDoc.data()
+              });
+            })
+            .catch(ErrorService.manageError);
+        })
+        .catch(ErrorService.manageError);
+    }
+  };
 
   const onCompanyAutoCompleteChange = value => {
     setPossibleCompaniesInput(value);
@@ -71,13 +99,35 @@ const ContractAdd = () => {
 
     // TODO
 
-    const companyOrderId = (isExecutor && selectedCompanyId) || computed.activeRole.companyId;
-    const companyExecId = (isExecutor && computed.activeRole.companyId) || selectedCompanyId;
-    
-    ContractService.create(new Contract(identification, [], companyOrderId, companyExecId, computed.activeRole.companyId, contractType, EContractStatus.DRAFT, DateService.getCurrentIsoDateString(), null))
-      .then(contractDoc => setContractId(contractDoc.id))
-      .catch(ErrorService.manageError);
+    if(currentContractId) {
+      ContractService.update(currentContractId,
+        new Contract(identification,
+                      currentContract.invoices,
+                      currentContract.companyOrderId,
+                      currentContract.companyExecId,
+                      currentContract.createdByCompanyId,
+                      currentContract.contractType,
+                      currentContract.status,
+                      currentContract.creationIsoDate,
+                      currentContract.archiveIsoDate))
+        .then(() => setNewContractId(currentContractId))
+        .catch(ErrorService.manageError);
+    }
+    else {
+      const companyOrderId = isExecutor ? selectedCompanyId : computed.activeRole.companyId;
+      const companyExecId = isExecutor ? computed.activeRole.companyId : selectedCompanyId;
+      
+      ContractService.create(new Contract(identification, [], companyOrderId, companyExecId, computed.activeRole.companyId, contractType, EContractStatus.DRAFT, DateService.getCurrentIsoDateString(), null))
+        .then(contractDoc => setNewContractId(contractDoc.id))
+        .catch(ErrorService.manageError);
+    }
   };
+
+  useEffect(() => {
+    if(computed.initialized) {
+      computeValues();
+    }
+  }, [computed]);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, observerKey);
@@ -90,6 +140,10 @@ const ContractAdd = () => {
     ErrorService.warning('Please activate a role to add an equipment!');
     return <Redirect to={`/dashboard`} />;
   }
+
+  /**
+   * RENDER
+   */
 
   let contractDetails = {};
   Object.keys(ContractTypeDetails).forEach(contractTypeKey => {
@@ -106,7 +160,7 @@ const ContractAdd = () => {
     return null;
   }
 
-  if(contractId) {
+  if(newContractId) {
     let contractsUrl = '/contracts';
     return <Redirect to={contractsUrl} />;
   }
@@ -147,47 +201,56 @@ const ContractAdd = () => {
             </span>
             <PageLink type={PageLinkType.COMPANY} entityId={computed.activeRole.companyId} entityData={computed.activeRoleCompany} />
           </div>
-          <div className="company-swap">
+          {currentContractId ? null : <div className="company-swap">
             <button onClick={() => setExecutor(!isExecutor)}>
               <Icon source="fa" icon={faExchange} style={{transform: 'rotate(90deg)'}} />
               Swap executing and ordering companies
             </button>
-          </div>
+          </div>}
         </Fragment>
         }
 
         {/* Company field */}
-        <FormDebounceAutoSuggestInput
-          value={possibleCompaniesInput}
-          label={
-            <span>
+        {currentContractId && selectedCompanyItem ?
+          <div className="input-company">
+            <span className="fake-label">
               <Icon source="fa" icon={faBuilding} />
               Company {isExecutor ? 'ordering' : 'executing'} the contract
             </span>
-          }
-          possibleItems={possibleCompanies}
-          onValueChange={onCompanyAutoCompleteChange}
-          onSelectedItemChange={(selectedCompanyId, _, selectedCompanyItem) => {
-            setSelectedCompanyId(selectedCompanyId);
-            setSelectedCompanyItem(selectedCompanyItem);
-          }}
-          inputAutoComplete="off"
-          inputRequired
-          selectedItemKey={selectedCompanyId}
-          selectedItem={selectedCompanyItem}
-          instructions={
-            <span>Pick a company</span>
-          } />
+            <PageLink type={PageLinkType.COMPANY} entityId={selectedCompanyId} entityData={selectedCompanyItem.value} />
+          </div> : 
+           <FormDebounceAutoSuggestInput
+            value={possibleCompaniesInput}
+            label={
+              <span>
+                <Icon source="fa" icon={faBuilding} />
+                Company {isExecutor ? 'ordering' : 'executing'} the contract
+              </span>
+            }
+            possibleItems={possibleCompanies}
+            onValueChange={onCompanyAutoCompleteChange}
+            onSelectedItemChange={(selectedCompanyId, _, selectedCompanyItem) => {
+              setSelectedCompanyId(selectedCompanyId);
+              setSelectedCompanyItem(selectedCompanyItem);
+            }}
+            inputAutoComplete="off"
+            inputRequired
+            selectedItemKey={selectedCompanyId}
+            selectedItem={selectedCompanyItem}
+            instructions={
+              <span>Pick a company</span>
+            } />
+        }
 
         {/* Company */}
         {isExecutor && 
         <Fragment>
-          <div className="company-swap">
+          {currentContractId ? null : <div className="company-swap">
             <button onClick={() => setExecutor(!isExecutor)}>
               <Icon source="fa" icon={faExchange} style={{transform: 'rotate(90deg)'}} />
               Swap executing and ordering companies
             </button>
-          </div>
+          </div>}
           <div className="input-company">
             <span className="fake-label">
               <Icon source="fa" icon={faBuilding} />
@@ -203,11 +266,13 @@ const ContractAdd = () => {
           <span className="fake-label">
             Contract Type
           </span>
-          <Choose
-            items={contractDetails}
-            multiple={false} 
-            fieldName="contractType"
-            onSelectionChange={setContractType} />
+          {currentContractId && currentContract ? 
+            contractDetails[contractType].content
+          : <Choose
+              selection={contractType}
+              items={contractDetails}
+              fieldName="contractType"
+              onSelectionChange={setContractType} /> }
         </div>
 
         <input type="submit" />

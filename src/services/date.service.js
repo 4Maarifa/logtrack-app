@@ -6,7 +6,7 @@ const DateService = {
   getCurrentIsoDateString: () => new Date().toISOString(),
   getCurrentTimeStampNumber: () => +new Date(),
 
-  getDateTimeString(date, withYear = true) {
+  getDateTimeString: (date, withYear = true) => {
     let DATETIME_TRANSFORM_OPTIONS = {
       year: 'numeric',
       month: '2-digit',
@@ -17,7 +17,7 @@ const DateService = {
     !withYear && delete DATETIME_TRANSFORM_OPTIONS.year;
     return date.toLocaleTimeString([], DATETIME_TRANSFORM_OPTIONS);
   },
-  getDateString(date, withYear = true) {
+  getDateString: (date, withYear = true) => {
     let DATE_TRANSFORM_OPTIONS = {
       year: 'numeric',
       month: '2-digit',
@@ -26,14 +26,14 @@ const DateService = {
     !withYear && delete DATE_TRANSFORM_OPTIONS.year;
     return date.toLocaleDateString([], DATE_TRANSFORM_OPTIONS);
   },
-  getMonthYearString(date) {
-    let DATE_TRANSFORM_OPTIONS = {
+  getMonthYearString: date => {
+    const DATE_TRANSFORM_OPTIONS = {
       year: 'numeric',
       month: '2-digit'
     };
     return date.toLocaleDateString([], DATE_TRANSFORM_OPTIONS);
   },
-  getTimeString(date) {
+  getTimeString: date => {
     const TIME_TRANSFORM_OPTIONS = {
       hour: '2-digit',
       minute: '2-digit'
@@ -41,11 +41,9 @@ const DateService = {
     return date.toLocaleTimeString([], TIME_TRANSFORM_OPTIONS);
   },
 
-  areDatesTheSameDay(date1, date2) {
-    return date1.getFullYear() === date2.getFullYear()
+  areDatesTheSameDay: (date1, date2) => date1.getFullYear() === date2.getFullYear()
       && date1.getMonth() === date2.getMonth()
-      && date1.getDate() === date2.getDate();
-  },
+      && date1.getDate() === date2.getDate(),
   isToday: date => DateService.areDatesTheSameDay(date, new Date()),
 
   getDifference: (date1, date2) => Math.abs((+date2) - (+date1)),
@@ -55,22 +53,18 @@ const DateService = {
   _unwatchDate: () => DateService._watcher && clearInterval(DateService._watcher),
 
   _observers: {},
-  addObserver(observerCallback, observerKey) {
+  addObserver: (observerCallback, observerKey) => {
     DateService._observers[observerKey] = observerCallback;
     observerCallback();
-    if(DateService._computeObserverNumber() >= 1) {
-      DateService._watchDate();
-    }
+    DateService._computeObserverNumber() >= 1 && DateService._watchDate();
   },
-  removeObserver(observerKey) {
+  removeObserver: observerKey => {
     delete DateService._observers[observerKey];
     DateService._observers[observerKey] = null;
-    if(DateService._computeObserverNumber() === 0) {
-      DateService._unwatchDate();
-    }
+    DateService._computeObserverNumber() === 0 && DateService._unwatchDate();
   },
-  notifyNewDate: () => Object.values(DateService._observers).filter(obs => !!obs && typeof obs === 'function').forEach(obs => obs()),
-  _computeObserverNumber: () => Object.values(DateService._observers).filter(obs => !!obs && typeof obs === 'function').length
+  notifyNewDate: () => Object.values(DateService._observers).filter(obs => obs && typeof obs === 'function').forEach(obs => obs()),
+  _computeObserverNumber: () => Object.values(DateService._observers).filter(obs => obs && typeof obs === 'function').length
 };
 
 export default DateService;

@@ -10,11 +10,11 @@ const FirebaseService = {
     connection: null,
     db: null,
 
-    initialize() {
-        if(FirebaseService.connection == null) {
+    initialize: () => {
+        if(!FirebaseService.connection) {
             FirebaseService.connection = firebase.initializeApp(Credentials.firebase);
         }
-        if(FirebaseService.db == null) {
+        if(!FirebaseService.db) {
             FirebaseService.db = firebase.firestore();
         }
     },
@@ -26,7 +26,7 @@ const FirebaseService = {
 
     signUp: (email, password) => FirebaseService.getFirebaseObject().auth().createUserWithEmailAndPassword(email, password),
 
-    updateUser: (userProps) => FirebaseService.getFirebaseObject().auth().currentUser.updateProfile(userProps),
+    updateUser: userProps => FirebaseService.getFirebaseObject().auth().currentUser.updateProfile(userProps),
 
     signOut: () => FirebaseService.getFirebaseObject().auth().signOut(),
 
@@ -37,7 +37,7 @@ const FirebaseService = {
     // FIRESTORE
     getDb: () => FirebaseService.db,
 
-    readAllDataFromCollection: (collectionName) => FirebaseService.getDb().collection(collectionName).get()
+    readAllDataFromCollection: collectionName => FirebaseService.getDb().collection(collectionName).get()
 };
 
 export default FirebaseService;

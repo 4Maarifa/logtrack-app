@@ -34,7 +34,7 @@ const Role = ({ role }) => {
 
   return (
     <div
-     className={'Role ' + (!!computed.employee && computed.employee.activeRoleId === roleKey ? 'Role--active' : '')} 
+     className={'Role ' + (computed.employee && computed.employee.activeRoleId === roleKey ? 'Role--active' : '')} 
      title={'' + (!role[roleKey].revokedIsoDate ? 
       'Requested on ' + DateService.getMonthYearString(DateService.getDateFromIsoString(role[roleKey].creationIsoDate)) : 
       'Revoked on ' + DateService.getMonthYearString(DateService.getDateFromIsoString(role[roleKey].revokedIsoDate))) }
@@ -43,7 +43,7 @@ const Role = ({ role }) => {
       <span>
         <Icon source="fa" icon={RoleDetails[role[roleKey].role].icon} />
         {RoleDetails[role[roleKey].role].name}
-        {!!computed.employee && computed.employee.activeRoleId === roleKey && <span className="badge">active</span> }
+        {computed.employee && computed.employee.activeRoleId === roleKey && <span className="badge">active</span> }
       </span>
       {actions}
     </div>

@@ -28,9 +28,6 @@ const SignUp = () => {
   const [newUser, setNewUser] = useState(null);
   const [isFinishedConfig, setFinishConfig] = useState(false);
 
-
-  const onProfilePictureChange = file => setProfilePicture(!!file ? file[0] : null);
-
   useEffect(() => {
     const unsubscribe = FirebaseService.getFirebaseObject().auth().onAuthStateChanged(user => {
         if (user) {
@@ -41,7 +38,7 @@ const SignUp = () => {
   }, []); 
 
   const finishConfiguration = () => {
-    EmployeeService.create(new Employee(newUser.uid, firstname, lastname, [], null, null, null, DateService.getCurrentIsoDateString()))
+    EmployeeService.create(newUser.uid, new Employee(firstname, lastname, [], null, null, null, DateService.getCurrentIsoDateString()))
       .then(() => {
         uploadProfilePhoto()
           .then(employeeProperties => {
@@ -74,8 +71,8 @@ const SignUp = () => {
   const uploadProfilePhoto = () => {
     return new Promise ((resolve, reject) => {
       // If profile picture is known, then first upload it then update the user
-      if(profilePicture) {
-        FileService.uploadProfilePhoto(profilePicture)
+      if(profilePicture && profilePicture.file) {
+        FileService.uploadProfilePhoto(profilePicture.file)
           .then(() => {
             FileService.getDownloadURLForProfilePicture()
               .then(profilePictureUrl => resolve({profilePictureUrl}))
@@ -208,7 +205,8 @@ const SignUp = () => {
         {/* Profile Photo */}
         <FormInputFile
           imagePreview
-          onValueChange={onProfilePictureChange}
+          value={profilePicture}
+          onValueChange={setProfilePicture}
           label={
             <span>
               <Icon source="fa" icon={faImage} />

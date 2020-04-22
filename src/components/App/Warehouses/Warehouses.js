@@ -73,12 +73,12 @@ const Warehouses = () => {
   /**
    * RENDER
    */
-  const renderWarehouse = (itemKey, itemData) => (
-    <Warehouse key={itemKey}
+  const renderWarehouse = (itemKey, itemData) => {
+    return <Warehouse key={itemKey}
       warehouse={ {[itemKey]: itemData} }
-      options={ {} }
+      options={{  }}
       showDetails />
-  );
+  };
 
   return (
     <div className="Warehouses">

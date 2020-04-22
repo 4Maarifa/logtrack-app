@@ -1,0 +1,134 @@
+.ActionList {
+  position: relative;
+  cursor: pointer;
+  width: 1rem;
+
+  ul {
+    position: absolute;
+    right: -.5rem;
+    top: 1.2rem;
+    margin: 0;
+    list-style-type: none;
+    overflow-y: hidden;
+    overflow-x: visible;
+    height: 0;
+    max-height: 0;
+    transition: max-height .5s;
+    width: 13rem;
+    padding: 0;
+    z-index: 90;
+
+    li {
+      padding: .5rem 1rem;
+      display: flex;
+      width: calc(100% - 2rem);
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+
+      & + li {
+        border-top: 1px solid var(--light-gray);
+      }
+
+      a,
+      a:hover,
+      a:focus,
+      a:visited,
+      a:link,
+      a:active,
+      button {
+        text-decoration: none;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        border: 0;
+      }
+
+      .action-title {
+        color: #000000;
+        margin-right: .5rem;
+      }
+
+      .action-icon {
+        color: (--second);
+      }
+    }
+  }
+
+  &--deployed {
+    ul {
+      height: auto;
+      max-height: 50vh;
+      background-color: #FFFFFF;
+      border: 1px solid var(--light-gray);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+    }
+  }
+
+  &--flat {
+    width: 100%;
+    min-height: 7rem;
+    display: block;
+
+    .trigger {
+      display: none;
+    }
+
+    ul {
+      display: flex;
+      flex-flow: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      position: static;
+      width: auto;
+      min-height: 7rem;
+      width: 100%;
+
+      li {
+        padding: 0 1rem 0 0;
+        width: auto;
+
+        & + li {
+          border-top: 0;
+        }
+
+        a, a:visited, a:hover, a:focus, a:active, a:link,
+        .white-button {
+          display: flex;
+          flex-direction: row-reverse;
+          background-color: #FFFFFF;
+          padding: .5rem;
+          color: var(--second);
+          border-radius: var(--border-radius);
+
+          .action-title {
+            background-color: inherit;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .ActionList {
+
+    &--flat {
+      width: 1rem;
+      min-height: 0;
+
+      .trigger {
+        display: block;
+      }
+
+      ul {
+        display: block;
+        position: absolute;
+        width: 13rem;
+        min-height: 0;
+      }
+    }
+  }
+}

@@ -14,7 +14,7 @@ const ChatService = {
     [ERights.RIGHT_CHAT_UPDATE]: () => false,
     [ERights.RIGHT_CHAT_DELETE]: () => false
   },
-  create(chat) {
+  create: chat => {
     if(!ChatService.rights[ERights.RIGHT_CHAT_CREATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create a Chat' });
     }
@@ -33,28 +33,28 @@ const ChatService = {
 
     return FirebaseService.getDb().collection('chats').add(migratePrototype(chat));
   },
-  get(chatId) {
+  get: chatId => {
     if(!ChatService.rights[ERights.RIGHT_CHAT_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Chat' });
     }
     return FirebaseService.getDb().collection('chats').doc(chatId).get();
   },
-  list() {
+  list: () => {
     if(!ChatService.rights[ERights.RIGHT_CHAT_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Chats' });
     }
 
-    var chats = {};
+    const chats = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getDb().collection('chats').get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((chatDoc) => chats[chatDoc.id] = chatDoc.data());
+            .then(querySnapshot => {
+                querySnapshot.forEach(chatDoc => chats[chatDoc.id] = chatDoc.data());
                 resolve(chats);
             })
-            .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+            .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  update(chat) {
+  update: (chatId, chat) => {
     if(!ChatService.rights[ERights.RIGHT_CHAT_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Chat' });
     }
@@ -67,20 +67,20 @@ const ChatService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'Chat' });
     }
 
-    if(chat.creator !== DataService.computed.employee.id || !chat.users.includes(DataService.computed.employee.id)) {
+    if(chat.creator !== DataService.computed.user.uid || !chat.users.includes(DataService.computed.user.uid)) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('chats').doc(chat.id).set(migratePrototype(chat));
+    return FirebaseService.getDb().collection('chats').doc(chatId).set(migratePrototype(chat));
   },
-  updateField(chatId, chatField) {
+  updateField: (chatId, chatField) => {
     if(!ChatService.rights[ERights.RIGHT_CHAT_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Chat' });
     }
     
     return FirebaseService.getDb().collection('chats').doc(chatId).update(chatField);
   },
-  delete(chatId) {
+  delete: chatId => {
     if(!ChatService.rights[ERights.RIGHT_CHAT_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Chat' });
     }
@@ -89,12 +89,12 @@ const ChatService = {
   },
 
   // CUSTOM FUNCTIONS
-  getAllForUserId(userId) {
+  getAllForUserId: userId => {
     if(!ChatService.rights[ERights.RIGHT_CHAT_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Chats' });
     }
 
-    var chats = {};
+    const chats = {};
     return new Promise((resolve, reject) => {
       FirebaseService.getDb().collection('chats')
       .where('users', 'array-contains', userId)
@@ -103,7 +103,7 @@ const ChatService = {
         querySnapshot.forEach(chatDoc => chats[chatDoc.id] = chatDoc.data());
         resolve(chats);
       })
-      .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+      .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   }
 };

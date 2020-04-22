@@ -15,6 +15,7 @@ const FormInput = ({ value,
                     inputAutoComplete,
                     inputRequired,
                     inputPattern,
+                    inputDisabled,
                     label,
                     instructions,
                     onValueChange }) => {
@@ -40,6 +41,7 @@ const FormInput = ({ value,
         name={inputName}
         autoComplete={inputAutoComplete}
         pattern={inputPattern}
+        disabled={inputDisabled}
         onChange={e => onChange(e.target.value)}
         required={inputRequired} />
       <span className="indicator"
@@ -54,11 +56,11 @@ const FormInput = ({ value,
           {label}
         </label>
       }
-      {instructions && <Tooltip 
+      {instructions && !inputDisabled ? <Tooltip 
         show={isHover} 
         label={instructions}
         tooltipPosition={ETooltipPosition.BOTTOM} 
-        tooltipTrianglePosition={ETooltipTrianglePosition.END} />}
+        tooltipTrianglePosition={ETooltipTrianglePosition.END} /> : null}
     </div>
   );
 };

@@ -38,7 +38,7 @@ const Equipments = () => {
       .then(setEquipmentModels)
       .catch(ErrorService.manageError);
 
-    if(!!computed.activeRole) {
+    if(computed.activeRole) {
       EquipmentService.getAllForCompanyId(computed.activeRole.companyId)
         .then(equipments => {
           setEquipments(equipments);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faFileSignature, faPlus, faBagsShopping, faCog, faSignature, faToggleOn, faToggleOff } from '@fortawesome/pro-solid-svg-icons';
+import { faPlus, faBagsShopping, faCog, faSignature, faToggleOn, faToggleOff, faHandshakeAlt } from '@fortawesome/pro-solid-svg-icons';
 
 import DataService from './../../../services/data.service';
 import ContractService from './../../../services/entities/contract.service';
@@ -123,7 +123,7 @@ const Contracts = () => {
         market: {
           name: () => <span>
             <Icon source="fa" icon={faBagsShopping} />
-            Market <span className="badge-inverse">soon</span>
+            Market <span className="badge badge-inverse">soon</span>
           </span>,
           content: () => null,
           disabled: true
@@ -134,7 +134,7 @@ const Contracts = () => {
         Show archived contracts
       </span>
       <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[
-        {title: 'Add a contract', icon: <Icon source="fa" icon={faFileSignature} />, link: `/contract-add`}
+        {title: 'Add a contract', icon: <Icon source="fa" icon={faHandshakeAlt} />, link: `/contract-add`}
       ]} />
     </div>
   );

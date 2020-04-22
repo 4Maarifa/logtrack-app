@@ -6,7 +6,7 @@
   padding: .2rem;
 
   & + .Role {
-    border-top: 1px solid #DDDDDD;
+    border-top: 1px solid var(--light-gray);
   }
 
   & > .Icon {

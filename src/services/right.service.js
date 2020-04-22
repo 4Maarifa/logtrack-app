@@ -86,13 +86,14 @@ export const ERights = {
 };
 
 const RightService = {
-  hasAppRight(right) {
+  hasAppRight: right => {
     if(!DataService.computed.activeRole) {
       return false;
     }
 
     if(right === ERights.APP_CAN_USE_GPS ||
         right === ERights.APP_CAN_USE_LOGTRACK) {
+          
       return DataService.computed.activeRole.role === ERole.DRIVER ||
         DataService.computed.activeRole.role === ERole.MECHANIC;
     }
@@ -101,6 +102,7 @@ const RightService = {
         right === ERights.APP_CAN_USE_EQUIPMENT_MANAGEMENT ||
         right === ERights.APP_CAN_USE_WAREHOUSE_MANAGEMENT ||
         right === ERights.APP_CAN_USE_ANALYTICS) {
+
       return DataService.computed.activeRole.role === ERole.MANAGER;
     }
 

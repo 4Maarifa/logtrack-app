@@ -442,7 +442,7 @@ const Profile = () => {
               {Object.keys(ESettings).map(settingKey => 
                 <div className="setting-container" key={settingKey}>
                   {ESettingsDetails[settingKey].title}
-                  {!!ESettingsDetails[settingKey].note &&
+                  {ESettingsDetails[settingKey].note &&
                     <div className="setting-note">{ESettingsDetails[settingKey].note}</div>
                   }
                   <ul>

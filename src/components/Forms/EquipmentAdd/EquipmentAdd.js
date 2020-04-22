@@ -19,14 +19,17 @@ import { v4 as uuid } from 'uuid';
 
 import './EquipmentAdd.scss';
 
-const EquipmentAdd = () => {
+const EquipmentAdd = ({ match }) => {
+  const currentEquipmentId = match.params.equipmentid;
 
-  const [equipmentId, setEquipmentId] = useState(null);
+  const [currentEquipment, setCurrentEquipment] = useState(null);
+
+  const [newEquipmentId, setNewEquipmentId] = useState(null);
 
   const [identification, setIdentification] = useState('');
-  const [selectedEquipmentType, setSelectedEquipmentType] = useState(null);
-  const [selectedEquipmentSubType, setSelectedEquipmentSubType] = useState(null);
-  const [selectedEquipmentModelId, setSelectedEquipmentModelId] = useState(null);
+  const [selectedEquipmentType, setSelectedEquipmentType] = useState('');
+  const [selectedEquipmentSubType, setSelectedEquipmentSubType] = useState('');
+  const [selectedEquipmentModelId, setSelectedEquipmentModelId] = useState('');
 
   const [equipmentModels, setEquipmentModels] = useState({});
 
@@ -34,36 +37,61 @@ const EquipmentAdd = () => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeModels = () => {
+  const computeValues = () => {
     EquipmentModelService.list()
       .then(setEquipmentModels)
       .catch(ErrorService.manageError);
+
+    if(currentEquipmentId) {
+      EquipmentService.get(currentEquipmentId)
+        .then(equipmentDoc => {
+          setIdentification(equipmentDoc.data().identification);
+          setCurrentEquipment(equipmentDoc.data());
+
+        })
+        .catch(ErrorService.manageError);
+    }
   };
 
   const handleSubmit = event => {
     event.preventDefault();
 
-    if(!selectedEquipmentModelId) {
-      ErrorService.error('Please pick a model or create one!');
-      return;
+    if(currentEquipmentId) {
+      EquipmentService.update(currentEquipmentId,
+          new Equipment(currentEquipment.companyId,
+                        identification,
+                        currentEquipment.equipmentModelId,
+                        currentEquipment.creationIsoDate))
+            .then(() => setNewEquipmentId(currentEquipmentId))
+            .catch(ErrorService.manageError);
     }
-    
-    EquipmentService.create(new Equipment(computed.activeRole.companyId, identification, selectedEquipmentModelId, DateService.getCurrentIsoDateString()))
-      .then(equipmentDoc => setEquipmentId(equipmentDoc.id))
-      .catch(ErrorService.manageError);
+    else  {
+      if(!selectedEquipmentModelId) {
+        ErrorService.error('Please pick a model or create one!');
+        return;
+      }
+      
+      EquipmentService.create(
+        new Equipment(computed.activeRole.companyId,
+                      identification,
+                      selectedEquipmentModelId,
+                      DateService.getCurrentIsoDateString()))
+          .then(equipmentDoc => setNewEquipmentId(equipmentDoc.id))
+          .catch(ErrorService.manageError);
+    }
   };
 
   const handleSelection = (value, fieldName) => {
     if(fieldName === 'selectedEquipmentType') {
       if(!value) {
-        setSelectedEquipmentSubType(null);
-        setSelectedEquipmentModelId(null);
+        setSelectedEquipmentSubType('');
+        setSelectedEquipmentModelId('');
       }
       setSelectedEquipmentType(value);
     }
     else if(fieldName === 'selectedEquipmentSubType') {
       if(!value) {
-        setSelectedEquipmentModelId(null);
+        setSelectedEquipmentModelId('');
       }
       setSelectedEquipmentSubType(value);
     }
@@ -88,7 +116,11 @@ const EquipmentAdd = () => {
     return newEquipmentModels;
   };
 
-  useEffect(() => computeModels(), [computed]);
+  useEffect(() => {
+    if(computed.initialized){
+      computeValues();
+    }
+  }, [computed]);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, observerKey);
@@ -101,6 +133,10 @@ const EquipmentAdd = () => {
     ErrorService.warning('Please activate a role to add an equipment!');
     return <Redirect to={`/equipments`} />;
   }
+
+  /**
+   * RENDER
+   */
 
   const renderModels = () => {
     if(!equipmentModels || !Object.keys(equipmentModels).length) {
@@ -157,7 +193,9 @@ const EquipmentAdd = () => {
       </div>
       
       {!selectedEquipmentType && 
-        <Choose items={equipmentTypes} 
+        <Choose
+          selection={selectedEquipmentType}
+          items={equipmentTypes} 
           fieldName="selectedEquipmentType"
           onSelectionChange={handleSelection} />
       }
@@ -177,8 +215,9 @@ const EquipmentAdd = () => {
             }
           </div>
           {!selectedEquipmentSubType &&
-            <Choose items={equipmentSubTypes} 
-              multiple={false} 
+            <Choose
+              items={equipmentSubTypes}
+              selection={selectedEquipmentSubType}
               fieldName="selectedEquipmentSubType"
               onSelectionChange={handleSelection} />
           }
@@ -201,8 +240,9 @@ const EquipmentAdd = () => {
             }
           </div>
           {!selectedEquipmentModelId &&
-            <Choose items={newEquipmentModels}
-              multiple={false}
+            <Choose
+              selection={selectedEquipmentModelId}
+              items={newEquipmentModels}
               fieldName="selectedEquipmentModelId"
               onSelectionChange={handleSelection} />
           }
@@ -221,9 +261,9 @@ const EquipmentAdd = () => {
   if(!computed.employee || !computed.activeRoleCompany) {
     return null;
   }
-  if(equipmentId) {
-    ErrorService.success('Equipment created!');
-    return <Redirect to={`/dashboard`} />;
+  if(newEquipmentId) {
+    ErrorService.success(`Equipment ${currentEquipmentId ? 'updated' : 'created'}!`);
+    return <Redirect to={`/equipments`} />;
   }
 
   return (
@@ -231,7 +271,26 @@ const EquipmentAdd = () => {
       <h1>Add an equipment</h1>
       <form onSubmit={handleSubmit}>
         {/* Model */}
-        {renderModels()}
+        {currentEquipmentId && currentEquipment ? 
+          <div className="model-selection--done">
+            <span className="fake-label">
+              <Icon source="fa" icon={faTruck} />
+              Model
+            </span>
+            <div className="Element Element--tile">
+              <div className="RoleCompany Element-content">
+                <div className="Element-base">
+                  <div className="Element-photo">
+                    <img src={equipmentModels[currentEquipment.equipmentModelId].photoUrl}
+                          alt={equipmentModels[currentEquipment.equipmentModelId].name + '\'s photo'} />
+                  </div>
+                  <div className="Element-data">
+                    <span className="Element-title">{equipmentModels[currentEquipment.equipmentModelId].name}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> : renderModels()}
 
         <FormInput
           value={identification}

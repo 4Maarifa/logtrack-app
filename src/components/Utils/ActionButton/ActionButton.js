@@ -15,14 +15,17 @@ const ActionButton = ({ icon, actions }) => {
       <ul>
         {actions.map(action =>
             <li key={action.title}>
-              <NavLink to={action.link}>
-                <span className="action-title">
-                  {action.title}
-                </span>
-                <span className="action-icon">
-                  {action.icon}
-                </span>
-              </NavLink>
+              {action.link ?
+                <NavLink to={action.link}>
+                  <span className="action-title">{action.title}</span>
+                  <span className="action-icon">{action.icon}</span>
+                </NavLink> :
+                <button className="white-button flat" onClick={action.callback}>
+                  <span className="action-title">{action.title}</span>
+                  <span className="action-icon">{action.icon}</span>
+                </button>
+              }
+              
             </li>
         )}
       </ul>

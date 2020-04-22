@@ -15,7 +15,7 @@ const EmployeeService = {
     [ERights.RIGHT_EMPLOYEE_UPDATE]: () => DataService.computed.isConnected(),
     [ERights.RIGHT_EMPLOYEE_DELETE]: () => false
   },
-  create(employee) {
+  create: (userId, employee) => {
     if(!EmployeeService.rights[ERights.RIGHT_EMPLOYEE_CREATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create an Employee' });
     }
@@ -24,28 +24,28 @@ const EmployeeService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'Employee' });
     }
 
-    if(!ensureFilledFields(employee, ['id', 'firstname', 'lastname'])) {
-      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['id', 'firstname', 'lastname'] });
+    if(!ensureFilledFields(employee, ['firstname', 'lastname'])) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['firstname', 'lastname'] });
     }
 
-    if(!!DataService.computed.employee && !!DataService.computed.employee.id && employee.id !== DataService.computed.employee.id) {
+    if(DataService.computed.employee && DataService.computed.employee.id && employee.id !== DataService.computed.employee.id) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('employees').doc(employee.id).set(migratePrototype(employee));
+    return FirebaseService.getDb().collection('employees').doc(userId).set(migratePrototype(employee));
   },
-  get(employeeId) {
+  get: employeeId => {
     if(!EmployeeService.rights[ERights.RIGHT_EMPLOYEE_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get an Employee' });
     }
     return FirebaseService.getDb().collection('employees').doc(employeeId).get();
   },
-  list() {
+  list: () => {
     if(!EmployeeService.rights[ERights.RIGHT_EMPLOYEE_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Employees' });
     }
 
-    var employees = {};
+    const employees = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getDb().collection('employees').get()
             .then(querySnapshot => {
@@ -55,7 +55,7 @@ const EmployeeService = {
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  update(employee) {
+  update: (employeeId, employee) => {
     if(!EmployeeService.rights[ERights.RIGHT_EMPLOYEE_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update an Employee' });
     }
@@ -64,28 +64,28 @@ const EmployeeService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'Employee' });
     }
 
-    if(!ensureFilledFields(employee, ['id', 'firstname', 'lastname'])) {
-      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['id', 'firstname', 'lastname'] });
-    }
-
-    if(employee.id !== DataService.computed.employee.id) {
-      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
-    }
-
-    return FirebaseService.getDb().collection('employees').doc(employee.id).set(migratePrototype(employee));
-  },
-  updateField(employeeId, employeeField) {
-    if(!EmployeeService.rights[ERights.RIGHT_EMPLOYEE_UPDATE]()) {
-      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update an Employee' });
+    if(!ensureFilledFields(employee, ['firstname', 'lastname'])) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['firstname', 'lastname'] });
     }
 
     if(employeeId !== DataService.computed.employee.id) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
+
+    return FirebaseService.getDb().collection('employees').doc(employeeId).set(migratePrototype(employee));
+  },
+  updateField: (employeeId, employeeField) => {
+    if(!EmployeeService.rights[ERights.RIGHT_EMPLOYEE_UPDATE]()) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update an Employee' });
+    }
+
+    if(employeeId !== DataService.computed.user.uid) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
+    }
     
     return FirebaseService.getDb().collection('employees').doc(employeeId).update(employeeField);
   },
-  delete(employeeId) {
+  delete: employeeId => {
     if(!EmployeeService.rights[ERights.RIGHT_EMPLOYEE_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete an Employee' });
     }
@@ -94,13 +94,13 @@ const EmployeeService = {
   },
 
   // CUSTOM FUNCTIONS
-  getAllForIdList(idList) {
+  getAllForIdList: idList => {
     if(!EmployeeService.rights[ERights.RIGHT_EMPLOYEE_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Employees' });
     }
 
-    var promises = [];
-    var employees = {};
+    const promises = [];
+    const employees = {};
 
     return new Promise((resolve, reject) => {
       idList.forEach(employeeId => promises.push(EmployeeService.get(employeeId)));
@@ -113,7 +113,7 @@ const EmployeeService = {
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });            
   },
-  activateRole(roleId) {
+  activateRole: roleId => {
     if(!EmployeeService.rights[ERights.RIGHT_EMPLOYEE_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update an Employee' });
     }
@@ -122,7 +122,7 @@ const EmployeeService = {
       .then(DataService.computed.notifyChanges)
       .catch(ErrorService.manageError);
   },
-  unactivateRole() {
+  unactivateRole: () => {
     if(!EmployeeService.rights[ERights.RIGHT_EMPLOYEE_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update an Employee' });
     }
@@ -131,13 +131,11 @@ const EmployeeService = {
       .then(DataService.computed.notifyChanges)
       .catch(ErrorService.manageError);
   },
-  search(term) {
-    return new Promise((resolve, reject) => {
+  search: term => new Promise((resolve, reject) => {
       DataService.computed.search([ESearchType.EMPLOYEES], term, null)
         .then(results => resolve(results.data.employees))
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
-    });
-  }
+    })
 };
 
 export default EmployeeService;

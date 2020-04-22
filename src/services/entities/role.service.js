@@ -24,7 +24,7 @@ const RoleService = {
     [ERights.RIGHT_ROLE_UPDATE]: () => DataService.computed.isConnected(),
     [ERights.RIGHT_ROLE_DELETE]: () => false
   },
-  create(role) {
+  create: role => {
     if(!RoleService.rights[ERights.RIGHT_ROLE_CREATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create a Role' });
     }
@@ -43,18 +43,18 @@ const RoleService = {
 
     return FirebaseService.getDb().collection('roles').add(migratePrototype(role));
   },
-  get(roleId) {
+  get: roleId => {
     if(!RoleService.rights[ERights.RIGHT_ROLE_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Role' });
     }
     return FirebaseService.getDb().collection('roles').doc(roleId).get();
   },
-  list() {
+  list: () => {
     if(!RoleService.rights[ERights.RIGHT_ROLE_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Roles' });
     }
 
-    var roles = {};
+    const roles = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getDb().collection('roles').get()
             .then(querySnapshot => {
@@ -64,7 +64,7 @@ const RoleService = {
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  update(role) {
+  update: (roleId, role) => {
     if(!RoleService.rights[ERights.RIGHT_ROLE_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Role' });
     }
@@ -83,16 +83,16 @@ const RoleService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('roles').doc(role.id).set(migratePrototype(role));
+    return FirebaseService.getDb().collection('roles').doc(roleId).set(migratePrototype(role));
   },
-  updateField(roleId, roleField) {
+  updateField: (roleId, roleField) => {
     if(!RoleService.rights[ERights.RIGHT_ROLE_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Role' });
     }
     
     return FirebaseService.getDb().collection('roles').doc(roleId).update(roleField);
   },
-  delete(roleId) {
+  delete: roleId => {
     if(!RoleService.rights[ERights.RIGHT_ROLE_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Role' });
     }
@@ -101,7 +101,7 @@ const RoleService = {
   },
 
   // CUSTOM FUNCTIONS
-  getActiveRoleForEmployeeId(employeeId) {
+  getActiveRoleForEmployeeId: employeeId => {
     if(!RoleService.rights[ERights.RIGHT_ROLE_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Role' });
     }
@@ -132,12 +132,12 @@ const RoleService = {
         .catch(e => {ErrorService.manageErrorThenReject(e, reject)});
     });
   },
-  getRolesForEmployeeId(employeeId, statusArray = [ERoleStatus.CONFIRMED]) {
+  getRolesForEmployeeId: (employeeId, statusArray = [ERoleStatus.CONFIRMED]) => {
     if(!RoleService.rights[ERights.RIGHT_ROLE_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Roles' });
     }
 
-    var roles = {};
+    const roles = {};
 
     return new Promise((resolve, reject) => {
       FirebaseService.getDb().collection('roles')
@@ -151,12 +151,12 @@ const RoleService = {
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  getRolesForCompanyId(companyId, statusArray = [ERoleStatus.CONFIRMED]) {
+  getRolesForCompanyId: (companyId, statusArray = [ERoleStatus.CONFIRMED]) => {
     if(!RoleService.rights[ERights.RIGHT_ROLE_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Roles' });
     }
 
-    var roles = {};
+    const roles = {};
 
     return new Promise((resolve, reject) => {
       FirebaseService.getDb().collection('roles')
@@ -170,12 +170,12 @@ const RoleService = {
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  getRolesForEmployeeIdAndCompanyId(employeeId, companyId, statusArray = [ERoleStatus.CONFIRMED]) {
+  getRolesForEmployeeIdAndCompanyId: (employeeId, companyId, statusArray = [ERoleStatus.CONFIRMED]) => {
     if(!RoleService.rights[ERights.RIGHT_ROLE_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Roles' });
     }
 
-    var roles = {};
+    const roles = {};
 
     return new Promise((resolve, reject) => {
       FirebaseService.getDb().collection('roles')
@@ -190,7 +190,7 @@ const RoleService = {
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  confirmRole(roleId) {
+  confirmRole: roleId => {
     if(!RoleService.rights[ERights.RIGHT_ROLE_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Role' });
     }
@@ -203,7 +203,7 @@ const RoleService = {
       .then(DataService.computed.notifyChanges)
       .catch(ErrorService.manageError);
   },
-  revokeRole(roleId) {
+  revokeRole: roleId => {
     if(!RoleService.rights[ERights.RIGHT_ROLE_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Role' });
     }
@@ -216,36 +216,31 @@ const RoleService = {
       .then(DataService.computed.notifyChanges)
       .catch(ErrorService.manageError);
   },
-  observeActions(role, callback, observerKey) {
+  observeActions: (role, callback, observerKey) => {
     RoleService.observers[observerKey] = {
       role: role,
       callback: callback
     };
     callback(RoleService.getActions(role));
   },
-  unobserveActions(observerKey) {
-    delete RoleService.observers[observerKey];
-  },
-  notifyObservers() {
-    Object.keys(RoleService.observers).forEach(observerKey => {
-      RoleService.observers[observerKey].callback(RoleService.getActions(RoleService.observers[observerKey].role))
-    });
-  },
-  getActions(role) {
-    var roleId = Object.keys(role)[0];
-    var actions = [];
+  unobserveActions: observerKey => delete RoleService.observers[observerKey],
+  notifyObservers: () => Object.keys(RoleService.observers)
+      .forEach(observerKey => RoleService.observers[observerKey].callback(RoleService.getActions(RoleService.observers[observerKey].role))),
+  getActions: role => {
+    const roleId = Object.keys(role)[0];
+    const actions = [];
 
-    if(!!DataService.computed.activeRole && role[roleId].status === ERoleStatus.DRAFT && role[roleId].companyId === DataService.computed.activeRole.companyId && DataService.computed.activeRole.role === ERole.MANAGER) {
+    if(DataService.computed.activeRole && role[roleId].status === ERoleStatus.DRAFT && role[roleId].companyId === DataService.computed.activeRole.companyId && DataService.computed.activeRole.role === ERole.MANAGER) {
       actions.push(<button key="CONFIRM" title="Confirm?" onClick={() => RoleService.confirmRole(roleId)}>
         <Icon source="fa" icon={faCheck} />
       </button>);
     }
-    if(!!DataService.computed.activeRole && !!DataService.computed.employee && roleId !== DataService.computed.employee.activeRoleId && role[roleId].status === ERoleStatus.CONFIRMED && role[roleId].companyId === DataService.computed.activeRole.companyId && DataService.computed.activeRole.role === ERole.MANAGER) {
+    if(DataService.computed.activeRole && DataService.computed.employee && roleId !== DataService.computed.employee.activeRoleId && role[roleId].status === ERoleStatus.CONFIRMED && role[roleId].companyId === DataService.computed.activeRole.companyId && DataService.computed.activeRole.role === ERole.MANAGER) {
       actions.push(<button key="REVOKE" title="Revoke?" onClick={() => RoleService.revokeRole(roleId)}>
         <Icon source="fa" icon={faTimes} />
       </button>);
     }
-    if(!!DataService.computed.user && role[roleId].status === ERoleStatus.CONFIRMED && role[roleId].employeeId === DataService.computed.user.uid) {
+    if(DataService.computed.user && role[roleId].status === ERoleStatus.CONFIRMED && role[roleId].employeeId === DataService.computed.user.uid) {
       if(roleId === DataService.computed.employee.activeRoleId) {
         actions.push(<button key="DISABLE" title="Disable?" onClick={EmployeeService.unactivateRole}>
           <Icon source="fa" icon={faToggleOn} />

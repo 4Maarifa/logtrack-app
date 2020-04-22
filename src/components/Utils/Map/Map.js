@@ -118,9 +118,9 @@ class Map extends Component {
 
     /* EVENTS */
     this.map.on('click', event => {
-      var feature = this.map.forEachFeatureAtPixel(event.pixel, feature => feature);
+      const feature = this.map.forEachFeatureAtPixel(event.pixel, feature => feature);
 
-      if(!!feature && !!feature.getProperties().popupContent) {
+      if(feature && feature.getProperties().popupContent) {
         this.popupDomRef.current.innerHTML = feature.getProperties().popupContent;
         this.popupDomRef.current.style.display = 'flex';
         this.popup.setPosition(feature.getGeometry().getCoordinates());
@@ -131,13 +131,13 @@ class Map extends Component {
     });
 
     this.map.on('pointermove', event => {
-      if(!!event.dragging) {
+      if(event.dragging) {
         this.popupDomRef.current.style.display = 'none';
         this.mapDomRef.current.style.cursor = 'grabbing';
         return;
       }
       let hit = this.map.hasFeatureAtPixel(this.map.getEventPixel(event.originalEvent));
-      this.mapDomRef.current.style.cursor = !!hit ? 'pointer' : 'grab';
+      this.mapDomRef.current.style.cursor = hit ? 'pointer' : 'grab';
     });
   };
 
@@ -157,7 +157,7 @@ class Map extends Component {
       this.state.userPosition.latitude
     ]));
 
-    if(!!this.state.locationMarkerId) {
+    if(this.state.locationMarkerId) {
       let marker = this.locationVectorSource.getFeatureById(this.state.locationMarkerId);
       marker.setGeometry(position);
     }
@@ -267,7 +267,7 @@ class Map extends Component {
   };
 
   centerOnAllMarkers = () => {
-    if(!!this.markerVectorSource.isEmpty()) {
+    if(this.markerVectorSource.isEmpty()) {
       return;
     }
     setTimeout(() => {
@@ -277,7 +277,7 @@ class Map extends Component {
 
   triggerPopup = markerId => {
     const feature = this.markerVectorSource.getFeatureById(markerId);
-    if(!!feature) {
+    if(feature) {
       this.popupDomRef.current.innerHTML = feature.getProperties().popupContent;
       this.popupDomRef.current.style.display = 'flex';
       this.popup.setPosition(feature.getGeometry().getCoordinates());
@@ -296,13 +296,13 @@ class Map extends Component {
   render() {
     return (
       <div className="Map">
-        <span id="map" className={'' + (!!this.state.gpsMode ? 'map-3d' : '')} ref={this.mapDomRef}>
+        <span id="map" className={'' + (this.state.gpsMode ? 'map-3d' : '')} ref={this.mapDomRef}>
           <span id="popup" ref={this.popupDomRef}></span>
           <span id="overlay-3d" ref={this.overlay3DRef} style={{
             backgroundImage: `url(${overlayClouds})`
           }}></span>
           <div id="additional-controls" className="ol-control" ref={this.additionalControlsDomRef}>
-            {!!this.state.userPosition &&
+            {this.state.userPosition &&
               <button onClick={this.centerOnUserPosition} className="ol-geolocation ol-additional-control" type="button" title="Center on your position">
                 <Icon source="fa" icon={faLocation} />
               </button>
@@ -316,7 +316,7 @@ class Map extends Component {
               <button onClick={this.toggleGpsMode} className={'ol-gps-mode-2d ' + (!this.state.gpsMode ? 'ol-gps-mode--active' : '')} type="button" title="Switch to 2D View">
                 <span>2D</span>
               </button>
-              <button onClick={this.toggleGpsMode} className={'ol-gps-mode-3d ' + (!!this.state.gpsMode ? 'ol-gps-mode--active' : '')} type="button" title="Switch to 3D View">
+              <button onClick={this.toggleGpsMode} className={'ol-gps-mode-3d ' + (this.state.gpsMode ? 'ol-gps-mode--active' : '')} type="button" title="Switch to 3D View">
                 <span>3D</span>
               </button>
             </div>
@@ -344,7 +344,7 @@ class Map extends Component {
                 <Icon source="fa" icon={faInfo} />
               </span>
               <span className="ol-attributions-content">
-                {!!this.state.activeTileLayer && TileLayersDetails[this.state.activeTileLayer].attributions}
+                {this.state.activeTileLayer && TileLayersDetails[this.state.activeTileLayer].attributions}
               </span>
             </span>
           </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import Nominatim from 'nominatim';
 
 import { boundingExtent, buffer } from 'ol/extent';
 import { fromLonLat } from 'ol/proj';
@@ -7,6 +8,7 @@ import { Tile as TileLayer } from 'ol/layer';
 import { OSM, BingMaps } from 'ol/source';
 
 import ColorService from './color.service';
+import ErrorService from './error.service';
 
 import DotMarkerIcon from './../assets/dot.png';
 
@@ -247,12 +249,17 @@ export const TileLayersDetails = {
 };
 
 const GeoService = {
-  computeBoundingBox(markers, margin = .5) {
-    return buffer(boundingExtent(markers), margin);
-  },
-  transformCoordinates(lonLat) {
-    return fromLonLat(lonLat, 'EPSG:3857');
-  }
+  computeBoundingBox: (markers, margin = .5) => buffer(boundingExtent(markers), margin),
+  transformCoordinates: lonLat => fromLonLat(lonLat, 'EPSG:3857'),
+
+  // Don't spam this function! Go for a debounce (one call each 1100ms max!)
+  searchPlaces: (searchString, options = {}) => new Promise((resolve, reject) => {
+    if(!searchString) { resolve([]); }
+    Nominatim.search({ q: searchString, ...options }, (err, _, res) => {
+      err && ErrorService.manageErrorThenReject(err, reject);
+      resolve(res);
+    });
+  })
 };
 
 export default GeoService;

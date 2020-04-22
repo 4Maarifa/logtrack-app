@@ -16,7 +16,7 @@ const WarehouseService = {
     [ERights.RIGHT_WAREHOUSE_UPDATE]: () => DataService.computed.isConnected(),
     [ERights.RIGHT_WAREHOUSE_DELETE]: () => false
   },
-  create(warehouse) {
+  create: warehouse => {
     if(!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_CREATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create a Warehouse' });
     }
@@ -35,18 +35,18 @@ const WarehouseService = {
 
     return FirebaseService.getDb().collection('warehouses').add(migratePrototype(warehouse));
   },
-  get(warehouseId) {
+  get: warehouseId => {
     if(!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Warehouse' });
     }
     return FirebaseService.getDb().collection('warehouses').doc(warehouseId).get();
   },
-  list() {
+  list: () => {
     if(!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Warehouses' });
     }
 
-    var warehouses = {};
+    const warehouses = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getDb().collection('warehouses').get()
             .then(querySnapshot => {
@@ -56,13 +56,13 @@ const WarehouseService = {
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  update(warehouse) {
+  update: (warehouseId, warehouse) => {
     if(!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Warehouse' });
     }
 
-    if(!ensureFilledFields(warehouse, ['name', 'latitude', 'longitude', 'companyId', 'creator'])) {
-      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['name', 'latitude', 'longitude', 'companyId', 'creator'] });
+    if(!ensureFilledFields(warehouse, ['name', 'latitude', 'longitude', 'address', 'companyId', 'creator'])) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['name', 'latitude', 'longitude', 'address', 'companyId', 'creator'] });
     }
 
     if(!warehouse instanceof Warehouse) {
@@ -73,16 +73,16 @@ const WarehouseService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('warehouses').doc(warehouse.id).set(migratePrototype(warehouse));
+    return FirebaseService.getDb().collection('warehouses').doc(warehouseId).set(migratePrototype(warehouse));
   },
-  updateField(warehouseId, warehouseField) {
+  updateField: (warehouseId, warehouseField) => {
     if(!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Warehouse' });
     }
     
     return FirebaseService.getDb().collection('warehouses').doc(warehouseId).update(warehouseField);
   },
-  delete(warehouseId) {
+  delete: warehouseId => {
     if(!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Warehouse' });
     }
@@ -91,12 +91,12 @@ const WarehouseService = {
   },
 
   // CUSTOM FUNCTIONS
-  getAllForCompanyId(companyId) {
+  getAllForCompanyId: companyId => {
     if(!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Warehouses' });
     }
 
-    var warehouses = {};
+    let warehouses = {};
     return new Promise((resolve, reject) => {
       FirebaseService.getDb().collection('warehouses')
       .where('companyId', '==', companyId)
@@ -108,16 +108,14 @@ const WarehouseService = {
       .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  search(term) {
-    return new Promise((resolve, reject) => {
+  search: term => new Promise((resolve, reject) => {
       if(!DataService.computed.activeRole) {
         reject('Cannot search warehouses : No active role');
       }
       DataService.computed.search([ESearchType.WAREHOUSES], term, DataService.computed.activeRole.companyId)
         .then(results => resolve(results.data.warehouses))
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
-    });
-  }
+    })
 };
 
 export default WarehouseService;

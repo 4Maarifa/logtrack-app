@@ -13,7 +13,7 @@ const PermissionService = {
           return reject('Geolocation is not compatible with your browser');
         }
   
-        if(!!PermissionService.location.__granted) {
+        if(PermissionService.location.__granted) {
           return resolve();
         }
         navigator.permissions.query({name: 'geolocation'}).then(result => {
@@ -73,29 +73,29 @@ const PermissionService = {
           maximumAge: 5000
         });
     },
-    __notifyLocationObservers: (positionCoords) => {
+    __notifyLocationObservers: positionCoords => {
       Object.values(PermissionService.location.__observers).forEach(observer => {
-        !!observer && observer(positionCoords);
+        observer && observer(positionCoords);
       });
     },
     __unwatchLocation: () => {
-      if(!!PermissionService.location.__watchId) {
+      if(PermissionService.location.__watchId) {
         navigator.geolocation.clearWatch(PermissionService.location.__watchId);
       }
     },
     __onLocationPermissionChanged: (result, resolve, reject) => {
       if(result.state === 'granted') {
         PermissionService.location.__granted = true;
-        !!resolve && resolve();
+        resolve && resolve();
       }
       else if(result.state === 'prompt') {
         result.onchange = PermissionService.location.__onLocationPermissionChanged;
       }
       else {
-        !!reject && reject('Location permission was denied');
+        reject && reject('Location permission was denied');
       }
     },
-    __computeObserverNumber: () => Object.values(PermissionService.location.__observers).filter(obs => !!obs).length
+    __computeObserverNumber: () => Object.values(PermissionService.location.__observers).filter(obs => obs).length
   }
 };
 

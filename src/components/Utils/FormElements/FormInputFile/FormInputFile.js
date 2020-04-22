@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { faUpload, faCheck, faTimes } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Icon/Icon';
@@ -14,24 +14,21 @@ const FormInputFile = ({ accept: defaultAccept,
                         label,
                         instructions,
                         imagePreview,
+                        value,
                         onValueChange }) => {
 
-
-
   const accept = defaultAccept || '*/*';
-  const [fileValues, setFileValues] = useState(null);
 
   const [isHover, setHover] = useState(false);
 
   const file = useRef(null);
 
-  useEffect(() => {
-    onValueChange && onValueChange(fileValues, fieldName);
-  }, [fileValues]);
-
   const onChange = () => {
     if(file.current.files && file.current.files.length) {
-      setFileValues(file.current.files);
+      onValueChange({ file: file.current.files[0], url: URL.createObjectURL(file.current.files[0]) }, fieldName);
+    }
+    else {
+      onValueChange && onValueChange(null, fieldName);
     }
   };
 
@@ -50,12 +47,12 @@ const FormInputFile = ({ accept: defaultAccept,
         accept={accept}
         required={inputRequired} />
       <label htmlFor={inputId}>
-        {imagePreview && fileValues && fileValues.length &&
-          <img src={URL.createObjectURL(fileValues[0])} alt="Upload Preview" />
+        {imagePreview && value && value.url ?
+          <img src={value.url} alt="Upload Preview" /> : null
         }
         <span className="input-title">
           <Icon source="fa" icon={faUpload} />
-          {fileValues ? 'Replace' : 'Upload'}
+          {value ? 'Replace' : 'Upload'}
         </span>
         <span className="indicator"
           onMouseOver={() => setHover(true)}

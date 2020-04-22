@@ -12,7 +12,7 @@ const WeatherService = {
     [ERights.RIGHT_WEATHER_UPDATE]: () => false,
     [ERights.RIGHT_WEATHER_DELETE]: () => false
   },
-  create(weather) {
+  create: weather => {
     if(!WeatherService.rights[ERights.RIGHT_WEATHER_CREATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create a Weather' });
     }
@@ -23,28 +23,28 @@ const WeatherService = {
 
     return FirebaseService.getDb().collection('weather').add(weather);
   },
-  get(weatherId) {
+  get: weatherId => {
     if(!WeatherService.rights[ERights.RIGHT_WEATHER_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Weather' });
     }
     return FirebaseService.getDb().collection('weather').doc(weatherId).get();
   },
-  list() {
+  list: () => {
     if(!WeatherService.rights[ERights.RIGHT_WEATHER_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Weathers' });
     }
 
-    var weathers = {};
+    const weathers = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getDb().collection('weather').get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((weatherDoc) => weathers[weatherDoc.id] = weatherDoc.data());
+            .then(querySnapshot => {
+                querySnapshot.forEach(weatherDoc => weathers[weatherDoc.id] = weatherDoc.data());
                 resolve(weathers);
             })
-            .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+            .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  update(weather) {
+  update: (weatherId, weather) => {
     if(!WeatherService.rights[ERights.RIGHT_WEATHER_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Weather' });
     }
@@ -53,16 +53,16 @@ const WeatherService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['date', 'latitude', 'longitude', 'main', 'name', 'temp', 'icon'] });
     }
 
-    return FirebaseService.getDb().collection('weather').doc(weather.id).set(weather);
+    return FirebaseService.getDb().collection('weather').doc(weatherId).set(weather);
   },
-  updateField(weatherId, weatherField) {
+  updateField: (weatherId, weatherField) => {
     if(!WeatherService.rights[ERights.RIGHT_WEATHER_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Weather' });
     }
     
     return FirebaseService.getDb().collection('weather').doc(weatherId).update(weatherField);
   },
-  delete(weatherId) {
+  delete: weatherId => {
     if(!WeatherService.rights[ERights.RIGHT_WEATHER_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Weather' });
     }
@@ -71,7 +71,7 @@ const WeatherService = {
   },
 
   // CUSTOM FUNCTIONS
-  getByLatAndLon(lon, lat) {
+  getByLatAndLon: (lon, lat) => {
     if(!WeatherService.rights[ERights.RIGHT_WEATHER_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Weathers' });
     }
@@ -87,15 +87,15 @@ const WeatherService = {
         .where('latitude', '==', latitudeLitteral)
         .limit(1)
         .get()
-        .then((querySnapshot) => {
-            if(!!querySnapshot.empty) {
+        .then(querySnapshot => {
+            if(querySnapshot.empty) {
                 resolve(null);
             }
             else {
                 resolve(querySnapshot.docs[0].data());
             }
         })
-        .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   }
 };

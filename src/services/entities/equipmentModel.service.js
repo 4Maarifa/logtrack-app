@@ -14,7 +14,7 @@ const EquipmentModelService = {
     [ERights.RIGHT_EQUIPMENT_MODEL_UPDATE]: () => false,
     [ERights.RIGHT_EQUIPMENT_MODEL_DELETE]: () => false
   },
-  create(equipmentModel) {
+  create: equipmentModel => {
     if(!EquipmentModelService.rights[ERights.RIGHT_EQUIPMENT_MODEL_CREATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create an Equipment Model' });
     }
@@ -33,28 +33,28 @@ const EquipmentModelService = {
 
     return FirebaseService.getDb().collection('equipmentModels').add(migratePrototype(equipmentModel));
   },
-  get(equipmentModelId) {
+  get: equipmentModelId => {
     if(!EquipmentModelService.rights[ERights.RIGHT_EQUIPMENT_MODEL_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get an Equipment Model' });
     }
     return FirebaseService.getDb().collection('equipmentModels').doc(equipmentModelId).get();
   },
-  list() {
+  list: () => {
     if(!EquipmentModelService.rights[ERights.RIGHT_EQUIPMENT_MODEL_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Equipment Models' });
     }
 
-    var equipmentModels = {};
+    const equipmentModels = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getDb().collection('equipmentModels').get()
-            .then((querySnapshot) => {
+            .then(querySnapshot => {
                 querySnapshot.forEach(equipmentModelDoc => equipmentModels[equipmentModelDoc.id] = equipmentModelDoc.data());
                 resolve(equipmentModels);
             })
-            .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+            .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  update(equipmentModel) {
+  update: (equipmentModelId, equipmentModel) => {
     if(!EquipmentModelService.rights[ERights.RIGHT_EQUIPMENT_MODEL_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update an Equipment Model' });
     }
@@ -67,16 +67,16 @@ const EquipmentModelService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['name', 'creator', 'logoURL'] });
     }
 
-    return FirebaseService.getDb().collection('equipmentModels').doc(equipmentModel.id).set(migratePrototype(equipmentModel));
+    return FirebaseService.getDb().collection('equipmentModels').doc(equipmentModelId).set(migratePrototype(equipmentModel));
   },
-  updateField(equipmentModelId, equipmentModelField) {
+  updateField: (equipmentModelId, equipmentModelField) => {
     if(!EquipmentModelService.rights[ERights.RIGHT_EQUIPMENT_MODEL_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update an Equipment Model' });
     }
     
     return FirebaseService.getDb().collection('equipmentModels').doc(equipmentModelId).update(equipmentModelField);
   },
-  delete(equipmentModelId) {
+  delete: equipmentModelId => {
     if(!EquipmentModelService.rights[ERights.RIGHT_EQUIPMENT_MODEL_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete an Equipment Model' });
     }
@@ -85,15 +85,17 @@ const EquipmentModelService = {
   },
 
   // CUSTOM FUNCTIONS
-  getAllByType() {
+  getAllByType: () => {
     if(!EquipmentModelService.rights[ERights.RIGHT_EQUIPMENT_MODEL_LIST]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Equipment Models' });
     }
     
-    var equipmentModelsByType = {}, type = '';
+    const equipmentModelsByType = {};
+    let type = '';
+
     return new Promise((resolve, reject) => {
       EquipmentModelService.list()
-        .then((equipmentModels) => {
+        .then(equipmentModels => {
           Object.keys(equipmentModels).forEach((equipmentModelKey) => {
             type = equipmentModels[equipmentModelKey].type;
             if(!equipmentModelsByType[type]) {  equipmentModelsByType[type] = {}};
@@ -102,7 +104,7 @@ const EquipmentModelService = {
           });
           resolve(equipmentModelsByType);
         })
-        .catch((e) => ErrorService.manageErrorThenReject(e, reject));
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   }
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { faTachometerFast, faHome, faSignIn, faUserPlus, faUserCog, faUsers, faTruck, faFileSignature, faTag, faCompass, faAnalytics, faMapPin, faBuilding, faSearch, faWarehouseAlt, faBars, faTimes } from '@fortawesome/pro-solid-svg-icons';
+import { faTachometerFast, faHome, faSignIn, faUserPlus, faUserCog, faUsers, faTruck, faTag, faCompass, faAnalytics, faMapPin, faBuilding, faSearch, faWarehouseAlt, faBars, faTimes, faHandshakeAlt } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 
@@ -108,7 +108,7 @@ const Navigation = () => {
         </NavLink>,
       [ERights.APP_CAN_USE_CONTRACT_MANAGEMENT]: 
         <NavLink key="contracts" activeClassName="nav--active" to={`/contracts`}>
-          <Icon source="fa" icon={faFileSignature} />
+          <Icon source="fa" icon={faHandshakeAlt} />
           <span className="nav-title">Contracts</span>
         </NavLink>,
       [ERights.APP_CAN_USE_ANALYTICS]: 
@@ -118,7 +118,7 @@ const Navigation = () => {
         </NavLink>
     };
 
-    return Object.keys(tabs).filter(key => !!RightService.hasAppRight(key)).map(key => tabs[key]);
+    return Object.keys(tabs).filter(key => RightService.hasAppRight(key)).map(key => tabs[key]);
   };
 
   return (

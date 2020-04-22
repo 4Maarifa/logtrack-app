@@ -43,7 +43,7 @@ const Gps = () => {
               This device is not compatible with heading.
             </span>
           }
-          {!!currentUserPosition && currentUserPosition.accuracy &&
+          {currentUserPosition && currentUserPosition.accuracy &&
             <span className={'accuracy ' + (currentUserPosition.accuracy > 150 ? 'accuracy--problem' : '')}>
               Accuracy: {currentUserPosition.accuracy}m
             </span>

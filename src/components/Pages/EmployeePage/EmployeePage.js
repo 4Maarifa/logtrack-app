@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, Redirect } from 'react-router-dom';
-import { faAward, faClipboardUser, faCommentDots, faEdit, faUserTag, faUserPlus } from '@fortawesome/pro-solid-svg-icons';
+import { faAward, faClipboardUser } from '@fortawesome/pro-solid-svg-icons';
 
-import DataService from './../../../services/data.service';
-import DateService from './../../../services/date.service';
-import UtilsService from './../../../services/utils.service';
-import ErrorService from './../../../services/error.service';
-import EmployeeService from './../../../services/entities/employee.service';
-import ChatService from './../../../services/entities/chat.service';
-import RoleService from './../../../services/entities/role.service';
-import CompanyService from './../../../services/entities/company.service';
+import DataService from '../../../services/data.service';
+import DateService from '../../../services/date.service';
+import UtilsService from '../../../services/utils.service';
+import ErrorService from '../../../services/error.service';
+import EmployeeService from '../../../services/entities/employee.service';
+import RoleService from '../../../services/entities/role.service';
+import CompanyService from '../../../services/entities/company.service';
 
-import Loader from './../../Utils/Loader/Loader';
-import Icon from './../../Utils/Icon/Icon';
-import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
-import ExTable from './../../Utils/ExTable/ExTable';
+import Loader from '../../Utils/Loader/Loader';
+import Icon from '../../Utils/Icon/Icon';
+import PageLink, { PageLinkType } from '../../Utils/PageLink/PageLink';
+import ExTable from '../../Utils/ExTable/ExTable';
 
-import { ERoleStatus, RoleDetails, ERole } from './../../../classes/Role';
-import Chat, { EChatType } from './../../../classes/Chat';
+import Employee from '../../Entities/Employee/Employee';
+
+import { ERoleStatus, RoleDetails } from '../../../classes/Role';
 
 import './EmployeePage.scss';
 
@@ -35,8 +34,6 @@ const EmployeePage = ({ match }) => {
   const [roles, setRoles] = useState({});
   const [companies, setCompanies] = useState({});
 
-  const [creationFormChatId, setCreationFormChatId] = useState(null);
-
   const observerKey = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
@@ -51,21 +48,6 @@ const EmployeePage = ({ match }) => {
     RoleService.getRolesForEmployeeId(employeeId, [ERoleStatus.CONFIRMED, ERoleStatus.REVOKED])
       .then(setRoles)
       .catch(ErrorService.manageError);
-  };
-
-  const createChat = () => {
-    let users = [computed.user.uid, employeeId];
-    const conversationId = uuid();
-
-    ChatService.create(new Chat(
-      conversationId,
-      computed.user.uid,
-      null,
-      DateService.getCurrentTimeStampNumber(),
-      users,
-      EChatType.CHAT_START)
-    ).then(() => setCreationFormChatId(conversationId))
-    .catch(ErrorService.manageError);
   };
 
   useEffect(() => {
@@ -100,13 +82,8 @@ const EmployeePage = ({ match }) => {
     );
   }
 
-  if(creationFormChatId) {
-    const chatId = `/chat/${creationFormChatId}`;
-    return <Redirect to={chatId} />;
-  }
-
   const employeeCertificates = {};
-  employeeData.certificates.forEach(c => employeeCertificates[c.name] = c);
+  employeeData.certificates && employeeData.certificates.forEach(c => employeeCertificates[c.name] = c);
 
   const renderCertificate = (_, certificate) => (
     <div className="certificate Element-content">
@@ -122,10 +99,12 @@ const EmployeePage = ({ match }) => {
     </div>);
 
   const employeeExperience = {};
-  Object.keys(roles)
-    .filter(roleKey => roles[roleKey].status === ERoleStatus.CONFIRMED
-        || roles[roleKey].status === ERoleStatus.REVOKED)
-    .forEach(roleKey => employeeExperience[roleKey] = roles[roleKey]);
+  if(roles) {
+    Object.keys(roles)
+      .filter(roleKey => roles[roleKey].status === ERoleStatus.CONFIRMED
+          || roles[roleKey].status === ERoleStatus.REVOKED)
+      .forEach(roleKey => employeeExperience[roleKey] = roles[roleKey]);
+  }
 
   const renderExperience = (_, exp) => (
     <div className="experience Element-content">
@@ -149,7 +128,7 @@ const EmployeePage = ({ match }) => {
   );
 
   const employeeOtherExperience = {};
-  employeeData.experience.forEach(e => employeeOtherExperience[e.name] = e);
+  employeeData.experience && employeeData.experience.forEach(e => employeeOtherExperience[e.name] = e);
 
   const renderOtherExperience = (_, otherExp) => (
     <div className="experience Element-content">
@@ -167,46 +146,18 @@ const EmployeePage = ({ match }) => {
 
   return (
     <div className="EmployeePage">
-      <div className="employee-header">
-        <h1>
-          <PageLink type={PageLinkType.EMPLOYEE} entityId={employeeId} entityData={employeeData} white />
-        </h1>
-        {employeeId === computed.user.uid &&
-          <div className="actions">
-            <NavLink className="action" to={`/profile`}>
-              <Icon source="fa" icon={faEdit} />
-              Edit your profile
-            </NavLink>
-            <NavLink className="action" to={`/role-add`}>
-              <Icon source="fa" icon={faUserTag} />
-              Request a role
-            </NavLink>
-          </div>
-        }
-        {employeeId !== computed.user.uid &&
-          <div className="actions">
-            <button className="action white-button" onClick={createChat}>
-              <Icon source="fa" icon={faCommentDots} />
-              Chat
-            </button>
-            {computed.activeRole && computed.activeRole.role === ERole.MANAGER &&
-              <NavLink className="action" to={`/role-offer/${employeeId}`}>
-                <Icon source="fa" icon={faUserPlus} />
-                Offer a role
-              </NavLink>
-            }
-          </div>
-        }
+      <div className="Element Element--page">
+        <Employee employee={{ [employeeId]: employeeData }} isPage />
       </div>
       <div className="employee-content">
-        {employeeData.certificates && <div className="certificates">
+        {employeeData.certificates && employeeData.certificates.length ? <div className="certificates">
           <h2 className="profile-title">Certificates</h2>
           <ExTable key="certificates" 
               items={employeeCertificates} 
               renderItem={renderCertificate} 
               header={['Name', '']}
               isNoFrame />
-        </div>}
+        </div> : null}
         <div className="roles">
           <h2 className="profile-title">Experience</h2>
           <ExTable key="experience" 
@@ -215,14 +166,14 @@ const EmployeePage = ({ match }) => {
               header={['Name', 'Company']}
               isNoFrame />
         </div>
-        {employeeData.experience && <div className="experience">
+        {employeeData.experience && employeeData.experience.length ? <div className="experience">
           <h2 className="profile-title">Other Experience</h2>
           <ExTable key="otherExperience" 
               items={employeeOtherExperience} 
               renderItem={renderOtherExperience} 
               header={['Name', 'Company']}
               isNoFrame />
-        </div>}
+        </div> : null}
       </div>
     </div>
   );

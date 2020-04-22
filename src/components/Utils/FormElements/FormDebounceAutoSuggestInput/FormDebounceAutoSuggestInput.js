@@ -76,7 +76,7 @@ const FormDebounceAutoSuggestInput = ({ value,
         required={inputRequired} 
         value={selectedItemKey} />
 
-      {!selectedItemKey && possibleItems && !!Object.keys(possibleItems).length && 
+      {!selectedItemKey && possibleItems && Object.keys(possibleItems).length && 
         <ul className="items">
           {Object.keys(possibleItems).map(key =>
             <li key={key} onClick={() => onItemChange(key)}>
