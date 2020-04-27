@@ -269,7 +269,7 @@ const Chat = ({ match }) => {
         </div>
       </div>
       <div className="conversation">
-        {selectedChatId && chats[selectedChatId] && <span className="conversation-top">
+        {selectedChatId && chats[selectedChatId] ? <span className="conversation-top">
           <NavLink className="return-link" to={`/chat`}>
             <Icon source="fa" icon={faChevronLeft} />
             Return
@@ -278,8 +278,8 @@ const Chat = ({ match }) => {
             .filter(userId => userId !== computed.user.uid && users[userId])
             .map(userId => users[userId].firstname + ' ' + users[userId].lastname)
             .join(', ')}
-        </span>}
-        {selectedChatId && chats[selectedChatId] && <div className="conversation-content" ref={chatContainer}>
+        </span> : ''}
+        {selectedChatId && chats[selectedChatId] ? <div className="conversation-content" ref={chatContainer}>
           <ul>
           {Object.keys(chats[selectedChatId])
             .sort((a, b) => -(chats[selectedChatId][b].datetime - chats[selectedChatId][a].datetime))
@@ -313,8 +313,8 @@ const Chat = ({ match }) => {
               </li>;
           })}
           </ul>
-        </div>}
-        {selectedChatId && <form className="conversation-bottom" onSubmit={handleSubmit}>
+        </div> : ''}
+        {selectedChatId ? <form className="conversation-bottom" onSubmit={handleSubmit}>
           <FormInput 
             inputType="text"
             value={inputValue}
@@ -333,8 +333,8 @@ const Chat = ({ match }) => {
               <Icon source="custom" icon="EnterKey" />
               to send
             </span>
-        </form>}
-        {!selectedChatId && <span className="conversation-notice">Please select a conversation or start a new one!</span>}
+        </form> : ''}
+        {!selectedChatId ? <span className="conversation-notice">Please select a conversation or start a new one!</span> : ''}
       </div>
     </div>
   );

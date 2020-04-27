@@ -11,20 +11,20 @@
     li {
       padding: .25rem;
       margin: .25rem 0;
-      border: 1px solid var(--second);
+      border: 1px solid var(--theme);
       display: inline-flex;
       justify-content: center;
       align-items: center;
-      background-color: #FFFFFF;
-      color: var(--second);
+      background-color: var(--inverse);
+      color: var(--theme);
       transition: color .5s, background-color .5s;
       cursor: pointer;
       border-radius: var(--border-radius);
       margin-right: .5rem;
 
       &.li--active {
-        background-color: var(--second);
-        color: #FFFFFF;
+        background-color: var(--theme);
+        color: var(--inverse);
       }
 
       &.li--disabled {

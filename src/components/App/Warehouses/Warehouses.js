@@ -82,13 +82,13 @@ const Warehouses = () => {
 
   return (
     <div className="Warehouses">
-      <Map ref={map}></Map>
+      <Map ref={map} />
       <ExTable key="warehouses" 
               items={warehouses} 
               renderItem={renderWarehouse} 
               header={['Name', '']}
               onActivateItem={onSelectedItemChanged}
-              loading={isWarehousesLoading}></ExTable>
+              loading={isWarehousesLoading} />
       <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[
         {title: 'Add a warehouse', icon: <Icon source="fa" icon={faWarehouseAlt} />, link: `/warehouse-add`}
       ]} />

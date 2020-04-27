@@ -11,9 +11,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #FFFFFF;
-    background-color: var(--second);
-    border-radius: 1.5rem;
+    color: var(--inverse);
+    background-color: var(--theme);
+    border-radius: 50%;
     box-shadow: var(--shadow);
     cursor: pointer;
     float: right;
@@ -49,7 +49,7 @@
       a:link,
       a:active,
       button {
-        color: #000000;
+        color: var(--text);
         text-decoration: none;
         display: flex;
         flex-direction: row;
@@ -59,20 +59,20 @@
       }
 
       .action-title {
-        color: #000000;
+        color: var(--text);
         margin-right: .5rem;
       }
 
       .action-icon {
         height: 2.5rem;
         width: 2.5rem;
-        background-color: var(--second);
+        background-color: var(--theme);
         border-radius: 1.25rem;
         box-shadow: var(--shadow);
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #FFFFFF;
+        color: var(--inverse);
         margin: .25rem;
       }
     }
@@ -86,6 +86,18 @@
 
     .button svg {
       transform: rotate(135deg);
+    }
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .ActionButton {
+    bottom: 2rem;
+    z-index: 5001;
+
+    .button {
+      border: 4px solid var(--inverse);
+
     }
   }
 }

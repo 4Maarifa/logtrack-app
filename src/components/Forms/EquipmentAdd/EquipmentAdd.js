@@ -4,7 +4,7 @@ import { faRectangleWide, faEdit, faTruck, faUser, faBuilding } from '@fortaweso
 
 import Icon from './../../Utils/Icon/Icon';
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
-import Choose from './../../Utils/Choose/Choose';
+import Choose from './../../Utils/FormElements/Choose/Choose';
 
 import DataService from './../../../services/data.service';
 import DateService from './../../../services/date.service';
@@ -57,11 +57,7 @@ const EquipmentAdd = ({ match }) => {
     event.preventDefault();
 
     if(currentEquipmentId) {
-      EquipmentService.update(currentEquipmentId,
-          new Equipment(currentEquipment.companyId,
-                        identification,
-                        currentEquipment.equipmentModelId,
-                        currentEquipment.creationIsoDate))
+      EquipmentService.updateField(currentEquipmentId, {identification})
             .then(() => setNewEquipmentId(currentEquipmentId))
             .catch(ErrorService.manageError);
     }

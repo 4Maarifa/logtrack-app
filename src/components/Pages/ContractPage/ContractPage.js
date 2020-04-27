@@ -45,7 +45,7 @@ const ContractPage = ({ match }) => {
   if(!contract || !companyExec || !companyOrder) {
     return (
       <div className="ContractPage">
-        <Loader></Loader>
+        <Loader />
       </div>
     );
   }

@@ -1,0 +1,20 @@
+.Switch {
+  display: block;
+
+  input {
+    display: none;
+  }
+
+  &-indicator {
+    cursor: pointer;
+    font-size: 180%;
+
+    .icon--on {
+      color: var(--green);
+    }
+  
+    .icon--off {
+      color: var(--red);
+    }
+  }
+}

@@ -8,7 +8,7 @@
     position: absolute;
     bottom: -.5rem;
     left: 1rem;
-    background-color: #FFFFFF;
+    background-color: var(--inverse);
     box-shadow: var(--shadow);
     border-radius: 1rem;
     cursor: pointer;
@@ -28,7 +28,7 @@
 
     &--active {
       .Icon svg {
-        color: var(--second);
+        color: var(--theme);
       }
     }
   }

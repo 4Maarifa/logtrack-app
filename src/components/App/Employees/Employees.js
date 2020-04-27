@@ -67,8 +67,8 @@ const Employees = () => {
 
   return (
     <div className="Employees">
-      <Map></Map>
-      <ExTable key="employees" items={companyEmployees} renderItem={renderRoleEmployee} header={['Name', 'Roles']} loading={isCompanyEmployeesLoading}></ExTable>
+      <Map />
+      <ExTable key="employees" items={companyEmployees} renderItem={renderRoleEmployee} header={['Name', 'Roles']} loading={isCompanyEmployeesLoading} />
     </div>
   );
 };

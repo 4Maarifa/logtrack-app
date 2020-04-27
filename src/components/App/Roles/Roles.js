@@ -169,22 +169,22 @@ const Roles = () => {
       }
 
       <h1>Your Roles</h1>
-      <ExTable items={userRolesCompanies} renderItem={renderUserRole} isNoFrame></ExTable>
+      <ExTable items={userRolesCompanies} renderItem={renderUserRole} isNoFrame />
 
       {computed.activeRole && computed.activeRole.role === ERole.MANAGER &&
         <Fragment>
           <h1>
             Requests to join <PageLink noPhoto type={PageLinkType.COMPANY} entityId={computed.employee.activeRoleId} entityData={computed.activeRoleCompany} />
           </h1>
-          <ExTable items={requestedRoles} renderItem={renderRequestedRole} isNoFrame></ExTable>
+          <ExTable items={requestedRoles} renderItem={renderRequestedRole} isNoFrame />
         </Fragment>
       }
 
       <h1>Pending Requests</h1>
-      <ExTable items={userDraftRolesCompanies} renderItem={renderDraftUserRole} isNoFrame></ExTable>
+      <ExTable items={userDraftRolesCompanies} renderItem={renderDraftUserRole} isNoFrame />
 
       <h1>Revoked Roles</h1>
-      <ExTable items={userRevokedRolesCompanies} renderItem={renderRevokedUserRole} isNoFrame></ExTable>
+      <ExTable items={userRevokedRolesCompanies} renderItem={renderRevokedUserRole} isNoFrame />
 
       <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={computeActions()} />
     </div>

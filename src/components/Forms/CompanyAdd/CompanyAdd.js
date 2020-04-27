@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { faBuilding, faUser, faImage, faPalette, faInfoCircle, faCheck, faWallet } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
-import Choose from './../../Utils/Choose/Choose';
+import Choose from './../../Utils/FormElements/Choose/Choose';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
 import FormInputFile from './../../Utils/FormElements/FormInputFile/FormInputFile';
@@ -28,7 +28,7 @@ import './CompanyAdd.scss';
 const defaultColors = {
   '#444444': {
     content: <Fragment>
-        <i className="input-color-choice" style={{ backgroundColor: '#444444' }}></i>
+        <i className="input-color-choice" style={{ backgroundColor: '#444444' }} />
         <Icon source="fa" icon={faCheck} />
       </Fragment>
   }
@@ -69,7 +69,7 @@ const CompanyAdd = ({ match }) => {
           let currentColors = colors;
           currentColors[companyDoc.data().color] = {
             content: <Fragment>
-              <i className="input-color-choice" style={{ backgroundColor: companyDoc.data().color }}></i>
+              <i className="input-color-choice" style={{ backgroundColor: companyDoc.data().color }} />
               <Icon source="fa" icon={faCheck} />
             </Fragment>
           };
@@ -106,15 +106,10 @@ const CompanyAdd = ({ match }) => {
 
     const endCompanyProcess = logoURL => {
       if(currentCompanyId) {
-        const company = new Company(currentCompany.name,
-                                    logoURL,
-                                    currentCompany.creator,
-                                    currentCompany.creationIsoString,
-                                    selectedColor || '#444444',
-                                    currentCompany.plan
-        );
-        CompanyService.update(currentCompanyId, company)
-          .then(() => {
+        CompanyService.updateField(currentCompanyId, {
+          logoURL,
+          color: selectedColor || '#444444'
+        }).then(() => {
             setNewCompanyId(currentCompanyId);
             DataService.computed.notifyChanges();
           })
@@ -169,7 +164,7 @@ const CompanyAdd = ({ match }) => {
     colors.filter(ColorService.isMedColor).map(ColorService.convertRGBtoHEX).forEach(color => {
       colorResults[color] = {
         content: <Fragment>
-          <i className="input-color-choice" style={{backgroundColor: color}}></i>
+          <i className="input-color-choice" style={{backgroundColor: color}} />
           <Icon source="fa" icon={faCheck} />
         </Fragment>
       }

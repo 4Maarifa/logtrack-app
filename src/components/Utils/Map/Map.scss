@@ -29,9 +29,9 @@
         justify-content: center;
         align-items: center;
         flex: 0 0 1.5rem;
-        background-color: var(--second);
+        background-color: var(--theme);
         border-radius: .75rem;
-        color: #FFFFFF;
+        color: var(--inverse);
       }
 
       &-content {
@@ -45,12 +45,12 @@
         justify-content: center;
         align-items: center;
         white-space: nowrap;
-        background-color: #FFFFFF;
+        background-color: var(--inverse);
         transition: max-width .5s, padding .5s;
         border-radius: .75rem 0 0 .75rem;
 
         a, a:hover, a:focus, a:active, a:visited, a:link {
-          color: #000000;
+          color: var(--text);
           text-decoration: none;
         }
       }
@@ -73,18 +73,18 @@
 
       &-selected {
         padding: .2rem;
-        background-color: var(--second);
+        background-color: var(--theme);
         border-radius: 2px;
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: auto;
-        color: #FFFFFF;
+        color: var(--inverse);
       }
 
       &-others {
         padding: .2rem 0;
-        background-color: #FFFFFF;
+        background-color: var(--inverse);
         max-width: 0;
         white-space: nowrap;
         overflow: hidden;
@@ -110,13 +110,13 @@
         position: static;
         vertical-align: top;
         border-radius: 0;
-        color: var(--second);
+        color: var(--theme);
         background-color: var(--gray);
-        color: #FFFFFF;
+        color: var(--inverse);
         transition: background-color .5s, color .5s, opacity .5s;
 
         &.layer--active {
-          background-color: var(--second);
+          background-color: var(--theme);
           opacity: 1;
         }
 
@@ -140,7 +140,7 @@
       background-color: transparent;
 
       &.ol-attribution {
-        background-color: #FFFFFF;
+        background-color: var(--inverse);
         border-top-left-radius: 5px;
 
         a,
@@ -149,7 +149,7 @@
         a:active,
         a:visited,
         a:link {
-          color: #000000;
+          color: var(--text);
           text-decoration: none;
         }
       }
@@ -165,14 +165,14 @@
 
         .ol-gps-mode {
           button {
-            color: var(--second);
+            color: var(--theme);
             background-color: var(--gray);
-            color: #FFFFFF;
+            color: var(--inverse);
             opacity: .6;
             transition: background-color .5s, color .5s, opacity .5s;
             
             &.ol-gps-mode--active {
-              background-color: var(--second);
+              background-color: var(--theme);
               opacity: 1;
             }
 
@@ -195,7 +195,7 @@
 
       button,
       button:hover {
-        background-color: var(--second);
+        background-color: var(--theme);
         cursor: pointer;
 
         svg {
@@ -211,8 +211,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #FFFFFF;
-      color: #000000;
+      background-color: var(--inverse);
+      color: var(--text);
       border-radius: var(--border-radius);
       position: relative;
 
@@ -224,7 +224,7 @@
         height: 0;
         width: 0;
         border-style: solid solid none solid;
-        border-color: #FFFFFF transparent transparent transparent;
+        border-color: var(--inverse) transparent transparent transparent;
         border-width: 10px 10px 0 10px;
       }
     }

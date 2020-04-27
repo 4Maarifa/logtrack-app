@@ -154,7 +154,7 @@ const Search = () => {
                                   items={employees}
                                   renderItem={renderEmployee}
                                   header={['Name', 'Roles']}
-                                  loading={isSearchLoading}></ExTable>
+                                  loading={isSearchLoading} />
         },
         companies: {
           name: () => <span>
@@ -166,7 +166,7 @@ const Search = () => {
                                   items={companies}
                                   renderItem={renderCompany}
                                   header={['Name', '']}
-                                  loading={isSearchLoading}></ExTable>
+                                  loading={isSearchLoading} />
         },
         equipments: {
           name: () => <span>
@@ -178,7 +178,7 @@ const Search = () => {
                                   items={equipments}
                                   renderItem={renderEquipment}
                                   header={['Identification', 'Model']}
-                                  loading={isSearchLoading}></ExTable>
+                                  loading={isSearchLoading} />
         },
         contracts: {
           name: () => <span>
@@ -190,7 +190,7 @@ const Search = () => {
                                   items={contracts}
                                   renderItem={renderContract}
                                   header={['Type', 'Company']}
-                                  loading={isSearchLoading}></ExTable>
+                                  loading={isSearchLoading} />
         },
         warehouses: {
           name: () => <span>
@@ -202,9 +202,9 @@ const Search = () => {
                                   items={warehouses}
                                   renderItem={renderWarehouse}
                                   header={['Name', '']}
-                                  loading={isSearchLoading}></ExTable>
+                                  loading={isSearchLoading} />
         }
-      }}></Tabs>
+      }} />
     </div>
   );
 };

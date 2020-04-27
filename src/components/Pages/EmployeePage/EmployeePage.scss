@@ -16,6 +16,13 @@
     }
   }
 
+  .employee-search {
+    margin-top: 1rem;
+    box-shadow: var(--shadow);
+    border-radius: var(--border-radius);
+    background-color: var(--inverse);
+  }
+
   .employee-content {
     flex: 1;
     margin: 1rem 0;
@@ -23,7 +30,7 @@
     display: block;
     box-shadow: var(--shadow);
     border-radius: var(--border-radius);
-    background-color: #FFFFFF;
+    background-color: var(--inverse);
 
     .PageLink {
       margin: 0 .5rem;

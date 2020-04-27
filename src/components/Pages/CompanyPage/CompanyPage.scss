@@ -3,6 +3,13 @@
   display: flex;
   flex-direction: column;
 
+  .joboffers {
+    margin-top: 1rem;
+    box-shadow: var(--shadow);
+    border-radius: var(--border-radius);
+    background-color: var(--inverse);
+  }
+
   .Tabs {
     flex: 1;
 

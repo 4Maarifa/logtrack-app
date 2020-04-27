@@ -105,7 +105,7 @@ const WarehousePage = ({ match }) => {
   if(!warehouse || !company) {
     return (
       <div className="WarehousePage">
-        <Loader></Loader>
+        <Loader />
       </div>
     );
   }

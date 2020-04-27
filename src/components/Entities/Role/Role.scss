@@ -29,11 +29,11 @@
       height: 1.4rem;
       box-shadow: none;
       padding: 0 .5rem;
-      color: #000000;
+      color: var(--text);
       transition: color .5s;
 
       &:hover {
-        color: var(--second)
+        color: var(--theme)
       }
     }
   }

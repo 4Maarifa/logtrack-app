@@ -74,12 +74,12 @@ const Equipments = () => {
 
   return (
     <div className="Equipments">
-      <Map></Map>
+      <Map />
       <ExTable key="equipments" 
                 items={equipments}
                 renderItem={renderEquipment}
                 header={['Identification', 'Model']}
-                loading={isEquipmentsLoading}></ExTable>
+                loading={isEquipmentsLoading} />
       <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[
         {title: 'Add an equipment', icon: <Icon source="fa" icon={faTruck} />, link: `/equipment-add`}
       ]} />

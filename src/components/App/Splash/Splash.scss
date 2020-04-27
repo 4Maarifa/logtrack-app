@@ -45,8 +45,8 @@
         position: absolute;
         bottom: .5rem;
         left: .2rem;
-        color: #FFFFFF;
-        text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+        color: var(--inverse);
+        text-shadow: -1px 0 var(--text), 0 1px var(--text), 1px 0 var(--text), 0 -1px var(--text);
       }
     }
   }

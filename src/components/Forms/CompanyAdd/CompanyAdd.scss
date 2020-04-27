@@ -4,7 +4,6 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  overflow: auto;
 
   h1 {
     flex: 0 0 1rem;
@@ -55,7 +54,7 @@
           align-items: center;
           border-radius: var(--border-radius);
           box-shadow: var(--shadow);
-          background-color: #FFFFFF;
+          background-color: var(--inverse);
           position: relative;
 
           &:nth-child(2) {
@@ -66,7 +65,7 @@
           .plan-icon {
             font-size: 300%;
             padding: .5rem 0;
-            color: var(--second);
+            color: var(--theme);
           }
 
           .plan-name {
@@ -82,12 +81,12 @@
           .plan-price {
             width: calc(100% - 4rem);
             margin: .5rem 1rem;
-            border-top: 2px solid var(--second);
+            border-top: 2px solid var(--theme);
 
             &-amount {
               display: block;
               font-size: 200%;
-              color: var(--second);
+              color: var(--theme);
               margin-bottom: -.5rem;
             }
           }
@@ -135,7 +134,7 @@
         width: 5rem;
         display: inline-block;
         padding: 0;
-        color: #FFFFFF;
+        color: var(--inverse);
         position: relative;
 
         svg {

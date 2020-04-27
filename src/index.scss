@@ -1,8 +1,13 @@
 :global(:root) {
   --main: #F1B5FF;
-  --second: #113885;
+
+  --theme: #113885;
+  --theme-light: #5A82D1;
   
-  --light-gray: #F1F1F1;
+  --text: #252525;
+  --inverse: #FFFFFF;
+
+  --light-gray: #F0F0F0;
   --gray: #969696;
 
   --red: #DD3333;
@@ -27,18 +32,18 @@
 }
 
 :global(::-webkit-scrollbar-track) {
-  background: #FFFFFF;
+  background: var(--inverse);
 }
 
 :global(::-webkit-scrollbar-thumb) {
-  background: var(--second);
+  background: var(--theme);
   width: 5px;
 }
 
 :global(.loader) {
   path,
   rect{
-    fill: var(--second);
+    fill: var(--theme);
   }
 }
 
@@ -59,11 +64,11 @@
 
 :global(.react-datetime-picker__wrapper) {
   border: 0;
-  border-bottom: 1px solid var(--second);
 }
 
 :global(textarea) {
-  resize: none;
+  resize: vertical;
+  border-radius: var(--border-radius);
 }
 
 :global(textarea),
@@ -73,8 +78,8 @@
 
 :global(input[type="submit"]) {
   height: 2rem;
-  color: #FFFFFF;
-  background-color: var(--second);
+  color: var(--inverse);
+  background-color: var(--theme);
   border: 0;
   border-radius: var(--border-radius);
   cursor: pointer;
@@ -87,7 +92,7 @@
   top: -1.2rem;
   left: 0;
   font-size: 85%;
-  color: var(--second);
+  color: var(--theme);
   z-index: 1;
 
   svg {
@@ -106,24 +111,24 @@
 :global(a) {
   &, &:active, &:visited, &:link, &:focus {
     text-decoration: none;
-    color: var(--second);
+    color: var(--theme);
   }
 
   &:hover {
     text-decoration: underline;
-    color: var(--second);
+    color: var(--theme);
   }
 }
 
 :global(a.white-link) {
   &, &:active, &:visited, &:link, &:focus {
     text-decoration: none;
-    color: #FFFFFF;
+    color: var(--inverse);
   }
 
   &:hover {
     text-decoration: underline;
-    color: #FFFFFF;
+    color: var(--inverse);
   }
 }
 
@@ -134,8 +139,8 @@
 
 :global(button), :global(.button) {
   border: 0;
-  color: #FFFFFF;
-  background-color: var(--second);
+  color: var(--inverse);
+  background-color: var(--theme);
   border-radius: calc(var(--border-radius) / 2);
   font-size: 1rem;
   padding: .2rem;
@@ -166,8 +171,8 @@
 }
 
 :global(button.white-button) {
-  color: var(--second);
-  background-color: #FFFFFF;
+  color: var(--theme);
+  background-color: var(--inverse);
 }
 
 :global(button.flat) {
@@ -180,8 +185,8 @@
   font-size: 100%;
   margin: 0 .5em;
   padding: .3em .5em;
-  background-color: var(--second);
-  color: #FFFFFF;
+  background-color: var(--theme);
+  color: var(--inverse);
   border-radius: 1em;
   text-transform: uppercase;
   display: inline-flex;
@@ -189,8 +194,8 @@
   align-items: center;
 
   &-inverse {
-    background-color: #FFFFFF;
-    color: var(--second);
+    background-color: var(--inverse);
+    color: var(--theme);
   }
 }
 
@@ -203,6 +208,7 @@ body, html {
   justify-content: center;
   align-items: center;
   background-color: var(--main);
+  color: var(--text);
   font-family: 'Nunito', sans-serif;
 }
 
@@ -221,7 +227,7 @@ body, html {
     align-items: center;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
-    background-color: #FFFFFF;
+    background-color: var(--inverse);
     transition: height .5s, width .5s, border-radius .5s;
 
     &.app-container--full {
@@ -241,20 +247,20 @@ body, html {
     }
   
     .page_content {
-      padding: 1.5rem;
-      height: calc(100% - 3rem);
-      max-height: calc(100% - 3rem);
+      padding: 0;
+      height: 100%;
+      max-height: 100%;
       flex: 4;
-      overflow: auto;
       position: relative;
       display: flex;
       flex-direction: column;
       background-color: var(--light-gray);
       border-radius: 0 var(--border-radius) var(--border-radius) 0;
       transition: padding .5s, height .5s;
+      overflow-y: auto;
 
       & > * {
-        max-height: calc(100vh - 3rem);
+        padding: 1rem;
       }
     }
   
@@ -268,6 +274,11 @@ body, html {
   }
 }
 
+:global(.sub) {
+  color: var(--gray);
+  font-size: 80%;
+}
+
 :global(.Element) {
   padding: 0;
   transition: all .5s;
@@ -277,7 +288,7 @@ body, html {
     height: 100%;
     min-height: 7rem;
     width: 7rem;
-    border-right: 1px solid var(--second);
+    border-right: 1px solid var(--theme);
     flex: 0 0 7rem;
     font-size: 135%;
     display: flex;
@@ -335,11 +346,7 @@ body, html {
     position: absolute;
     top: -.5rem;
     right: 1rem;
-  }
-
-  &-sub {
-    color: var(--gray);
-    font-size: 80%;
+    transition: top .5s;
   }
 
   &-details {
@@ -367,12 +374,8 @@ body, html {
   &--tile {
     width: calc(50% - 2rem);
     margin: 1rem;
-    box-shadow: var(--small-shadow);
+    box-shadow: var(--shadow);
     border-radius: var(--border-radius);
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
   }
 
   &--row {
@@ -385,7 +388,7 @@ body, html {
     }
 
     .Element-photo {
-      border-right: 1px solid var(--second);
+      border-right: 1px solid var(--theme);
     }
 
     .Element-badge {
@@ -396,7 +399,7 @@ body, html {
   &--tile, &--row {
     min-height: 7rem;
     display: block;
-    background-color: #FFFFFF;
+    background-color: var(--inverse);
     position: relative;
 
     &:hover {
@@ -406,15 +409,15 @@ body, html {
   }
 
   &--page {
-    background-color: var(--second);
-    color: #FFFFFF;
+    background-color: var(--theme);
+    color: var(--inverse);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
 
     .Element {
 
       &-icon {
-        border-right: 1px solid #FFFFFF;
+        border-right: 1px solid var(--inverse);
       }
 
       &-actions {
@@ -422,9 +425,44 @@ body, html {
       }
     }
   }
+
+  &.Element-small {
+    .Element {
+
+      &-icon {
+        min-height: 4rem;
+      }
+
+      &-photo {
+        min-height: 4rem;
+
+        img {
+          width: 3.2rem;
+          height: 3.2rem;
+        }
+      }
+
+      &-data {
+        min-height: 4rem;
+      }
+    }
+  }
+
+  &.Element--tile, &.Element--row {
+    min-height: 3rem;
+  }
 }
 
 :global(.react-datetime-picker) {
+  width: 100%;
+  border: 1px solid var(--gray);
+  height: 2rem;
+  padding: 0 .5rem;
+  display: flex;
+  align-items: center;
+  border-radius: var(--border-radius);
+  z-index: 5;
+
   button:not(.react-calendar__month-view__days__day--weekend) {
     color:var(--gray);
   }
@@ -449,21 +487,11 @@ body, html {
       padding: .3rem .3rem 3rem .3rem;
       height: calc(100% - 2rem);
       max-height: calc(100% - 2rem);
+      overflow-y: auto;
 
       & > * {
         max-height: calc(100vh - 2rem);
       }
-    }
-
-    .Navigation {
-      border-radius: 0;
-      width: 100%;
-    }
-
-    .MenuBar {
-      width: 100%;
-      border-radius: 0;
-      right: 0;
     }
   }
 

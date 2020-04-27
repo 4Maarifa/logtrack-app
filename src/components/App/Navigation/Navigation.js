@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { faTachometerFast, faHome, faSignIn, faUserPlus, faUserCog, faUsers, faTruck, faTag, faCompass, faAnalytics, faMapPin, faBuilding, faSearch, faWarehouseAlt, faBars, faTimes, faHandshakeAlt } from '@fortawesome/pro-solid-svg-icons';
+import { faTachometerFast, faHome, faSignIn, faUserPlus, faUserCog, faUsers,
+  faTruck, faTag, faCompass, faAnalytics, faMapPin, faBuilding, faSearch,
+  faWarehouseAlt, faBars, faTimes, faHandshakeAlt, faSuitcase, faPortrait } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 
@@ -115,6 +117,11 @@ const Navigation = () => {
         <NavLink key="analytics" activeClassName="nav--active" to={`/analytics`}>
           <Icon source="fa" icon={faAnalytics} />
           <span className="nav-title">Analytics</span>
+        </NavLink>,
+      [ERights.APP_CAN_USE_JOBOFFERS_MANAGEMENT] :
+        <NavLink key="joboffers" activeClassName="nav--active" to={`/joboffers`}>
+          <Icon source="fa" icon={faPortrait} />
+          <span className="nav-title">Job Offers</span>
         </NavLink>
     };
 
@@ -140,6 +147,10 @@ const Navigation = () => {
           <NavLink activeClassName="nav--active" to={`/search`}>
             <Icon source="fa" icon={faSearch} />
             <span className="nav-title">Search</span>
+          </NavLink>
+          <NavLink activeClassName="nav--active" to={`/jobs`}>
+            <Icon source="fa" icon={faSuitcase} />
+            <span className="nav-title">Jobs</span>
           </NavLink>
           {computed.activeRole &&
             <NavLink activeClassName="nav--active" to={`/company/${computed.activeRole.companyId}`}>

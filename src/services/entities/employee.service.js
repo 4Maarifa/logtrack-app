@@ -4,7 +4,7 @@ import DataService, { ensureFilledFields, migratePrototype } from './../data.ser
 import FirebaseService from './../firebase.service';
 import ErrorService from './../error.service';
 
-import Employee from './../../classes/Employee';
+import Employee, { LoginAttempt } from './../../classes/Employee';
 import ESearchType from './../../classes/enums/ESearchType';
 
 const EmployeeService = {
@@ -135,7 +135,101 @@ const EmployeeService = {
       DataService.computed.search([ESearchType.EMPLOYEES], term, null)
         .then(results => resolve(results.data.employees))
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
-    })
+    }),
+
+  loginAttempt: {
+    rights: {
+      [ERights.RIGHT_LOGIN_ATTEMPT_CREATE]: () => true,
+      [ERights.RIGHT_LOGIN_ATTEMPT_GET]: () => DataService.computed.isConnected(),
+      [ERights.RIGHT_LOGIN_ATTEMPT_LIST]: () => DataService.computed.isConnected(),
+      [ERights.RIGHT_LOGIN_ATTEMPT_UPDATE]: () => false,
+      [ERights.RIGHT_LOGIN_ATTEMPT_DELETE]: () => false
+    },
+
+    create: loginAttempt => {
+      if(!EmployeeService.loginAttempt.rights[ERights.RIGHT_LOGIN_ATTEMPT_CREATE]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create a Login Attempt' });
+      }
+  
+      if(!loginAttempt instanceof LoginAttempt) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'LoginAttempt' });
+      }
+  
+      if(!ensureFilledFields(loginAttempt, ['country', 'city', 'latitude', 'longitude', 'ip'])) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['country', 'city', 'latitude', 'longitude', 'ip'] });
+      }
+  
+      return FirebaseService.getDb().collection('loginAttempts').add(migratePrototype(loginAttempt));
+    },
+    get: loginAttemptId => {
+      if(!EmployeeService.loginAttempt.rights[ERights.RIGHT_LOGIN_ATTEMPT_GET]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Login Attempt' });
+      }
+      return FirebaseService.getDb().collection('loginAttempts').doc(loginAttemptId).get();
+    },
+    list: () => {
+      if(!EmployeeService.loginAttempt.rights[ERights.RIGHT_LOGIN_ATTEMPT_LIST]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Login Attempts' });
+      }
+  
+      const loginAttempts = {};
+      return new Promise((resolve, reject) => {
+          FirebaseService.getDb().collection('loginAttempts').get()
+              .then(querySnapshot => {
+                  querySnapshot.forEach(loginAttemptDoc => loginAttempts[loginAttemptDoc.id] = loginAttemptDoc.data());
+                  resolve(loginAttempts);
+              })
+              .catch(e => ErrorService.manageErrorThenReject(e, reject));
+      });
+    },
+    update: (loginAttemptId, loginAttempt) => {
+      if(!EmployeeService.loginAttempt.rights[ERights.RIGHT_LOGIN_ATTEMPT_UPDATE]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Login Attempt' });
+      }
+  
+      if(!loginAttempt instanceof LoginAttempt) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'Login Attempt' });
+      }
+  
+      if(!ensureFilledFields(loginAttempt, ['country', 'city', 'latitude', 'longitude', 'ip'])) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['country', 'city', 'latitude', 'longitude', 'ip'] });
+      }
+  
+      return FirebaseService.getDb().collection('employees').doc(loginAttemptId).set(migratePrototype(loginAttempt));
+    },
+    updateField: (loginAttemptId, loginAttemptField) => {
+      if(!EmployeeService.loginAttempt.rights[ERights.RIGHT_LOGIN_ATTEMPT_UPDATE]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Login Attempt' });
+      }
+      
+      return FirebaseService.getDb().collection('loginAttempts').doc(loginAttemptId).update(loginAttemptField);
+    },
+    delete: loginAttemptId => {
+      if(!EmployeeService.loginAttempt.rights[ERights.RIGHT_LOGIN_ATTEMPT_DELETE]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Login Attempt' });
+      }
+      
+      return FirebaseService.getDb().collection('loginAttempts').doc(loginAttemptId).delete();
+    },
+    // CUSTOM FUNCTIONS
+    getAllByEmail: email => {
+      if(!EmployeeService.loginAttempt.rights[ERights.RIGHT_LOGIN_ATTEMPT_LIST]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Login Attempts' });
+      }
+
+      const loginAttempts = {};
+      return new Promise((resolve, reject) => {
+        FirebaseService.getDb().collection('loginAttempts')
+          .where('email', '==', email)
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(loginAttemptDoc => loginAttempts[loginAttemptDoc.id] = loginAttemptDoc.data());
+            resolve(loginAttempts);
+          })
+          .catch(e => ErrorService.manageErrorThenReject(e, reject));
+      });
+    }
+  }
 };
 
 export default EmployeeService;

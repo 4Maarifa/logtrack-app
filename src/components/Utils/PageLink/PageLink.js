@@ -57,6 +57,13 @@ const PageLink = ({ type, entityId, entityData, noLink, white, noPhoto }) => {
             <span>{entityData.identification}</span>
           </Fragment>
         };
+      case PageLinkType.JOBOFFER:
+        return {
+          link: `/joboffer/${entityId}`,
+          content: <Fragment>
+            <span>{entityData.title}</span>
+          </Fragment>
+        };
       default:
         ErrorService.manageError('PageLink: The type ' + type + ' is not recognized');
         return null;
@@ -84,7 +91,8 @@ export const PageLinkType = {
   COMPANY: 'COMPANY',
   EQUIPMENT: 'EQUIPMENT',
   WAREHOUSE: 'WAREHOUSE',
-  CONTRACT: 'CONTRACT'
+  CONTRACT: 'CONTRACT',
+  JOBOFFER: 'JOBOFFER'
 };
 
 export default PageLink;

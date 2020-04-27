@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { faUsers, faTruck, faWarehouseAlt } from '@fortawesome/pro-solid-svg-icons';
+import { NavLink } from 'react-router-dom';
+import { faUsers, faTruck, faWarehouseAlt, faClipboardUser } from '@fortawesome/pro-solid-svg-icons';
 
 import DataService from '../../../services/data.service';
 import CompanyService from '../../../services/entities/company.service';
@@ -47,6 +48,8 @@ const CompanyPage = ({ match }) => {
   const [equipmentModels, setEquipmentModels] = useState({});
   const [brands, setBrands] = useState({});
 
+  const [nbJobOffers, setNbJobOffers] = useState(0);
+
   const observerKey = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
@@ -54,6 +57,10 @@ const CompanyPage = ({ match }) => {
   const computeCompany = () => {
     CompanyService.get(companyId)
       .then(companyDoc => setCompany(companyDoc.data()))
+      .catch(ErrorService.manageError);
+
+    CompanyService.jobOffer.countOpenedForCompanyId(companyId)
+      .then(setNbJobOffers)
       .catch(ErrorService.manageError);
   };
 
@@ -109,7 +116,11 @@ const CompanyPage = ({ match }) => {
 
   useEffect(() => computeEmployeesRoles(), [company]);
 
-  useEffect(() => computeCompany(), [computed]);
+  useEffect(() => {
+    if(computed.initialized) {
+      computeCompany();
+    }
+  }, [computed]);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, observerKey);
@@ -154,7 +165,7 @@ const CompanyPage = ({ match }) => {
 
   if(!company) {
     return <div className="CompanyPage">
-      <Loader></Loader>
+      <Loader />
     </div>
   }
 
@@ -163,6 +174,18 @@ const CompanyPage = ({ match }) => {
       <div className="Element Element--page">
         <Company key={companyId} company={ {[companyId]: company} } options={{ }} showDetails isPage />
       </div>
+      {nbJobOffers ? 
+        <NavLink className="Element Element--row joboffers" to={`/jobs/${companyId}`}>
+          <div className="Element-base">
+            <Icon containerclassname="Element-icon" source="fa" icon={faClipboardUser} />
+            <div className="Element-data">
+              <div className="Element-title">
+                {company.name} has {nbJobOffers} opened positions!
+              </div>
+            </div>
+          </div>
+        </NavLink>
+      : null}
       <Tabs default="warehouses" tabs={{
         warehouses: {
           name: () => <span>

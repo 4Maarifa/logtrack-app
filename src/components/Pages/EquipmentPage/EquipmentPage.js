@@ -40,7 +40,7 @@ const EquipmentPage = ({ match }) => {
   if(!equipment || !equipmentModel) {
     return (
       <div className="EquipmentPage">
-        <Loader></Loader>
+        <Loader />
       </div>
     );
   }

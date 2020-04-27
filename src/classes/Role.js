@@ -1,4 +1,4 @@
-import { faSteeringWheel, faUserTie, faEye, faWrench, faJoystick, faHands, faCalculator } from '@fortawesome/pro-solid-svg-icons';
+import { faSteeringWheel, faUserTie, faEye, faWrench, faHands, faCalculator, faUserHardHat, faPeopleArrows } from '@fortawesome/pro-solid-svg-icons';
 
 /**
  * A role is authorization for an employee to access a company's data depending of its role
@@ -29,37 +29,50 @@ export const ERole = Object.freeze({
     MECHANIC: 'MECHANIC',
     OPERATOR: 'OPERATOR',
     INSURER: 'INSURER',
-    ACCOUNTANT: 'ACCOUNTANT'
+    ACCOUNTANT: 'ACCOUNTANT',
+    RECRUITER: 'RECRUITER'
 });
 
 export const RoleDetails = {
     [ERole.DRIVER]: {
         name: 'Driver',
-        icon: faSteeringWheel
+        icon: faSteeringWheel,
+        description: 'An employee that takes good from point A to point B'
     },
     [ERole.MANAGER]: {
         name: 'Manager',
-        icon: faUserTie
+        icon: faUserTie,
+        description: 'Powerful role to manage all company\'s assets'
     },
     [ERole.OBSERVER]: {
         name: 'Observer',
-        icon: faEye
+        icon: faEye,
+        description: 'A trustful role who can see everything but cannot modify anything. Useful for external monitoring companies'
     },
     [ERole.MECHANIC]: {
         name: 'Mechanic',
-        icon: faWrench
+        icon: faWrench,
+        description: 'Can do maintenance over company\'s equipments'
     },
     [ERole.OPERATOR]: {
         name: 'Operator',
-        icon: faJoystick
+        icon: faUserHardHat,
+        description: 'A generic user who can use equipment and do various tasks'
     },
     [ERole.INSURER]: {
         name: 'Insurer',
-        icon: faHands
+        icon: faHands,
+        description: 'A specific role for your insurance company which is not on the platform. This user can see every equipment and logtrack'
     },
     [ERole.ACCOUNTANT]: {
         name: 'Accountant',
-        icon: faCalculator
+        icon: faCalculator,
+        description: 'A specific role for your accountant company which is not on the platform. This user can see every logtrack and analytics'
+    },
+    [ERole.RECRUITER]: {
+        name: 'Recruiter',
+        icon: faPeopleArrows,
+        description: 'This employee can create job offers and observe employees'
     }
 };
 

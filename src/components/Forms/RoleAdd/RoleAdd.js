@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { faBuilding, faTag, faUser, faInfoCircle } from '@fortawesome/pro-solid-svg-icons';
 
-import Choose from './../../Utils/Choose/Choose';
+import Choose from './../../Utils/FormElements/Choose/Choose';
 import Icon from './../../Utils/Icon/Icon';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import Loader from './../../Utils/Loader/Loader';
@@ -183,7 +183,7 @@ const RoleAdd = ({ match }) => {
             </Fragment> : null
           }
           {selectedCompanyId && isCurrentRolesLoading &&
-            <Loader></Loader>
+            <Loader />
           }
           {!selectedCompanyId &&
             <span>Please select a company first!</span>

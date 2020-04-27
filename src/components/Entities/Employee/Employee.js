@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faUser, faCommentDots, faUserCog, faUserPlus, faUserTag } from '@fortawesome/pro-solid-svg-icons';
+import { faUser, faCommentDots, faUserCog, faUserPlus, faUserTag, faPortrait } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
@@ -36,6 +36,7 @@ const Employee = ({ employee, isPage }) => {
 
   if(computed.user.uid === employeeKey) {
     actions.push({ title: 'Modify Profile', icon: <Icon source="fa" icon={faUserCog} />, link: '/profile' });
+    actions.push({ title: 'Modify Pro Profile', icon: <Icon source="fa" icon={faPortrait} />, link: '/jobs?tab=profile' });
     actions.push({ title: 'Request a role', icon: <Icon source="fa" icon={faUserTag} />, link: '/role-add' });
   }
   else {
