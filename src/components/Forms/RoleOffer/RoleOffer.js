@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { faBuilding, faTag, faUser, faInfoCircle } from '@fortawesome/pro-solid-svg-icons';
 
-import Choose from './../../Utils/Choose/Choose';
+import Choose from './../../Utils/FormElements/Choose/Choose';
 import Icon from './../../Utils/Icon/Icon';
 import Loader from './../../Utils/Loader/Loader';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
@@ -130,7 +130,7 @@ const RoleOffer = ({ match }) => {
   /**
    * RENDER
    */
-  let roleDetails = {};
+  const roleDetails = {};
   Object.keys(RoleDetails).forEach(roleKey => {
     roleDetails[roleKey] = {
       content: <Fragment>
@@ -189,7 +189,7 @@ const RoleOffer = ({ match }) => {
             </Fragment>
           }
           {selectedUserId && isCurrentRolesLoading &&
-            <Loader></Loader>
+            <Loader />
           }
           {!selectedUserId &&
             <span>Please select a user first!</span>

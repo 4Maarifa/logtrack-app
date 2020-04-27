@@ -259,7 +259,15 @@ const GeoService = {
       err && ErrorService.manageErrorThenReject(err, reject);
       resolve(res);
     });
+  }),
+
+  getApproximateLocation: () => new Promise((resolve, reject) => {
+    fetch(`https://geolocation-db.com/json/`)
+      .then(response => response.json())
+      .then(resolve)
+      .catch(e => ErrorService.manageErrorThenReject(e, reject));
   })
+  
 };
 
 export default GeoService;

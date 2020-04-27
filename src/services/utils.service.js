@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 
 const UtilsService = {
     getClosestElement: (el, classs) => {
@@ -43,6 +44,15 @@ const UtilsService = {
             }           
         }       
         return true;
+    },
+
+    // HOOKS
+    usePrevious: value => {
+        const ref = useRef();
+        useEffect(() => {
+          ref.current = value;
+        });
+        return ref.current;
     }
 };
 

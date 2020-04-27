@@ -4,6 +4,8 @@ import { faCircle, faTimesCircle, faCheckCircle } from '@fortawesome/pro-solid-s
 
 import Icon from './../components/Utils/Icon/Icon';
 
+import { ERole } from './Role';
+
 /**
  * class Company
  * This class represents the company
@@ -84,6 +86,22 @@ export const ECompanyPlan = {
             <span><Icon containerclassname="included" source="fa" icon={faCheckCircle} /> Other Contracts<span className="plan-info">Insurance, Accounting</span></span>
         ]
     }
+};
+
+export class JobOffer {
+    constructor(title, description, role, companyId, creationIsoDate, status) {
+        this.title = title;
+        this.description = description;
+        this.role = ERole[role];
+        this.companyId = companyId;
+        this.creationIsoDate = creationIsoDate;
+        this.status = EJobOfferStatus[status];
+    }
+}
+
+export const EJobOfferStatus = {
+    OPENED: 'OPENED',
+    CLOSED: 'CLOSED'
 };
 
 export default Company;

@@ -4,7 +4,6 @@
   flex-direction: row;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
-  background-color: #FFFFFF;
 
   .selection {
     flex: 1;
@@ -12,6 +11,7 @@
     flex-direction: column;
     height: 100%;
     background-color: var(--light-gray);
+    box-shadow: var(--shadow);
     border-radius: var(--border-radius) 0 0 var(--border-radius);
 
     ul {
@@ -35,7 +35,7 @@
         background-color: transparent;
 
         &--active {
-          background-color: #FFFFFF;
+          background-color: var(--inverse);
 
           svg {
             display: none;
@@ -49,7 +49,7 @@
             height: 1rem;
             width: 1rem;
             display: block;
-            background-color: #FFFFFF;
+            background-color: var(--inverse);
             -webkit-clip-path: polygon(100% 0, 100% 100%, 0 100%, 60% 90%, 80% 80%, 90% 60%);
             clip-path: polygon(100% 0, 100% 100%, 0 100%, 60% 90%, 80% 80%, 90% 60%);
           }
@@ -62,7 +62,7 @@
             height: 1rem;
             width: 1rem;
             display: block;
-            background-color: #FFFFFF;
+            background-color: var(--inverse);
             -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 90% 40%, 80% 20%, 60% 10%);
             clip-path: polygon(0 0, 100% 0, 100% 100%, 90% 40%, 80% 20%, 60% 10%);
           }
@@ -83,13 +83,13 @@
       flex: 0 0 2rem;
       width: calc(100% - 1rem);
       margin: 0 .5rem;
-      border-top: 1px solid var(--second);
+      border-top: 1px solid var(--theme);
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
       text-align: center;
-      color: var(--second);
+      color: var(--theme);
 
       svg {
         margin-right: .2rem;
@@ -163,7 +163,7 @@
         .conversation-create-cancel {
           border: 0;
           background-color: var(--red);
-          color: #FFFFFF;
+          color: var(--inverse);
           border-radius: var(--border-radius);
           height: 2rem;
           width: 2rem;
@@ -178,8 +178,8 @@
 
         .conversation-create-validate {
           border: 0;
-          background-color: var(--second);
-          color: #FFFFFF;
+          background-color: var(--theme);
+          color: var(--inverse);
           border-radius: var(--border-radius);
           height: 2rem;
           flex: 1;
@@ -202,6 +202,8 @@
     flex: 4;
     height: 100%;
     display: block;
+    background-color: var(--inverse);
+    box-shadow: var(--shadow);
 
     .conversation-top {
       height: 4rem;
@@ -209,7 +211,7 @@
       border-top-right-radius: var(--border-radius);
       border-bottom: 1px solid var(--light-gray);
       padding: 0 .5rem;
-      background-color: #FFFFFF;
+      background-color: var(--inverse);
       display: flex;
       align-items: center;
 
@@ -219,7 +221,7 @@
 
         &, &:hover, &:active, &:focus, &:link, &:visited {
           text-decoration: none;
-          color: var(--second);
+          color: var(--theme);
         }
       }
     }
@@ -266,8 +268,8 @@
             align-items: flex-end;
   
             .message-content {
-              color: #FFFFFF;
-              background-color: var(--second);
+              color: var(--inverse);
+              background-color: var(--theme);
               border-bottom-right-radius: 0;
   
               &:after {
@@ -278,7 +280,7 @@
                 height: .4rem;
                 width: .4rem;
                 clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
-                background-color: var(--second);
+                background-color: var(--theme);
               }
             }
           }
@@ -287,7 +289,7 @@
             align-items: flex-start;
   
             .message-content {
-              color: #333333;
+              color: var(--text);
               border-bottom-left-radius: 0;
               background-color: var(--light-gray);
   
@@ -330,7 +332,7 @@
       height: 4rem;
       width: calc(100% - 1rem);
       padding: .5rem;
-      background-color: #FFFFFF;
+      background-color: var(--inverse);
       display: flex;
       align-items: flex-end;
       border-bottom-right-radius: 8px;
@@ -341,7 +343,7 @@
         margin: 0;
 
         input {
-          border-color: var(--second);
+          border-color: var(--theme);
         }
 
         .indicator {
@@ -351,9 +353,9 @@
 
       .send-action {
         height: 2rem;
-        background-color: var(--second);
-        color: #FFFFFF;
-        border: 1px solid var(--second);
+        background-color: var(--theme);
+        color: var(--inverse);
+        border: 1px solid var(--theme);
         display: block;
         width: 5rem;
         margin-left: .5rem;

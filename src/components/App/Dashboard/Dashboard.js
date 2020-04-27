@@ -67,8 +67,7 @@ const Dashboard = () => {
     DataService.computed.conputeStat([EStat.equipmentCount, EStat.employeeCount, EStat.warehouseCount, EStat.chatCount, EStat.requestedRolesCount], {
       companyId: computed.activeRole.companyId,
       userId: computed.user.uid
-    })
-      .then(statData => {
+    }).then(statData => {
         if(typeof statData.equipmentCount === 'number') {
           isMounted && setEquipmentCount(statData.equipmentCount);
         }
@@ -88,7 +87,11 @@ const Dashboard = () => {
       .catch(ErrorService.manageError);
   };
 
-  useEffect(() => computeValues(), [computed]);
+  useEffect(() => {
+    if(computed.initialized) {
+      computeValues();
+    }
+  }, [computed]);
 
   useEffect(() => {
     setMounted(true);
@@ -242,10 +245,10 @@ const Dashboard = () => {
       </div>
       <div className="line line-big">
         <div className="card map">
-          <Map></Map>
+          <Map />
         </div>
         <div className={'card card-stick logtrack ' + (computed.activeRole && computed.activeRole.role !== ERole.MANAGER ? 'logtrack-with-button' : '')}>
-          <LogTrack></LogTrack>
+          <LogTrack />
           <Icon containerclassname="icon-overlay" source="fa" icon={faMapPin} />
         </div>
       </div>

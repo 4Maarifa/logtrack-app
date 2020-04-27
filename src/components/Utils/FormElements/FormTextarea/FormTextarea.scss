@@ -1,0 +1,94 @@
+.FormTextarea {
+  display: flex;
+  position: relative;
+  margin: 1rem 0;
+
+  label {
+    position: absolute;
+    z-index: 2;
+    color: var(--gray);
+    top: .4rem;
+    left: .5rem;
+    font-size: 100%;
+    transition: font-size .5s, top .5s, left .5s, color .5s;
+
+    svg {
+      margin-right: .2rem;
+    }
+  }
+
+  .indicator {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 1.5rem;
+    width: 1.5rem;
+    clip-path: polygon(100% 0%, 100% 100%, 0% 100%);
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    color: var(--inverse);
+    border-radius: 0 0 var(--border-radius) 0;
+    transition: background-color .5s;
+    z-index: 3;
+
+    .valid, .invalid {
+      display: none;
+      opacity: 0;
+      justify-content: flex-end;
+      transition: opacity .5s;
+    }
+
+    svg {
+      font-size: .85rem;
+    }
+  }
+
+  textarea {
+    flex: 1;
+    position: relative;
+    height: 5rem;
+    padding: .5rem;
+    border: 1px solid var(--gray);
+    border-radius: var(--border-radius);
+    z-index: 2;
+    transition: color .5s, border-color .5s;
+    min-width: 0;
+
+    &:valid {
+      border-color: var(--green);
+
+      & ~ .indicator {
+        background-color: var(--green);
+  
+        .valid {
+          display: flex;
+          opacity: 1;
+        }
+      }
+    }
+
+    &:invalid {
+      border-color: var(--red);
+
+      & ~ .indicator {
+        background-color: var(--red);
+  
+        .invalid {
+          display: flex;
+          opacity: 1;
+        }
+      }
+    }
+
+    &:active ~ label,
+    &:focus ~ label,
+    &:not(.input--empty) ~ label {
+      top: -1.2rem;
+      left: 0;
+      font-size: 85%;
+      color: var(--theme);
+      z-index: 2;
+    }
+  }
+}

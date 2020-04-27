@@ -49,7 +49,7 @@ const FormDebounceAutoSuggestInput = ({ value,
       + (isValid() ? 'input--valid ' : 'input--invalid ')
       + (fieldName ? 'input-' + fieldName : '')}>
 
-      {!selectedItemKey &&
+      {!selectedItemKey ?
         <DelayInput
           id={inputId}
           delayTimeout={1100}
@@ -58,7 +58,7 @@ const FormDebounceAutoSuggestInput = ({ value,
           value={value}
           name={inputName}
           autoComplete={inputAutoComplete}
-          onChange={e => onChange(e.target.value)} />
+          onChange={e => onChange(e.target.value)} /> : null
       }
 
       {selectedItemKey && selectedItem && 
@@ -76,14 +76,14 @@ const FormDebounceAutoSuggestInput = ({ value,
         required={inputRequired} 
         value={selectedItemKey} />
 
-      {!selectedItemKey && possibleItems && Object.keys(possibleItems).length && 
+      {!selectedItemKey && possibleItems && Object.keys(possibleItems).length ? 
         <ul className="items">
           {Object.keys(possibleItems).map(key =>
             <li key={key} onClick={() => onItemChange(key)}>
               {possibleItems[key].content}
             </li>
           )}
-        </ul>
+        </ul> : null
       }
 
       <span className="indicator"
@@ -93,10 +93,10 @@ const FormDebounceAutoSuggestInput = ({ value,
         <Icon containerclassname="valid" source="fa" icon={faCheck} />
         <Icon containerclassname="invalid" source="fa" icon={faTimes} />
       </span>
-      {label && 
+      {label ? 
         <label htmlFor={inputId}>
           {label}
-        </label>
+        </label> : null
       }
       {instructions && <Tooltip 
         show={isHover} 

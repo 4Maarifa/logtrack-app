@@ -129,7 +129,7 @@ const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, 
           </span>
           {isExecutor ? 'You execute the contract for' : 'You ordered the contract from'}
           <PageLink type={PageLinkType.COMPANY} entityId={otherCompanyId} entityData={otherCompany[otherCompanyId]} white={isPage} />
-          <span className="Element-sub">{computeStatus()}</span>
+          <span className="sub">{computeStatus()}</span>
           <span className={'Element-badge badge ' + (isPage ? 'badge-inverse' : '')}>
             {EContractStatusDetails[contractData.status].icon}
             {EContractStatusDetails[contractData.status].name}

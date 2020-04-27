@@ -1,5 +1,5 @@
 .ExTable {
-  background-color: #FFFFFF;
+  background-color: var(--inverse);
   box-shadow: var(--shadow);
 
   &.ExTable--no-frame {
@@ -47,7 +47,7 @@
         transition: color .5s;
 
         &--active {
-          color: var(--second);
+          color: var(--theme);
         }
       }
     }

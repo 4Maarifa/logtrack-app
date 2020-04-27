@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { faBuilding, faRectangleWide, faExchange } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
-import Choose from './../../Utils/Choose/Choose';
+import Choose from './../../Utils/FormElements/Choose/Choose';
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import FormDebounceAutoSuggestInput from './../../Utils/FormElements/FormDebounceAutoSuggestInput/FormDebounceAutoSuggestInput';
@@ -100,16 +100,7 @@ const ContractAdd = ({ match }) => {
     // TODO
 
     if(currentContractId) {
-      ContractService.update(currentContractId,
-        new Contract(identification,
-                      currentContract.invoices,
-                      currentContract.companyOrderId,
-                      currentContract.companyExecId,
-                      currentContract.createdByCompanyId,
-                      currentContract.contractType,
-                      currentContract.status,
-                      currentContract.creationIsoDate,
-                      currentContract.archiveIsoDate))
+      ContractService.updateField(currentContractId, {identification})
         .then(() => setNewContractId(currentContractId))
         .catch(ErrorService.manageError);
     }

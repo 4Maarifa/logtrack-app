@@ -8,6 +8,11 @@ import Icon from './../../Utils/Icon/Icon';
 import FirebaseService from './../../../services/firebase.service';
 import ErrorService from './../../../services/error.service';
 import DataService from './../../../services/data.service';
+import GeoService from './../../../services/geo.service';
+import EmployeeService from './../../../services/entities/employee.service';
+import DateService from './../../../services/date.service';
+
+import { LoginAttempt } from './../../../classes/Employee';
 
 import { v4 as uuid } from 'uuid';
 
@@ -28,20 +33,43 @@ const SignIn = () => {
     DataService.computed.observeComputedValues(setComputed, observerKey);
     return () => DataService.computed.unobserveComputedValues(observerKey)
   }, []);
+
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    const registerAttempt = (user, isSuccess) => (
+      GeoService.getApproximateLocation()
+        .then(location => {
+          const loginAttempt = new LoginAttempt(
+            location.country_name,
+            location.city,
+            parseFloat(location.latitude),
+            parseFloat(location.longitude),
+            location.IPv4,
+            email,
+            isSuccess,
+            DateService.getCurrentIsoDateString()
+          );
+          EmployeeService.loginAttempt.create(loginAttempt)
+            .then(() => user && setUser(user))
+            .catch(ErrorService.manageError);
+        })
+        .catch(ErrorService.manageError)
+    );
+
+    FirebaseService.signIn(email, password)
+      .then(user => registerAttempt(user, true))
+      .catch(e => {
+        registerAttempt(null, false);
+        ErrorService.manageError(e);
+      });
+  };
   
   if(!computed.initialized) { return null; }
 
   if(computed.user || user) {
     return <Redirect to='/dashboard' />;
   }
-
-  const handleSubmit = event => {
-    event.preventDefault();
-
-    FirebaseService.signIn(email, password)
-      .then(setUser)
-      .catch(ErrorService.manageError);
-  };
 
   /**
    * RENDER

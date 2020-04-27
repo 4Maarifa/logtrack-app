@@ -5,7 +5,7 @@ import { faRectangleWide, faMapMarker, faUser, faBuilding, faWarehouse } from '@
 import Map from './../../Utils/Map/Map';
 import Icon from './../../Utils/Icon/Icon';
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
-import Range from './../../Utils/Range/Range';
+import Range from './../../Utils/FormElements/Range/Range';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import FormDebouceAutoSuggestInput from './../../Utils/FormElements/FormDebounceAutoSuggestInput/FormDebounceAutoSuggestInput';
 
@@ -138,17 +138,13 @@ const WarehouseAdd = ({ match }) => {
     }
 
     if(currentWarehouse) {
-      const warehouse = new Warehouse(
+      WarehouseService.updateField(currentWarehouseId, {
         identification,
-        selectedLocationItem.value.coordinates[0],
-        selectedLocationItem.value.coordinates[1],
-        selectedLocationItem.value.display_name,
-        currentWarehouse.companyId,
-        currentWarehouse.creator,
-        currentWarehouse.creationIsoDate,
+        latitude: selectedLocationItem.value.coordinates[0],
+        longitude: selectedLocationItem.value.coordinates[1],
+        address: selectedLocationItem.value.display_name,
         nbLoadingDocks
-      );
-      WarehouseService.update(currentWarehouseId, warehouse)
+      })
         .then(() => setNewWarehouseId(currentWarehouseId))
         .catch(ErrorService.manageError);        
     }

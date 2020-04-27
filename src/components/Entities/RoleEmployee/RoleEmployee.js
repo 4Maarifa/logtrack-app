@@ -35,7 +35,7 @@ const RoleEmployee = ({ employee, options, roles }) => {
     if(!options.showDraft && roles[roleKey].status === ERoleStatus.DRAFT) {
       return null;
     }
-    return <Role key={roleKey} role={ { [roleKey]: roles[roleKey] } } options={options}></Role>;
+    return <Role key={roleKey} role={ { [roleKey]: roles[roleKey] } } options={options} />;
   };
 
   if(!employee || !Object.keys(roles).length) {

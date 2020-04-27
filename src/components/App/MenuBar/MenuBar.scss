@@ -3,14 +3,14 @@
   bottom: 0;
   right: 5rem;
   z-index: 5000;
-  background-color: var(--second);
+  background-color: var(--theme);
   height: 2.5rem;
   display: flex;
   box-shadow: var(--shadow);
   border-radius: var(--border-radius) var(--border-radius) 0 0;
 
   a, a:hover, a:active, a:focus, a:link, a:visited {
-    color: #FFFFFF;
+    color: var(--inverse);
     text-decoration: none;
     flex: 0 0 2.5rem;
     width: 2.5rem;
@@ -34,8 +34,8 @@
     }
 
     &.nav--active {
-      color: var(--second);
-      background-color: #FFFFFF;
+      color: var(--theme);
+      background-color: var(--inverse);
     }
 
     .badge {
@@ -45,7 +45,7 @@
       margin: 0;
       z-index: 2;
       font-size: 80%;
-      border: 1px solid var(--second);
+      border: 1px solid var(--theme);
       box-shadow: var(--shadow);
     }
   }
@@ -53,6 +53,9 @@
 
 @media screen and (orientation: portrait) {
   .MenuBar {
+    width: 100%;
+    border-radius: 0;
+    right: 0;
 
     a, a:hover, a:active, a:focus, a:link, a:visited {
       flex: 1;

@@ -1,8 +1,8 @@
 .Navigation {
-  background-color: var(--second);
+  background-color: var(--theme);
   display: flex;
   flex-direction: column;
-  color: #FFFFFF;
+  color: var(--inverse);
   padding: 1rem 0;
   height: calc(100% - 2rem);
   position: relative;
@@ -34,7 +34,7 @@
     a:visited,
     a:active,
     a:link {
-      color: #FFFFFF;
+      color: var(--inverse);
       text-decoration: none;
       height: 2.5rem;
       flex-basis: 2.5rem;
@@ -49,7 +49,7 @@
         background-color: var(--light-gray);
         border-radius: var(--border-radius) 0 0 var(--border-radius);
         border-right: 2px solid var(--light-gray);
-        color: var(--second);
+        color: var(--theme);
 
         &:before {
           content: '';
@@ -97,7 +97,7 @@
         top: 0;
         width: 0;
         height: 2.5rem;
-        background-color: var(--second);
+        background-color: var(--theme);
         overflow: hidden;
         transition: width .5s, padding-left .5s, left .1s;
         white-space: nowrap;
@@ -165,10 +165,13 @@
 @media screen and (orientation: portrait) {
   .Navigation {
     height: 3rem;
+    min-height: 3rem;
     flex: 0 0 3rem;
     padding: 0;
     z-index: 9999;
     box-shadow: var(--shadow);
+    border-radius: 0;
+    width: 100%;
 
     &.Navigation--opened {
       nav {
@@ -189,7 +192,7 @@
             .nav-title {
               display: flex;
               align-items: center;
-              color: #FFFFFF;
+              color: var(--inverse);
               width: auto;
               position: static;
             }
@@ -217,7 +220,7 @@
       width: 100%;
       position: absolute;
       top: 0;
-      background-color: var(--second);
+      background-color: var(--theme);
       left: 0;
       height: 100%;
       transition: height .5s;
@@ -237,7 +240,7 @@
 
         &.nav--active {
           background-color: transparent;
-          color: #FFFFFF;
+          color: var(--inverse);
           border: 0;
           height: 3rem;
           flex: 0 0 3rem;
@@ -249,7 +252,7 @@
           .nav-title {
             display: flex;
             align-items: center;
-            color: #FFFFFF;
+            color: var(--inverse);
             width: auto;
             position: static;
           }

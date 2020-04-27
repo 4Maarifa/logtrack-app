@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './Choose.scss';
 
@@ -9,12 +9,14 @@ const Choose = ({ selection,
                   onSelectionChange,
                   fieldName }) => {
 
+  const [forceUpdate, setForceUpdate] = useState(0);
+
   const onValueChange = itemKey => {
     if(items[itemKey].disabled) {
       return;
     }
 
-    let newSelection = selection;
+    let newSelection = [...selection];
     if(multiple) {
       if(newSelection.includes(itemKey)) {
         if(selectionRequired && newSelection.length <= 1) {
@@ -39,7 +41,6 @@ const Choose = ({ selection,
         onSelectionChange && onSelectionChange(itemKey, fieldName);
       }
     }
-
   };
 
   const isItemActive = itemKey => {
@@ -58,7 +59,7 @@ const Choose = ({ selection,
             role="option"
             aria-selected={isItemActive(key)}
             className={'' + (isItemActive(key) ? 'li--active ' : '') + (items[key].disabled ? 'li--disabled' : '')} 
-            onClick={() => onValueChange(key)}>
+            onClick={() => {onValueChange(key); setForceUpdate(forceUpdate + 1)}}>
               
             {items[key].content}
           </li>

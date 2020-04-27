@@ -46,12 +46,12 @@
       }
 
       .action-title {
-        color: #000000;
+        color: var(--text);
         margin-right: .5rem;
       }
 
       .action-icon {
-        color: (--second);
+        color: (--theme);
       }
     }
   }
@@ -60,7 +60,7 @@
     ul {
       height: auto;
       max-height: 50vh;
-      background-color: #FFFFFF;
+      background-color: var(--inverse);
       border: 1px solid var(--light-gray);
       border-radius: var(--border-radius);
       box-shadow: var(--shadow);
@@ -98,9 +98,9 @@
         .white-button {
           display: flex;
           flex-direction: row-reverse;
-          background-color: #FFFFFF;
+          background-color: var(--inverse);
           padding: .5rem;
-          color: var(--second);
+          color: var(--theme);
           border-radius: var(--border-radius);
 
           .action-title {

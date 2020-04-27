@@ -12,7 +12,6 @@ import {
 import keys from './../params.inc';
 
 import ErrorService from './error.service';
-import DataService from './data.service';
 import WeatherDataService from './entities/weather.service';
 
 const WeatherService = {
@@ -27,21 +26,19 @@ const WeatherService = {
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
-  callWeatherViaAPI: (lon, lat) => {
-    return new Promise((resolve, reject) => {
+  __callWeatherViaAPI: (lon, lat) => new Promise((resolve, reject) => {
         fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&APPID=${keys.openWeatherMapAPIKey}`)
             .then(response => response.json())
             .then(resolve)
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
-    });
-  },
+    }),
   __getWeatherFromAPI: (lon, lat) => {
     const currentDateLitteral = (new Date()).toISOString().substring(0, 14);
     const longitudeLitteral = Math.floor(lon * 100) / 100;
     const latitudeLitteral = Math.floor(lat * 100) / 100;
 
     return new Promise((resolve, reject) => {
-      DataService.computed.callWeatherViaAPI(longitudeLitteral, latitudeLitteral)
+      WeatherService.__callWeatherViaAPI(longitudeLitteral, latitudeLitteral)
         .then(result => {
           const weatherLine = {
             date: currentDateLitteral,

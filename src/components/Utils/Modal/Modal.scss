@@ -17,7 +17,7 @@
   &-content {
     height: auto;
     width: 50%;
-    background-color: #FFFFFF;
+    background-color: var(--inverse);
     border-radius: var(--border-radius);
     display: block;
     padding: .5rem;
@@ -27,16 +27,16 @@
 
       button {
         border: 0;
-        background-color: var(--second);
+        background-color: var(--theme);
         border-radius: var(--border-radius);
-        border: 1px solid var(--second);
-        color: #FFFFFF;
+        border: 1px solid var(--theme);
+        color: var(--inverse);
         padding: .5rem;
         cursor: pointer;
   
         &[value="CANCEL"] {
-          background-color: #FFFFFF;
-          color: var(--second);
+          background-color: var(--inverse);
+          color: var(--theme);
         }
   
         & + button {

@@ -40,8 +40,8 @@
         flex: 1;
         height: calc(100% - 1rem);
         display: block;
-        background-color: #FFFFFF;
-        color: #000000;
+        background-color: var(--inverse);
+        color: var(--text);
         position: relative;
         padding: .5rem;
         border-radius: var(--border-radius);
@@ -62,10 +62,10 @@
         }
 
         &-inverse {
-          background-color: var(--second);
+          background-color: var(--theme);
 
           &, &:hover, &:focus, &:visited, &:link, &:active {
-            color: #FFFFFF;
+            color: var(--inverse);
           }
         }
 
@@ -106,8 +106,8 @@
             justify-content: center;
             align-items: center;
             height: 100%;
-            background-color: var(--second);
-            color: #FFFFFF;
+            background-color: var(--theme);
+            color: var(--inverse);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
           }
@@ -148,9 +148,9 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                background-color: var(--second);
+                background-color: var(--theme);
                 border-radius: var(--border-radius);
-                color: #FFFFFF;
+                color: var(--inverse);
                 vertical-align: middle;
                 position: relative;
 
@@ -172,7 +172,7 @@
           }
 
           &:hover .icon-overlay {
-            color: var(--second);
+            color: var(--theme);
             opacity: .9;
           }
         }
@@ -262,9 +262,6 @@
         &-stat-content {
           display: none;
         }
-      }
-
-      .company-details-stat-content {
       }
     }
   }

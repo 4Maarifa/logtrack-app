@@ -1,0 +1,28 @@
+.JobOfferAdd {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  
+  h1 {
+    flex: 0 0 1rem;
+  }
+
+  form {
+    padding: 2rem 0;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: var(--complex-form-width);
+
+    .FormInput, .FormTextarea {
+      width: 100%;
+    }
+
+    .role-selection {
+      margin: 1rem 0;
+      position: relative;
+    }
+  }
+}

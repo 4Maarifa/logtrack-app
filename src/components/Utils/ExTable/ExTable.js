@@ -6,7 +6,7 @@ import Icon from './../Icon/Icon';
 
 import './ExTable.scss';
 
-const ExTable = ({ header, loading, items, renderItem, isNoFrame }) => {
+const ExTable = ({ header, loading, items, renderItem, isNoFrame, isSmallItems }) => {
   
   const [view, setView] = useState('ITEMS');
 
@@ -29,10 +29,10 @@ const ExTable = ({ header, loading, items, renderItem, isNoFrame }) => {
       </div>
       <ul>
         {loading && <li className="loader">
-          <Loader></Loader>
+          <Loader />
         </li>}
         {!loading && Object.keys(items).map(itemKey => 
-          <li key={itemKey} className={'Element Element--' + (view === 'LIST' ? 'row' : 'tile')}>
+          <li key={itemKey} className={'Element Element--' + (!isSmallItems && view === 'ITEMS' ? 'tile' : 'row') + (isSmallItems ? ' Element-small' : '')}>
             {renderItem(itemKey, items[itemKey])}
           </li>)
         }

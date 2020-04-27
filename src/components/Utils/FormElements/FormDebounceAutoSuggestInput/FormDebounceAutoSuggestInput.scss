@@ -34,7 +34,7 @@
   }
 
   ul.items {
-    background-color: #FFFFFF;
+    background-color: var(--inverse);
     position: absolute;
     top: 100%;
     box-sizing: border-box;
@@ -78,7 +78,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    color: #FFFFFF;
+    color: var(--inverse);
     border-radius: 0 0 var(--border-radius) 0;
     transition: background-color .5s;
     z-index: 3;
@@ -119,7 +119,7 @@
       cursor: pointer;
 
       svg {
-        color: var(--second);
+        color: var(--theme);
       }
     }
   }
@@ -142,7 +142,7 @@
       top: -1.2rem;
       left: 0;
       font-size: 85%;
-      color: var(--second);
+      color: var(--theme);
       z-index: 2;
     }
   }
@@ -153,7 +153,7 @@
       top: -1.2rem;
       left: 0;
       font-size: 85%;
-      color: var(--second);
+      color: var(--theme);
       z-index: 1;
     }
   }

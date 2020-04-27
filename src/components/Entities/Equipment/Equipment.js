@@ -53,7 +53,7 @@ const Equipment = ({ equipment, equipmentModel, isPage }) => {
           <span className="Element-title">
             <PageLink type={PageLinkType.EQUIPMENT} entityId={equipmentKey} entityData={equipment[equipmentKey]} white={isPage} />
           </span>
-          <span className="Element-sub">{equipmentModel[equipmentModelKey].name}</span>
+          <span className="sub">{equipmentModel[equipmentModelKey].name}</span>
         </div>
         <div className="Element-actions">
           <ActionList actions={actions} isFlatten={isPage} />

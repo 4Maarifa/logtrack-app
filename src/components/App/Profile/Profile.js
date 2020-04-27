@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import DateTimePicker from 'react-datetime-picker';
 import { NavLink } from 'react-router-dom';
-import { faSignOut, faUser, faCog, faUserHeadset, faPlus, faPhoneAlt, faInfoCircle, 
-  faExclamationCircle, faTimes, faUpload, faExclamationTriangle, faEnvelope, faCalendarAlt } from '@fortawesome/pro-solid-svg-icons';
+import { faSignOut, faUser, faCog, faUserHeadset, faPhoneAlt, faInfoCircle, 
+  faExclamationCircle, faTimes, faUpload, faExclamationTriangle, faEnvelope, faLock, faCheck } from '@fortawesome/pro-solid-svg-icons';
 
 import Tabs from './../../Utils/Tabs/Tabs';
 import Loader from './../../Utils/Loader/Loader';
 import Icon from './../../Utils/Icon/Icon';
+import ExTable from './../../Utils/ExTable/ExTable';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
+import FormInput from './../../Utils/FormElements/FormInput/FormInput';
 
 import DataService from './../../../services/data.service';
 import DateService from './../../../services/date.service';
@@ -24,16 +25,11 @@ import './Profile.scss';
 const Profile = () => {
   const [isProfilePictureLoading, setProfilePictureLoading] = useState(false);
 
-  const [certificateName, setCertificateName] = useState('');
-  const [certificateDate, setCertificateDate] = useState(null);
-
-  const [experienceName, setExperienceName] = useState('');
-  const [experienceCompamyName, setExperienceCompanyName] = useState('');
-  const [experienceStartDate, setExperienceStartDate] = useState(null);
-  const [experienceEndDate, setExperienceEndDate] = useState(null);
-
   const [supportMessage, setSupportMessage] = useState('');
   const [supportMetadata, setSupportMetadata] = useState({});
+
+  const [loginAttempts, setLoginAttempts] = useState([]);
+  const [isLoginAttemptsLoading, setLoginAttemptsLoading] = useState(true);
 
   const observerKey = uuid();
   
@@ -51,6 +47,12 @@ const Profile = () => {
       activeRole: computed.activeRole ? computed.activeRole.role : null,
       date: DateService.getCurrentIsoDateString()
     });
+    EmployeeService.loginAttempt.getAllByEmail(computed.employee.email)
+      .then(loginAttempts => {
+        setLoginAttempts(loginAttempts);
+        setLoginAttemptsLoading(false);
+      })
+      .catch(ErrorService.manageError);
   };
 
   const removeProfilePicture = () => {
@@ -79,53 +81,6 @@ const Profile = () => {
     }
   };
 
-  const handleSubmitCertificate = event => {
-    event.preventDefault();
-
-    if(computed.employee.certificates.filter(certificate => certificate.name === certificateName).length) {
-      ErrorService.warning('You already have this certificate!');
-      return;
-    }
-
-    let certificates = computed.employee.certificates || [];
-    certificates.push({name: certificateName, date: DateService.getMonthYearString(certificateDate)});
-
-    EmployeeService.updateField(computed.user.uid, {certificates})
-      .then(() => DataService.computed.notifyChanges()
-        .then(() => {
-          setCertificateName('');
-          setCertificateDate(null);
-        }))
-      .catch(ErrorService.manageError);
-  };
-
-  const handleSubmitExperience = event => {
-    event.preventDefault();
-
-    if(experienceEndDate && experienceStartDate > experienceEndDate) {
-      ErrorService.manageError('Experience start date muse be before end date!');
-      return;
-    }
-
-    let experience = computed.employee.experience || [];
-    experience.push({
-      name: experienceName,
-      company: experienceCompamyName,
-      start: DateService.getMonthYearString(experienceStartDate),
-      end: experienceEndDate ? DateService.getMonthYearString(experienceEndDate) : null
-    });
-
-    EmployeeService.updateField(computed.user.uid, {experience})
-      .then(() => DataService.computed.notifyChanges()
-        .then(() => {
-          setExperienceName('');
-          setExperienceCompanyName('');
-          setExperienceStartDate(null);
-          setExperienceEndDate(null);
-        }))
-      .catch(ErrorService.manageError);
-  };
-
   const handleSubmitSupport = event => {
     event.preventDefault();
 
@@ -134,22 +89,6 @@ const Profile = () => {
         setSupportMessage('');
         ErrorService.success('Your message was received successfully!');
       })
-      .catch(ErrorService.manageError);
-  };
-
-  const deleteCertificate = index => {
-    let certificates = computed.employee.certificates;
-    certificates.splice(index, 1);
-    EmployeeService.updateField(computed.user.uid, {certificates})
-      .then(DataService.computed.notifyChanges)
-      .catch(ErrorService.manageError);
-  };
-
-  const deleteExperience = index => {
-    let experience = computed.employee.experience;
-    experience.splice(index, 1);
-    EmployeeService.updateField(computed.user.uid, {experience})
-      .then(DataService.computed.notifyChanges)
       .catch(ErrorService.manageError);
   };
 
@@ -170,6 +109,22 @@ const Profile = () => {
   /**
    * RENDER
    */
+  const renderLoginAttempt = (_, itemData) => (
+    <div className="Equipment Element-content Element-content-small">
+      <div className="Element-base">
+        {itemData.success ?
+          <Icon containerclassname="Element-icon loginAttempt--success" source="fa" icon={faCheck} /> :
+          <Icon containerclassname="Element-icon loginAttempt--failed" source="fa" icon={faTimes} />
+        }
+        <div className="Element-data">
+          <span className="Element-title">
+            Near {itemData.city}, {itemData.country}
+          </span>
+          <span className="sub">{DateService.getDateTimeString(DateService.getDateFromIsoString(itemData.creationIsoDate), false)}</span>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="Profile">
@@ -182,16 +137,16 @@ const Profile = () => {
           </NavLink>
         </div>
       }
-      <Tabs default="profile" tabs={{
-        profile: {
+      <Tabs default="account" tabs={{
+        account: {
           name: () => <span>
             <Icon source="fa" icon={faUser} />
-            Profile
+            Account
           </span>,
           content: () => {
             if(!computed.user) {
               return <div className="tab-content">
-                <Loader></Loader>
+                <Loader />
               </div>;
             }
             else {
@@ -228,7 +183,7 @@ const Profile = () => {
                       <input type="file" id="profile-picture" name="profile-picture" ref={profilePicture} onChange={() => uploadProfilePicture()} />
                     </div>}
 
-                    {isProfilePictureLoading && <Loader></Loader>}
+                    {isProfilePictureLoading && <Loader />}
 
                     <span className="profile-picture-info">
                       <Icon source="fa" icon={faExclamationCircle} />
@@ -238,132 +193,55 @@ const Profile = () => {
                     </span>
                   </div>
                 </div>
-                <h2 className="profile-title">Profile Information</h2>
+                <h2 className="profile-title">
+                  <Icon source="fa" icon={faUser} />
+                  Profile Information
+                </h2>
                 <div className="personal-info-container">
-                  <div className="personal-info-line">
-                    <div className="personal-info-input-container">
-                      <label htmlFor="personal-info-firstname">Firstname</label>
-                      <input type="text" disabled id="personal-info-firstname" name="personal-info-firstname" value={computed.employee.firstname} />
-                    </div>
-                    <div className="personal-info-input-container">
-                      <label htmlFor="personal-info-lastname">Lastname</label>
-                      <input type="text" disabled id="personal-info-lastname" name="personal-info-lastname" value={computed.employee.lastname} />
-                    </div>
-                  </div>
                   <div className="personal-info-line">
                     <span className="personal-info-infos">
                       <Icon source="fa" icon={faInfoCircle} />
                       Please contact the support to edit your firstname or lastname.
                     </span>
                   </div>
+                  <div className="personal-info-line">
+                    <div className="personal-info-input-container">
+                      <FormInput
+                        value={computed.employee.firstname}
+                        inputType="text"
+                        fieldName="firstname"
+                        inputDisabled
+                        label={
+                          <span>
+                            Firstname
+                          </span>
+                        } />
+                    </div>
+                    <div className="personal-info-input-container">
+                      <FormInput
+                        value={computed.employee.lastname}
+                        inputType="text"
+                        fieldName="lastname"
+                        inputDisabled
+                        label={
+                          <span>
+                            Lastname
+                          </span>
+                        } />
+                    </div>
+                  </div>
                 </div>
-                <div className="bottom-container">
-                  <div className="certificate-container">
-                    <h2 className="profile-title">Certificates</h2>
-                    <div className="certificate">
-                      <div className="certificate-list">
-                        {computed.employee.certificates && computed.employee.certificates.map((certificate, index) => 
-                          <span key={certificate.name} className="certificate-item">
-                            {certificate.name}
-                            <span className="certificate-item-date">{certificate.date}</span>
-                            <button onClick={() => deleteCertificate(index)}>
-                              <Icon source="fa" icon={faTimes} />
-                            </button>
-                          </span>  
-                        )}
-                      </div>
-                    </div>
-                    <form className="certificate-add" onSubmit={handleSubmitCertificate}>
-                      <input 
-                        className="certificate-add-name-input"
-                        type="text" 
-                        placeholder="Certificate" 
-                        data-field="certificateName"
-                        value={certificateName}
-                        onChange={e => setCertificateName(e.target.value)}
-                        autoComplete="false"
-                        required />
-                      <DateTimePicker
-                        onChange={setCertificateDate}
-                        value={certificateDate}
-                        clearIcon={null}
-                        calendarIcon={<Icon source="fa" icon={faCalendarAlt} />}
-                        format="y-MM"
-                        maxDate={new Date()}
-                        minDetail="year"
-                        required
-                        showLeadingZeros />
-                      <button className="certificate-add-submit">
-                        <Icon source="fa" icon={faPlus} />
-                        <span className="button-label">Add</span>
-                      </button>
-                    </form>
-                  </div>
-                  <div className="experience-container">
-                    <h2 className="profile-title">Experience</h2>
-                    <div className="experience">
-                      <div className="experience-list">
-                        {computed.employee.experience && computed.employee.experience.map((experienceItem, index) => 
-                          <span key={experienceItem.name} className="experience-item">
-                            {experienceItem.name} @ {experienceItem.company}
-                            <span className="experience-item-date">
-                              {experienceItem.start} - {experienceItem.end ? experienceItem.end : 'Current'}
-                            </span>
-                            <button onClick={() => deleteExperience(index)}>
-                              <Icon source="fa" icon={faTimes} />
-                            </button>
-                          </span>  
-                        )}
-                      </div>
-                    </div>
-                    <form className="experience-add" onSubmit={handleSubmitExperience}>
-                      <div className="experience-add-line">
-                        <input 
-                          className="experience-add-name-input"
-                          type="text" 
-                          placeholder="Experience" 
-                          data-field="experienceName"
-                          value={experienceName}
-                          onChange={e => setExperienceName(e.target.value)}
-                          autoComplete="false"
-                          required />
-                        <input 
-                          className="experience-add-company-input"
-                          type="text" 
-                          placeholder="Company" 
-                          data-field="experienceCompamyName"
-                          value={experienceCompamyName}
-                          onChange={e => setExperienceCompanyName(e.target.value)}
-                          autoComplete="false"
-                          required />
-                      </div>
-                      <div className="experience-add-line">
-                        <DateTimePicker
-                          onChange={setExperienceStartDate}
-                          value={experienceStartDate}
-                          clearIcon={null}
-                          calendarIcon={<Icon source="fa" icon={faCalendarAlt} />}
-                          format="y-MM"
-                          maxDate={new Date()}
-                          minDetail="year"
-                          required
-                          showLeadingZeros />
-                        <DateTimePicker
-                          onChange={setExperienceEndDate}
-                          value={experienceEndDate}
-                          clearIcon={null}
-                          calendarIcon={<Icon source="fa" icon={faCalendarAlt} />}
-                          format="y-MM"
-                          maxDate={new Date()}
-                          minDetail="year"
-                          showLeadingZeros />
-                        <button className="experience-add-submit">
-                          <Icon source="fa" icon={faPlus} />
-                          <span className="button-label">Add</span>
-                        </button>
-                      </div>
-                    </form>
-                  </div>
+                <h2 className="profile-title">
+                  <Icon source="fa" icon={faLock} />
+                  Security
+                </h2>
+                <div className="personal-info-container">
+                  <ExTable key="loginAttempts" 
+                    items={loginAttempts}
+                    renderItem={renderLoginAttempt}
+                    loading={isLoginAttemptsLoading}
+                    isNoFrame
+                    isSmallItems />
                 </div>
               </div>;
             }
@@ -412,7 +290,7 @@ const Profile = () => {
                 value={supportMessage}
                 onChange={e => setSupportMessage(e.target.value)}
                 autoComplete="false"
-                required ></textarea>
+                required />
               <details>
                 <summary>
                   <Icon source="fa" icon={faInfoCircle} />

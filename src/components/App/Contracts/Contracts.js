@@ -92,7 +92,7 @@ const Contracts = () => {
       notifyContractChanges={computeValues}
       contract={{[itemKey]: itemData}}
       companyExec={{[itemData.companyExecId]: companies[itemData.companyExecId]}}
-      companyOrder={{[itemData.companyOrderId]: companies[itemData.companyOrderId]}}></Contract>
+      companyOrder={{[itemData.companyOrderId]: companies[itemData.companyOrderId]}} />
   };
 
   return (
@@ -107,7 +107,7 @@ const Contracts = () => {
                                   items={executeContracts}
                                   renderItem={renderContract}
                                   header={['Type', 'Company']}
-                                  loading={isContractsLoading}></ExTable>
+                                  loading={isContractsLoading} />
         },
         order: {
           name: () => <span>
@@ -118,7 +118,7 @@ const Contracts = () => {
                                   items={orderContracts}
                                   renderItem={renderContract}
                                   header={['Type', 'Company']}
-                                  loading={isContractsLoading}></ExTable>
+                                  loading={isContractsLoading} />
         },
         market: {
           name: () => <span>
@@ -128,7 +128,7 @@ const Contracts = () => {
           content: () => null,
           disabled: true
         }
-      }}></Tabs>
+      }} />
       <span className={'toggle-button ' + (isShowArchived ? 'toggle-button--active' : '')} tabIndex="0" onClick={() => setShowArchived(!isShowArchived)}>
         <Icon source="fa" icon={isShowArchived ? faToggleOn : faToggleOff} />
         Show archived contracts

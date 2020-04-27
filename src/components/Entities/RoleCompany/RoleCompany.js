@@ -34,7 +34,7 @@ const RoleCompany = ({ company, roles, options }) => {
    */
 
   const renderRole = roleKey => (
-    <Role key={roleKey} role={ { [roleKey]: roles[roleKey] } } options={options}></Role>
+    <Role key={roleKey} role={ { [roleKey]: roles[roleKey] } } options={options} />
   );
 
   const actions = [

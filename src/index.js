@@ -65,6 +65,11 @@ import CompanyPage from './components/Pages/CompanyPage/CompanyPage';
 import Employees from './components/App/Employees/Employees';
 import EmployeePage from './components/Pages/EmployeePage/EmployeePage';
 
+import Jobs from './components/App/Jobs/Jobs';
+import JobOfferPage from './components/Pages/JobOfferPage/JobOfferPage';
+import JobOffers from './components/App/JobOffers/JobOffers';
+import JobOfferAdd from './components/Forms/JobOfferAdd/JobOfferAdd';
+
 import Roles from './components/App/Roles/Roles';
 import RoleAdd from './components/Forms/RoleAdd/RoleAdd';
 import RoleOffer from './components/Forms/RoleOffer/RoleOffer';
@@ -99,6 +104,7 @@ import FirebaseService from './services/firebase.service';
 import DataService from './services/data.service';
 import ResizeService from './services/resize.service';
 import SettingsService, { ESettings } from './services/settings.service';
+import ColorService from './services/color.service';
 
 import { ERole } from './classes/Role';
 
@@ -172,7 +178,8 @@ const styleOverride = () => {
     }
     return <style>
         {`:root {
-            --second: ${DataService.computed.activeRoleCompany.color} !important;
+            --theme: ${DataService.computed.activeRoleCompany.color} !important;
+            --theme-light: ${ColorService.lightenDarkenColor(DataService.computed.activeRoleCompany.color, -40)} !important;
         }`}
     </style>;
 };
@@ -181,8 +188,8 @@ const renderApp = () => {
     ReactDOM.render(
         <Router>
             <div className={'app-container ' + (SettingsService.getSettingValue(ESettings.SETTINGS_FULL_PAGE_LAYOUT) === 'FULL' ? 'app-container--full' : '')}>
-                <Navigation></Navigation>
-                <MenuBar></MenuBar>
+                <Navigation />
+                <MenuBar />
                 <div className="page_content">
                     <Route exact path="/" component={Splash} />
                     <Route exact path="/specs" component={Specs} />
@@ -201,6 +208,13 @@ const renderApp = () => {
                     <PrivateRoute exact path="/company/:companyid" component={CompanyPage} />
                     <PrivateRoute exact path="/company-add" component={CompanyAdd} />
                     <PrivateRoute exact path="/company-edit/:companyid" component={CompanyAdd} />
+
+                    <PrivateRoute exact path="/jobs/:companyid" component={Jobs} />
+                    <PrivateRoute exact path="/jobs" component={Jobs} />
+                    <RoleLimitedRoute roles={[ERole.MANAGER, ERole.RECRUITER]} exact path="/joboffers" component={JobOffers} />
+                    <PrivateRoute exact path="/joboffer/:jobofferid" component={JobOfferPage} />
+                    <RoleLimitedRoute roles={[ERole.MANAGER, ERole.RECRUITER]} exact path="/joboffer-add" component={JobOfferAdd} />
+                    <RoleLimitedRoute roles={[ERole.MANAGER, ERole.RECRUITER]} exact path="/joboffer-edit/:jobofferid" component={JobOfferAdd} />
 
                     <PrivateRoute exact path="/roles" component={Roles} />
 
@@ -239,7 +253,7 @@ const renderApp = () => {
                     <PrivateRoute exact path="/chat/:chatid" component={Chat} />
                     <PrivateRoute exact path="/chat-create/:userid" component={ChatCreate} />
                 </div>
-                <Modal></Modal>
+                <Modal />
             </div>
             {styleOverride()}
         </Router>,

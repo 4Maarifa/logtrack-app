@@ -4,7 +4,7 @@ import DataService, { ensureFilledFields, migratePrototype } from './../data.ser
 import FirebaseService from './../firebase.service';
 import ErrorService from './../error.service';
 
-import Company from './../../classes/Company';
+import Company, { JobOffer, EJobOfferStatus } from './../../classes/Company';
 
 import ESearchType from './../../classes/enums/ESearchType';
 import { ERole } from './../../classes/Role';
@@ -111,7 +111,149 @@ const CompanyService = {
       DataService.computed.search([ESearchType.COMPANIES], term, null)
         .then(results => resolve(results.data.companies))
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
-    })
+    }),
+
+  jobOffer: {
+    rights: {
+      [ERights.RIGHT_JOBOFFERS_CREATE]: () => DataService.computed.isConnected(),
+      [ERights.RIGHT_JOBOFFERS_GET]: () => DataService.computed.isConnected(),
+      [ERights.RIGHT_JOBOFFERS_LIST]: () => DataService.computed.isConnected(),
+      [ERights.RIGHT_JOBOFFERS_UPDATE]: () => DataService.computed.isConnected(),
+      [ERights.RIGHT_JOBOFFERS_DELETE]: () => false
+    },
+    create: jobOffer => {
+      if(!CompanyService.jobOffer.rights[ERights.RIGHT_JOBOFFERS_CREATE]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create a Job Offer' });
+      }
+  
+      if(!jobOffer instanceof JobOffer) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'Job Offer' });
+      }
+  
+      if(!ensureFilledFields(jobOffer, ['title', 'description', 'role', 'companyId'])) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['title', 'description', 'role', 'companyId'] });
+      }
+  
+      return FirebaseService.getDb().collection('jobOffers').add(migratePrototype(jobOffer));
+    },
+    get: jobOfferId => {
+      if(!CompanyService.jobOffer.rights[ERights.RIGHT_JOBOFFERS_GET]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Job Offer' });
+      }
+      return FirebaseService.getDb().collection('jobOffers').doc(jobOfferId).get();
+    },
+    list: () => {
+      if(!CompanyService.jobOffer.rights[ERights.RIGHT_JOBOFFERS_LIST]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Job Offers' });
+      }
+  
+      const jobOffers = {};
+      return new Promise((resolve, reject) => {
+          FirebaseService.getDb().collection('jobOffers').get()
+              .then(querySnapshot => {
+                  querySnapshot.forEach(jobOfferDoc => jobOffers[jobOfferDoc.id] = jobOfferDoc.data());
+                  resolve(jobOffers);
+              })
+              .catch(e => ErrorService.manageErrorThenReject(e, reject));
+      });
+    },
+    update: (jobOfferId, jobOffer) => {
+      if(!CompanyService.jobOffer.rights[ERights.RIGHT_JOBOFFERS_UPDATE]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Job Offer' });
+      }
+  
+      if(!jobOffer instanceof JobOffer) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'Job Offer' });
+      }
+  
+      if(!ensureFilledFields(jobOffer, ['title', 'description', 'role', 'companyId'])) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['title', 'description', 'role', 'companyId'] });
+      }
+  
+      return FirebaseService.getDb().collection('jobOffers').doc(jobOfferId).set(migratePrototype(jobOffer));
+    },
+    updateField: (jobOfferId, jobOfferField) => {
+      if(!CompanyService.jobOffer.rights[ERights.RIGHT_JOBOFFERS_UPDATE]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Job Offer' });
+      }
+      
+      return FirebaseService.getDb().collection('jobOffers').doc(jobOfferId).update(jobOfferField);
+    },
+    delete: jobOfferId => {
+      if(!CompanyService.jobOffer.rights[ERights.RIGHT_JOBOFFERS_DELETE]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Job Offer' });
+      }
+      
+      return FirebaseService.getDb().collection('jobOffers').doc(jobOfferId).delete();
+    },
+
+    // CUSTOM FUNCTIONS
+    getAllForCompanyId: companyId => {
+      if(!CompanyService.jobOffer.rights[ERights.RIGHT_JOBOFFERS_LIST]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Job Offers' });
+      }
+
+      const jobOffers = {};
+      return new Promise((resolve, reject) => {
+        FirebaseService.getDb().collection('jobOffers')
+        .where('companyId', '==', companyId)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(jobOfferDoc => jobOffers[jobOfferDoc.id] = jobOfferDoc.data());
+          resolve(jobOffers);
+        })
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
+      });
+    },
+    getOpenedForCompanyId: companyId => {
+      if(!CompanyService.jobOffer.rights[ERights.RIGHT_JOBOFFERS_LIST]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Job Offers' });
+      }
+
+      const jobOffers = {};
+      return new Promise((resolve, reject) => {
+        FirebaseService.getDb().collection('jobOffers')
+        .where('companyId', '==', companyId)
+        .where('status', '==', EJobOfferStatus.OPENED)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(jobOfferDoc => jobOffers[jobOfferDoc.id] = jobOfferDoc.data());
+          resolve(jobOffers);
+        })
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
+      });
+    },
+    countOpenedForCompanyId: companyId => {
+      if(!CompanyService.jobOffer.rights[ERights.RIGHT_JOBOFFERS_LIST]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Job Offers' });
+      }
+
+      return new Promise((resolve, reject) => {
+        FirebaseService.getDb().collection('jobOffers')
+        .where('companyId', '==', companyId)
+        .get()
+        .then(querySnapshot => resolve(querySnapshot.size))
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
+      });
+    },
+    getAllOpenedPositions: () => {
+      if(!CompanyService.jobOffer.rights[ERights.RIGHT_JOBOFFERS_LIST]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Job Offers' });
+      }
+
+      const jobOffers = {};
+      return new Promise((resolve, reject) => {
+        FirebaseService.getDb().collection('jobOffers')
+        .where('status', '==', EJobOfferStatus.OPENED)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(jobOfferDoc => jobOffers[jobOfferDoc.id] = jobOfferDoc.data());
+          resolve(jobOffers);
+        })
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
+      });
+    }
+  }
 };
 
 export default CompanyService;
