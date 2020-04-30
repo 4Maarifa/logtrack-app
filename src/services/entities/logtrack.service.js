@@ -27,7 +27,7 @@ const LogTrackService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['activity', 'companyId', 'employeeId'] });
     }
 
-    if(logTrack.employeeId !== DataService.computed.employee.id || logTrack.companyId !== DataService.computed.activeRole.companyId) {
+    if(logTrack.employeeId !== DataService.computed.user.uid || logTrack.companyId !== DataService.computed.activeRole.companyId) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
@@ -76,7 +76,7 @@ const LogTrackService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['activity', 'companyId', 'employeeId'] });
     }
 
-    if(logTrack.employeeId !== DataService.computed.employee.id || logTrack.companyId !== DataService.computed.activeRole.companyId) {
+    if(logTrack.employeeId !== DataService.computed.user.uid || logTrack.companyId !== DataService.computed.activeRole.companyId) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
@@ -87,7 +87,7 @@ const LogTrackService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a LogTrack' });
     }
 
-    if(logTrack.employeeId !== DataService.computed.employee.id || logTrack.companyId !== DataService.computed.activeRole.companyId) {
+    if(logTrack.employeeId !== DataService.computed.user.uid || logTrack.companyId !== DataService.computed.activeRole.companyId) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
     

@@ -92,7 +92,7 @@ const RoleAdd = ({ match }) => {
 
   const computeCurrentRoles = () => {
     if(!selectedCompanyId || !computed.initialized) { return; }
-    RoleService.getRolesForEmployeeIdAndCompanyId(computed.user.uid, selectedCompanyId, [ERoleStatus.DRAFT, ERoleStatus.CONFIRMED])
+    RoleService.getRolesForEmployeeIdAndCompanyId(computed.user.uid, selectedCompanyId, [ERoleStatus.DRAFT, ERoleStatus.CONFIRMED, ERoleStatus.DENIED])
       .then(currentRoles => {
         setCurrentRoles(Object.keys(currentRoles).map(roleKey => currentRoles[roleKey].role));
         setCurrentRolesLoading(false);
@@ -173,9 +173,10 @@ const RoleAdd = ({ match }) => {
             <Fragment>
               {currentRoles.length ? <span className="info">
                 <Icon source="fa" icon={faInfoCircle} />
-                Some roles are already owned or requested by the user.
+                Some roles are already owned, requested by, or denied for the user.
               </span> : null}
               <Choose
+                selection={roleType}
                 items={roleDetails}
                 multiple={false} 
                 fieldName="roleType"

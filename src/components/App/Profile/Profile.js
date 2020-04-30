@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { faSignOut, faUser, faCog, faUserHeadset, faPhoneAlt, faInfoCircle, 
-  faExclamationCircle, faTimes, faUpload, faExclamationTriangle, faEnvelope, faLock, faCheck } from '@fortawesome/pro-solid-svg-icons';
+  faExclamationCircle, faImage, faExclamationTriangle, faEnvelope, faLock, 
+  faKey, faSignIn } from '@fortawesome/pro-solid-svg-icons';
 
 import Tabs from './../../Utils/Tabs/Tabs';
 import Loader from './../../Utils/Loader/Loader';
@@ -9,7 +10,9 @@ import Icon from './../../Utils/Icon/Icon';
 import ExTable from './../../Utils/ExTable/ExTable';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
+import FormInputFile from './../../Utils/FormElements/FormInputFile/FormInputFile';
 
+import FirebaseService from './../../../services/firebase.service';
 import DataService from './../../../services/data.service';
 import DateService from './../../../services/date.service';
 import ErrorService from './../../../services/error.service';
@@ -18,24 +21,28 @@ import EmployeeService from './../../../services/entities/employee.service';
 import SupportService from './../../../services/entities/support.service';
 import SettingsService, { ESettings, ESettingsDetails } from './../../../services/settings.service';
 
+import { AccountActivity, EAccountActivityType, EAccountActivityTypeDetails, printAccountActivityDetails } from './../../../classes/Employee';
+
 import { v4 as uuid } from 'uuid';
 
 import './Profile.scss';
 
 const Profile = () => {
-  const [isProfilePictureLoading, setProfilePictureLoading] = useState(false);
+  const [profilePicture, setProfilePicture] = useState(null);
 
   const [supportMessage, setSupportMessage] = useState('');
   const [supportMetadata, setSupportMetadata] = useState({});
 
-  const [loginAttempts, setLoginAttempts] = useState([]);
-  const [isLoginAttemptsLoading, setLoginAttemptsLoading] = useState(true);
+  const [accountActivities, setAccountActivities] = useState([]);
+  const [isAccountActivitiesLoading, setAccountActivitiesLoading] = useState(true);
+
+  const [newPassword, setNewPassword] = useState('');
+  const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
 
   const observerKey = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
-
-  const profilePicture = useRef(null);
 
   const computeValues = () => {
     setSupportMetadata({
@@ -47,36 +54,40 @@ const Profile = () => {
       activeRole: computed.activeRole ? computed.activeRole.role : null,
       date: DateService.getCurrentIsoDateString()
     });
-    EmployeeService.loginAttempt.getAllByEmail(computed.employee.email)
-      .then(loginAttempts => {
-        setLoginAttempts(loginAttempts);
-        setLoginAttemptsLoading(false);
+    if(computed.employee.profilePictureUrl) {
+      setProfilePicture({
+        file: null,
+        url: computed.employee.profilePictureUrl
+      });
+    }
+    else {
+      setProfilePicture(null);
+    }
+    EmployeeService.accountActivity.getAllByEmail(computed.employee.email)
+      .then(accountActivities => {
+        setAccountActivities(accountActivities);
+        setAccountActivitiesLoading(false);
       })
       .catch(ErrorService.manageError);
   };
 
-  const removeProfilePicture = () => {
-    setProfilePictureLoading(true);
-    EmployeeService.updateField(computed.user.uid, { profilePictureUrl: null })
-      .then(() => DataService.computed.notifyChanges()
-        .then(() => setProfilePictureLoading(false)))
-      .catch(ErrorService.manageError);
-  };
-
-  const uploadProfilePicture = () => {
-    if(profilePicture.current.files.length) {
-      setProfilePictureLoading(true);
-      FileService.uploadProfilePhoto(profilePicture.current.files[0])
+  const handleProfilePictureChange = newProfilePicture => {
+    if(newProfilePicture && newProfilePicture.file) {
+      FileService.uploadProfilePhoto(newProfilePicture.file)
         .then(() => {
           FileService.getDownloadURLForProfilePicture()
             .then(url => {
               EmployeeService.updateField(computed.user.uid, { profilePictureUrl: url })
-                .then(() => DataService.computed.notifyChanges()
-                  .then(() => setProfilePictureLoading(false)))
+                .then(DataService.computed.notifyChanges)
                 .catch(ErrorService.manageError);
             })
             .catch(ErrorService.manageError);
         })
+        .catch(ErrorService.manageError);
+    }
+    else {
+      EmployeeService.updateField(computed.user.uid, { profilePictureUrl: null })
+        .then(DataService.computed.notifyChanges)
         .catch(ErrorService.manageError);
     }
   };
@@ -88,6 +99,45 @@ const Profile = () => {
       .then(() => {
         setSupportMessage('');
         ErrorService.success('Your message was received successfully!');
+      })
+      .catch(ErrorService.manageError);
+  };
+
+  const handleChangePasswordSubmit = event => {
+    event.preventDefault();
+
+    if(newPassword !== newPasswordConfirm) {
+      ErrorService.manageError({code: 'auth/passwords-not-match'});
+      return;
+    }
+
+    const credential = FirebaseService.getFirebaseObject().auth.EmailAuthProvider.credential(
+      computed.user.email,
+      currentPassword
+    );
+
+    FirebaseService.getCurrentUser().reauthenticateWithCredential(credential)
+      .then(() => {
+        FirebaseService.getCurrentUser().updatePassword(newPassword)
+          .then(() => {
+            EmployeeService.accountActivity.create(
+              new AccountActivity(
+                computed.employee.email,
+                DateService.getCurrentIsoDateString(),
+                {
+                  success: true,
+                },
+                EAccountActivityType.PASSWORD_CHANGE)
+            )
+              .then(() => {
+                ErrorService.success('Password modified!');
+                setCurrentPassword('');
+                setNewPassword('');
+                setNewPasswordConfirm('');
+              })
+              .catch(ErrorService.manageError);
+          })
+          .catch(ErrorService.manageError);
       })
       .catch(ErrorService.manageError);
   };
@@ -109,18 +159,17 @@ const Profile = () => {
   /**
    * RENDER
    */
-  const renderLoginAttempt = (_, itemData) => (
+  const renderAccountActivity = (_, itemData) => (
     <div className="Equipment Element-content Element-content-small">
       <div className="Element-base">
-        {itemData.success ?
-          <Icon containerclassname="Element-icon loginAttempt--success" source="fa" icon={faCheck} /> :
-          <Icon containerclassname="Element-icon loginAttempt--failed" source="fa" icon={faTimes} />
-        }
+        <Icon containerclassname="Element-icon" source="fa" icon={EAccountActivityTypeDetails[itemData.type].icon} />
         <div className="Element-data">
           <span className="Element-title">
-            Near {itemData.city}, {itemData.country}
+            {EAccountActivityTypeDetails[itemData.type].title}
           </span>
-          <span className="sub">{DateService.getDateTimeString(DateService.getDateFromIsoString(itemData.creationIsoDate), false)}</span>
+          <span className="sub">
+            {printAccountActivityDetails(itemData)}
+          </span>
         </div>
       </div>
     </div>
@@ -153,45 +202,25 @@ const Profile = () => {
               return <div className="tab-content">
                 <h2 className="profile-title">Profile Picture</h2>
                 <div className="profile-picture-container">
-                  {computed.employee.profilePictureUrl &&
-                    <img src={computed.employee.profilePictureUrl} 
-                      alt={computed.employee.firstname + ' ' + computed.employee.lastname + ' profile picture'} />
-                  }
-                  <div className="profile-picture-description">
-                    {computed.employee.profilePictureUrl && 
-                      <h3>Current Profile Picture</h3>
+                  <FormInputFile
+                    imagePreview
+                    onValueChange={handleProfilePictureChange}
+                    value={profilePicture}
+                    label={
+                      <span>
+                        <Icon source="fa" icon={faImage} />
+                        Profile Picture
+                      </span>
                     }
-                    {!computed.employee.profilePictureUrl && 
-                      <h3>You don't have a Profile Picture yet</h3>
+                    instructions={
+                      <span>
+                        <Icon source="fa" icon={faExclamationCircle} />
+                        Before uploading a profile picture, make sure it is compliant with our guidelines.<br/>
+                        <Icon source="fa" icon={faInfoCircle} />
+                        Make sure to use a square picture otherwise it might be stretched.
+                      </span>
                     }
-
-                    {!isProfilePictureLoading && <div className="profile-picture-actions">
-
-                      <label className="profile-picture-action" htmlFor="profile-picture">
-                        <Icon source="fa" icon={faUpload} />
-                        {computed.employee.profilePictureUrl && <span>Replace your Profile Picture</span>}
-                        {!computed.employee.profilePictureUrl && <span>Set your Profile Picture</span>}
-                      </label>
-
-                      {computed.employee.profilePictureUrl &&
-                        <span className="profile-picture-action profile-picture-action-delete" onClick={() => removeProfilePicture()}>
-                          <Icon source="fa" icon={faTimes} />
-                          Remove your Profile Picture
-                        </span>
-                      }
-
-                      <input type="file" id="profile-picture" name="profile-picture" ref={profilePicture} onChange={() => uploadProfilePicture()} />
-                    </div>}
-
-                    {isProfilePictureLoading && <Loader />}
-
-                    <span className="profile-picture-info">
-                      <Icon source="fa" icon={faExclamationCircle} />
-                      Before uploading a profile picture, make sure it is compliant with our guidelines.<br/>
-                      <Icon source="fa" icon={faInfoCircle} />
-                      Make sure to use a square picture otherwise it might be stretched.
-                    </span>
-                  </div>
+                    accept="image/*" />
                 </div>
                 <h2 className="profile-title">
                   <Icon source="fa" icon={faUser} />
@@ -217,6 +246,7 @@ const Profile = () => {
                           </span>
                         } />
                     </div>
+                    <span className="personal-info-line-separator"></span>
                     <div className="personal-info-input-container">
                       <FormInput
                         value={computed.employee.lastname}
@@ -235,11 +265,92 @@ const Profile = () => {
                   <Icon source="fa" icon={faLock} />
                   Security
                 </h2>
+                <h3>Change your password</h3>
+                <form onSubmit={handleChangePasswordSubmit}>
+                  <div className="personal-info-line">
+                    <div className="personal-info-input-container">
+                      {/* Current Password field */}
+                      <FormInput
+                        value={currentPassword}
+                        inputType="password"
+                        fieldName="currentPassword"
+                        label={
+                          <span>
+                            <Icon source="fa" icon={faKey} />
+                            Current password
+                          </span>
+                        }
+                        instructions={
+                          <span>
+                            Your old password
+                          </span>
+                        }
+                        inputAutoComplete="password"
+                        inputPattern=".{5,}"
+                        inputName="password"
+                        inputRequired
+                        onValueChange={setCurrentPassword} />
+                    </div>
+                  </div>
+                  <div className="personal-info-line">
+                    <div className="personal-info-input-container">
+                      {/* Password field */}
+                      <FormInput
+                        value={newPassword}
+                        inputType="password"
+                        fieldName="password"
+                        label={
+                          <span>
+                            <Icon source="fa" icon={faKey} />
+                            New password
+                          </span>
+                        }
+                        instructions={
+                          <span>
+                            Pick a password<br/>
+                            5 characters minimum
+                          </span>
+                        }
+                        inputAutoComplete="off"
+                        inputPattern=".{5,}"
+                        inputName="password"
+                        inputRequired
+                        onValueChange={setNewPassword} />
+                    </div>
+                    <span className="personal-info-line-separator"></span>
+                    <div className="personal-info-input-container">
+                      {/* Second Password field */}
+                      <FormInput
+                        value={newPasswordConfirm}
+                        inputType="password"
+                        fieldName="secondpassword"
+                        label={
+                          <span>
+                            <Icon source="fa" icon={faKey} />
+                            Repeat your new password
+                          </span>
+                        }
+                        instructions={
+                          <span>
+                            Repeat the password
+                          </span>
+                        }
+                        inputAutoComplete="off"
+                        inputRequired
+                        onValueChange={setNewPasswordConfirm} />
+                    </div>
+                  </div>
+                  <input type="submit" value="Change password" />
+                </form>
+                <h2 className="profile-title">
+                  <Icon source="fa" icon={faSignIn} />
+                  Account Activity
+                </h2>
                 <div className="personal-info-container">
-                  <ExTable key="loginAttempts" 
-                    items={loginAttempts}
-                    renderItem={renderLoginAttempt}
-                    loading={isLoginAttemptsLoading}
+                  <ExTable key="accountActivities" 
+                    items={accountActivities}
+                    renderItem={renderAccountActivity}
+                    loading={isAccountActivitiesLoading}
                     isNoFrame
                     isSmallItems />
                 </div>

@@ -32,6 +32,11 @@ const FormInputFile = ({ accept: defaultAccept,
     }
   };
 
+  const remove = () => {
+    file.current.value = null;
+    onChange();
+  };
+
   /**
    * RENDER
    */
@@ -39,6 +44,9 @@ const FormInputFile = ({ accept: defaultAccept,
 
   return (
     <div className="FormInputFile">
+      {label && <span className="fake-label">
+        {label}
+      </span>}
       <input
         id={inputId}
         type="file"
@@ -46,14 +54,10 @@ const FormInputFile = ({ accept: defaultAccept,
         onChange={onChange}
         accept={accept}
         required={inputRequired} />
-      <label htmlFor={inputId}>
+      <div className="FormInputFile-actions">
         {imagePreview && value && value.url ?
           <img src={value.url} alt="Upload Preview" /> : null
         }
-        <span className="input-title">
-          <Icon source="fa" icon={faUpload} />
-          {value ? 'Replace' : 'Upload'}
-        </span>
         <span className="indicator"
           onMouseOver={() => setHover(true)}
           onMouseOut={() => setHover(false)}>
@@ -61,10 +65,15 @@ const FormInputFile = ({ accept: defaultAccept,
           <Icon containerclassname="valid" source="fa" icon={faCheck} />
           <Icon containerclassname="invalid" source="fa" icon={faTimes} />
         </span>
-      </label>
-      {label && <span className="fake-label">
-        {label}
-      </span>}
+        <label htmlFor={inputId}>
+          <Icon source="fa" icon={faUpload} />
+          {value ? 'Replace' : 'Upload'}
+        </label>
+        {value ? <span className="FormInputFile-remove" onClick={remove}>
+          <Icon source="fa" icon={faTimes} />
+          Remove
+        </span> : null}
+      </div>
       {instructions && <Tooltip 
         show={isHover} 
         label={instructions}

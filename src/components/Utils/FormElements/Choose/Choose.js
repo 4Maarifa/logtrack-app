@@ -16,7 +16,7 @@ const Choose = ({ selection,
       return;
     }
 
-    let newSelection = [...selection];
+    let newSelection = selection ? [...selection] : [];
     if(multiple) {
       if(newSelection.includes(itemKey)) {
         if(selectionRequired && newSelection.length <= 1) {

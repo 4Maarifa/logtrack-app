@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { faCog, faClock, faCommentDots, faMapMarker, faBuilding, faTag, faMapPin } from '@fortawesome/pro-light-svg-icons';
+import { faCog, faClock, faMapMarker, faBuilding, faTag, faMapPin } from '@fortawesome/pro-light-svg-icons';
 import { faChevronRight, faTruck, faUsers, faWarehouseAlt, faThermometerHalf } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
@@ -12,7 +12,6 @@ import PermissionService from './../../../services/permission.service';
 import SettingsService, { ESettings } from './../../../services/settings.service';
 import DateService from './../../../services/date.service';
 
-import EStat from './../../../classes/enums/EStat';
 import { ERole, RoleDetails } from './../../../classes/Role';
 
 import LogTrack from './../LogTrack/LogTrack';
@@ -33,15 +32,7 @@ const Dashboard = () => {
 
   const [weather, setWeather] = useState(null);
 
-  const [chatCount, setChatCount] = useState(null);
-
   const [datetime, setDateTime] = useState({date: null, time: null});
-
-  // MANAGER
-  const [equipmentCount, setEquipmentCount] = useState(null);
-  const [employeeCount, setEmployeeCount] = useState(null);
-  const [warehouseCount, setWarehouseCount] = useState(null);
-  const [requestedRolesCount, setRequestedRolesCount] = useState(null);
 
   const observerKey = uuid();
   
@@ -61,30 +52,6 @@ const Dashboard = () => {
         })
         .catch(ErrorService.manageError);
     }
-
-    if(!computed.activeRole || !computed.user || !computed.user.uid) { return; }
-    
-    DataService.computed.conputeStat([EStat.equipmentCount, EStat.employeeCount, EStat.warehouseCount, EStat.chatCount, EStat.requestedRolesCount], {
-      companyId: computed.activeRole.companyId,
-      userId: computed.user.uid
-    }).then(statData => {
-        if(typeof statData.equipmentCount === 'number') {
-          isMounted && setEquipmentCount(statData.equipmentCount);
-        }
-        if(typeof statData.employeeCount === 'number') {
-          isMounted && setEmployeeCount(statData.employeeCount);
-        }
-        if(typeof statData.warehouseCount === 'number') {
-          isMounted && setWarehouseCount(statData.warehouseCount);
-        }
-        if(typeof statData.requestedRolesCount === 'number') {
-          isMounted && setRequestedRolesCount(statData.requestedRolesCount);
-        }
-        if(typeof statData.chatCount === 'number') {
-          isMounted && setChatCount(statData.chatCount);
-        }
-      })
-      .catch(ErrorService.manageError);
   };
 
   useEffect(() => {
@@ -138,10 +105,9 @@ const Dashboard = () => {
             <div className="company-details-stat">
               <span className="company-details-stat-icon">
                 <Icon source="fa" icon={faWarehouseAlt} />
-                {warehouseCount ? <span className="badge badge-inverse">{warehouseCount}</span> : null}
               </span>
               <span className="company-details-stat-content">
-                {warehouseCount ? <span>{warehouseCount} Warehouses</span> : <span>Warehouses</span>}
+                <span>Warehouses</span>
                 {computed.activeRole.role === ERole.MANAGER && <NavLink className="manage-link" to={`/warehouses`}>
                   Manage
                   <Icon source="fa" icon={faChevronRight} />
@@ -151,10 +117,9 @@ const Dashboard = () => {
             <div className="company-details-stat">
               <span className="company-details-stat-icon">
                 <Icon source="fa" icon={faUsers} />
-                {employeeCount ? <span className="badge badge-inverse">{employeeCount}</span> : null}
               </span>
               <span className="company-details-stat-content">
-                {employeeCount ? <span>{employeeCount} Employees</span> : <span>Employees</span>}
+                <span>Employees</span>
                 {computed.activeRole.role === ERole.MANAGER && <NavLink className="manage-link" to={`/employees`}>
                   Manage
                   <Icon source="fa" icon={faChevronRight} />
@@ -164,10 +129,9 @@ const Dashboard = () => {
             <div className="company-details-stat">
               <span className="company-details-stat-icon">
                 <Icon source="fa" icon={faTruck} />
-                {equipmentCount ? <span className="badge badge-inverse">{equipmentCount}</span> : null}
               </span>
               <span className="company-details-stat-content">
-                {equipmentCount ? <span>{equipmentCount} Equipments</span> : <span>Equipments</span>}
+                <span>Equipments</span>
                 {computed.activeRole.role === ERole.MANAGER && <NavLink className="manage-link" to={`/equipments`}>
                   Manage
                   <Icon source="fa" icon={faChevronRight} />
@@ -183,14 +147,9 @@ const Dashboard = () => {
           <h2>Profile and Settings</h2>
           <Icon containerclassname="icon-overlay" source="fa" icon={faCog} />
         </NavLink>
-        <NavLink className="card chat" to={`/chat`}>
-          <h2>Chat</h2>
-          {chatCount && <span>{chatCount} active conversations</span>}
-          <Icon containerclassname="icon-overlay" source="fa" icon={faCommentDots} />
-        </NavLink>
         {computed.activeRole && computed.activeRole.role === ERole.MANAGER && <NavLink className="card card-w roles-link desktop-only" to={`/roles`}>
           <h2>Requested Roles</h2>
-          {requestedRolesCount && <span>{requestedRolesCount} to confirm</span>}
+          <span>Roles to confirm</span>
           <Icon containerclassname="icon-overlay" source="fa" icon={faTag} />
         </NavLink>}
         <div className="card card-w hour desktop-only">
@@ -218,7 +177,7 @@ const Dashboard = () => {
       <div className="line line-small mobile-only">
         {computed.activeRole && computed.activeRole.role === ERole.MANAGER && <NavLink className="card card-w roles-link" to={`/roles`}>
           <h2>Requested Roles</h2>
-          {requestedRolesCount && <span>{requestedRolesCount} to confirm</span>}
+          <span>Roles to confirm</span>
           <Icon containerclassname="icon-overlay" source="fa" icon={faTag} />
         </NavLink>}
         <div className="card card-w hour">

@@ -22,7 +22,7 @@ const SupportService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['message', 'userId'] });
     }
 
-    if(support.userId !== DataService.computed.employee.id) {
+    if(support.userId !== DataService.computed.user.uid) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
@@ -58,7 +58,7 @@ const SupportService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['message', 'userId'] });
     }
 
-    if(support.userId !== DataService.computed.employee.id) {
+    if(support.userId !== DataService.computed.user.uid) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 

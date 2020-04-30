@@ -14,11 +14,11 @@ import Tabs from './../../Utils/Tabs/Tabs';
 import JobOffer from './../../Entities/JobOffer/JobOffer';
 
 import { ERole } from './../../../classes/Role';
+import { EJobOfferStatus } from './../../../classes/Company';
 
 import { v4 as uuid } from 'uuid';
 
 import './JobOffers.scss';
-import { EJobOfferStatus } from '../../../classes/Company';
 
 /**
  * Component: JobOffers

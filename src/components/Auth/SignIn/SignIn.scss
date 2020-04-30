@@ -1,0 +1,21 @@
+.SignIn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: var(--form-width);
+
+    .FormInput {
+      width: 100%;
+    }
+  }
+
+  .signin-link {
+    margin-top: 1rem;
+    text-align: center;
+  }
+}

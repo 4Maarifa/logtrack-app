@@ -61,8 +61,7 @@ const Employees = () => {
     <RoleEmployee key={itemKey} 
       employee={ {[itemKey]: itemData} } 
       roles={UtilsService.filterKeyValueOnPropertyValue(rolesOfCompanyEmployees, predicate => predicate.employeeId === itemKey)}
-      options={ {showDraft: false, showActions: false} }
-      showDetails />
+      options={ {showDraft: false} } />
   );
 
   return (

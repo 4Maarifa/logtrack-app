@@ -3,7 +3,7 @@ import { faEdit } from '@fortawesome/pro-solid-svg-icons';
 
 import ActionList from './../../Utils/ActionList/ActionList';
 import Icon from './../../Utils/Icon/Icon';
-import PageLink, { PageLinkType } from '../../Utils/PageLink/PageLink';
+import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 
 import DataService from './../../../services/data.service';
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faUser, faUserTag, faUserPlus, faCommentDots, faUserCog } from '@fortawesome/pro-solid-svg-icons';
+import { faUser, faUserTag, faUserPlus, faUserCog } from '@fortawesome/pro-solid-svg-icons';
 
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import Icon from './../../Utils/Icon/Icon';
@@ -19,6 +19,7 @@ const RoleEmployee = ({ employee, options, roles }) => {
   const observerKey = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
+  
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, observerKey);
     return () => DataService.computed.unobserveComputedValues(observerKey);
@@ -57,7 +58,6 @@ const RoleEmployee = ({ employee, options, roles }) => {
     actions.push({ title: 'Request a role', icon: <Icon source="fa" icon={faUserTag} />, link: '/role-add' });
   }
   else {
-    actions.push({ title: 'Chat', icon: <Icon source="fa" icon={faCommentDots} />, link: `/chat-create/${employeeId}` });
     if(computed.activeRole.role === ERole.MANAGER) {
       actions.push({ title: 'Offer a role', icon: <Icon source="fa" icon={faUserPlus} />, link: `/role-offer/${employeeId}` });
     }

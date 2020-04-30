@@ -27,7 +27,7 @@ const EquipmentModelService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['name', 'creator', 'logoURL'] });
     }
 
-    if(equipmentModel.creator !== DataService.computed.employee.id) {
+    if(equipmentModel.creator !== DataService.computed.user.uid) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 

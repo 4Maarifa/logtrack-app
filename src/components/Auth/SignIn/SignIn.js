@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import { faEnvelope, faKey } from '@fortawesome/pro-solid-svg-icons';
 
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
@@ -12,7 +12,7 @@ import GeoService from './../../../services/geo.service';
 import EmployeeService from './../../../services/entities/employee.service';
 import DateService from './../../../services/date.service';
 
-import { LoginAttempt } from './../../../classes/Employee';
+import { AccountActivity, EAccountActivityType } from './../../../classes/Employee';
 
 import { v4 as uuid } from 'uuid';
 
@@ -40,17 +40,20 @@ const SignIn = () => {
     const registerAttempt = (user, isSuccess) => (
       GeoService.getApproximateLocation()
         .then(location => {
-          const loginAttempt = new LoginAttempt(
-            location.country_name,
-            location.city,
-            parseFloat(location.latitude),
-            parseFloat(location.longitude),
-            location.IPv4,
-            email,
-            isSuccess,
-            DateService.getCurrentIsoDateString()
-          );
-          EmployeeService.loginAttempt.create(loginAttempt)
+          EmployeeService.accountActivity.create(
+            new AccountActivity(
+              email,
+              DateService.getCurrentIsoDateString(),
+              {
+                country: location.country_name,
+                city: location.city,
+                latitude: parseFloat(location.latitude),
+                longitude: parseFloat(location.longitude),
+                ip: location.IPv4,
+                success: isSuccess,
+              },
+              EAccountActivityType.SIGNIN)
+          )
             .then(() => user && setUser(user))
             .catch(ErrorService.manageError);
         })
@@ -118,8 +121,10 @@ const SignIn = () => {
           inputRequired
           onValueChange={setPassword} />
 
-        <input type="submit" />
+        <input type="submit" value="Sign In" />
       </form>
+      <NavLink className="signin-link" to={`/signup`}>Don't have an account yet?</NavLink>
+      <NavLink className="signin-link" to={`/forgotten`}>Lost your password?</NavLink>
     </div>
   );
 };

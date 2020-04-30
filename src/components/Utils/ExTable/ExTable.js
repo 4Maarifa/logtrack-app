@@ -28,15 +28,15 @@ const ExTable = ({ header, loading, items, renderItem, isNoFrame, isSmallItems }
         </div>
       </div>
       <ul>
-        {loading && <li className="loader">
+        {loading ? <li className="loader">
           <Loader />
-        </li>}
-        {!loading && Object.keys(items).map(itemKey => 
+        </li> : null}
+        {!loading && items && Object.keys(items).map(itemKey => 
           <li key={itemKey} className={'Element Element--' + (!isSmallItems && view === 'ITEMS' ? 'tile' : 'row') + (isSmallItems ? ' Element-small' : '')}>
             {renderItem(itemKey, items[itemKey])}
           </li>)
         }
-        {!loading && !Object.keys(items).length && 
+        {!loading && (!items || !Object.keys(items).length) && 
           <li className="no-item">Nothing to show!</li>
         }
       </ul>

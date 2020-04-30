@@ -9,7 +9,7 @@ import ActionList from './../../Utils/ActionList/ActionList';
 import Icon from './../../Utils/Icon/Icon';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 
-import { ERole, RoleDetails } from '../../../classes/Role';
+import { ERole, RoleDetails } from './../../../classes/Role';
 import { EJobOfferStatus } from './../../../classes/Company';
 
 import { v4 as uuid } from 'uuid';

@@ -36,17 +36,20 @@ const Roles = () => {
   const [requestedRoles, setRequestedRoles] = useState({});
   const [requestedRolesEmployees, setRequestedRolesEmployees] = useState({});
 
+  const [userDeniedRoles, setUserDeniedRoles] = useState({});
+  const [userDeniedRolesCompanies, setUserDeniedRolesCompanies] = useState({});
+
   const observerKey = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
   
   const computeRoles = () => {
-    if(!computed.user) return;
+    if(!computed.user) { return; }
     // USER ROLES
-    RoleService.getRolesForEmployeeId(computed.user.uid, [ERoleStatus.CONFIRMED, ERoleStatus.DRAFT, ERoleStatus.REVOKED])
+    RoleService.getRolesForEmployeeId(computed.user.uid, [ERoleStatus.CONFIRMED, ERoleStatus.DRAFT, ERoleStatus.REVOKED, ERoleStatus.DENIED])
       .then(roles => {
-        let userRoles = {}, userRevokedRoles = {}, userDraftRoles = {}, 
-          userRolesCompanyKeys = [], userRevokedRolesCompanyKeys = [], userDraftRolesCompanyKeys = [];
+        let userRoles = {}, userRevokedRoles = {}, userDraftRoles = {}, userDeniedRoles = {},
+          userRolesCompanyKeys = [], userRevokedRolesCompanyKeys = [], userDraftRolesCompanyKeys = [], userDeniedRolesCompanyKeys = [];
 
         Object.keys(roles).forEach(roleKey => {
           if(roles[roleKey].status === ERoleStatus.CONFIRMED) {
@@ -61,30 +64,37 @@ const Roles = () => {
             userRevokedRoles[roleKey] = roles[roleKey];
             userRevokedRolesCompanyKeys.push(roles[roleKey].companyId);
           }
+          if(roles[roleKey].status === ERoleStatus.DENIED) {
+            userDeniedRoles[roleKey] = roles[roleKey];
+            userDeniedRolesCompanyKeys.push(roles[roleKey].companyId);
+          }
         });
 
         CompanyService.getAllForIdList(UtilsService.removeDuplicateFromArray(Object.keys(roles).map(roleKey => roles[roleKey].companyId)))
           .then(allCompanies => {
-            let userRolesCompanies = {}, userDraftRolesCompanies = {}, userRevokedRolesCompanies = {};
+            let userRolesCompanies = {}, userDraftRolesCompanies = {}, userRevokedRolesCompanies = {}, userDeniedRolesCompanies = {};
 
             userRolesCompanyKeys.forEach(companyKey => userRolesCompanies[companyKey] = allCompanies[companyKey]);
             userRevokedRolesCompanyKeys.forEach(companyKey => userRevokedRolesCompanies[companyKey] = allCompanies[companyKey]);
             userDraftRolesCompanyKeys.forEach(companyKey => userDraftRolesCompanies[companyKey] = allCompanies[companyKey]);
+            userDeniedRolesCompanyKeys.forEach(companyKey => userDeniedRolesCompanies[companyKey] = allCompanies[companyKey]);
 
             setUserDraftRolesCompanies(userDraftRolesCompanies);
             setUserRevokedRolesCompanies(userRevokedRolesCompanies);
             setUserRolesCompanies(userRolesCompanies);
+            setUserDeniedRolesCompanies(userDeniedRolesCompanies);
 
             setUserDraftRoles(userDraftRoles);
             setUserRevokedRoles(userRevokedRoles);
             setUserRoles(userRoles);
+            setUserDeniedRoles(userDeniedRoles);
           })
           .catch(ErrorService.manageError);
       })
       .catch(ErrorService.manageError);
 
     // REQUESTED ROLES
-    if(computed.activeRole) {
+    if(computed.activeRole && computed.activeRole.role === ERole.MANAGER) {
       RoleService.getRolesForCompanyId(computed.activeRole.companyId, [ERoleStatus.DRAFT])
         .then(requestedRoles => {
           let employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(requestedRoles).map(roleKey => requestedRoles[roleKey].employeeId));
@@ -116,11 +126,15 @@ const Roles = () => {
     return defaultActions;
   };
 
-  useEffect(() => computeRoles(), [computed]);
+  useEffect(() => {
+    if(computed.initialized) {
+      computeRoles();
+    }
+  }, [computed]);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    return () => DataService.computed.unobserveComputedValues(observerKey);
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -156,6 +170,13 @@ const Roles = () => {
       options={ {showDraft: true, showActions: true} } />
   );
 
+  const renderDeniedUserRole = (itemKey, itemData) => (
+    <RoleCompany key={itemKey} 
+      company={ {[itemKey]: itemData} } 
+      roles={UtilsService.filterKeyValueOnPropertyValue(userDeniedRoles, predicate => predicate.companyId === itemKey)}
+      options={ {showActions: true, showDates: true} } />
+  );
+
   return (
     <div className="Roles">
       {computed.activeRole && 
@@ -185,6 +206,9 @@ const Roles = () => {
 
       <h1>Revoked Roles</h1>
       <ExTable items={userRevokedRolesCompanies} renderItem={renderRevokedUserRole} isNoFrame />
+
+      <h1>Denied Roles</h1>
+      <ExTable items={userDeniedRolesCompanies} renderItem={renderDeniedUserRole} isNoFrame />
 
       <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={computeActions()} />
     </div>
