@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import UtilsService from './../../../services/utils.service';
+
 import './Tabs.scss';
 
 const Tabs = ({ default: defaultTab, tabs }) => {
@@ -8,7 +10,7 @@ const Tabs = ({ default: defaultTab, tabs }) => {
   const activateTab = newActiveTab => !tabs[newActiveTab].disabled && setActiveTab(newActiveTab);
 
   useEffect(() => {
-    const tab = new URLSearchParams(window.location.search).get('tab');
+    const tab = UtilsService.getUrlGetParam('tab');
     if(tab && tabs[tab]) {
       setActiveTab(tab);
     }

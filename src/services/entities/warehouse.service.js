@@ -29,7 +29,9 @@ const WarehouseService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['name', 'latitude', 'longitude', 'companyId', 'creator'] });
     }
 
-    if(warehouse.creator !== DataService.computed.employee.id || DataService.computed.activeRole.role !== ERole.MANAGER || warehouse.companyId !== DataService.computed.activeRole.companyId) {
+    if(warehouse.creator !== DataService.computed.user.uid ||
+        DataService.computed.activeRole.role !== ERole.MANAGER || warehouse.companyId !== DataService.computed.activeRole.companyId) {
+          
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 

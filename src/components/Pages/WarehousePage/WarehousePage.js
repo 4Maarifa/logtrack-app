@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { faTruck } from '@fortawesome/pro-solid-svg-icons'
 
-import DataService from '../../../services/data.service';
-import CompanyService from '../../../services/entities/company.service';
-import ErrorService from '../../../services/error.service';
-import BrandService from '../../../services/entities/brand.service';
-import EquipmentModelService from '../../../services/entities/equipmentModel.service';
-import EquipmentService from '../../../services/entities/equipment.service';
-import WarehouseService from '../../../services/entities/warehouse.service';
+import DataService from './../../../services/data.service';
+import CompanyService from './../../../services/entities/company.service';
+import ErrorService from './../../../services/error.service';
+import BrandService from './../../../services/entities/brand.service';
+import EquipmentModelService from './../../../services/entities/equipmentModel.service';
+import EquipmentService from './../../../services/entities/equipment.service';
+import WarehouseService from './../../../services/entities/warehouse.service';
 
-import Loader from '../../Utils/Loader/Loader';
-import ExTable from '../../Utils/ExTable/ExTable';
-import Icon from '../../Utils/Icon/Icon';
-import Tabs from '../../Utils/Tabs/Tabs';
+import Loader from './../../Utils/Loader/Loader';
+import ExTable from './../../Utils/ExTable/ExTable';
+import Icon from './../../Utils/Icon/Icon';
+import Tabs from './../../Utils/Tabs/Tabs';
 
-import Equipment from '../../Entities/Equipment/Equipment';
-import Warehouse from '../../Entities/Warehouse/Warehouse';
+import Equipment from './../../Entities/Equipment/Equipment';
+import Warehouse from './../../Entities/Warehouse/Warehouse';
 
 import { v4 as uuid } from 'uuid';
 

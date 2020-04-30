@@ -14,13 +14,13 @@ import DateService from './../../../services/date.service';
 import ErrorService from './../../../services/error.service';
 import WarehouseService from './../../../services/entities/warehouse.service';
 import GeoService from './../../../services/geo.service';
+import EmployeeService from './../../../services/entities/employee.service';
 
 import Warehouse from './../../../classes/Warehouse';
 
 import { v4 as uuid } from 'uuid';
 
 import './WarehouseAdd.scss';
-import EmployeeService from '../../../services/entities/employee.service';
 
 const WarehouseAdd = ({ match }) => {
   const currentWarehouseId = match.params.warehouseid;

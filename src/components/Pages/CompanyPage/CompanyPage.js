@@ -2,26 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { faUsers, faTruck, faWarehouseAlt, faClipboardUser } from '@fortawesome/pro-solid-svg-icons';
 
-import DataService from '../../../services/data.service';
-import CompanyService from '../../../services/entities/company.service';
-import ErrorService from '../../../services/error.service';
-import RoleService from '../../../services/entities/role.service';
-import UtilsService from '../../../services/utils.service';
-import EmployeeService from '../../../services/entities/employee.service';
-import BrandService from '../../../services/entities/brand.service';
-import EquipmentModelService from '../../../services/entities/equipmentModel.service';
-import EquipmentService from '../../../services/entities/equipment.service';
-import WarehouseService from '../../../services/entities/warehouse.service';
+import DataService from './../../../services/data.service';
+import CompanyService from './../../../services/entities/company.service';
+import ErrorService from './../../../services/error.service';
+import RoleService from './../../../services/entities/role.service';
+import UtilsService from './../../../services/utils.service';
+import EmployeeService from './../../../services/entities/employee.service';
+import BrandService from './../../../services/entities/brand.service';
+import EquipmentModelService from './../../../services/entities/equipmentModel.service';
+import EquipmentService from './../../../services/entities/equipment.service';
+import WarehouseService from './../../../services/entities/warehouse.service';
 
-import Loader from '../../Utils/Loader/Loader';
-import Tabs from '../../Utils/Tabs/Tabs';
-import Icon from '../../Utils/Icon/Icon';
-import ExTable from '../../Utils/ExTable/ExTable';
+import Loader from './../../Utils/Loader/Loader';
+import Tabs from './../../Utils/Tabs/Tabs';
+import Icon from './../../Utils/Icon/Icon';
+import ExTable from './../../Utils/ExTable/ExTable';
 
-import RoleEmployee from '../../Entities/RoleEmployee/RoleEmployee';
-import Equipment from '../../Entities/Equipment/Equipment';
-import Warehouse from '../../Entities/Warehouse/Warehouse';
-import Company from '../../Entities/Company/Company';
+import RoleEmployee from './../../Entities/RoleEmployee/RoleEmployee';
+import Equipment from './../../Entities/Equipment/Equipment';
+import Warehouse from './../../Entities/Warehouse/Warehouse';
+import Company from './../../Entities/Company/Company';
 
 import { v4 as uuid } from 'uuid';
 

@@ -2,11 +2,11 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { faComments, faExclamationTriangle, faBell, faCalendarAlt, faEnvelope } from '@fortawesome/pro-solid-svg-icons';
 
-import DataService from '../../../services/data.service';
+import DataService from './../../../services/data.service';
 
-import { ERole } from '../../../classes/Role';
+import { ERole } from './../../../classes/Role';
 
-import Icon from '../../Utils/Icon/Icon';
+import Icon from './../../Utils/Icon/Icon';
 
 import { v4 as uuid } from 'uuid';
 
@@ -38,7 +38,7 @@ const MenuBar = () => {
       <NavLink className="nav-soon" activeClassName="nav--active" to={`/`} title="Mail" exact>
         <Icon source="fa" icon={faEnvelope} />
       </NavLink>
-      <NavLink activeClassName="nav--active" to={`/chat`} title="Chat">
+      <NavLink className="nav-soon" activeClassName="nav--active" to={`/`} title="Chat" exact>
         <Icon source="fa" icon={faComments} />
         <span className="badge badge-inverse">...</span>
       </NavLink>

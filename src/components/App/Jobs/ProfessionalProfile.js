@@ -316,6 +316,7 @@ const ProfessionalProfile = () => {
 
     <h2>Other Experience</h2>
     <ExTable key="otherExperience" 
+      loading={false}
       items={computed.employee.experience} 
       renderItem={renderOtherExperience} 
       header={['Name', 'Company']}

@@ -37,7 +37,7 @@ const RoleService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['employeeId', 'companyId', 'status', 'role'] });
     }
 
-    if(role.employeeId !== DataService.computed.employee.id && (role.companyId !== DataService.computed.activeRole.companyId || DataService.computed.activeRole.role !== ERole.MANAGER)) {
+    if(role.employeeId !== DataService.computed.user.uid && (!DataService.computed.activeRole || (role.companyId !== DataService.computed.activeRole.companyId || DataService.computed.activeRole.role !== ERole.MANAGER))) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
@@ -77,9 +77,9 @@ const RoleService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['employeeId', 'companyId', 'status', 'role'] });
     }
 
-    if(role.employeeId !== DataService.computed.employee.id && (
-      DataService.computed.activeRole.companyId !== role.companyId || DataService.computed.activeRole.role !== ERole.MANAGER
-      )) {
+    if(role.employeeId !== DataService.computed.user.uid && (
+      DataService.computed.activeRole.companyId !== role.companyId || DataService.computed.activeRole.role !== ERole.MANAGER )) {
+        
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
@@ -203,6 +203,19 @@ const RoleService = {
       .then(DataService.computed.notifyChanges)
       .catch(ErrorService.manageError);
   },
+  denyRole: roleId => {
+    if(!RoleService.rights[ERights.RIGHT_ROLE_UPDATE]()) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Role' });
+    }
+
+    if(!DataService.computed.activeRole || DataService.computed.activeRole.role !== ERole.MANAGER) {
+      return ErrorService.manageErrorThenPromiseRejection('You don\'t have right to confirm this role');
+    }
+
+    return RoleService.updateField(roleId, {status: ERoleStatus.DENIED})
+      .then(DataService.computed.notifyChanges)
+      .catch(ErrorService.manageError);
+  },
   revokeRole: roleId => {
     if(!RoleService.rights[ERights.RIGHT_ROLE_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Role' });
@@ -234,6 +247,9 @@ const RoleService = {
       actions.push(<button key="CONFIRM" title="Confirm?" onClick={() => RoleService.confirmRole(roleId)}>
         <Icon source="fa" icon={faCheck} />
       </button>);
+      actions.push(<button key="DENY" title="Deny?" onClick={() => RoleService.denyRole(roleId)}>
+      <Icon source="fa" icon={faTimes} />
+    </button>);
     }
     if(DataService.computed.activeRole && DataService.computed.employee && roleId !== DataService.computed.employee.activeRoleId && role[roleId].status === ERoleStatus.CONFIRMED && role[roleId].companyId === DataService.computed.activeRole.companyId && DataService.computed.activeRole.role === ERole.MANAGER) {
       actions.push(<button key="REVOKE" title="Revoke?" onClick={() => RoleService.revokeRole(roleId)}>

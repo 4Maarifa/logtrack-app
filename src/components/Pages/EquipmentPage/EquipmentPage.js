@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { faTruck } from '@fortawesome/pro-solid-svg-icons';
 
-import ErrorService from '../../../services/error.service';
-import EquipmentService from '../../../services/entities/equipment.service';
-import EquipmentModelService from '../../../services/entities/equipmentModel.service';
+import ErrorService from './../../../services/error.service';
+import EquipmentService from './../../../services/entities/equipment.service';
+import EquipmentModelService from './../../../services/entities/equipmentModel.service';
 
 import Loader from './../../Utils/Loader/Loader';
 import Tabs from './../../Utils/Tabs/Tabs';
 import Icon from './../../Utils/Icon/Icon';
 
-import Equipment from '../../Entities/Equipment/Equipment';
+import Equipment from './../../Entities/Equipment/Equipment';
 
 import './EquipmentPage.scss';
 

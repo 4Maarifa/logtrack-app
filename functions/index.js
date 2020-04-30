@@ -1,4 +1,4 @@
-const paramsInc = require('./params.inc');
+//const paramsInc = require('./params.inc');
 
 const express = require('express');
 const cors = require('cors');
@@ -10,115 +10,6 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 const db = admin.firestore();
-
-const computeStatApp = express();
-computeStatApp.use(cors({origin: true}));
-computeStatApp.use(bodyParser.json());
-
-const computeStat = {
-  api: functions.https.onRequest((request, response) => {
-    if(!request.path) {
-      request.url = `/${request.url}`
-    }
-    return computeStatApp(request, response);
-  }),
-  app: (req, res) => {
-    const promises = [];
-  
-    req.body.data.types.forEach(reqType => {
-      if(computeStat.fns[reqType]) {
-        promises.push(computeStat.fns[reqType](req));
-      } 
-      else {
-        console.error('The type ' + reqType + ' was not recognized');
-      }
-    });
-  
-    Promise.all(promises)
-      .then(values => {
-        const result = {data: {}};
-        values.forEach(value => {
-          Object.assign(result.data, value);
-        });
-  
-        return res.status(200).send(result);
-      })
-      .catch(e => {
-        console.error(e);
-        return res.status(500).end();
-      });
-  },
-  fns: {
-    'equipment-count': req => new Promise((resolve, reject) => {
-      if(!req.body.data.companyId) {
-        handleError(reject, 'The equipment-count request needs the companyId param');
-      }
-  
-      db.collection('equipments')
-        .where('companyId', '==', req.body.data.companyId)
-        .get()
-        .then(querySnapshot => resolve({equipmentCount: querySnapshot.size}))
-        .catch(e => handleError(reject, e));
-    }),
-    'employee-count': req => new Promise((resolve, reject) => {
-      if(!req.body.data.companyId) {
-        handleError(reject, 'The employee-count request needs the companyId param');
-      }
-  
-      const roles = {};
-      db.collection('roles')
-        .where('companyId', '==', req.body.data.companyId)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(roleDoc => roles[roleDoc.id] = roleDoc.data());
-          return resolve({
-            employeeCount: removeDuplicateFromArray(Object.keys(roles).map((roleKey) => roles[roleKey].employeeId)).length
-          });
-        })
-        .catch(e => handleError(reject, e));
-    }),
-    'warehouse-count': req => new Promise((resolve, reject) => {
-      if(!req.body.data.companyId) {
-        handleError(reject, 'The warehouse-count request needs the companyId param');
-      }
-
-      db.collection('warehouses')
-        .where('companyId', '==', req.body.data.companyId)
-        .get()
-        .then(querySnapshot => resolve({warehouseCount: querySnapshot.size}))
-        .catch(e => handleError(reject, e));
-    }),
-    'requested-roles-count': req => new Promise((resolve, reject) => {
-      if(!req.body.data.companyId) {
-        handleError(reject, 'The requested-roles-count request needs the companyId param');
-      }
-
-      db.collection('roles')
-        .where('companyId', '==', req.body.data.companyId)
-        .where('status', '==', 'DRAFT')
-        .get()
-        .then(querySnapshot => resolve({requestedRolesCount: querySnapshot.size}))
-        .catch(e => handleError(reject, e));
-    }),
-    'chat-count': req => new Promise((resolve, reject) => {
-      if(!req.body.data.userId) {
-        handleError(reject, 'The chat-count request needs the userId param');
-      }
-
-      db.collection('chats')
-        .where('users', 'array-contains', req.body.data.userId)
-        .get()
-        .then(querySnapshot =>  {
-          let conversationIds = {};
-          querySnapshot.forEach(chatDoc => conversationIds[chatDoc.data().conversationId] = 1);
-          return resolve({chatCount: Object.keys(conversationIds).length});
-        })
-        .catch(e => handleError(reject, e));
-    })
-  }
-};
-
-computeStatApp.post('*', computeStat.app);
 
 const searchApp = express();
 searchApp.use(cors({origin: true}));
@@ -263,6 +154,5 @@ removeDuplicateFromArray = array => {
 }
 
 module.exports = {
-  computeStat: computeStat.api,
   search: search.api
 };

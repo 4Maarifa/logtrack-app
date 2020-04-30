@@ -34,6 +34,18 @@ const ErrorService = {
                 case 'auth/passwords-not-match':
                     errorMessage = 'The two passwords don\'ont match';
                     break;
+                case 'auth/expired-action-code':
+                    errorMessage = 'Your reset code has expired';
+                    break;
+                case 'auth/invalid-action-code':
+                    errorMessage = 'Your reset code is invalid';
+                    break;
+                case 'auth/weak-password':
+                    errorMessage = 'Your password is not strong enough';
+                    break;
+                case 'auth/wrong-password':
+                    errorMessage = 'Wrong password';
+                    break;
                 case 'form/missing-fields':
                     errorMessage = 'Please enter details in fields : ' + error.details.join(', ');
                     break;

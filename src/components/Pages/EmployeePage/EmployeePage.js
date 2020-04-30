@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { faAward, faClipboardUser, faPortrait } from '@fortawesome/pro-solid-svg-icons';
 
-import DataService from '../../../services/data.service';
-import DateService from '../../../services/date.service';
-import UtilsService from '../../../services/utils.service';
-import ErrorService from '../../../services/error.service';
-import EmployeeService from '../../../services/entities/employee.service';
-import RoleService from '../../../services/entities/role.service';
-import CompanyService from '../../../services/entities/company.service';
+import DataService from './../../../services/data.service';
+import DateService from './../../../services/date.service';
+import UtilsService from './../../../services/utils.service';
+import ErrorService from './../../../services/error.service';
+import EmployeeService from './../../../services/entities/employee.service';
+import RoleService from './../../../services/entities/role.service';
+import CompanyService from './../../../services/entities/company.service';
 
-import Loader from '../../Utils/Loader/Loader';
-import Icon from '../../Utils/Icon/Icon';
-import PageLink, { PageLinkType } from '../../Utils/PageLink/PageLink';
-import ExTable from '../../Utils/ExTable/ExTable';
+import Loader from './../../Utils/Loader/Loader';
+import Icon from './../../Utils/Icon/Icon';
+import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
+import ExTable from './../../Utils/ExTable/ExTable';
 
-import Employee from '../../Entities/Employee/Employee';
+import Employee from './../../Entities/Employee/Employee';
 
-import { ERoleStatus, RoleDetails } from '../../../classes/Role';
+import { ERoleStatus, RoleDetails } from './../../../classes/Role';
 
 import './EmployeePage.scss';
 

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
-import ErrorService from '../../../services/error.service';
-import CompanyService from '../../../services/entities/company.service';
+import ErrorService from './../../../services/error.service';
+import CompanyService from './../../../services/entities/company.service';
 
 import Loader from './../../Utils/Loader/Loader';
 
-import JobOffer from '../../Entities/JobOffer/JobOffer';
+import JobOffer from './../../Entities/JobOffer/JobOffer';
+import Company from './../../Entities/Company/Company';
 
 import './JobOfferPage.scss';
-import Company from '../../Entities/Company/Company';
 
 /**
  * Component: JobOfferPage

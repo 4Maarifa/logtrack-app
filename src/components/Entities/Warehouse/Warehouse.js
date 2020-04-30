@@ -3,11 +3,11 @@ import { faWarehouseAlt, faWarehouse, faEdit, faEye } from '@fortawesome/pro-sol
 
 import Icon from './../../Utils/Icon/Icon';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
-import ActionList from '../../Utils/ActionList/ActionList';
+import ActionList from './../../Utils/ActionList/ActionList';
 
 import DataService from './../../../services/data.service';
 
-import { ERole } from '../../../classes/Role';
+import { ERole } from './../../../classes/Role';
 
 import { v4 as uuid } from 'uuid';
 

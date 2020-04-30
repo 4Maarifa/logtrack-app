@@ -12,6 +12,8 @@ const UtilsService = {
         return el;
     },
 
+    getUrlGetParam: paramKey => new URLSearchParams(window.location.search).get(paramKey),
+
     // STRINGS
     capitalize: str => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase(),
 

@@ -53,9 +53,11 @@ import Splash from './components/App/Splash/Splash';
 import Navigation from './components/App/Navigation/Navigation';
 import MenuBar from './components/App/MenuBar/MenuBar';
 
-import SignIn from './components/Forms/SignIn/SignIn';
-import SignUp from './components/Forms/SignUp/SignUp';
-import SignOut from './components/Forms/SignOut/SignOut';
+import SignIn from './components/Auth/SignIn/SignIn';
+import SignUp from './components/Auth/SignUp/SignUp';
+import SignOut from './components/Auth/SignOut/SignOut';
+import ForgottenPassword from './components/Auth/ForgottenPassword/ForgottenPassword';
+import AuthHandler from './components/Auth/AuthHandler/AuthHandler';
 
 import Profile from './components/App/Profile/Profile';
 
@@ -95,9 +97,6 @@ import LogTrackAdd from './components/Forms/LogTrackAdd/LogTrackAdd';
 import Analytics from './components/App/Analytics/Analytics';
 
 import Search from './components/App/Search/Search';
-
-import Chat from './components/App/Chat/Chat';
-import ChatCreate from './components/App/ChatCreate/ChatCreate';
 
 // SERVICES
 import FirebaseService from './services/firebase.service';
@@ -201,6 +200,8 @@ const renderApp = () => {
                     <Route exact path="/signin" component={SignIn} />
                     <Route exact path="/signup" component={SignUp} />
                     <PrivateRoute exact path="/signout" component={SignOut} />
+                    <Route exact path="/forgotten" component={ForgottenPassword} />
+                    <Route exact path="/auth-handler" component={AuthHandler} />
                     
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/employees" component={Employees} />
                     <PrivateRoute exact path="/employee/:employeeid" component={EmployeePage} />
@@ -248,10 +249,6 @@ const renderApp = () => {
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/analytics" component={Analytics} />
 
                     <PrivateRoute exact path="/search" component={Search} />
-
-                    <PrivateRoute exact path="/chat" component={Chat} />
-                    <PrivateRoute exact path="/chat/:chatid" component={Chat} />
-                    <PrivateRoute exact path="/chat-create/:userid" component={ChatCreate} />
                 </div>
                 <Modal />
             </div>

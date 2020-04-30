@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import { faUser, faEnvelope, faKey, faImage } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
@@ -11,8 +11,9 @@ import ErrorService from './../../../services/error.service';
 import DateService from './../../../services/date.service';
 import FileService from './../../../services/file.service';
 import EmployeeService from './../../../services/entities/employee.service';
+import GeoService from './../../../services/geo.service';
 
-import Employee from './../../../classes/Employee';
+import Employee, { AccountActivity, EAccountActivityType } from './../../../classes/Employee';
 
 import './SignUp.scss';
 
@@ -38,17 +39,22 @@ const SignUp = () => {
   }, []); 
 
   const finishConfiguration = () => {
-    EmployeeService.create(newUser.uid, new Employee(firstname, lastname, email, [], null, null, null, DateService.getCurrentIsoDateString(), []))
+    EmployeeService.create(newUser.uid, new Employee(firstname, lastname, email, [], null, null, null, DateService.getCurrentIsoDateString()))
       .then(() => {
         uploadProfilePhoto()
-          .then(employeeProperties => {
-            if(employeeProperties) {
-              EmployeeService.updateField(newUser.uid, employeeProperties)
-                .then(() => setFinishConfig(true))
+          .then(profilePicutreUrl => {
+            if(profilePicutreUrl) {
+              Promise.all([
+                EmployeeService.updateField(newUser.uid, { profilePicutreUrl }),
+                FirebaseService.getCurrentUser().updateProfile({ profilePicutreUrl, displayName: `${firstname} ${lastname}` })
+              ]).then(() => setFinishConfig(true))
                 .catch(ErrorService.manageError);
             }
             else {
-              setFinishConfig(true);
+              FirebaseService.getCurrentUser().updateProfile({
+                displayName: `${firstname} ${lastname}`
+              }).then(() => setFinishConfig(true))
+                .catch(ErrorService.manageError);
             }
           })
           .catch(ErrorService.manageError);
@@ -75,20 +81,39 @@ const SignUp = () => {
         FileService.uploadProfilePhoto(profilePicture.file)
           .then(() => {
             FileService.getDownloadURLForProfilePicture()
-              .then(profilePictureUrl => resolve({profilePictureUrl}))
+              .then(resolve)
               .catch(reject);
           })
           .catch(reject);
 
       }
       else {
-        resolve();
+        resolve(null);
       }
     });
   };
 
   if(newUser && !isFinishedConfig) {
-    finishConfiguration();
+    GeoService.getApproximateLocation()
+        .then(location => {
+          EmployeeService.accountActivity.create(
+            new AccountActivity(
+              email,
+              DateService.getCurrentIsoDateString(),
+              {
+                country: location.country_name,
+                city: location.city,
+                latitude: parseFloat(location.latitude),
+                longitude: parseFloat(location.longitude),
+                ip: location.IPv4,
+                success: true,
+              },
+              EAccountActivityType.SIGNUP)
+          )
+            .then(() => finishConfiguration())
+            .catch(ErrorService.manageError);
+        })
+        .catch(ErrorService.manageError)
   }
 
   if(isFinishedConfig) {
@@ -220,8 +245,9 @@ const SignUp = () => {
           }
           accept="image/*" />
 
-        <input type="submit" />
+        <input type="submit" value="Sign Up" />
       </form>
+      <NavLink className="signup-link" to={`/signin`}>Already have an account?</NavLink>
     </div>
   );
 };

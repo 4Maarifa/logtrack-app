@@ -5,7 +5,7 @@ import { faSteeringWheel, faUserTie, faEye, faWrench, faHands, faCalculator, faU
  * 
  * employeeId: string | The employeeId of the employee authorized
  * companyId: string | The concerned company
- * status: ERoleStatus | The status of the role : 'DRAFT'|'CONFIRMED'|'REVOKED'
+ * status: ERoleStatus | The status of the role : 'DRAFT'|'CONFIRMED'|'REVOKED'|'DENIED'
  * role: The role as Enum: 'MANAGER'|'DRIVER'|'OBSERVER'|'MECHANIC'
  * creationIsoDate: The creation date, as iso string
  * revokedIsoDate: The revoked date, as iso string
@@ -79,7 +79,8 @@ export const RoleDetails = {
 export const ERoleStatus = Object.freeze({
     CONFIRMED: 'CONFIRMED',
     DRAFT: 'DRAFT',
-    REVOKED: 'REVOKED'
+    REVOKED: 'REVOKED',
+    DENIED: 'DENIED'
 });
 
 export default Role;

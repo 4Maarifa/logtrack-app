@@ -182,6 +182,7 @@ const RoleOffer = ({ match }) => {
                 Some roles are already owned or requested by the user.
               </span> : null}
               <Choose
+                selection={roleType}
                 items={roleDetails}
                 multiple={false} 
                 fieldName="roleType"

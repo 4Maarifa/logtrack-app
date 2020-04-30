@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faUser, faCommentDots, faUserCog, faUserPlus, faUserTag, faPortrait } from '@fortawesome/pro-solid-svg-icons';
+import { faUser, faUserCog, faUserPlus, faUserTag, faPortrait } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
@@ -40,7 +40,6 @@ const Employee = ({ employee, isPage }) => {
     actions.push({ title: 'Request a role', icon: <Icon source="fa" icon={faUserTag} />, link: '/role-add' });
   }
   else {
-    actions.push({ title: 'Chat', icon: <Icon source="fa" icon={faCommentDots} />, link: `/chat-create/${employeeKey}` });
     if (computed.activeRole.role === ERole.MANAGER) {
       actions.push({ title: 'Offer a role', icon: <Icon source="fa" icon={faUserPlus} />, link: `/role-offer/${employeeKey}` });
     }

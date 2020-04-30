@@ -8,7 +8,6 @@ import Icon from './../../Utils/Icon/Icon';
 
 import DataService from './../../../services/data.service';
 import ErrorService from './../../../services/error.service';
-import BrandService from './../../../services/entities/brand.service';
 import EquipmentModelService from './../../../services/entities/equipmentModel.service';
 import EquipmentService from './../../../services/entities/equipment.service';
 
@@ -23,17 +22,12 @@ const Equipments = () => {
   const [equipments, setEquipments] = useState({});
   const [isEquipmentsLoading, setEquipmentsLoading] = useState(true);
   const [equipmentModels, setEquipmentModels] = useState({});
-  const [brands, setBrands] = useState({});
 
   const observerKey = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
   const computeEquipments = () => {
-    BrandService.list()
-      .then(setBrands)
-      .catch(ErrorService.manageError);
-
     EquipmentModelService.list()
       .then(setEquipmentModels)
       .catch(ErrorService.manageError);
@@ -61,15 +55,11 @@ const Equipments = () => {
    * RENDER
    */
   const renderEquipment = (itemKey, itemData) => {
-    const equipmentModel = { [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] },
-      brand = { [equipmentModel[itemData.equipmentModelId].brand]: brands[equipmentModel[itemData.equipmentModelId].brand] };
+    const equipmentModel = { [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] };
 
     return <Equipment key={itemKey}
       equipment={ {[itemKey]: itemData} }
-      brand={brand}
-      equipmentModel={equipmentModel}
-      options={ {} }
-      showDetails />
+      equipmentModel={equipmentModel} />
   };
 
   return (

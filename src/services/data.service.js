@@ -72,17 +72,6 @@ const DataService = {
         });
     },
     computed: {
-        conputeStat: (statArray, options) => {
-            if(!Array.isArray(statArray)) {
-                ErrorService.error('The stats passed are not in an array');
-                return;
-            }
-            return new Promise((resolve, reject) => {
-                FirebaseService.getFirebaseObject().functions().httpsCallable('computeStat')({types: statArray, ...options})
-                    .then(result => resolve(result.data))
-                    .catch(e => ErrorService.manageErrorThenReject(e, reject));
-            });
-        },
         search: (searchTypeArray, term, companyId) => {
             if(!Array.isArray(searchTypeArray)) {
                 ErrorService.error('The search types passed are not in an array');
