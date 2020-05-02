@@ -4,7 +4,7 @@ import DataService from './../../../services/data.service';
 import RoleService from './../../../services/entities/role.service';
 import DateService from './../../../services/date.service';
 
-import { RoleDetails } from './../../../classes/Role';
+import { ERoleDetails } from './../../../classes/Role';
 
 import Icon from './../../Utils/Icon/Icon';
 
@@ -41,8 +41,8 @@ const Role = ({ role }) => {
      data-id={roleKey}>
 
       <span>
-        <Icon source="fa" icon={RoleDetails[role[roleKey].role].icon} />
-        {RoleDetails[role[roleKey].role].name}
+        <Icon source="fa" icon={ERoleDetails[role[roleKey].role].icon} />
+        {ERoleDetails[role[roleKey].role].name}
         {computed.employee && computed.employee.activeRoleId === roleKey && <span className="badge">active</span> }
       </span>
       {actions}

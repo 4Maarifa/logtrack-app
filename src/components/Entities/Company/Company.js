@@ -8,6 +8,7 @@ import ActionList from './../../Utils/ActionList/ActionList';
 import { ERole } from './../../../classes/Role';
 
 import DataService from './../../../services/data.service';
+import UtilsService from './../../../services/utils.service';
 
 import { v4 as uuid } from 'uuid';
 
@@ -61,6 +62,21 @@ const Company = ({ company, isPage }) => {
       </div>
     </div>
   );
+};
+
+export const companiesExTableFSS = {
+  sort: {
+    name: {
+      title: 'Name',
+      apply: (keys, items, sortDirection) => keys.sort((key1, key2) => (
+        (sortDirection === 'ASC' ? 1 : -1) * UtilsService.compareFn(items[key1].name, items[key2].name)
+      )),
+      default: true
+    }
+  },
+  search: (_, itemData, searchTerm) => (
+    itemData.name.toLowerCase().includes(searchTerm.toLowerCase())
+  )
 };
 
 export default Company;

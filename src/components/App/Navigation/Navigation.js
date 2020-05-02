@@ -12,7 +12,7 @@ import RightService from './../../../services/right.service';
 import SettingsService, { ESettings } from './../../../services/settings.service';
 import { ERights } from './../../../services/right.service';
 
-import { RoleDetails } from './../../../classes/Role';
+import { ERoleDetails } from './../../../classes/Role';
 
 import { v4 as uuid } from 'uuid';
 
@@ -51,7 +51,7 @@ const Navigation = () => {
       </NavLink>);
     }
     return (<NavLink activeClassName="nav--active" to={`/roles`} exact>
-      <Icon source="fa" icon={RoleDetails[computed.activeRole.role].icon} />
+      <Icon source="fa" icon={ERoleDetails[computed.activeRole.role].icon} />
       <span className="nav-title nav-title-role">
         {UtilsService.capitalize(computed.activeRole.role)}<br/>
         {computed.activeRoleCompany.name}

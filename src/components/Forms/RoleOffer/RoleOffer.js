@@ -15,7 +15,7 @@ import EmployeeService from './../../../services/entities/employee.service';
 import RoleService from './../../../services/entities/role.service';
 
 import Role, { ERole } from './../../../classes/Role';
-import { ERoleStatus, RoleDetails } from './../../../classes/Role';
+import { ERoleStatus, ERoleDetails } from './../../../classes/Role';
 
 import { v4 as uuid } from 'uuid';
 
@@ -131,11 +131,16 @@ const RoleOffer = ({ match }) => {
    * RENDER
    */
   const roleDetails = {};
-  Object.keys(RoleDetails).forEach(roleKey => {
+  Object.keys(ERoleDetails).forEach(roleKey => {
     roleDetails[roleKey] = {
       content: <Fragment>
-        <Icon source="fa" icon={RoleDetails[roleKey].icon} />
-        {RoleDetails[roleKey].name}
+        <span>
+          <Icon source="fa" icon={ERoleDetails[roleKey].icon} />
+          {ERoleDetails[roleKey].name}
+        </span>
+        <span className="sub">
+          {ERoleDetails[roleKey].description}
+        </span>
       </Fragment>,
       disabled: currentRoles.includes(roleKey)
     }
@@ -186,7 +191,8 @@ const RoleOffer = ({ match }) => {
                 items={roleDetails}
                 multiple={false} 
                 fieldName="roleType"
-                onSelectionChange={setRoleType} />
+                onSelectionChange={setRoleType}
+                isVertical />
             </Fragment>
           }
           {selectedUserId && isCurrentRolesLoading &&

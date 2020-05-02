@@ -21,7 +21,9 @@ import EmployeeService from './../../../services/entities/employee.service';
 import SupportService from './../../../services/entities/support.service';
 import SettingsService, { ESettings, ESettingsDetails } from './../../../services/settings.service';
 
-import { AccountActivity, EAccountActivityType, EAccountActivityTypeDetails, printAccountActivityDetails } from './../../../classes/Employee';
+import { AccountActivity, EAccountActivityType } from './../../../classes/Employee';
+
+import { EmployeeAccountActivity, employeeAccountActivityExTableFSS } from './../../Entities/Employee/Employee';
 
 import { v4 as uuid } from 'uuid';
 
@@ -159,22 +161,6 @@ const Profile = () => {
   /**
    * RENDER
    */
-  const renderAccountActivity = (_, itemData) => (
-    <div className="Equipment Element-content Element-content-small">
-      <div className="Element-base">
-        <Icon containerclassname="Element-icon" source="fa" icon={EAccountActivityTypeDetails[itemData.type].icon} />
-        <div className="Element-data">
-          <span className="Element-title">
-            {EAccountActivityTypeDetails[itemData.type].title}
-          </span>
-          <span className="sub">
-            {printAccountActivityDetails(itemData)}
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-
   return (
     <div className="Profile">
       {computed.employee && computed.user &&
@@ -348,11 +334,13 @@ const Profile = () => {
                 </h2>
                 <div className="personal-info-container">
                   <ExTable key="accountActivities" 
-                    items={accountActivities}
-                    renderItem={renderAccountActivity}
-                    loading={isAccountActivitiesLoading}
-                    isNoFrame
-                    isSmallItems />
+                          items={accountActivities}
+                          fss={employeeAccountActivityExTableFSS}
+                          renderItem={(_, activity) => <EmployeeAccountActivity activity={activity} />}
+                          loading={isAccountActivitiesLoading}
+                          header={<span><Icon source="fa" icon={faSignIn} /> Account Activity</span>}
+                          isNoFrame
+                          isSmallItems />
                 </div>
               </div>;
             }

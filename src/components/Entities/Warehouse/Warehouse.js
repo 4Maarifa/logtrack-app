@@ -6,6 +6,7 @@ import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import ActionList from './../../Utils/ActionList/ActionList';
 
 import DataService from './../../../services/data.service';
+import UtilsService from './../../../services/utils.service';
 
 import { ERole } from './../../../classes/Role';
 
@@ -55,6 +56,27 @@ const Warehouse = ({ warehouse, isPage }) => {
       </div>
     </div>
   );
+};
+
+export const warehousesExTableFSS = {
+  sort: {
+    name: {
+      title: 'Name',
+      apply: (keys, items, sortDirection) => keys.sort((key1, key2) => (
+        (sortDirection === 'ASC' ? 1 : -1) * UtilsService.compareFn(items[key1].name, items[key2].name)
+      )),
+      default: true
+    },
+    loadingDocks: {
+      title: 'Nb Loading Docks',
+      apply: (keys, items, sortDirection) => keys.sort((key1, key2) => (
+        (sortDirection === 'ASC' ? 1 : -1) * UtilsService.compareFn(items[key1].nbLoadingDocks, items[key2].nbLoadingDocks)
+      ))
+    }
+  },
+  search: (_, itemData, searchTerm) => (
+    itemData.name.toLowerCase().includes(searchTerm.toLowerCase())
+  )
 };
 
 export default Warehouse;

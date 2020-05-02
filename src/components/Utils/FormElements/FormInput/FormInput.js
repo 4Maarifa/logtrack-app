@@ -16,6 +16,7 @@ const FormInput = ({ value,
                     inputRequired,
                     inputPattern,
                     inputDisabled,
+                    noValidation,
                     label,
                     instructions,
                     onValueChange }) => {
@@ -35,7 +36,7 @@ const FormInput = ({ value,
 
       <input
         id={inputId}
-        className={'input ' + (!value ? 'input--empty' : '')}
+        className={'input ' + (!value ? 'input--empty ' : '') + (noValidation ? 'input--novalidation ' : '')}
         type={inputType || "text"}
         value={value}
         name={inputName}

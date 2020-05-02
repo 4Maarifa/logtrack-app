@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { faPlus, faUserTag, faBuilding, faUserPlus } from '@fortawesome/pro-solid-svg-icons';
+import { faPlus, faUserTag, faBuilding, faUserPlus, faTag } from '@fortawesome/pro-solid-svg-icons';
 
 import ActionButton from './../../Utils/ActionButton/ActionButton';
 import ExTable from './../../Utils/ExTable/ExTable';
@@ -13,8 +13,8 @@ import RoleService from './../../../services/entities/role.service';
 import CompanyService from './../../../services/entities/company.service';
 import EmployeeService from './../../../services/entities/employee.service';
 
-import RoleCompany from './../../Entities/RoleCompany/RoleCompany';
-import RoleEmployee from './../../Entities/RoleEmployee/RoleEmployee';
+import RoleCompany, { roleCompanyExTableFSS } from './../../Entities/RoleCompany/RoleCompany';
+import RoleEmployee, { roleEmployeeExTableFSS } from './../../Entities/RoleEmployee/RoleEmployee';
 
 import { ERole, ERoleStatus } from './../../../classes/Role';
 
@@ -190,25 +190,45 @@ const Roles = () => {
       }
 
       <h1>Your Roles</h1>
-      <ExTable items={userRolesCompanies} renderItem={renderUserRole} isNoFrame />
+      <ExTable items={userRolesCompanies}
+                renderItem={renderUserRole}
+                fss={roleCompanyExTableFSS}
+                header={<span><Icon source="fa" icon={faTag} /> Your Roles</span>}
+                isNoFrame />
 
       {computed.activeRole && computed.activeRole.role === ERole.MANAGER &&
         <Fragment>
           <h1>
-            Requests to join <PageLink noPhoto type={PageLinkType.COMPANY} entityId={computed.employee.activeRoleId} entityData={computed.activeRoleCompany} />
+            Requests to join <PageLink noPhoto type={PageLinkType.COMPANY} entityId={computed.activeRole.companyId} entityData={computed.activeRoleCompany} />
           </h1>
-          <ExTable items={requestedRoles} renderItem={renderRequestedRole} isNoFrame />
+          <ExTable items={requestedRoles}
+                    renderItem={renderRequestedRole}
+                    fss={roleEmployeeExTableFSS}
+                    header={<span><Icon source="fa" icon={faTag} /> Requests to join</span>}
+                    isNoFrame />
         </Fragment>
       }
 
       <h1>Pending Requests</h1>
-      <ExTable items={userDraftRolesCompanies} renderItem={renderDraftUserRole} isNoFrame />
+      <ExTable items={userDraftRolesCompanies}
+                renderItem={renderDraftUserRole}
+                fss={roleCompanyExTableFSS}
+                header={<span><Icon source="fa" icon={faTag} /> Pending Requests</span>}
+                isNoFrame />
 
       <h1>Revoked Roles</h1>
-      <ExTable items={userRevokedRolesCompanies} renderItem={renderRevokedUserRole} isNoFrame />
+      <ExTable items={userRevokedRolesCompanies}
+                renderItem={renderRevokedUserRole}
+                fss={roleCompanyExTableFSS}
+                header={<span><Icon source="fa" icon={faTag} /> Revoked Roles</span>}
+                isNoFrame />
 
       <h1>Denied Roles</h1>
-      <ExTable items={userDeniedRolesCompanies} renderItem={renderDeniedUserRole} isNoFrame />
+      <ExTable items={userDeniedRolesCompanies}
+                renderItem={renderDeniedUserRole}
+                fss={roleCompanyExTableFSS}
+                header={<span><Icon source="fa" icon={faTag} /> Denied Roles</span>}
+                isNoFrame />
 
       <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={computeActions()} />
     </div>

@@ -9,7 +9,7 @@ import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import FormDebounceAutoSuggestInput from './../../Utils/FormElements/FormDebounceAutoSuggestInput/FormDebounceAutoSuggestInput';
 
 import Contract from './../../../classes/Contract';
-import { EContractStatus, ContractTypeDetails } from './../../../classes/Contract';
+import { EContractStatus, EContractTypeDetails } from './../../../classes/Contract';
 
 import DataService from './../../../services/data.service';
 import DateService from './../../../services/date.service';
@@ -137,13 +137,13 @@ const ContractAdd = ({ match }) => {
    */
 
   let contractDetails = {};
-  Object.keys(ContractTypeDetails).forEach(contractTypeKey => {
+  Object.keys(EContractTypeDetails).forEach(contractTypeKey => {
     contractDetails[contractTypeKey] = {
-      content: <span title={ContractTypeDetails[contractTypeKey].disabled ? 'Not available in your plan' : 'Choose this type'}>
-        {ContractTypeDetails[contractTypeKey].icon}
-        {ContractTypeDetails[contractTypeKey].name}
+      content: <span title={EContractTypeDetails[contractTypeKey].disabled ? 'Not available in your plan' : 'Choose this type'}>
+        {EContractTypeDetails[contractTypeKey].icon}
+        {EContractTypeDetails[contractTypeKey].name}
       </span>,
-      disabled: ContractTypeDetails[contractTypeKey].disabled
+      disabled: EContractTypeDetails[contractTypeKey].disabled
     }
   });
 

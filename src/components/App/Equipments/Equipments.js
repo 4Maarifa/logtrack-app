@@ -11,7 +11,7 @@ import ErrorService from './../../../services/error.service';
 import EquipmentModelService from './../../../services/entities/equipmentModel.service';
 import EquipmentService from './../../../services/entities/equipment.service';
 
-import Equipment from './../../Entities/Equipment/Equipment';
+import Equipment, { equipmentsExTableFSS } from './../../Entities/Equipment/Equipment';
 
 import { v4 as uuid } from 'uuid';
 
@@ -65,10 +65,11 @@ const Equipments = () => {
   return (
     <div className="Equipments">
       <Map />
-      <ExTable key="equipments" 
+      <ExTable key="equipments"
+                fss={equipmentsExTableFSS}
                 items={equipments}
                 renderItem={renderEquipment}
-                header={['Identification', 'Model']}
+                header={<span><Icon source="fa" icon={faTruck} /> Equipments</span>}
                 loading={isEquipmentsLoading} />
       <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[
         {title: 'Add an equipment', icon: <Icon source="fa" icon={faTruck} />, link: `/equipment-add`}
