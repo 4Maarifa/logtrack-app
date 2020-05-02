@@ -4,12 +4,13 @@ import { faClipboardUser, faEye, faEdit, faCheck } from '@fortawesome/pro-solid-
 import DateService from './../../../services/date.service';
 import DataService from './../../../services/data.service';
 import CompanyService from './../../../services/entities/company.service';
+import UtilsService from './../../../services/utils.service';
 
 import ActionList from './../../Utils/ActionList/ActionList';
 import Icon from './../../Utils/Icon/Icon';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 
-import { ERole, RoleDetails } from './../../../classes/Role';
+import { ERole, ERoleDetails } from './../../../classes/Role';
 import { EJobOfferStatus } from './../../../classes/Company';
 
 import { v4 as uuid } from 'uuid';
@@ -53,8 +54,8 @@ const JobOffer = ({ jobOffer, isPage }) => {
       <div className="Element-base">
         <Icon source="fa" containerclassname="Element-icon" icon={faClipboardUser} />
         <span className={'Element-badge badge ' + (isPage ? 'badge-inverse' : '')}>
-          <Icon source="fa" icon={RoleDetails[jobOffer[jobOfferKey].role].icon} />
-          {RoleDetails[jobOffer[jobOfferKey].role].name}
+          <Icon source="fa" icon={ERoleDetails[jobOffer[jobOfferKey].role].icon} />
+          {ERoleDetails[jobOffer[jobOfferKey].role].name}
         </span>
         <div className="Element-data">
           <span className="Element-title">
@@ -69,5 +70,43 @@ const JobOffer = ({ jobOffer, isPage }) => {
     </div>
   );
 };
+
+const jobsExTableFSS = {
+  sort: {
+    date: {
+      title: 'Date',
+      apply: (keys, items, sortDirection) => keys.sort((key1, key2) => (
+        (sortDirection === 'ASC' ? 1 : -1) * UtilsService.compareFn(items[key1].creationIsoDate, items[key2].creationIsoDate)
+      )),
+      default: true
+    },
+    title: {
+      title: 'Title',
+      apply: (keys, items, sortDirection) => keys.sort((key1, key2) => (
+        (sortDirection === 'ASC' ? 1 : -1) * UtilsService.compareFn(items[key1].title, items[key2].title)
+      ))
+    },
+    role: {
+      title: 'Role',
+      apply: (keys, items, sortDirection) => keys.sort((key1, key2) => (
+        (sortDirection === 'ASC' ? 1 : -1) * UtilsService.compareFn(items[key1].role, items[key2].role)
+      ))
+    }
+  },
+  search: (_, itemData, searchTerm) => (
+    itemData.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    itemData.role.toLowerCase().includes(searchTerm.toLowerCase())
+  ),
+  filter: {}
+};
+
+Object.keys(ERoleDetails).forEach(roleKey => {
+  jobsExTableFSS.filter[roleKey] = {
+    title: 'Role - ' + ERoleDetails[roleKey].name,
+    apply: (_, itemData) => itemData.role === roleKey
+  }
+});
+
+export { jobsExTableFSS };
 
 export default JobOffer;

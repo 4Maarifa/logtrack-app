@@ -15,11 +15,11 @@ import UtilsService from './../../../services/utils.service';
 
 import ESearchType from './../../../classes/enums/ESearchType';
 
-import Warehouse from './../../Entities/Warehouse/Warehouse';
-import Equipment from './../../Entities/Equipment/Equipment';
-import Contract from './../../Entities/Contract/Contract';
-import Company from './../../Entities/Company/Company';
-import Employee from './../../Entities/Employee/Employee';
+import Warehouse, { warehousesExTableFSS } from './../../Entities/Warehouse/Warehouse';
+import Equipment, { equipmentsExTableFSS } from './../../Entities/Equipment/Equipment';
+import Contract, { contractsExTableFSS } from './../../Entities/Contract/Contract';
+import Company, { companiesExTableFSS } from './../../Entities/Company/Company';
+import Employee, { employeesExTableFSS } from './../../Entities/Employee/Employee';
 
 import { v4 as uuid } from 'uuid';
 
@@ -150,10 +150,11 @@ const Search = () => {
             Employees / Users
             <span className="badge badge-inverse">{Object.keys(employees).length}</span>
           </span>,
-          content: () => <ExTable key="employees" 
+          content: () => <ExTable key="employees"
+                                  fss={employeesExTableFSS}
                                   items={employees}
                                   renderItem={renderEmployee}
-                                  header={['Name', 'Roles']}
+                                  header={<span><Icon source="fa" icon={faUsers} /> Employees</span>}
                                   loading={isSearchLoading} />
         },
         companies: {
@@ -163,9 +164,10 @@ const Search = () => {
             <span className="badge badge-inverse">{Object.keys(companies).length}</span>
           </span>,
           content: () => <ExTable key="companies"
+                                  fss={companiesExTableFSS}
                                   items={companies}
                                   renderItem={renderCompany}
-                                  header={['Name', '']}
+                                  header={<span><Icon source="fa" icon={faBuilding} /> Companies</span>}
                                   loading={isSearchLoading} />
         },
         equipments: {
@@ -175,9 +177,10 @@ const Search = () => {
             <span className="badge badge-inverse">{Object.keys(equipments).length}</span>
           </span>,
           content: () => <ExTable key="equipments"
+                                  fss={equipmentsExTableFSS}
                                   items={equipments}
                                   renderItem={renderEquipment}
-                                  header={['Identification', 'Model']}
+                                  header={<span><Icon source="fa" icon={faTruck} /> Equipments</span>}
                                   loading={isSearchLoading} />
         },
         contracts: {
@@ -187,21 +190,23 @@ const Search = () => {
             <span className="badge badge-inverse">{Object.keys(contracts).length}</span>
           </span>,
           content: () => <ExTable key="contracts"
+                                  fss={contractsExTableFSS}
                                   items={contracts}
                                   renderItem={renderContract}
-                                  header={['Type', 'Company']}
+                                  header={<span><Icon source="fa" icon={faHandshakeAlt} /> Contracts</span>}
                                   loading={isSearchLoading} />
         },
         warehouses: {
           name: () => <span>
             <Icon source="fa" icon={faWarehouseAlt} />
             Warehouses
-            <span className="badgebadge-inverse">{Object.keys(warehouses).length}</span>
+            <span className="badge badge-inverse">{Object.keys(warehouses).length}</span>
           </span>,
           content: () => <ExTable key="warehouses"
+                                  fss={warehousesExTableFSS}
                                   items={warehouses}
                                   renderItem={renderWarehouse}
-                                  header={['Name', '']}
+                                  header="Warehouses"
                                   loading={isSearchLoading} />
         }
       }} />

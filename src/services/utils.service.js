@@ -47,6 +47,11 @@ const UtilsService = {
         }       
         return true;
     },
+    compareFn: (val1, val2) => {
+        if(val1 > val2) { return 1; }
+        if(val1 < val2) { return -1; }
+        return 0;
+    },
 
     // HOOKS
     usePrevious: value => {

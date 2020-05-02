@@ -1,4 +1,4 @@
-import { faSteeringWheel, faUserTie, faEye, faWrench, faHands, faCalculator, faUserHardHat, faPeopleArrows } from '@fortawesome/pro-solid-svg-icons';
+import { faSteeringWheel, faUserTie, faEye, faWrench, faHands, faCalculator, faUserHardHat, faPeopleArrows, faRandom } from '@fortawesome/pro-solid-svg-icons';
 
 /**
  * A role is authorization for an employee to access a company's data depending of its role
@@ -30,14 +30,15 @@ export const ERole = Object.freeze({
     OPERATOR: 'OPERATOR',
     INSURER: 'INSURER',
     ACCOUNTANT: 'ACCOUNTANT',
-    RECRUITER: 'RECRUITER'
+    RECRUITER: 'RECRUITER',
+    DISPATCHER: 'DISPATCHER'
 });
 
-export const RoleDetails = {
+export const ERoleDetails = {
     [ERole.DRIVER]: {
         name: 'Driver',
         icon: faSteeringWheel,
-        description: 'An employee that takes good from point A to point B'
+        description: 'An employee that takes goods from point A to point B'
     },
     [ERole.MANAGER]: {
         name: 'Manager',
@@ -47,32 +48,37 @@ export const RoleDetails = {
     [ERole.OBSERVER]: {
         name: 'Observer',
         icon: faEye,
-        description: 'A trustful role who can see everything but cannot modify anything. Useful for external monitoring companies'
+        description: 'A trustful role who can see everything but cannot modify anything'
     },
     [ERole.MECHANIC]: {
         name: 'Mechanic',
         icon: faWrench,
-        description: 'Can do maintenance over company\'s equipments'
+        description: 'Can do maintenance over all company\'s equipments'
     },
     [ERole.OPERATOR]: {
         name: 'Operator',
         icon: faUserHardHat,
-        description: 'A generic user who can use equipment and do various tasks'
+        description: 'A generic user who can use equipment and achieve various tasks'
     },
     [ERole.INSURER]: {
         name: 'Insurer',
         icon: faHands,
-        description: 'A specific role for your insurance company which is not on the platform. This user can see every equipment and logtrack'
+        description: 'A specific role for your insurer which is not on the platform'
     },
     [ERole.ACCOUNTANT]: {
         name: 'Accountant',
         icon: faCalculator,
-        description: 'A specific role for your accountant company which is not on the platform. This user can see every logtrack and analytics'
+        description: 'A specific role for your accountant which is not on the platform'
     },
     [ERole.RECRUITER]: {
         name: 'Recruiter',
         icon: faPeopleArrows,
-        description: 'This employee can create job offers and observe employees'
+        description: 'This employee can create job offers'
+    },
+    [ERole.DISPATCHER]: {
+        name: 'Dispatcher',
+        icon: faRandom,
+        description: 'Dispatch tasks to operators, drivers and mechanics'
     }
 };
 

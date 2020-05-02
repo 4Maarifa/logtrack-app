@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { faClipboardUser, faPlus, faCheck } from '@fortawesome/pro-solid-svg-icons';
+import { faClipboardUser, faPlus, faCheck, faPortrait } from '@fortawesome/pro-solid-svg-icons';
 
 import DataService from './../../../services/data.service';
 import CompanyService from './../../../services/entities/company.service';
@@ -11,7 +11,7 @@ import Icon from './../../Utils/Icon/Icon';
 import ActionButton from './../../Utils/ActionButton/ActionButton';
 import Tabs from './../../Utils/Tabs/Tabs';
 
-import JobOffer from './../../Entities/JobOffer/JobOffer';
+import JobOffer, { jobsExTableFSS } from './../../Entities/JobOffer/JobOffer';
 
 import { ERole } from './../../../classes/Role';
 import { EJobOfferStatus } from './../../../classes/Company';
@@ -76,8 +76,6 @@ const JobOffers = () => {
   /**
    * RENDER
    */
-  const renderJobOffer = (itemKey, itemData) => <JobOffer key={itemKey} jobOffer={ {[itemKey]: itemData} } />;
-
   return <div className="JobOffers">
     <Tabs default="opened" tabs={{
       opened: {
@@ -85,11 +83,12 @@ const JobOffers = () => {
           <Icon source="fa" icon={faClipboardUser} />
           Opened positions
         </span>,
-        content: () => <ExTable key="opened" 
-          items={openedJobOffers}
-          renderItem={renderJobOffer}
-          header={['Title']}
-          loading={isJobOffersLoading} />
+        content: () => <ExTable key="opened"
+                                fss={jobsExTableFSS}
+                                items={openedJobOffers}
+                                renderItem={(itemKey, itemData) => <JobOffer key={itemKey} jobOffer={ {[itemKey]: itemData} } />}
+                                header={<span><Icon source="fa" icon={faPortrait} /> Opened Positions</span>}
+                                loading={isJobOffersLoading} />
       },
       closed: {
         name: () => <span>
@@ -97,10 +96,11 @@ const JobOffers = () => {
           Closed applications
         </span>,
         content: () => <ExTable key="closed" 
-          items={closedApplications}
-          renderItem={renderJobOffer}
-          header={['Title']}
-          loading={isJobOffersLoading} />
+                                fss={jobsExTableFSS}
+                                items={closedApplications}
+                                renderItem={(itemKey, itemData) => <JobOffer key={itemKey} jobOffer={ {[itemKey]: itemData} } />}
+                                header={<span><Icon source="fa" icon={faCheck} /> Closed Applications</span>}
+                                loading={isJobOffersLoading} />
       }
     }} />
     <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[

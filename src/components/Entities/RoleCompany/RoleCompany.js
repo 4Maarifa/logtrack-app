@@ -8,6 +8,7 @@ import Icon from './../../Utils/Icon/Icon';
 import Role from './../Role/Role';
 
 import DataService from './../../../services/data.service';
+import UtilsService from './../../../services/utils.service';
 
 import { ERole } from './../../../classes/Role';
 
@@ -69,6 +70,21 @@ const RoleCompany = ({ company, roles }) => {
       </div>
     </div>
   );
+};
+
+export const roleCompanyExTableFSS = {
+  sort: {
+    name: {
+      title: 'Company',
+      apply: (keys, items, sortDirection) => keys.sort((key1, key2) => (
+        (sortDirection === 'ASC' ? 1 : -1) * UtilsService.compareFn(items[key1].name, items[key2].name)
+      )),
+      default: true
+    }
+  },
+  search: (_, itemData, searchTerm) => (
+    itemData.nane.toLowerCase().includes(searchTerm.toLowerCase())
+  )
 };
 
 export default RoleCompany;

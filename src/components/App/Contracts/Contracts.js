@@ -14,7 +14,7 @@ import Tabs from './../../Utils/Tabs/Tabs';
 
 import { EContractStatus } from './../../../classes/Contract';
 
-import Contract from './../../Entities/Contract/Contract';
+import Contract, { contractsExTableFSS } from './../../Entities/Contract/Contract';
 
 import { v4 as uuid } from 'uuid';
 
@@ -103,10 +103,11 @@ const Contracts = () => {
             <Icon source="fa" icon={faCog} />
             Execution
           </span>,
-          content: () => <ExTable key="EXECUTION" 
+          content: () => <ExTable key="EXECUTION"
+                                  fss={contractsExTableFSS}
                                   items={executeContracts}
                                   renderItem={renderContract}
-                                  header={['Type', 'Company']}
+                                  header={<span><Icon source="fa" icon={faHandshakeAlt} /> Contracts to execute</span>}
                                   loading={isContractsLoading} />
         },
         order: {
@@ -115,9 +116,10 @@ const Contracts = () => {
             Orders
           </span>,
           content: () => <ExTable key="ORDER"
+                                  fss={contractsExTableFSS}
                                   items={orderContracts}
                                   renderItem={renderContract}
-                                  header={['Type', 'Company']}
+                                  header={<span><Icon source="fa" icon={faHandshakeAlt} /> Ordered contracts</span>}
                                   loading={isContractsLoading} />
         },
         market: {

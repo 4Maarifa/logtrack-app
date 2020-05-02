@@ -5,7 +5,7 @@ import Icon from './../../Utils/Icon/Icon';
 import Tabs from './../../Utils/Tabs/Tabs';
 import ExTable from './../../Utils/ExTable/ExTable';
 
-import JobOffer from './../../Entities/JobOffer/JobOffer';
+import JobOffer, { jobsExTableFSS } from './../../Entities/JobOffer/JobOffer';
 import Company from './../../Entities/Company/Company';
 
 import CompanyService from './../../../services/entities/company.service';
@@ -68,10 +68,12 @@ const Jobs = ({ match }) => {
             <Icon source="fa" icon={faSuitcase} />
             Offers
           </span>,
-          content: () => <ExTable key="jobs" 
-            items={jobOffers}
-            renderItem={renderJobOffer}
-            loading={isJobOffersLoading} />,
+          content: () => <ExTable key="jobs"
+                                  fss={jobsExTableFSS}
+                                  header={<span><Icon source="fa" icon={faSuitcase} /> Job Offers</span>}
+                                  items={jobOffers}
+                                  renderItem={renderJobOffer}
+                                  loading={isJobOffersLoading} />,
         },
         profile: {
           name: () => <span>

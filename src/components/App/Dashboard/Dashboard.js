@@ -12,7 +12,7 @@ import PermissionService from './../../../services/permission.service';
 import SettingsService, { ESettings } from './../../../services/settings.service';
 import DateService from './../../../services/date.service';
 
-import { ERole, RoleDetails } from './../../../classes/Role';
+import { ERole, ERoleDetails } from './../../../classes/Role';
 
 import LogTrack from './../LogTrack/LogTrack';
 import Map from './../../Utils/Map/Map';
@@ -93,8 +93,8 @@ const Dashboard = () => {
         {computed.activeRole && <div className="card card company-link">
           <NavLink className="change-role-link white-link" to={`/roles`}>
             <h2>
-              <Icon source="fa" icon={RoleDetails[computed.activeRole.role].icon} />
-              {RoleDetails[computed.activeRole.role].name}
+              <Icon source="fa" icon={ERoleDetails[computed.activeRole.role].icon} />
+              {ERoleDetails[computed.activeRole.role].name}
             </h2>
             <span>Click here to change or request a role.</span>
           </NavLink>

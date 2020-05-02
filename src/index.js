@@ -178,7 +178,13 @@ const styleOverride = () => {
     return <style>
         {`:root {
             --theme: ${DataService.computed.activeRoleCompany.color} !important;
-            --theme-light: ${ColorService.lightenDarkenColor(DataService.computed.activeRoleCompany.color, -40)} !important;
+            --theme-light: ${
+                ColorService.addOpacityToRGB(
+                    ColorService.convertHEXtoRGB(
+                        ColorService.lightenDarkenColor(DataService.computed.activeRoleCompany.color, 30)
+                    ), '.2'
+                )
+            } !important;
         }`}
     </style>;
 };

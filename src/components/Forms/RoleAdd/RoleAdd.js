@@ -14,8 +14,8 @@ import ErrorService from './../../../services/error.service';
 import CompanyService from './../../../services/entities/company.service';
 import RoleService from './../../../services/entities/role.service';
 
-import Role from './../../../classes/Role';
-import { ERoleStatus, RoleDetails } from './../../../classes/Role';
+import Role, { ERole } from './../../../classes/Role';
+import { ERoleStatus, ERoleDetails } from './../../../classes/Role';
 
 import { v4 as uuid } from 'uuid';
 
@@ -67,7 +67,9 @@ const RoleAdd = ({ match }) => {
       return;
     }
     
-    const roleStatus = (selectedCompanyItem.creator === computed.user.uid) ? ERoleStatus.CONFIRMED : ERoleStatus.DRAFT;
+    const roleStatus = (selectedCompanyItem.creator === computed.user.uid ||
+      (selectedCompanyId === computed.activeRole.companyId && computed.activeRole.role === ERole.MANAGER)
+      ) ? ERoleStatus.CONFIRMED : ERoleStatus.DRAFT;
     
     RoleService.create(new Role(computed.user.uid, selectedCompanyId, roleStatus, roleType, DateService.getCurrentIsoDateString(), null))
       .then(docRole => setRoleId(docRole.id))
@@ -120,21 +122,25 @@ const RoleAdd = ({ match }) => {
     return <Redirect to={dashboardUrl} />;
   }
 
-  
+  /**
+   * RENDER
+   */  
   let roleDetails = {};
-  Object.keys(RoleDetails).forEach(roleKey => {
+  Object.keys(ERoleDetails).forEach(roleKey => {
     roleDetails[roleKey] = {
       content: <Fragment>
-        <Icon source="fa" icon={RoleDetails[roleKey].icon} />
-        {RoleDetails[roleKey].name}
+        <span>
+          <Icon source="fa" icon={ERoleDetails[roleKey].icon} />
+          {ERoleDetails[roleKey].name}
+        </span>
+        <span>
+          {ERoleDetails[roleKey].description}
+        </span>
       </Fragment>,
       disabled: currentRoles.includes(roleKey)
     }
   });
 
-  /**
-   * RENDER
-   */
   return (
     <div className="RoleAdd">
       <h1>Request a role</h1>
@@ -180,7 +186,8 @@ const RoleAdd = ({ match }) => {
                 items={roleDetails}
                 multiple={false} 
                 fieldName="roleType"
-                onSelectionChange={setRoleType} />
+                onSelectionChange={setRoleType}
+                isVertical />
             </Fragment> : null
           }
           {selectedCompanyId && isCurrentRolesLoading &&

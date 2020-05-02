@@ -197,6 +197,12 @@
     background-color: var(--inverse);
     color: var(--theme);
   }
+
+  &-mono {
+    font-weight: bold;
+    background-color: var(--theme-light);
+    color: var(--theme);
+  }
 }
 
 body, html {
@@ -288,7 +294,6 @@ body, html {
     height: 100%;
     min-height: 7rem;
     width: 7rem;
-    border-right: 1px solid var(--theme);
     flex: 0 0 7rem;
     font-size: 135%;
     display: flex;
@@ -328,12 +333,24 @@ body, html {
 
   &-data {
     flex: 1;
-    min-height: 7rem;
+    min-height: 6rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    padding: 0 .5rem;
+    padding: .5rem;
+    position: relative;
+
+    &:before {
+      content: '';
+      top: .5rem;
+      position: absolute;
+      height: calc(100% - 1rem);
+      width: 1px;
+      left: -1px;
+      display: block;
+      background-color: var(--theme);
+    }
   }
 
   &-title {
@@ -387,10 +404,6 @@ body, html {
       border-top: 1px solid var(--light-gray);
     }
 
-    .Element-photo {
-      border-right: 1px solid var(--theme);
-    }
-
     .Element-badge {
       top: .5rem;
     }
@@ -416,8 +429,8 @@ body, html {
 
     .Element {
 
-      &-icon {
-        border-right: 1px solid var(--inverse);
+      &-data:before {
+        background-color: var(--inverse);
       }
 
       &-actions {

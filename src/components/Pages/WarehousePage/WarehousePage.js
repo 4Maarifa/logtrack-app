@@ -14,7 +14,7 @@ import ExTable from './../../Utils/ExTable/ExTable';
 import Icon from './../../Utils/Icon/Icon';
 import Tabs from './../../Utils/Tabs/Tabs';
 
-import Equipment from './../../Entities/Equipment/Equipment';
+import Equipment, { equipmentsExTableFSS } from './../../Entities/Equipment/Equipment';
 import Warehouse from './../../Entities/Warehouse/Warehouse';
 
 import { v4 as uuid } from 'uuid';
@@ -122,7 +122,8 @@ const WarehousePage = ({ match }) => {
           </span>,
           content: () => <ExTable items={equipments}
             renderItem={renderEquipment}
-            header={['Identification', 'Model']}
+            fss={equipmentsExTableFSS}
+            header={<span><Icon source="fa" icon={faTruck} /> Equipments</span>}
             loading={isEquipmentsLoading} />
         }
       }} />

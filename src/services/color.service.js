@@ -29,6 +29,10 @@ const ColorService = {
     return colorSum > (64 * 3) && colorSum < (192 * 3);
   },
 
+  addOpacityToRGB: (colorRGB, opacity) => {
+    return `rgba(${colorRGB[0]}, ${colorRGB[1]}, ${colorRGB[2]}, ${opacity})`;
+  },
+
   lightenDarkenColor: (colorHEX, amount) => {
     colorHEX = colorHEX.slice(1);
  

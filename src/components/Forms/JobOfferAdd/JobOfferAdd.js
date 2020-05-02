@@ -13,7 +13,7 @@ import FormInput from './../../Utils/FormElements/FormInput/FormInput';
 import FormTextarea from './../../Utils/FormElements/FormTextarea/FormTextarea';
 
 import { JobOffer, EJobOfferStatus } from './../../../classes/Company';
-import { RoleDetails } from './../../../classes/Role';
+import { ERoleDetails } from './../../../classes/Role';
 
 import { v4 as uuid } from 'uuid';
 
@@ -100,11 +100,11 @@ const JobOfferAdd = ({ match }) => {
   }
 
   const roleDetails = {};
-  Object.keys(RoleDetails).forEach(roleKey => {
+  Object.keys(ERoleDetails).forEach(roleKey => {
     roleDetails[roleKey] = {
       content: <Fragment>
-        <Icon source="fa" icon={RoleDetails[roleKey].icon} />
-        {RoleDetails[roleKey].name}
+        <Icon source="fa" icon={ERoleDetails[roleKey].icon} />
+        {ERoleDetails[roleKey].name}
       </Fragment>
     }
   });
@@ -161,8 +161,8 @@ const JobOfferAdd = ({ match }) => {
           </span>
           {currentJobOfferId && currentJobOffer ? 
             <span>
-              <Icon source="fa" icon={RoleDetails[roleType].icon} />
-              {RoleDetails[roleType].name}
+              <Icon source="fa" icon={ERoleDetails[roleType].icon} />
+              {ERoleDetails[roleType].name}
             </span>
           : <Choose
               selection={roleType}

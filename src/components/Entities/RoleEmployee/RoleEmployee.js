@@ -8,8 +8,10 @@ import ActionList from './../../Utils/ActionList/ActionList';
 import Role from './../Role/Role';
 
 import DataService from './../../../services/data.service';
+import UtilsService from './../../../services/utils.service';
 
 import { ERoleStatus, ERole } from './../../../classes/Role';
+
 import { v4 as uuid } from 'uuid';
 
 import './RoleEmployee.scss';
@@ -87,6 +89,21 @@ const RoleEmployee = ({ employee, options, roles }) => {
       </div>
     </div>
   );
+};
+
+export const roleEmployeeExTableFSS = {
+  sort: {
+    role: {
+      title: 'Role',
+      apply: (keys, items, sortDirection) => keys.sort((key1, key2) => (
+        (sortDirection === 'ASC' ? 1 : -1) * UtilsService.compareFn(items[key1].role, items[key2].role)
+      )),
+      default: true
+    }
+  },
+  search: (_, itemData, searchTerm) => (
+    itemData.role.toLowerCase().includes(searchTerm.toLowerCase())
+  )
 };
 
 export default RoleEmployee;

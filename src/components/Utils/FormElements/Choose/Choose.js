@@ -5,6 +5,7 @@ import './Choose.scss';
 const Choose = ({ selection,
                   items,
                   multiple,
+                  isVertical,
                   selectionRequired,
                   onSelectionChange,
                   fieldName }) => {
@@ -51,7 +52,7 @@ const Choose = ({ selection,
   };
 
   return (
-    <div className="Choose">
+    <div className={'Choose ' + (isVertical ? 'Choose--vertical' : '')}>
       <ul role="listbox" tabIndex="0" aria-activedescendant={selection} aria-multiselectable={multiple}>
         {Object.keys(items).map(key =>
           <li key={key} 

@@ -19,8 +19,9 @@ import Icon from './../../Utils/Icon/Icon';
 import ExTable from './../../Utils/ExTable/ExTable';
 
 import RoleEmployee from './../../Entities/RoleEmployee/RoleEmployee';
-import Equipment from './../../Entities/Equipment/Equipment';
-import Warehouse from './../../Entities/Warehouse/Warehouse';
+import Equipment, { equipmentsExTableFSS } from './../../Entities/Equipment/Equipment';
+import Warehouse, { warehousesExTableFSS } from './../../Entities/Warehouse/Warehouse';
+import { employeesExTableFSS } from './../../Entities/Employee/Employee';
 import Company from './../../Entities/Company/Company';
 
 import { v4 as uuid } from 'uuid';
@@ -193,7 +194,12 @@ const CompanyPage = ({ match }) => {
             Warehouses
             <span className="badge badge-inverse">{Object.keys(warehouses).length}</span>
           </span>,
-          content: () => <ExTable key="warehouses" items={warehouses} renderItem={renderWarehouse} header={['Name', '']} loading={isWarehousesLoading} />
+          content: () => <ExTable key="warehouses"
+                                  fss={warehousesExTableFSS}
+                                  items={warehouses}
+                                  renderItem={renderWarehouse}
+                                  header={<span><Icon source="fa" icon={faWarehouseAlt} /> Warehouses</span>}
+                                  loading={isWarehousesLoading} />
         },
         employees: {
           name: () => <span>
@@ -201,7 +207,12 @@ const CompanyPage = ({ match }) => {
             Employees
             <span className="badge badge-inverse">{Object.keys(companyEmployees).length}</span>
           </span>,
-          content: () => <ExTable key="employees" items={companyEmployees} renderItem={renderRoleEmployee} header={['Name', 'Roles']} loading={isCompanyEmployeesLoading}/>
+          content: () => <ExTable key="employees"
+                                  fss={employeesExTableFSS}
+                                  items={companyEmployees}
+                                  renderItem={renderRoleEmployee}
+                                  header={<span><Icon source="fa" icon={faUsers} /> Employees</span>}
+                                  loading={isCompanyEmployeesLoading}/>
         },
         equipments: {
           name: () => <span>
@@ -209,7 +220,12 @@ const CompanyPage = ({ match }) => {
             Equipments
             <span className="badge badge-inverse">{Object.keys(equipments).length}</span>
           </span>,
-          content: () => <ExTable key="equipments" items={equipments} renderItem={renderEquipment} header={['Identification', 'Model']} loading={isEquipmentsLoading}/>
+          content: () => <ExTable key="equipments"
+                                  fss={equipmentsExTableFSS}
+                                  items={equipments}
+                                  renderItem={renderEquipment}
+                                  header={<span><Icon source="fa" icon={faTruck} /> Equipments</span>}
+                                  loading={isEquipmentsLoading}/>
         }
       }} />
     </div>

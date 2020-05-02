@@ -2,6 +2,7 @@
   display: flex;
   position: relative;
   margin: 1rem 0;
+  min-width: 0;
 
   label {
     position: absolute;
@@ -54,31 +55,36 @@
     z-index: 2;
     transition: color .5s, border-color .5s;
     min-width: 0;
+    max-height: calc(100% - 2px);
 
-    &:valid {
-      border-color: var(--green);
+    &:not(.input--novalidation) {
 
-      & ~ .indicator {
-        background-color: var(--green);
+      &:valid {
+        border-color: var(--green);
   
-        .valid {
-          display: flex;
-          opacity: 1;
+        & ~ .indicator {
+          background-color: var(--green);
+    
+          .valid {
+            display: flex;
+            opacity: 1;
+          }
         }
       }
-    }
-
-    &:invalid {
-      border-color: var(--red);
-
-      & ~ .indicator {
-        background-color: var(--red);
   
-        .invalid {
-          display: flex;
-          opacity: 1;
+      &:invalid {
+        border-color: var(--red);
+  
+        & ~ .indicator {
+          background-color: var(--red);
+    
+          .invalid {
+            display: flex;
+            opacity: 1;
+          }
         }
       }
+
     }
 
     &:active ~ label,

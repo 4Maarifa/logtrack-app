@@ -74,7 +74,7 @@ export const EContractType = Object.freeze({
    ACCOUNTING: 'ACCOUNTING'
 });
 
-export const ContractTypeDetails = Object.freeze({
+export const EContractTypeDetails = Object.freeze({
     [EContractType.MAINTENANCE]: {
         name: 'Maintenance',
         icon: <Icon source="fa" icon={faWrench} />,

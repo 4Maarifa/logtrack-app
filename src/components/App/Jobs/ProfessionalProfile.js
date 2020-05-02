@@ -1,25 +1,25 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import DateTimePicker from 'react-datetime-picker';
 import { faPlus, faArrowAltToRight, faArrowAltFromLeft, faCalendarAlt,
-  faClipboardUser, faInfoCircle, faBuilding, faAward, faSave, faTimes } from '@fortawesome/pro-solid-svg-icons';
+  faClipboardUser, faInfoCircle, faBuilding, faAward, faSave, faUserTie } from '@fortawesome/pro-solid-svg-icons';
 
 import DataService from './../../../services/data.service';
 import UtilsService from './../../../services/utils.service';
 import EmployeeService from './../../../services/entities/employee.service';
-import DateService from './../../../services/date.service';
 import ErrorService from './../../../services/error.service';
 import RoleService from './../../../services/entities/role.service';
 import CompanyService from './../../../services/entities/company.service';
+import DateService from './../../../services/date.service';
 
-import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
-import ActionList from './../../Utils/ActionList/ActionList';
 import Icon from './../../Utils/Icon/Icon';
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
 import ExTable from './../../Utils/ExTable/ExTable';
 import Choose from './../../Utils/FormElements/Choose/Choose';
 import Switch from './../../Utils/FormElements/Switch/Switch';
 
-import { RoleDetails, ERoleStatus } from './../../../classes/Role';
+import { ERoleDetails, ERoleStatus } from './../../../classes/Role';
+
+import { EmployeeCertificate, EmployeeExperience, EmployeeOtherExperience, employeeCertificatesExTableFSS, employeeExperienceExTableFSS, employeeOtherExperiencesExTableFSS } from './../../Entities/Employee/Employee';
 
 import { v4 as uuid } from 'uuid';
 
@@ -52,7 +52,10 @@ const ProfessionalProfile = () => {
     }
 
     const certificates = computed.employee.certificates || [];
-    certificates.push({name: certificateName, date: DateService.getMonthYearString(certificateDate)});
+    certificates.push({
+      name: certificateName,
+      date: DateService.getIsoDateString(certificateDate)
+    });
 
     EmployeeService.updateField(computed.user.uid, {certificates})
       .then(() => DataService.computed.notifyChanges()
@@ -75,8 +78,8 @@ const ProfessionalProfile = () => {
     experience.push({
       name: experienceName,
       company: experienceCompamyName,
-      start: DateService.getMonthYearString(experienceStartDate),
-      end: experienceEndDate ? DateService.getMonthYearString(experienceEndDate) : null
+      start: DateService.getIsoDateString(experienceStartDate),
+      end: experienceEndDate ? DateService.getIsoDateString(experienceEndDate) : null
     });
 
     EmployeeService.updateField(computed.user.uid, {experience})
@@ -97,22 +100,6 @@ const ProfessionalProfile = () => {
       resume
     };
     EmployeeService.updateField(computed.user.uid, { search });
-  };
-
-  const deleteCertificate = index => {
-    let certificates = computed.employee.certificates;
-    certificates.splice(index, 1);
-    EmployeeService.updateField(computed.user.uid, {certificates})
-      .then(DataService.computed.notifyChanges)
-      .catch(ErrorService.manageError);
-  };
-
-  const deleteExperience = index => {
-    let experience = computed.employee.experience;
-    experience.splice(index, 1);
-    EmployeeService.updateField(computed.user.uid, {experience})
-      .then(DataService.computed.notifyChanges)
-      .catch(ErrorService.manageError);
   };
 
   useEffect(() => {
@@ -146,68 +133,12 @@ const ProfessionalProfile = () => {
   /**
    * RENDER
    */
-  const renderExperience = (_, exp) => (
-    <div className="experience Element-content">
-      <div className="Element-base">
-        <Icon containerclassname="Element-icon" source="fa" icon={RoleDetails[exp.role].icon} />
-        <div className="Element-data">
-          <span className="Element-title">
-            {RoleDetails[exp.role].name} @
-            {companies[exp.companyId] &&
-              <PageLink type={PageLinkType.COMPANY} entityId={exp.companyId} entityData={companies[exp.companyId]} />
-            }
-          </span>
-          <span className="sub">
-            {DateService.getMonthYearString(
-              DateService.getDateFromIsoString(exp.creationIsoDate)) + ' - ' + 
-              (exp.status === 'CONFIRMED' ? 'Current' : DateService.getMonthYearString(DateService.getDateFromIsoString(exp.revokedIsoDate)))}
-          </span>
-        </div>
-      </div>
-    </div>);
-    
-  const renderCertificate = (index, certificate) => (
-    <div className="certificate Element-content">
-      <div className="Element-base">
-        <Icon containerclassname="Element-icon" source="fa" icon={faAward} />
-        <div className="Element-data">
-          <span className="Element-title">
-            {certificate.name}
-          </span>
-          <span className="sub">{certificate.date}</span>
-        </div>
-        <div className="Element-actions">
-          <ActionList actions={[
-            { title: 'Delete certificate', icon: <Icon source="fa" icon={faTimes} />, callback: () => deleteCertificate(index) }
-          ]} />
-        </div>
-      </div>
-    </div>);
-
-  const renderOtherExperience = (index, otherExp) => (
-    <div className="experience Element-content">
-      <div className="Element-base">
-        <Icon containerclassname="Element-icon" source="fa" icon={faClipboardUser} />
-        <div className="Element-data">
-          <span className="Element-title">{otherExp.name} @ {otherExp.company}</span>
-          <span className="sub">
-            {otherExp.start} - {otherExp.end ? otherExp.end : 'Current'}
-          </span>
-        </div>
-        <div className="Element-actions">
-          <ActionList actions={[
-            { title: 'Delete experience', icon: <Icon source="fa" icon={faTimes} />, callback: () => deleteExperience(index) }
-          ]} />
-        </div>
-      </div>
-    </div>);
-
   const roleDetails = {};
-  Object.keys(RoleDetails).forEach(roleKey => {
+  Object.keys(ERoleDetails).forEach(roleKey => {
     roleDetails[roleKey] = {
       content: <Fragment>
-        <Icon source="fa" icon={RoleDetails[roleKey].icon} />
-        {RoleDetails[roleKey].name}
+        <Icon source="fa" icon={ERoleDetails[roleKey].icon} />
+        {ERoleDetails[roleKey].name}
       </Fragment>
     }
   });
@@ -254,10 +185,11 @@ const ProfessionalProfile = () => {
     </button>
     <h2>Certificates</h2>
     <ExTable key="certificates" 
-      items={computed.employee.certificates} 
-      renderItem={renderCertificate} 
-      header={['Name', '']}
-      isNoFrame />
+              items={computed.employee.certificates} 
+              fss={employeeCertificatesExTableFSS}
+              renderItem={(_, cert) => <EmployeeCertificate certificate={cert} employeeId={computed.user.uid} />} 
+              header={<span><Icon source="fa" icon={faAward} /> Certificates</span>}
+              isNoFrame />
     <form className="pro-form" onSubmit={handleSubmitCertificate}>
       <h3>
         <Icon source="fa" icon={faAward} />
@@ -309,18 +241,20 @@ const ProfessionalProfile = () => {
       These are your current and past roles
     </span>
     <ExTable key="experience" 
-      items={employeeExperience} 
-      renderItem={renderExperience} 
-      header={['Name', 'Company']}
-      isNoFrame />
+              items={employeeExperience}
+              fss={employeeExperienceExTableFSS}
+              renderItem={(_, exp) => <EmployeeExperience exp={exp} company={{[exp.companyId]: companies[exp.companyId]}} />} 
+              header={<span><Icon source="fa" icon={faUserTie} /> Experience</span>}
+              isNoFrame />
 
     <h2>Other Experience</h2>
     <ExTable key="otherExperience" 
-      loading={false}
-      items={computed.employee.experience} 
-      renderItem={renderOtherExperience} 
-      header={['Name', 'Company']}
-      isNoFrame />
+            loading={false}
+            fss={employeeOtherExperiencesExTableFSS}
+            items={computed.employee.experience} 
+            renderItem={(index, exp) => <EmployeeOtherExperience otherExp={exp} employeeId={computed.user.uid} />}
+            header={<span><Icon source="fa" icon={faClipboardUser} /> Other Experience</span>}
+            isNoFrame />
     <form className="pro-form experience-add" onSubmit={handleSubmitExperience}>
       <h3>
         <Icon source="fa" icon={faClipboardUser} />

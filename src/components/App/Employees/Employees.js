@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { faUsers } from '@fortawesome/pro-solid-svg-icons';
 
 import Map from './../../Utils/Map/Map';
 import ExTable from './../../Utils/ExTable/ExTable';
+import Icon from './../../Utils/Icon/Icon';
 
 import DataService from './../../../services/data.service';
 import ErrorService from './../../../services/error.service';
@@ -10,6 +12,7 @@ import RoleService from './../../../services/entities/role.service';
 import EmployeeService from './../../../services/entities/employee.service';
 
 import RoleEmployee from './../../Entities/RoleEmployee/RoleEmployee';
+import { employeesExTableFSS } from './../../Entities/Employee/Employee';
 
 import { v4 as uuid } from 'uuid';
 
@@ -31,8 +34,9 @@ const Employees = () => {
         .then(rolesOfCompanyEmployees => {
           setRolesOfCompanyEmployees(rolesOfCompanyEmployees);
   
-          let employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(rolesOfCompanyEmployees)
-            .map(roleKey => rolesOfCompanyEmployees[roleKey].employeeId));
+          let employeesIds = UtilsService.removeDuplicateFromArray(
+            Object.keys(rolesOfCompanyEmployees)
+              .map(roleKey => rolesOfCompanyEmployees[roleKey].employeeId));
             
           EmployeeService.getAllForIdList(employeesIds)
             .then(companyEmployees => {
@@ -67,7 +71,12 @@ const Employees = () => {
   return (
     <div className="Employees">
       <Map />
-      <ExTable key="employees" items={companyEmployees} renderItem={renderRoleEmployee} header={['Name', 'Roles']} loading={isCompanyEmployeesLoading} />
+      <ExTable key="employees"
+                fss={employeesExTableFSS}
+                items={companyEmployees}
+                renderItem={renderRoleEmployee}
+                header={<span><Icon source="fa" icon={faUsers} /> Employees</span>}
+                loading={isCompanyEmployeesLoading} />
     </div>
   );
 };

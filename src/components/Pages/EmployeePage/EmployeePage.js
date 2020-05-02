@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { faAward, faClipboardUser, faPortrait } from '@fortawesome/pro-solid-svg-icons';
+import { faAward, faClipboardUser, faPortrait, faUserTie } from '@fortawesome/pro-solid-svg-icons';
 
 import DataService from './../../../services/data.service';
-import DateService from './../../../services/date.service';
 import UtilsService from './../../../services/utils.service';
 import ErrorService from './../../../services/error.service';
 import EmployeeService from './../../../services/entities/employee.service';
@@ -11,42 +10,15 @@ import CompanyService from './../../../services/entities/company.service';
 
 import Loader from './../../Utils/Loader/Loader';
 import Icon from './../../Utils/Icon/Icon';
-import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import ExTable from './../../Utils/ExTable/ExTable';
 
-import Employee from './../../Entities/Employee/Employee';
+import Employee, { EmployeeExperience, EmployeeCertificate, EmployeeOtherExperience, employeeCertificatesExTableFSS, employeeExperienceExTableFSS, employeeOtherExperiencesExTableFSS } from './../../Entities/Employee/Employee';
 
-import { ERoleStatus, RoleDetails } from './../../../classes/Role';
+import { ERoleStatus, ERoleDetails } from './../../../classes/Role';
 
 import './EmployeePage.scss';
 
 import { v4 as uuid } from 'uuid';
-
-const renderCertificate = (_, certificate) => (
-  <div className="certificate Element-content">
-    <div className="Element-base">
-      <Icon containerclassname="Element-icon" source="fa" icon={faAward} />
-      <div className="Element-data">
-        <span className="Element-title">
-          {certificate.name}
-        </span>
-        <span className="sub">{certificate.date}</span>
-      </div>
-    </div>
-  </div>);
-
-const renderOtherExperience = (_, otherExp) => (
-  <div className="experience Element-content">
-    <div className="Element-base">
-      <Icon containerclassname="Element-icon" source="fa" icon={faClipboardUser} />
-      <div className="Element-data">
-        <span className="Element-title">{otherExp.name} @ {otherExp.company}</span>
-        <span className="sub">
-          {otherExp.start} - {otherExp.end ? otherExp.end : 'Current'}
-        </span>
-      </div>
-    </div>
-  </div>);
 
 /**
  * Component: EmployeePage
@@ -112,26 +84,6 @@ const EmployeePage = ({ match }) => {
       .forEach(roleKey => employeeExperience[roleKey] = roles[roleKey]);
   }
 
-  const renderExperience = (_, exp) => (
-    <div className="experience Element-content">
-      <div className="Element-base">
-        <Icon containerclassname="Element-icon" source="fa" icon={RoleDetails[exp.role].icon} />
-        <div className="Element-data">
-          <span className="Element-title">
-            {RoleDetails[exp.role].name} @
-            {companies[exp.companyId] &&
-              <PageLink type={PageLinkType.COMPANY} entityId={exp.companyId} entityData={companies[exp.companyId]} />
-            }
-          </span>
-          <span className="sub">
-            {DateService.getMonthYearString(
-              DateService.getDateFromIsoString(exp.creationIsoDate)) + ' - ' + 
-              (exp.status === 'CONFIRMED' ? 'Current' : DateService.getMonthYearString(DateService.getDateFromIsoString(exp.revokedIsoDate)))}
-          </span>
-        </div>
-      </div>
-    </div>);
-
   return (
     <div className="EmployeePage">
       <div className="Element Element--page">
@@ -144,7 +96,7 @@ const EmployeePage = ({ match }) => {
             <div className="Element-data">
               <div className="Element-title">
                 {employeeData.firstname + ' ' + employeeData.lastname} is looking for a new job
-                {employeeData.search.roles && employeeData.search.roles.length ? ' as ' + employeeData.search.roles.map(role => RoleDetails[role].name).join(' or ') : null}!
+                {employeeData.search.roles && employeeData.search.roles.length ? ' as ' + employeeData.search.roles.map(role => ERoleDetails[role].name).join(' or ') : null}!
               </div>
               <span>
                 {employeeData.search.resume ? <span className="sub">{employeeData.search.resume}</span> : null}
@@ -157,26 +109,29 @@ const EmployeePage = ({ match }) => {
         {employeeData.certificates && employeeData.certificates.length ? <div className="certificates">
           <h2 className="profile-title">Certificates</h2>
           <ExTable key="certificates" 
-              items={employeeData.certificates} 
-              renderItem={renderCertificate} 
-              header={['Name', '']}
-              isNoFrame />
+                  items={employeeData.certificates} 
+                  fss={employeeCertificatesExTableFSS}
+                  renderItem={(_, cert) => <EmployeeCertificate certificate={cert} employeeId={employeeId} />}
+                  header={<span><Icon source="fa" icon={faAward} /> Certificates</span>}
+                  isNoFrame />
         </div> : null}
         <div className="roles">
           <h2 className="profile-title">Experience</h2>
           <ExTable key="experience" 
-              items={employeeExperience} 
-              renderItem={renderExperience} 
-              header={['Name', 'Company']}
-              isNoFrame />
+                  items={employeeExperience} 
+                  fss={employeeExperienceExTableFSS}
+                  renderItem={(_, exp) => <EmployeeExperience exp={exp} company={{[exp.companyId]: companies[exp.companyId]}} />} 
+                  header={<span><Icon source="fa" icon={faUserTie} /> Experience</span>}
+                  isNoFrame />
         </div>
         {employeeData.experience && employeeData.experience.length ? <div className="experience">
           <h2 className="profile-title">Other Experience</h2>
           <ExTable key="otherExperience" 
-              items={employeeData.experience} 
-              renderItem={renderOtherExperience} 
-              header={['Name', 'Company']}
-              isNoFrame />
+                    items={employeeData.experience}
+                    fss={employeeOtherExperiencesExTableFSS}
+                    renderItem={(_, exp) => <EmployeeOtherExperience otherExp={exp} employeeId={employeeId} />}
+                    header={<span><Icon source="fa" icon={faClipboardUser} /> Other Experience</span>}
+                    isNoFrame />
         </div> : null}
       </div>
     </div>

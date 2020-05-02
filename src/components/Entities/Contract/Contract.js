@@ -5,12 +5,13 @@ import DataService from './../../../services/data.service';
 import ContractService from './../../../services/entities/contract.service';
 import ErrorService from './../../../services/error.service';
 import DateService from './../../../services/date.service';
+import UtilsService from './../../../services/utils.service';
 
 import Icon from './../../Utils/Icon/Icon';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import ActionList from './../../Utils/ActionList/ActionList';
 
-import { EContractStatusDetails, EContractStatus } from './../../../classes/Contract';
+import { EContractStatusDetails, EContractStatus, EContractTypeDetails } from './../../../classes/Contract';
 import { ERole } from './../../../classes/Role';
 
 import { v4 as uuid } from 'uuid';
@@ -129,6 +130,10 @@ const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, 
           </span>
           {isExecutor ? 'You execute the contract for' : 'You ordered the contract from'}
           <PageLink type={PageLinkType.COMPANY} entityId={otherCompanyId} entityData={otherCompany[otherCompanyId]} white={isPage} />
+          <span className="badge badge-mono">
+            {EContractTypeDetails[contractData.contractType].icon}
+            {EContractTypeDetails[contractData.contractType].name}
+          </span>
           <span className="sub">{computeStatus()}</span>
           <span className={'Element-badge badge ' + (isPage ? 'badge-inverse' : '')}>
             {EContractStatusDetails[contractData.status].icon}
@@ -142,5 +147,51 @@ const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, 
     </div>
   );
 };
+
+const contractsExTableFSS = {
+  sort: {
+    identification: {
+      title: 'Identification',
+      apply: (keys, items, sortDirection) => keys.sort((key1, key2) => (
+        (sortDirection === 'ASC' ? 1 : -1) * UtilsService.compareFn(items[key1].identification, items[key2].identification)
+      )),
+      default: true
+    },
+    status: {
+      title: 'Status',
+      apply: (keys, items, sortDirection) => keys.sort((key1, key2) => (
+        (sortDirection === 'ASC' ? 1 : -1) * UtilsService.compareFn(items[key1].status, items[key2].status)
+      ))
+    },
+    contractType: {
+      title: 'Type',
+      apply: (keys, items, sortDirection) => keys.sort((key1, key2) => (
+        (sortDirection === 'ASC' ? 1 : -1) * UtilsService.compareFn(items[key1].contractType, items[key2].contractType)
+      ))
+    }
+  },
+  search: (_, itemData, searchTerm) => (
+    itemData.identification.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    itemData.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    itemData.contractType.toLowerCase().includes(searchTerm.toLowerCase())
+  ),
+  filter: {}
+};
+
+Object.keys(EContractTypeDetails).filter(typeKey => !EContractTypeDetails[typeKey].disabled).forEach(typeKey => {
+  contractsExTableFSS.filter[typeKey] = {
+    title: 'Type - ' + EContractTypeDetails[typeKey].name,
+    apply: (_, itemData) => itemData.contractType === typeKey
+  }
+});
+
+Object.keys(EContractStatusDetails).forEach(statusKey => {
+  contractsExTableFSS.filter[statusKey] = {
+    title: 'Status - ' + EContractStatusDetails[statusKey].name,
+    apply: (_, itemData) => itemData.status === statusKey
+  }
+});
+
+export { contractsExTableFSS };
 
 export default Contract;

@@ -10,7 +10,7 @@ import DataService from './../../../services/data.service';
 import ErrorService from './../../../services/error.service';
 import WarehouseService from './../../../services/entities/warehouse.service';
 
-import Warehouse from './../../Entities/Warehouse/Warehouse';
+import Warehouse, { warehousesExTableFSS } from './../../Entities/Warehouse/Warehouse';
 
 import { v4 as uuid } from 'uuid';
 
@@ -84,9 +84,10 @@ const Warehouses = () => {
     <div className="Warehouses">
       <Map ref={map} />
       <ExTable key="warehouses" 
-              items={warehouses} 
-              renderItem={renderWarehouse} 
-              header={['Name', '']}
+              items={warehouses}
+              fss={warehousesExTableFSS}
+              renderItem={renderWarehouse}
+              header={<span><Icon source="fa" icon={faWarehouseAlt} /> Warehouses</span>}
               onActivateItem={onSelectedItemChanged}
               loading={isWarehousesLoading} />
       <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[
