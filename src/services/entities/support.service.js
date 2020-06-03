@@ -26,13 +26,13 @@ const SupportService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('support').add(support);
+    return FirebaseService.getFirestore().collection('support').add(support);
   },
   get: supportId => {
     if(!SupportService.rights[ERights.RIGHT_SUPPORT_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Support' });
     }
-    return FirebaseService.getDb().collection('support').doc(supportId).get();
+    return FirebaseService.getFirestore().collection('support').doc(supportId).get();
   },
   list: () => {
     if(!SupportService.rights[ERights.RIGHT_SUPPORT_LIST]()) {
@@ -41,7 +41,7 @@ const SupportService = {
 
     const supports = {};
     return new Promise((resolve, reject) => {
-        FirebaseService.getDb().collection('support').get()
+        FirebaseService.getFirestore().collection('support').get()
             .then(querySnapshot => {
                 querySnapshot.forEach(supportDoc => supports[supportDoc.id] = supportDoc.data());
                 resolve(supports);
@@ -62,21 +62,21 @@ const SupportService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('support').doc(supportId).set(support);
+    return FirebaseService.getFirestore().collection('support').doc(supportId).set(support);
   },
   updateField: (supportId, supportField) => {
     if(!SupportService.rights[ERights.RIGHT_SUPPORT_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Support' });
     }
     
-    return FirebaseService.getDb().collection('support').doc(supportId).update(supportField);
+    return FirebaseService.getFirestore().collection('support').doc(supportId).update(supportField);
   },
   delete: supportId => {
     if(!SupportService.rights[ERights.RIGHT_SUPPORT_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Support' });
     }
     
-    return FirebaseService.getDb().collection('support').doc(supportId).delete();
+    return FirebaseService.getFirestore().collection('support').doc(supportId).delete();
   },
 
   // CUSTOM FUNCTIONS

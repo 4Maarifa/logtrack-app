@@ -35,13 +35,13 @@ const WarehouseService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('warehouses').add(migratePrototype(warehouse));
+    return FirebaseService.getFirestore().collection('warehouses').add(migratePrototype(warehouse));
   },
   get: warehouseId => {
     if(!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Warehouse' });
     }
-    return FirebaseService.getDb().collection('warehouses').doc(warehouseId).get();
+    return FirebaseService.getFirestore().collection('warehouses').doc(warehouseId).get();
   },
   list: () => {
     if(!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_LIST]()) {
@@ -50,7 +50,7 @@ const WarehouseService = {
 
     const warehouses = {};
     return new Promise((resolve, reject) => {
-        FirebaseService.getDb().collection('warehouses').get()
+        FirebaseService.getFirestore().collection('warehouses').get()
             .then(querySnapshot => {
                 querySnapshot.forEach(warehouseDoc => warehouses[warehouseDoc.id] = warehouseDoc.data());
                 resolve(warehouses);
@@ -75,21 +75,21 @@ const WarehouseService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('warehouses').doc(warehouseId).set(migratePrototype(warehouse));
+    return FirebaseService.getFirestore().collection('warehouses').doc(warehouseId).set(migratePrototype(warehouse));
   },
   updateField: (warehouseId, warehouseField) => {
     if(!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Warehouse' });
     }
     
-    return FirebaseService.getDb().collection('warehouses').doc(warehouseId).update(warehouseField);
+    return FirebaseService.getFirestore().collection('warehouses').doc(warehouseId).update(warehouseField);
   },
   delete: warehouseId => {
     if(!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Warehouse' });
     }
     
-    return FirebaseService.getDb().collection('warehouses').doc(warehouseId).delete();
+    return FirebaseService.getFirestore().collection('warehouses').doc(warehouseId).delete();
   },
 
   // CUSTOM FUNCTIONS
@@ -100,7 +100,7 @@ const WarehouseService = {
 
     let warehouses = {};
     return new Promise((resolve, reject) => {
-      FirebaseService.getDb().collection('warehouses')
+      FirebaseService.getFirestore().collection('warehouses')
       .where('companyId', '==', companyId)
       .get()
       .then(querySnapshot => {

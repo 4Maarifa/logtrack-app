@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faPlus, faBagsShopping, faCog, faSignature, faToggleOn, faToggleOff, faHandshakeAlt } from '@fortawesome/pro-solid-svg-icons';
+import { faPlus, faBagsShopping, faCog, faSignature, faHandshakeAlt } from '@fortawesome/pro-solid-svg-icons';
 
 import DataService from './../../../services/data.service';
 import ContractService from './../../../services/entities/contract.service';
@@ -11,6 +11,7 @@ import ActionButton from './../../Utils/ActionButton/ActionButton';
 import Icon from './../../Utils/Icon/Icon';
 import ExTable from './../../Utils/ExTable/ExTable';
 import Tabs from './../../Utils/Tabs/Tabs';
+import Switch from './../../Utils/FormElements/Switch/Switch';
 
 import { EContractStatus } from './../../../classes/Contract';
 
@@ -131,10 +132,7 @@ const Contracts = () => {
           disabled: true
         }
       }} />
-      <span className={'toggle-button ' + (isShowArchived ? 'toggle-button--active' : '')} tabIndex="0" onClick={() => setShowArchived(!isShowArchived)}>
-        <Icon source="fa" icon={isShowArchived ? faToggleOn : faToggleOff} />
-        Show archived contracts
-      </span>
+      <Switch value={isShowArchived} onChange={setShowArchived} label="Show archived contracts" />
       <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[
         {title: 'Add a contract', icon: <Icon source="fa" icon={faHandshakeAlt} />, link: `/contract-add`}
       ]} />

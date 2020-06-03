@@ -31,7 +31,7 @@ const LogTrackService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('logtracks').add(migratePrototype(logTrack));
+    return FirebaseService.getFirestore().collection('logtracks').add(migratePrototype(logTrack));
   },
   get: logTrackId => {
     if(!LogTrackService.rights[ERights.RIGHT_LOGTRACK_GET]()) {
@@ -42,7 +42,7 @@ const LogTrackService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('logtracks').doc(logTrackId).get();
+    return FirebaseService.getFirestore().collection('logtracks').doc(logTrackId).get();
   },
   list: () => {
     if(!LogTrackService.rights[ERights.RIGHT_LOGTRACK_LIST]()) {
@@ -55,7 +55,7 @@ const LogTrackService = {
 
     const logTracks = {};
     return new Promise((resolve, reject) => {
-        FirebaseService.getDb().collection('logtracks').get()
+        FirebaseService.getFirestore().collection('logtracks').get()
             .then(querySnapshot => {
                 querySnapshot.forEach(logTrackDoc => logTracks[logTrackDoc.id] = logTrackDoc.data());
                 resolve(logTracks);
@@ -80,7 +80,7 @@ const LogTrackService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('logtracks').doc(logTrackId).set(migratePrototype(logTrack));
+    return FirebaseService.getFirestore().collection('logtracks').doc(logTrackId).set(migratePrototype(logTrack));
   },
   updateField: (logTrackId, logTrackField) => {
     if(!LogTrackService.rights[ERights.RIGHT_LOGTRACK_UPDATE]()) {
@@ -91,14 +91,14 @@ const LogTrackService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
     
-    return FirebaseService.getDb().collection('logtracks').doc(logTrackId).update(logTrackField);
+    return FirebaseService.getFirestore().collection('logtracks').doc(logTrackId).update(logTrackField);
   },
   delete: logTrackId => {
     if(!LogTrackService.rights[ERights.RIGHT_LOGTRACK_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a LogTrack' });
     }
     
-    return FirebaseService.getDb().collection('logtracks').doc(logTrackId).delete();
+    return FirebaseService.getFirestore().collection('logtracks').doc(logTrackId).delete();
   },
 
   // CUSTOM FUNCTIONS

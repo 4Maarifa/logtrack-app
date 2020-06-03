@@ -1,17 +1,6 @@
 import { useEffect, useRef } from 'react';
 
 const UtilsService = {
-    getClosestElement: (el, classs) => {
-        console.warning('UtilsService.getClosestElement is DEPRECATED!');
-        while (!el.classList.contains(classs)) {
-            el = el.parentNode;
-            if(!el) {
-                return null;
-            }
-        }
-        return el;
-    },
-
     getUrlGetParam: paramKey => new URLSearchParams(window.location.search).get(paramKey),
 
     // STRINGS

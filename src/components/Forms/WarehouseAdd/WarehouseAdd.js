@@ -75,7 +75,7 @@ const WarehouseAdd = ({ match }) => {
     }
     else {
       setCreatorId(computed.user.uid);
-      setCreator(computed.user);
+      setCreator(computed.employee);
     }
   };
 
@@ -208,6 +208,7 @@ const WarehouseAdd = ({ match }) => {
       <h1>{currentWarehouse ? `Edit "${currentWarehouse.name}" warehouse` : 'Add  a Warehouse'}</h1>
       <form onSubmit={handleSubmit}>
         
+        {/* Identification */}
         <FormInput
           value={identification}
           inputType="text"
@@ -229,6 +230,7 @@ const WarehouseAdd = ({ match }) => {
           }
           onValueChange={setIdentification} />
 
+        {/* Location */}
         <FormDebouceAutoSuggestInput
           value={possibleLocationsInput}
           label={

@@ -18,12 +18,13 @@ import Icon from './../components/Utils/Icon/Icon';
  * companyExecId: string | The company will execute the contract
  * contractType: string | The type of contract
  * status: string | The status of contract
+ * creator: string | The creator of the contract (employeeId)
  * creationIsoDate: string | The creation date, as iso string
  * archiveIsoDate: string | The archive date, as iso string
  */
 
 class Contract {
-    constructor(identification, invoices, companyOrderId, companyExecId, createdByCompanyId, contractType, status, creationIsoDate, archiveIsoDate) {
+    constructor(identification, invoices, companyOrderId, companyExecId, createdByCompanyId, contractType, status, creator, creationIsoDate, archiveIsoDate) {
         this.identification = identification;
         this.invoices = invoices;
         this.companyOrderId = companyOrderId;
@@ -31,6 +32,7 @@ class Contract {
         this.createdByCompanyId = createdByCompanyId;
         this.contractType = contractType;
         this.status = status;
+        this.creator = creator;
         this.creationIsoDate = creationIsoDate;
         this.archiveIsoDate = archiveIsoDate;
     }

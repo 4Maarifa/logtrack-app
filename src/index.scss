@@ -25,6 +25,42 @@
   --form-width: 30%;
 
   --border-radius: 8px;
+
+  --very-light-palette-gray: #E6E8E9;
+  --very-light-palette-blue: #D2E2FC;
+  --very-light-palette-red: #F9CBC7;
+  --very-light-palette-yellow: #FEEAAF;
+  --very-light-palette-green: #DBEFE0;
+  --very-light-palette-pink: #FFD8ED;
+  --very-light-palette-purple: #EFDFFD;
+  --very-light-palette-turquoise: #D1F2F8;
+
+  --light-palette-gray: #BDC1C6;
+  --light-palette-blue: #8AB4F8;
+  --light-palette-red: #F28B82;
+  --light-palette-yellow: #FDD663;
+  --light-palette-green: #81C995;
+  --light-palette-pink: #FF8BCB;
+  --light-palette-purple: #D7AEFB;
+  --light-palette-turquoise: #78D9EC;
+  
+  --medium-palette-gray: #949AA3;
+  --medium-palette-blue: #4286F4;
+  --medium-palette-red: #EB4B3D;
+  --medium-palette-yellow: #FCC217;
+  --medium-palette-green: #4CB168;
+  --medium-palette-pink: #FF3FA9;
+  --medium-palette-purple: #B365F7;
+  --medium-palette-turquoise: #35C6E3;
+  
+  --dark-palette-gray: #6C737E;
+  --dark-palette-blue: #0D5CDD;
+  --dark-palette-red: #C72315;
+  --dark-palette-yellow: #C49303;
+  --dark-palette-green: #357B49;
+  --dark-palette-pink: #F20085;
+  --dark-palette-purple: #8F1CF3;
+  --dark-palette-turquoise: #1999B3;
 }
 
 :global(::-webkit-scrollbar) {
@@ -248,7 +284,7 @@ body, html {
 
     .Navigation {
       position: relative;
-      z-index: 9998;
+      z-index: 2000;
       border-radius: var(--border-radius) 0 0 var(--border-radius);
     }
   
@@ -290,6 +326,31 @@ body, html {
   transition: all .5s;
   position: relative;
 
+  &-date {
+    height: 100%;
+    min-height: 7rem;
+    width: 7rem;
+    flex: 0 0 7rem;
+    font-size: 135%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &-month {
+      font-size: .8rem;
+      text-transform: uppercase;
+      margin-top: -.2rem;
+    }
+
+    &.Element-date--small {
+      min-height: 4rem;
+      width: 5rem;
+      flex: 0 0 5rem;
+      font-size: 120%;
+    }
+  }
+
   &-icon {
     height: 100%;
     min-height: 7rem;
@@ -299,6 +360,13 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &.Element-icon--small {
+      min-height: 4rem;
+      width: 5rem;
+      flex: 0 0 5rem;
+      font-size: 120%;
+    }
   }
 
   &-photo {
@@ -393,6 +461,10 @@ body, html {
     margin: 1rem;
     box-shadow: var(--shadow);
     border-radius: var(--border-radius);
+
+    &.Element--full-width {
+      width: calc(100% - 2rem);
+    }
   }
 
   &--row {

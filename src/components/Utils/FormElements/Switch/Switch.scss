@@ -10,11 +10,17 @@
     font-size: 180%;
 
     .icon--on {
-      color: var(--green);
+      color: var(--theme);
     }
   
     .icon--off {
-      color: var(--red);
+      color: var(--theme);
+    }
+
+    span {
+      font-size: 1rem;
+      vertical-align: middle;
+      margin-left: .5rem;
     }
   }
 }

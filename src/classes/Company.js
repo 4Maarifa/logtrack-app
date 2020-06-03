@@ -89,11 +89,12 @@ export const ECompanyPlan = {
 };
 
 export class JobOffer {
-    constructor(title, description, role, companyId, creationIsoDate, status) {
+    constructor(title, description, role, companyId, creator, creationIsoDate, status) {
         this.title = title;
         this.description = description;
         this.role = ERole[role];
         this.companyId = companyId;
+        this.creator = creator;
         this.creationIsoDate = creationIsoDate;
         this.status = EJobOfferStatus[status];
     }

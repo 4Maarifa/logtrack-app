@@ -7,7 +7,7 @@ import { v4 as uuid } from 'uuid';
 
 import './Switch.scss';
 
-const Switch = ({ value, onChange, fieldName }) => {
+const Switch = ({ value, onChange, fieldName, label }) => {
   const inputKey = uuid();
 
   return (
@@ -19,6 +19,7 @@ const Switch = ({ value, onChange, fieldName }) => {
       <label className="Switch-indicator" htmlFor={inputKey}>
         {value ? <Icon source="fa" icon={faToggleOn} className="icon--on" /> : 
         <Icon source="fa" icon={faToggleOff} className="icon--off" />}
+        <span>{label}</span>
       </label>
     </div>
   );

@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import Icon from './../Icon/Icon';
+
+import { EPalette, EVeryLightPaletteDetails, ELightPaletteDetails, EMediumPaletteDetails, EDarkPaletteDetails } from './../../../services/color.service';
 
 import './Specs.scss';
 
@@ -22,6 +24,26 @@ class Specs extends Component {
         <span className="color clr-j"></span>
         <span className="color clr-k"></span>
         <span className="color clr-l"></span>
+        <br/>
+        {Object.keys(EPalette).map(colorKey => 
+            <Fragment key={colorKey}>
+                <span key={'very-light' + colorKey} className="color" style={{backgroundColor: `var(${EVeryLightPaletteDetails[colorKey].cssVariable})`}}>
+                    {EVeryLightPaletteDetails[colorKey].name} /
+                    <span style={{color: 'white'}}>{EVeryLightPaletteDetails[colorKey].name}</span>
+                </span>
+                <span key={'light' + colorKey} className="color" style={{backgroundColor: `var(${ELightPaletteDetails[colorKey].cssVariable})`}}>
+                    {ELightPaletteDetails[colorKey].name} /
+                    <span style={{color: 'white'}}>{ELightPaletteDetails[colorKey].name}</span>
+                </span>
+                <span key={'medium' + colorKey} className="color" style={{backgroundColor: `var(${EMediumPaletteDetails[colorKey].cssVariable})`}}>
+                    {EMediumPaletteDetails[colorKey].name} /
+                    <span style={{color: 'white'}}>{EMediumPaletteDetails[colorKey].name}</span>
+                </span>
+                <span key={'dark' + colorKey} className="color" style={{backgroundColor: `var(${EDarkPaletteDetails[colorKey].cssVariable})`}}>
+                    {EDarkPaletteDetails[colorKey].name} /
+                    <span style={{color: 'white'}}>{EDarkPaletteDetails[colorKey].name}</span>
+                </span><br/>
+            </Fragment>)}
         <h1>Icons</h1>
         <h2>Vehicles</h2>
         <ul>

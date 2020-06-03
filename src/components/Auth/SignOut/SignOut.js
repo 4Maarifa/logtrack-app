@@ -26,9 +26,8 @@ const SignOut = () => {
               success: true,
             },
             EAccountActivityType.SIGNOUT)
-        )
-          .then(() => setSignOut(true))
-          .catch(ErrorService.manageError);
+        ).then(() => setSignOut(true))
+        .catch(ErrorService.manageError);
       })
       .catch(ErrorService.manageError);
   }, []);

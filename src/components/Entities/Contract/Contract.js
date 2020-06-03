@@ -72,7 +72,7 @@ const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, 
         }
         return <button onClick={() => changeContractStatus(EContractStatus.ARCHIVED)}>Click to archive</button>;
       case EContractStatus.ARCHIVED:
-        return <span>Archived on {DateService.getDateString(DateService.getDateFromIsoString(contractData.archiveIsoDate))}</span>
+        return <span>Archived on {DateService.getDateString(DateService.getDateFromIsoString(contractData.archiveIsoDate), false)}</span>
       default: 
         console.error('Unknown contract status:' + contractData.status);
     }

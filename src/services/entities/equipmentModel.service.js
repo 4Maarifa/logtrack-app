@@ -31,13 +31,13 @@ const EquipmentModelService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('equipmentModels').add(migratePrototype(equipmentModel));
+    return FirebaseService.getFirestore().collection('equipmentModels').add(migratePrototype(equipmentModel));
   },
   get: equipmentModelId => {
     if(!EquipmentModelService.rights[ERights.RIGHT_EQUIPMENT_MODEL_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get an Equipment Model' });
     }
-    return FirebaseService.getDb().collection('equipmentModels').doc(equipmentModelId).get();
+    return FirebaseService.getFirestore().collection('equipmentModels').doc(equipmentModelId).get();
   },
   list: () => {
     if(!EquipmentModelService.rights[ERights.RIGHT_EQUIPMENT_MODEL_LIST]()) {
@@ -46,7 +46,7 @@ const EquipmentModelService = {
 
     const equipmentModels = {};
     return new Promise((resolve, reject) => {
-        FirebaseService.getDb().collection('equipmentModels').get()
+        FirebaseService.getFirestore().collection('equipmentModels').get()
             .then(querySnapshot => {
                 querySnapshot.forEach(equipmentModelDoc => equipmentModels[equipmentModelDoc.id] = equipmentModelDoc.data());
                 resolve(equipmentModels);
@@ -67,21 +67,21 @@ const EquipmentModelService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['name', 'creator', 'logoURL'] });
     }
 
-    return FirebaseService.getDb().collection('equipmentModels').doc(equipmentModelId).set(migratePrototype(equipmentModel));
+    return FirebaseService.getFirestore().collection('equipmentModels').doc(equipmentModelId).set(migratePrototype(equipmentModel));
   },
   updateField: (equipmentModelId, equipmentModelField) => {
     if(!EquipmentModelService.rights[ERights.RIGHT_EQUIPMENT_MODEL_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update an Equipment Model' });
     }
     
-    return FirebaseService.getDb().collection('equipmentModels').doc(equipmentModelId).update(equipmentModelField);
+    return FirebaseService.getFirestore().collection('equipmentModels').doc(equipmentModelId).update(equipmentModelField);
   },
   delete: equipmentModelId => {
     if(!EquipmentModelService.rights[ERights.RIGHT_EQUIPMENT_MODEL_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete an Equipment Model' });
     }
     
-    return FirebaseService.getDb().collection('equipmentModels').doc(equipmentModelId).delete();
+    return FirebaseService.getFirestore().collection('equipmentModels').doc(equipmentModelId).delete();
   },
 
   // CUSTOM FUNCTIONS

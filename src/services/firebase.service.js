@@ -2,20 +2,25 @@ import Credentials from './../params.inc';
 
 const firebase = require('firebase/app');
 require('firebase/firestore');
+require('firebase/database');
 require('firebase/auth');
 require('firebase/storage');
 require('firebase/functions');
 
 const FirebaseService = {
     connection: null,
-    db: null,
+    firestore: null,
+    rtDb: null,
 
     initialize: () => {
         if(!FirebaseService.connection) {
             FirebaseService.connection = firebase.initializeApp(Credentials.firebase);
         }
-        if(!FirebaseService.db) {
-            FirebaseService.db = firebase.firestore();
+        if(!FirebaseService.firestore) {
+            FirebaseService.firestore = firebase.firestore();
+        }
+        if(!FirebaseService.rtDb) {
+            FirebaseService.rtDb = firebase.database();
         }
     },
 
@@ -35,9 +40,10 @@ const FirebaseService = {
     isUserConnected: () => FirebaseService.getCurrentUser() != null,
 
     // FIRESTORE
-    getDb: () => FirebaseService.db,
+    getFirestore: () => FirebaseService.firestore,
 
-    readAllDataFromCollection: collectionName => FirebaseService.getDb().collection(collectionName).get()
+    // REAL-TIME
+    getRtDb: () => FirebaseService.rtDb
 };
 
 export default FirebaseService;

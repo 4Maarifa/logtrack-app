@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { faBuilding, faRectangleWide, faExchange } from '@fortawesome/pro-solid-svg-icons';
+import { faBuilding, faRectangleWide, faExchange, faUser } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 import Choose from './../../Utils/FormElements/Choose/Choose';
@@ -15,6 +15,7 @@ import DataService from './../../../services/data.service';
 import DateService from './../../../services/date.service';
 import ErrorService from './../../../services/error.service';
 import CompanyService from './../../../services/entities/company.service';
+import EmployeeService from './../../../services/entities/employee.service';
 import ContractService from './../../../services/entities/contract.service';
 
 import { v4 as uuid } from 'uuid';
@@ -36,6 +37,9 @@ const ContractAdd = ({ match }) => {
   const [selectedCompanyItem, setSelectedCompanyItem] = useState(null);
 
   const [contractType, setContractType] = useState('');
+
+  const [creatorId, setCreatorId] = useState(null);
+  const [creator, setCreator] = useState(null);
 
   const [isExecutor, setExecutor] = useState(false);
 
@@ -63,8 +67,19 @@ const ContractAdd = ({ match }) => {
               });
             })
             .catch(ErrorService.manageError);
+
+          EmployeeService.get(contractDoc.data().creator)
+            .then(employeeDoc => {
+              setCreatorId(employeeDoc.id);
+              setCreator(employeeDoc.data());
+            })
+            .catch(ErrorService.manageError);
         })
         .catch(ErrorService.manageError);
+    }
+    else {
+      setCreatorId(computed.user.uid);
+      setCreator(computed.employee);
     }
   };
 
@@ -108,7 +123,7 @@ const ContractAdd = ({ match }) => {
       const companyOrderId = isExecutor ? selectedCompanyId : computed.activeRole.companyId;
       const companyExecId = isExecutor ? computed.activeRole.companyId : selectedCompanyId;
       
-      ContractService.create(new Contract(identification, [], companyOrderId, companyExecId, computed.activeRole.companyId, contractType, EContractStatus.DRAFT, DateService.getCurrentIsoDateString(), null))
+      ContractService.create(new Contract(identification, [], companyOrderId, companyExecId, computed.activeRole.companyId, contractType, EContractStatus.DRAFT, computed.user.uid, DateService.getCurrentIsoDateString(), null))
         .then(contractDoc => setNewContractId(contractDoc.id))
         .catch(ErrorService.manageError);
     }
@@ -158,7 +173,7 @@ const ContractAdd = ({ match }) => {
 
   return (
     <div className="ContractAdd">
-      <h1>Add a contract</h1>
+      <h1>{currentContractId ? 'Edit' : 'Add'} a contract</h1>
       <form onSubmit={handleSubmit}>
 
         <FormInput
@@ -264,6 +279,15 @@ const ContractAdd = ({ match }) => {
               items={contractDetails}
               fieldName="contractType"
               onSelectionChange={setContractType} /> }
+        </div>
+
+        {/* Creator */}
+        <div className="input-creator">
+          <span className="fake-label">
+            <Icon source="fa" icon={faUser} />
+            Creator
+          </span>
+          <PageLink type={PageLinkType.EMPLOYEE} entityId={creatorId} entityData={creator} />
         </div>
 
         <input type="submit" />

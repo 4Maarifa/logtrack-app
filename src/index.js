@@ -101,6 +101,7 @@ import Search from './components/App/Search/Search';
 // SERVICES
 import FirebaseService from './services/firebase.service';
 import DataService from './services/data.service';
+import RT_Service from './services/rt.service';
 import ResizeService from './services/resize.service';
 import SettingsService, { ESettings } from './services/settings.service';
 import ColorService from './services/color.service';
@@ -269,6 +270,7 @@ const renderApp = () => {
 
 // Service Initialization
 DataService.initialize();
+RT_Service.initialize();
 
 const observerKey = uuid();
 

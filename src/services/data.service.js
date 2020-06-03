@@ -4,6 +4,7 @@ import FirebaseService from './firebase.service';
 import RoleService from './entities/role.service';
 import CompanyService from './entities/company.service';
 import EmployeeService from './entities/employee.service';
+import RT_Service from './rt.service';
 
 import { ERoleStatus } from './../classes/Role';
 
@@ -41,6 +42,7 @@ const DataService = {
                                         EmployeeService.unactivateRole()
                                             .then(DataService.computed.notifyChanges)
                                             .catch(ErrorService.manageError);
+                                        RT_Service.role.resetRole();
                                     }
 
                                     DataService.computed.activeRole = activeRole;

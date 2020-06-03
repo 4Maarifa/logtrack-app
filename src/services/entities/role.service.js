@@ -41,13 +41,13 @@ const RoleService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('roles').add(migratePrototype(role));
+    return FirebaseService.getFirestore().collection('roles').add(migratePrototype(role));
   },
   get: roleId => {
     if(!RoleService.rights[ERights.RIGHT_ROLE_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Role' });
     }
-    return FirebaseService.getDb().collection('roles').doc(roleId).get();
+    return FirebaseService.getFirestore().collection('roles').doc(roleId).get();
   },
   list: () => {
     if(!RoleService.rights[ERights.RIGHT_ROLE_LIST]()) {
@@ -56,7 +56,7 @@ const RoleService = {
 
     const roles = {};
     return new Promise((resolve, reject) => {
-        FirebaseService.getDb().collection('roles').get()
+        FirebaseService.getFirestore().collection('roles').get()
             .then(querySnapshot => {
                 querySnapshot.forEach(roleDoc => roles[roleDoc.id] = roleDoc.data());
                 resolve(roles);
@@ -83,21 +83,21 @@ const RoleService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('roles').doc(roleId).set(migratePrototype(role));
+    return FirebaseService.getFirestore().collection('roles').doc(roleId).set(migratePrototype(role));
   },
   updateField: (roleId, roleField) => {
     if(!RoleService.rights[ERights.RIGHT_ROLE_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Role' });
     }
     
-    return FirebaseService.getDb().collection('roles').doc(roleId).update(roleField);
+    return FirebaseService.getFirestore().collection('roles').doc(roleId).update(roleField);
   },
   delete: roleId => {
     if(!RoleService.rights[ERights.RIGHT_ROLE_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Role' });
     }
     
-    return FirebaseService.getDb().collection('roles').doc(roleId).delete();
+    return FirebaseService.getFirestore().collection('roles').doc(roleId).delete();
   },
 
   // CUSTOM FUNCTIONS
@@ -140,7 +140,7 @@ const RoleService = {
     const roles = {};
 
     return new Promise((resolve, reject) => {
-      FirebaseService.getDb().collection('roles')
+      FirebaseService.getFirestore().collection('roles')
         .where('employeeId', '==', employeeId)
         .where('status', 'in', statusArray)
         .get()
@@ -159,7 +159,7 @@ const RoleService = {
     const roles = {};
 
     return new Promise((resolve, reject) => {
-      FirebaseService.getDb().collection('roles')
+      FirebaseService.getFirestore().collection('roles')
         .where('companyId', '==', companyId)
         .where('status', 'in', statusArray)
         .get()
@@ -178,7 +178,7 @@ const RoleService = {
     const roles = {};
 
     return new Promise((resolve, reject) => {
-      FirebaseService.getDb().collection('roles')
+      FirebaseService.getFirestore().collection('roles')
         .where('companyId', '==', companyId)
         .where('employeeId', '==', employeeId)
         .where('status', 'in', statusArray)

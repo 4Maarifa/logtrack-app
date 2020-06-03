@@ -32,13 +32,13 @@ const EquipmentService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('equipments').add(migratePrototype(equipment));
+    return FirebaseService.getFirestore().collection('equipments').add(migratePrototype(equipment));
   },
   get: equipmentId => {
     if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get an Equipment' });
     }
-    return FirebaseService.getDb().collection('equipments').doc(equipmentId).get();
+    return FirebaseService.getFirestore().collection('equipments').doc(equipmentId).get();
   },
   list: () => {
     if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_LIST]()) {
@@ -47,7 +47,7 @@ const EquipmentService = {
 
     const equipments = {};
     return new Promise((resolve, reject) => {
-      FirebaseService.getDb().collection('equipments').get()
+      FirebaseService.getFirestore().collection('equipments').get()
         .then(querySnapshot => {
             querySnapshot.forEach(equipmentDoc => equipments[equipmentDoc.id] = equipmentDoc.data());
             resolve(equipments);
@@ -72,21 +72,21 @@ const EquipmentService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('equipments').doc(equpmentId).set(migratePrototype(equipment));
+    return FirebaseService.getFirestore().collection('equipments').doc(equpmentId).set(migratePrototype(equipment));
   },
   updateField: (equipmentId, equipmentField) => {
     if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update an Equipment' });
     }
     
-    return FirebaseService.getDb().collection('equipments').doc(equipmentId).update(equipmentField);
+    return FirebaseService.getFirestore().collection('equipments').doc(equipmentId).update(equipmentField);
   },
   delete: equipmentId => {
     if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete an Equipment' });
     }
     
-    return FirebaseService.getDb().collection('equipments').doc(equipmentId).delete();
+    return FirebaseService.getFirestore().collection('equipments').doc(equipmentId).delete();
   },
 
   // CUSTOM FUNCTIONS
@@ -97,7 +97,7 @@ const EquipmentService = {
 
     const equipments = {};
     return new Promise((resolve, reject) => {
-      FirebaseService.getDb().collection('equipments')
+      FirebaseService.getFirestore().collection('equipments')
       .where('companyId', '==', companyId)
       .get()
       .then(querySnapshot => {
@@ -114,7 +114,7 @@ const EquipmentService = {
 
     const equipments = {};
     return new Promise((resolve, reject) => {
-      FirebaseService.getDb().collection('equipments')
+      FirebaseService.getFirestore().collection('equipments')
       .where('warehouseId', '==', warehouseId)
       .get()
       .then(querySnapshot => {

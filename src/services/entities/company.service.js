@@ -5,7 +5,6 @@ import FirebaseService from './../firebase.service';
 import ErrorService from './../error.service';
 
 import Company, { JobOffer, EJobOfferStatus } from './../../classes/Company';
-
 import ESearchType from './../../classes/enums/ESearchType';
 import { ERole } from './../../classes/Role';
 
@@ -30,13 +29,13 @@ const CompanyService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['name', 'creator', 'logoURL', 'color', 'creationIsoString', 'plan'] });
     }
 
-    return FirebaseService.getDb().collection('companies').add(migratePrototype(company));
+    return FirebaseService.getFirestore().collection('companies').add(migratePrototype(company));
   },
   get: companyId => {
     if(!CompanyService.rights[ERights.RIGHT_COMPANY_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Company' });
     }
-    return FirebaseService.getDb().collection('companies').doc(companyId).get();
+    return FirebaseService.getFirestore().collection('companies').doc(companyId).get();
   },
   list: () => {
     if(!CompanyService.rights[ERights.RIGHT_COMPANY_LIST]()) {
@@ -45,7 +44,7 @@ const CompanyService = {
 
     const companies = {};
     return new Promise((resolve, reject) => {
-        FirebaseService.getDb().collection('companies').get()
+        FirebaseService.getFirestore().collection('companies').get()
             .then(querySnapshot => {
                 querySnapshot.forEach(companyDoc => companies[companyDoc.id] = companyDoc.data());
                 resolve(companies);
@@ -70,21 +69,21 @@ const CompanyService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('companies').doc(companyId).set(migratePrototype(company));
+    return FirebaseService.getFirestore().collection('companies').doc(companyId).set(migratePrototype(company));
   },
   updateField: (companyId, companyField) => {
     if(!CompanyService.rights[ERights.RIGHT_COMPANY_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Company' });
     }
     
-    return FirebaseService.getDb().collection('companies').doc(companyId).update(companyField);
+    return FirebaseService.getFirestore().collection('companies').doc(companyId).update(companyField);
   },
   delete: companyId => {
     if(!CompanyService.rights[ERights.RIGHT_COMPANY_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Company' });
     }
     
-    return FirebaseService.getDb().collection('companies').doc(companyId).delete();
+    return FirebaseService.getFirestore().collection('companies').doc(companyId).delete();
   },
 
   // CUSTOM FUNCTIONS
@@ -134,13 +133,13 @@ const CompanyService = {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['title', 'description', 'role', 'companyId'] });
       }
   
-      return FirebaseService.getDb().collection('jobOffers').add(migratePrototype(jobOffer));
+      return FirebaseService.getFirestore().collection('jobOffers').add(migratePrototype(jobOffer));
     },
     get: jobOfferId => {
       if(!CompanyService.jobOffer.rights[ERights.RIGHT_JOBOFFERS_GET]()) {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Job Offer' });
       }
-      return FirebaseService.getDb().collection('jobOffers').doc(jobOfferId).get();
+      return FirebaseService.getFirestore().collection('jobOffers').doc(jobOfferId).get();
     },
     list: () => {
       if(!CompanyService.jobOffer.rights[ERights.RIGHT_JOBOFFERS_LIST]()) {
@@ -149,7 +148,7 @@ const CompanyService = {
   
       const jobOffers = {};
       return new Promise((resolve, reject) => {
-          FirebaseService.getDb().collection('jobOffers').get()
+          FirebaseService.getFirestore().collection('jobOffers').get()
               .then(querySnapshot => {
                   querySnapshot.forEach(jobOfferDoc => jobOffers[jobOfferDoc.id] = jobOfferDoc.data());
                   resolve(jobOffers);
@@ -170,21 +169,21 @@ const CompanyService = {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['title', 'description', 'role', 'companyId'] });
       }
   
-      return FirebaseService.getDb().collection('jobOffers').doc(jobOfferId).set(migratePrototype(jobOffer));
+      return FirebaseService.getFirestore().collection('jobOffers').doc(jobOfferId).set(migratePrototype(jobOffer));
     },
     updateField: (jobOfferId, jobOfferField) => {
       if(!CompanyService.jobOffer.rights[ERights.RIGHT_JOBOFFERS_UPDATE]()) {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Job Offer' });
       }
       
-      return FirebaseService.getDb().collection('jobOffers').doc(jobOfferId).update(jobOfferField);
+      return FirebaseService.getFirestore().collection('jobOffers').doc(jobOfferId).update(jobOfferField);
     },
     delete: jobOfferId => {
       if(!CompanyService.jobOffer.rights[ERights.RIGHT_JOBOFFERS_DELETE]()) {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Job Offer' });
       }
       
-      return FirebaseService.getDb().collection('jobOffers').doc(jobOfferId).delete();
+      return FirebaseService.getFirestore().collection('jobOffers').doc(jobOfferId).delete();
     },
 
     // CUSTOM FUNCTIONS
@@ -195,7 +194,7 @@ const CompanyService = {
 
       const jobOffers = {};
       return new Promise((resolve, reject) => {
-        FirebaseService.getDb().collection('jobOffers')
+        FirebaseService.getFirestore().collection('jobOffers')
         .where('companyId', '==', companyId)
         .get()
         .then(querySnapshot => {
@@ -212,7 +211,7 @@ const CompanyService = {
 
       const jobOffers = {};
       return new Promise((resolve, reject) => {
-        FirebaseService.getDb().collection('jobOffers')
+        FirebaseService.getFirestore().collection('jobOffers')
         .where('companyId', '==', companyId)
         .where('status', '==', EJobOfferStatus.OPENED)
         .get()
@@ -229,7 +228,7 @@ const CompanyService = {
       }
 
       return new Promise((resolve, reject) => {
-        FirebaseService.getDb().collection('jobOffers')
+        FirebaseService.getFirestore().collection('jobOffers')
         .where('companyId', '==', companyId)
         .get()
         .then(querySnapshot => resolve(querySnapshot.size))
@@ -243,7 +242,7 @@ const CompanyService = {
 
       const jobOffers = {};
       return new Promise((resolve, reject) => {
-        FirebaseService.getDb().collection('jobOffers')
+        FirebaseService.getFirestore().collection('jobOffers')
         .where('status', '==', EJobOfferStatus.OPENED)
         .get()
         .then(querySnapshot => {

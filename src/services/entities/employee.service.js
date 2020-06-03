@@ -6,6 +6,9 @@ import ErrorService from './../error.service';
 
 import Employee, { AccountActivity } from './../../classes/Employee';
 import ESearchType from './../../classes/enums/ESearchType';
+import RT_Service from '../rt.service';
+import RoleService from './role.service';
+import { ERoleStatus } from '../../classes/Role';
 
 const EmployeeService = {
   rights: {
@@ -32,13 +35,13 @@ const EmployeeService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('employees').doc(userId).set(migratePrototype(employee));
+    return FirebaseService.getFirestore().collection('employees').doc(userId).set(migratePrototype(employee));
   },
   get: employeeId => {
     if(!EmployeeService.rights[ERights.RIGHT_EMPLOYEE_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get an Employee' });
     }
-    return FirebaseService.getDb().collection('employees').doc(employeeId).get();
+    return FirebaseService.getFirestore().collection('employees').doc(employeeId).get();
   },
   list: () => {
     if(!EmployeeService.rights[ERights.RIGHT_EMPLOYEE_LIST]()) {
@@ -47,7 +50,7 @@ const EmployeeService = {
 
     const employees = {};
     return new Promise((resolve, reject) => {
-        FirebaseService.getDb().collection('employees').get()
+        FirebaseService.getFirestore().collection('employees').get()
             .then(querySnapshot => {
                 querySnapshot.forEach(employeeDoc => employees[employeeDoc.id] = employeeDoc.data());
                 resolve(employees);
@@ -72,7 +75,7 @@ const EmployeeService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('employees').doc(employeeId).set(migratePrototype(employee));
+    return FirebaseService.getFirestore().collection('employees').doc(employeeId).set(migratePrototype(employee));
   },
   updateField: (employeeId, employeeField) => {
     if(!EmployeeService.rights[ERights.RIGHT_EMPLOYEE_UPDATE]()) {
@@ -83,14 +86,14 @@ const EmployeeService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
     
-    return FirebaseService.getDb().collection('employees').doc(employeeId).update(employeeField);
+    return FirebaseService.getFirestore().collection('employees').doc(employeeId).update(employeeField);
   },
   delete: employeeId => {
     if(!EmployeeService.rights[ERights.RIGHT_EMPLOYEE_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete an Employee' });
     }
     
-    return FirebaseService.getDb().collection('employees').doc(employeeId).delete();
+    return FirebaseService.getFirestore().collection('employees').doc(employeeId).delete();
   },
 
   // CUSTOM FUNCTIONS
@@ -118,9 +121,25 @@ const EmployeeService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update an Employee' });
     }
 
-    return EmployeeService.updateField(DataService.computed.user.uid, {activeRoleId: roleId})
-      .then(DataService.computed.notifyChanges)
-      .catch(ErrorService.manageError);
+    return new Promise((resolve, reject) => {
+      RoleService.get(roleId)
+        .then(roleDoc => {
+          if(roleDoc.data().status !== ERoleStatus.CONFIRMED) {
+            ErrorService.manageErrorThenReject({ code: 'entity/right', details: 'Activate a non-confirmed role' }, reject);
+            return;
+          }
+
+          EmployeeService.updateField(DataService.computed.user.uid, { activeRoleId: roleId })
+            .then(() => {
+              RT_Service.role.updateRole(roleDoc.data());
+              DataService.computed.notifyChanges();
+              resolve();
+            })
+            .catch(e => ErrorService.manageErrorThenReject(e, reject));
+
+        })
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
+    });
   },
   unactivateRole: () => {
     if(!EmployeeService.rights[ERights.RIGHT_EMPLOYEE_UPDATE]()) {
@@ -128,7 +147,10 @@ const EmployeeService = {
     }
     
     return EmployeeService.updateField(DataService.computed.user.uid, {activeRoleId: null})
-      .then(DataService.computed.notifyChanges)
+      .then(() => {
+        RT_Service.role.resetRole();
+        DataService.computed.notifyChanges();
+      })
       .catch(ErrorService.manageError);
   },
   search: term => new Promise((resolve, reject) => {
@@ -159,13 +181,13 @@ const EmployeeService = {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['email', 'creationIsoDate'] });
       }
   
-      return FirebaseService.getDb().collection('accountActivity').add(migratePrototype(accountActivity));
+      return FirebaseService.getFirestore().collection('accountActivity').add(migratePrototype(accountActivity));
     },
     get: accountActivityId => {
       if(!EmployeeService.accountActivity.rights[ERights.RIGHT_ACCOUNT_ACTIVITY_GET]()) {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get an Account Activity' });
       }
-      return FirebaseService.getDb().collection('accountActivity').doc(accountActivityId).get();
+      return FirebaseService.getFirestore().collection('accountActivity').doc(accountActivityId).get();
     },
     list: () => {
       if(!EmployeeService.accountActivity.rights[ERights.RIGHT_ACCOUNT_ACTIVITY_LIST]()) {
@@ -174,7 +196,7 @@ const EmployeeService = {
   
       const accountActivities = {};
       return new Promise((resolve, reject) => {
-          FirebaseService.getDb().collection('accountActivity').get()
+          FirebaseService.getFirestore().collection('accountActivity').get()
               .then(querySnapshot => {
                   querySnapshot.forEach(accountActivityDoc => accountActivities[accountActivityDoc.id] = accountActivityDoc.data());
                   resolve(accountActivities);
@@ -195,21 +217,21 @@ const EmployeeService = {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['email', 'creationIsoDate'] });
       }
   
-      return FirebaseService.getDb().collection('accountActivity').doc(accountActivityId).set(migratePrototype(accountActivity));
+      return FirebaseService.getFirestore().collection('accountActivity').doc(accountActivityId).set(migratePrototype(accountActivity));
     },
     updateField: (accountActivityId, accountActivityField) => {
       if(!EmployeeService.accountActivity.rights[ERights.RIGHT_ACCOUNT_ACTIVITY_UPDATE]()) {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update an Account Activity' });
       }
       
-      return FirebaseService.getDb().collection('accountActivity').doc(accountActivityId).update(accountActivityField);
+      return FirebaseService.getFirestore().collection('accountActivity').doc(accountActivityId).update(accountActivityField);
     },
     delete: accountActivityId => {
       if(!EmployeeService.accountActivity.rights[ERights.RIGHT_ACCOUNT_ACTIVITY_DELETE]()) {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete an Account Activity' });
       }
       
-      return FirebaseService.getDb().collection('accountActivity').doc(accountActivityId).delete();
+      return FirebaseService.getFirestore().collection('accountActivity').doc(accountActivityId).delete();
     },
     // CUSTOM FUNCTIONS
     getAllByEmail: email => {
@@ -219,7 +241,7 @@ const EmployeeService = {
 
       const accountActivities = {};
       return new Promise((resolve, reject) => {
-        FirebaseService.getDb().collection('accountActivity')
+        FirebaseService.getFirestore().collection('accountActivity')
           .where('email', '==', email)
           .get()
           .then(querySnapshot => {

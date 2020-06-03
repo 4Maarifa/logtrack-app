@@ -34,14 +34,14 @@ const ContractService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('contracts').add(migratePrototype(contract));
+    return FirebaseService.getFirestore().collection('contracts').add(migratePrototype(contract));
   },
   get: contractId => {
     if(!ContractService.rights[ERights.RIGHT_CONTRACT_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get a Contract' });
     }
 
-    return FirebaseService.getDb().collection('contracts').doc(contractId).get();
+    return FirebaseService.getFirestore().collection('contracts').doc(contractId).get();
   },
   list: () => {
     if(!ContractService.rights[ERights.RIGHT_CONTRACT_LIST]()) {
@@ -50,7 +50,7 @@ const ContractService = {
 
     const contracts = {};
     return new Promise((resolve, reject) => {
-        FirebaseService.getDb().collection('contracts').get()
+        FirebaseService.getFirestore().collection('contracts').get()
             .then(querySnapshot => {
                 querySnapshot.forEach((contractDoc) => contracts[contractDoc.id] = contractDoc.data());
                 resolve(contracts);
@@ -76,21 +76,21 @@ const ContractService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    return FirebaseService.getDb().collection('contracts').doc(contractId).set(migratePrototype(contract));
+    return FirebaseService.getFirestore().collection('contracts').doc(contractId).set(migratePrototype(contract));
   },
   updateField: (contractId, contractField) => {
     if(!ContractService.rights[ERights.RIGHT_CONTRACT_UPDATE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Contract' });
     }
     
-    return FirebaseService.getDb().collection('contracts').doc(contractId).update(contractField);
+    return FirebaseService.getFirestore().collection('contracts').doc(contractId).update(contractField);
   },
   delete: contractId => {
     if(!ContractService.rights[ERights.RIGHT_CONTRACT_DELETE]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Delete a Contract' });
     }
     
-    return FirebaseService.getDb().collection('contracts').doc(contractId).delete();
+    return FirebaseService.getFirestore().collection('contracts').doc(contractId).delete();
   },
 
   // CUSTOM FUNCTIONS
@@ -101,7 +101,7 @@ const ContractService = {
 
     const contracts = {};
     return new Promise((resolve, reject) => {
-      FirebaseService.getDb().collection('contracts')
+      FirebaseService.getFirestore().collection('contracts')
         .where('companyExecId', '==', companyExecId)
         .where('status', 'in', statusArray)
         .get()
@@ -119,7 +119,7 @@ const ContractService = {
     
     const contracts = {};
     return new Promise((resolve, reject) => {
-      FirebaseService.getDb().collection('contracts')
+      FirebaseService.getFirestore().collection('contracts')
         .where('companyOrderId', '==', companyOrderId)
         .where('status', 'in', statusArray)
         .get()

@@ -87,7 +87,7 @@ const CompanyAdd = ({ match }) => {
     }
     else {
       setCreatorId(computed.user.uid);
-      setCreator(computed.user);
+      setCreator(computed.employee);
     }
   };
 
@@ -197,7 +197,7 @@ const CompanyAdd = ({ match }) => {
 
   return (
     <div className="CompanyAdd">
-      <h1>Add a company</h1>
+      <h1>{currentCompanyId ? 'Edit' : 'Add'} a company</h1>
       <form onSubmit={handleSubmit}>
 
         {/* Name field */}
@@ -290,7 +290,7 @@ const CompanyAdd = ({ match }) => {
             fieldName="selectedColor"
             selectionRequired
             onSelectionChange={setSelectedColor} />
-          <span className="input-color-info">
+          <span className="input-color-info sub">
             <Icon source="fa" icon={faInfoCircle} />
             The dominant color of your company is used to customize employees' experience.
           </span>

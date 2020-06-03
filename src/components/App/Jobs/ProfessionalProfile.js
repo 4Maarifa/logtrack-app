@@ -155,11 +155,15 @@ const ProfessionalProfile = () => {
   return <div className="ProfessionalProfile tab-content">
     <h2>Current Search</h2>
     <div className="input-container">
+
+      {/* Looking */}
       <span className="fake-label">
         Actively Looking for a job?
       </span>
       <Switch value={looking} onChange={setLooking} />
     </div>
+
+    {/* Role selection */}
     <div className="input-container">
       <span className="fake-label">
         Looking for an offer as
@@ -169,6 +173,8 @@ const ProfessionalProfile = () => {
               multiple
               onSelectionChange={setRoleSelection} />
     </div>
+
+    {/* Resume */}
     <div className="input-container">
       <span className="fake-label">
         Write about yourself
@@ -179,10 +185,13 @@ const ProfessionalProfile = () => {
         value={resume}
         onChange={e => setResume(e.target.value)} />
     </div>
+
+    {/* Save search */}
     <button className="input-submit" onClick={saveSearch}>
       <Icon source="fa" icon={faSave} />
       Save Current Search
     </button>
+
     <h2>Certificates</h2>
     <ExTable key="certificates" 
               items={computed.employee.certificates} 
@@ -195,6 +204,8 @@ const ProfessionalProfile = () => {
         <Icon source="fa" icon={faAward} />
         Add a new certificate
       </h3>
+
+      {/* Certificate name */}
       <FormInput
         value={certificateName}
         inputType="text"
@@ -213,6 +224,8 @@ const ProfessionalProfile = () => {
           </span>
         }
         onValueChange={setCertificateName} />
+
+      {/* Certificate date */}
       <div className="input-container">
         <span className="fake-label">
           <Icon source="fa" icon={faCalendarAlt} />
@@ -229,6 +242,8 @@ const ProfessionalProfile = () => {
           required
           showLeadingZeros />
       </div>
+
+      {/* Submit */}
       <button className="input-submit">
         <Icon source="fa" icon={faPlus} />
         <span className="button-label">Add Certificate</span>
@@ -260,6 +275,8 @@ const ProfessionalProfile = () => {
         <Icon source="fa" icon={faClipboardUser} />
         Add a new experience
       </h3>
+
+      {/* Experience Name */}
       <FormInput
         value={experienceName}
         inputType="text"
@@ -278,6 +295,8 @@ const ProfessionalProfile = () => {
           </span>
         }
         onValueChange={setExperienceName} />
+
+      {/* Experience company */}
       <FormInput
         value={experienceCompamyName}
         inputType="text"
@@ -296,6 +315,8 @@ const ProfessionalProfile = () => {
           </span>
         }
         onValueChange={setExperienceCompanyName} />
+
+      {/* Experience start date */}
       <div className="input-container">
         <span className="fake-label">
           <Icon source="fa" icon={faArrowAltFromLeft} />
@@ -312,6 +333,8 @@ const ProfessionalProfile = () => {
           required
           showLeadingZeros />
       </div>
+
+      {/* Experience end date */}
       <div className="input-container">
         <span className="fake-label">
           <Icon source="fa" icon={faArrowAltToRight} />
@@ -327,6 +350,8 @@ const ProfessionalProfile = () => {
           minDetail="year"
           showLeadingZeros />
       </div>
+
+      {/* Submit */}
       <button className="input-submit">
         <Icon source="fa" icon={faPlus} />
         <span className="button-label">Add Experience</span>

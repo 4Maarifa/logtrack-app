@@ -5,12 +5,15 @@ import { faRectangleWide, faEdit, faTruck, faUser, faBuilding } from '@fortaweso
 import Icon from './../../Utils/Icon/Icon';
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
 import Choose from './../../Utils/FormElements/Choose/Choose';
+import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 
 import DataService from './../../../services/data.service';
 import DateService from './../../../services/date.service';
 import ErrorService from './../../../services/error.service';
 import EquipmentModelService from './../../../services/entities/equipmentModel.service';
 import EquipmentService from './../../../services/entities/equipment.service';
+import EmployeeService from './../../../services/entities/employee.service';
+import CompanyService from './../../../services/entities/company.service';
 
 import Equipment from './../../../classes/Equipment';
 import { EEquipmentModelTypeDetails, EEquipmentModelSubTypeDetails } from './../../../classes/EquipmentModel';
@@ -33,11 +36,20 @@ const EquipmentAdd = ({ match }) => {
 
   const [equipmentModels, setEquipmentModels] = useState({});
 
+  const [creatorId, setCreatorId] = useState(null);
+  const [creator, setCreator] = useState(null);
+
+  const [companyId, setCompanyId] = useState(null);
+  const [company, setCompany] = useState(null);
+
   const observerKey = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
   const computeValues = () => {
+    if(!computed.activeRole) {
+      return;
+    }
     EquipmentModelService.list()
       .then(setEquipmentModels)
       .catch(ErrorService.manageError);
@@ -48,8 +60,27 @@ const EquipmentAdd = ({ match }) => {
           setIdentification(equipmentDoc.data().identification);
           setCurrentEquipment(equipmentDoc.data());
 
+          EmployeeService.get(equipmentDoc.data().creator)
+            .then(employeeDoc => {
+              setCreatorId(employeeDoc.id);
+              setCreator(employeeDoc.data());
+            })
+            .catch(ErrorService.manageError);
+
+          CompanyService.get(equipmentDoc.data().companyId)
+            .then(companyDoc => {
+              setCompanyId(companyDoc.id);
+              setCompany(companyDoc.data());
+            })
+            .catch(ErrorService.manageError);
         })
         .catch(ErrorService.manageError);
+    }
+    else {
+      setCreatorId(computed.user.uid);
+      setCreator(computed.employee);
+      setCompanyId(computed.activeRole.companyId);
+      setCompany(computed.activeRoleCompany);
     }
   };
 
@@ -71,6 +102,7 @@ const EquipmentAdd = ({ match }) => {
         new Equipment(computed.activeRole.companyId,
                       identification,
                       selectedEquipmentModelId,
+                      computed.user.uid,
                       DateService.getCurrentIsoDateString()))
           .then(equipmentDoc => setNewEquipmentId(equipmentDoc.id))
           .catch(ErrorService.manageError);
@@ -264,7 +296,7 @@ const EquipmentAdd = ({ match }) => {
 
   return (
     <div className="EquipmentAdd">
-      <h1>Add an equipment</h1>
+      <h1>{currentEquipmentId ? 'Edit' : 'Add'} an equipment</h1>
       <form onSubmit={handleSubmit}>
         {/* Model */}
         {currentEquipmentId && currentEquipment ? 
@@ -315,9 +347,7 @@ const EquipmentAdd = ({ match }) => {
             <Icon source="fa" icon={faBuilding} />
             Company
           </span>
-          <span>
-            {computed.activeRoleCompany.name}
-          </span>
+          <PageLink type={PageLinkType.COMPANY} entityId={companyId} entityData={company} />
         </div>
 
         {/* Creator */}
@@ -326,9 +356,7 @@ const EquipmentAdd = ({ match }) => {
             <Icon source="fa" icon={faUser} />
             Creator
           </span>
-          <span>
-            {computed.employee.firstname + ' ' + computed.employee.lastname}
-          </span>
+          <PageLink type={PageLinkType.EMPLOYEE} entityId={creatorId} entityData={creator} />
         </div>
 
         <input type="submit" />

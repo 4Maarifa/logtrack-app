@@ -61,7 +61,7 @@ const JobOffer = ({ jobOffer, isPage }) => {
           <span className="Element-title">
             <PageLink type={PageLinkType.JOBOFFER} entityId={jobOfferKey} entityData={jobOffer[jobOfferKey]} white={isPage} />
           </span>
-          <span className="sub">Created on {DateService.getDateString(DateService.getDateFromIsoString(jobOffer[jobOfferKey].creationIsoDate), false)}</span>
+          <span className="sub">Created on {DateService.getDateString(DateService.getDateFromIsoString(jobOffer[jobOfferKey].creationIsoDate), false, false)}</span>
         </div>
         <div className="Element-actions">
           <ActionList actions={actions} isFlatten={isPage} />

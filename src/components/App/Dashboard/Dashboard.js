@@ -64,7 +64,7 @@ const Dashboard = () => {
     setMounted(true);
     DataService.computed.observeComputedValues(setComputed, observerKey);
     DateService.addObserver(() => setDateTime({
-      date: DateService.getDateString(new Date(), false),
+      date: DateService.getDateString(new Date(), false, false),
       time: DateService.getTimeString(new Date())
     }), observerKey);
     return () => {
@@ -181,8 +181,8 @@ const Dashboard = () => {
           <Icon containerclassname="icon-overlay" source="fa" icon={faTag} />
         </NavLink>}
         <div className="card card-w hour">
-          <h2>{DateService.getDateString(new Date(), false)}</h2>
-          <span>{DateService.getTimeString(new Date())}</span>
+          <h2>{datetime.date}</h2>
+          <span>{datetime.time}</span>
           <Icon containerclassname="icon-overlay" source="fa" icon={faClock} />
         </div>
         {weather && <div className="card card-w weather">

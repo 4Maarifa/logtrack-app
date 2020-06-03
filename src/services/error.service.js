@@ -55,6 +55,9 @@ const ErrorService = {
                 case 'entity/prototype-not-match':
                     errorMessage = 'Entity must be of prototype : ' + error.details;
                     break;
+                case 'entity/creator-not-match':
+                    errorMessage = 'Creator must be you when creating / updating : ' + error.details;
+                    break;
                 case 'entity/not-found':
                     errorMessage = 'Can\'t found entity ' + error.details;
                     break;
