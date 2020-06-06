@@ -13,7 +13,6 @@ import { ReactComponent as SettingsFullPageLayoutFull } from './../assets/settin
 import { ReactComponent as SettingsNavCollapsedCollapsed } from './../assets/settings/SETTINGS_NAV_COLLAPSED__COLLAPSED.svg';
 import { ReactComponent as SettingsNavCollapsedExtended } from './../assets/settings/SETTINGS_NAV_COLLAPSED__EXTENDED.svg';
 
-
 /**
  * Service: SettingsService
  * Used to read and write settings from user / employee
@@ -22,10 +21,7 @@ const SettingsService = {
   _settingsUpdating: false,
   // Get a specific settings from uers
   getSettingValue: settingKey => {
-    if(!DataService.computed.employee) {
-      return null;
-    }
-    if(DataService.computed.employee.settings && DataService.computed.employee.settings[settingKey]) {
+    if(DataService.computed.employee && DataService.computed.employee.settings && DataService.computed.employee.settings[settingKey]) {
       return DataService.computed.employee.settings[settingKey];
     }
     return ESettingsDetails[settingKey].default;
@@ -104,7 +100,7 @@ export const ESettingsDetails = {
           </span>)
       }
     ],
-    default: 'CLEAR'
+    default: 'FULL'
   },
   [ESettings.SETTINGS_NAV_COLLAPSED]: {
     title: <h2 className="profile-title">Navigation Layout</h2>,
@@ -125,7 +121,7 @@ export const ESettingsDetails = {
           </span>)
       }
     ],
-    default: 'EXTENDED'
+    default: 'COLLAPSED'
   },
   [ESettings.SETTINGS_DASHBOARD_WEATHER]: {
     title: <h2 className="profile-title">Dashboard Weather Widget</h2>,

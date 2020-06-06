@@ -198,6 +198,12 @@ const renderApp = () => {
                 <MenuBar />
                 <div className="page_content">
                     <Route exact path="/" component={Splash} />
+                    <Route exact path="/terms" render={props => <Splash {...props} page='terms' />} />
+                    <Route exact path="/credits" render={props => <Splash {...props} page='credits' />} />
+                    <Route exact path="/pricing" render={props => <Splash {...props} page='pricing' />} />
+                    <Route exact path="/contact" render={props => <Splash {...props} page='contact' />} />
+                    <Route exact path="/changelog" render={props => <Splash {...props} page='changelog' />} />
+                    <Route exact path="/faq" render={props => <Splash {...props} page='faq' />} />
                     <Route exact path="/specs" component={Specs} />
 
                     <PrivateRoute exact path="/dashboard" component={Dashboard} />
