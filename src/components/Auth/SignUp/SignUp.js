@@ -39,7 +39,7 @@ const SignUp = () => {
   }, []); 
 
   const finishConfiguration = () => {
-    EmployeeService.create(newUser.uid, new Employee(firstname, lastname, email, [], null, null, null, DateService.getCurrentIsoDateString()))
+    EmployeeService.create(newUser.uid, new Employee(firstname, lastname, [], null, null, null, DateService.getCurrentIsoDateString()))
       .then(() => {
         uploadProfilePhoto()
           .then(profilePicutreUrl => {

@@ -23,7 +23,7 @@ const Jobs = ({ match }) => {
   const [jobOffers, setJobOffers] = useState([]);
   const [isJobOffersLoading, setJobOffersLoading] = useState(true);
 
-  const computeValues = () => {
+  useEffect(() => {
     if(companyId) {
       CompanyService.get(companyId)
         .then(companyDoc => setCompany({[companyDoc.id]: companyDoc.data()}))
@@ -44,10 +44,6 @@ const Jobs = ({ match }) => {
         })
         .catch(ErrorService.manageError);
     }
-  };
-
-  useEffect(() => {
-    computeValues();
   }, []);
 
   /**

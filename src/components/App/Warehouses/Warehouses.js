@@ -26,8 +26,19 @@ const Warehouses = () => {
   const observerKey = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
-  
-  const computeWarehouses = () => {
+
+  const onSelectedItemChanged = itemId => {
+    if(!itemId) {
+      map.current.centerOnAllMarkers();
+      return;
+    }
+    if(warehouses[itemId].markerId) {
+      map.current.centerOnMarker(warehouses[itemId].markerId);
+      map.current.triggerPopup(warehouses[itemId].markerId);
+    }
+  };
+
+  useEffect(() => {
     if(computed.activeRole) {
       WarehouseService.getAllForCompanyId(computed.activeRole.companyId)
         .then(warehouses => {
@@ -47,21 +58,7 @@ const Warehouses = () => {
         })
         .catch(ErrorService.manageError);
     }
-  };
-
-  const onSelectedItemChanged = itemId => {
-    if(!itemId) {
-      map.current.centerOnAllMarkers();
-      return;
-    }
-    if(warehouses[itemId].markerId) {
-      map.current.centerOnMarker(warehouses[itemId].markerId);
-      map.current.triggerPopup(warehouses[itemId].markerId);
-    }
-  };
-
-
-  useEffect(() => computeWarehouses(), [computed]);
+  }, [computed.activeRole]);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, observerKey);

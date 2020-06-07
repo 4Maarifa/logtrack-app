@@ -48,37 +48,6 @@ const WarehouseAdd = ({ match }) => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeValues = () => {
-    if(currentWarehouseId) {
-      WarehouseService.get(currentWarehouseId)
-        .then(warehouseDoc => {
-          setCurrentWarehouse(warehouseDoc.data());
-          setIdentification(warehouseDoc.data().name);
-          setNbLoadingDocks(warehouseDoc.data().nbLoadingDocks);
-
-          onSelectedLocationItem('CURRENT', null, {
-            content: <span>{warehouseDoc.data().address}</span>,
-            value: {
-              display_name: warehouseDoc.data().address,
-              coordinates: [warehouseDoc.data().latitude, warehouseDoc.data().longitude]
-            }
-          });
-
-          EmployeeService.get(warehouseDoc.data().creator)
-            .then(employeeDoc => {
-              setCreatorId(employeeDoc.id);
-              setCreator(employeeDoc.data());
-            })
-            .catch(ErrorService.manageError);
-        })
-        .catch(ErrorService.manageError);
-    }
-    else {
-      setCreatorId(computed.user.uid);
-      setCreator(computed.employee);
-    }
-  };
-
   const onLocationAutoCompleteChange = inputValue => {
     setPossibleLocationsInput(inputValue);
 
@@ -170,7 +139,34 @@ const WarehouseAdd = ({ match }) => {
 
   useEffect(() => {
     if(computed.initialized) {
-      computeValues();
+      if(currentWarehouseId) {
+        WarehouseService.get(currentWarehouseId)
+          .then(warehouseDoc => {
+            setCurrentWarehouse(warehouseDoc.data());
+            setIdentification(warehouseDoc.data().name);
+            setNbLoadingDocks(warehouseDoc.data().nbLoadingDocks);
+  
+            onSelectedLocationItem('CURRENT', null, {
+              content: <span>{warehouseDoc.data().address}</span>,
+              value: {
+                display_name: warehouseDoc.data().address,
+                coordinates: [warehouseDoc.data().latitude, warehouseDoc.data().longitude]
+              }
+            });
+  
+            EmployeeService.get(warehouseDoc.data().creator)
+              .then(employeeDoc => {
+                setCreatorId(employeeDoc.id);
+                setCreator(employeeDoc.data());
+              })
+              .catch(ErrorService.manageError);
+          })
+          .catch(ErrorService.manageError);
+      }
+      else {
+        setCreatorId(computed.user.uid);
+        setCreator(computed.employee);
+      }
     }
   }, [computed]);
 

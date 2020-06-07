@@ -54,43 +54,6 @@ const CompanyAdd = ({ match }) => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeValues = () => {
-    if(currentCompanyId) {
-      CompanyService.get(currentCompanyId)
-        .then(companyDoc => {
-          setCurrentCompany(companyDoc.data());
-          setName(companyDoc.data().name);
-          setPlan(companyDoc.data().plan);
-          setLogo({
-            file: null,
-            url: companyDoc.data().logoURL
-          });
-          
-          let currentColors = colors;
-          currentColors[companyDoc.data().color] = {
-            content: <Fragment>
-              <i className="input-color-choice" style={{ backgroundColor: companyDoc.data().color }} />
-              <Icon source="fa" icon={faCheck} />
-            </Fragment>
-          };
-          setColors(currentColors);
-          setSelectedColor(companyDoc.data().color);
-          
-          EmployeeService.get(companyDoc.data().creator)
-            .then(employeeDoc => {
-              setCreatorId(employeeDoc.id);
-              setCreator(employeeDoc.data());
-            })
-            .catch(ErrorService.manageError);
-        })
-        .catch(ErrorService.manageError);
-    }
-    else {
-      setCreatorId(computed.user.uid);
-      setCreator(computed.employee);
-    }
-  };
-
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -174,7 +137,40 @@ const CompanyAdd = ({ match }) => {
 
   useEffect(() => {
     if(computed.initialized) {
-      computeValues();
+      if(currentCompanyId) {
+        CompanyService.get(currentCompanyId)
+          .then(companyDoc => {
+            setCurrentCompany(companyDoc.data());
+            setName(companyDoc.data().name);
+            setPlan(companyDoc.data().plan);
+            setLogo({
+              file: null,
+              url: companyDoc.data().logoURL
+            });
+            
+            let currentColors = colors;
+            currentColors[companyDoc.data().color] = {
+              content: <Fragment>
+                <i className="input-color-choice" style={{ backgroundColor: companyDoc.data().color }} />
+                <Icon source="fa" icon={faCheck} />
+              </Fragment>
+            };
+            setColors(currentColors);
+            setSelectedColor(companyDoc.data().color);
+            
+            EmployeeService.get(companyDoc.data().creator)
+              .then(employeeDoc => {
+                setCreatorId(employeeDoc.id);
+                setCreator(employeeDoc.data());
+              })
+              .catch(ErrorService.manageError);
+          })
+          .catch(ErrorService.manageError);
+      }
+      else {
+        setCreatorId(computed.user.uid);
+        setCreator(computed.employee);
+      }
     }
   }, [computed]);
 

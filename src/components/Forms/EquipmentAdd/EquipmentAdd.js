@@ -46,44 +46,6 @@ const EquipmentAdd = ({ match }) => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeValues = () => {
-    if(!computed.activeRole) {
-      return;
-    }
-    EquipmentModelService.list()
-      .then(setEquipmentModels)
-      .catch(ErrorService.manageError);
-
-    if(currentEquipmentId) {
-      EquipmentService.get(currentEquipmentId)
-        .then(equipmentDoc => {
-          setIdentification(equipmentDoc.data().identification);
-          setCurrentEquipment(equipmentDoc.data());
-
-          EmployeeService.get(equipmentDoc.data().creator)
-            .then(employeeDoc => {
-              setCreatorId(employeeDoc.id);
-              setCreator(employeeDoc.data());
-            })
-            .catch(ErrorService.manageError);
-
-          CompanyService.get(equipmentDoc.data().companyId)
-            .then(companyDoc => {
-              setCompanyId(companyDoc.id);
-              setCompany(companyDoc.data());
-            })
-            .catch(ErrorService.manageError);
-        })
-        .catch(ErrorService.manageError);
-    }
-    else {
-      setCreatorId(computed.user.uid);
-      setCreator(computed.employee);
-      setCompanyId(computed.activeRole.companyId);
-      setCompany(computed.activeRoleCompany);
-    }
-  };
-
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -145,8 +107,39 @@ const EquipmentAdd = ({ match }) => {
   };
 
   useEffect(() => {
-    if(computed.initialized){
-      computeValues();
+    if(computed.initialized && computed.activeRole){
+      EquipmentModelService.list()
+        .then(setEquipmentModels)
+        .catch(ErrorService.manageError);
+  
+      if(currentEquipmentId) {
+        EquipmentService.get(currentEquipmentId)
+          .then(equipmentDoc => {
+            setIdentification(equipmentDoc.data().identification);
+            setCurrentEquipment(equipmentDoc.data());
+  
+            EmployeeService.get(equipmentDoc.data().creator)
+              .then(employeeDoc => {
+                setCreatorId(employeeDoc.id);
+                setCreator(employeeDoc.data());
+              })
+              .catch(ErrorService.manageError);
+  
+            CompanyService.get(equipmentDoc.data().companyId)
+              .then(companyDoc => {
+                setCompanyId(companyDoc.id);
+                setCompany(companyDoc.data());
+              })
+              .catch(ErrorService.manageError);
+          })
+          .catch(ErrorService.manageError);
+      }
+      else {
+        setCreatorId(computed.user.uid);
+        setCreator(computed.employee);
+        setCompanyId(computed.activeRole.companyId);
+        setCompany(computed.activeRoleCompany);
+      }
     }
   }, [computed]);
 

@@ -1,0 +1,209 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn(request) {
+      return request.auth.uid != null;
+    }
+    
+    function getActiveRoleId(employeeId) {
+    	return get(/databases/$(database)/documents/employees/$(employeeId)).data.activeRoleId;
+    }
+    
+    function getCompany(companyId) {
+    	return get(/databases/$(database)/documents/companies/$(companyId)).data;
+    }
+    
+    function getRole(roleId) {
+    	return get(/databases/$(database)/documents/roles/$(roleId)).data;
+    }
+    
+    function isActiveRoleEqualsForRolesAndCompany(activeRoleId, roles, companyId) {
+    	return (activeRoleId != null)
+      	&& get(/databases/$(database)/documents/roles/$(activeRoleId)).data.role in roles
+        && get(/databases/$(database)/documents/roles/$(activeRoleId)).data.companyId == companyId;
+    }
+    
+    function isActiveRoleEqualsForCompany(activeRoleId, companyId) {
+    	return (activeRoleId != null)
+      	&& get(/databases/$(database)/documents/roles/$(activeRoleId)).data.companyId == companyId;
+    }
+    
+    match /chats/{chatId} {
+    	allow get, list: if isSignedIn(request)
+      	&& request.auth.uid in resource.data.users;
+      allow create: if isSignedIn(request)
+      	&& request.resource.data.creator == request.auth.uid
+        && request.auth.uid in request.resource.data.users;
+      allow update, delete: if false;
+    }
+    
+    match /brands/{brandId} {
+    	allow get, list: if isSignedIn(request);
+      allow create, update, delete: if false;
+    }
+    
+    match /companies/{companyId} {
+    	allow delete: if false;
+      
+      allow create, get, list: if isSignedIn(request);
+      
+      allow update: if isSignedIn(request) && 
+        isActiveRoleEqualsForRolesAndCompany(
+        	getActiveRoleId(request.auth.uid), 
+          ['MANAGER'], 
+          companyId);
+    }
+    
+    match /jobOffers/{jobOfferId} {
+    	allow delete: if false;
+      allow create, update: if isSignedIn(request) &&
+      	isActiveRoleEqualsForRolesAndCompany(
+        	getActiveRoleId(request.auth.uid),
+          ['MANAGER', 'RECRUITER'],
+          request.resource.data.companyId
+        );
+      allow get, list: if isSignedIn(request);
+    }
+    
+    match /contracts/{contractId} {
+    	allow create, update: if isSignedIn(request) &&
+        request.resource.data.companyOrderId != request.resource.data.companyExecId &&
+        (
+          isActiveRoleEqualsForRolesAndCompany(
+            getActiveRoleId(request.auth.uid), 
+            ['MANAGER'], 
+            request.resource.data.companyOrderId) || 
+          isActiveRoleEqualsForRolesAndCompany(
+            getActiveRoleId(request.auth.uid), 
+            ['MANAGER'], 
+            request.resource.data.companyExecId)
+        );
+        
+      allow get, list: if isSignedIn(request) &&
+        (
+          isActiveRoleEqualsForCompany(
+            getActiveRoleId(request.auth.uid), 
+            resource.data.companyOrderId) || 
+          isActiveRoleEqualsForCompany(
+            getActiveRoleId(request.auth.uid), 
+            resource.data.companyExecId)
+        );
+        
+      allow delete: if false;
+    }
+    
+    match /employees/{employeeId} {
+    	allow delete: if false;
+      
+      allow create, update: if isSignedIn(request) && 
+      	employeeId == request.auth.uid &&
+        (
+        	request.resource.data.activeRoleId == null ||
+        	getRole(request.resource.data.activeRoleId).status == 'CONFIRMED'
+        );
+      
+      allow list, get: if isSignedIn(request);
+    }
+    
+    match /accountActivity/{accountActivityId} {
+    	allow update, delete: if false;
+      allow create: if true;
+      allow get, list: if isSignedIn(request) && resource.data.email == request.auth.token.email;
+    }
+    
+    match /equipmentModels/{equipmentModelId} {
+    	allow get, list: if isSignedIn(request);
+      allow create: if isSignedIn(request) && request.resource.data.creator == request.auth.uid;
+    	allow update, delete: if false;
+    }
+    
+  	match /equipments/{equipmentId} {
+    	allow get, list: if isSignedIn(request);
+      allow create, update: if isSignedIn(request) && 
+      	isActiveRoleEqualsForCompany(
+          getActiveRoleId(request.auth.uid),
+          request.resource.data.companyId);
+      allow delete: if false;
+    }
+    
+    match /logtracks/{logtrackId} {
+    	allow delete: if false;
+      
+      allow get, list: if isSignedIn(request) &&
+      	isActiveRoleEqualsForCompany(
+          getActiveRoleId(request.auth.uid), 
+          request.resource.data.companyId);
+          
+      allow create, update: if isSignedIn(request) &&
+      	isActiveRoleEqualsForCompany(
+          getActiveRoleId(request.auth.uid), 
+          request.resource.data.companyId) &&
+        request.resource.data.employeeId == request.auth.uid;
+  	}
+    
+    match /roles/{roleId} {      
+      allow create: if isSignedIn(request) &&
+      	(request.resource.data.employeeId == request.auth.uid ||
+        isActiveRoleEqualsForRolesAndCompany(
+            getActiveRoleId(request.auth.uid), 
+            ['MANAGER'], 
+            request.resource.data.companyId)) &&
+      	(request.resource.data.status == 'DRAFT' || 
+        getCompany(request.resource.data.companyId).creator == request.auth.uid ||
+        isActiveRoleEqualsForRolesAndCompany(
+            getActiveRoleId(request.auth.uid), 
+            ['MANAGER'], 
+            request.resource.data.companyId));
+      
+      allow get, list: if isSignedIn(request);
+      
+      allow update: if isSignedIn(request) && 
+      	(
+          isActiveRoleEqualsForRolesAndCompany(
+            getActiveRoleId(request.auth.uid), 
+            ['MANAGER'], 
+            request.resource.data.companyId) ||
+          request.resource.data.employeeId == request.auth.uid
+        );
+          
+      allow delete: if false;
+    }
+    
+    match /contact/{contactId} {
+    	allow delete, update, get, list: if false;
+      
+      allow create: if request.resource.data.email &&
+      	request.resource.data.message &&
+        request.resource.data.date;
+    }
+    
+    match /support/{supportId} {
+    	allow delete, update, get, list: if false;
+      
+      allow create: if isSignedIn(request) &&
+      	request.resource.data.userId == request.auth.uid &&
+        request.resource.data.metadata.userId == request.auth.uid;
+    }
+    
+    match /warehouses/{warehouseId} {
+    	allow delete: if false;
+      
+      allow create, update: if isSignedIn(request) && 
+      	isActiveRoleEqualsForRolesAndCompany(
+            getActiveRoleId(request.auth.uid), 
+            ['MANAGER'], 
+            request.resource.data.companyId) &&
+        request.resource.data.creator == request.auth.uid;
+            
+    	allow get, list: if isSignedIn(request);
+    }
+    
+    match /weather/{weatherId} {
+    	allow delete, update: if false;
+      
+      allow list, create, get: if isSignedIn(request);
+    }
+  }
+}

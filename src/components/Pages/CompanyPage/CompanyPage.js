@@ -65,17 +65,6 @@ const CompanyPage = ({ match }) => {
       .catch(ErrorService.manageError);
   };
 
-  const computeWarehouses = () => {
-    if(companyId) {
-      WarehouseService.getAllForCompanyId(companyId)
-        .then(warehouses => {
-          setWarehouses(warehouses);
-          setWarehousesLoading(false);
-        })
-        .catch(ErrorService.manageError);
-    }
-  };
-
   const computeEmployeesRoles = () => {
     if(companyId) {
       RoleService.getRolesForCompanyId(companyId)
@@ -96,7 +85,26 @@ const CompanyPage = ({ match }) => {
     }
   };
 
-  const computeEquipments = () => {
+  useEffect(() => computeEmployeesRoles(), [company]);
+
+  useEffect(() => {
+    if(computed.initialized) {
+      computeCompany();
+    }
+  }, [computed]);
+
+  useEffect(() => {
+    DataService.computed.observeComputedValues(setComputed, observerKey);
+
+    if(companyId) {
+      WarehouseService.getAllForCompanyId(companyId)
+        .then(warehouses => {
+          setWarehouses(warehouses);
+          setWarehousesLoading(false);
+        })
+        .catch(ErrorService.manageError);
+    }
+    computeEmployeesRoles();
     BrandService.list()
       .then(setBrands)
       .catch(ErrorService.manageError);
@@ -113,21 +121,6 @@ const CompanyPage = ({ match }) => {
         })
         .catch(ErrorService.manageError);
     }
-  };
-
-  useEffect(() => computeEmployeesRoles(), [company]);
-
-  useEffect(() => {
-    if(computed.initialized) {
-      computeCompany();
-    }
-  }, [computed]);
-
-  useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    computeWarehouses();
-    computeEmployeesRoles();
-    computeEquipments();
     return () => DataService.computed.unobserveComputedValues(observerKey)
   }, []);
 

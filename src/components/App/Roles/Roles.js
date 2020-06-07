@@ -42,73 +42,6 @@ const Roles = () => {
   const observerKey = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
-  
-  const computeRoles = () => {
-    if(!computed.user) { return; }
-    // USER ROLES
-    RoleService.getRolesForEmployeeId(computed.user.uid, [ERoleStatus.CONFIRMED, ERoleStatus.DRAFT, ERoleStatus.REVOKED, ERoleStatus.DENIED])
-      .then(roles => {
-        let userRoles = {}, userRevokedRoles = {}, userDraftRoles = {}, userDeniedRoles = {},
-          userRolesCompanyKeys = [], userRevokedRolesCompanyKeys = [], userDraftRolesCompanyKeys = [], userDeniedRolesCompanyKeys = [];
-
-        Object.keys(roles).forEach(roleKey => {
-          if(roles[roleKey].status === ERoleStatus.CONFIRMED) {
-            userRoles[roleKey] = roles[roleKey];
-            userRolesCompanyKeys.push(roles[roleKey].companyId);
-          }
-          if(roles[roleKey].status === ERoleStatus.DRAFT) {
-            userDraftRoles[roleKey] = roles[roleKey];
-            userDraftRolesCompanyKeys.push(roles[roleKey].companyId);
-          }
-          if(roles[roleKey].status === ERoleStatus.REVOKED) {
-            userRevokedRoles[roleKey] = roles[roleKey];
-            userRevokedRolesCompanyKeys.push(roles[roleKey].companyId);
-          }
-          if(roles[roleKey].status === ERoleStatus.DENIED) {
-            userDeniedRoles[roleKey] = roles[roleKey];
-            userDeniedRolesCompanyKeys.push(roles[roleKey].companyId);
-          }
-        });
-
-        CompanyService.getAllForIdList(UtilsService.removeDuplicateFromArray(Object.keys(roles).map(roleKey => roles[roleKey].companyId)))
-          .then(allCompanies => {
-            let userRolesCompanies = {}, userDraftRolesCompanies = {}, userRevokedRolesCompanies = {}, userDeniedRolesCompanies = {};
-
-            userRolesCompanyKeys.forEach(companyKey => userRolesCompanies[companyKey] = allCompanies[companyKey]);
-            userRevokedRolesCompanyKeys.forEach(companyKey => userRevokedRolesCompanies[companyKey] = allCompanies[companyKey]);
-            userDraftRolesCompanyKeys.forEach(companyKey => userDraftRolesCompanies[companyKey] = allCompanies[companyKey]);
-            userDeniedRolesCompanyKeys.forEach(companyKey => userDeniedRolesCompanies[companyKey] = allCompanies[companyKey]);
-
-            setUserDraftRolesCompanies(userDraftRolesCompanies);
-            setUserRevokedRolesCompanies(userRevokedRolesCompanies);
-            setUserRolesCompanies(userRolesCompanies);
-            setUserDeniedRolesCompanies(userDeniedRolesCompanies);
-
-            setUserDraftRoles(userDraftRoles);
-            setUserRevokedRoles(userRevokedRoles);
-            setUserRoles(userRoles);
-            setUserDeniedRoles(userDeniedRoles);
-          })
-          .catch(ErrorService.manageError);
-      })
-      .catch(ErrorService.manageError);
-
-    // REQUESTED ROLES
-    if(computed.activeRole && computed.activeRole.role === ERole.MANAGER) {
-      RoleService.getRolesForCompanyId(computed.activeRole.companyId, [ERoleStatus.DRAFT])
-        .then(requestedRoles => {
-          let employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(requestedRoles).map(roleKey => requestedRoles[roleKey].employeeId));
-
-          EmployeeService.getAllForIdList(employeesIds)
-            .then(requestedRolesEmployees => {
-              setRequestedRoles(requestedRoles);
-              setRequestedRolesEmployees(requestedRolesEmployees);
-            })
-            .catch(ErrorService.manageError);
-        })
-        .catch(ErrorService.manageError);
-    }
-  };
 
   const computeActions = () => {
     const defaultActions = [
@@ -127,10 +60,72 @@ const Roles = () => {
   };
 
   useEffect(() => {
-    if(computed.initialized) {
-      computeRoles();
+    if(computed.initialized && computed.user) {
+      // USER ROLES
+      RoleService.getRolesForEmployeeId(computed.user.uid, [ERoleStatus.CONFIRMED, ERoleStatus.DRAFT, ERoleStatus.REVOKED, ERoleStatus.DENIED])
+        .then(roles => {
+          let userRoles = {}, userRevokedRoles = {}, userDraftRoles = {}, userDeniedRoles = {},
+            userRolesCompanyKeys = [], userRevokedRolesCompanyKeys = [], userDraftRolesCompanyKeys = [], userDeniedRolesCompanyKeys = [];
+
+          Object.keys(roles).forEach(roleKey => {
+            if(roles[roleKey].status === ERoleStatus.CONFIRMED) {
+              userRoles[roleKey] = roles[roleKey];
+              userRolesCompanyKeys.push(roles[roleKey].companyId);
+            }
+            if(roles[roleKey].status === ERoleStatus.DRAFT) {
+              userDraftRoles[roleKey] = roles[roleKey];
+              userDraftRolesCompanyKeys.push(roles[roleKey].companyId);
+            }
+            if(roles[roleKey].status === ERoleStatus.REVOKED) {
+              userRevokedRoles[roleKey] = roles[roleKey];
+              userRevokedRolesCompanyKeys.push(roles[roleKey].companyId);
+            }
+            if(roles[roleKey].status === ERoleStatus.DENIED) {
+              userDeniedRoles[roleKey] = roles[roleKey];
+              userDeniedRolesCompanyKeys.push(roles[roleKey].companyId);
+            }
+          });
+
+          CompanyService.getAllForIdList(UtilsService.removeDuplicateFromArray(Object.keys(roles).map(roleKey => roles[roleKey].companyId)))
+            .then(allCompanies => {
+              let userRolesCompanies = {}, userDraftRolesCompanies = {}, userRevokedRolesCompanies = {}, userDeniedRolesCompanies = {};
+
+              userRolesCompanyKeys.forEach(companyKey => userRolesCompanies[companyKey] = allCompanies[companyKey]);
+              userRevokedRolesCompanyKeys.forEach(companyKey => userRevokedRolesCompanies[companyKey] = allCompanies[companyKey]);
+              userDraftRolesCompanyKeys.forEach(companyKey => userDraftRolesCompanies[companyKey] = allCompanies[companyKey]);
+              userDeniedRolesCompanyKeys.forEach(companyKey => userDeniedRolesCompanies[companyKey] = allCompanies[companyKey]);
+
+              setUserDraftRolesCompanies(userDraftRolesCompanies);
+              setUserRevokedRolesCompanies(userRevokedRolesCompanies);
+              setUserRolesCompanies(userRolesCompanies);
+              setUserDeniedRolesCompanies(userDeniedRolesCompanies);
+
+              setUserDraftRoles(userDraftRoles);
+              setUserRevokedRoles(userRevokedRoles);
+              setUserRoles(userRoles);
+              setUserDeniedRoles(userDeniedRoles);
+            })
+            .catch(ErrorService.manageError);
+        })
+        .catch(ErrorService.manageError);
+
+      // REQUESTED ROLES
+      if(computed.activeRole && computed.activeRole.role === ERole.MANAGER) {
+        RoleService.getRolesForCompanyId(computed.activeRole.companyId, [ERoleStatus.DRAFT])
+          .then(requestedRoles => {
+            let employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(requestedRoles).map(roleKey => requestedRoles[roleKey].employeeId));
+
+            EmployeeService.getAllForIdList(employeesIds)
+              .then(requestedRolesEmployees => {
+                setRequestedRoles(requestedRoles);
+                setRequestedRolesEmployees(requestedRolesEmployees);
+              })
+              .catch(ErrorService.manageError);
+          })
+          .catch(ErrorService.manageError);
+      }
     }
-  }, [computed]);
+  }, [computed.initialized, computed.user]);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, observerKey);

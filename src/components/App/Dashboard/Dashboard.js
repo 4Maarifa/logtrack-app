@@ -38,8 +38,8 @@ const Dashboard = () => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeValues = () => {
-    if(SettingsService.getSettingValue(ESettings.SETTINGS_DASHBOARD_WEATHER) === 'ON') {
+  useEffect(() => {
+    if(computed.initialized && SettingsService.getSettingValue(ESettings.SETTINGS_DASHBOARD_WEATHER) === 'ON') {
       PermissionService.location.askPermission()
         .then(() => {
           PermissionService.location.getLocation()
@@ -51,12 +51,6 @@ const Dashboard = () => {
             .catch(ErrorService.manageError);
         })
         .catch(ErrorService.manageError);
-    }
-  };
-
-  useEffect(() => {
-    if(computed.initialized) {
-      computeValues();
     }
   }, [computed]);
 

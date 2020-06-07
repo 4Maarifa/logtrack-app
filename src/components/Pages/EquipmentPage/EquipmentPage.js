@@ -23,7 +23,7 @@ const EquipmentPage = ({ match }) => {
   const [equipment, setEquipment] = useState(null);
   const [equipmentModel, setEquipmentModel] = useState(null);
 
-  const computeValues = () => {
+  useEffect(() => {
     EquipmentService.get(equipmentId)
       .then(equipmentDoc => {
         setEquipment(equipmentDoc.data());
@@ -33,9 +33,7 @@ const EquipmentPage = ({ match }) => {
           .catch(ErrorService.manageError);
       })
       .catch(ErrorService.manageError);
-  };
-
-  useEffect(() => computeValues(), []);
+  }, []);
 
   if(!equipment || !equipmentModel) {
     return (

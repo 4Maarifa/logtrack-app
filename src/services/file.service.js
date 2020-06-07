@@ -1,6 +1,6 @@
 import FirebaseService from './firebase.service';
 
-const uuidv4 = require('uuid/v4');
+import { v4 as uuid } from 'uuid';
 
 const FileService = {
     getStorageRef: () => FirebaseService.getFirebaseObject().storage().ref(),
@@ -9,7 +9,7 @@ const FileService = {
 
     getDownloadURLForProfilePicture: () => FileService.getStorageRef().child(FirebaseService.getCurrentUser().uid + '/profile').getDownloadURL(),
 
-    uploadCompanyLogo: file => FileService.getStorageRef().child(FirebaseService.getCurrentUser().uid + '/' + uuidv4()).put(file),
+    uploadCompanyLogo: file => FileService.getStorageRef().child(FirebaseService.getCurrentUser().uid + '/' + uuid()).put(file),
 
     getDownloadURLForCompanyLogo: fileRef => FileService.getStorageRef().child(fileRef.metadata.fullPath).getDownloadURL()
 };

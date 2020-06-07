@@ -47,42 +47,6 @@ const ContractAdd = ({ match }) => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeValues = () => {
-    if(currentContractId) {
-      ContractService.get(currentContractId)
-        .then(contractDoc => {
-          setContractType(contractDoc.data().contractType);
-          setIdentification(contractDoc.data().identification);
-          setCurrentContract(contractDoc.data());
-
-          const isCurrentExecutor = contractDoc.data().companyExecId === computed.activeRole.companyId;
-          setExecutor(isCurrentExecutor);
-          
-          CompanyService.get(isCurrentExecutor ? contractDoc.data().companyOrderId : contractDoc.data().companyExecId)
-            .then(companyDoc => {
-              setSelectedCompanyId(companyDoc.id);
-              setSelectedCompanyItem({
-                content: <PageLink noLink type={PageLinkType.COMPANY} entityId={companyDoc.id} entityData={companyDoc.data()} />,
-                value: companyDoc.data()
-              });
-            })
-            .catch(ErrorService.manageError);
-
-          EmployeeService.get(contractDoc.data().creator)
-            .then(employeeDoc => {
-              setCreatorId(employeeDoc.id);
-              setCreator(employeeDoc.data());
-            })
-            .catch(ErrorService.manageError);
-        })
-        .catch(ErrorService.manageError);
-    }
-    else {
-      setCreatorId(computed.user.uid);
-      setCreator(computed.employee);
-    }
-  };
-
   const onCompanyAutoCompleteChange = value => {
     setPossibleCompaniesInput(value);
     if(value.trim().length < 3) {
@@ -131,7 +95,39 @@ const ContractAdd = ({ match }) => {
 
   useEffect(() => {
     if(computed.initialized) {
-      computeValues();
+      if(currentContractId) {
+      ContractService.get(currentContractId)
+        .then(contractDoc => {
+          setContractType(contractDoc.data().contractType);
+          setIdentification(contractDoc.data().identification);
+          setCurrentContract(contractDoc.data());
+
+          const isCurrentExecutor = contractDoc.data().companyExecId === computed.activeRole.companyId;
+          setExecutor(isCurrentExecutor);
+          
+          CompanyService.get(isCurrentExecutor ? contractDoc.data().companyOrderId : contractDoc.data().companyExecId)
+            .then(companyDoc => {
+              setSelectedCompanyId(companyDoc.id);
+              setSelectedCompanyItem({
+                content: <PageLink noLink type={PageLinkType.COMPANY} entityId={companyDoc.id} entityData={companyDoc.data()} />,
+                value: companyDoc.data()
+              });
+            })
+            .catch(ErrorService.manageError);
+
+          EmployeeService.get(contractDoc.data().creator)
+            .then(employeeDoc => {
+              setCreatorId(employeeDoc.id);
+              setCreator(employeeDoc.data());
+            })
+            .catch(ErrorService.manageError);
+        })
+        .catch(ErrorService.manageError);
+    }
+    else {
+      setCreatorId(computed.user.uid);
+      setCreator(computed.employee);
+    }
     }
   }, [computed]);
 

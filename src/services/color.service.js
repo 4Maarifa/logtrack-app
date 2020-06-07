@@ -2,7 +2,7 @@
 import DataService from './data.service';
 import SettingsService, { ESettings } from './settings.service';
 
-const { getPaletteFromURL } = require('color-thief-node');
+import { getPaletteFromURL } from 'color-thief-node';
 
 const ColorService = {
   getMainColorsOfImage: image => getPaletteFromURL(image, 8, 1),

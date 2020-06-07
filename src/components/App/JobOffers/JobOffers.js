@@ -34,31 +34,27 @@ const JobOffers = () => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeJobOffers = () => {
-    CompanyService.jobOffer.getAllForCompanyId(computed.activeRole.companyId)
-      .then(jobOffers => {
-        const newOpenedJobOffers = {};
-        const newClosedApplications = {};
-        Object.keys(jobOffers).forEach(jobOfferKey => {
-          if(jobOffers[jobOfferKey].status === EJobOfferStatus.CLOSED) {
-            newClosedApplications[jobOfferKey] = jobOffers[jobOfferKey];
-          }
-          else {
-            newOpenedJobOffers[jobOfferKey] = jobOffers[jobOfferKey];
-          }
-        });
-        setOpenedJobOffers(newOpenedJobOffers);
-        setClosedApplications(newClosedApplications);
-        setJobOffersLoading(false);
-      })
-      .catch(ErrorService.manageError);
-  };
-
   useEffect(() => {
-    if(computed.initialized && computed.activeRole) {
-      computeJobOffers();
+    if(computed.activeRole) {
+      CompanyService.jobOffer.getAllForCompanyId(computed.activeRole.companyId)
+        .then(jobOffers => {
+          const newOpenedJobOffers = {};
+          const newClosedApplications = {};
+          Object.keys(jobOffers).forEach(jobOfferKey => {
+            if(jobOffers[jobOfferKey].status === EJobOfferStatus.CLOSED) {
+              newClosedApplications[jobOfferKey] = jobOffers[jobOfferKey];
+            }
+            else {
+              newOpenedJobOffers[jobOfferKey] = jobOffers[jobOfferKey];
+            }
+          });
+          setOpenedJobOffers(newOpenedJobOffers);
+          setClosedApplications(newClosedApplications);
+          setJobOffersLoading(false);
+        })
+        .catch(ErrorService.manageError);
     }
-  }, [computed]);
+  }, [computed.activeRole]);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, observerKey);

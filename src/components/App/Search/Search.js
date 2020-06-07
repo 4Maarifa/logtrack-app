@@ -45,16 +45,6 @@ const Search = () => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeValues = () => {
-    BrandService.list()
-      .then(setBrands)
-      .catch(ErrorService.manageError);
-
-    EquipmentModelService.list()
-      .then(setEquipmentModels)
-      .catch(ErrorService.manageError);
-  };
-
   const searchEntities = () => {
     if(searchInput.length <= 3) { return; }
     DataService.computed.search([ESearchType.EMPLOYEES, ESearchType.COMPANIES, ESearchType.WAREHOUSES, ESearchType.CONTRACTS, ESearchType.EQUIPMENTS], 
@@ -79,7 +69,15 @@ const Search = () => {
     searchEntities();
   }, [searchInput]);
 
-  useEffect(computeValues, [computed]);
+  useEffect(() => {
+    BrandService.list()
+      .then(setBrands)
+      .catch(ErrorService.manageError);
+
+    EquipmentModelService.list()
+      .then(setEquipmentModels)
+      .catch(ErrorService.manageError);
+  }, [computed]);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, observerKey);

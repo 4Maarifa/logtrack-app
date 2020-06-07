@@ -26,13 +26,13 @@ const MenuBar = () => {
   const [rtMessagesUpdateCount, setRtMessagesUpdateCount] = useState(0);
 
   useEffect(() => {
-    if(computed.initialized && computed.user) {
+    if(computed.user) {
       RT_Service.observeRTmessages(rt => {
         setRtMessages(rt);
         setRtMessagesUpdateCount(rtMessagesUpdateCount + 1);
       }, observerKey);
     }
-  }, [computed]);
+  }, [computed.user]);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, observerKey);

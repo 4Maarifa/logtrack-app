@@ -28,7 +28,7 @@ const Employees = () => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeEmployeesRoles = () => {
+  useEffect(() => {
     if(computed.activeRole) {
       RoleService.getRolesForCompanyId(computed.activeRole.companyId)
         .then(rolesOfCompanyEmployees => {
@@ -47,9 +47,7 @@ const Employees = () => {
         })
         .catch(ErrorService.manageError);
     }
-  };
-
-  useEffect(() => computeEmployeesRoles(), [computed]);
+  }, [computed.activeRole]);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, observerKey);

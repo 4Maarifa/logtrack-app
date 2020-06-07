@@ -18,10 +18,9 @@ import DateService from './../services/date.service';
  * cretionDate: string | The creation date, as iso string
  */
 class Employee {
-    constructor(firstname, lastname, email, certificates, activeRoleId, profilePictureUrl, settings, creationIsoDate) {
+    constructor(firstname, lastname, certificates, activeRoleId, profilePictureUrl, settings, creationIsoDate) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.email = email;
         this.certificates = certificates;
         this.activeRoleId = activeRoleId;
         this.profilePictureUrl = profilePictureUrl;

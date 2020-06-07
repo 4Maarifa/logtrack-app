@@ -42,40 +42,6 @@ const JobOfferAdd = ({ match }) => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeValues = () => {
-    if(!computed.activeRole) { return; }
-    if(currentJobOfferId) {
-      CompanyService.jobOffer.get(currentJobOfferId)
-        .then(jobOfferDoc => {
-          setTitle(jobOfferDoc.data().title);
-          setDescription(jobOfferDoc.data().description);
-          setRoleType(jobOfferDoc.data().role);
-          setCurrentJobOffer(jobOfferDoc.data());
-
-          CompanyService.get(jobOfferDoc.data().companyId)
-            .then(companyDoc => {
-              setCompanyId(companyDoc.id);
-              setCompany(companyDoc.data());
-            })
-            .catch(ErrorService.manageError);
-
-          EmployeeService.get(jobOfferDoc.data().creator)
-            .then(employeeDoc => {
-              setCreatorId(employeeDoc.id);
-              setCreator(employeeDoc.data());
-            })
-            .catch(ErrorService.manageError);
-        })
-        .catch(ErrorService.manageError);
-    }
-    else {
-      setCreatorId(computed.user.uid);
-      setCreator(computed.employee);
-      setCompanyId(computed.activeRole.companyId);
-      setCompany(computed.activeRoleCompany);
-    }
-  };
-
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -104,8 +70,37 @@ const JobOfferAdd = ({ match }) => {
   };
 
   useEffect(() => {
-    if(computed.initialized) {
-      computeValues();
+    if(computed.initialized && computed.activeRole) {
+      if(currentJobOfferId) {
+        CompanyService.jobOffer.get(currentJobOfferId)
+          .then(jobOfferDoc => {
+            setTitle(jobOfferDoc.data().title);
+            setDescription(jobOfferDoc.data().description);
+            setRoleType(jobOfferDoc.data().role);
+            setCurrentJobOffer(jobOfferDoc.data());
+  
+            CompanyService.get(jobOfferDoc.data().companyId)
+              .then(companyDoc => {
+                setCompanyId(companyDoc.id);
+                setCompany(companyDoc.data());
+              })
+              .catch(ErrorService.manageError);
+  
+            EmployeeService.get(jobOfferDoc.data().creator)
+              .then(employeeDoc => {
+                setCreatorId(employeeDoc.id);
+                setCreator(employeeDoc.data());
+              })
+              .catch(ErrorService.manageError);
+          })
+          .catch(ErrorService.manageError);
+      }
+      else {
+        setCreatorId(computed.user.uid);
+        setCreator(computed.employee);
+        setCompanyId(computed.activeRole.companyId);
+        setCompany(computed.activeRoleCompany);
+      }
     }
   }, [computed]);
 

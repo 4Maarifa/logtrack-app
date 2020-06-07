@@ -40,20 +40,6 @@ const RoleOffer = ({ match }) => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeValues = () => {
-    if(userId) {
-      EmployeeService.get(userId)
-        .then(employeeDoc => {
-          setSelectedUserId(employeeDoc.id);
-          setSelectedUserItem({
-            content: <PageLink noLink type={PageLinkType.EMPLOYEE} entityId={employeeDoc.id} entityData={employeeDoc.data()} />,
-            value: employeeDoc.data()
-          });
-        })
-        .catch(ErrorService.manageError);
-    }
-  };
-
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -104,8 +90,16 @@ const RoleOffer = ({ match }) => {
   useEffect(() => computeCurrentRoles(), [selectedUserId]);
 
   useEffect(() => {
-    if(computed.initialized) {
-      computeValues();
+    if(computed.initialized && userId) {
+      EmployeeService.get(userId)
+        .then(employeeDoc => {
+          setSelectedUserId(employeeDoc.id);
+          setSelectedUserItem({
+            content: <PageLink noLink type={PageLinkType.EMPLOYEE} entityId={employeeDoc.id} entityData={employeeDoc.data()} />,
+            value: employeeDoc.data()
+          });
+        })
+        .catch(ErrorService.manageError);
     }
   }, [computed]);
 

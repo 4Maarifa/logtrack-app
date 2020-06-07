@@ -40,21 +40,17 @@ const WarehousePage = ({ match }) => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeValues = () => {
-    WarehouseService.get(warehouseId)
-      .then(warehouseDoc => setWarehouse(warehouseDoc.data()))
-      .catch(ErrorService.manageError);
-  };
 
-  const computeCompany = () => {
+
+  useEffect(() => {
     if(warehouse) {
       CompanyService.get(warehouse.companyId)
         .then(companyDoc => setCompany(companyDoc.data()))
         .catch(ErrorService.manageError);
     }
-  };
+  }, [warehouse]);
 
-  const computeEquipments = () => {
+  useEffect(() => {
     BrandService.list()
       .then(setBrands)
       .catch(ErrorService.manageError);
@@ -63,22 +59,17 @@ const WarehousePage = ({ match }) => {
       .then(setEquipmentsModels)
       .catch(ErrorService.manageError);
 
-    if(warehouseId) {
-      EquipmentService.getAllForWarehouseId(warehouseId)
-        .then(equipments => {
-          setEquipments(equipments);
-          setEquipmentsLoading(false);
-        })
-        .catch(ErrorService.manageError);
-    }
-  };
-
-  useEffect(() => {
-    computeCompany();
-    computeEquipments();
-  }, [warehouse]);
-
-  useEffect(() => computeValues(), [computed]);
+    WarehouseService.get(warehouseId)
+      .then(warehouseDoc => setWarehouse(warehouseDoc.data()))
+      .catch(ErrorService.manageError);
+    
+    EquipmentService.getAllForWarehouseId(warehouseId)
+      .then(equipments => {
+        setEquipments(equipments);
+        setEquipmentsLoading(false);
+      })
+      .catch(ErrorService.manageError);
+  }, [computed]);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, observerKey);

@@ -40,20 +40,6 @@ const RoleAdd = ({ match }) => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeValues = () => {
-    if(companyId) {
-      CompanyService.get(companyId)
-        .then(companyDoc => {
-          setSelectedCompanyId(companyDoc.id);
-          setSelectedCompanyItem({
-            value: companyDoc.id,
-            content: <PageLink noLink type={PageLinkType.COMPANY} entityId={companyDoc.id} entityData={companyDoc.data()} />
-          });
-        })
-        .catch(ErrorService.manageError);
-    }
-  };
-
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -104,8 +90,16 @@ const RoleAdd = ({ match }) => {
   useEffect(() => computeCurrentRoles(), [selectedCompanyId]);
 
   useEffect(() => {
-    if (computed.initialized) {
-      computeValues();
+    if (computed.initialized && companyId) {
+      CompanyService.get(companyId)
+        .then(companyDoc => {
+          setSelectedCompanyId(companyDoc.id);
+          setSelectedCompanyItem({
+            value: companyDoc.id,
+            content: <PageLink noLink type={PageLinkType.COMPANY} entityId={companyDoc.id} entityData={companyDoc.data()} />
+          });
+        })
+        .catch(ErrorService.manageError);
     }
   }, [computed]);
 

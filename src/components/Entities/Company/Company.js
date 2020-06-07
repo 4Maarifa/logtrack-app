@@ -22,6 +22,7 @@ const Company = ({ company, isPage }) => {
   const observerKey = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
+  
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, observerKey);
     return () => DataService.computed.unobserveComputedValues(observerKey);

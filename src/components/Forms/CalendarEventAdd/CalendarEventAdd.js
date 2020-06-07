@@ -42,32 +42,6 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeValues = () => {
-    if(currentCalendarEventId && currentCalendarEvent) {
-      setTitle(currentCalendarEvent.content);
-      setSelectedColor(currentCalendarEvent.metadata.color);
-      setStartDateTime(DateService.getDateFromIsoString(currentCalendarEvent.metadata.date));
-      setDescription(currentCalendarEvent.metadata.description);
-      setLocation(currentCalendarEvent.metadata.location);
-
-      if(currentCalendarEvent.metadata.end) {
-        setEndDateTime(DateService.getDateFromIsoString(currentCalendarEvent.metadata.end));
-        setPunctualEvent(false);
-      }
-      
-      EmployeeService.get(currentCalendarEvent.creator)
-        .then(employeeDoc => {
-          setCreator(employeeDoc.data());
-          setCreatorId(employeeDoc.id);
-        })
-        .catch(ErrorService.manageError);
-    }
-    else {
-      setCreatorId(computed.user.uid);
-      setCreator(computed.employee);
-    }
-  };
-
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -127,7 +101,29 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
 
   useEffect(() => {
     if(computed.initialized) {
-      computeValues();
+      if(currentCalendarEventId && currentCalendarEvent) {
+        setTitle(currentCalendarEvent.content);
+        setSelectedColor(currentCalendarEvent.metadata.color);
+        setStartDateTime(DateService.getDateFromIsoString(currentCalendarEvent.metadata.date));
+        setDescription(currentCalendarEvent.metadata.description);
+        setLocation(currentCalendarEvent.metadata.location);
+  
+        if(currentCalendarEvent.metadata.end) {
+          setEndDateTime(DateService.getDateFromIsoString(currentCalendarEvent.metadata.end));
+          setPunctualEvent(false);
+        }
+        
+        EmployeeService.get(currentCalendarEvent.creator)
+          .then(employeeDoc => {
+            setCreator(employeeDoc.data());
+            setCreatorId(employeeDoc.id);
+          })
+          .catch(ErrorService.manageError);
+      }
+      else {
+        setCreatorId(computed.user.uid);
+        setCreator(computed.employee);
+      }
     }
   }, [computed]);
 

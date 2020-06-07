@@ -35,11 +35,13 @@ const Analytics = () => {
   };
 
   return <div className="Analytics">
-    <Chart
-      options={graphs.logtrack.options}
-      series={graphs.logtrack.series}
-      type="line"
-      width="500" />
+    <div className="chart-container">
+      <Chart
+        options={graphs.logtrack.options}
+        series={graphs.logtrack.series}
+        type="line"
+        width="500" />
+    </div>
       
     <Chart
       options={graphs.gauge.options}

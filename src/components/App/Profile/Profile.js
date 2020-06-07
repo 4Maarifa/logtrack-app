@@ -46,33 +46,6 @@ const Profile = () => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeValues = () => {
-    setSupportMetadata({
-      userId: computed.user.uid,
-      userName: computed.employee.firstname + ' ' + computed.employee.lastname,
-      userEmail: computed.user.email,
-      activeRoleId: computed.employee.activeRoleId,
-      activeRoleCompanyId: computed.activeRole ? computed.activeRole.companyId : null,
-      activeRole: computed.activeRole ? computed.activeRole.role : null,
-      date: DateService.getCurrentIsoDateString()
-    });
-    if(computed.employee.profilePictureUrl) {
-      setProfilePicture({
-        file: null,
-        url: computed.employee.profilePictureUrl
-      });
-    }
-    else {
-      setProfilePicture(null);
-    }
-    EmployeeService.accountActivity.getAllByEmail(computed.employee.email)
-      .then(accountActivities => {
-        setAccountActivities(accountActivities);
-        setAccountActivitiesLoading(false);
-      })
-      .catch(ErrorService.manageError);
-  };
-
   const handleProfilePictureChange = newProfilePicture => {
     if(newProfilePicture && newProfilePicture.file) {
       FileService.uploadProfilePhoto(newProfilePicture.file)
@@ -124,7 +97,7 @@ const Profile = () => {
           .then(() => {
             EmployeeService.accountActivity.create(
               new AccountActivity(
-                computed.employee.email,
+                computed.user.email,
                 DateService.getCurrentIsoDateString(),
                 {
                   success: true,
@@ -146,9 +119,32 @@ const Profile = () => {
 
   useEffect(() => {
     if(computed.initialized) {
-      computeValues();
+      setSupportMetadata({
+        userId: computed.user.uid,
+        userName: computed.employee.firstname + ' ' + computed.employee.lastname,
+        userEmail: computed.user.email,
+        activeRoleId: computed.employee.activeRoleId,
+        activeRoleCompanyId: computed.activeRole ? computed.activeRole.companyId : null,
+        activeRole: computed.activeRole ? computed.activeRole.role : null,
+        date: DateService.getCurrentIsoDateString()
+      });
+      if(computed.employee.profilePictureUrl) {
+        setProfilePicture({
+          file: null,
+          url: computed.employee.profilePictureUrl
+        });
+      }
+      else {
+        setProfilePicture(null);
+      }
+      EmployeeService.accountActivity.getAllByEmail(computed.user.email)
+        .then(accountActivities => {
+          setAccountActivities(accountActivities);
+          setAccountActivitiesLoading(false);
+        })
+        .catch(ErrorService.manageError);
     }
-  }, [computed]);
+  }, [computed.initialized, computed.employee]);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, observerKey);

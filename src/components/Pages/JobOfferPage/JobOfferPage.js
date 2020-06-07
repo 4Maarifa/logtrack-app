@@ -20,7 +20,7 @@ const JobOfferPage = ({ match }) => {
   const [jobOffer, setJobOffer] = useState(null);
   const [company, setCompany] = useState(null);
 
-  const computeValues = () => {
+  useEffect(() => {
     CompanyService.jobOffer.get(jobOfferId)
       .then(jobOfferDoc => {
         setJobOffer(jobOfferDoc.data());
@@ -30,9 +30,7 @@ const JobOfferPage = ({ match }) => {
           .catch(ErrorService.manageError);
       })
       .catch(ErrorService.manageError);
-  };
-
-  useEffect(() => computeValues(), []);
+  }, []);
 
   if(!jobOffer || !company) {
     return (

@@ -35,27 +35,23 @@ const EmployeePage = ({ match }) => {
   const observerKey = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
-  
-  const computeValues = () => EmployeeService.get(employeeId)
-      .then(employeeDoc => setEmployeeData(employeeDoc.data()))
-      .catch(ErrorService.manageError);
-  
-  const computeRoles = () => RoleService.getRolesForEmployeeId(employeeId, [ERoleStatus.CONFIRMED, ERoleStatus.REVOKED])
-      .then(setRoles)
-      .catch(ErrorService.manageError);
 
   useEffect(() => {
-    let companyIds = UtilsService.removeDuplicateFromArray(Object.keys(roles).map(roleKey => roles[roleKey].companyId));
-    CompanyService.getAllForIdList(companyIds)
+    CompanyService.getAllForIdList(UtilsService.removeDuplicateFromArray(Object.keys(roles).map(roleKey => roles[roleKey].companyId)))
       .then(setCompanies)
       .catch(ErrorService.manageError);
   }, [roles]);
 
-  useEffect(() => computeRoles, [employeeData]);
-
   useEffect(() => {
-    computeValues();
-    computeRoles();
+    if(employeeId) {
+      EmployeeService.get(employeeId)
+        .then(employeeDoc => setEmployeeData(employeeDoc.data()))
+        .catch(ErrorService.manageError);
+      
+      RoleService.getRolesForEmployeeId(employeeId, [ERoleStatus.CONFIRMED, ERoleStatus.REVOKED])
+        .then(setRoles)
+        .catch(ErrorService.manageError);
+    }
   }, [computed]);
 
   useEffect(() => {

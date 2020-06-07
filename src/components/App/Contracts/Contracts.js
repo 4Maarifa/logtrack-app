@@ -29,6 +29,7 @@ const Contracts = () => {
 
   const [orderContracts, setOrderContracts] = useState({});
   const [executeContracts, setExecuteContracts] = useState({});
+  const [nofifyCount, setNotifyCount] = useState(0);
 
   const [companies, setCompanies] = useState(null);
 
@@ -40,8 +41,12 @@ const Contracts = () => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeValues = () => {
-    if(!computed.activeRole) { return null; }
+  useEffect(() => {
+    setOrderContracts({});
+    setExecuteContracts({});
+    setContractsLoading(true);
+
+    if(!computed.activeRole) { return; }
     let statusArray = [EContractStatus.DRAFT, EContractStatus.EXECUTION, EContractStatus.FINISHED, EContractStatus.PAID];
     if(isShowArchived) {
       statusArray.push(EContractStatus.ARCHIVED);
@@ -64,19 +69,7 @@ const Contracts = () => {
         })
         .catch(ErrorService.manageError);
     }).catch(ErrorService.manageError);
-  };
-
-  useEffect(() => {
-    setOrderContracts({});
-    setExecuteContracts({});
-    setContractsLoading(true);
-    computeValues();
-  }, [isShowArchived]);
-
-
-  useEffect(() => {
-    computeValues();
-  }, [computed]);
+  }, [computed.activeRole, isShowArchived, nofifyCount]);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, observerKey);
@@ -90,7 +83,7 @@ const Contracts = () => {
    */
   const renderContract = (itemKey, itemData) => {
     return <Contract
-      notifyContractChanges={computeValues}
+      notifyContractChanges={() => setNotifyCount(n => n+1)}
       contract={{[itemKey]: itemData}}
       companyExec={{[itemData.companyExecId]: companies[itemData.companyExecId]}}
       companyOrder={{[itemData.companyOrderId]: companies[itemData.companyOrderId]}} />

@@ -27,9 +27,7 @@ const RoleEmployee = ({ employee, options, roles }) => {
     return () => DataService.computed.unobserveComputedValues(observerKey);
   }, []);
 
-  if(!computed.initialized) {
-    return null;
-  }
+  if(!computed.initialized) { return null; }
 
   /**
    * RENDER

@@ -27,12 +27,6 @@ const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, 
   const observerKey = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
-  useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey);
-  }, []);
-
-  if(!computed.initialized) { return null; }
 
   const changeContractStatus = status => {
     let fieldsToUpdate = { status };
@@ -45,7 +39,17 @@ const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, 
         notifyContractChanges && notifyContractChanges(contractKey);
       }).catch(ErrorService.manageError);
   };
+  
+  useEffect(() => {
+    DataService.computed.observeComputedValues(setComputed, observerKey);
+    return () => DataService.computed.unobserveComputedValues(observerKey);
+  }, []);
 
+  if(!computed.initialized) { return null; }
+
+  /**
+   * RENDER
+   */
   const computeStatus = () => {
     const isExecutor = (Object.keys(companyExec)[0] === computed.activeRole.companyId);
     const hasCreated = contractData.createdByCompanyId === computed.activeRole.companyId;

@@ -27,12 +27,12 @@ const Equipments = () => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeEquipments = () => {
-    EquipmentModelService.list()
-      .then(setEquipmentModels)
-      .catch(ErrorService.manageError);
-
+  useEffect(() => {
     if(computed.activeRole) {
+      EquipmentModelService.list()
+        .then(setEquipmentModels)
+        .catch(ErrorService.manageError);
+        
       EquipmentService.getAllForCompanyId(computed.activeRole.companyId)
         .then(equipments => {
           setEquipments(equipments);
@@ -40,9 +40,7 @@ const Equipments = () => {
         })
         .catch(ErrorService.manageError);
     }
-  };
-
-  useEffect(() => computeEquipments(), [computed]);
+  }, [computed.activeRole]);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, observerKey);
