@@ -11,6 +11,7 @@ const Checkbox = ({ value,
                     fieldName,
                     inputName,
                     inputDisabled,
+                    inputRequired,
                     label,
                     onValueChange }) => {
 
@@ -19,22 +20,23 @@ const Checkbox = ({ value,
   /**
    * RENDER
    */
-  const inputId = uuid();
+  const INPUT_ID = uuid();
 
   return (
     <div className={'Checkbox '
         + (fieldName ? 'input-' + fieldName : '')}>
 
       <input
-        id={inputId}
+        id={INPUT_ID}
         className="input"
         type="checkbox"
         checked={value}
         name={inputName}
         disabled={inputDisabled}
+        required={inputRequired}
         onChange={e => onChange(e.target.checked)} />
 
-      <label htmlFor={inputId}>
+      <label htmlFor={INPUT_ID}>
         <span className="square">
           <Icon source="fa" containerclassname="check-icon" icon={faCheck} />
         </span>

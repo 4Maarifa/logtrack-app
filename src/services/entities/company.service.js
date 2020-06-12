@@ -42,12 +42,12 @@ const CompanyService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Companies' });
     }
 
-    const companies = {};
+    const COMPANIES = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getFirestore().collection('companies').get()
             .then(querySnapshot => {
-                querySnapshot.forEach(companyDoc => companies[companyDoc.id] = companyDoc.data());
-                resolve(companies);
+                querySnapshot.forEach(companyDoc => COMPANIES[companyDoc.id] = companyDoc.data());
+                resolve(COMPANIES);
             })
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
@@ -92,19 +92,36 @@ const CompanyService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Companies' });
     }
 
-    const promises = [];
-    const companies = {};
+    const PROMISES = [],
+      COMPANIES = {};
 
     return new Promise((resolve, reject) => {
-      idList.forEach(companyId => promises.push(CompanyService.get(companyId)));
+      idList.forEach(companyId => PROMISES.push(CompanyService.get(companyId)));
 
-      Promise.all(promises)
+      Promise.all(PROMISES)
         .then(companyDocs => {
-            companyDocs.forEach(companyDoc => companies[companyDoc.id] = companyDoc.data());
-            resolve(companies);
+            companyDocs.forEach(companyDoc => COMPANIES[companyDoc.id] = companyDoc.data());
+            resolve(COMPANIES);
         })
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });            
+  },
+  getAllForCreatorId: creatorId => {
+    if(!CompanyService.rights[ERights.RIGHT_COMPANY_LIST]()) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Companies' });
+    }
+
+    const COMPANIES = {};
+    return new Promise((resolve, reject) => {
+      FirebaseService.getFirestore().collection('companies')
+      .where('creator', '==', creatorId)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(companyDoc => COMPANIES[companyDoc.id] = companyDoc.data());
+        resolve(COMPANIES);
+      })
+      .catch(e => ErrorService.manageErrorThenReject(e, reject));
+    });
   },
   search: term => new Promise((resolve, reject) => {
       DataService.computed.search([ESearchType.COMPANIES], term, null)
@@ -146,12 +163,12 @@ const CompanyService = {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Job Offers' });
       }
   
-      const jobOffers = {};
+      const JOB_OFFERS = {};
       return new Promise((resolve, reject) => {
           FirebaseService.getFirestore().collection('jobOffers').get()
               .then(querySnapshot => {
-                  querySnapshot.forEach(jobOfferDoc => jobOffers[jobOfferDoc.id] = jobOfferDoc.data());
-                  resolve(jobOffers);
+                  querySnapshot.forEach(jobOfferDoc => JOB_OFFERS[jobOfferDoc.id] = jobOfferDoc.data());
+                  resolve(JOB_OFFERS);
               })
               .catch(e => ErrorService.manageErrorThenReject(e, reject));
       });
@@ -192,14 +209,31 @@ const CompanyService = {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Job Offers' });
       }
 
-      const jobOffers = {};
+      const JOB_OFFERS = {};
       return new Promise((resolve, reject) => {
         FirebaseService.getFirestore().collection('jobOffers')
         .where('companyId', '==', companyId)
         .get()
         .then(querySnapshot => {
-          querySnapshot.forEach(jobOfferDoc => jobOffers[jobOfferDoc.id] = jobOfferDoc.data());
-          resolve(jobOffers);
+          querySnapshot.forEach(jobOfferDoc => JOB_OFFERS[jobOfferDoc.id] = jobOfferDoc.data());
+          resolve(JOB_OFFERS);
+        })
+        .catch(e => ErrorService.manageErrorThenReject(e, reject));
+      });
+    },
+    getAllForCreatorId: creatorId => {
+      if(!CompanyService.jobOffer.rights[ERights.RIGHT_JOBOFFERS_LIST]()) {
+        return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Job Offers' });
+      }
+
+      const JOB_OFFERS = {};
+      return new Promise((resolve, reject) => {
+        FirebaseService.getFirestore().collection('jobOffers')
+        .where('creator', '==', creatorId)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(jobOfferDoc => JOB_OFFERS[jobOfferDoc.id] = jobOfferDoc.data());
+          resolve(JOB_OFFERS);
         })
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
       });
@@ -209,15 +243,15 @@ const CompanyService = {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Job Offers' });
       }
 
-      const jobOffers = {};
+      const JOB_OFFERS = {};
       return new Promise((resolve, reject) => {
         FirebaseService.getFirestore().collection('jobOffers')
         .where('companyId', '==', companyId)
         .where('status', '==', EJobOfferStatus.OPENED)
         .get()
         .then(querySnapshot => {
-          querySnapshot.forEach(jobOfferDoc => jobOffers[jobOfferDoc.id] = jobOfferDoc.data());
-          resolve(jobOffers);
+          querySnapshot.forEach(jobOfferDoc => JOB_OFFERS[jobOfferDoc.id] = jobOfferDoc.data());
+          resolve(JOB_OFFERS);
         })
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
       });
@@ -240,14 +274,14 @@ const CompanyService = {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Job Offers' });
       }
 
-      const jobOffers = {};
+      const JOB_OFFERS = {};
       return new Promise((resolve, reject) => {
         FirebaseService.getFirestore().collection('jobOffers')
         .where('status', '==', EJobOfferStatus.OPENED)
         .get()
         .then(querySnapshot => {
-          querySnapshot.forEach(jobOfferDoc => jobOffers[jobOfferDoc.id] = jobOfferDoc.data());
-          resolve(jobOffers);
+          querySnapshot.forEach(jobOfferDoc => JOB_OFFERS[jobOfferDoc.id] = jobOfferDoc.data());
+          resolve(JOB_OFFERS);
         })
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
       });

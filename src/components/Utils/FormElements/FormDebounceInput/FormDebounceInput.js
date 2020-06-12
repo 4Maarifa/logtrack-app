@@ -27,14 +27,14 @@ const FormDebounceInput = ({ value,
   /**
    * RENDER
    */
-  const inputId = uuid();
+  const INPUT_ID = uuid();
 
   return (
     <div className={'FormDebounceInput '
       + (fieldName ? 'input-' + fieldName : '')}>
 
       <DelayInput
-        id={inputId}
+        id={INPUT_ID}
         delayTimeout={1100}
         className={'input ' + (!value ? 'input--empty' : '')}
         type={inputType || 'text'}
@@ -53,7 +53,7 @@ const FormDebounceInput = ({ value,
         <Icon containerclassname="invalid" source="fa" icon={faTimes} />
       </span>
       {label && 
-        <label htmlFor={inputId}>
+        <label htmlFor={INPUT_ID}>
           {label}
         </label>
       }

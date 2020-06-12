@@ -18,13 +18,13 @@ import './RoleEmployee.scss';
 
 const RoleEmployee = ({ employee, options, roles }) => {
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
   
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey);
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY);
   }, []);
 
   if(!computed.initialized) { return null; }
@@ -32,11 +32,11 @@ const RoleEmployee = ({ employee, options, roles }) => {
   /**
    * RENDER
    */
-  const renderRole = roleKey => {
-    if(!options.showDraft && roles[roleKey].status === ERoleStatus.DRAFT) {
+  const renderRole = roleId => {
+    if(!options.showDraft && roles[roleId].status === ERoleStatus.DRAFT) {
       return null;
     }
-    return <Role key={roleKey} role={ { [roleKey]: roles[roleKey] } } options={options} />;
+    return <Role key={roleId} role={ { [roleId]: roles[roleId] } } options={options} />;
   };
 
   if(!employee || !Object.keys(roles).length) {
@@ -45,21 +45,21 @@ const RoleEmployee = ({ employee, options, roles }) => {
   let employeeId = Object.keys(employee)[0];
 
   if(!options.showDraft && 
-      Object.keys(roles).map(roleKey => roles[roleKey].status).reduce((total, role) => total + (role.status === ERoleStatus.CONFIRMED) ? 1 : 0) === 0) {
+      Object.keys(roles).map(roleId => roles[roleId].status).reduce((total, role) => total + (role.status === ERoleStatus.CONFIRMED) ? 1 : 0) === 0) {
       return null;
   }
 
-  const actions = [
+  const ACTIONS = [
     { title: 'Visit Profile', icon: <Icon source="fa" icon={faUser} />, link: `/employee/${employeeId}` }
   ];
 
   if(computed.user.uid === employeeId) {
-    actions.push({ title: 'Modify profile', icon: <Icon source="fa" icon={faUserCog} />, link: '/profile' });
-    actions.push({ title: 'Request a role', icon: <Icon source="fa" icon={faUserTag} />, link: '/role-add' });
+    ACTIONS.push({ title: 'Modify profile', icon: <Icon source="fa" icon={faUserCog} />, link: '/profile' });
+    ACTIONS.push({ title: 'Request a role', icon: <Icon source="fa" icon={faUserTag} />, link: '/role-add' });
   }
   else {
     if(computed.activeRole.role === ERole.MANAGER) {
-      actions.push({ title: 'Offer a role', icon: <Icon source="fa" icon={faUserPlus} />, link: `/role-offer/${employeeId}` });
+      ACTIONS.push({ title: 'Offer a role', icon: <Icon source="fa" icon={faUserPlus} />, link: `/role-offer/${employeeId}` });
     }
   }
 
@@ -82,7 +82,7 @@ const RoleEmployee = ({ employee, options, roles }) => {
           </div>
         </div>
         <div className="Element-actions">
-          <ActionList actions={actions} />
+          <ActionList actions={ACTIONS} />
         </div>
       </div>
     </div>

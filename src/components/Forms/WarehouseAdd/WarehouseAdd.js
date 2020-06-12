@@ -23,7 +23,7 @@ import { v4 as uuid } from 'uuid';
 import './WarehouseAdd.scss';
 
 const WarehouseAdd = ({ match }) => {
-  const currentWarehouseId = match.params.warehouseid;
+  const CURRENT_WAREHOUSE_ID = match.params.warehouseid;
 
   const [currentWarehouse, setCurrentWarehouse] = useState(null);
 
@@ -42,9 +42,9 @@ const WarehouseAdd = ({ match }) => {
 
   const [locationMarkerId, setLocationMarkerId] = useState(null);
 
-  const map = useRef(null);
+  const REF_MAP = useRef(null);
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
@@ -76,12 +76,12 @@ const WarehouseAdd = ({ match }) => {
     setSelectedLocationItem(selectedLocationItem);
 
     if(!selectedLocationItem) {
-      map.current.deleteMarker(locationMarkerId);
+      REF_MAP.current.deleteMarker(locationMarkerId);
       setLocationMarkerId(null);
       return;
     }
     if(locationMarkerId) {
-      map.current.switchMarker(
+      REF_MAP.current.switchMarker(
         locationMarkerId,
         selectedLocationItem.value.coordinates[0],
         selectedLocationItem.value.coordinates[1],
@@ -89,14 +89,14 @@ const WarehouseAdd = ({ match }) => {
       centerOnLocationMarker();
     }
     else {
-      setLocationMarkerId(map.current.addMarker(
+      setLocationMarkerId(REF_MAP.current.addMarker(
         selectedLocationItem.value.coordinates[0],
         selectedLocationItem.value.coordinates[1],
         selectedLocationItem.value.display_name));
     }
   };
 
-  const centerOnLocationMarker = () => locationMarkerId && map.current.centerOnMarker(locationMarkerId);
+  const centerOnLocationMarker = () => locationMarkerId && REF_MAP.current.centerOnMarker(locationMarkerId);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -107,14 +107,14 @@ const WarehouseAdd = ({ match }) => {
     }
 
     if(currentWarehouse) {
-      WarehouseService.updateField(currentWarehouseId, {
+      WarehouseService.updateField(CURRENT_WAREHOUSE_ID, {
         identification,
         latitude: selectedLocationItem.value.coordinates[0],
         longitude: selectedLocationItem.value.coordinates[1],
         address: selectedLocationItem.value.display_name,
         nbLoadingDocks
       })
-        .then(() => setNewWarehouseId(currentWarehouseId))
+        .then(() => setNewWarehouseId(CURRENT_WAREHOUSE_ID))
         .catch(ErrorService.manageError);        
     }
     else {
@@ -139,8 +139,8 @@ const WarehouseAdd = ({ match }) => {
 
   useEffect(() => {
     if(computed.initialized) {
-      if(currentWarehouseId) {
-        WarehouseService.get(currentWarehouseId)
+      if(CURRENT_WAREHOUSE_ID) {
+        WarehouseService.get(CURRENT_WAREHOUSE_ID)
           .then(warehouseDoc => {
             setCurrentWarehouse(warehouseDoc.data());
             setIdentification(warehouseDoc.data().name);
@@ -171,8 +171,8 @@ const WarehouseAdd = ({ match }) => {
   }, [computed]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey);
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY);
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -246,10 +246,10 @@ const WarehouseAdd = ({ match }) => {
           instructions={
             <span>Pick a location</span>
           } />
-        <Map ref={map} />
+        <Map ref={REF_MAP} />
 
         {/* Nb Loading Docks */}
-        <div className="input-nbloadingdocks">
+        <div className="input-container">
           <span className="fake-label">
             <Icon source="fa" icon={faWarehouse} />
             Number of Loading Docks
@@ -258,7 +258,7 @@ const WarehouseAdd = ({ match }) => {
         </div>
 
         {/* Company */}
-        <div className="input-company">
+        <div className="input-container">
           <span className="fake-label">
             <Icon source="fa" icon={faBuilding} />
             Company
@@ -267,7 +267,7 @@ const WarehouseAdd = ({ match }) => {
         </div>
 
         {/* Creator */}
-        <div className="input-creator">
+        <div className="input-container">
           <span className="fake-label">
             <Icon source="fa" icon={faUser} />
             Creator

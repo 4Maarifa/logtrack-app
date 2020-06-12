@@ -21,20 +21,20 @@ const Warehouses = () => {
   const [warehouses, setWarehouses] = useState({});
   const [isWarehousesLoading, setWarehousesLoading] = useState(true);
 
-  const map = useRef(null);
+  const REF_MAP = useRef(null);
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
   const onSelectedItemChanged = itemId => {
     if(!itemId) {
-      map.current.centerOnAllMarkers();
+      REF_MAP.current.centerOnAllMarkers();
       return;
     }
     if(warehouses[itemId].markerId) {
-      map.current.centerOnMarker(warehouses[itemId].markerId);
-      map.current.triggerPopup(warehouses[itemId].markerId);
+      REF_MAP.current.centerOnMarker(warehouses[itemId].markerId);
+      REF_MAP.current.triggerPopup(warehouses[itemId].markerId);
     }
   };
 
@@ -42,15 +42,15 @@ const Warehouses = () => {
     if(computed.activeRole) {
       WarehouseService.getAllForCompanyId(computed.activeRole.companyId)
         .then(warehouses => {
-          if(map.current) {
-            Object.keys(warehouses).forEach(warehouseKey => {
-              warehouses[warehouseKey].markerId = map.current.addMarker(
-                warehouses[warehouseKey].latitude,
-                warehouses[warehouseKey].longitude,
-                warehouses[warehouseKey].name
+          if(REF_MAP.current) {
+            Object.keys(warehouses).forEach(warehouseId => {
+              warehouses[warehouseId].markerId = REF_MAP.current.addMarker(
+                warehouses[warehouseId].latitude,
+                warehouses[warehouseId].longitude,
+                warehouses[warehouseId].name
               );
             });
-            map.current.centerOnAllMarkers();
+            REF_MAP.current.centerOnAllMarkers();
           }
           
           setWarehouses(warehouses);
@@ -61,8 +61,8 @@ const Warehouses = () => {
   }, [computed.activeRole]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -70,16 +70,16 @@ const Warehouses = () => {
   /**
    * RENDER
    */
-  const renderWarehouse = (itemKey, itemData) => {
-    return <Warehouse key={itemKey}
-      warehouse={ {[itemKey]: itemData} }
+  const renderWarehouse = (itemId, itemData) => {
+    return <Warehouse key={itemId}
+      warehouse={ {[itemId]: itemData} }
       options={{  }}
       showDetails />
   };
 
   return (
     <div className="Warehouses">
-      <Map ref={map} />
+      <Map ref={REF_MAP} />
       <ExTable key="warehouses" 
               items={warehouses}
               fss={warehousesExTableFSS}

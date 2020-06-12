@@ -1,0 +1,9 @@
+.ActionLink {
+  color: var(--theme);
+  display: inline;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

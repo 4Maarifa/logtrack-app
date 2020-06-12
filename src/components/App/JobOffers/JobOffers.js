@@ -30,7 +30,7 @@ const JobOffers = () => {
   const [closedApplications, setClosedApplications] = useState(null);
   const [isJobOffersLoading, setJobOffersLoading] = useState(true);
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
@@ -38,18 +38,18 @@ const JobOffers = () => {
     if(computed.activeRole) {
       CompanyService.jobOffer.getAllForCompanyId(computed.activeRole.companyId)
         .then(jobOffers => {
-          const newOpenedJobOffers = {};
-          const newClosedApplications = {};
-          Object.keys(jobOffers).forEach(jobOfferKey => {
-            if(jobOffers[jobOfferKey].status === EJobOfferStatus.CLOSED) {
-              newClosedApplications[jobOfferKey] = jobOffers[jobOfferKey];
+          const NEW_OPENED_JOB_OFFERS = {};
+          const NEW_CLOSED_JOB_OFFERS = {};
+          Object.keys(jobOffers).forEach(jobOfferId => {
+            if(jobOffers[jobOfferId].status === EJobOfferStatus.CLOSED) {
+              NEW_CLOSED_JOB_OFFERS[jobOfferId] = jobOffers[jobOfferId];
             }
             else {
-              newOpenedJobOffers[jobOfferKey] = jobOffers[jobOfferKey];
+              NEW_OPENED_JOB_OFFERS[jobOfferId] = jobOffers[jobOfferId];
             }
           });
-          setOpenedJobOffers(newOpenedJobOffers);
-          setClosedApplications(newClosedApplications);
+          setOpenedJobOffers(NEW_OPENED_JOB_OFFERS);
+          setClosedApplications(NEW_CLOSED_JOB_OFFERS);
           setJobOffersLoading(false);
         })
         .catch(ErrorService.manageError);
@@ -57,8 +57,8 @@ const JobOffers = () => {
   }, [computed.activeRole]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -82,7 +82,7 @@ const JobOffers = () => {
         content: () => <ExTable key="opened"
                                 fss={jobsExTableFSS}
                                 items={openedJobOffers}
-                                renderItem={(itemKey, itemData) => <JobOffer key={itemKey} jobOffer={ {[itemKey]: itemData} } />}
+                                renderItem={(itemId, itemData) => <JobOffer key={itemId} jobOffer={ {[itemId]: itemData} } />}
                                 header={<span><Icon source="fa" icon={faPortrait} /> Opened Positions</span>}
                                 loading={isJobOffersLoading} />
       },
@@ -94,7 +94,7 @@ const JobOffers = () => {
         content: () => <ExTable key="closed" 
                                 fss={jobsExTableFSS}
                                 items={closedApplications}
-                                renderItem={(itemKey, itemData) => <JobOffer key={itemKey} jobOffer={ {[itemKey]: itemData} } />}
+                                renderItem={(itemId, itemData) => <JobOffer key={itemId} jobOffer={ {[itemId]: itemData} } />}
                                 header={<span><Icon source="fa" icon={faCheck} /> Closed Applications</span>}
                                 loading={isJobOffersLoading} />
       }

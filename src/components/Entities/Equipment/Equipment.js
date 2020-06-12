@@ -17,48 +17,49 @@ import './Equipment.scss';
 
 const Equipment = ({ equipment, equipmentModel, isPage }) => {
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
   
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey);
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY);
   }, []);
 
   if(!computed.initialized) { return null; }
   if(!equipment) { return null; }
 
   
-  const equipmentKey = Object.keys(equipment)[0],
-    equipmentModelKey = Object.keys(equipmentModel)[0];
+  const EQUIPMENT_ID = Object.keys(equipment)[0],
+    EQUIPMENT_DATA = equipment[EQUIPMENT_ID],
+    EQUIPMENT_MODEL_DATA = equipmentModel[Object.keys(equipmentModel)[0]];
 
   /** 
    * RENDER
    */
 
-  const actions = [];
-  if(computed.activeRole.role === ERole.MANAGER && equipment[equipmentKey].companyId === computed.activeRole.companyId) {
-    actions.push({title: 'Edit', icon: <Icon source="fa" icon={faEdit} />, link: `/equipment-edit/${equipmentKey}`});
+  const ACTIONS = [];
+  if(computed.activeRole.role === ERole.MANAGER && EQUIPMENT_DATA.companyId === computed.activeRole.companyId) {
+    ACTIONS.push({title: 'Edit', icon: <Icon source="fa" icon={faEdit} />, link: `/equipment-edit/${EQUIPMENT_ID}`});
   }
 
   return (
     <div className="Equipment Element-content">
       <div className="Element-base">
-        <span className={'Element-badge badge ' + (isPage ? 'badge-inverse' : '')}>{EEquipmentModelSubTypeDetails[equipmentModel[equipmentModelKey].type][equipmentModel[equipmentModelKey].subType].icon}</span>
+        <span className={'Element-badge badge ' + (isPage ? 'badge-inverse' : '')}>{EEquipmentModelSubTypeDetails[EQUIPMENT_MODEL_DATA.type][EQUIPMENT_MODEL_DATA.subType].icon}</span>
         <div className="Element-photo">
           <img
-            alt={equipmentModel[equipmentModelKey].name} 
-            src={equipmentModel[equipmentModelKey].photoUrl} />
+            alt={EQUIPMENT_MODEL_DATA.name} 
+            src={EQUIPMENT_MODEL_DATA.photoUrl} />
         </div>
         <div className="Element-data">
           <span className="Element-title">
-            <PageLink type={PageLinkType.EQUIPMENT} entityId={equipmentKey} entityData={equipment[equipmentKey]} white={isPage} />
+            <PageLink type={PageLinkType.EQUIPMENT} entityId={EQUIPMENT_ID} entityData={EQUIPMENT_DATA} white={isPage} />
           </span>
-          <span className="sub">{equipmentModel[equipmentModelKey].name}</span>
+          <span className="sub">{EQUIPMENT_MODEL_DATA.name}</span>
         </div>
         <div className="Element-actions">
-          <ActionList actions={actions} isFlatten={isPage} />
+          <ActionList actions={ACTIONS} isFlatten={isPage} />
         </div>
       </div>
     </div>

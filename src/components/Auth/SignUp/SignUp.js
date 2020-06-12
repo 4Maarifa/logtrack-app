@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect, NavLink } from 'react-router-dom';
-import { faUser, faEnvelope, faKey, faImage } from '@fortawesome/pro-solid-svg-icons';
+import { faUser, faEnvelope, faKey, faImage, faExternalLink } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
 import FormInputFile from './../../Utils/FormElements/FormInputFile/FormInputFile';
+import Checkbox from './../../Utils/FormElements/Checkbox/Checkbox';
 
 import FirebaseService from './../../../services/firebase.service';
 import ErrorService from './../../../services/error.service';
@@ -12,6 +13,7 @@ import DateService from './../../../services/date.service';
 import FileService from './../../../services/file.service';
 import EmployeeService from './../../../services/entities/employee.service';
 import GeoService from './../../../services/geo.service';
+import UserAgentService from './../../../services/useragent.service';
 
 import Employee, { AccountActivity, EAccountActivityType } from './../../../classes/Employee';
 
@@ -26,6 +28,9 @@ const SignUp = () => {
   const [secondPassword, setSecondPassword] = useState('');
   const [profilePicture, setProfilePicture] = useState(null);
 
+  const [isAcceptTerms, setAcceptTerms] = useState(true);
+  const [isKeepInformed, setKeepInformed] = useState(false);
+
   const [newUser, setNewUser] = useState(null);
   const [isFinishedConfig, setFinishConfig] = useState(false);
 
@@ -39,7 +44,8 @@ const SignUp = () => {
   }, []); 
 
   const finishConfiguration = () => {
-    EmployeeService.create(newUser.uid, new Employee(firstname, lastname, [], null, null, null, DateService.getCurrentIsoDateString()))
+    EmployeeService.create(newUser.uid, new Employee(firstname, lastname, [], null, null, null, DateService.getCurrentIsoDateString(), 
+        { terms: isAcceptTerms, informed: isKeepInformed, version: UserAgentService.getAppVersion(), acceptDate: DateService.getCurrentIsoDateString() }))
       .then(() => {
         uploadProfilePhoto()
           .then(profilePicutreUrl => {
@@ -244,6 +250,31 @@ const SignUp = () => {
             </span>
           }
           accept="image/*" />
+
+        {/* Terms */}
+        <Checkbox
+          value={isAcceptTerms}
+          fieldName="terms"
+          inputName="terms"
+          inputRequired
+          label={<span>
+            You must accept <a className="text-link" href="/terms" target="_blank">
+              terms and conditions
+              <Icon source="fa" icon={faExternalLink} />
+            </a>
+          </span>}
+          onValueChange={setAcceptTerms} />
+
+        {/* Keep Informed */}
+        <Checkbox
+          value={isKeepInformed}
+          fieldName="informed"
+          inputName="informed"
+          label={<span>
+            Keep me informed about product's news!<br/>
+            <span className="sub">Once per month, NO spam, NO email from partners</span>
+          </span>}
+          onValueChange={setKeepInformed} />
 
         <input type="submit" value="Sign Up" />
       </form>

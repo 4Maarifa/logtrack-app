@@ -54,12 +54,12 @@ const RoleService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Roles' });
     }
 
-    const roles = {};
+    const ROLES = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getFirestore().collection('roles').get()
             .then(querySnapshot => {
-                querySnapshot.forEach(roleDoc => roles[roleDoc.id] = roleDoc.data());
-                resolve(roles);
+                querySnapshot.forEach(roleDoc => ROLES[roleDoc.id] = roleDoc.data());
+                resolve(ROLES);
             })
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
@@ -137,7 +137,7 @@ const RoleService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Roles' });
     }
 
-    const roles = {};
+    const ROLES = {};
 
     return new Promise((resolve, reject) => {
       FirebaseService.getFirestore().collection('roles')
@@ -145,8 +145,8 @@ const RoleService = {
         .where('status', 'in', statusArray)
         .get()
         .then(querySnapshot => {
-          querySnapshot.forEach(roleDoc => roles[roleDoc.id] = roleDoc.data());
-          resolve(roles);
+          querySnapshot.forEach(roleDoc => ROLES[roleDoc.id] = roleDoc.data());
+          resolve(ROLES);
         })
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
@@ -156,7 +156,7 @@ const RoleService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Roles' });
     }
 
-    const roles = {};
+    const ROLES = {};
 
     return new Promise((resolve, reject) => {
       FirebaseService.getFirestore().collection('roles')
@@ -164,8 +164,8 @@ const RoleService = {
         .where('status', 'in', statusArray)
         .get()
         .then(querySnapshot => {
-          querySnapshot.forEach(roleDoc => roles[roleDoc.id] = roleDoc.data());
-          resolve(roles);
+          querySnapshot.forEach(roleDoc => ROLES[roleDoc.id] = roleDoc.data());
+          resolve(ROLES);
         })
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
@@ -175,7 +175,7 @@ const RoleService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Roles' });
     }
 
-    const roles = {};
+    const ROLES = {};
 
     return new Promise((resolve, reject) => {
       FirebaseService.getFirestore().collection('roles')
@@ -184,8 +184,8 @@ const RoleService = {
         .where('status', 'in', statusArray)
         .get()
         .then(querySnapshot => {
-          querySnapshot.forEach(roleDoc => roles[roleDoc.id] = roleDoc.data());
-          resolve(roles);
+          querySnapshot.forEach(roleDoc => ROLES[roleDoc.id] = roleDoc.data());
+          resolve(ROLES);
         })
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
@@ -240,36 +240,37 @@ const RoleService = {
   notifyObservers: () => Object.keys(RoleService.observers)
       .forEach(observerKey => RoleService.observers[observerKey].callback(RoleService.getActions(RoleService.observers[observerKey].role))),
   getActions: role => {
-    const roleId = Object.keys(role)[0];
-    const actions = [];
+    const ROLE_ID = Object.keys(role)[0],
+      ROLE_DATA = role[ROLE_ID];
+    const ACTIONS = [];
 
-    if(DataService.computed.activeRole && role[roleId].status === ERoleStatus.DRAFT && role[roleId].companyId === DataService.computed.activeRole.companyId && DataService.computed.activeRole.role === ERole.MANAGER) {
-      actions.push(<button key="CONFIRM" title="Confirm?" onClick={() => RoleService.confirmRole(roleId)}>
+    if(DataService.computed.activeRole && ROLE_DATA.status === ERoleStatus.DRAFT && ROLE_DATA.companyId === DataService.computed.activeRole.companyId && DataService.computed.activeRole.role === ERole.MANAGER) {
+      ACTIONS.push(<button key="CONFIRM" title="Confirm?" onClick={() => RoleService.confirmRole(ROLE_ID)}>
         <Icon source="fa" icon={faCheck} />
       </button>);
-      actions.push(<button key="DENY" title="Deny?" onClick={() => RoleService.denyRole(roleId)}>
+      ACTIONS.push(<button key="DENY" title="Deny?" onClick={() => RoleService.denyRole(ROLE_ID)}>
       <Icon source="fa" icon={faTimes} />
     </button>);
     }
-    if(DataService.computed.activeRole && DataService.computed.employee && roleId !== DataService.computed.employee.activeRoleId && role[roleId].status === ERoleStatus.CONFIRMED && role[roleId].companyId === DataService.computed.activeRole.companyId && DataService.computed.activeRole.role === ERole.MANAGER) {
-      actions.push(<button key="REVOKE" title="Revoke?" onClick={() => RoleService.revokeRole(roleId)}>
+    if(DataService.computed.activeRole && DataService.computed.employee && ROLE_ID !== DataService.computed.employee.activeRoleId && ROLE_DATA.status === ERoleStatus.CONFIRMED && ROLE_DATA.companyId === DataService.computed.activeRole.companyId && DataService.computed.activeRole.role === ERole.MANAGER) {
+      ACTIONS.push(<button key="REVOKE" title="Revoke?" onClick={() => RoleService.revokeRole(ROLE_ID)}>
         <Icon source="fa" icon={faTimes} />
       </button>);
     }
-    if(DataService.computed.user && role[roleId].status === ERoleStatus.CONFIRMED && role[roleId].employeeId === DataService.computed.user.uid) {
-      if(roleId === DataService.computed.employee.activeRoleId) {
-        actions.push(<button key="DISABLE" title="Disable?" onClick={EmployeeService.unactivateRole}>
+    if(DataService.computed.user && ROLE_DATA.status === ERoleStatus.CONFIRMED && ROLE_DATA.employeeId === DataService.computed.user.uid) {
+      if(ROLE_ID === DataService.computed.employee.activeRoleId) {
+        ACTIONS.push(<button key="DISABLE" title="Disable?" onClick={EmployeeService.unactivateRole}>
           <Icon source="fa" icon={faToggleOn} />
         </button>);
       }
       else {
-        actions.push(<button key="ENABLE" title="Enable?" onClick={() => EmployeeService.activateRole(roleId)}>
+        ACTIONS.push(<button key="ENABLE" title="Enable?" onClick={() => EmployeeService.activateRole(ROLE_ID)}>
           <Icon source="fa" icon={faToggleOff} />
         </button>);
       }
     }
     return <div className="Role-actions">
-      {actions}
+      {ACTIONS}
     </div>;
   }
 };

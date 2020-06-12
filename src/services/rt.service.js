@@ -46,20 +46,20 @@ const RT_Service = {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'RT_userMessage/metadata' });
       }
   
-      const messageKey = uuid(), revision = rtUserMessage.revision;
+      const MESSAGE_ID = uuid(), REVISION = rtUserMessage.revision;
   
       return new Promise((resolve, reject) => {
-        FirebaseService.getRtDb().ref('/rtForUsers/' + messageKey).set(migratePrototype(rtUserMessage))
+        FirebaseService.getRtDb().ref('/rtForUsers/' + MESSAGE_ID).set(migratePrototype(rtUserMessage))
           .then(() => {
             Promise.all([
               Object.keys(rtUserMessage.users).map(userId =>
-                FirebaseService.getRtDb().ref(`/users/${userId}/messages/${messageKey}`)
+                FirebaseService.getRtDb().ref(`/users/${userId}/messages/${MESSAGE_ID}`)
                 .set({
-                  revision,
+                  REVISION,
                   private: ERT_userMessageDetails[rtUserMessage.type].buildPrivateInfo()
                 }))
             ])
-            .then(() => resolve(messageKey))
+            .then(() => resolve(MESSAGE_ID))
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
           })
           .catch(e => ErrorService.manageErrorThenReject(e, reject));
@@ -103,7 +103,7 @@ const RT_Service = {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'RT_userMessage/metadata' });
       }
 
-      const revision = uuid(), newUsers = [], existingUsers = [], removedUsers = [];
+      const REVISION = uuid(), NEW_USERS = [], EXISTING_USERS = [], REMOVED_USERS = [];
   
       return new Promise((resolve, reject) => {
         FirebaseService.getRtDb().ref('/rtForUsers/' + rtUserMessageId).transaction(rtForUser => {
@@ -111,23 +111,23 @@ const RT_Service = {
           rtForUser.content = rtUserMessage.content;
           rtForUser.metadata = rtUserMessage.metadata;
           
-          rtForUser.revision = revision;
+          rtForUser.revision = REVISION;
 
           // ADDING NEW USERS
           Object.keys(rtUserMessage.users).forEach(userId => {
             if(!rtForUser.users[userId]) {
               rtForUser.users[userId] = rtUserMessage.users[userId];
-              newUsers.push(userId);
+              NEW_USERS.push(userId);
             }
             else {
-              existingUsers.push(userId);
+              EXISTING_USERS.push(userId);
             }
           });
 
           // DELETING OLD USERS
           Object.keys(rtForUser.users).forEach(userId => {
             if(!rtUserMessage.users[userId]) {
-              removedUsers.push(userId);
+              REMOVED_USERS.push(userId);
               delete rtForUser.users[userId];
             }
           });
@@ -136,26 +136,26 @@ const RT_Service = {
         }).then(() => {
           Promise.all([
             // ADDING RIGHTS FOR NEW USERS
-            newUsers.map(userId =>
+            NEW_USERS.map(userId =>
               FirebaseService.getRtDb()
                 .ref(`/users/${userId}/messages/${rtUserMessageId}`)
                 .set({
-                  revision,
+                  REVISION,
                   private: ERT_userMessageDetails[rtUserMessage.type].buildPrivateInfo()
                 })),
 
             // UPDATING REVISION FOR EXISTING USERS
-            existingUsers.map(userId => 
+            EXISTING_USERS.map(userId => 
               FirebaseService.getRtDb()
                 .ref(`/users/${userId}/messages/${rtUserMessageId}`)
                 .transaction(userMessage => {
                   if(!userMessage) { return null; }
-                  userMessage.revision = revision;
+                  userMessage.revision = REVISION;
                   return userMessage;
                 })),
 
             // REMOVING RIGHTS FOR REMOVED USERS
-            removedUsers.map(userId => 
+            REMOVED_USERS.map(userId => 
               FirebaseService.getRtDb()
                 .ref(`/users/${userId}/messages/${rtUserMessageId}`)
                 .remove())
@@ -196,11 +196,11 @@ const RT_Service = {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/prototype-not-match', details: 'RT_companyMessage/metadata' });
       }
   
-      const messageKey = uuid();
+      const MESSAGE_ID = uuid();
   
       return new Promise((resolve, reject) => {
-        FirebaseService.getRtDb().ref('/rtForCompanies/' + messageKey).set(migratePrototype(rtCompanyMessage))
-          .then(() => resolve(messageKey))
+        FirebaseService.getRtDb().ref('/rtForCompanies/' + MESSAGE_ID).set(migratePrototype(rtCompanyMessage))
+          .then(() => resolve(MESSAGE_ID))
           .catch(e => ErrorService.manageErrorThenReject(e, reject));
       });
     },
@@ -271,10 +271,10 @@ const RT_Service = {
     FirebaseService.getRtDb().ref(`/rtForUsers/${rtSnapshot.key}`)
       .once('value')
       .then(snapshot => {
-        const message = migratePrototype(snapshot.val());
-        message.forUser = rtSnapshot.val();
-        message.type = ERT_userMessage[message.type];
-        RT_Service._rtForUsers[rtSnapshot.key] = message;
+        const MESSAGE = migratePrototype(snapshot.val());
+        MESSAGE.forUser = rtSnapshot.val();
+        MESSAGE.type = ERT_userMessage[MESSAGE.type];
+        RT_Service._rtForUsers[rtSnapshot.key] = MESSAGE;
         RT_Service.notifyObservers();
       })
       .catch(ErrorService.manageError);

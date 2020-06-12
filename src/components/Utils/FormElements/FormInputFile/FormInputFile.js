@@ -21,11 +21,11 @@ const FormInputFile = ({ accept: defaultAccept,
 
   const [isHover, setHover] = useState(false);
 
-  const file = useRef(null);
+  const REF_FILE = useRef(null);
 
   const onChange = () => {
-    if(file.current.files && file.current.files.length) {
-      onValueChange({ file: file.current.files[0], url: URL.createObjectURL(file.current.files[0]) }, fieldName);
+    if(REF_FILE.current.files && REF_FILE.current.files.length) {
+      onValueChange({ file: REF_FILE.current.files[0], url: URL.createObjectURL(REF_FILE.current.files[0]) }, fieldName);
     }
     else {
       onValueChange && onValueChange(null, fieldName);
@@ -33,14 +33,14 @@ const FormInputFile = ({ accept: defaultAccept,
   };
 
   const remove = () => {
-    file.current.value = null;
+    REF_FILE.current.value = null;
     onChange();
   };
 
   /**
    * RENDER
    */
-  const inputId = uuid();
+  const INPUT_ID = uuid();
 
   return (
     <div className="FormInputFile">
@@ -48,9 +48,9 @@ const FormInputFile = ({ accept: defaultAccept,
         {label}
       </span>}
       <input
-        id={inputId}
+        id={INPUT_ID}
         type="file"
-        ref={file}
+        ref={REF_FILE}
         onChange={onChange}
         accept={accept}
         required={inputRequired} />
@@ -65,7 +65,7 @@ const FormInputFile = ({ accept: defaultAccept,
           <Icon containerclassname="valid" source="fa" icon={faCheck} />
           <Icon containerclassname="invalid" source="fa" icon={faTimes} />
         </span>
-        <label htmlFor={inputId}>
+        <label htmlFor={INPUT_ID}>
           <Icon source="fa" icon={faUpload} />
           {value ? 'Replace' : 'Upload'}
         </label>

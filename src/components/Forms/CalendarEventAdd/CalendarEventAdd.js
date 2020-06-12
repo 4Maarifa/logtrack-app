@@ -38,34 +38,34 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
   const [creator, setCreator] = useState(null);
   const [creatorId, setCreatorId] = useState(null);
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
   const handleSubmit = event => {
     event.preventDefault();
 
-    const revision = uuid();
+    const REVISION = uuid();
 
     if(currentCalendarEvent) {
-      const rtMetadata = ERT_userMessageDetails[ERT_userMessage.CALENDAR]
+      const RT_METADATA = ERT_userMessageDetails[ERT_userMessage.CALENDAR]
         .buildMetadata(selectedColor,
                         startDateTime ? DateService.getIsoDateString(startDateTime) : null,
                         endDateTime ? DateService.getIsoDateString(endDateTime) : null,
                         description,
                         location);
 
-      const rtMessage = new RT_userMessage(
+      const RT_MESSAGE = new RT_userMessage(
         ERT_userMessage.CALENDAR,
         currentCalendarEvent.creationIsoDate,
         title,
         currentCalendarEvent.creator,
         currentCalendarEvent.users,
-        rtMetadata,
-        revision
+        RT_METADATA,
+        REVISION
       );
 
-      RT_Service.user.update(currentCalendarEventId, rtMessage)
+      RT_Service.user.update(currentCalendarEventId, RT_MESSAGE)
         .then(_ => {
           ErrorService.success('Calendar Event Edited!');
           onFinished && onFinished();
@@ -73,24 +73,24 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
         .catch(ErrorService.manageError);
     }
     else {
-      const rtMetadata = ERT_userMessageDetails[ERT_userMessage.CALENDAR]
+      const RT_METADATA = ERT_userMessageDetails[ERT_userMessage.CALENDAR]
         .buildMetadata(selectedColor, 
                         startDateTime ? DateService.getIsoDateString(startDateTime) : null,
                         endDateTime ? DateService.getIsoDateString(endDateTime) : null,
                         description,
                         location);
 
-      const rtMessage = new RT_userMessage(
+      const RT_MESSAGE = new RT_userMessage(
         ERT_userMessage.CALENDAR,
         DateService.getCurrentIsoDateString(),
         title,
         computed.user.uid,
         { [computed.user.uid]: ERT_userMessageDetails[ERT_userMessage.CALENDAR].buildPublicInfo() },
-        rtMetadata,
-        revision
+        RT_METADATA,
+        REVISION
       );
 
-      RT_Service.user.create(rtMessage)
+      RT_Service.user.create(RT_MESSAGE)
         .then(_ => {
           ErrorService.success('Calendar Event Created!');
           onFinished && onFinished();
@@ -128,8 +128,8 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
   }, [computed]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
 
   if(!computed.initialized) { return null; }
@@ -137,9 +137,9 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
   /**
    * RENDER
    */
-  const possibleColors = {};
+  const POSSIBLE_COLORS = {};
   Object.keys(EPalette).forEach(colorKey => {
-    possibleColors[colorKey] = {
+    POSSIBLE_COLORS[colorKey] = {
       content: <Fragment>
         <i className="input-color-choice" style={{backgroundColor: EMediumPaletteDetails[colorKey].color}} />
         <Icon source="fa" icon={faCheck} />
@@ -233,13 +233,13 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
         onValueChange={setLocation} />
 
       {/* Color */}
-      <div className="input-color">
+      <div className="input-color input-container">
         <span className="fake-label">
           <Icon source="fa" icon={faPalette} />
           Color
         </span>
         <Choose
-          items={possibleColors}
+          items={POSSIBLE_COLORS}
           selection={selectedColor}
           fieldName="selectedColor"
           selectionRequired
@@ -269,7 +269,7 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
         onValueChange={setDescription} />
 
       {/* Creator */}
-      <div className="input-creator">
+      <div className="input-container">
         <span className="fake-label">
           <Icon source="fa" icon={faUser} />
           Creator

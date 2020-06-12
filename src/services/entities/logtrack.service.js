@@ -53,12 +53,12 @@ const LogTrackService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Your role is not suitable' });
     }
 
-    const logTracks = {};
+    const LOGTRACKS = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getFirestore().collection('logtracks').get()
             .then(querySnapshot => {
-                querySnapshot.forEach(logTrackDoc => logTracks[logTrackDoc.id] = logTrackDoc.data());
-                resolve(logTracks);
+                querySnapshot.forEach(logTrackDoc => LOGTRACKS[logTrackDoc.id] = logTrackDoc.data());
+                resolve(LOGTRACKS);
             })
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });

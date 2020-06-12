@@ -34,7 +34,7 @@ const Dashboard = () => {
 
   const [datetime, setDateTime] = useState({date: null, time: null});
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
@@ -56,15 +56,15 @@ const Dashboard = () => {
 
   useEffect(() => {
     setMounted(true);
-    DataService.computed.observeComputedValues(setComputed, observerKey);
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
     DateService.addObserver(() => setDateTime({
       date: DateService.getDateString(new Date(), false, false),
       time: DateService.getTimeString(new Date())
-    }), observerKey);
+    }), OBSERVER_KEY);
     return () => {
       setMounted(false);
-      DataService.computed.unobserveComputedValues(observerKey);
-      DateService.removeObserver(observerKey);
+      DataService.computed.unobserveComputedValues(OBSERVER_KEY);
+      DateService.removeObserver(OBSERVER_KEY);
     }
   }, []);
   

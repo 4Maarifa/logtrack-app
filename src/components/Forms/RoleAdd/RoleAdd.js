@@ -22,7 +22,7 @@ import { v4 as uuid } from 'uuid';
 import './RoleAdd.scss';
 
 const RoleAdd = ({ match }) => {
-  const companyId = match.params.companyid;
+  const COMPANY_ID = match.params.companyid;
 
   const [roleId, setRoleId] = useState(null);
 
@@ -36,7 +36,7 @@ const RoleAdd = ({ match }) => {
   const [selectedCompanyId, setSelectedCompanyId] = useState('');
   const [selectedCompanyItem, setSelectedCompanyItem] = useState(null);
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
@@ -53,11 +53,11 @@ const RoleAdd = ({ match }) => {
       return;
     }
     
-    const roleStatus = (selectedCompanyItem.creator === computed.user.uid ||
+    const ROLE_STATUS = (selectedCompanyItem.creator === computed.user.uid ||
       (selectedCompanyId === computed.activeRole.companyId && computed.activeRole.role === ERole.MANAGER)
       ) ? ERoleStatus.CONFIRMED : ERoleStatus.DRAFT;
     
-    RoleService.create(new Role(computed.user.uid, selectedCompanyId, roleStatus, roleType, DateService.getCurrentIsoDateString(), null))
+    RoleService.create(new Role(computed.user.uid, selectedCompanyId, ROLE_STATUS, roleType, DateService.getCurrentIsoDateString(), null))
       .then(docRole => setRoleId(docRole.id))
       .catch(ErrorService.manageError);
   };
@@ -69,9 +69,9 @@ const RoleAdd = ({ match }) => {
     }
     else {
       CompanyService.search(value.trim().toLowerCase()).then(companies => {
-        Object.keys(companies).forEach(companyKey => companies[companyKey] = {
-          content: <PageLink noLink type={PageLinkType.COMPANY} entityId={companyKey} entityData={companies[companyKey]} />,
-          value: companies[companyKey]
+        Object.keys(companies).forEach(companyId => companies[companyId] = {
+          content: <PageLink noLink type={PageLinkType.COMPANY} entityId={companyId} entityData={companies[companyId]} />,
+          value: companies[companyId]
         });
         setPossibleCompanies(companies);
       }).catch(ErrorService.manageError);
@@ -82,7 +82,7 @@ const RoleAdd = ({ match }) => {
     if(!selectedCompanyId || !computed.initialized) { return; }
     RoleService.getRolesForEmployeeIdAndCompanyId(computed.user.uid, selectedCompanyId, [ERoleStatus.DRAFT, ERoleStatus.CONFIRMED, ERoleStatus.DENIED])
       .then(currentRoles => {
-        setCurrentRoles(Object.keys(currentRoles).map(roleKey => currentRoles[roleKey].role));
+        setCurrentRoles(Object.keys(currentRoles).map(roleId => currentRoles[roleId].role));
         setCurrentRolesLoading(false);
       }).catch(ErrorService.manageError);
   };
@@ -90,8 +90,8 @@ const RoleAdd = ({ match }) => {
   useEffect(() => computeCurrentRoles(), [selectedCompanyId]);
 
   useEffect(() => {
-    if (computed.initialized && companyId) {
-      CompanyService.get(companyId)
+    if (computed.initialized && COMPANY_ID) {
+      CompanyService.get(COMPANY_ID)
         .then(companyDoc => {
           setSelectedCompanyId(companyDoc.id);
           setSelectedCompanyItem({
@@ -104,8 +104,8 @@ const RoleAdd = ({ match }) => {
   }, [computed]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -120,18 +120,18 @@ const RoleAdd = ({ match }) => {
    * RENDER
    */  
   let roleDetails = {};
-  Object.keys(ERoleDetails).forEach(roleKey => {
-    roleDetails[roleKey] = {
+  Object.keys(ERoleDetails).forEach(roleId => {
+    roleDetails[roleId] = {
       content: <Fragment>
         <span>
-          <Icon source="fa" icon={ERoleDetails[roleKey].icon} />
-          {ERoleDetails[roleKey].name}
+          <Icon source="fa" icon={ERoleDetails[roleId].icon} />
+          {ERoleDetails[roleId].name}
         </span>
         <span>
-          {ERoleDetails[roleKey].description}
+          {ERoleDetails[roleId].description}
         </span>
       </Fragment>,
-      disabled: currentRoles.includes(roleKey)
+      disabled: currentRoles.includes(roleId)
     }
   });
 
@@ -193,7 +193,7 @@ const RoleAdd = ({ match }) => {
         </div>
 
         {/* User */}
-        {computed.employee && <div className="input-user">
+        {computed.employee && <div className="input-container">
           <span className="fake-label">
             <Icon source="fa" icon={faUser} />
             User

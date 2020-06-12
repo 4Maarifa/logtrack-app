@@ -22,9 +22,9 @@ const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, 
 
   if(!contract) { return null; }
 
-  const contractKey = Object.keys(contract)[0];
-  const contractData = contract[contractKey];
-  const observerKey = uuid();
+  const CONTRACT_ID = Object.keys(contract)[0];
+  const CONTRACT_DATA = contract[CONTRACT_ID];
+  const OBSERVER_KEY = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
@@ -33,16 +33,16 @@ const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, 
     if(status === EContractStatus.ARCHIVED) {
       Object.assign(fieldsToUpdate, { archiveIsoDate: DateService.getCurrentIsoDateString() });
     }
-    ContractService.updateField(contractKey, fieldsToUpdate)
+    ContractService.updateField(CONTRACT_ID, fieldsToUpdate)
       .then(() => {
         ErrorService.success('Contract updated!');
-        notifyContractChanges && notifyContractChanges(contractKey);
+        notifyContractChanges && notifyContractChanges(CONTRACT_ID);
       }).catch(ErrorService.manageError);
   };
   
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey);
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY);
   }, []);
 
   if(!computed.initialized) { return null; }
@@ -51,108 +51,109 @@ const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, 
    * RENDER
    */
   const computeStatus = () => {
-    const isExecutor = (Object.keys(companyExec)[0] === computed.activeRole.companyId);
-    const hasCreated = contractData.createdByCompanyId === computed.activeRole.companyId;
+    const IS_EXECUTOR = (Object.keys(companyExec)[0] === computed.activeRole.companyId);
+    const HAS_CREATED = CONTRACT_DATA.createdByCompanyId === computed.activeRole.companyId;
 
-    switch(contractData.status) {
+    switch(CONTRACT_DATA.status) {
       case EContractStatus.DRAFT:
-        if(hasCreated) {
+        if(HAS_CREATED) {
           return <span><Icon source="fa" icon={faHourglassStart} />Waiting for the other company...</span>;
         }
         return <span><Icon source="fa" icon={faPlay} />You have to accept the contract</span>;
       case EContractStatus.EXECUTION:
-        if(isExecutor) {
+        if(IS_EXECUTOR) {
           return <span><Icon source="fa" icon={faCog} />You're executing the contract...</span>;
         }
         return <span><Icon source="fa" icon={faCheck} />Inidicate when the contract is finished</span>;
       case EContractStatus.FINISHED:
-        if(isExecutor) {
+        if(IS_EXECUTOR) {
           return <button onClick={() => changeContractStatus(EContractStatus.PAID)}>Click when you get paid</button>;
         }
         return <span><Icon source="fa" icon={faCreditCard} />You're paying the contract...</span>;
       case EContractStatus.PAID:
-        if(isExecutor) {
+        if(IS_EXECUTOR) {
           return <span><Icon source="fa" icon={faHourglassStart} />Waiting for the other company...</span>;
         }
         return <button onClick={() => changeContractStatus(EContractStatus.ARCHIVED)}>Click to archive</button>;
       case EContractStatus.ARCHIVED:
-        return <span>Archived on {DateService.getDateString(DateService.getDateFromIsoString(contractData.archiveIsoDate), false)}</span>
+        return <span>Archived on {DateService.getDateString(DateService.getDateFromIsoString(CONTRACT_DATA.archiveIsoDate), false)}</span>
       default: 
-        console.error('Unknown contract status:' + contractData.status);
+        console.error('Unknown contract status:' + CONTRACT_DATA.status);
     }
   };
 
   const computeAction = () => {
-    const isExecutor = (Object.keys(companyExec)[0] === computed.activeRole.companyId);
-    const hasCreated = contractData.createdByCompanyId === computed.activeRole.companyId;
+    const IS_EXECUTOR = (Object.keys(companyExec)[0] === computed.activeRole.companyId);
+    const HAS_CREATED = CONTRACT_DATA.createdByCompanyId === computed.activeRole.companyId;
 
     if(computed.activeRole.role !== ERole.MANAGER ||
-      !(computed.activeRole.companyId === contractData.companyExecId || computed.activeRole.companyId === contractData.companyOrderId)) {
+      !(computed.activeRole.companyId === CONTRACT_DATA.companyExecId || computed.activeRole.companyId === CONTRACT_DATA.companyOrderId)) {
         return [];
       }
 
-    switch(contractData.status) {
+    switch(CONTRACT_DATA.status) {
       case EContractStatus.DRAFT:
-        if(hasCreated) { return []; }
+        if(HAS_CREATED) { return []; }
         return [{ title: 'Accept', icon: <Icon source="fa" icon={faPlay} />, callback: () => changeContractStatus(EContractStatus.EXECUTION) }];
       case EContractStatus.EXECUTION:
-        if(isExecutor) { return []; }
+        if(IS_EXECUTOR) { return []; }
         return [{ title: 'Finish', icon: <Icon source="fa" icon={faCheck} />, callback: () => changeContractStatus(EContractStatus.FINISHED) }];
       case EContractStatus.FINISHED:
-        if(isExecutor) {
+        if(IS_EXECUTOR) {
           return [{ title: 'Got paid?', icon: <Icon source="fa" icon={faMoneyBill} />, callback: () => changeContractStatus(EContractStatus.PAID) }];
         }
         return [];
       case EContractStatus.PAID:
-        if(isExecutor) { return []; }
+        if(IS_EXECUTOR) { return []; }
         return [{ title: 'Archive', icon: <Icon source="fa" icon={faArchive} />, callback: () => changeContractStatus(EContractStatus.ARCHIVED) }];
       default: 
         return [];
     }
   };
 
-  const otherCompany = Object.keys(companyExec)[0] === computed.activeRole.companyId ? companyOrder : companyExec;
-  const otherCompanyId = Object.keys(otherCompany)[0];
+  const OTHER_COMPANY = Object.keys(companyExec)[0] === computed.activeRole.companyId ? companyOrder : companyExec;
+  const OTHER_COMPANY_ID = Object.keys(OTHER_COMPANY)[0];
+  const OTHER_COMPANY_DATA = OTHER_COMPANY[OTHER_COMPANY_ID];
   
-  const isExecutor = (Object.keys(companyExec)[0] === computed.activeRole.companyId);
+  const IS_EXECUTOR = (Object.keys(companyExec)[0] === computed.activeRole.companyId);
 
-  const actions = [...computeAction()];
+  const ACTIONS = [...computeAction()];
 
   if(computed.activeRole.role === ERole.MANAGER && 
-    (computed.activeRole.companyId === contractData.companyExecId || computed.activeRole.companyId === contractData.companyOrderId)) {
+    (computed.activeRole.companyId === CONTRACT_DATA.companyExecId || computed.activeRole.companyId === CONTRACT_DATA.companyOrderId)) {
 
-      actions.push({ title: 'Edit', icon: <Icon source="fa" icon={faEdit} />, link: `/contract-edit/${contractKey}` });
+      ACTIONS.push({ title: 'Edit', icon: <Icon source="fa" icon={faEdit} />, link: `/contract-edit/${CONTRACT_ID}` });
   }
   
   return (
-    <div className="Contract Element-content" key={contractKey}>
+    <div className="Contract Element-content" key={CONTRACT_ID}>
       <div className="Element-base">
         <Icon containerclassname="Element-icon" source="fa" icon={faHandshakeAlt} />
         <div className="Element-data">
           <span className="Element-title">
-            <PageLink type={PageLinkType.CONTRACT} entityId={contractKey} entityData={contractData} white={isPage} />
+            <PageLink type={PageLinkType.CONTRACT} entityId={CONTRACT_ID} entityData={CONTRACT_DATA} white={isPage} />
           </span>
-          {isExecutor ? 'You execute the contract for' : 'You ordered the contract from'}
-          <PageLink type={PageLinkType.COMPANY} entityId={otherCompanyId} entityData={otherCompany[otherCompanyId]} white={isPage} />
+          {IS_EXECUTOR ? 'You execute the contract for' : 'You ordered the contract from'}
+          <PageLink type={PageLinkType.COMPANY} entityId={OTHER_COMPANY_ID} entityData={OTHER_COMPANY_DATA} white={isPage} />
           <span className="badge badge-mono">
-            {EContractTypeDetails[contractData.contractType].icon}
-            {EContractTypeDetails[contractData.contractType].name}
+            {EContractTypeDetails[CONTRACT_DATA.contractType].icon}
+            {EContractTypeDetails[CONTRACT_DATA.contractType].name}
           </span>
           <span className="sub">{computeStatus()}</span>
           <span className={'Element-badge badge ' + (isPage ? 'badge-inverse' : '')}>
-            {EContractStatusDetails[contractData.status].icon}
-            {EContractStatusDetails[contractData.status].name}
+            {EContractStatusDetails[CONTRACT_DATA.status].icon}
+            {EContractStatusDetails[CONTRACT_DATA.status].name}
           </span>
         </div>
         <span className="Element-actions">
-          <ActionList actions={actions} isFlatten={isPage} />
+          <ActionList actions={ACTIONS} isFlatten={isPage} />
         </span>
       </div>
     </div>
   );
 };
 
-const contractsExTableFSS = {
+export const contractsExTableFSS = {
   sort: {
     identification: {
       title: 'Identification',
@@ -195,7 +196,5 @@ Object.keys(EContractStatusDetails).forEach(statusKey => {
     apply: (_, itemData) => itemData.status === statusKey
   }
 });
-
-export { contractsExTableFSS };
 
 export default Contract;

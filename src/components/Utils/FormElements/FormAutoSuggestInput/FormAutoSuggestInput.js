@@ -40,7 +40,7 @@ const FormAutoSuggestInput = ({ value,
   /**
    * RENDER
    */
-  const inputId = uuid();
+  const INPUT_ID = uuid();
 
   return (
     <div className={'FormAutoSuggestInput ' 
@@ -49,7 +49,7 @@ const FormAutoSuggestInput = ({ value,
       
       {!selectedItemKey &&
         <input
-          id={inputId}
+          id={INPUT_ID}
           className={'input ' + (!value ? 'input--empty' : '')}
           type="text"
           value={value}
@@ -91,7 +91,7 @@ const FormAutoSuggestInput = ({ value,
         <Icon containerclassname="invalid" source="fa" icon={faTimes} />
       </span>
       {label && 
-        <label htmlFor={inputId}>
+        <label htmlFor={INPUT_ID}>
           {label}
         </label>
       }

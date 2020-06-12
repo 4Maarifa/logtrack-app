@@ -42,7 +42,7 @@ const FormDebounceAutoSuggestInput = ({ value,
    * RENDER
    */
 
-  const inputId = uuid();
+  const INPUT_ID = uuid();
 
   return (
     <div className={'FormDebounceAutoSuggestInput '
@@ -51,7 +51,7 @@ const FormDebounceAutoSuggestInput = ({ value,
 
       {!selectedItemKey ?
         <DelayInput
-          id={inputId}
+          id={INPUT_ID}
           delayTimeout={1100}
           className={'input ' + (!value ? 'input--empty' : '')}
           type="text"
@@ -94,7 +94,7 @@ const FormDebounceAutoSuggestInput = ({ value,
         <Icon containerclassname="invalid" source="fa" icon={faTimes} />
       </span>
       {label ? 
-        <label htmlFor={inputId}>
+        <label htmlFor={INPUT_ID}>
           {label}
         </label> : null
       }

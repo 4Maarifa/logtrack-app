@@ -9,13 +9,6 @@
     flex-direction: column;
     width: var(--complex-form-width);
 
-    .input-creator,
-    .input-color {
-      position: relative;
-      margin: 1.5rem 0 1rem 0;
-      width: 100%;
-    }
-
     .input-color {
       .Choose ul li {
         height: 3rem;
@@ -56,12 +49,6 @@
 
         }
       }
-    }
-
-    .input-container {
-      margin: 2rem 0 1rem 0;
-      display: block;
-      position: relative;
     }
   }
 }

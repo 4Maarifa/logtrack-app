@@ -44,12 +44,12 @@ const EquipmentModelService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Equipment Models' });
     }
 
-    const equipmentModels = {};
+    const EQUIPMENT_MODELS = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getFirestore().collection('equipmentModels').get()
             .then(querySnapshot => {
-                querySnapshot.forEach(equipmentModelDoc => equipmentModels[equipmentModelDoc.id] = equipmentModelDoc.data());
-                resolve(equipmentModels);
+                querySnapshot.forEach(equipmentModelDoc => EQUIPMENT_MODELS[equipmentModelDoc.id] = equipmentModelDoc.data());
+                resolve(EQUIPMENT_MODELS);
             })
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
@@ -90,19 +90,19 @@ const EquipmentModelService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Equipment Models' });
     }
     
-    const equipmentModelsByType = {};
+    const EQUIPMENT_MODELS_BY_TYPE = {};
     let type = '';
 
     return new Promise((resolve, reject) => {
       EquipmentModelService.list()
         .then(equipmentModels => {
-          Object.keys(equipmentModels).forEach((equipmentModelKey) => {
+          Object.keys(equipmentModels).forEach(equipmentModelKey => {
             type = equipmentModels[equipmentModelKey].type;
-            if(!equipmentModelsByType[type]) {  equipmentModelsByType[type] = {}};
+            if(!EQUIPMENT_MODELS_BY_TYPE[type]) {  EQUIPMENT_MODELS_BY_TYPE[type] = {}};
 
-            equipmentModelsByType[type][equipmentModelKey] = equipmentModels[equipmentModelKey];
+            EQUIPMENT_MODELS_BY_TYPE[type][equipmentModelKey] = equipmentModels[equipmentModelKey];
           });
-          resolve(equipmentModelsByType);
+          resolve(EQUIPMENT_MODELS_BY_TYPE);
         })
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });

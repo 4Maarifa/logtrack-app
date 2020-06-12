@@ -15,16 +15,16 @@ const ColorService = {
   },
 
   convertHEXtoRGB: colorHEX => {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(colorHEX);
-    return result ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)] : null;
+    const RESULT = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(colorHEX);
+    return RESULT ? [parseInt(RESULT[1], 16), parseInt(RESULT[2], 16), parseInt(RESULT[3], 16)] : null;
   },
   convertRGBtoHEX: colorRGB => '#' + ((1 << 24) + (colorRGB[0] << 16) + (colorRGB[1] << 8) + colorRGB[2]).toString(16).slice(1),
 
   isDarkColor: colorRGB => (colorRGB[0] + colorRGB[1] + colorRGB[2]) < (128 * 3),
   isLightColor: colorRGB => (colorRGB[0] + colorRGB[1] + colorRGB[2]) > (128 * 3),
   isMedColor: colorRGB => {
-    const colorSum = colorRGB[0] + colorRGB[1] + colorRGB[2];
-    return colorSum > (64 * 3) && colorSum < (192 * 3);
+    const COLOR_SUM = colorRGB[0] + colorRGB[1] + colorRGB[2];
+    return COLOR_SUM > (64 * 3) && COLOR_SUM < (192 * 3);
   },
 
   addOpacityToRGB: (colorRGB, opacity) => {
@@ -54,10 +54,10 @@ const ColorService = {
     return '#' + (g | (b << 8) | (r << 16)).toString(16);
   },
   buildGradientFromHEX: (hexColor, amount) => {
-    const rgbColor = ColorService.convertHEXtoRGB(hexColor);
-    const otherRgbColor = ColorService.convertHEXtoRGB(ColorService.lightenDarkenColor(hexColor, amount));
-    return `linear-gradient(to bottom right, rgb(${rgbColor[0]}, ${rgbColor[1]}, ${rgbColor[2]}),
-      rgb(${otherRgbColor[0]}, ${otherRgbColor[1]}, ${otherRgbColor[2]}))`
+    const RGB_COLOR = ColorService.convertHEXtoRGB(hexColor);
+    const OTHER_RGB_COLOR = ColorService.convertHEXtoRGB(ColorService.lightenDarkenColor(hexColor, amount));
+    return `linear-gradient(to bottom right, rgb(${RGB_COLOR[0]}, ${RGB_COLOR[1]}, ${RGB_COLOR[2]}),
+      rgb(${OTHER_RGB_COLOR[0]}, ${OTHER_RGB_COLOR[1]}, ${OTHER_RGB_COLOR[2]}))`
   }
 };
 

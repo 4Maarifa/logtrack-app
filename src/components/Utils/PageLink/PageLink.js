@@ -23,6 +23,7 @@ const PageLink = ({ type, entityId, entityData, noLink, white, noPhoto }) => {
             }
             <span>{entityData.firstname + ' ' + entityData.lastname}</span>
             {DataService.computed.user && entityId === DataService.computed.user.uid && <span className={'badge you ' + (white ? 'badge-inverse' : '')}>you</span>}
+            {DataService.computed.employee && entityId === DataService.computed.user.uid && DataService.computed.employee.staff && <span className={'badge staff ' + (white ? 'badge-inverse' : '')}>staff</span>}
           </Fragment>
         };
       case PageLinkType.COMPANY:
@@ -73,15 +74,15 @@ const PageLink = ({ type, entityId, entityData, noLink, white, noPhoto }) => {
   /**
    * RENDER
    */
-  const pageLink = getPageLink();
+  const PAGE_LINK = getPageLink();
   if(noLink) {
     return <span className={'PageLink ' + (white ? 'PageLink-white' : '')}>
-      {pageLink.content}
+      {PAGE_LINK.content}
     </span>;
   }
   return (
-    <NavLink className={'PageLink ' + (white ? 'white-link' : '')} to={pageLink.link} title="Visit Page">
-      {pageLink.content}
+    <NavLink className={'PageLink ' + (white ? 'white-link' : '')} to={PAGE_LINK.link} title="Visit Page">
+      {PAGE_LINK.content}
     </NavLink>
   );
 };

@@ -18,13 +18,13 @@ import './EquipmentPage.scss';
  * Use by everyone to see details about an equipment
  */
 const EquipmentPage = ({ match }) => {
-  const equipmentId = match.params.equipmentid;
+  const EQUIPMENT_ID = match.params.equipmentid;
 
   const [equipment, setEquipment] = useState(null);
   const [equipmentModel, setEquipmentModel] = useState(null);
 
   useEffect(() => {
-    EquipmentService.get(equipmentId)
+    EquipmentService.get(EQUIPMENT_ID)
       .then(equipmentDoc => {
         setEquipment(equipmentDoc.data());
         
@@ -45,7 +45,7 @@ const EquipmentPage = ({ match }) => {
   return (
     <div className="EquipmentPage">
       <div className="Element Element--page">
-        <Equipment equipment={{[equipmentId]: equipment}} equipmentModel={{[equipment.equipmentModelId]: equipmentModel}} isPage />
+        <Equipment equipment={{[EQUIPMENT_ID]: equipment}} equipmentModel={{[equipment.equipmentModelId]: equipmentModel}} isPage />
       </div>
       <Tabs default="equipments" tabs={{
         equipments: {

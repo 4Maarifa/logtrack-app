@@ -48,6 +48,8 @@ import Specs from './components/Utils/Specs/Specs';
 
 import Modal from './components/Utils/Modal/Modal';
 
+import Admin from './components/App/Admin/Admin';
+
 import Dashboard from './components/App/Dashboard/Dashboard';
 import Splash from './components/App/Splash/Splash';
 import Navigation from './components/App/Navigation/Navigation';
@@ -206,6 +208,8 @@ const renderApp = () => {
                     <Route exact path="/faq" render={props => <Splash {...props} page='faq' />} />
                     <Route exact path="/specs" component={Specs} />
 
+                    <PrivateRoute exact path="/admin" component={Admin} />
+
                     <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
                     <PrivateRoute exact path="/profile" component={Profile} />
@@ -278,10 +282,10 @@ const renderApp = () => {
 DataService.initialize();
 RT_Service.initialize();
 
-const observerKey = uuid();
+const OBSERVER_KEY = uuid();
 
 DataService.computed.observeComputedValues(computedValues => {
     if(computedValues.initialized) {
         renderApp();
     }
-}, observerKey);
+}, OBSERVER_KEY);

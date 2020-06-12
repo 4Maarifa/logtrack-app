@@ -12,6 +12,7 @@ export const ERights = {
   APP_CAN_USE_WAREHOUSE_MANAGEMENT: 'APP_CAN_USE_WAREHOUSE_MANAGEMENT',
   APP_CAN_USE_ANALYTICS: 'APP_CAN_USE_ANALYTICS',
   APP_CAN_USE_JOBOFFERS_MANAGEMENT: 'APP_CAN_USE_JOBOFFERS_MANAGEMENT',
+  APP_CAN_USE_ADMIN_MANAGEMENT: 'APP_CAN_USE_ADMIN_MANAGEMENT',
 
   RIGHT_RT_USER_CREATE: 'RIGHT_RT_USER_CREATE',
   RIGHT_RT_USER_GET: 'RIGHT_RT_USER_GET',
@@ -112,8 +113,12 @@ export const ERights = {
 
 const RightService = {
   hasAppRight: right => {
-    if(!DataService.computed.activeRole) {
+    if(!DataService.computed.activeRole || !DataService.computed.employee) {
       return false;
+    }
+
+    if(right === ERights.APP_CAN_USE_ADMIN_MANAGEMENT) {
+      return DataService.computed.employee.staff;
     }
 
     if(right === ERights.APP_CAN_USE_GPS) {

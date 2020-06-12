@@ -4,6 +4,7 @@ const DateService = {
   getDateFromTimeStampNumber: timeStampNumber => new Date(timeStampNumber),
 
   getCurrentIsoDateString: () => new Date().toISOString(),
+  getCurrentDate: () => new Date(),
   getIsoDateString: date => date.toISOString(),
   getCurrentTimeStampNumber: () => +new Date(),
 

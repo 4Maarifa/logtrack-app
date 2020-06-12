@@ -5,26 +5,18 @@ import { faUsers, faTruck, faWarehouseAlt, faClipboardUser } from '@fortawesome/
 import DataService from './../../../services/data.service';
 import CompanyService from './../../../services/entities/company.service';
 import ErrorService from './../../../services/error.service';
-import RoleService from './../../../services/entities/role.service';
-import UtilsService from './../../../services/utils.service';
-import EmployeeService from './../../../services/entities/employee.service';
-import BrandService from './../../../services/entities/brand.service';
-import EquipmentModelService from './../../../services/entities/equipmentModel.service';
-import EquipmentService from './../../../services/entities/equipment.service';
-import WarehouseService from './../../../services/entities/warehouse.service';
 
 import Loader from './../../Utils/Loader/Loader';
 import Tabs from './../../Utils/Tabs/Tabs';
 import Icon from './../../Utils/Icon/Icon';
-import ExTable from './../../Utils/ExTable/ExTable';
 
-import RoleEmployee from './../../Entities/RoleEmployee/RoleEmployee';
-import Equipment, { equipmentsExTableFSS } from './../../Entities/Equipment/Equipment';
-import Warehouse, { warehousesExTableFSS } from './../../Entities/Warehouse/Warehouse';
-import { employeesExTableFSS } from './../../Entities/Employee/Employee';
 import Company from './../../Entities/Company/Company';
 
 import { v4 as uuid } from 'uuid';
+
+import CompanyEmployeesTab from './tabs/CompanyEmployeesTab';
+import CompanyWarehousesTab from './tabs/CompanyWarehousesTab';
+import CompanyEquipmentsTab from './tabs/CompanyEquipmentsTab';
 
 import './CompanyPage.scss';
 
@@ -33,59 +25,25 @@ import './CompanyPage.scss';
  * Use by everyone to see details about a company (warehouses / equipments / employees)
  */
 const CompanyPage = ({ match }) => {
-  const companyId = match.params.companyid;
+  const COMPANY_ID = match.params.companyid;
 
   const [company, setCompany] = useState(null);
-  
-  const [warehouses, setWarehouses] = useState({});
-  const [isWarehousesLoading, setWarehousesLoading] = useState(true);
-
-  const [companyEmployees, setCompanyEmployees] = useState({});
-  const [isCompanyEmployeesLoading, setCompanyEmployeesLoading] = useState(true);
-  const [rolesOfCompanyEmployees, setRolesOfCompanyEmployees] = useState(null);
-
-  const [equipments, setEquipments] = useState({});
-  const [isEquipmentsLoading, setEquipmentsLoading] = useState(true);
-  const [equipmentModels, setEquipmentModels] = useState({});
-  const [brands, setBrands] = useState({});
 
   const [nbJobOffers, setNbJobOffers] = useState(0);
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
   const computeCompany = () => {
-    CompanyService.get(companyId)
+    CompanyService.get(COMPANY_ID)
       .then(companyDoc => setCompany(companyDoc.data()))
       .catch(ErrorService.manageError);
 
-    CompanyService.jobOffer.countOpenedForCompanyId(companyId)
+    CompanyService.jobOffer.countOpenedForCompanyId(COMPANY_ID)
       .then(setNbJobOffers)
       .catch(ErrorService.manageError);
   };
-
-  const computeEmployeesRoles = () => {
-    if(companyId) {
-      RoleService.getRolesForCompanyId(companyId)
-        .then(rolesOfCompanyEmployees => {
-          setRolesOfCompanyEmployees(rolesOfCompanyEmployees);
-  
-          const employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(rolesOfCompanyEmployees)
-            .map(roleKey => rolesOfCompanyEmployees[roleKey].employeeId));
-          
-          EmployeeService.getAllForIdList(employeesIds)
-            .then(companyEmployees => {
-              setCompanyEmployees(companyEmployees);
-              setCompanyEmployeesLoading(false);
-            })
-            .catch(ErrorService.manageError);
-        })
-        .catch(ErrorService.manageError);
-    }
-  };
-
-  useEffect(() => computeEmployeesRoles(), [company]);
 
   useEffect(() => {
     if(computed.initialized) {
@@ -94,34 +52,8 @@ const CompanyPage = ({ match }) => {
   }, [computed]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-
-    if(companyId) {
-      WarehouseService.getAllForCompanyId(companyId)
-        .then(warehouses => {
-          setWarehouses(warehouses);
-          setWarehousesLoading(false);
-        })
-        .catch(ErrorService.manageError);
-    }
-    computeEmployeesRoles();
-    BrandService.list()
-      .then(setBrands)
-      .catch(ErrorService.manageError);
-
-    EquipmentModelService.list()
-      .then(setEquipmentModels)
-      .catch(ErrorService.manageError);
-
-    if(companyId) {
-      EquipmentService.getAllForCompanyId(companyId)
-        .then(equipments => {
-          setEquipments(equipments);
-          setEquipmentsLoading(false);
-        })
-        .catch(ErrorService.manageError);
-    }
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
 
   if(!computed.initialized) { return null; }
@@ -130,33 +62,6 @@ const CompanyPage = ({ match }) => {
   /**
    * RENDER
    */
-  const renderRoleEmployee = (itemKey, itemData) => (
-    <RoleEmployee key={itemKey} 
-      employee={ {[itemKey]: itemData} } 
-      roles={UtilsService.filterKeyValueOnPropertyValue(rolesOfCompanyEmployees, predicate => predicate.employeeId === itemKey)}
-      options={ {showDraft: false, showActions: false} }
-      showDetails />
-  );
-
-  const renderEquipment = (itemKey, itemData) => {
-    const equipmentModel = { [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] }, 
-      brand = { [equipmentModel[itemData.equipmentModelId].brand]: brands[equipmentModel[itemData.equipmentModelId].brand] };
-
-    return <Equipment key={itemKey}
-      equipment={ {[itemKey]: itemData} }
-      brand={brand}
-      equipmentModel={equipmentModel}
-      options={ {} }
-      showDetails />
-  };
-
-  const renderWarehouse = (itemKey, itemData) => (
-    <Warehouse key={itemKey}
-      warehouse={ {[itemKey]: itemData} }
-      options={ {} }
-      showDetails />
-  );
-
   if(!company) {
     return <div className="CompanyPage">
       <Loader />
@@ -166,10 +71,10 @@ const CompanyPage = ({ match }) => {
   return (
     <div className="CompanyPage">
       <div className="Element Element--page">
-        <Company key={companyId} company={ {[companyId]: company} } options={{ }} showDetails isPage />
+        <Company key={COMPANY_ID} company={ {[COMPANY_ID]: company} } options={{ }} showDetails isPage />
       </div>
       {nbJobOffers ? 
-        <NavLink className="Element Element--row joboffers" to={`/jobs/${companyId}`}>
+        <NavLink className="Element Element--row joboffers" to={`/jobs/${COMPANY_ID}`}>
           <div className="Element-base">
             <Icon containerclassname="Element-icon" source="fa" icon={faClipboardUser} />
             <div className="Element-data">
@@ -185,40 +90,22 @@ const CompanyPage = ({ match }) => {
           name: () => <span>
             <Icon source="fa" icon={faWarehouseAlt} />
             Warehouses
-            <span className="badge badge-inverse">{Object.keys(warehouses).length}</span>
           </span>,
-          content: () => <ExTable key="warehouses"
-                                  fss={warehousesExTableFSS}
-                                  items={warehouses}
-                                  renderItem={renderWarehouse}
-                                  header={<span><Icon source="fa" icon={faWarehouseAlt} /> Warehouses</span>}
-                                  loading={isWarehousesLoading} />
+          content: () => <CompanyWarehousesTab companyId={COMPANY_ID} />
         },
         employees: {
           name: () => <span>
             <Icon source="fa" icon={faUsers} />
             Employees
-            <span className="badge badge-inverse">{Object.keys(companyEmployees).length}</span>
           </span>,
-          content: () => <ExTable key="employees"
-                                  fss={employeesExTableFSS}
-                                  items={companyEmployees}
-                                  renderItem={renderRoleEmployee}
-                                  header={<span><Icon source="fa" icon={faUsers} /> Employees</span>}
-                                  loading={isCompanyEmployeesLoading}/>
+          content: () => <CompanyEmployeesTab companyId={COMPANY_ID} />
         },
         equipments: {
           name: () => <span>
             <Icon source="fa" icon={faTruck} />
             Equipments
-            <span className="badge badge-inverse">{Object.keys(equipments).length}</span>
           </span>,
-          content: () => <ExTable key="equipments"
-                                  fss={equipmentsExTableFSS}
-                                  items={equipments}
-                                  renderItem={renderEquipment}
-                                  header={<span><Icon source="fa" icon={faTruck} /> Equipments</span>}
-                                  loading={isEquipmentsLoading}/>
+          content: () => <CompanyEquipmentsTab companyId={COMPANY_ID} />
         }
       }} />
     </div>

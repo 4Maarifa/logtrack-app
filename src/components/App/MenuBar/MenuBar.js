@@ -16,7 +16,7 @@ import './MenuBar.scss';
 
 const MenuBar = () => {
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
   const [activeMenu, _setActiveMenu] = useState(null);
@@ -30,13 +30,13 @@ const MenuBar = () => {
       RT_Service.observeRTmessages(rt => {
         setRtMessages(rt);
         setRtMessagesUpdateCount(rtMessagesUpdateCount + 1);
-      }, observerKey);
+      }, OBSERVER_KEY);
     }
   }, [computed.user]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -60,60 +60,60 @@ const MenuBar = () => {
    */
   const renderContent = () => {
     if(ERT_userMessage[activeMenu]) {
-      return ERT_userMessageDetails[activeMenu].render(sortedRtByType[activeMenu]);
+      return ERT_userMessageDetails[activeMenu].render(SORTED_RT_BY_TYPE[activeMenu]);
     }
     else if (ERT_companyMessage[activeMenu]) {
-      return ERT_companyMessageDetails[activeMenu].render(sortedRtByType[activeMenu]);
+      return ERT_companyMessageDetails[activeMenu].render(SORTED_RT_BY_TYPE[activeMenu]);
     }
     else if(activeMenu) {
         ErrorService.error('Unknown menu : ' + activeMenu);
     }
   };
 
-  const sortedRtByType = {}, badgeCountByType = {};
+  const SORTED_RT_BY_TYPE = {}, BADGE_COUNT_BY_TYPE = {};
   Object.keys(ERT_userMessage).forEach(rtUserMessageType => {
-    sortedRtByType[rtUserMessageType] = {};
-    Object.keys(rtMessages).filter(rtKey => rtMessages[rtKey].type === rtUserMessageType).forEach(rtKey => {
-      sortedRtByType[rtUserMessageType][rtKey] = rtMessages[rtKey];
+    SORTED_RT_BY_TYPE[rtUserMessageType] = {};
+    Object.keys(rtMessages).filter(rtId => rtMessages[rtId].type === rtUserMessageType).forEach(rtId => {
+      SORTED_RT_BY_TYPE[rtUserMessageType][rtId] = rtMessages[rtId];
     });
-    badgeCountByType[rtUserMessageType] = ERT_userMessageDetails[rtUserMessageType].countBadge(sortedRtByType[rtUserMessageType]);
+    BADGE_COUNT_BY_TYPE[rtUserMessageType] = ERT_userMessageDetails[rtUserMessageType].countBadge(SORTED_RT_BY_TYPE[rtUserMessageType]);
   });
   Object.keys(ERT_companyMessage).forEach(rtCompanyMessageType => {
-    sortedRtByType[rtCompanyMessageType] = {};
-    Object.keys(rtMessages).filter(rtKey => rtMessages[rtKey].type === rtCompanyMessageType).forEach(rtKey => {
-      sortedRtByType[rtCompanyMessageType][rtKey] = rtMessages[rtKey];
+    SORTED_RT_BY_TYPE[rtCompanyMessageType] = {};
+    Object.keys(rtMessages).filter(rtId => rtMessages[rtId].type === rtCompanyMessageType).forEach(rtId => {
+      SORTED_RT_BY_TYPE[rtCompanyMessageType][rtId] = rtMessages[rtId];
     });
-    badgeCountByType[rtCompanyMessageType] = ERT_companyMessageDetails[rtCompanyMessageType].countBadge(sortedRtByType[rtCompanyMessageType]);
+    BADGE_COUNT_BY_TYPE[rtCompanyMessageType] = ERT_companyMessageDetails[rtCompanyMessageType].countBadge(SORTED_RT_BY_TYPE[rtCompanyMessageType]);
   });
 
   const renderMenu = () => (
     <nav>
-      {Object.keys(ERT_userMessage).map(ERT_userMessageKey => (
-        <button key={ERT_userMessageKey}
-                title={ERT_userMessageDetails[ERT_userMessageKey].title}
-                className={'MenuBar-item ' + (activeMenu === ERT_userMessageKey ? 'MenuBar-item--active' : '')} 
-                onClick={() => changeActiveMenu(ERT_userMessageKey)}>
+      {Object.keys(ERT_userMessage).map(ERT_userMessageId => (
+        <button key={ERT_userMessageId}
+                title={ERT_userMessageDetails[ERT_userMessageId].title}
+                className={'MenuBar-item ' + (activeMenu === ERT_userMessageId ? 'MenuBar-item--active' : '')} 
+                onClick={() => changeActiveMenu(ERT_userMessageId)}>
 
-          {badgeCountByType[ERT_userMessageKey] && badgeCountByType[ERT_userMessageKey] > 0 ?
+          {BADGE_COUNT_BY_TYPE[ERT_userMessageId] && BADGE_COUNT_BY_TYPE[ERT_userMessageId] > 0 ?
             <Fragment>
-              <Icon source="fa" icon={ERT_userMessageDetails[ERT_userMessageKey].icons.active} />
-              <span className="badge badge-inverse">{badgeCountByType[ERT_userMessageKey]}</span>
+              <Icon source="fa" icon={ERT_userMessageDetails[ERT_userMessageId].icons.active} />
+              <span className="badge badge-inverse">{BADGE_COUNT_BY_TYPE[ERT_userMessageId]}</span>
             </Fragment>
-          : <Icon source="fa" icon={ERT_userMessageDetails[ERT_userMessageKey].icons.inactive} />}
+          : <Icon source="fa" icon={ERT_userMessageDetails[ERT_userMessageId].icons.inactive} />}
         </button>
       ))}
-      {Object.keys(ERT_companyMessage).map(ERT_companyMessageKey => (
-        <button key={ERT_companyMessageKey}
-                title={ERT_companyMessageDetails[ERT_companyMessageKey].title}
-                className={'MenuBar-item ' + (activeMenu === ERT_companyMessageKey ? 'MenuBar-item--active' : '')} 
-                onClick={() => changeActiveMenu(ERT_companyMessageKey)}>
+      {Object.keys(ERT_companyMessage).map(ERT_companyMessageId => (
+        <button key={ERT_companyMessageId}
+                title={ERT_companyMessageDetails[ERT_companyMessageId].title}
+                className={'MenuBar-item ' + (activeMenu === ERT_companyMessageId ? 'MenuBar-item--active' : '')} 
+                onClick={() => changeActiveMenu(ERT_companyMessageId)}>
 
-          {badgeCountByType[ERT_companyMessageKey] && badgeCountByType[ERT_companyMessageKey] > 0 ?
+          {BADGE_COUNT_BY_TYPE[ERT_companyMessageId] && BADGE_COUNT_BY_TYPE[ERT_companyMessageId] > 0 ?
             <Fragment>
-              <Icon source="fa" icon={ERT_companyMessageDetails[ERT_companyMessageKey].icons.active} />
-              <span className="badge badge-inverse">{badgeCountByType[ERT_companyMessageKey]}</span>
+              <Icon source="fa" icon={ERT_companyMessageDetails[ERT_companyMessageId].icons.active} />
+              <span className="badge badge-inverse">{BADGE_COUNT_BY_TYPE[ERT_companyMessageId]}</span>
             </Fragment>
-          : <Icon source="fa" icon={ERT_companyMessageDetails[ERT_companyMessageKey].icons.inactive} />}
+          : <Icon source="fa" icon={ERT_companyMessageDetails[ERT_companyMessageId].icons.inactive} />}
         </button>
       ))}
       <button className='MenuBar-close' onClick={() => changeActiveMenu(activeMenu ? null : lastActiveMenu)}>

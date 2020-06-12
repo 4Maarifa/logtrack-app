@@ -19,15 +19,16 @@ import './RoleCompany.scss';
 const RoleCompany = ({ company, roles }) => {
   if(!company || !Object.keys(roles).length) { return null; }
 
-  const companyId = Object.keys(company)[0];
+  const COMPANY_ID = Object.keys(company)[0],
+    COMPANY_DATA = company[COMPANY_ID];
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
   
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey);
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY);
   }, []);
 
   if(!computed.initialized) { return null; }
@@ -35,38 +36,38 @@ const RoleCompany = ({ company, roles }) => {
   /**
    * RENDER
    */
-  const renderRole = roleKey => (
-    <Role key={roleKey} role={ { [roleKey]: roles[roleKey] } } />
+  const renderRole = roleId => (
+    <Role key={roleId} role={ { [roleId]: roles[roleId] } } />
   );
 
-  const actions = [
-    { title: 'View', icon: <Icon source="fa" icon={faBuilding} />, link: `/company/${companyId}` }
+  const ACTIONS = [
+    { title: 'View', icon: <Icon source="fa" icon={faBuilding} />, link: `/company/${COMPANY_ID}` }
   ];
 
-  if(computed.activeRole && computed.activeRole.role === ERole.MANAGER && computed.activeRole.companyId === companyId) {
-    actions.push({ title: 'Edit', icon: <Icon source="fa" icon={faEdit} />, link: `/company-edit/${companyId}` });
+  if(computed.activeRole && computed.activeRole.role === ERole.MANAGER && computed.activeRole.companyId === COMPANY_ID) {
+    ACTIONS.push({ title: 'Edit', icon: <Icon source="fa" icon={faEdit} />, link: `/company-edit/${COMPANY_ID}` });
   }
 
-  actions.push({ title: 'Request a role', icon: <Icon source="fa" icon={faUserTag} />, link: `/role-add/${companyId}` });
+  ACTIONS.push({ title: 'Request a role', icon: <Icon source="fa" icon={faUserTag} />, link: `/role-add/${COMPANY_ID}` });
 
   return (
     <div className="RoleCompany Element-content">
       <div className="Element-base">
         <div className="Element-photo">
           <img
-            alt={company[companyId].name} 
-            src={company[companyId].logoURL} />
+            alt={COMPANY_DATA.name} 
+            src={COMPANY_DATA.logoURL} />
         </div>
         <div className="Element-data">
           <span className="Element-title">
-            <PageLink type={PageLinkType.COMPANY} entityId={companyId} entityData={company[companyId]} noPhoto />
+            <PageLink type={PageLinkType.COMPANY} entityId={COMPANY_ID} entityData={COMPANY_DATA} noPhoto />
           </span>
           <div className="roles">
             {Object.keys(roles).map(renderRole)}
           </div>
         </div>
         <div className="Element-actions">
-          <ActionList actions={actions} />
+          <ActionList actions={ACTIONS} />
         </div>
       </div>
     </div>

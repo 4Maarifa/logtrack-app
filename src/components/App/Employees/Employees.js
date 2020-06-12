@@ -24,7 +24,7 @@ const Employees = () => {
   const [isCompanyEmployeesLoading, setCompanyEmployeesLoading] = useState(true);
   const [rolesOfCompanyEmployees, setRolesOfCompanyEmployees] = useState({});
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
@@ -36,7 +36,7 @@ const Employees = () => {
   
           let employeesIds = UtilsService.removeDuplicateFromArray(
             Object.keys(rolesOfCompanyEmployees)
-              .map(roleKey => rolesOfCompanyEmployees[roleKey].employeeId));
+              .map(roleId => rolesOfCompanyEmployees[roleId].employeeId));
             
           EmployeeService.getAllForIdList(employeesIds)
             .then(companyEmployees => {
@@ -50,8 +50,8 @@ const Employees = () => {
   }, [computed.activeRole]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -59,10 +59,10 @@ const Employees = () => {
   /**
    * RENDER
    */
-  const renderRoleEmployee = (itemKey, itemData) => (
-    <RoleEmployee key={itemKey} 
-      employee={ {[itemKey]: itemData} } 
-      roles={UtilsService.filterKeyValueOnPropertyValue(rolesOfCompanyEmployees, predicate => predicate.employeeId === itemKey)}
+  const renderRoleEmployee = (itemId, itemData) => (
+    <RoleEmployee key={itemId} 
+      employee={ {[itemId]: itemData} } 
+      roles={UtilsService.filterKeyValueOnPropertyValue(rolesOfCompanyEmployees, predicate => predicate.employeeId === itemId)}
       options={ {showDraft: false} } />
   );
 

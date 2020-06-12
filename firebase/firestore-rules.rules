@@ -6,6 +6,10 @@ service cloud.firestore {
     function isSignedIn(request) {
       return request.auth.uid != null;
     }
+
+    function getCurrentEmployee(request) {
+      return get(/databases/$(database)/documents/employees/$(request.auth.uid));
+    }
     
     function getActiveRoleId(employeeId) {
     	return get(/databases/$(database)/documents/employees/$(employeeId)).data.activeRoleId;
@@ -29,6 +33,21 @@ service cloud.firestore {
     	return (activeRoleId != null)
       	&& get(/databases/$(database)/documents/roles/$(activeRoleId)).data.companyId == companyId;
     }
+
+    function isStaff(request) {
+      return getCurrentEmployee(request).data.staff == true;
+    }
+    
+    match /accountActivity/{accountActivityId} {
+    	allow update, delete: if false;
+      allow create: if true;
+      allow get, list: if isSignedIn(request) && resource.data.email == request.auth.token.email;
+    }
+    
+    match /brands/{brandId} {
+    	allow get, list: if isSignedIn(request);
+      allow create, update, delete: if false;
+    }
     
     match /chats/{chatId} {
     	allow get, list: if isSignedIn(request)
@@ -37,11 +56,6 @@ service cloud.firestore {
       	&& request.resource.data.creator == request.auth.uid
         && request.auth.uid in request.resource.data.users;
       allow update, delete: if false;
-    }
-    
-    match /brands/{brandId} {
-    	allow get, list: if isSignedIn(request);
-      allow create, update, delete: if false;
     }
     
     match /companies/{companyId} {
@@ -56,15 +70,14 @@ service cloud.firestore {
           companyId);
     }
     
-    match /jobOffers/{jobOfferId} {
-    	allow delete: if false;
-      allow create, update: if isSignedIn(request) &&
-      	isActiveRoleEqualsForRolesAndCompany(
-        	getActiveRoleId(request.auth.uid),
-          ['MANAGER', 'RECRUITER'],
-          request.resource.data.companyId
-        );
-      allow get, list: if isSignedIn(request);
+    match /contact/{contactId} {
+    	allow delete, update: if false;
+      allow get, list: if isSignedIn(request) && isStaff(request);
+      
+      allow create: if request.resource.data.email != null &&
+      	request.resource.data.message != null &&
+        request.resource.data.category != null &&
+        request.resource.data.creationIsoDate != null;
     }
     
     match /contracts/{contractId} {
@@ -89,7 +102,7 @@ service cloud.firestore {
           isActiveRoleEqualsForCompany(
             getActiveRoleId(request.auth.uid), 
             resource.data.companyExecId)
-        );
+        ) || resource.data.creator == request.auth.uid;
         
       allow delete: if false;
     }
@@ -98,6 +111,7 @@ service cloud.firestore {
     	allow delete: if false;
       
       allow create, update: if isSignedIn(request) && 
+        request.resource.data.staff == resource.data.staff &&
       	employeeId == request.auth.uid &&
         (
         	request.resource.data.activeRoleId == null ||
@@ -105,12 +119,6 @@ service cloud.firestore {
         );
       
       allow list, get: if isSignedIn(request);
-    }
-    
-    match /accountActivity/{accountActivityId} {
-    	allow update, delete: if false;
-      allow create: if true;
-      allow get, list: if isSignedIn(request) && resource.data.email == request.auth.token.email;
     }
     
     match /equipmentModels/{equipmentModelId} {
@@ -126,6 +134,17 @@ service cloud.firestore {
           getActiveRoleId(request.auth.uid),
           request.resource.data.companyId);
       allow delete: if false;
+    }
+    
+    match /jobOffers/{jobOfferId} {
+    	allow delete: if false;
+      allow create, update: if isSignedIn(request) &&
+      	isActiveRoleEqualsForRolesAndCompany(
+        	getActiveRoleId(request.auth.uid),
+          ['MANAGER', 'RECRUITER'],
+          request.resource.data.companyId
+        );
+      allow get, list: if isSignedIn(request);
     }
     
     match /logtracks/{logtrackId} {
@@ -171,16 +190,9 @@ service cloud.firestore {
       allow delete: if false;
     }
     
-    match /contact/{contactId} {
-    	allow delete, update, get, list: if false;
-      
-      allow create: if request.resource.data.email &&
-      	request.resource.data.message &&
-        request.resource.data.date;
-    }
-    
     match /support/{supportId} {
-    	allow delete, update, get, list: if false;
+    	allow delete, update: if false;
+      allow get, list: if isSignedIn(request) && (isStaff(request) || resource.data.userId == request.user.uid);
       
       allow create: if isSignedIn(request) &&
       	request.resource.data.userId == request.auth.uid &&

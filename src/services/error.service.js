@@ -64,6 +64,9 @@ const ErrorService = {
                 case 'entity/right':
                     errorMessage = 'You don\'t have the right for this : ' + error.details;
                     break;
+                case 'auth/email-already-in-use':
+                    errorMessage = 'An account already exists with this email address. Please sign in, or change your password if you forgot it.';
+                    break;
                 default :
                     errorMessage = 'An unknown error occured. Please contact the administrator providing details.';
                     break;

@@ -16,13 +16,13 @@ import './EquipmentModelAdd.scss';
 
 const EquipmentModelAdd = () => {
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -48,7 +48,7 @@ const EquipmentModelAdd = () => {
         
 
         {/* Creator */}
-        <div className="input-creator">
+        <div className="input-container">
           <span className="fake-label">
             <Icon source="fa" icon={faUser} />
             Creator

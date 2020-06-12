@@ -20,7 +20,7 @@ import ErrorService from './../../../services/error.service';
 import './Icon.scss';
 
 const Icon = ({ source, containerclassname, icon, additional, ...otherProps }) => {
-  const icons = {
+  const CUSTOM_ICONS = {
     Spring,
     Fuel,
     Exhaust,
@@ -49,7 +49,7 @@ const Icon = ({ source, containerclassname, icon, additional, ...otherProps }) =
     );
   }
   if(source === 'custom') {
-    const IconTag = icons[icon];
+    let IconTag = CUSTOM_ICONS[icon];
     return (
       <div className="Icon">
         <IconTag className="custom-icon">Icon</IconTag>

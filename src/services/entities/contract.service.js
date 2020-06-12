@@ -48,12 +48,12 @@ const ContractService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Contracts' });
     }
 
-    const contracts = {};
+    const CONTRACTS = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getFirestore().collection('contracts').get()
             .then(querySnapshot => {
-                querySnapshot.forEach((contractDoc) => contracts[contractDoc.id] = contractDoc.data());
-                resolve(contracts);
+                querySnapshot.forEach((contractDoc) => CONTRACTS[contractDoc.id] = contractDoc.data());
+                resolve(CONTRACTS);
             })
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
@@ -99,15 +99,15 @@ const ContractService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Contracts' });
     }
 
-    const contracts = {};
+    const CONTRACTS = {};
     return new Promise((resolve, reject) => {
       FirebaseService.getFirestore().collection('contracts')
         .where('companyExecId', '==', companyExecId)
         .where('status', 'in', statusArray)
         .get()
         .then(querySnapshot => {
-            querySnapshot.forEach(contractDoc => contracts[contractDoc.id] = contractDoc.data());
-            resolve(contracts);
+            querySnapshot.forEach(contractDoc => CONTRACTS[contractDoc.id] = contractDoc.data());
+            resolve(CONTRACTS);
         })
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
@@ -117,15 +117,15 @@ const ContractService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Contracts' });
     }
     
-    const contracts = {};
+    const CONTRACTS = {};
     return new Promise((resolve, reject) => {
       FirebaseService.getFirestore().collection('contracts')
         .where('companyOrderId', '==', companyOrderId)
         .where('status', 'in', statusArray)
         .get()
         .then(querySnapshot => {
-            querySnapshot.forEach(contractDoc => contracts[contractDoc.id] = contractDoc.data());
-            resolve(contracts);
+            querySnapshot.forEach(contractDoc => CONTRACTS[contractDoc.id] = contractDoc.data());
+            resolve(CONTRACTS);
         })
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });

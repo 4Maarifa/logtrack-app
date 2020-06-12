@@ -23,7 +23,7 @@ const Equipments = () => {
   const [isEquipmentsLoading, setEquipmentsLoading] = useState(true);
   const [equipmentModels, setEquipmentModels] = useState({});
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
@@ -43,8 +43,8 @@ const Equipments = () => {
   }, [computed.activeRole]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -52,11 +52,11 @@ const Equipments = () => {
   /**
    * RENDER
    */
-  const renderEquipment = (itemKey, itemData) => {
+  const renderEquipment = (itemId, itemData) => {
     const equipmentModel = { [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] };
 
-    return <Equipment key={itemKey}
-      equipment={ {[itemKey]: itemData} }
+    return <Equipment key={itemId}
+      equipment={ {[itemId]: itemData} }
       equipmentModel={equipmentModel} />
   };
 

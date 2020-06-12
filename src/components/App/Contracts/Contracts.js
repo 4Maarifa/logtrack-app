@@ -37,7 +37,7 @@ const Contracts = () => {
 
   const [isShowArchived, setShowArchived] = useState(false);
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
@@ -57,8 +57,8 @@ const Contracts = () => {
       ContractService.getAllForCompanyOrderId(computed.activeRole.companyId, statusArray)
     ]).then(results => {
       let companyIds = [];
-      Object.keys(results[0]).forEach(key => companyIds.push(results[0][key].companyExecId, results[0][key].companyOrderId));
-      Object.keys(results[1]).forEach(key => companyIds.push(results[1][key].companyExecId, results[1][key].companyOrderId));
+      Object.keys(results[0]).forEach(id => companyIds.push(results[0][id].companyExecId, results[0][id].companyOrderId));
+      Object.keys(results[1]).forEach(id => companyIds.push(results[1][id].companyExecId, results[1][id].companyOrderId));
 
       CompanyService.getAllForIdList(UtilsService.removeDuplicateFromArray(companyIds))
         .then(companies => {
@@ -72,8 +72,8 @@ const Contracts = () => {
   }, [computed.activeRole, isShowArchived, nofifyCount]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -81,10 +81,10 @@ const Contracts = () => {
   /**
    * RENDER
    */
-  const renderContract = (itemKey, itemData) => {
+  const renderContract = (itemId, itemData) => {
     return <Contract
       notifyContractChanges={() => setNotifyCount(n => n+1)}
-      contract={{[itemKey]: itemData}}
+      contract={{[itemId]: itemData}}
       companyExec={{[itemData.companyExecId]: companies[itemData.companyExecId]}}
       companyOrder={{[itemData.companyOrderId]: companies[itemData.companyOrderId]}} />
   };

@@ -32,7 +32,7 @@ import './Map.scss';
  * /!\ Cannot be converted to function component due to ref utilization
  */
 class Map extends Component {
-  observerKey = uuid();
+  OBSERVER_KEY = uuid();
 
   constructor (props) {
     super(props);
@@ -58,16 +58,16 @@ class Map extends Component {
   }
 
   componentDidMount = () => {
-    ResizeService.addObserver(this.invalidateMap, this.observerKey);
+    ResizeService.addObserver(this.invalidateMap, this.OBSERVER_KEY);
 
     PermissionService.location.askPermission()
-      .then(() => PermissionService.location.addLocationObserver(this.onUserPositionChanged, this.observerKey))
+      .then(() => PermissionService.location.addLocationObserver(this.onUserPositionChanged, this.OBSERVER_KEY))
       .catch(ErrorService.manageError);
   };
 
   componentWillUnmount = () => {
-    ResizeService.removeObserver(this.observerKey);
-    PermissionService.location.removeLocationObserver(this.observerKey);
+    ResizeService.removeObserver(this.OBSERVER_KEY);
+    PermissionService.location.removeLocationObserver(this.OBSERVER_KEY);
     this.map.dispose();
   };
 
@@ -118,12 +118,12 @@ class Map extends Component {
 
     /* EVENTS */
     this.map.on('click', event => {
-      const feature = this.map.forEachFeatureAtPixel(event.pixel, feature => feature);
+      const FEATURE = this.map.forEachFeatureAtPixel(event.pixel, feature => feature);
 
-      if(feature && feature.getProperties().popupContent) {
-        this.popupDomRef.current.innerHTML = feature.getProperties().popupContent;
+      if(FEATURE && FEATURE.getProperties().popupContent) {
+        this.popupDomRef.current.innerHTML = FEATURE.getProperties().popupContent;
         this.popupDomRef.current.style.display = 'flex';
-        this.popup.setPosition(feature.getGeometry().getCoordinates());
+        this.popup.setPosition(FEATURE.getGeometry().getCoordinates());
       }
       else {
         this.popupDomRef.current.style.display = 'none';
@@ -162,17 +162,17 @@ class Map extends Component {
       marker.setGeometry(position);
     }
     else {
-      const locationMarkerId = uuid();
+      const LOCATION_MARKER_ID = uuid();
 
-      const marker = new Feature({
+      const MARKER = new Feature({
         geometry: position,
         popupContent: 'Your position'
       });
-      marker.setId(locationMarkerId);
+      MARKER.setId(LOCATION_MARKER_ID);
       
-      this.locationVectorSource.addFeature(marker);
+      this.locationVectorSource.addFeature(MARKER);
 
-      this.setState({locationMarkerId});
+      this.setState({LOCATION_MARKER_ID});
     }
   };
 
@@ -180,13 +180,13 @@ class Map extends Component {
     if(!this.state.locationMarkerId) {
       return;
     }
-    const feature = this.locationVectorSource.getFeatureById(this.state.locationMarkerId);
+    const FEATURE = this.locationVectorSource.getFeatureById(this.state.locationMarkerId);
 
-    this.view.fit(buffer(feature.getGeometry().getExtent(), 1000), {duration: 1000});
+    this.view.fit(buffer(FEATURE.getGeometry().getExtent(), 1000), {duration: 1000});
 
-    this.popupDomRef.current.innerHTML = feature.getProperties().popupContent;
+    this.popupDomRef.current.innerHTML = FEATURE.getProperties().popupContent;
     this.popupDomRef.current.style.display = 'flex';
-    this.popup.setPosition(feature.getGeometry().getCoordinates());
+    this.popup.setPosition(FEATURE.getGeometry().getCoordinates());
   };
 
   invalidateMap = () => {
@@ -211,19 +211,19 @@ class Map extends Component {
   };
 
   addMarker = (lat, lon, popup) => {
-    const markerId = uuid();
+    const MARKER_ID = uuid();
 
-    const marker = new Feature({
+    const MARKER = new Feature({
       geometry: new Point([lat, lon]),
       popupContent: popup
     });
-    marker.setId(markerId);
+    MARKER.setId(MARKER_ID);
     
-    this.markerVectorSource.addFeature(marker);
+    this.markerVectorSource.addFeature(MARKER);
 
     this.setState({nbFeatures: this.state.nbFeatures + 1});
 
-    return markerId;
+    return MARKER_ID;
   };
 
   addMarkers = markersToAdd => {
@@ -231,15 +231,16 @@ class Map extends Component {
     let featuresToAddToSource = [];
 
     markersToAdd.forEach(markerToAdd => {
-      const markerId = uuid();
-      let marker = new Feature({
+      const MARKER_ID = uuid();
+      
+      let MARKER = new Feature({
         geometry: new Point([markerToAdd.lat, markerToAdd.lon]),
         popupContent: markerToAdd.popup
       });
-      marker.setId(markerId);
+      MARKER.setId(MARKER_ID);
 
-      markerIds.push(markerId);
-      featuresToAddToSource.push(marker);
+      markerIds.push(MARKER_ID);
+      featuresToAddToSource.push(MARKER);
     });
     this.markerVectorSource.addFeatures(featuresToAddToSource);
 
@@ -261,8 +262,8 @@ class Map extends Component {
 
   centerOnMarker = markerId => {
     setTimeout(() => {
-      const markerGeometry = this.markerVectorSource.getFeatureById(markerId).getGeometry();
-      this.view.fit(buffer(markerGeometry.getExtent(), 1000), {duration: 1000});
+      const MARKER_GEOMETRY = this.markerVectorSource.getFeatureById(markerId).getGeometry();
+      this.view.fit(buffer(MARKER_GEOMETRY.getExtent(), 1000), {duration: 200});
     }, 250);
   };
 
@@ -271,16 +272,16 @@ class Map extends Component {
       return;
     }
     setTimeout(() => {
-      this.view.fit(buffer(this.markerVectorSource.getExtent(), 10000), {duration: 1000});
+      this.view.fit(buffer(this.markerVectorSource.getExtent(), 10000), {duration: 200});
     }, 250);
   };
 
   triggerPopup = markerId => {
-    const feature = this.markerVectorSource.getFeatureById(markerId);
-    if(feature) {
-      this.popupDomRef.current.innerHTML = feature.getProperties().popupContent;
+    const FEATURE = this.markerVectorSource.getFeatureById(markerId);
+    if(FEATURE) {
+      this.popupDomRef.current.innerHTML = FEATURE.getProperties().popupContent;
       this.popupDomRef.current.style.display = 'flex';
-      this.popup.setPosition(feature.getGeometry().getCoordinates());
+      this.popup.setPosition(FEATURE.getGeometry().getCoordinates());
     }
     else {
       this.popupDomRef.current.style.display = 'none';

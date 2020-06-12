@@ -28,14 +28,14 @@ const FormInput = ({ value,
   /**
    * RENDER
    */
-  const inputId = uuid();
+  const INPUT_ID = uuid();
 
   return (
     <div className={'FormInput '
         + (fieldName ? 'input-' + fieldName : '')}>
 
       <input
-        id={inputId}
+        id={INPUT_ID}
         className={'input ' + (!value ? 'input--empty ' : '') + (noValidation ? 'input--novalidation ' : '')}
         type={inputType || "text"}
         value={value}
@@ -53,7 +53,7 @@ const FormInput = ({ value,
         <Icon containerclassname="invalid" source="fa" icon={faTimes} />
       </span>
       {label && 
-        <label htmlFor={inputId}>
+        <label htmlFor={INPUT_ID}>
           {label}
         </label>
       }

@@ -1,6 +1,25 @@
 import { useEffect, useRef } from 'react';
 
 const UtilsService = {
+    _observers: {},
+    addObserver: (observerCallback, observerKey) => {
+        UtilsService._observers[observerKey] = observerCallback;
+      observerCallback();
+      UtilsService._computeObserverNumber() >= 1 && UtilsService._initializeListener();
+      return observerKey;
+    },
+    removeObserver: observerKey => {
+      delete UtilsService._observers[observerKey];
+      UtilsService._observers[observerKey] = null;
+      UtilsService._computeObserverNumber() === 0 && UtilsService._deleteListener();
+    },
+    updateObservers: () => Object.values(UtilsService._observers)
+      .forEach(observer => observer && (typeof observer === 'function') && observer()),
+
+    _initializeListener: () => window.addEventListener('popstate', UtilsService.updateObservers),
+    _deleteListener: () => window.removeEventListener('popstate', UtilsService.updateObservers),
+    _computeObserverNumber: () => Object.values(UtilsService._observers).filter(obs => obs && typeof obs === 'function').length,
+
     getUrlGetParam: paramKey => new URLSearchParams(window.location.search).get(paramKey),
 
     // STRINGS
@@ -11,10 +30,10 @@ const UtilsService = {
     filterKeysOnPropertyValue: (obj, predicate) => Object.keys(obj).filter(key => predicate(obj[key])),
     filterObjectsOnPropertyValue: (obj, predicate) => UtilsService.filterKeysOnPropertyValue(obj, predicate).map(key => obj[key]),
     filterKeyValueOnPropertyValue: (obj, predicate) => {
-        const result = {};
+        const RESULT = {};
         UtilsService.filterKeysOnPropertyValue(obj, predicate)
-            .forEach(key => result[key] = obj[key]);
-        return result;
+            .forEach(key => RESULT[key] = obj[key]);
+        return RESULT;
     },
     mergeObjects: (...obj) => Object.assign({}, ...obj),
     compareArrays: (arr1, arr2) => {
@@ -41,14 +60,32 @@ const UtilsService = {
         if(val1 < val2) { return -1; }
         return 0;
     },
+    flattenObject: ob => {
+        var toReturn = {};
+    
+        for (var i in ob) {
+            if (!ob.hasOwnProperty(i)) continue;
+    
+            if ((typeof ob[i]) == 'object' && ob[i] !== null) {
+                var flatObject = UtilsService.flattenObject(ob[i]);
+                for (var x in flatObject) {
+                    if (!flatObject.hasOwnProperty(x)) continue;
+                    toReturn[i + '.' + x] = flatObject[x].toString();
+                }
+            } else {
+                toReturn[i] = ob[i];
+            }
+        }
+        return toReturn;
+    },
 
     // HOOKS
     usePrevious: value => {
-        const ref = useRef();
+        const REF = useRef();
         useEffect(() => {
-          ref.current = value;
+            REF.current = value;
         });
-        return ref.current;
+        return REF.current;
     }
 };
 

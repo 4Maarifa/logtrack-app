@@ -13,17 +13,17 @@ const Accordion = ({ default: defaultItem, items }) => {
   return (
     <ul className="Accordion">
       {
-        Object.keys(items).map(itemKey => 
-          <li key={itemKey} 
-              className={'item ' + (itemKey === activeItem ? 'item--selected ' : '') + (items[itemKey].disabled ? 'item--disabled' : '')} 
-              onClick={() => activateItem(itemKey)}>
+        Object.keys(items).map(itemId => 
+          <li key={itemId} 
+              className={'item ' + (itemId === activeItem ? 'item--selected ' : '') + (items[itemId].disabled ? 'item--disabled' : '')} 
+              onClick={() => activateItem(itemId)}>
 
             <span className="item-header">
-              {items[itemKey].name()}
+              {items[itemId].name()}
               <Icon source="fa" icon={faChevronUp} />
             </span>
             <div className="item-data">
-              {activeItem === itemKey ? items[itemKey].content() : null}
+              {activeItem === itemId ? items[itemId].content() : null}
             </div>
           </li>
         )

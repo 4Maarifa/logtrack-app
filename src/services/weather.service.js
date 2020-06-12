@@ -17,12 +17,12 @@ import WeatherDataService from './entities/weather.service';
 const WeatherService = {
   // TODO: celsius or fahrenheiht ?
   getWeather: (lon, lat) => {
-    const longitudeLitteral = Math.floor(parseFloat(lon) * 100) / 100;
-    const latitudeLitteral = Math.floor(parseFloat(lat) * 100) / 100;
+    const LONGITUDE_LITTERAL = Math.floor(parseFloat(lon) * 100) / 100;
+    const LATITUDE_LITTERAL = Math.floor(parseFloat(lat) * 100) / 100;
 
     return new Promise((resolve, reject) => {
-      WeatherDataService.getByLatAndLon(longitudeLitteral, latitudeLitteral)
-        .then(result => result ? resolve(result) : resolve(WeatherService.__getWeatherFromAPI(longitudeLitteral, latitudeLitteral)))
+      WeatherDataService.getByLatAndLon(LONGITUDE_LITTERAL, LATITUDE_LITTERAL)
+        .then(result => result ? resolve(result) : resolve(WeatherService.__getWeatherFromAPI(LONGITUDE_LITTERAL, LATITUDE_LITTERAL)))
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
   },
@@ -33,26 +33,26 @@ const WeatherService = {
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
     }),
   __getWeatherFromAPI: (lon, lat) => {
-    const currentDateLitteral = (new Date()).toISOString().substring(0, 14);
-    const longitudeLitteral = Math.floor(lon * 100) / 100;
-    const latitudeLitteral = Math.floor(lat * 100) / 100;
+    const CURRENT_DATE_LITTERAL = (new Date()).toISOString().substring(0, 14);
+    const LONGITUDE_LITTERAL = Math.floor(lon * 100) / 100;
+    const LATITUDE_LITTERAL = Math.floor(lat * 100) / 100;
 
     return new Promise((resolve, reject) => {
-      WeatherService.__callWeatherViaAPI(longitudeLitteral, latitudeLitteral)
+      WeatherService.__callWeatherViaAPI(LONGITUDE_LITTERAL, LATITUDE_LITTERAL)
         .then(result => {
-          const weatherLine = {
-            date: currentDateLitteral,
+          const WEATHER_ITEM = {
+            date: CURRENT_DATE_LITTERAL,
 
-            latitude: latitudeLitteral,
-            longitude: longitudeLitteral,
+            latitude: LATITUDE_LITTERAL,
+            longitude: LONGITUDE_LITTERAL,
             name: result.name,
 
             icon: result.weather[0].icon,
             main: result.weather[0].main,
             temp: result.main.temp
           };
-          WeatherDataService.create(weatherLine)
-            .then(() => resolve(weatherLine))
+          WeatherDataService.create(WEATHER_ITEM)
+            .then(() => resolve(WEATHER_ITEM))
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
         })
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
