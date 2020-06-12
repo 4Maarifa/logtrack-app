@@ -34,12 +34,12 @@ const Dashboard = () => {
 
   const [datetime, setDateTime] = useState({date: null, time: null});
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeValues = () => {
-    if(SettingsService.getSettingValue(ESettings.SETTINGS_DASHBOARD_WEATHER) === 'ON') {
+  useEffect(() => {
+    if(computed.initialized && SettingsService.getSettingValue(ESettings.SETTINGS_DASHBOARD_WEATHER) === 'ON') {
       PermissionService.location.askPermission()
         .then(() => {
           PermissionService.location.getLocation()
@@ -52,25 +52,19 @@ const Dashboard = () => {
         })
         .catch(ErrorService.manageError);
     }
-  };
-
-  useEffect(() => {
-    if(computed.initialized) {
-      computeValues();
-    }
   }, [computed]);
 
   useEffect(() => {
     setMounted(true);
-    DataService.computed.observeComputedValues(setComputed, observerKey);
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
     DateService.addObserver(() => setDateTime({
       date: DateService.getDateString(new Date(), false, false),
       time: DateService.getTimeString(new Date())
-    }), observerKey);
+    }), OBSERVER_KEY);
     return () => {
       setMounted(false);
-      DataService.computed.unobserveComputedValues(observerKey);
-      DateService.removeObserver(observerKey);
+      DataService.computed.unobserveComputedValues(OBSERVER_KEY);
+      DateService.removeObserver(OBSERVER_KEY);
     }
   }, []);
   

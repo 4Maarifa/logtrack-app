@@ -57,6 +57,10 @@
     min-width: 0;
     max-height: calc(100% - 2px);
 
+    &[disabled] {
+      cursor: not-allowed;
+    }
+
     &:not(.input--novalidation) {
 
       &:valid {

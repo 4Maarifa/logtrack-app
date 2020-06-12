@@ -48,12 +48,12 @@ const WarehouseService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Warehouses' });
     }
 
-    const warehouses = {};
+    const WAREHOUSES = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getFirestore().collection('warehouses').get()
             .then(querySnapshot => {
-                querySnapshot.forEach(warehouseDoc => warehouses[warehouseDoc.id] = warehouseDoc.data());
-                resolve(warehouses);
+                querySnapshot.forEach(warehouseDoc => WAREHOUSES[warehouseDoc.id] = warehouseDoc.data());
+                resolve(WAREHOUSES);
             })
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
@@ -98,14 +98,31 @@ const WarehouseService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Warehouses' });
     }
 
-    let warehouses = {};
+    const WAREHOUSES = {};
     return new Promise((resolve, reject) => {
       FirebaseService.getFirestore().collection('warehouses')
       .where('companyId', '==', companyId)
       .get()
       .then(querySnapshot => {
-        querySnapshot.forEach(warehouseDoc => warehouses[warehouseDoc.id] = warehouseDoc.data());
-        resolve(warehouses);
+        querySnapshot.forEach(warehouseDoc => WAREHOUSES[warehouseDoc.id] = warehouseDoc.data());
+        resolve(WAREHOUSES);
+      })
+      .catch(e => ErrorService.manageErrorThenReject(e, reject));
+    });
+  },
+  getAllForCreatorId: creatorId => {
+    if(!WarehouseService.rights[ERights.RIGHT_WAREHOUSE_LIST]()) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Warehouses' });
+    }
+
+    const WAREHOUSES = {};
+    return new Promise((resolve, reject) => {
+      FirebaseService.getFirestore().collection('warehouses')
+      .where('creator', '==', creatorId)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(warehouseDoc => WAREHOUSES[warehouseDoc.id] = warehouseDoc.data());
+        resolve(WAREHOUSES);
       })
       .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });

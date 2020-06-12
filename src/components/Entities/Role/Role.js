@@ -16,17 +16,19 @@ import './Role.scss';
 const Role = ({ role }) => {
   if(!role) { return null; }
 
-  const roleKey = Object.keys(role)[0];
-  const observerKey = uuid();
+  const ROLE_ID = Object.keys(role)[0],
+    ROLE_DATA = role[ROLE_ID];
+  
+  const OBSERVER_KEY = uuid();
   const [actions, setActions] = useState(null);
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    RoleService.observeActions(role, setActions, observerKey);
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    RoleService.observeActions(role, setActions, OBSERVER_KEY);
     return () => {
-      DataService.computed.unobserveComputedValues(observerKey);
-      RoleService.unobserveActions(observerKey);
+      DataService.computed.unobserveComputedValues(OBSERVER_KEY);
+      RoleService.unobserveActions(OBSERVER_KEY);
     }
   }, []);
 
@@ -34,16 +36,16 @@ const Role = ({ role }) => {
 
   return (
     <div
-     className={'Role ' + (computed.employee && computed.employee.activeRoleId === roleKey ? 'Role--active' : '')} 
-     title={'' + (!role[roleKey].revokedIsoDate ? 
-      'Requested on ' + DateService.getMonthYearString(DateService.getDateFromIsoString(role[roleKey].creationIsoDate)) : 
-      'Revoked on ' + DateService.getMonthYearString(DateService.getDateFromIsoString(role[roleKey].revokedIsoDate))) }
-     data-id={roleKey}>
+     className={'Role ' + (computed.employee && computed.employee.activeRoleId === ROLE_ID ? 'Role--active' : '')} 
+     title={'' + (!ROLE_DATA.revokedIsoDate ? 
+      'Requested on ' + DateService.getMonthYearString(DateService.getDateFromIsoString(ROLE_DATA.creationIsoDate)) : 
+      'Revoked on ' + DateService.getMonthYearString(DateService.getDateFromIsoString(ROLE_DATA.revokedIsoDate))) }
+     data-id={ROLE_ID}>
 
       <span>
-        <Icon source="fa" icon={ERoleDetails[role[roleKey].role].icon} />
-        {ERoleDetails[role[roleKey].role].name}
-        {computed.employee && computed.employee.activeRoleId === roleKey && <span className="badge">active</span> }
+        <Icon source="fa" icon={ERoleDetails[ROLE_DATA.role].icon} />
+        {ERoleDetails[ROLE_DATA.role].name}
+        {computed.employee && computed.employee.activeRoleId === ROLE_ID && <span className="badge">active</span> }
       </span>
       {actions}
     </div>

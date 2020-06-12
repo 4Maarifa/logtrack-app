@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { faTachometerFast, faHome, faSignIn, faUserPlus, faUserCog, faUsers,
   faTruck, faTag, faCompass, faAnalytics, faMapPin, faBuilding, faSearch,
-  faWarehouseAlt, faBars, faTimes, faHandshakeAlt, faSuitcase, faPortrait } from '@fortawesome/pro-solid-svg-icons';
+  faWarehouseAlt, faBars, faTimes, faHandshakeAlt, faSuitcase, faPortrait, faCrown } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 
@@ -19,8 +19,8 @@ import { v4 as uuid } from 'uuid';
 import './Navigation.scss';
 
 const TrackRouteChange = ({ onChange }) => {
-  const location = useLocation();
-  useEffect(() => onChange(), [location]);
+  const LOCATION = useLocation();
+  useEffect(() => onChange(), [LOCATION]);
   return null;
 };
 
@@ -28,13 +28,13 @@ const Navigation = () => {
 
   const [isOpenedOnMobile, setOpenedOnMobile] = useState(false);
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -82,7 +82,12 @@ const Navigation = () => {
   }
 
   const getNavigationTabs = () => {
-    const tabs = {
+    const TABS = {
+      [ERights.APP_CAN_USE_ADMIN_MANAGEMENT]:
+        <NavLink key="admin" activeClassName="nav--active" to={`/admin`}>
+          <Icon source="fa" icon={faCrown} />
+          <span className="nav-title">Admin</span>
+        </NavLink>,
       [ERights.APP_CAN_USE_GPS]: 
         <NavLink key="gps" activeClassName="nav--active" to={`/gps`}>
           <Icon source="fa" icon={faCompass} />
@@ -125,7 +130,7 @@ const Navigation = () => {
         </NavLink>
     };
 
-    return Object.keys(tabs).filter(key => RightService.hasAppRight(key)).map(key => tabs[key]);
+    return Object.keys(TABS).filter(key => RightService.hasAppRight(key)).map(key => TABS[key]);
   };
 
   return (

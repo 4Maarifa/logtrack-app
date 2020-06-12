@@ -27,7 +27,9 @@
     align-items: center;
   }
   
-  .badge.company-plan, .badge.you {
+  .badge.company-plan,
+  .badge.you,
+  .badge.staff {
     font-size: 70%;
     position: relative;
     top: -.5rem;

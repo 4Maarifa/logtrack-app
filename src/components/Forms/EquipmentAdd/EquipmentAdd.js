@@ -23,7 +23,7 @@ import { v4 as uuid } from 'uuid';
 import './EquipmentAdd.scss';
 
 const EquipmentAdd = ({ match }) => {
-  const currentEquipmentId = match.params.equipmentid;
+  const CURRENT_EQUIPMENT_ID = match.params.equipmentid;
 
   const [currentEquipment, setCurrentEquipment] = useState(null);
 
@@ -42,54 +42,16 @@ const EquipmentAdd = ({ match }) => {
   const [companyId, setCompanyId] = useState(null);
   const [company, setCompany] = useState(null);
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
-
-  const computeValues = () => {
-    if(!computed.activeRole) {
-      return;
-    }
-    EquipmentModelService.list()
-      .then(setEquipmentModels)
-      .catch(ErrorService.manageError);
-
-    if(currentEquipmentId) {
-      EquipmentService.get(currentEquipmentId)
-        .then(equipmentDoc => {
-          setIdentification(equipmentDoc.data().identification);
-          setCurrentEquipment(equipmentDoc.data());
-
-          EmployeeService.get(equipmentDoc.data().creator)
-            .then(employeeDoc => {
-              setCreatorId(employeeDoc.id);
-              setCreator(employeeDoc.data());
-            })
-            .catch(ErrorService.manageError);
-
-          CompanyService.get(equipmentDoc.data().companyId)
-            .then(companyDoc => {
-              setCompanyId(companyDoc.id);
-              setCompany(companyDoc.data());
-            })
-            .catch(ErrorService.manageError);
-        })
-        .catch(ErrorService.manageError);
-    }
-    else {
-      setCreatorId(computed.user.uid);
-      setCreator(computed.employee);
-      setCompanyId(computed.activeRole.companyId);
-      setCompany(computed.activeRoleCompany);
-    }
-  };
 
   const handleSubmit = event => {
     event.preventDefault();
 
-    if(currentEquipmentId) {
-      EquipmentService.updateField(currentEquipmentId, {identification})
-            .then(() => setNewEquipmentId(currentEquipmentId))
+    if(CURRENT_EQUIPMENT_ID) {
+      EquipmentService.updateField(CURRENT_EQUIPMENT_ID, {identification})
+            .then(() => setNewEquipmentId(CURRENT_EQUIPMENT_ID))
             .catch(ErrorService.manageError);
     }
     else  {
@@ -132,27 +94,58 @@ const EquipmentAdd = ({ match }) => {
     let newEquipmentModels = {};
     if(!subType) {
       Object.keys(equipmentModels)
-        .filter(key => equipmentModels[key].type === type)
-        .forEach(key => newEquipmentModels[key] = equipmentModels[key]);
+        .filter(equipmentModelId => equipmentModels[equipmentModelId].type === type)
+        .forEach(equipmentModelId => newEquipmentModels[equipmentModelId] = equipmentModels[equipmentModelId]);
     }
     else {
       Object.keys(equipmentModels)
-        .filter(key => equipmentModels[key].type === type)
-        .filter(key => equipmentModels[key].subType === subType)
-        .forEach(key => newEquipmentModels[key] = equipmentModels[key]);
+        .filter(equipmentModelId => equipmentModels[equipmentModelId].type === type)
+        .filter(equipmentModelId => equipmentModels[equipmentModelId].subType === subType)
+        .forEach(equipmentModelId => newEquipmentModels[equipmentModelId] = equipmentModels[equipmentModelId]);
     }
     return newEquipmentModels;
   };
 
   useEffect(() => {
-    if(computed.initialized){
-      computeValues();
+    if(computed.initialized && computed.activeRole){
+      EquipmentModelService.list()
+        .then(setEquipmentModels)
+        .catch(ErrorService.manageError);
+  
+      if(CURRENT_EQUIPMENT_ID) {
+        EquipmentService.get(CURRENT_EQUIPMENT_ID)
+          .then(equipmentDoc => {
+            setIdentification(equipmentDoc.data().identification);
+            setCurrentEquipment(equipmentDoc.data());
+  
+            EmployeeService.get(equipmentDoc.data().creator)
+              .then(employeeDoc => {
+                setCreatorId(employeeDoc.id);
+                setCreator(employeeDoc.data());
+              })
+              .catch(ErrorService.manageError);
+  
+            CompanyService.get(equipmentDoc.data().companyId)
+              .then(companyDoc => {
+                setCompanyId(companyDoc.id);
+                setCompany(companyDoc.data());
+              })
+              .catch(ErrorService.manageError);
+          })
+          .catch(ErrorService.manageError);
+      }
+      else {
+        setCreatorId(computed.user.uid);
+        setCreator(computed.employee);
+        setCompanyId(computed.activeRole.companyId);
+        setCompany(computed.activeRoleCompany);
+      }
     }
   }, [computed]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -290,16 +283,16 @@ const EquipmentAdd = ({ match }) => {
     return null;
   }
   if(newEquipmentId) {
-    ErrorService.success(`Equipment ${currentEquipmentId ? 'updated' : 'created'}!`);
+    ErrorService.success(`Equipment ${CURRENT_EQUIPMENT_ID ? 'updated' : 'created'}!`);
     return <Redirect to={`/equipments`} />;
   }
 
   return (
     <div className="EquipmentAdd">
-      <h1>{currentEquipmentId ? 'Edit' : 'Add'} an equipment</h1>
+      <h1>{CURRENT_EQUIPMENT_ID ? 'Edit' : 'Add'} an equipment</h1>
       <form onSubmit={handleSubmit}>
         {/* Model */}
-        {currentEquipmentId && currentEquipment ? 
+        {CURRENT_EQUIPMENT_ID && currentEquipment ? 
           <div className="model-selection--done">
             <span className="fake-label">
               <Icon source="fa" icon={faTruck} />
@@ -342,7 +335,7 @@ const EquipmentAdd = ({ match }) => {
           onValueChange={setIdentification} />
 
         {/* Company */}
-        <div className="input-company">
+        <div className="input-container">
           <span className="fake-label">
             <Icon source="fa" icon={faBuilding} />
             Company
@@ -351,7 +344,7 @@ const EquipmentAdd = ({ match }) => {
         </div>
 
         {/* Creator */}
-        <div className="input-creator">
+        <div className="input-container">
           <span className="fake-label">
             <Icon source="fa" icon={faUser} />
             Creator

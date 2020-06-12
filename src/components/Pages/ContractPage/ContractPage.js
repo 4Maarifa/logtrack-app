@@ -18,14 +18,14 @@ import './ContractPage.scss';
  * Use by everyone to see details about a contract
  */
 const ContractPage = ({ match }) => {
-  const contractId = match.params.contractid;
+  const CONTRACT_ID = match.params.contractid;
 
   const [contract, setContract] = useState(null);
   const [companyExec, setCompanyExec] = useState(null);
   const [companyOrder, setCompanyOrder] = useState(null);
 
-  const computeValues = () => {
-    ContractService.get(contractId)
+  useEffect(() => {
+    ContractService.get(CONTRACT_ID)
       .then(contractDoc => {
         setContract(contractDoc.data());
 
@@ -38,9 +38,7 @@ const ContractPage = ({ match }) => {
           .catch(ErrorService.manageError);
       })
       .catch(ErrorService.manageError);
-  };
-
-  useEffect(() => computeValues(), []);
+  }, []);
 
   if(!contract || !companyExec || !companyOrder) {
     return (
@@ -52,7 +50,7 @@ const ContractPage = ({ match }) => {
   return (
     <div className="ContractPage">
       <div className="Element Element--page">
-        <Contract contract={{[contractId]: contract}}
+        <Contract contract={{[CONTRACT_ID]: contract}}
                   companyExec={{[contract.companyExecId]: companyExec}}
                   companyOrder={{[contract.companyOrderId]: companyOrder}}
                   isPage />

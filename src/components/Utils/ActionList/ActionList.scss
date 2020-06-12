@@ -1,6 +1,5 @@
 .ActionList {
   position: relative;
-  cursor: pointer;
   width: 1rem;
 
   ul {
@@ -69,7 +68,6 @@
 
   &--flat {
     width: 100%;
-    min-height: 7rem;
     display: block;
 
     .trigger {
@@ -83,7 +81,7 @@
       justify-content: flex-end;
       position: static;
       width: auto;
-      min-height: 7rem;
+      min-height: 2rem;
       width: 100%;
 
       li {

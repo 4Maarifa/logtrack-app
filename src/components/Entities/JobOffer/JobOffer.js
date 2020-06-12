@@ -18,31 +18,33 @@ import { v4 as uuid } from 'uuid';
 const JobOffer = ({ jobOffer, isPage }) => {
   if(!jobOffer) { return null; }
 
-  const jobOfferKey = Object.keys(jobOffer)[0];
+  const JOB_OFFER_ID = Object.keys(jobOffer)[0],
+    JOB_OFFER_DATA = jobOffer[JOB_OFFER_ID];
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
+  
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey);
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY);
   }, []);
 
   if(!computed.initialized) { return null; }
 
-  const actions = [];
+  const ACTIONS = [];
 
   if(!isPage) {
-    actions.push({ title: 'View', icon: <Icon source="fa" icon={faEye} />, link: `/joboffer/${jobOfferKey}` });
+    ACTIONS.push({ title: 'View', icon: <Icon source="fa" icon={faEye} />, link: `/joboffer/${JOB_OFFER_ID}` });
   }
 
-  if(jobOffer[jobOfferKey].companyId === computed.activeRole.companyId &&
+  if(JOB_OFFER_DATA.companyId === computed.activeRole.companyId &&
       (computed.activeRole.role === ERole.MANAGER || computed.activeRole.role === ERole.RECRUITER) &&
-      jobOffer[jobOfferKey].status === EJobOfferStatus.OPENED) {
+      JOB_OFFER_DATA.status === EJobOfferStatus.OPENED) {
 
-    actions.push({title: 'Edit', icon: <Icon source="fa" icon={faEdit} />, link: `/joboffer-edit/${jobOfferKey}`});
-    actions.push({title: 'Close applications', icon: <Icon source="fa" icon={faCheck} />, callback: () => {
-      CompanyService.jobOffer.updateField(jobOfferKey, { status: EJobOfferStatus.CLOSED });
+    ACTIONS.push({title: 'Edit', icon: <Icon source="fa" icon={faEdit} />, link: `/joboffer-edit/${JOB_OFFER_ID}`});
+    ACTIONS.push({title: 'Close applications', icon: <Icon source="fa" icon={faCheck} />, callback: () => {
+      CompanyService.jobOffer.updateField(JOB_OFFER_ID, { status: EJobOfferStatus.CLOSED });
     }});
   }
 
@@ -50,21 +52,21 @@ const JobOffer = ({ jobOffer, isPage }) => {
    * RENDER
    */
   return (
-    <div className="JobOffer Element-content" key={jobOfferKey}>
+    <div className="JobOffer Element-content" key={JOB_OFFER_ID}>
       <div className="Element-base">
         <Icon source="fa" containerclassname="Element-icon" icon={faClipboardUser} />
         <span className={'Element-badge badge ' + (isPage ? 'badge-inverse' : '')}>
-          <Icon source="fa" icon={ERoleDetails[jobOffer[jobOfferKey].role].icon} />
-          {ERoleDetails[jobOffer[jobOfferKey].role].name}
+          <Icon source="fa" icon={ERoleDetails[JOB_OFFER_DATA.role].icon} />
+          {ERoleDetails[JOB_OFFER_DATA.role].name}
         </span>
         <div className="Element-data">
           <span className="Element-title">
-            <PageLink type={PageLinkType.JOBOFFER} entityId={jobOfferKey} entityData={jobOffer[jobOfferKey]} white={isPage} />
+            <PageLink type={PageLinkType.JOBOFFER} entityId={JOB_OFFER_ID} entityData={JOB_OFFER_DATA} white={isPage} />
           </span>
-          <span className="sub">Created on {DateService.getDateString(DateService.getDateFromIsoString(jobOffer[jobOfferKey].creationIsoDate), false, false)}</span>
+          <span className="sub">Created on {DateService.getDateString(DateService.getDateFromIsoString(JOB_OFFER_DATA.creationIsoDate), false, false)}</span>
         </div>
         <div className="Element-actions">
-          <ActionList actions={actions} isFlatten={isPage} />
+          <ActionList actions={ACTIONS} isFlatten={isPage} />
         </div>
       </div>
     </div>
@@ -100,10 +102,10 @@ const jobsExTableFSS = {
   filter: {}
 };
 
-Object.keys(ERoleDetails).forEach(roleKey => {
-  jobsExTableFSS.filter[roleKey] = {
-    title: 'Role - ' + ERoleDetails[roleKey].name,
-    apply: (_, itemData) => itemData.role === roleKey
+Object.keys(ERoleDetails).forEach(roleId => {
+  jobsExTableFSS.filter[roleId] = {
+    title: 'Role - ' + ERoleDetails[roleId].name,
+    apply: (_, itemData) => itemData.role === roleId
   }
 });
 

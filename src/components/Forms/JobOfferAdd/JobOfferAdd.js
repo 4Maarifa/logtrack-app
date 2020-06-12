@@ -22,13 +22,13 @@ import { v4 as uuid } from 'uuid';
 import './JobOfferAdd.scss';
 
 const JobOfferAdd = ({ match }) => {
-  const currentJobOfferId = match.params.jobofferid;
+  const CURRENT_JOB_OFFER_ID = match.params.jobofferid;
 
   const [currentJobOffer, setCurrentJobOffer] = useState(null);
 
   const [newJobOfferId, setNewJobOfferId] = useState(null);
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -42,40 +42,6 @@ const JobOfferAdd = ({ match }) => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeValues = () => {
-    if(!computed.activeRole) { return; }
-    if(currentJobOfferId) {
-      CompanyService.jobOffer.get(currentJobOfferId)
-        .then(jobOfferDoc => {
-          setTitle(jobOfferDoc.data().title);
-          setDescription(jobOfferDoc.data().description);
-          setRoleType(jobOfferDoc.data().role);
-          setCurrentJobOffer(jobOfferDoc.data());
-
-          CompanyService.get(jobOfferDoc.data().companyId)
-            .then(companyDoc => {
-              setCompanyId(companyDoc.id);
-              setCompany(companyDoc.data());
-            })
-            .catch(ErrorService.manageError);
-
-          EmployeeService.get(jobOfferDoc.data().creator)
-            .then(employeeDoc => {
-              setCreatorId(employeeDoc.id);
-              setCreator(employeeDoc.data());
-            })
-            .catch(ErrorService.manageError);
-        })
-        .catch(ErrorService.manageError);
-    }
-    else {
-      setCreatorId(computed.user.uid);
-      setCreator(computed.employee);
-      setCompanyId(computed.activeRole.companyId);
-      setCompany(computed.activeRoleCompany);
-    }
-  };
-
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -84,12 +50,12 @@ const JobOfferAdd = ({ match }) => {
       return;
     }
 
-    if(currentJobOfferId) {
-      CompanyService.jobOffer.updateField(currentJobOfferId, {
+    if(CURRENT_JOB_OFFER_ID) {
+      CompanyService.jobOffer.updateField(CURRENT_JOB_OFFER_ID, {
         title,
         description
       }).then(() => {
-          setNewJobOfferId(currentJobOfferId);
+          setNewJobOfferId(CURRENT_JOB_OFFER_ID);
         })
         .catch(ErrorService.manageError);
     }
@@ -104,14 +70,43 @@ const JobOfferAdd = ({ match }) => {
   };
 
   useEffect(() => {
-    if(computed.initialized) {
-      computeValues();
+    if(computed.initialized && computed.activeRole) {
+      if(CURRENT_JOB_OFFER_ID) {
+        CompanyService.jobOffer.get(CURRENT_JOB_OFFER_ID)
+          .then(jobOfferDoc => {
+            setTitle(jobOfferDoc.data().title);
+            setDescription(jobOfferDoc.data().description);
+            setRoleType(jobOfferDoc.data().role);
+            setCurrentJobOffer(jobOfferDoc.data());
+  
+            CompanyService.get(jobOfferDoc.data().companyId)
+              .then(companyDoc => {
+                setCompanyId(companyDoc.id);
+                setCompany(companyDoc.data());
+              })
+              .catch(ErrorService.manageError);
+  
+            EmployeeService.get(jobOfferDoc.data().creator)
+              .then(employeeDoc => {
+                setCreatorId(employeeDoc.id);
+                setCreator(employeeDoc.data());
+              })
+              .catch(ErrorService.manageError);
+          })
+          .catch(ErrorService.manageError);
+      }
+      else {
+        setCreatorId(computed.user.uid);
+        setCreator(computed.employee);
+        setCompanyId(computed.activeRole.companyId);
+        setCompany(computed.activeRoleCompany);
+      }
     }
   }, [computed]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -128,19 +123,19 @@ const JobOfferAdd = ({ match }) => {
     return <Redirect to={`/joboffers`} />;
   }
 
-  const roleDetails = {};
-  Object.keys(ERoleDetails).forEach(roleKey => {
-    roleDetails[roleKey] = {
+  const ROLE_DETAILS = {};
+  Object.keys(ERoleDetails).forEach(roleId => {
+    ROLE_DETAILS[roleId] = {
       content: <Fragment>
-        <Icon source="fa" icon={ERoleDetails[roleKey].icon} />
-        {ERoleDetails[roleKey].name}
+        <Icon source="fa" icon={ERoleDetails[roleId].icon} />
+        {ERoleDetails[roleId].name}
       </Fragment>
     }
   });
 
   return (
     <div className="JobOfferAdd">
-      <h1>{currentJobOfferId ? 'Edit' : 'Add'} a Job Offer</h1>
+      <h1>{CURRENT_JOB_OFFER_ID ? 'Edit' : 'Add'} a Job Offer</h1>
       <form onSubmit={handleSubmit}>
 
         {/* Title field */}
@@ -188,20 +183,20 @@ const JobOfferAdd = ({ match }) => {
             <Icon source="fa" icon={faTag} />
             Role to request
           </span>
-          {currentJobOfferId && currentJobOffer ? 
+          {CURRENT_JOB_OFFER_ID && currentJobOffer ? 
             <span>
               <Icon source="fa" icon={ERoleDetails[roleType].icon} />
               {ERoleDetails[roleType].name}
             </span>
           : <Choose
               selection={roleType}
-              items={roleDetails}
+              items={ROLE_DETAILS}
               fieldName="roleType"
               onSelectionChange={setRoleType} /> }
         </div>
 
         {/* Company */}
-        <div className="input-company">
+        <div className="input-container">
           <span className="fake-label">
             <Icon source="fa" icon={faBuilding} />
             Company
@@ -210,7 +205,7 @@ const JobOfferAdd = ({ match }) => {
         </div>
 
         {/* Creator */}
-        <div className="input-creator">
+        <div className="input-container">
           <span className="fake-label">
             <Icon source="fa" icon={faUser} />
             Creator

@@ -45,12 +45,12 @@ const EquipmentService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Equipments' });
     }
 
-    const equipments = {};
+    const EQUIPMENTS = {};
     return new Promise((resolve, reject) => {
       FirebaseService.getFirestore().collection('equipments').get()
         .then(querySnapshot => {
-            querySnapshot.forEach(equipmentDoc => equipments[equipmentDoc.id] = equipmentDoc.data());
-            resolve(equipments);
+            querySnapshot.forEach(equipmentDoc => EQUIPMENTS[equipmentDoc.id] = equipmentDoc.data());
+            resolve(EQUIPMENTS);
         })
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
@@ -95,14 +95,14 @@ const EquipmentService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Equipments' });
     }
 
-    const equipments = {};
+    const EQUIPMENTS = {};
     return new Promise((resolve, reject) => {
       FirebaseService.getFirestore().collection('equipments')
       .where('companyId', '==', companyId)
       .get()
       .then(querySnapshot => {
-        querySnapshot.forEach(equipmentDoc => equipments[equipmentDoc.id] = equipmentDoc.data());
-        resolve(equipments);
+        querySnapshot.forEach(equipmentDoc => EQUIPMENTS[equipmentDoc.id] = equipmentDoc.data());
+        resolve(EQUIPMENTS);
       })
       .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
@@ -112,14 +112,31 @@ const EquipmentService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Equipments' });
     }
 
-    const equipments = {};
+    const EQUIPMENTS = {};
     return new Promise((resolve, reject) => {
       FirebaseService.getFirestore().collection('equipments')
       .where('warehouseId', '==', warehouseId)
       .get()
       .then(querySnapshot => {
-        querySnapshot.forEach(equipmentDoc => equipments[equipmentDoc.id] = equipmentDoc.data());
-        resolve(equipments);
+        querySnapshot.forEach(equipmentDoc => EQUIPMENTS[equipmentDoc.id] = equipmentDoc.data());
+        resolve(EQUIPMENTS);
+      })
+      .catch(e => ErrorService.manageErrorThenReject(e, reject));
+    });
+  },
+  getAllForCreatorId: creatorId => {
+    if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_LIST]()) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Equipments' });
+    }
+
+    const EQUIPMENTS = {};
+    return new Promise((resolve, reject) => {
+      FirebaseService.getFirestore().collection('equipments')
+      .where('creator', '==', creatorId)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(equipmentDoc => EQUIPMENTS[equipmentDoc.id] = equipmentDoc.data());
+        resolve(EQUIPMENTS);
       })
       .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });

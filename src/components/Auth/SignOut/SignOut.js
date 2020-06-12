@@ -20,7 +20,7 @@ const SignOut = () => {
       .then(() => {
         EmployeeService.accountActivity.create(
           new AccountActivity(
-            DataService.computed.employee.email,
+            DataService.computed.user.email,
             DateService.getCurrentIsoDateString(),
             {
               success: true,

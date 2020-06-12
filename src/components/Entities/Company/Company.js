@@ -17,47 +17,49 @@ import './Company.scss';
 const Company = ({ company, isPage }) => {
   if(!company) { return null; }
   
-  const companyKey = Object.keys(company)[0];
+  const COMPANY_ID = Object.keys(company)[0];
+  const COMPANY_DATA = company[COMPANY_ID];
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
+  
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey);
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY);
   }, []);
 
   if(!computed.initialized) { return null; }
 
-  const actions = [
-    { title: 'Request a role', icon: <Icon source="fa" icon={faUserTag} />, link: `/role-add/${companyKey}` }
+  const ACTIONS = [
+    { title: 'Request a role', icon: <Icon source="fa" icon={faUserTag} />, link: `/role-add/${COMPANY_ID}` }
   ];
 
-  if(computed.activeRole.role === ERole.MANAGER && computed.activeRole.companyId === companyKey) {
-    actions.unshift({ title: 'Edit', icon: <Icon source="fa" icon={faEdit} />, link: `/company-edit/${companyKey}` });
+  if(computed.activeRole.role === ERole.MANAGER && computed.activeRole.companyId === COMPANY_ID) {
+    ACTIONS.unshift({ title: 'Edit', icon: <Icon source="fa" icon={faEdit} />, link: `/company-edit/${COMPANY_ID}` });
   }
 
   if(!isPage) {
-    actions.unshift({ title: 'View', icon: <Icon source="fa" icon={faBuilding} />, link: `/company/${companyKey}` });
+    ACTIONS.unshift({ title: 'View', icon: <Icon source="fa" icon={faBuilding} />, link: `/company/${COMPANY_ID}` });
   }
 
   return (
     <div className="Company Element-content">
       <div className="Element-base">
-        {company[companyKey] && company[companyKey].logoURL ?
+        {COMPANY_DATA.logoURL ?
           <div className="Element-photo">
             <img
-              alt={company[companyKey].name + '\'s logo'} 
-              src={company[companyKey].logoURL} />
+              alt={COMPANY_DATA.name + '\'s logo'} 
+              src={COMPANY_DATA.logoURL} />
           </div>
         : <Icon containerclassname="Element-icon" source="fa" icon={faBuilding} /> }
         <div className="Element-data">
           <span className="Element-title">
-            <PageLink type={PageLinkType.COMPANY} entityId={companyKey} entityData={company[companyKey]} white={isPage} noPhoto />
+            <PageLink type={PageLinkType.COMPANY} entityId={COMPANY_ID} entityData={COMPANY_DATA} white={isPage} noPhoto />
           </span>
         </div>
         <div className="Element-actions">
-          <ActionList actions={actions} isFlatten={isPage} />
+          <ActionList actions={ACTIONS} isFlatten={isPage} />
         </div>
       </div>
     </div>

@@ -8,10 +8,56 @@
   top: 0;
   left: 0;
   z-index: 2000;
-  background-color: var(--tooltip-background);
+
+  &-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2001;
+    width: 100%;
+    height: 100%;
+    background-color: var(--tooltip-background);
+    cursor: pointer;
+  }
 
   &--show {
     display: flex;
+  }
+
+  &-noClose {
+    .Modal {
+      &-close.flat {
+        display: none;
+      }
+
+      &-back {
+        cursor: initial;
+      }
+    }
+  }
+
+  &-title {
+    font-size: 150%;
+    padding: 0 1.5rem 0 .5rem;
+    border-bottom: 1px solid var(--light-gray);
+    position: relative;
+  }
+
+  &-close.flat {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: .5rem;
+    color: var(--gray);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+  }
+
+  &-data {
+    max-height: 80vh;
+    overflow: auto;
   }
 
   &-content {
@@ -21,28 +67,47 @@
     border-radius: var(--border-radius);
     display: block;
     padding: .5rem;
+    position: relative;
+    z-index: 2002;
+  }
 
-    .actions {
-      margin-top: .5rem;
+  &-actions {
+    margin-top: .5rem;
+    text-align: right;
 
-      button {
-        border: 0;
-        background-color: var(--theme);
-        border-radius: var(--border-radius);
-        border: 1px solid var(--theme);
-        color: var(--inverse);
-        padding: .5rem;
-        cursor: pointer;
-  
-        &[value="CANCEL"] {
-          background-color: var(--inverse);
-          color: var(--theme);
-        }
-  
-        & + button {
-          margin-left: .5rem;
-        }
+    button {
+      border: 0;
+      background-color: var(--theme);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--theme);
+      color: var(--inverse);
+      padding: .5rem;
+      cursor: pointer;
+
+      &[value="CANCEL"] {
+        background-color: var(--inverse);
+        color: var(--theme);
       }
+
+      & + button {
+        margin-left: .5rem;
+      }
+    }
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .Modal {
+    &-content {
+      width: 90%;
+    }
+
+    &-close.flat {
+      padding: .2rem;
+    }
+
+    &-title {
+      font-size: 105%;
     }
   }
 }

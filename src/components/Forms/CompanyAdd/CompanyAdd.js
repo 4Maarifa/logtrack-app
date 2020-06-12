@@ -25,7 +25,7 @@ import { v4 as uuid } from 'uuid';
 
 import './CompanyAdd.scss';
 
-const defaultColors = {
+const DEFAULT_COLORS = {
   '#444444': {
     content: <Fragment>
         <i className="input-color-choice" style={{ backgroundColor: '#444444' }} />
@@ -35,7 +35,7 @@ const defaultColors = {
 };
 
 const CompanyAdd = ({ match }) => {
-  const currentCompanyId = match.params.companyid;
+  const CURRENT_COMPANY_ID = match.params.companyid;
 
   const [currentCompany, setCurrentCompany] = useState(null);
 
@@ -47,49 +47,12 @@ const CompanyAdd = ({ match }) => {
   const [name, setName] = useState('');
   const [plan, setPlan] = useState('');
   const [logo, setLogo] = useState(null);
-  const [colors, setColors] = useState({ ...defaultColors });
+  const [colors, setColors] = useState({ ...DEFAULT_COLORS });
   const [selectedColor, setSelectedColor] = useState('#444444');
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
-
-  const computeValues = () => {
-    if(currentCompanyId) {
-      CompanyService.get(currentCompanyId)
-        .then(companyDoc => {
-          setCurrentCompany(companyDoc.data());
-          setName(companyDoc.data().name);
-          setPlan(companyDoc.data().plan);
-          setLogo({
-            file: null,
-            url: companyDoc.data().logoURL
-          });
-          
-          let currentColors = colors;
-          currentColors[companyDoc.data().color] = {
-            content: <Fragment>
-              <i className="input-color-choice" style={{ backgroundColor: companyDoc.data().color }} />
-              <Icon source="fa" icon={faCheck} />
-            </Fragment>
-          };
-          setColors(currentColors);
-          setSelectedColor(companyDoc.data().color);
-          
-          EmployeeService.get(companyDoc.data().creator)
-            .then(employeeDoc => {
-              setCreatorId(employeeDoc.id);
-              setCreator(employeeDoc.data());
-            })
-            .catch(ErrorService.manageError);
-        })
-        .catch(ErrorService.manageError);
-    }
-    else {
-      setCreatorId(computed.user.uid);
-      setCreator(computed.employee);
-    }
-  };
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -105,12 +68,12 @@ const CompanyAdd = ({ match }) => {
     }
 
     const endCompanyProcess = logoURL => {
-      if(currentCompanyId) {
-        CompanyService.updateField(currentCompanyId, {
+      if(CURRENT_COMPANY_ID) {
+        CompanyService.updateField(CURRENT_COMPANY_ID, {
           logoURL,
           color: selectedColor || '#444444'
         }).then(() => {
-            setNewCompanyId(currentCompanyId);
+            setNewCompanyId(CURRENT_COMPANY_ID);
             DataService.computed.notifyChanges();
           })
           .catch(ErrorService.manageError);
@@ -159,7 +122,7 @@ const CompanyAdd = ({ match }) => {
 
   const computeColors = colors => {
     let colorResults = {
-      ...defaultColors
+      ...DEFAULT_COLORS
     };
     colors.filter(ColorService.isMedColor).map(ColorService.convertRGBtoHEX).forEach(color => {
       colorResults[color] = {
@@ -174,13 +137,46 @@ const CompanyAdd = ({ match }) => {
 
   useEffect(() => {
     if(computed.initialized) {
-      computeValues();
+      if(CURRENT_COMPANY_ID) {
+        CompanyService.get(CURRENT_COMPANY_ID)
+          .then(companyDoc => {
+            setCurrentCompany(companyDoc.data());
+            setName(companyDoc.data().name);
+            setPlan(companyDoc.data().plan);
+            setLogo({
+              file: null,
+              url: companyDoc.data().logoURL
+            });
+            
+            let currentColors = colors;
+            currentColors[companyDoc.data().color] = {
+              content: <Fragment>
+                <i className="input-color-choice" style={{ backgroundColor: companyDoc.data().color }} />
+                <Icon source="fa" icon={faCheck} />
+              </Fragment>
+            };
+            setColors(currentColors);
+            setSelectedColor(companyDoc.data().color);
+            
+            EmployeeService.get(companyDoc.data().creator)
+              .then(employeeDoc => {
+                setCreatorId(employeeDoc.id);
+                setCreator(employeeDoc.data());
+              })
+              .catch(ErrorService.manageError);
+          })
+          .catch(ErrorService.manageError);
+      }
+      else {
+        setCreatorId(computed.user.uid);
+        setCreator(computed.employee);
+      }
     }
   }, [computed]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -197,7 +193,7 @@ const CompanyAdd = ({ match }) => {
 
   return (
     <div className="CompanyAdd">
-      <h1>{currentCompanyId ? 'Edit' : 'Add'} a company</h1>
+      <h1>{CURRENT_COMPANY_ID ? 'Edit' : 'Add'} a company</h1>
       <form onSubmit={handleSubmit}>
 
         {/* Name field */}
@@ -205,7 +201,7 @@ const CompanyAdd = ({ match }) => {
           value={name}
           inputType="text"
           fieldName="name"
-          inputDisabled={currentCompanyId}
+          inputDisabled={CURRENT_COMPANY_ID}
           label={
             <span>
               <Icon source="fa" icon={faBuilding} />
@@ -222,7 +218,7 @@ const CompanyAdd = ({ match }) => {
           }
           onValueChange={setName} />
 
-        {currentCompanyId ? <span className="input-color-info">
+        {CURRENT_COMPANY_ID ? <span className="input-color-info">
           <Icon source="fa" icon={faInfoCircle} />
           Please contact the support to edit your company's name.
         </span> : null}
@@ -270,7 +266,7 @@ const CompanyAdd = ({ match }) => {
               Logo
             </span>
           }
-          inputRequired={!currentCompanyId}
+          inputRequired={!CURRENT_COMPANY_ID}
           instructions={
             <span>
               The logo is required
@@ -279,7 +275,7 @@ const CompanyAdd = ({ match }) => {
           accept="image/*" />
 
         {/* Main Color */}
-        <div className="input-color">
+        <div className="input-color input-container">
           <span className="fake-label">
             <Icon source="fa" icon={faPalette} />
             Dominant Color
@@ -297,7 +293,7 @@ const CompanyAdd = ({ match }) => {
         </div>
 
         {/* Creator */}
-        <div className="input-creator">
+        <div className="input-container">
           <span className="fake-label">
             <Icon source="fa" icon={faUser} />
             Creator

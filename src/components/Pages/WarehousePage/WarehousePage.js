@@ -4,20 +4,18 @@ import { faTruck } from '@fortawesome/pro-solid-svg-icons'
 import DataService from './../../../services/data.service';
 import CompanyService from './../../../services/entities/company.service';
 import ErrorService from './../../../services/error.service';
-import BrandService from './../../../services/entities/brand.service';
-import EquipmentModelService from './../../../services/entities/equipmentModel.service';
-import EquipmentService from './../../../services/entities/equipment.service';
 import WarehouseService from './../../../services/entities/warehouse.service';
 
 import Loader from './../../Utils/Loader/Loader';
-import ExTable from './../../Utils/ExTable/ExTable';
 import Icon from './../../Utils/Icon/Icon';
 import Tabs from './../../Utils/Tabs/Tabs';
 
-import Equipment, { equipmentsExTableFSS } from './../../Entities/Equipment/Equipment';
 import Warehouse from './../../Entities/Warehouse/Warehouse';
+import Company from '../../Entities/Company/Company';
 
 import { v4 as uuid } from 'uuid';
+
+import WarehouseEquipmentsTab from './tabs/WarehouseEquipmentsTab';
 
 import './WarehousePage.scss';
 
@@ -26,63 +24,32 @@ import './WarehousePage.scss';
  * Use by everyone to see details about a warehouse (linked equipments)
  */
 const WarehousePage = ({ match }) => {
-  const warehouseId = match.params.warehouseid;
+  const WAREHOUSE_ID = match.params.warehouseid;
 
   const [warehouse, setWarehouse] = useState(null);
   const [company, setCompany] = useState(null);
 
-  const [equipments, setEquipments] = useState({});
-  const [isEquipmentsLoading, setEquipmentsLoading] = useState(true);
-  const [equipmentModels, setEquipmentsModels] = useState({});
-  const [brands, setBrands] = useState({});
-
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeValues = () => {
-    WarehouseService.get(warehouseId)
-      .then(warehouseDoc => setWarehouse(warehouseDoc.data()))
-      .catch(ErrorService.manageError);
-  };
-
-  const computeCompany = () => {
+  useEffect(() => {
     if(warehouse) {
       CompanyService.get(warehouse.companyId)
         .then(companyDoc => setCompany(companyDoc.data()))
         .catch(ErrorService.manageError);
     }
-  };
-
-  const computeEquipments = () => {
-    BrandService.list()
-      .then(setBrands)
-      .catch(ErrorService.manageError);
-
-    EquipmentModelService.list()
-      .then(setEquipmentsModels)
-      .catch(ErrorService.manageError);
-
-    if(warehouseId) {
-      EquipmentService.getAllForWarehouseId(warehouseId)
-        .then(equipments => {
-          setEquipments(equipments);
-          setEquipmentsLoading(false);
-        })
-        .catch(ErrorService.manageError);
-    }
-  };
-
-  useEffect(() => {
-    computeCompany();
-    computeEquipments();
   }, [warehouse]);
 
-  useEffect(() => computeValues(), [computed]);
+  useEffect(() => {
+    WarehouseService.get(WAREHOUSE_ID)
+      .then(warehouseDoc => setWarehouse(warehouseDoc.data()))
+      .catch(ErrorService.manageError);
+  }, [computed]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -90,18 +57,6 @@ const WarehousePage = ({ match }) => {
   /**
    * RENDER
    */
-  const renderEquipment = (itemKey, itemData) => {
-    const equipmentModel = { [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] }, 
-      brand = { [equipmentModel[itemData.equipmentModelId].brand]: brands[equipmentModel[itemData.equipmentModelId].brand] };
-
-    return <Equipment key={itemKey}
-      equipment={ {[itemKey]: itemData} }
-      brand={brand}
-      equipmentModel={equipmentModel}
-      options={ {} }
-      showDetails />
-  };
-
   if(!warehouse || !company) {
     return (
       <div className="WarehousePage">
@@ -112,7 +67,10 @@ const WarehousePage = ({ match }) => {
   return (
     <div className="WarehousePage">
       <div className="Element Element--page">
-        <Warehouse key={warehouseId} warehouse={ {[warehouseId]: warehouse} } options={{ }} showDetails isPage />
+        <Warehouse key={WAREHOUSE_ID} warehouse={ {[WAREHOUSE_ID]: warehouse} } options={{ }} showDetails isPage />
+      </div>
+      <div className="Element Element--page warehouse-company">
+        <Company company={ {[warehouse.companyId]: company} } isPage />
       </div>
       <Tabs default="equipments" tabs={{
         equipments: {
@@ -120,11 +78,7 @@ const WarehousePage = ({ match }) => {
             <Icon source="fa" icon={faTruck} />
             Equipments
           </span>,
-          content: () => <ExTable items={equipments}
-            renderItem={renderEquipment}
-            fss={equipmentsExTableFSS}
-            header={<span><Icon source="fa" icon={faTruck} /> Equipments</span>}
-            loading={isEquipmentsLoading} />
+          content: () => <WarehouseEquipmentsTab warehouseId={WAREHOUSE_ID} />
         }
       }} />
     </div>

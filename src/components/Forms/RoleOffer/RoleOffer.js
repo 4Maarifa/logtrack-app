@@ -22,7 +22,7 @@ import { v4 as uuid } from 'uuid';
 import './RoleOffer.scss';
 
 const RoleOffer = ({ match }) => {
-  const userId = match.params.userid;
+  const USER_ID = match.params.userid;
 
   const [roleId, setRoleId] = useState(null);
 
@@ -36,23 +36,9 @@ const RoleOffer = ({ match }) => {
   const [selectedUserId, setSelectedUserId] = useState('');
   const [selectedUserItem, setSelectedUserItem] = useState(null);
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
-
-  const computeValues = () => {
-    if(userId) {
-      EmployeeService.get(userId)
-        .then(employeeDoc => {
-          setSelectedUserId(employeeDoc.id);
-          setSelectedUserItem({
-            content: <PageLink noLink type={PageLinkType.EMPLOYEE} entityId={employeeDoc.id} entityData={employeeDoc.data()} />,
-            value: employeeDoc.data()
-          });
-        })
-        .catch(ErrorService.manageError);
-    }
-  };
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -81,10 +67,10 @@ const RoleOffer = ({ match }) => {
     else {
       EmployeeService.search(value)
         .then(newPossibleUsers => {
-          Object.keys(newPossibleUsers).forEach(employeeKey => {
-            newPossibleUsers[employeeKey] = {
-              content: <PageLink noLink type={PageLinkType.EMPLOYEE} entityId={employeeKey} entityData={newPossibleUsers[employeeKey]} />,
-              value: newPossibleUsers[employeeKey]
+          Object.keys(newPossibleUsers).forEach(employeeId => {
+            newPossibleUsers[employeeId] = {
+              content: <PageLink noLink type={PageLinkType.EMPLOYEE} entityId={employeeId} entityData={newPossibleUsers[employeeId]} />,
+              value: newPossibleUsers[employeeId]
             };
           });
           setPossibleUsers(newPossibleUsers);
@@ -96,7 +82,7 @@ const RoleOffer = ({ match }) => {
     if(!selectedUserId) { return; }
     RoleService.getRolesForEmployeeIdAndCompanyId(selectedUserId, computed.activeRole.companyId, [ERoleStatus.DRAFT, ERoleStatus.CONFIRMED])
       .then(currentRoles => {
-        setCurrentRoles(Object.keys(currentRoles).map(roleKey => currentRoles[roleKey].role));
+        setCurrentRoles(Object.keys(currentRoles).map(roleId => currentRoles[roleId].role));
         setCurrentRolesLoading(false);
       }).catch(ErrorService.manageError);
   };
@@ -104,14 +90,22 @@ const RoleOffer = ({ match }) => {
   useEffect(() => computeCurrentRoles(), [selectedUserId]);
 
   useEffect(() => {
-    if(computed.initialized) {
-      computeValues();
+    if(computed.initialized && USER_ID) {
+      EmployeeService.get(USER_ID)
+        .then(employeeDoc => {
+          setSelectedUserId(employeeDoc.id);
+          setSelectedUserItem({
+            content: <PageLink noLink type={PageLinkType.EMPLOYEE} entityId={employeeDoc.id} entityData={employeeDoc.data()} />,
+            value: employeeDoc.data()
+          });
+        })
+        .catch(ErrorService.manageError);
     }
   }, [computed]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -130,19 +124,19 @@ const RoleOffer = ({ match }) => {
   /**
    * RENDER
    */
-  const roleDetails = {};
-  Object.keys(ERoleDetails).forEach(roleKey => {
-    roleDetails[roleKey] = {
+  const ROLE_DETAILS = {};
+  Object.keys(ERoleDetails).forEach(roleId => {
+    ROLE_DETAILS[roleId] = {
       content: <Fragment>
         <span>
-          <Icon source="fa" icon={ERoleDetails[roleKey].icon} />
-          {ERoleDetails[roleKey].name}
+          <Icon source="fa" icon={ERoleDetails[roleId].icon} />
+          {ERoleDetails[roleId].name}
         </span>
         <span className="sub">
-          {ERoleDetails[roleKey].description}
+          {ERoleDetails[roleId].description}
         </span>
       </Fragment>,
-      disabled: currentRoles.includes(roleKey)
+      disabled: currentRoles.includes(roleId)
     }
   });
 
@@ -188,7 +182,7 @@ const RoleOffer = ({ match }) => {
               </span> : null}
               <Choose
                 selection={roleType}
-                items={roleDetails}
+                items={ROLE_DETAILS}
                 multiple={false} 
                 fieldName="roleType"
                 onSelectionChange={setRoleType}
@@ -204,7 +198,7 @@ const RoleOffer = ({ match }) => {
         </div>
 
         {/* Company */}
-        {computed.activeRoleCompany && <div className="input-company">
+        {computed.activeRoleCompany && <div className="input-container">
           <span className="fake-label">
             <Icon source="fa" icon={faBuilding} />
             Company

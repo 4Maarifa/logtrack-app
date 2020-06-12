@@ -1,0 +1,52 @@
+.Accordion {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow);
+  margin: 1rem 0 0 0;
+  padding: 0 1rem;
+  border-radius: var(--border-radius);
+  background-color: var(--inverse);
+  list-style-type: none;
+
+  .item {
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 3rem;
+      padding: 0;
+      cursor: pointer;
+
+      .Icon {
+        transition: transform .5s;
+      }
+    }
+
+    &-data {
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: padding .5s, max-height .5s;
+    }
+
+    &--selected {
+      .item {
+        &-header {
+          .Icon {
+            transform: rotate(180deg);
+          }
+        }
+        &-data {
+          padding: 1rem 0;
+          max-height: 100vh;
+        }
+      }
+    }
+  }
+}

@@ -15,13 +15,13 @@ import './JobOfferPage.scss';
  * Use by everyone to see details about a job offer
  */
 const JobOfferPage = ({ match }) => {
-  const jobOfferId = match.params.jobofferid;
+  const JOB_OFFER_ID = match.params.jobofferid;
 
   const [jobOffer, setJobOffer] = useState(null);
   const [company, setCompany] = useState(null);
 
-  const computeValues = () => {
-    CompanyService.jobOffer.get(jobOfferId)
+  useEffect(() => {
+    CompanyService.jobOffer.get(JOB_OFFER_ID)
       .then(jobOfferDoc => {
         setJobOffer(jobOfferDoc.data());
 
@@ -30,9 +30,7 @@ const JobOfferPage = ({ match }) => {
           .catch(ErrorService.manageError);
       })
       .catch(ErrorService.manageError);
-  };
-
-  useEffect(() => computeValues(), []);
+  }, []);
 
   if(!jobOffer || !company) {
     return (
@@ -45,7 +43,7 @@ const JobOfferPage = ({ match }) => {
   return (
     <div className="JobOfferPage">
       <div className="Element Element--page">
-        <JobOffer jobOffer={{[jobOfferId]: jobOffer}} isPage />
+        <JobOffer jobOffer={{[JOB_OFFER_ID]: jobOffer}} isPage />
       </div>
       <div className="Element Element--row joboffer-company">
         <Company company={company} />

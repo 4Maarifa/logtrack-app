@@ -8,15 +8,15 @@ import { v4 as uuid } from 'uuid';
 import './Switch.scss';
 
 const Switch = ({ value, onChange, fieldName, label }) => {
-  const inputKey = uuid();
+  const INPUT_ID = uuid();
 
   return (
     <div className="Switch">
       <input type="checkbox"
-            id={inputKey}
+            id={INPUT_ID}
             checked={value}
             onChange={e => onChange(e.target.checked, fieldName)} />
-      <label className="Switch-indicator" htmlFor={inputKey}>
+      <label className="Switch-indicator" htmlFor={INPUT_ID}>
         {value ? <Icon source="fa" icon={faToggleOn} className="icon--on" /> : 
         <Icon source="fa" icon={faToggleOff} className="icon--off" />}
         <span>{label}</span>

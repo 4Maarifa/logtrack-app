@@ -39,102 +39,97 @@ const Roles = () => {
   const [userDeniedRoles, setUserDeniedRoles] = useState({});
   const [userDeniedRolesCompanies, setUserDeniedRolesCompanies] = useState({});
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
-  
-  const computeRoles = () => {
-    if(!computed.user) { return; }
-    // USER ROLES
-    RoleService.getRolesForEmployeeId(computed.user.uid, [ERoleStatus.CONFIRMED, ERoleStatus.DRAFT, ERoleStatus.REVOKED, ERoleStatus.DENIED])
-      .then(roles => {
-        let userRoles = {}, userRevokedRoles = {}, userDraftRoles = {}, userDeniedRoles = {},
-          userRolesCompanyKeys = [], userRevokedRolesCompanyKeys = [], userDraftRolesCompanyKeys = [], userDeniedRolesCompanyKeys = [];
-
-        Object.keys(roles).forEach(roleKey => {
-          if(roles[roleKey].status === ERoleStatus.CONFIRMED) {
-            userRoles[roleKey] = roles[roleKey];
-            userRolesCompanyKeys.push(roles[roleKey].companyId);
-          }
-          if(roles[roleKey].status === ERoleStatus.DRAFT) {
-            userDraftRoles[roleKey] = roles[roleKey];
-            userDraftRolesCompanyKeys.push(roles[roleKey].companyId);
-          }
-          if(roles[roleKey].status === ERoleStatus.REVOKED) {
-            userRevokedRoles[roleKey] = roles[roleKey];
-            userRevokedRolesCompanyKeys.push(roles[roleKey].companyId);
-          }
-          if(roles[roleKey].status === ERoleStatus.DENIED) {
-            userDeniedRoles[roleKey] = roles[roleKey];
-            userDeniedRolesCompanyKeys.push(roles[roleKey].companyId);
-          }
-        });
-
-        CompanyService.getAllForIdList(UtilsService.removeDuplicateFromArray(Object.keys(roles).map(roleKey => roles[roleKey].companyId)))
-          .then(allCompanies => {
-            let userRolesCompanies = {}, userDraftRolesCompanies = {}, userRevokedRolesCompanies = {}, userDeniedRolesCompanies = {};
-
-            userRolesCompanyKeys.forEach(companyKey => userRolesCompanies[companyKey] = allCompanies[companyKey]);
-            userRevokedRolesCompanyKeys.forEach(companyKey => userRevokedRolesCompanies[companyKey] = allCompanies[companyKey]);
-            userDraftRolesCompanyKeys.forEach(companyKey => userDraftRolesCompanies[companyKey] = allCompanies[companyKey]);
-            userDeniedRolesCompanyKeys.forEach(companyKey => userDeniedRolesCompanies[companyKey] = allCompanies[companyKey]);
-
-            setUserDraftRolesCompanies(userDraftRolesCompanies);
-            setUserRevokedRolesCompanies(userRevokedRolesCompanies);
-            setUserRolesCompanies(userRolesCompanies);
-            setUserDeniedRolesCompanies(userDeniedRolesCompanies);
-
-            setUserDraftRoles(userDraftRoles);
-            setUserRevokedRoles(userRevokedRoles);
-            setUserRoles(userRoles);
-            setUserDeniedRoles(userDeniedRoles);
-          })
-          .catch(ErrorService.manageError);
-      })
-      .catch(ErrorService.manageError);
-
-    // REQUESTED ROLES
-    if(computed.activeRole && computed.activeRole.role === ERole.MANAGER) {
-      RoleService.getRolesForCompanyId(computed.activeRole.companyId, [ERoleStatus.DRAFT])
-        .then(requestedRoles => {
-          let employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(requestedRoles).map(roleKey => requestedRoles[roleKey].employeeId));
-
-          EmployeeService.getAllForIdList(employeesIds)
-            .then(requestedRolesEmployees => {
-              setRequestedRoles(requestedRoles);
-              setRequestedRolesEmployees(requestedRolesEmployees);
-            })
-            .catch(ErrorService.manageError);
-        })
-        .catch(ErrorService.manageError);
-    }
-  };
 
   const computeActions = () => {
-    const defaultActions = [
+    const DEFAULT_ACTIONS = [
       {title: 'Request a role', icon: <Icon source="fa" icon={faUserTag} />, link: `/role-add`},
       {title: 'Add a company', icon: <Icon source="fa" icon={faBuilding} />, link: `/company-add`}
     ];
 
     if(computed.activeRole && computed.activeRole.role === ERole.MANAGER) {
-      defaultActions.unshift({
+      DEFAULT_ACTIONS.unshift({
         title: 'Offer a role', 
         icon: <Icon source="fa" icon={faUserPlus} />, 
         link: `/role-offer`
       })
     }
-    return defaultActions;
+    return DEFAULT_ACTIONS;
   };
 
   useEffect(() => {
-    if(computed.initialized) {
-      computeRoles();
+    if(computed.initialized && computed.user) {
+      // USER ROLES
+      RoleService.getRolesForEmployeeId(computed.user.uid, [ERoleStatus.CONFIRMED, ERoleStatus.DRAFT, ERoleStatus.REVOKED, ERoleStatus.DENIED])
+        .then(roles => {
+          const USER_ROLES = {}, USER_REVOKED_ROLES = {}, USER_DRAFT_ROLES = {}, USER_DENIED_ROLES = {};
+          const COMPANY_IDS_FOR_USER_ROLES = [], COMPANY_IDS_FOR_USER_REVOKED_ROLES = [], COMPANY_IDS_FOR_USER_DRAFT_ROLES = [], COMPANY_IDS_FOR_USER_DENIED_ROLES = [];
+
+          Object.keys(roles).forEach(roleId => {
+            if(roles[roleId].status === ERoleStatus.CONFIRMED) {
+              USER_ROLES[roleId] = roles[roleId];
+              COMPANY_IDS_FOR_USER_ROLES.push(roles[roleId].companyId);
+            }
+            if(roles[roleId].status === ERoleStatus.DRAFT) {
+              USER_DRAFT_ROLES[roleId] = roles[roleId];
+              COMPANY_IDS_FOR_USER_DRAFT_ROLES.push(roles[roleId].companyId);
+            }
+            if(roles[roleId].status === ERoleStatus.REVOKED) {
+              USER_REVOKED_ROLES[roleId] = roles[roleId];
+              COMPANY_IDS_FOR_USER_REVOKED_ROLES.push(roles[roleId].companyId);
+            }
+            if(roles[roleId].status === ERoleStatus.DENIED) {
+              USER_DENIED_ROLES[roleId] = roles[roleId];
+              COMPANY_IDS_FOR_USER_DENIED_ROLES.push(roles[roleId].companyId);
+            }
+          });
+
+          CompanyService.getAllForIdList(UtilsService.removeDuplicateFromArray(Object.keys(roles).map(roleId => roles[roleId].companyId)))
+            .then(allCompanies => {
+              const COMPANIES_FOR_USER_ROLES = {}, COMPANIES_FOR_USER_DRAFT_ROLES = {}, COMPANIES_FOR_USER_REVOKED_ROLES = {}, COMPANIES_FOR_USER_DENIED_ROLES = {};
+
+              COMPANY_IDS_FOR_USER_ROLES.forEach(companyId => COMPANIES_FOR_USER_ROLES[companyId] = allCompanies[companyId]);
+              COMPANY_IDS_FOR_USER_REVOKED_ROLES.forEach(companyId => COMPANIES_FOR_USER_REVOKED_ROLES[companyId] = allCompanies[companyId]);
+              COMPANY_IDS_FOR_USER_DRAFT_ROLES.forEach(companyId => COMPANIES_FOR_USER_DRAFT_ROLES[companyId] = allCompanies[companyId]);
+              COMPANY_IDS_FOR_USER_DENIED_ROLES.forEach(companyId => COMPANIES_FOR_USER_DENIED_ROLES[companyId] = allCompanies[companyId]);
+
+              setUserDraftRolesCompanies(COMPANIES_FOR_USER_DRAFT_ROLES);
+              setUserRevokedRolesCompanies(COMPANIES_FOR_USER_REVOKED_ROLES);
+              setUserRolesCompanies(COMPANIES_FOR_USER_ROLES);
+              setUserDeniedRolesCompanies(COMPANIES_FOR_USER_DENIED_ROLES);
+
+              setUserDraftRoles(USER_DRAFT_ROLES);
+              setUserRevokedRoles(USER_REVOKED_ROLES);
+              setUserRoles(USER_ROLES);
+              setUserDeniedRoles(USER_DENIED_ROLES);
+            })
+            .catch(ErrorService.manageError);
+        })
+        .catch(ErrorService.manageError);
+
+      // REQUESTED ROLES
+      if(computed.activeRole && computed.activeRole.role === ERole.MANAGER) {
+        RoleService.getRolesForCompanyId(computed.activeRole.companyId, [ERoleStatus.DRAFT])
+          .then(requestedRoles => {
+            let employeesIds = UtilsService.removeDuplicateFromArray(Object.keys(requestedRoles).map(roleId => requestedRoles[roleId].employeeId));
+
+            EmployeeService.getAllForIdList(employeesIds)
+              .then(requestedRolesEmployees => {
+                setRequestedRoles(requestedRoles);
+                setRequestedRolesEmployees(requestedRolesEmployees);
+              })
+              .catch(ErrorService.manageError);
+          })
+          .catch(ErrorService.manageError);
+      }
     }
-  }, [computed]);
+  }, [computed.initialized, computed.user]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey);
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY);
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -142,38 +137,38 @@ const Roles = () => {
   /**
    * RENDER
    */
-  const renderUserRole = (itemKey, itemData) => (
-    <RoleCompany key={itemKey} 
-      company={ {[itemKey]: itemData} } 
-      roles={UtilsService.filterKeyValueOnPropertyValue(userRoles, predicate => predicate.companyId === itemKey)}
+  const renderUserRole = (itemId, itemData) => (
+    <RoleCompany key={itemId} 
+      company={ {[itemId]: itemData} } 
+      roles={UtilsService.filterKeyValueOnPropertyValue(userRoles, predicate => predicate.companyId === itemId)}
       options={ {showActions: true} } />
   );
 
-  const renderDraftUserRole = (itemKey, itemData) => (
-    <RoleCompany key={itemKey} 
-      company={ {[itemKey]: itemData} } 
-      roles={UtilsService.filterKeyValueOnPropertyValue(userDraftRoles, predicate => predicate.companyId === itemKey)}
+  const renderDraftUserRole = (itemId, itemData) => (
+    <RoleCompany key={itemId} 
+      company={ {[itemId]: itemData} } 
+      roles={UtilsService.filterKeyValueOnPropertyValue(userDraftRoles, predicate => predicate.companyId === itemId)}
       options={ {showActions: true, showDates: true} } />
   );
 
-  const renderRevokedUserRole = (itemKey, itemData) => (
-    <RoleCompany key={itemKey} 
-      company={ {[itemKey]: itemData} } 
-      roles={UtilsService.filterKeyValueOnPropertyValue(userRevokedRoles, predicate => predicate.companyId === itemKey)}
+  const renderRevokedUserRole = (itemId, itemData) => (
+    <RoleCompany key={itemId} 
+      company={ {[itemId]: itemData} } 
+      roles={UtilsService.filterKeyValueOnPropertyValue(userRevokedRoles, predicate => predicate.companyId === itemId)}
       options={ {showActions: true, showDates: true} } />
   );
 
-  const renderRequestedRole = (itemKey, itemData) => (
-    <RoleEmployee key={itemKey}
+  const renderRequestedRole = (itemId, itemData) => (
+    <RoleEmployee key={itemId}
       employee={ {[itemData.employeeId]: requestedRolesEmployees[itemData.employeeId]} }
-      roles={ { [itemKey]: itemData } }
+      roles={ { [itemId]: itemData } }
       options={ {showDraft: true, showActions: true} } />
   );
 
-  const renderDeniedUserRole = (itemKey, itemData) => (
-    <RoleCompany key={itemKey} 
-      company={ {[itemKey]: itemData} } 
-      roles={UtilsService.filterKeyValueOnPropertyValue(userDeniedRoles, predicate => predicate.companyId === itemKey)}
+  const renderDeniedUserRole = (itemId, itemData) => (
+    <RoleCompany key={itemId} 
+      company={ {[itemId]: itemData} } 
+      roles={UtilsService.filterKeyValueOnPropertyValue(userDeniedRoles, predicate => predicate.companyId === itemId)}
       options={ {showActions: true, showDates: true} } />
   );
 

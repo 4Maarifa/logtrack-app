@@ -13,8 +13,8 @@ import './AuthHandler.scss';
 
 const AuthHandler = () => {
 
-  const mode = UtilsService.getUrlGetParam('mode');
-  const code = UtilsService.getUrlGetParam('oobCode');
+  const MODE = UtilsService.getUrlGetParam('mode');
+  const CODE = UtilsService.getUrlGetParam('oobCode');
 
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
@@ -29,12 +29,12 @@ const AuthHandler = () => {
       return;
     }
 
-    FirebaseService.getFirebaseObject().auth().confirmPasswordReset(code, newPassword)
+    FirebaseService.getFirebaseObject().auth().confirmPasswordReset(CODE, newPassword)
       .then(() => setChangePasswordDone(true))
       .catch(ErrorService.manageError);
   };
 
-  if(!mode) {
+  if(!MODE) {
     ErrorService.error('Invalid mode!');
     return <Redirect to={`/signin`} />;
   }
@@ -49,7 +49,7 @@ const AuthHandler = () => {
    */
   return (<div className="AuthHandler">
     {
-      mode === 'resetPassword' ? 
+      MODE === 'resetPassword' ? 
         <Fragment>
           <h1>Reset your password</h1>
           <span className="sub">

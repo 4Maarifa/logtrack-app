@@ -98,6 +98,12 @@
   }
 }
 
+:global {
+  img {
+    max-width: 100%;
+  }
+}
+
 :global(.react-datetime-picker__wrapper) {
   border: 0;
 }
@@ -112,6 +118,17 @@
   font-family: 'Nunito', sans-serif;
 }
 
+:global(.input-container) {
+  margin: 1.5rem 0 .8rem 0;
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+:global(.tooltip-parent)  {
+  position: relative;
+}
+
 :global(input[type="submit"]) {
   height: 2rem;
   color: var(--inverse);
@@ -119,8 +136,17 @@
   border: 0;
   border-radius: var(--border-radius);
   cursor: pointer;
-  display: block;
-  margin: 1rem auto 0 auto;
+  display: inline-block;
+  margin: 1rem auto 1.5rem auto;
+}
+
+:global(select) {
+  height: 2rem;
+  padding: 0 .5rem;
+  border: 1px solid var(--gray);
+  border-radius: var(--border-radius);
+  min-width: 0;
+  width: 100%;
 }
 
 :global(.fake-label) {
@@ -148,6 +174,18 @@
   &, &:active, &:visited, &:link, &:focus {
     text-decoration: none;
     color: var(--theme);
+
+    &.whiteLink {
+      color: var(--inverse);
+
+      &:hover {
+        color: var(--inverse);
+      }
+    }
+
+    &.text-link {
+      text-decoration: underline;
+    }
   }
 
   &:hover {
@@ -156,21 +194,10 @@
   }
 }
 
-:global(a.white-link) {
-  &, &:active, &:visited, &:link, &:focus {
-    text-decoration: none;
-    color: var(--inverse);
-  }
-
-  &:hover {
-    text-decoration: underline;
-    color: var(--inverse);
-  }
-}
-
 :global(h1), :global(h2), :global(h3), :global(h4), :global(h5), :global(h6) {
-  font-weight: normal;
+  font-weight: 400;
   margin: 0;
+  padding: 0 .2rem;
 }
 
 :global(button), :global(.button) {
@@ -198,22 +225,27 @@
     opacity: .6;
     cursor: not-allowed;
   }
+
+  &.white-button {
+    color: var(--theme);
+    background-color: var(--inverse);
+  }
+
+  &.flat {
+    box-shadow: none;
+    padding: 0;
+  }
+
+  &.inline {
+    display: inline-block;
+    margin: 0 auto;
+  }
 }
 
 :global(.mention) {
   position: relative;
   font-size: 50%;
   top: -.5em;
-}
-
-:global(button.white-button) {
-  color: var(--theme);
-  background-color: var(--inverse);
-}
-
-:global(button.flat) {
-  box-shadow: none;
-  padding: 0;
 }
 
 :global(.badge) {
@@ -252,6 +284,7 @@ body, html {
   background-color: var(--main);
   color: var(--text);
   font-family: 'Nunito', sans-serif;
+  font-weight: 200;
 }
 
 #root {
@@ -465,6 +498,18 @@ body, html {
     &.Element--full-width {
       width: calc(100% - 2rem);
     }
+
+    &.Element--additional {
+      padding-top: .5rem;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      top: -1.5rem;
+      z-index: 0;
+    }
+  }
+
+  &--hasAdditional {
+    z-index: 3;
   }
 
   &--row {
@@ -501,12 +546,20 @@ body, html {
 
     .Element {
 
-      &-data:before {
-        background-color: var(--inverse);
+      &-data {
+
+        &:before {
+          background-color: var(--inverse);
+        }
+
+        .sub {
+          color: var(--inverse);
+        }
       }
 
       &-actions {
         flex: 1;
+        color: var(--inverse);
       }
     }
   }
@@ -574,14 +627,14 @@ body, html {
     .page_content {
       width: calc(100% - .6rem);
       border-radius: 0;
-      padding: .3rem .3rem 0rem .3rem;
-      margin-bottom: 3rem;
+      padding: .3rem;
+      margin-bottom: 2.5rem;
       height: calc(100% - 2rem);
       max-height: calc(100% - 2rem);
       overflow-y: auto;
 
       & > * {
-        max-height: calc(100vh - 2rem);
+        padding: .5rem .2rem;
       }
     }
   }

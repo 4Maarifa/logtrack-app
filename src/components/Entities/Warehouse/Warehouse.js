@@ -16,25 +16,27 @@ import './Warehouse.scss';
 
 const Warehouse = ({ warehouse, isPage }) => {
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
+  
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey);
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY);
   }, []);
 
   if(!computed.initialized) { return null; }
   if(!warehouse) { return null; }
 
-  const warehouseKey = Object.keys(warehouse)[0];
+  const WAREHOUSE_ID = Object.keys(warehouse)[0],
+    WAREHOUSE_DATA = warehouse[WAREHOUSE_ID];
 
-  const actions = [];
-  if(computed.activeRole.role === ERole.MANAGER && warehouse[warehouseKey].companyId === computed.activeRole.companyId) {
+  const ACTIONS = [];
+  if(computed.activeRole.role === ERole.MANAGER && WAREHOUSE_DATA.companyId === computed.activeRole.companyId) {
     if(!isPage) {
-      actions.push({ title: 'View', icon: <Icon source="fa" icon={faEye} />, link: `/warehouse/${warehouseKey}` });
+      ACTIONS.push({ title: 'View', icon: <Icon source="fa" icon={faEye} />, link: `/warehouse/${WAREHOUSE_ID}` });
     }
-    actions.push({title: 'Edit', icon: <Icon source="fa" icon={faEdit} />, link: `/warehouse-edit/${warehouseKey}`});
+    ACTIONS.push({title: 'Edit', icon: <Icon source="fa" icon={faEdit} />, link: `/warehouse-edit/${WAREHOUSE_ID}`});
   }
 
   return (
@@ -43,15 +45,15 @@ const Warehouse = ({ warehouse, isPage }) => {
         <Icon containerclassname="Element-icon" source="fa" icon={faWarehouseAlt} />
         <div className="Element-data">
           <span className="Element-title">
-            <PageLink type={PageLinkType.WAREHOUSE} entityId={warehouseKey} white={isPage} entityData={warehouse[warehouseKey]} />
+            <PageLink type={PageLinkType.WAREHOUSE} entityId={WAREHOUSE_ID} white={isPage} entityData={WAREHOUSE_DATA} />
           </span>
-          {warehouse[warehouseKey].nbLoadingDocks && <span className={'badge ' + (isPage ? 'badge-inverse' : '')}>
+          {WAREHOUSE_DATA.nbLoadingDocks && <span className={'badge ' + (isPage ? 'badge-inverse' : '')}>
             <Icon source="fa" icon={faWarehouse} />
-            {warehouse[warehouseKey].nbLoadingDocks}
+            {WAREHOUSE_DATA.nbLoadingDocks}
           </span>}
         </div>
         <div className="Element-actions">
-          <ActionList actions={actions} isFlatten={isPage} />
+          <ActionList actions={ACTIONS} isFlatten={isPage} />
         </div>
       </div>
     </div>

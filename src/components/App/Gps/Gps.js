@@ -13,21 +13,21 @@ import './Gps.scss';
 
 const Gps = () => {
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
 
   const [currentUserPosition, setCurrentUserPosition] = useState(null);
-  const map = useRef(null);
+  const REF_MAP = useRef(null);
 
   useEffect(() => {
     PermissionService.location.askPermission()
-      .then(() => PermissionService.location.addLocationObserver(setCurrentUserPosition, observerKey))
+      .then(() => PermissionService.location.addLocationObserver(setCurrentUserPosition, OBSERVER_KEY))
       .catch(ErrorService.manageError);
   }, []);
 
   return (
     <div className="Gps">
       <div className="gps-content">
-        <Map ref={map} gpsMode />
+        <Map ref={REF_MAP} gpsMode />
         <div className="indications">
           <div className="active-logtrack">
 

@@ -23,17 +23,17 @@ const Calendar = ({ rt }) => {
   /**
    * RENDER
    */
-  const Event = ({ rtKey, rtMessage, computed, isActive }) => {
+  const Event = ({ rtId, rtMessage, computed, isActive }) => {
 
     let badges = [];
 
     if(computed.isPast) { badges.push('PAST'); }
     if(computed.totalDays > 1) { badges.push(`DAY ${computed.dayNumber}/${computed.totalDays}`); }
 
-    return <li key={rtKey}
+    return <li key={rtId}
               className={'Calendar-event Element Element--tile Element-small Element--full-width' + (isActive ? ' Calendar-event--active' : '')}
               style={{backgroundColor: isActive ? EMediumPaletteDetails[rtMessage.metadata.color].color : EVeryLightPaletteDetails[rtMessage.metadata.color].color}}
-              onClick={() => setSelectedEvent(selectedEvent === rtKey ? null : rtKey)}>
+              onClick={() => setSelectedEvent(selectedEvent === rtId ? null : rtId)}>
 
       <div className="Element-content">
         <div className="Element-base">
@@ -66,43 +66,43 @@ const Calendar = ({ rt }) => {
     </li>;
   };
   
-  const sortedEventsByIsoDate = {};
-  const sortedTodayEvents = {
+  const SORTED_EVENTS_BY_ISO_DATE = {};
+  const SORTED_TODAY_EVENTS = {
     past: {},
     now: {},
     future: {}
   };
 
-  const addEventToDate = (dateString, eventKey, event, computed) => {
-    if(!sortedEventsByIsoDate[dateString]) {
-      sortedEventsByIsoDate[dateString] = {};
+  const addEventToDate = (dateString, eventId, event, computed) => {
+    if(!SORTED_EVENTS_BY_ISO_DATE[dateString]) {
+      SORTED_EVENTS_BY_ISO_DATE[dateString] = {};
     }
-    sortedEventsByIsoDate[dateString][eventKey] = { event, computed };
+    SORTED_EVENTS_BY_ISO_DATE[dateString][eventId] = { event, computed };
 
     if(DateService.isToday(DateService.getDateFromIsoString(dateString))) {
       let eventDate = DateService.getDateFromIsoString(event.metadata.date),
         eventDateEnd = (event.metadata.end ? DateService.getDateFromIsoString(event.metadata.end) : null);
       
       if(!eventDateEnd) {
-        sortedTodayEvents[DateService.getRelativeDifference(eventDate) < 0 ? 'past' : 'future'][eventKey] =  { event, computed };
+        SORTED_TODAY_EVENTS[DateService.getRelativeDifference(eventDate) < 0 ? 'past' : 'future'][eventId] =  { event, computed };
       }
       else {
         if(DateService.getRelativeDifference(eventDateEnd) < 0) {
-          sortedTodayEvents['past'][eventKey] =  { event, computed };
+          SORTED_TODAY_EVENTS['past'][eventId] =  { event, computed };
         }
         else if(DateService.getRelativeDifference(eventDate) > 0) {
-          sortedTodayEvents['future'][eventKey] =  { event, computed };
+          SORTED_TODAY_EVENTS['future'][eventId] =  { event, computed };
         }
         else {
-          sortedTodayEvents['now'][eventKey] =  { event, computed };
+          SORTED_TODAY_EVENTS['now'][eventId] =  { event, computed };
         }
       }
     }
   };
 
-  Object.keys(rt).forEach(rtKey => {
-    let eventDate = DateService.getDateFromIsoString(rt[rtKey].metadata.date),
-      eventDateEnd = (rt[rtKey].metadata.end ? DateService.getDateFromIsoString(rt[rtKey].metadata.end) : null),
+  Object.keys(rt).forEach(rtId => {
+    let eventDate = DateService.getDateFromIsoString(rt[rtId].metadata.date),
+      eventDateEnd = (rt[rtId].metadata.end ? DateService.getDateFromIsoString(rt[rtId].metadata.end) : null),
       isPast = false,
       eventResults = [];
 
@@ -128,8 +128,8 @@ const Calendar = ({ rt }) => {
     
     // ADD EVENT TO DATE
     eventResults.push({ isoDate: DateService.getIsoDateString(eventDate),
-                        key: rtKey,
-                        event: rt[rtKey],
+                        key: rtId,
+                        event: rt[rtId],
                         computed: { printedDate, multipleDays, isPast, date: eventDate } });
 
     if(eventDateEnd && !DateService.areDatesTheSameDay(eventDate, eventDateEnd)) {
@@ -137,8 +137,8 @@ const Calendar = ({ rt }) => {
       do {
         dateFetch = DateService.addOrRemoveDays(dateFetch, 1);
         eventResults.push({ isoDate: DateService.getIsoDateString(dateFetch),
-                            key: rtKey,
-                            event: rt[rtKey],
+                            key: rtId,
+                            event: rt[rtId],
                             computed: { printedDate, multipleDays, isPast, date: dateFetch } });
       } while (!DateService.areDatesTheSameDay(dateFetch, eventDateEnd));
     }
@@ -154,8 +154,8 @@ const Calendar = ({ rt }) => {
 
   let selectedEventDetails = null;
   if(selectedEvent && selectedEvent !== 'ADD' && selectedEvent !== 'EDIT') {
-    if(sortedEventsByIsoDate[DateService.getIsoDateString(DateService.getDateFromIsoString(rt[selectedEvent].metadata.date))]) {
-      selectedEventDetails = sortedEventsByIsoDate[DateService.getIsoDateString(DateService.getDateFromIsoString(rt[selectedEvent].metadata.date))][selectedEvent];
+    if(SORTED_EVENTS_BY_ISO_DATE[DateService.getIsoDateString(DateService.getDateFromIsoString(rt[selectedEvent].metadata.date))]) {
+      selectedEventDetails = SORTED_EVENTS_BY_ISO_DATE[DateService.getIsoDateString(DateService.getDateFromIsoString(rt[selectedEvent].metadata.date))][selectedEvent];
     }
     else {
       ErrorService.manageError(`Can't load event`);
@@ -185,44 +185,44 @@ const Calendar = ({ rt }) => {
         </div>
       </div>
       <ul className="Calendar-event-list">
-        {Object.keys(sortedEventsByIsoDate).sort((date1, date2) => UtilsService.compareFn(date1, date2)).map(isoDate => {
+        {Object.keys(SORTED_EVENTS_BY_ISO_DATE).sort((date1, date2) => UtilsService.compareFn(date1, date2)).map(isoDate => {
           if(DateService.isToday(DateService.getDateFromIsoString(isoDate))) {
             return <Fragment key="past">
-              {Object.keys(sortedTodayEvents.past).length ?
+              {Object.keys(SORTED_TODAY_EVENTS.past).length ?
                 <Fragment>
                   <h4>Today's Past Events</h4>
-                  {Object.keys(sortedTodayEvents.past).map(rtKey => (
-                    <Event key={rtKey}
-                            rtKey={rtKey}
-                            rtMessage={rt[rtKey]}
-                            computed={sortedTodayEvents.past[rtKey].computed}
-                            isActive={selectedEvent === rtKey} />
+                  {Object.keys(SORTED_TODAY_EVENTS.past).map(rtId => (
+                    <Event key={rtId}
+                            rtId={rtId}
+                            rtMessage={rt[rtId]}
+                            computed={SORTED_TODAY_EVENTS.past[rtId].computed}
+                            isActive={selectedEvent === rtId} />
                   ))}
                 </Fragment>
               : null}
 
-              {Object.keys(sortedTodayEvents.now).length ?
+              {Object.keys(SORTED_TODAY_EVENTS.now).length ?
                 <Fragment key="now">
                   <h4>Now</h4>
-                  {Object.keys(sortedTodayEvents.now).map(rtKey => (
-                    <Event key={rtKey}
-                            rtKey={rtKey}
-                            rtMessage={rt[rtKey]}
-                            computed={sortedTodayEvents.now[rtKey].computed}
-                            isActive={selectedEvent === rtKey} />
+                  {Object.keys(SORTED_TODAY_EVENTS.now).map(rtId => (
+                    <Event key={rtId}
+                            rtId={rtId}
+                            rtMessage={rt[rtId]}
+                            computed={SORTED_TODAY_EVENTS.now[rtId].computed}
+                            isActive={selectedEvent === rtId} />
                   ))}
                 </Fragment>
               : null}
               
-              {Object.keys(sortedTodayEvents.future).length ?
+              {Object.keys(SORTED_TODAY_EVENTS.future).length ?
                 <Fragment key="future">
                   <h4>Later Today</h4>
-                  {Object.keys(sortedTodayEvents.future).map(rtKey => (
-                    <Event key={rtKey}
-                            rtKey={rtKey}
-                            rtMessage={rt[rtKey]}
-                            computed={sortedTodayEvents.future[rtKey].computed}
-                            isActive={selectedEvent === rtKey} />
+                  {Object.keys(SORTED_TODAY_EVENTS.future).map(rtId => (
+                    <Event key={rtId}
+                            rtId={rtId}
+                            rtMessage={rt[rtId]}
+                            computed={SORTED_TODAY_EVENTS.future[rtId].computed}
+                            isActive={selectedEvent === rtId} />
                   ))}
                 </Fragment>
               : <h4>No remaining events for today!</h4>}
@@ -231,12 +231,12 @@ const Calendar = ({ rt }) => {
           }
           else {
             return <Fragment key={isoDate}>
-              {Object.keys(sortedEventsByIsoDate[isoDate]).map(rtKey => (
-                <Event key={rtKey} 
-                        rtKey={rtKey}
-                        rtMessage={rt[rtKey]}
-                        computed={sortedEventsByIsoDate[isoDate][rtKey].computed}
-                        isActive={selectedEvent === rtKey} />
+              {Object.keys(SORTED_EVENTS_BY_ISO_DATE[isoDate]).map(rtId => (
+                <Event key={rtId} 
+                        rtId={rtId}
+                        rtMessage={rt[rtId]}
+                        computed={SORTED_EVENTS_BY_ISO_DATE[isoDate][rtId].computed}
+                        isActive={selectedEvent === rtId} />
               ))}
             </Fragment>;
           }

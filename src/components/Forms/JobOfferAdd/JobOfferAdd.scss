@@ -15,16 +15,5 @@
     flex: 1;
     flex-direction: column;
     width: var(--complex-form-width);
-
-    .FormInput, .FormTextarea {
-      width: 100%;
-    }
-
-    .role-selection,
-    .input-company,
-    .input-creator {
-      margin: 1rem 0;
-      position: relative;
-    }
   }
 }

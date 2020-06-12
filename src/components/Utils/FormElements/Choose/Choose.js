@@ -12,57 +12,57 @@ const Choose = ({ selection,
 
   const [forceUpdate, setForceUpdate] = useState(0);
 
-  const onValueChange = itemKey => {
-    if(items[itemKey].disabled) {
+  const onValueChange = itemId => {
+    if(items[itemId].disabled) {
       return;
     }
 
     let newSelection = selection ? [...selection] : [];
     if(multiple) {
-      if(newSelection.includes(itemKey)) {
+      if(newSelection.includes(itemId)) {
         if(selectionRequired && newSelection.length <= 1) {
           return;
         }
-        newSelection.splice(newSelection.indexOf(itemKey), 1);
+        newSelection.splice(newSelection.indexOf(itemId), 1);
       }
       else {
-        newSelection.push(itemKey);
+        newSelection.push(itemId);
       }
       onSelectionChange && onSelectionChange(newSelection, fieldName);
     }
     else {
-      if(selectionRequired && itemKey === selection) {
+      if(selectionRequired && itemId === selection) {
         return;
       }
 
-      if(itemKey === selection) {
+      if(itemId === selection) {
         onSelectionChange && onSelectionChange(null, fieldName);
       }
       else {
-        onSelectionChange && onSelectionChange(itemKey, fieldName);
+        onSelectionChange && onSelectionChange(itemId, fieldName);
       }
     }
   };
 
-  const isItemActive = itemKey => {
+  const isItemActive = itemId => {
     if(multiple) {
-      return selection.includes(itemKey);
+      return selection.includes(itemId);
     }
-    return selection === itemKey;
+    return selection === itemId;
   };
 
   return (
     <div className={'Choose ' + (isVertical ? 'Choose--vertical' : '')}>
       <ul role="listbox" tabIndex="0" aria-activedescendant={selection} aria-multiselectable={multiple}>
-        {Object.keys(items).map(key =>
-          <li key={key} 
-            id={key}
+        {Object.keys(items).map(itemId =>
+          <li key={itemId} 
+            id={itemId}
             role="option"
-            aria-selected={isItemActive(key)}
-            className={'' + (isItemActive(key) ? 'li--active ' : '') + (items[key].disabled ? 'li--disabled' : '')} 
-            onClick={() => {onValueChange(key); setForceUpdate(forceUpdate + 1)}}>
+            aria-selected={isItemActive(itemId)}
+            className={'' + (isItemActive(itemId) ? 'li--active ' : '') + (items[itemId].disabled ? 'li--disabled' : '')} 
+            onClick={() => {onValueChange(itemId); setForceUpdate(forceUpdate + 1)}}>
               
-            {items[key].content}
+            {items[itemId].content}
           </li>
         )}
       </ul>

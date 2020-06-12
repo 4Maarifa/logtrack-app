@@ -25,14 +25,14 @@ const FormTextarea = ({ value,
   /**
    * RENDER
    */
-  const inputId = uuid();
+  const INPUT_ID = uuid();
 
   return (
     <div className={'FormTextarea '
         + (fieldName ? 'input-' + fieldName : '')}>
 
       <textarea
-        id={inputId}
+        id={INPUT_ID}
         className={'input ' + (!value ? 'input--empty' : '')}
         value={value}
         name={inputName}
@@ -48,7 +48,7 @@ const FormTextarea = ({ value,
         <Icon containerclassname="invalid" source="fa" icon={faTimes} />
       </span>
       {label && 
-        <label htmlFor={inputId}>
+        <label htmlFor={INPUT_ID}>
           {label}
         </label>
       }

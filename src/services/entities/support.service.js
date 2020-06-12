@@ -9,7 +9,7 @@ const SupportService = {
   rights: {
     [ERights.RIGHT_SUPPORT_CREATE]: () => DataService.computed.isConnected(),
     [ERights.RIGHT_SUPPORT_GET]: () => false,
-    [ERights.RIGHT_SUPPORT_LIST]: () => false,
+    [ERights.RIGHT_SUPPORT_LIST]: () => DataService.computed.employee.staff,
     [ERights.RIGHT_SUPPORT_UPDATE]: () => false,
     [ERights.RIGHT_SUPPORT_DELETE]: () => false
   },
@@ -39,12 +39,12 @@ const SupportService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Supports' });
     }
 
-    const supports = {};
+    const SUPPORTS = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getFirestore().collection('support').get()
             .then(querySnapshot => {
-                querySnapshot.forEach(supportDoc => supports[supportDoc.id] = supportDoc.data());
-                resolve(supports);
+                querySnapshot.forEach(supportDoc => SUPPORTS[supportDoc.id] = supportDoc.data());
+                resolve(SUPPORTS);
             })
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
@@ -80,7 +80,24 @@ const SupportService = {
   },
 
   // CUSTOM FUNCTIONS
-  createWithData: (message, userId, metadata) => SupportService.create({message, userId, metadata, date: DateService.getCurrentIsoDateString() })
+  createWithData: (message, userId, metadata, userAgent) => SupportService.create({message, userId, metadata, userAgent, date: DateService.getCurrentIsoDateString() }),
+  getAllForUserId: userId => {
+    if(!SupportService.rights[ERights.RIGHT_SUPPORT_LIST]()) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Supports' });
+    }
+
+    const SUPPORTS = {};
+    return new Promise((resolve, reject) => {
+        FirebaseService.getFirestore().collection('support')
+          .where('userId', '==', userId)
+          .get()
+          .then(querySnapshot => {
+              querySnapshot.forEach(supportDoc => SUPPORTS[supportDoc.id] = supportDoc.data());
+              resolve(SUPPORTS);
+          })
+          .catch(e => ErrorService.manageErrorThenReject(e, reject));
+    });
+  }
 };
 
 export default SupportService;

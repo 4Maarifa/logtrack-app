@@ -32,10 +32,13 @@
       position: absolute;
       background-color: rgba(0, 0, 0, .3);
       top: 0;
+      padding: 0 1rem;
+      box-sizing: border-box;
       overflow: hidden;
 
       svg {
         max-height: 80%;
+        max-width: 100%;
         object-fit: contain;
         fill: var(--inverse);
       }
@@ -142,10 +145,46 @@
       }
     }
   }
+
+  .Contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      width: var(--form-width);
+    }
+  }
+
+  .Credits {
+    max-width: 800px;
+    margin: 0 auto;
+  }
 }
 
 @keyframes power-circle {
   to {
     stroke-dashoffset: -98;
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .Splash {
+    footer {
+      flex-flow: wrap;
+
+      a {
+        width: calc(33% - 2rem);
+        text-align: center;
+        margin: .5rem 1rem;
+
+        & + a {
+          margin: .5rem 1rem;
+        }
+      }
+    }
   }
 }

@@ -1,30 +1,31 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import DateTimePicker from 'react-datetime-picker';
-import { faPlus, faArrowAltToRight, faArrowAltFromLeft, faCalendarAlt,
-  faClipboardUser, faInfoCircle, faBuilding, faAward, faSave, faUserTie } from '@fortawesome/pro-solid-svg-icons';
+import { faArrowAltToRight, faArrowAltFromLeft, faCalendarAlt, faClipboardUser,
+  faInfoCircle, faBuilding, faAward, faUserTie } from '@fortawesome/pro-solid-svg-icons';
 
-import DataService from './../../../services/data.service';
-import UtilsService from './../../../services/utils.service';
-import EmployeeService from './../../../services/entities/employee.service';
-import ErrorService from './../../../services/error.service';
-import RoleService from './../../../services/entities/role.service';
-import CompanyService from './../../../services/entities/company.service';
-import DateService from './../../../services/date.service';
+import DataService from '../../../../services/data.service';
+import UtilsService from '../../../../services/utils.service';
+import EmployeeService from '../../../../services/entities/employee.service';
+import ErrorService from '../../../../services/error.service';
+import RoleService from '../../../../services/entities/role.service';
+import CompanyService from '../../../../services/entities/company.service';
+import DateService from '../../../../services/date.service';
 
-import Icon from './../../Utils/Icon/Icon';
-import FormInput from './../../Utils/FormElements/FormInput/FormInput';
-import ExTable from './../../Utils/ExTable/ExTable';
-import Choose from './../../Utils/FormElements/Choose/Choose';
-import Switch from './../../Utils/FormElements/Switch/Switch';
+import Icon from '../../../Utils/Icon/Icon';
+import FormInput from '../../../Utils/FormElements/FormInput/FormInput';
+import ExTable from '../../../Utils/ExTable/ExTable';
+import Choose from '../../../Utils/FormElements/Choose/Choose';
+import Switch from '../../../Utils/FormElements/Switch/Switch';
 
-import { ERoleDetails, ERoleStatus } from './../../../classes/Role';
+import { ERoleDetails, ERoleStatus } from '../../../../classes/Role';
 
-import { EmployeeCertificate, EmployeeExperience, EmployeeOtherExperience, employeeCertificatesExTableFSS, employeeExperienceExTableFSS, employeeOtherExperiencesExTableFSS } from './../../Entities/Employee/Employee';
+import { EmployeeCertificate, EmployeeExperience, EmployeeOtherExperience, employeeCertificatesExTableFSS, employeeExperienceExTableFSS, employeeOtherExperiencesExTableFSS } from '../../../Entities/Employee/Employee';
 
 import { v4 as uuid } from 'uuid';
+import FormTextarea from '../../../Utils/FormElements/FormTextarea/FormTextarea';
 
-const ProfessionalProfile = () => {
-  const observerKey = uuid();
+const ProfessionalProfileTab = () => {
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
@@ -51,13 +52,13 @@ const ProfessionalProfile = () => {
       return;
     }
 
-    const certificates = computed.employee.certificates || [];
-    certificates.push({
+    const CERTIFICATES = computed.employee.certificates || [];
+    CERTIFICATES.push({
       name: certificateName,
       date: DateService.getIsoDateString(certificateDate)
     });
 
-    EmployeeService.updateField(computed.user.uid, {certificates})
+    EmployeeService.updateField(computed.user.uid, { certificates: CERTIFICATES })
       .then(() => DataService.computed.notifyChanges()
         .then(() => {
           setCertificateName('');
@@ -74,15 +75,15 @@ const ProfessionalProfile = () => {
       return;
     }
 
-    const experience = computed.employee.experience || [];
-    experience.push({
+    const EXPERIENCE = computed.employee.experience || [];
+    EXPERIENCE.push({
       name: experienceName,
       company: experienceCompamyName,
       start: DateService.getIsoDateString(experienceStartDate),
       end: experienceEndDate ? DateService.getIsoDateString(experienceEndDate) : null
     });
 
-    EmployeeService.updateField(computed.user.uid, {experience})
+    EmployeeService.updateField(computed.user.uid, { experience: EXPERIENCE })
       .then(() => DataService.computed.notifyChanges()
         .then(() => {
           setExperienceName('');
@@ -93,17 +94,24 @@ const ProfessionalProfile = () => {
       .catch(ErrorService.manageError);
   };
 
-  const saveSearch = () => {
-    const search = {
+  const saveSearch = e => {
+    e.preventDefault();
+
+    const SEARCH = {
       looking,
       roles: roleSelection,
       resume
     };
-    EmployeeService.updateField(computed.user.uid, { search });
+    EmployeeService.updateField(computed.user.uid, { search: SEARCH })
+      .then(() => {
+        ErrorService.success('Search Saved');
+        DataService.computed.notifyChanges();
+      })
+      .catch(ErrorService.manageError);
   };
 
   useEffect(() => {
-    let companyIds = UtilsService.removeDuplicateFromArray(Object.keys(roles).map(roleKey => roles[roleKey].companyId));
+    let companyIds = UtilsService.removeDuplicateFromArray(Object.keys(roles).map(roleId => roles[roleId].companyId));
     CompanyService.getAllForIdList(companyIds)
       .then(setCompanies)
       .catch(ErrorService.manageError);
@@ -124,8 +132,8 @@ const ProfessionalProfile = () => {
   }, [computed]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -133,64 +141,57 @@ const ProfessionalProfile = () => {
   /**
    * RENDER
    */
-  const roleDetails = {};
-  Object.keys(ERoleDetails).forEach(roleKey => {
-    roleDetails[roleKey] = {
+  const ROLE_DETAILS = {};
+  Object.keys(ERoleDetails).forEach(roleId => {
+    ROLE_DETAILS[roleId] = {
       content: <Fragment>
-        <Icon source="fa" icon={ERoleDetails[roleKey].icon} />
-        {ERoleDetails[roleKey].name}
+        <Icon source="fa" icon={ERoleDetails[roleId].icon} />
+        {ERoleDetails[roleId].name}
       </Fragment>
     }
   });
 
 
-  const employeeExperience = {};
+  const EMPLOYEE_EXPERIENCE = {};
   if(roles) {
     Object.keys(roles)
-      .filter(roleKey => roles[roleKey].status === ERoleStatus.CONFIRMED
-          || roles[roleKey].status === ERoleStatus.REVOKED)
-      .forEach(roleKey => employeeExperience[roleKey] = roles[roleKey]);
+      .filter(roleId => roles[roleId].status === ERoleStatus.CONFIRMED
+          || roles[roleId].status === ERoleStatus.REVOKED)
+      .forEach(roleId => EMPLOYEE_EXPERIENCE[roleId] = roles[roleId]);
   }
 
   return <div className="ProfessionalProfile tab-content">
-    <h2>Current Search</h2>
-    <div className="input-container">
+    <form onSubmit={saveSearch}>
+      <h2>Current Search</h2>
+      <div className="input-container">
 
-      {/* Looking */}
-      <span className="fake-label">
-        Actively Looking for a job?
-      </span>
-      <Switch value={looking} onChange={setLooking} />
-    </div>
+        {/* Looking */}
+        <span className="fake-label">
+          Actively Looking for a job?
+        </span>
+        <Switch value={looking} onChange={setLooking} />
+      </div>
 
-    {/* Role selection */}
-    <div className="input-container">
-      <span className="fake-label">
-        Looking for an offer as
-      </span>
-      <Choose selection={roleSelection}
-              items={roleDetails}
-              multiple
-              onSelectionChange={setRoleSelection} />
-    </div>
+      {/* Role selection */}
+      <div className="input-container">
+        <span className="fake-label">
+          Looking for an offer as
+        </span>
+        <Choose selection={roleSelection}
+                items={ROLE_DETAILS}
+                multiple
+                onSelectionChange={setRoleSelection} />
+      </div>
 
-    {/* Resume */}
-    <div className="input-container">
-      <span className="fake-label">
-        Write about yourself
-      </span>
-      <textarea
-        placeholder="Tell recruiters about yourself"
-        rows="5"
+      {/* Resume */}
+      <FormTextarea
+        label={<span>Tell recruiters about yourself</span>}
         value={resume}
-        onChange={e => setResume(e.target.value)} />
-    </div>
+        onValueChange={setResume} />
 
-    {/* Save search */}
-    <button className="input-submit" onClick={saveSearch}>
-      <Icon source="fa" icon={faSave} />
-      Save Current Search
-    </button>
+      {/* Save search */}
+      <input type="submit" value="Save current search" />
+    </form>
 
     <h2>Certificates</h2>
     <ExTable key="certificates" 
@@ -244,10 +245,7 @@ const ProfessionalProfile = () => {
       </div>
 
       {/* Submit */}
-      <button className="input-submit">
-        <Icon source="fa" icon={faPlus} />
-        <span className="button-label">Add Certificate</span>
-      </button>
+      <input type="submit" value="Add certificate" />
     </form>
 
     <h2>Experience</h2>
@@ -256,7 +254,7 @@ const ProfessionalProfile = () => {
       These are your current and past roles
     </span>
     <ExTable key="experience" 
-              items={employeeExperience}
+              items={EMPLOYEE_EXPERIENCE}
               fss={employeeExperienceExTableFSS}
               renderItem={(_, exp) => <EmployeeExperience exp={exp} company={{[exp.companyId]: companies[exp.companyId]}} />} 
               header={<span><Icon source="fa" icon={faUserTie} /> Experience</span>}
@@ -352,12 +350,9 @@ const ProfessionalProfile = () => {
       </div>
 
       {/* Submit */}
-      <button className="input-submit">
-        <Icon source="fa" icon={faPlus} />
-        <span className="button-label">Add Experience</span>
-      </button>
+      <input type="submit" value="Add Experience" />
     </form>
   </div>;
 };
 
-export default ProfessionalProfile;
+export default ProfessionalProfileTab;

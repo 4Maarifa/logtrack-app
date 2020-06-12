@@ -25,42 +25,38 @@ import { v4 as uuid } from 'uuid';
  * Used to visit employee profile
  */
 const EmployeePage = ({ match }) => {
-  const employeeId = match.params.employeeid;
+  const EMPLOYEE_ID = match.params.employeeid;
 
   const [employeeData, setEmployeeData] = useState(null);
 
   const [roles, setRoles] = useState({});
   const [companies, setCompanies] = useState({});
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
-  
-  const computeValues = () => EmployeeService.get(employeeId)
-      .then(employeeDoc => setEmployeeData(employeeDoc.data()))
-      .catch(ErrorService.manageError);
-  
-  const computeRoles = () => RoleService.getRolesForEmployeeId(employeeId, [ERoleStatus.CONFIRMED, ERoleStatus.REVOKED])
-      .then(setRoles)
-      .catch(ErrorService.manageError);
 
   useEffect(() => {
-    let companyIds = UtilsService.removeDuplicateFromArray(Object.keys(roles).map(roleKey => roles[roleKey].companyId));
-    CompanyService.getAllForIdList(companyIds)
+    CompanyService.getAllForIdList(UtilsService.removeDuplicateFromArray(Object.keys(roles).map(itemId => roles[itemId].companyId)))
       .then(setCompanies)
       .catch(ErrorService.manageError);
   }, [roles]);
 
-  useEffect(() => computeRoles, [employeeData]);
-
   useEffect(() => {
-    computeValues();
-    computeRoles();
+    if(EMPLOYEE_ID) {
+      EmployeeService.get(EMPLOYEE_ID)
+        .then(employeeDoc => setEmployeeData(employeeDoc.data()))
+        .catch(ErrorService.manageError);
+      
+      RoleService.getRolesForEmployeeId(EMPLOYEE_ID, [ERoleStatus.CONFIRMED, ERoleStatus.REVOKED])
+        .then(setRoles)
+        .catch(ErrorService.manageError);
+    }
   }, [computed]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
 
   if(!computed.initialized) { return null; }
@@ -76,18 +72,18 @@ const EmployeePage = ({ match }) => {
     );
   }
 
-  const employeeExperience = {};
+  const EMPLOYEE_EXPERIENCE = {};
   if(roles) {
     Object.keys(roles)
-      .filter(roleKey => roles[roleKey].status === ERoleStatus.CONFIRMED
-          || roles[roleKey].status === ERoleStatus.REVOKED)
-      .forEach(roleKey => employeeExperience[roleKey] = roles[roleKey]);
+      .filter(roleId => roles[roleId].status === ERoleStatus.CONFIRMED
+          || roles[roleId].status === ERoleStatus.REVOKED)
+      .forEach(roleId => EMPLOYEE_EXPERIENCE[roleId] = roles[roleId]);
   }
 
   return (
     <div className="EmployeePage">
       <div className="Element Element--page">
-        <Employee employee={{ [employeeId]: employeeData }} isPage />
+        <Employee employee={{ [EMPLOYEE_ID]: employeeData }} isPage />
       </div>
       {employeeData.search && employeeData.search.looking ?
         <div className="Element Element--row employee-search">
@@ -111,14 +107,14 @@ const EmployeePage = ({ match }) => {
           <ExTable key="certificates" 
                   items={employeeData.certificates} 
                   fss={employeeCertificatesExTableFSS}
-                  renderItem={(_, cert) => <EmployeeCertificate certificate={cert} employeeId={employeeId} />}
+                  renderItem={(_, cert) => <EmployeeCertificate certificate={cert} employeeId={EMPLOYEE_ID} />}
                   header={<span><Icon source="fa" icon={faAward} /> Certificates</span>}
                   isNoFrame />
         </div> : null}
         <div className="roles">
           <h2 className="profile-title">Experience</h2>
           <ExTable key="experience" 
-                  items={employeeExperience} 
+                  items={EMPLOYEE_EXPERIENCE} 
                   fss={employeeExperienceExTableFSS}
                   renderItem={(_, exp) => <EmployeeExperience exp={exp} company={{[exp.companyId]: companies[exp.companyId]}} />} 
                   header={<span><Icon source="fa" icon={faUserTie} /> Experience</span>}
@@ -129,7 +125,7 @@ const EmployeePage = ({ match }) => {
           <ExTable key="otherExperience" 
                     items={employeeData.experience}
                     fss={employeeOtherExperiencesExTableFSS}
-                    renderItem={(_, exp) => <EmployeeOtherExperience otherExp={exp} employeeId={employeeId} />}
+                    renderItem={(_, exp) => <EmployeeOtherExperience otherExp={exp} employeeId={EMPLOYEE_ID} />}
                     header={<span><Icon source="fa" icon={faClipboardUser} /> Other Experience</span>}
                     isNoFrame />
         </div> : null}

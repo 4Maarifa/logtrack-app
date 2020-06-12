@@ -34,12 +34,12 @@ const WeatherService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Weathers' });
     }
 
-    const weathers = {};
+    const WEATHERS = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getFirestore().collection('weather').get()
             .then(querySnapshot => {
-                querySnapshot.forEach(weatherDoc => weathers[weatherDoc.id] = weatherDoc.data());
-                resolve(weathers);
+                querySnapshot.forEach(weatherDoc => WEATHERS[weatherDoc.id] = weatherDoc.data());
+                resolve(WEATHERS);
             })
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
@@ -76,15 +76,15 @@ const WeatherService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Weathers' });
     }
 
-    const currentDateLitteral = (new Date()).toISOString().substring(0, 14);
-    const longitudeLitteral = Math.floor(parseFloat(lon) * 100) / 100;
-    const latitudeLitteral = Math.floor(parseFloat(lat) * 100) / 100;
+    const CURRENT_DATE_LITTERAL = (new Date()).toISOString().substring(0, 14),
+      LONGITUDE_LITTERAL = Math.floor(parseFloat(lon) * 100) / 100,
+      LATITUDE_LITTERAL = Math.floor(parseFloat(lat) * 100) / 100;
 
     return new Promise((resolve, reject) => {
       FirebaseService.getFirestore().collection('weather')
-        .where('date', '==', currentDateLitteral)
-        .where('longitude', '==', longitudeLitteral)
-        .where('latitude', '==', latitudeLitteral)
+        .where('date', '==', CURRENT_DATE_LITTERAL)
+        .where('longitude', '==', LONGITUDE_LITTERAL)
+        .where('latitude', '==', LATITUDE_LITTERAL)
         .limit(1)
         .get()
         .then(querySnapshot => {

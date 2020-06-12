@@ -40,12 +40,12 @@ const BrandService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Brands' });
     }
 
-    const brands = {};
+    const BRANDS = {};
     return new Promise((resolve, reject) => {
       FirebaseService.getFirestore().collection('brands').get()
         .then(querySnapshot => {
-            querySnapshot.forEach(brandDoc => brands[brandDoc.id] = brandDoc.data());
-            resolve(brands);
+            querySnapshot.forEach(brandDoc => BRANDS[brandDoc.id] = brandDoc.data());
+            resolve(BRANDS);
         })
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });

@@ -22,32 +22,34 @@ import './Employee.scss';
 const Employee = ({ employee, isPage }) => {
   if(!employee) { return null; }
 
-  const employeeKey = Object.keys(employee)[0];
+  const EMPLOYEE_ID = Object.keys(employee)[0];
+  const EMPLOYEE_DATA = employee[EMPLOYEE_ID];
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
+  
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey);
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY);
   }, []);
 
   if(!computed.initialized) { return null; }
 
-  const actions = [];
+  const ACTIONS = [];
 
   if(!isPage) {
-    actions.push({ title: 'Visit Profile', icon: <Icon source="fa" icon={faUser} />, link: `/employee/${employeeKey}` });
+    ACTIONS.push({ title: 'Visit Profile', icon: <Icon source="fa" icon={faUser} />, link: `/employee/${EMPLOYEE_ID}` });
   }
 
-  if(computed.user.uid === employeeKey) {
-    actions.push({ title: 'Modify Profile', icon: <Icon source="fa" icon={faUserCog} />, link: '/profile' });
-    actions.push({ title: 'Modify Pro Profile', icon: <Icon source="fa" icon={faPortrait} />, link: '/jobs?tab=profile' });
-    actions.push({ title: 'Request a role', icon: <Icon source="fa" icon={faUserTag} />, link: '/role-add' });
+  if(computed.user.uid === EMPLOYEE_ID) {
+    ACTIONS.push({ title: 'Modify Profile', icon: <Icon source="fa" icon={faUserCog} />, link: '/profile' });
+    ACTIONS.push({ title: 'Modify Pro Profile', icon: <Icon source="fa" icon={faPortrait} />, link: '/jobs?tab=profile' });
+    ACTIONS.push({ title: 'Request a role', icon: <Icon source="fa" icon={faUserTag} />, link: '/role-add' });
   }
   else {
     if (computed.activeRole.role === ERole.MANAGER) {
-      actions.push({ title: 'Offer a role', icon: <Icon source="fa" icon={faUserPlus} />, link: `/role-offer/${employeeKey}` });
+      ACTIONS.push({ title: 'Offer a role', icon: <Icon source="fa" icon={faUserPlus} />, link: `/role-offer/${EMPLOYEE_ID}` });
     }
   }
 
@@ -57,20 +59,20 @@ const Employee = ({ employee, isPage }) => {
   return (
     <div className="Employee Element-content">
       <div className="Element-base">
-        {employee[employeeKey] && employee[employeeKey].profilePictureUrl ?
+        {EMPLOYEE_DATA.profilePictureUrl ?
           <div className="Element-photo">
             <img
-              alt={employee[employeeKey].firstname + ' ' + employee[employeeKey].lastname + '\'s profile picture'} 
-              src={employee[employeeKey].profilePictureUrl} />
+              alt={EMPLOYEE_DATA.firstname + ' ' + EMPLOYEE_DATA.lastname + '\'s profile picture'} 
+              src={EMPLOYEE_DATA.profilePictureUrl} />
           </div>
         : <Icon containerclassname="Element-icon" source="fa" icon={faUser} /> }
         <div className="Element-data">
           <span className="Element-title">
-            <PageLink type={PageLinkType.EMPLOYEE} entityId={employeeKey} entityData={employee[employeeKey]} noPhoto white={isPage} />
+            <PageLink type={PageLinkType.EMPLOYEE} entityId={EMPLOYEE_ID} entityData={EMPLOYEE_DATA} noPhoto white={isPage} />
           </span>
         </div>
         <div className="Element-actions">
-          <ActionList actions={actions} isFlatten={isPage} />
+          <ActionList actions={ACTIONS} isFlatten={isPage} />
         </div>
       </div>
     </div>
@@ -103,7 +105,7 @@ export const employeesExTableFSS = {
    *** *** * *  *  *** *   *** *** * *  *  *** ***
 */
 export const EmployeeCertificate = ({ certificate, employeeId }) => {
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
@@ -115,8 +117,8 @@ export const EmployeeCertificate = ({ certificate, employeeId }) => {
   };
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey);
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY);
   }, []);
 
   if(!computed.initialized) { return null; }
@@ -220,7 +222,7 @@ export const employeeExperienceExTableFSS = {
   ***  *  * * *** * *
 */
 export const EmployeeOtherExperience = ({ otherExp, employeeId }) => {
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
@@ -232,8 +234,8 @@ export const EmployeeOtherExperience = ({ otherExp, employeeId }) => {
   };
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey);
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY);
   }, []);
 
   if(!computed.initialized) { return null; }

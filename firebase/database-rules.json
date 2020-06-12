@@ -1,0 +1,37 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        
+        "role": {
+          ".read": "auth != null && auth.uid == $uid",
+          ".write": "auth != null && auth.uid == $uid"
+        },
+        "messages": {
+          "$rtid" : {
+          	".write": "auth != null && root.child('/rtForUsers/' + $rtid).exists() && (root.child('/rtForUsers/' + $rtid + '/creator').val() == auth.uid || auth.uid == $uid)",
+            ".validate": "newData.hasChildren(['revision'])"
+          }
+        }
+      }
+    },
+    "rtForUsers": {
+      "$rtid": {
+        ".read": "auth != null && root.hasChild('users/' + auth.uid + '/messages/' + $rtid)",
+        ".write": "auth != null && newData.child('creator').val() == auth.uid",
+        ".validate": "newData.hasChildren(['creator', 'creationIsoDate', 'type', 'content', 'users', 'revision'])"
+      }
+    },
+    "rtForCompanies": {
+      "$companyId": {
+        ".read": "auth != null && root.hasChild('users/' + auth.uid + '/role/companyId/' + $companyId)",
+          
+        "$rtid": {
+          ".write": "auth != null && data.child('creator').val() == auth.uid",
+          ".validate": "newData.hasChildren(['creator', 'creationIsoDate', 'type', 'content', 'roles'])"
+        }
+      }
+    }
+  }
+}

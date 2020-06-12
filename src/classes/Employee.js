@@ -16,17 +16,20 @@ import DateService from './../services/date.service';
  * profilePictureUrl: string | The picture URL of the employee
  * settings: object | The settings customed by the employee
  * cretionDate: string | The creation date, as iso string
+ * legal: object | Legal acceptance
+ * staff: boolean | If the employee is part of the staff
  */
 class Employee {
-    constructor(firstname, lastname, email, certificates, activeRoleId, profilePictureUrl, settings, creationIsoDate) {
+    constructor(firstname, lastname, certificates, activeRoleId, profilePictureUrl, settings, creationIsoDate, legal) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.email = email;
         this.certificates = certificates;
         this.activeRoleId = activeRoleId;
         this.profilePictureUrl = profilePictureUrl;
         this.settings = settings;
         this.creationIsoDate = creationIsoDate;
+        this.legal = legal;
+        this.staff = false;
     }
 }
 

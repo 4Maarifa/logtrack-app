@@ -48,12 +48,12 @@ const EmployeeService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Employees' });
     }
 
-    const employees = {};
+    const EMPLOYEES = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getFirestore().collection('employees').get()
             .then(querySnapshot => {
-                querySnapshot.forEach(employeeDoc => employees[employeeDoc.id] = employeeDoc.data());
-                resolve(employees);
+                querySnapshot.forEach(employeeDoc => EMPLOYEES[employeeDoc.id] = employeeDoc.data());
+                resolve(EMPLOYEES);
             })
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
@@ -102,16 +102,16 @@ const EmployeeService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Employees' });
     }
 
-    const promises = [];
-    const employees = {};
+    const PROMISES = [],
+      EMPLOYEES = {};
 
     return new Promise((resolve, reject) => {
-      idList.forEach(employeeId => promises.push(EmployeeService.get(employeeId)));
+      idList.forEach(employeeId => PROMISES.push(EmployeeService.get(employeeId)));
 
-      Promise.all(promises)
+      Promise.all(PROMISES)
         .then(employeeDocs => {
-          employeeDocs.forEach(employeeDoc => employees[employeeDoc.id] = employeeDoc.data())
-          resolve(employees);
+          employeeDocs.forEach(employeeDoc => EMPLOYEES[employeeDoc.id] = employeeDoc.data())
+          resolve(EMPLOYEES);
         })
         .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });            
@@ -194,12 +194,12 @@ const EmployeeService = {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Account Activities' });
       }
   
-      const accountActivities = {};
+      const ACCOUNT_ACTIVITIES = {};
       return new Promise((resolve, reject) => {
           FirebaseService.getFirestore().collection('accountActivity').get()
               .then(querySnapshot => {
-                  querySnapshot.forEach(accountActivityDoc => accountActivities[accountActivityDoc.id] = accountActivityDoc.data());
-                  resolve(accountActivities);
+                  querySnapshot.forEach(accountActivityDoc => ACCOUNT_ACTIVITIES[accountActivityDoc.id] = accountActivityDoc.data());
+                  resolve(ACCOUNT_ACTIVITIES);
               })
               .catch(e => ErrorService.manageErrorThenReject(e, reject));
       });
@@ -239,14 +239,14 @@ const EmployeeService = {
         return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Account Activities' });
       }
 
-      const accountActivities = {};
+      const ACCOUNT_ACTIVITIES = {};
       return new Promise((resolve, reject) => {
         FirebaseService.getFirestore().collection('accountActivity')
           .where('email', '==', email)
           .get()
           .then(querySnapshot => {
-            querySnapshot.forEach(accountActivityDoc => accountActivities[accountActivityDoc.id] = accountActivityDoc.data());
-            resolve(accountActivities);
+            querySnapshot.forEach(accountActivityDoc => ACCOUNT_ACTIVITIES[accountActivityDoc.id] = accountActivityDoc.data());
+            resolve(ACCOUNT_ACTIVITIES);
           })
           .catch(e => ErrorService.manageErrorThenReject(e, reject));
       });

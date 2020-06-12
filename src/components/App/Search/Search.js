@@ -41,26 +41,16 @@ const Search = () => {
 
   const [isSearchLoading, setSearchLoading] = useState(true);
 
-  const observerKey = uuid();
+  const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
-
-  const computeValues = () => {
-    BrandService.list()
-      .then(setBrands)
-      .catch(ErrorService.manageError);
-
-    EquipmentModelService.list()
-      .then(setEquipmentModels)
-      .catch(ErrorService.manageError);
-  };
 
   const searchEntities = () => {
     if(searchInput.length <= 3) { return; }
     DataService.computed.search([ESearchType.EMPLOYEES, ESearchType.COMPANIES, ESearchType.WAREHOUSES, ESearchType.CONTRACTS, ESearchType.EQUIPMENTS], 
         searchInput, computed.activeRole.companyId)
       .then(results => {
-        CompanyService.getAllForIdList(UtilsService.removeDuplicateFromArray(Object.keys(results.data.contracts).map(key => [results.data.contracts[key].companyExecId, results.data.contracts[key].companyOrderId]).flat(Infinity)))
+        CompanyService.getAllForIdList(UtilsService.removeDuplicateFromArray(Object.keys(results.data.contracts).map(contractId => [results.data.contracts[contractId].companyExecId, results.data.contracts[contractId].companyOrderId]).flat(Infinity)))
           .then(contractCompanies => {
             setEmployees(results.data.employees);
             setContracts(results.data.contracts);
@@ -79,11 +69,19 @@ const Search = () => {
     searchEntities();
   }, [searchInput]);
 
-  useEffect(computeValues, [computed]);
+  useEffect(() => {
+    BrandService.list()
+      .then(setBrands)
+      .catch(ErrorService.manageError);
+
+    EquipmentModelService.list()
+      .then(setEquipmentModels)
+      .catch(ErrorService.manageError);
+  }, [computed]);
 
   useEffect(() => {
-    DataService.computed.observeComputedValues(setComputed, observerKey);
-    return () => DataService.computed.unobserveComputedValues(observerKey)
+    DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
   
   if(!computed.initialized) { return null; }
@@ -91,36 +89,36 @@ const Search = () => {
   /**
    * RENDER
    */
-  const renderEmployee = (itemKey, itemData) => {
-    return <Employee employee={{[itemKey]: itemData}} />;
+  const renderEmployee = (itemId, itemData) => {
+    return <Employee employee={{[itemId]: itemData}} />;
   };
 
-  const renderCompany = (itemKey, itemData) => {
-    return <Company company={{[itemKey]: itemData}} />;
+  const renderCompany = (itemId, itemData) => {
+    return <Company company={{[itemId]: itemData}} />;
   };
 
-  const renderWarehouse = (itemKey, itemData) => {
-    return <Warehouse key={itemKey}
-      warehouse={ {[itemKey]: itemData} }
+  const renderWarehouse = (itemId, itemData) => {
+    return <Warehouse key={itemId}
+      warehouse={ {[itemId]: itemData} }
       options={ {} }
       showDetails />;
   };
 
-  const renderContract = (itemKey, itemData) => {
+  const renderContract = (itemId, itemData) => {
     return <Contract
-      contract={{[itemKey]: itemData}}
+      contract={{[itemId]: itemData}}
       companyExec={{[itemData.companyExecId]: contractCompanies[itemData.companyExecId]}}
       companyOrder={{[itemData.companyOrderId]: contractCompanies[itemData.companyOrderId]}} />
   };
 
-  const renderEquipment = (itemKey, itemData) => {
-    const equipmentModel = { [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] },
-      brand = { [equipmentModel[itemData.equipmentModelId].brand]: brands[equipmentModel[itemData.equipmentModelId].brand] };
+  const renderEquipment = (itemId, itemData) => {
+    const EQUIPMENT_MODEL = { [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] },
+      BRAND = { [EQUIPMENT_MODEL[itemData.equipmentModelId].brand]: brands[EQUIPMENT_MODEL[itemData.equipmentModelId].brand] };
 
-    return <Equipment key={itemKey}
-      equipment={ {[itemKey]: itemData} }
-      brand={brand}
-      equipmentModel={equipmentModel}
+    return <Equipment key={itemId}
+      equipment={ {[itemId]: itemData} }
+      brand={BRAND}
+      equipmentModel={EQUIPMENT_MODEL}
       options={ {} }
       showDetails />
   };

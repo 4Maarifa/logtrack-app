@@ -5,11 +5,13 @@ import DataService, { ensureFilledFields } from './../data.service';
 import FirebaseService from './../firebase.service';
 import ErrorService from './../error.service';
 
+import { EContactCategories } from './../../components/Entities/Contact/Contact';
+
 const ContactService = {
   rights: {
     [ERights.RIGHT_CONTACT_CREATE]: () => true,
     [ERights.RIGHT_CONTACT_GET]: () => false,
-    [ERights.RIGHT_CONTACT_LIST]: () => false,
+    [ERights.RIGHT_CONTACT_LIST]: () => DataService.computed.employee.staff,
     [ERights.RIGHT_CONTACT_UPDATE]: () => false,
     [ERights.RIGHT_CONTACT_DELETE]: () => false
   },
@@ -18,8 +20,8 @@ const ContactService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Create a Contact' });
     }
 
-    if(!ensureFilledFields(contact, ['message', 'email', 'creationIsoDate'])) {
-      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['message', 'email', 'creationIsoDate'] });
+    if(!ensureFilledFields(contact, ['message', 'email', 'creationIsoDate', 'category'])) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['message', 'email', 'creationIsoDate', 'category'] });
     }
 
     return FirebaseService.getFirestore().collection('contact').add(contact);
@@ -35,12 +37,12 @@ const ContactService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'List Contacts' });
     }
 
-    const contacts = {};
+    const CONTACTS = {};
     return new Promise((resolve, reject) => {
         FirebaseService.getFirestore().collection('contact').get()
             .then(querySnapshot => {
-                querySnapshot.forEach(contactDoc => contacts[contactDoc.id] = contactDoc.data());
-                resolve(contacts);
+                querySnapshot.forEach(contactDoc => CONTACTS[contactDoc.id] = contactDoc.data());
+                resolve(CONTACTS);
             })
             .catch(e => ErrorService.manageErrorThenReject(e, reject));
     });
@@ -50,8 +52,8 @@ const ContactService = {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Update a Contact' });
     }
 
-    if(!ensureFilledFields(contact, ['message', 'email', 'creationIsoDate'])) {
-      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['message', 'email', 'creationIsoDate'] });
+    if(!ensureFilledFields(contact, ['message', 'email', 'creationIsoDate', 'category'])) {
+      return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/missing-fields', details: ['message', 'email', 'creationIsoDate', 'category'] });
     }
 
     return FirebaseService.getFirestore().collection('contact').doc(contactId).set(contact);
@@ -72,7 +74,7 @@ const ContactService = {
   },
 
   // CUSTOM FUNCTIONS
-  createWithData: (message, email) => ContactService.create({message, email, creationIsoDate: DateService.getCurrentIsoDateString() })
+  createWithData: (message, email, category) => ContactService.create({message, email, category: EContactCategories[category], creationIsoDate: DateService.getCurrentIsoDateString() })
 };
 
 export default ContactService;
