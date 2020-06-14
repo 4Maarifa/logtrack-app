@@ -100,6 +100,8 @@ import Analytics from './components/App/Analytics/Analytics';
 
 import Search from './components/App/Search/Search';
 
+import Files from './components/App/Files/Files';
+
 // SERVICES
 import FirebaseService from './services/firebase.service';
 import DataService from './services/data.service';
@@ -266,6 +268,8 @@ const renderApp = () => {
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/analytics" component={Analytics} />
 
                     <PrivateRoute exact path="/search" component={Search} />
+
+                    <PrivateRoute exact path="/files" component={Files} />
                 </div>
                 <Modal />
             </div>

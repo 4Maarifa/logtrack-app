@@ -6,7 +6,7 @@ import Icon from './../Icon/Icon';
 
 import './ActionList.scss';
 
-const ActionList = ({ actions, isFlatten }) => {
+const ActionList = ({ actions, isFlatten, isHideLabels }) => {
 
   const [isDeployed, setDeployed] = useState(false);
 
@@ -21,13 +21,13 @@ const ActionList = ({ actions, isFlatten }) => {
   );
 
   return (
-    <div className={'ActionList ' + (isDeployed ? ' ActionList--deployed ' : '') + (isFlatten ? ' ActionList--flat ' : '')}>
+    <div className={'ActionList ' + (isDeployed ? ' ActionList--deployed ' : '') + (isFlatten ? ' ActionList--flat ' : '') + (isHideLabels || actions.length > 2 ? 'ActionList--manyItems ' : '')}>
       {actions ? <ul>
         {actions.map(action =>
             <li key={action.title}>
-              {action.link ? <NavLink to={action.link}>{renderInner(action)}</NavLink> : null}
-              {action.callback ? <button className="white-button flat" onClick={action.callback}>{renderInner(action)}</button> : null}
-              {action.pureLink ? <a href={action.pureLink} target="_blank" rel="noopener noreferrer">{renderInner(action)}</a> : null}
+              {action.link ? <NavLink to={action.link} title={action.title}>{renderInner(action)}</NavLink> : null}
+              {action.callback ? <button className="white-button flat" title={action.title} onClick={action.callback}>{renderInner(action)}</button> : null}
+              {action.pureLink ? <a href={action.pureLink} title={action.title} target="_blank" rel="noopener noreferrer" download={action.isDownload ? '' : null}>{renderInner(action)}</a> : null}
             </li>
         )}
       </ul> : null}

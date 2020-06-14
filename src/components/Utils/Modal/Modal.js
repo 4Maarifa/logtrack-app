@@ -3,7 +3,7 @@ import { faTimes } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../Icon/Icon';
 
-import ModalService from './../../../services/modal.service';
+import ModalService, { MODAL_EVENT_TYPES } from './../../../services/modal.service';
 
 import './Modal.scss';
 
@@ -18,14 +18,22 @@ const Modal = () => {
   const [isShow, setShow] = useState(false);
 
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState(null);
   const [options, setOptions] = useState({ actions: [] });
 
-  const listen = (newTitle, newContent, newOptions) => {
-    setTitle(newTitle);
-    setContent(newContent);
-    setOptions(newOptions);
-    setShow(true);
+  const [, setRerenderCount] = useState(0);
+
+  const listen = (event, params) => {
+
+    if(event === MODAL_EVENT_TYPES.NEW_MODAL) {
+      setTitle(params.title);
+      setContent(params.content);
+      setOptions(params.options);
+      setShow(true);
+    }
+    if(event === MODAL_EVENT_TYPES.RERENDER) {
+      setRerenderCount(r => r + 1);
+    }
   };
 
   const onAction = value => {
@@ -53,7 +61,7 @@ const Modal = () => {
           {options.actions.map(action =>
             <button key={action.value} value={action.value} onClick={() => onAction(action.value)}>{action.content}</button>  
           )}
-          {!options.noClose ? <button key="close" onClick={() => onAction('CLOSE')}>CLOSE</button> : null}
+          {!options.noClose ? <button key="close" onClick={() => onAction('CLOSE')}>Close</button> : null}
         </div>
       </div>
     </div>

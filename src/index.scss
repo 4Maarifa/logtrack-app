@@ -61,6 +61,14 @@
   --dark-palette-pink: #F20085;
   --dark-palette-purple: #8F1CF3;
   --dark-palette-turquoise: #1999B3;
+
+  // DARK THEME TEST
+  /*--inverse: #252525;
+  --text: #FFFFFF;
+  --light-gray: #333333;
+
+  --shadow: 0 0 10px 1px rgba(255, 255, 255, .1);
+  --small-shadow: 0 0 5px 1px rgba(255, 255, 255, .05);*/
 }
 
 :global(::-webkit-scrollbar) {
@@ -215,6 +223,7 @@
   font-family: 'Nunito', sans-serif;
   box-shadow: var(--small-shadow);
   transition: box-shadow .5s;
+  vertical-align: middle;
 
   &:hover {
     text-decoration: underline;
@@ -505,6 +514,12 @@ body, html {
       border-top-right-radius: 0;
       top: -1.5rem;
       z-index: 0;
+      width: calc(50% - 4rem);
+      margin: 1rem 2rem;
+
+      &.Element--full-width {
+        width: calc(100% - 4rem);
+      }
     }
   }
 
@@ -533,7 +548,7 @@ body, html {
     position: relative;
 
     &:hover {
-      transform: scale(1.03);
+      transform: scale(1.015);
       z-index: 2;
     }
   }

@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { faExclamationTriangle, faEnvelope, faCalendar, faHashtag, faIndent, faUserPlus, faCog, faPortrait, faWarehouseAlt, faBuilding, faTruck, faAward, faUserTie, faClipboardUser, faSignIn, faUserHeadset } from '@fortawesome/pro-solid-svg-icons';
+import { faExclamationTriangle, faEnvelope, faCalendar, faHashtag, faIndent, faUserPlus, faCog, faPortrait, faWarehouseAlt, faBuilding, faTruck, faAward, faUserTie, faClipboardUser, faSignIn, faUserHeadset, faFolders, faFile } from '@fortawesome/pro-solid-svg-icons';
 
 import DataService from './../../../../services/data.service';
 import FileService from './../../../../services/file.service';
@@ -19,7 +19,6 @@ import SupportService from './../../../../services/entities/support.service';
 import Icon from './../../../Utils/Icon/Icon'
 import Loader from './../../../Utils/Loader/Loader';
 import ExTable from './../../../Utils/ExTable/ExTable';
-import Directory from './../../../Utils/Directory/Directory';
 import CompletionBar from './../../../Utils/CompletionBar/CompletionBar';
 
 import Employee, { employeeCertificatesExTableFSS, EmployeeCertificate, employeeExperienceExTableFSS, EmployeeExperience, employeeOtherExperiencesExTableFSS, EmployeeOtherExperience, employeeAccountActivityExTableFSS, EmployeeAccountActivity } from './../../../Entities/Employee/Employee';
@@ -53,7 +52,7 @@ const DataTab = () => {
         WarehouseService.getAllForCreatorId(computed.user.uid),
         CompanyService.getAllForCreatorId(computed.user.uid),
         RoleService.getRolesForEmployeeId(computed.user.uid, [ERoleStatus.CONFIRMED, ERoleStatus.DENIED, ERoleStatus.DRAFT, ERoleStatus.REVOKED]),
-        FileService.listFilesForUser(computed.user.uid),
+        FileService.getPersonalFiles(),
         EmployeeService.accountActivity.getAllByEmail(computed.user.email),
         CompanyService.jobOffer.getAllForCreatorId(computed.user.uid),
         SupportService.getAllForUserId(computed.user.uid)
@@ -117,6 +116,11 @@ const DataTab = () => {
 
   const renderSupport = (itemId, itemData) => <Support support={{[itemId]: itemData}} />;
 
+  let USER_QUOTA = null;
+  if(report) {
+    USER_QUOTA = FileService.getQuota(report.files);
+  }
+
   return <div className="tab-content">
     <h1>Generated Data on LogTrack</h1>
     <span>All the data you generated on LogTrack</span>
@@ -133,7 +137,7 @@ const DataTab = () => {
       </div>
       <h3 className="profile-title">Notice</h3>
       <div className="Element Element--tile Element--full-width">
-        <div className="certificate Element-content">
+        <div className="Element-content">
           <div className="Element-base">
             <Icon containerclassname="Element-icon" source="fa" icon={faExclamationTriangle} />
             <div className="Element-data">
@@ -152,7 +156,7 @@ const DataTab = () => {
         <Employee employee={{ [computed.user.uid]: computed.employee }} isPage />
       </div>
       <div className="Element Element--tile Element--full-width Element--additional">
-        <div className="certificate Element-content">
+        <div className="Element-content">
           <div className="Element-base">
             <Icon containerclassname="Element-icon" source="fa" icon={faUserPlus} />
             <div className="Element-data">
@@ -175,7 +179,7 @@ const DataTab = () => {
 
       <h3 className="profile-title">Terms &amp; Legal Information</h3>
       {computed.employee.legal ? <div className="Element Element--tile Element--full-width">
-        <div className="certificate Element-content">
+        <div className="Element-content">
           <div className="Element-base">
             <Icon containerclassname="Element-icon" source="fa" icon={faIndent} />
             <div className="Element-data">
@@ -214,7 +218,7 @@ const DataTab = () => {
 
       <h3 className="profile-title">Your Job Search</h3>
       <div className="Element Element--tile Element--full-width">
-        <div className="certificate Element-content">
+        <div className="Element-content">
           <div className="Element-base">
             <Icon containerclassname="Element-icon" source="fa" icon={faPortrait} />
             <div className="Element-data">
@@ -231,12 +235,44 @@ const DataTab = () => {
       </div>
 
       <h3 className="profile-title">Your Files</h3>
-      <CompletionBar title="Quota Usage" percentage={FileService.getQuotaPercentage(report.files)} />
-      <Directory tree={report.files} />
+      <div className="Element Element--tile Element--full-width Element--hasAdditional">
+        <div className="Element-content">
+          <div className="Element-base">
+            <Icon containerclassname="Element-icon" source="fa" icon={faFolders} />
+            <div className="Element-data">
+              <CompletionBar title="Personal Quota"
+                      details={`${USER_QUOTA.totalReadableSize} / ${USER_QUOTA.authorizedReadableQuota}`}
+                      percentage={USER_QUOTA.percentageUsed} />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="Element Element--tile Element--full-width Element--additional">
+        <div className="Element-content">
+          <div className="Element-base">
+            <Icon containerclassname="Element-icon" source="fa" icon={faFile} />
+            <div className="Element-data">
+              <h1>Your personal Files</h1>
+              <ul className="personalFilesList">
+                {report.files.map(f => {
+                  const FILE_DETAILS = FileService.getDetailsForFile(f);
+                  return <li key={f.name}>
+                    <span>
+                      <Icon source="fa" icon={FILE_DETAILS.icon} />
+                      {f.metadata.customMetadata.realName}
+                    </span>
+                    <span>{FileService.getReadableSize(f.metadata.size)}</span>
+                  </li>
+                })}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <h3 className="profile-title">Your Settings</h3>
       <div className="Element Element--tile Element--full-width">
-        <div className="certificate Element-content">
+        <div className="Element-content">
           <div className="Element-base">
             <Icon containerclassname="Element-icon" source="fa" icon={faCog} />
             <div className="Element-data">

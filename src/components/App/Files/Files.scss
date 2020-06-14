@@ -1,0 +1,185 @@
+.Files {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  input[type="file"] {
+    display: none;
+  }
+
+  &-content {
+    box-shadow: var(--shadow);
+    border-radius: var(--border-radius);
+    background-color: var(--inverse);
+    position: relative;
+    flex: 1;
+    padding: 1rem;
+    margin-top: 1rem;
+
+    .ActionList {
+      width: auto;
+
+      &--flat ul li {
+
+
+        a, a:hover, a:link, a:focus, a:active, a:visited, .white-button {
+          background-color: transparent;
+        }
+      }
+
+      .action-title {
+        display: none;
+      }
+    }
+  }
+
+  &-quota {
+    margin-top: 1rem;
+    padding: 1rem;
+    box-shadow: var(--shadow);
+    border-radius: var(--border-radius);
+    background-color: var(--inverse);
+    position: relative;
+  }
+
+  &-menu {
+    height: 2rem;
+    margin-bottom: .5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    &-part {
+      display: flex;
+
+      form {
+        display: flex;
+        margin-right: 1rem;
+
+        .FormInput {
+          margin: 0;
+
+          input {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+          }
+        }
+
+        button {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+      }
+    }
+
+    &-actions {
+
+      button {
+        margin-left: 1rem;
+      }
+    }
+  }
+
+  &-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    li[class^="Files"] {
+      height: 2rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--light-gray);
+
+      &:first-child {
+        border-top: 1px solid var(--light-gray);
+      }
+
+      &.Files-folder {
+        cursor: pointer;
+      }
+
+      &.Files-file {
+
+        & > span {
+          flex: 1;
+        }
+      }
+
+      .Icon {
+        color: var(--gray);
+      }
+    }
+  }
+
+  &-breadcrumb {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    vertical-align: middle;
+    display: flex;
+
+    li {
+      padding: 0 .5rem;
+      height: 1.8rem;
+      color: var(--inverse);
+      background-color: var(--theme);
+      border-radius: var(--border-radius);
+      position: relative;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      &:not(:first-child) {
+        margin-left: .6rem;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+
+        &:before {
+          width: .7rem;
+          content: '';
+          top: 0;
+          height: 1.8rem;
+          background-color: var(--theme);
+          right: calc(100% - 1px);
+          position: absolute;
+          clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 50% 50%);
+        }
+      }
+
+      &:not(:last-child) {
+        margin-right: .6rem;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+
+        &:after {
+          width: .7rem;
+          content: '';
+          top: 0;
+          height: 1.8rem;
+          background-color: var(--theme);
+          left: calc(100% - 1px);
+          position: absolute;
+          clip-path: polygon(0% 0%, 50% 0%, 100% 50%, 50% 100%, 0% 100%);
+        }
+      }
+    }
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .Files {
+
+    &-content {
+      .ActionList {
+
+        .action-title {
+          display: block;
+        }
+      }
+    }
+  }
+}

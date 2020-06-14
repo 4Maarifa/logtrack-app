@@ -2,6 +2,10 @@
   position: relative;
   width: 1rem;
 
+  .trigger {
+    cursor: pointer;
+  }
+
   ul {
     position: absolute;
     right: -.5rem;
@@ -74,14 +78,22 @@
       display: none;
     }
 
+    &.ActionList--manyItems {
+      &:not(.ActionList--deployed) {
+        .action-title {
+          display: none;
+        }
+      }
+    }
+
     ul {
       display: flex;
-      flex-flow: wrap;
       align-items: center;
       justify-content: flex-end;
       position: static;
       width: auto;
-      min-height: 2rem;
+      white-space: nowrap;
+      min-height: 2.5rem;
       width: 100%;
 
       li {
@@ -96,9 +108,9 @@
         .white-button {
           display: flex;
           flex-direction: row-reverse;
-          background-color: var(--inverse);
           padding: .5rem;
           color: var(--theme);
+          background-color: var(--inverse);
           border-radius: var(--border-radius);
 
           .action-title {

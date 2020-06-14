@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { faTachometerFast, faHome, faSignIn, faUserPlus, faUserCog, faUsers,
   faTruck, faTag, faCompass, faAnalytics, faMapPin, faBuilding, faSearch,
-  faWarehouseAlt, faBars, faTimes, faHandshakeAlt, faSuitcase, faPortrait, faCrown } from '@fortawesome/pro-solid-svg-icons';
+  faWarehouseAlt, faBars, faTimes, faHandshakeAlt, faSuitcase, faPortrait, faCrown, faFolders } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 
@@ -156,6 +156,10 @@ const Navigation = () => {
           <NavLink activeClassName="nav--active" to={`/jobs`}>
             <Icon source="fa" icon={faSuitcase} />
             <span className="nav-title">Jobs</span>
+          </NavLink>
+          <NavLink activeClassName="nav--active" to={`/files`}>
+            <Icon source="fa" icon={faFolders} />
+            <span className="nav-title">Files</span>
           </NavLink>
           {computed.activeRole &&
             <NavLink activeClassName="nav--active" to={`/company/${computed.activeRole.companyId}`}>
