@@ -205,19 +205,23 @@
 
         &.map {
           padding: 0;
-          height: 100%;
+          height: calc(100% - 1rem);
 
           .Map {
             border-radius: var(--border-radius);
-            height: 100%;
             box-sizing: border-box;
+            height: 100%;
             border: 3px solid var(--ivnerse);
           }
         }
 
-        &.logtrack {
+        &.logtracks {
+          height: 0;
+          min-height: calc(100% - 2rem);
+          flex: 1;
+          padding: 0;
+          overflow-y: auto;
           margin: .5rem 0;
-          height: calc(100% - 2rem);
           border-top-left-radius: 0;
           border-bottom-left-radius: 0;
 
@@ -225,7 +229,7 @@
             display: none;
           }
 
-          &.logtrack-with-button {
+          &.logtracks-with-button {
 
             .ActionButton {
               display: block;

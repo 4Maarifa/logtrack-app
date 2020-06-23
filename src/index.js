@@ -93,7 +93,7 @@ import WarehousePage from './components/Pages/WarehousePage/WarehousePage';
 
 import Gps from './components/App/Gps/Gps';
 
-import LogTrack from './components/App/LogTrack/LogTrack';
+import LogTracks from './components/App/LogTracks/LogTracks';
 import LogTrackAdd from './components/Forms/LogTrackAdd/LogTrackAdd';
 
 import Analytics from './components/App/Analytics/Analytics';
@@ -262,7 +262,7 @@ const renderApp = () => {
 
                     <RoleLimitedRoute roles={[ERole.DRIVER]} exact path="/gps" component={Gps} />
                     
-                    <RoleLimitedRoute roles={[ERole.DRIVER, ERole.MECHANIC]} exact path="/logtrack" component={LogTrack} />
+                    <RoleLimitedRoute roles={[ERole.DRIVER, ERole.MECHANIC, ERole.MANAGER]} exact path="/logtracks" component={LogTracks} />
                     <RoleLimitedRoute roles={[ERole.DRIVER, ERole.MECHANIC]} exact path="/logtrack-add" component={LogTrackAdd} />
 
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/analytics" component={Analytics} />

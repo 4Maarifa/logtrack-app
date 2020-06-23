@@ -183,7 +183,6 @@ const RoleOffer = ({ match }) => {
               <Choose
                 selection={roleType}
                 items={ROLE_DETAILS}
-                multiple={false} 
                 fieldName="roleType"
                 onSelectionChange={setRoleType}
                 isVertical />

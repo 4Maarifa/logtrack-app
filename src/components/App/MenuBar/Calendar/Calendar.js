@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import { faCalendarAlt, faClock, faPlus, faAngleLeft, faMapMarker, faBars, faEdit } from '@fortawesome/pro-solid-svg-icons';
 
-import { EVeryLightPaletteDetails, EMediumPaletteDetails } from './../../../../services/color.service';
+import ColorService from './../../../../services/color.service';
 import DateService from './../../../../services/date.service';
 import UtilsService from './../../../../services/utils.service';
 import ErrorService from './../../../../services/error.service';
@@ -30,9 +30,11 @@ const Calendar = ({ rt }) => {
     if(computed.isPast) { badges.push('PAST'); }
     if(computed.totalDays > 1) { badges.push(`DAY ${computed.dayNumber}/${computed.totalDays}`); }
 
+    const COLOR_PALETTE = ColorService.getPaletteForColor(rtMessage.metadata.color);
+
     return <li key={rtId}
               className={'Calendar-event Element Element--tile Element-small Element--full-width' + (isActive ? ' Calendar-event--active' : '')}
-              style={{backgroundColor: isActive ? EMediumPaletteDetails[rtMessage.metadata.color].color : EVeryLightPaletteDetails[rtMessage.metadata.color].color}}
+              style={{backgroundColor: isActive ? COLOR_PALETTE.medium.color : COLOR_PALETTE.veryLight.color}}
               onClick={() => setSelectedEvent(selectedEvent === rtId ? null : rtId)}>
 
       <div className="Element-content">
@@ -51,8 +53,8 @@ const Calendar = ({ rt }) => {
               {badges.map(badge => <span className="badge"
                                                   key={badge}
                                                   style={{
-                                                    backgroundColor: EMediumPaletteDetails[rtMessage.metadata.color].color,
-                                                    borderColor: EVeryLightPaletteDetails[rtMessage.metadata.color].color
+                                                    backgroundColor: COLOR_PALETTE.medium.color,
+                                                    borderColor: COLOR_PALETTE.veryLight.color
                                                   }}>
                                                   {badge}
                                                 </span>)}
@@ -153,9 +155,11 @@ const Calendar = ({ rt }) => {
   });
 
   let selectedEventDetails = null;
+  let selectedEventDetailsPalette = null;
   if(selectedEvent && selectedEvent !== 'ADD' && selectedEvent !== 'EDIT') {
     if(SORTED_EVENTS_BY_ISO_DATE[DateService.getIsoDateString(DateService.getDateFromIsoString(rt[selectedEvent].metadata.date))]) {
       selectedEventDetails = SORTED_EVENTS_BY_ISO_DATE[DateService.getIsoDateString(DateService.getDateFromIsoString(rt[selectedEvent].metadata.date))][selectedEvent];
+      selectedEventDetailsPalette = ColorService.getPaletteForColor(selectedEventDetails.event.metadata.color);
     }
     else {
       ErrorService.manageError(`Can't load event`);
@@ -259,19 +263,19 @@ const Calendar = ({ rt }) => {
             <Icon source="fa" icon={faEdit} />
           </button>
         </div>
-        <div className="Calendar-event-selected-header" style={{backgroundColor: EMediumPaletteDetails[selectedEventDetails.event.metadata.color].color}}>
+        <div className="Calendar-event-selected-header" style={{backgroundColor: selectedEventDetailsPalette.medium.color}}>
           <div className="Calendar-event-selected-header-top">
             <h3>
               <Icon source="fa" icon={selectedEventDetails.computed.multipleDays ? faCalendarAlt : faClock} />
               {selectedEventDetails.event.content}
             </h3>
             {selectedEventDetails.computed.isPast ? <span className="badge" style={{
-                                                    backgroundColor: EMediumPaletteDetails[selectedEventDetails.event.metadata.color].color,
-                                                    borderColor: EVeryLightPaletteDetails[selectedEventDetails.event.metadata.color].color
+                                                    backgroundColor: selectedEventDetailsPalette.medium.color,
+                                                    borderColor: selectedEventDetailsPalette.veryLight.color
                                                     }}>PAST</span> : null}
             {selectedEventDetails.computed.multipleDays ? <span className="badge" style={{
-                                                    backgroundColor: EMediumPaletteDetails[selectedEventDetails.event.metadata.color].color,
-                                                    borderColor: EVeryLightPaletteDetails[selectedEventDetails.event.metadata.color].color
+                                                    backgroundColor: selectedEventDetailsPalette.medium.color,
+                                                    borderColor: selectedEventDetailsPalette.veryLight.color
                                                     }}>{selectedEventDetails.computed.totalDays} DAYS</span> : null}
           </div>
           <div>

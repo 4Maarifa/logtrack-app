@@ -24,7 +24,8 @@ import Icon from './../components/Utils/Icon/Icon';
  */
 
 class Contract {
-    constructor(identification, invoices, companyOrderId, companyExecId, createdByCompanyId, contractType, status, creator, creationIsoDate, archiveIsoDate) {
+    constructor(identification, invoices, companyOrderId, companyExecId, createdByCompanyId, 
+                contractType, status, creator, creationIsoDate, archiveIsoDate) {
         this.identification = identification;
         this.invoices = invoices;
         this.companyOrderId = companyOrderId;

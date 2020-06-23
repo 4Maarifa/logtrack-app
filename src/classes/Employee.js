@@ -18,6 +18,7 @@ import DateService from './../services/date.service';
  * cretionDate: string | The creation date, as iso string
  * legal: object | Legal acceptance
  * staff: boolean | If the employee is part of the staff
+ * currentLogTrack: LogTrack | Current LogTrack of the employee
  */
 class Employee {
     constructor(firstname, lastname, certificates, activeRoleId, profilePictureUrl, settings, creationIsoDate, legal) {
@@ -30,6 +31,7 @@ class Employee {
         this.creationIsoDate = creationIsoDate;
         this.legal = legal;
         this.staff = false;
+        this.currentLogTrack = null;
     }
 }
 

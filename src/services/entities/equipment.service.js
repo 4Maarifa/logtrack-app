@@ -38,6 +38,7 @@ const EquipmentService = {
     if(!EquipmentService.rights[ERights.RIGHT_EQUIPMENT_GET]()) {
       return ErrorService.manageErrorThenPromiseRejection({ code: 'entity/right', details: 'Get an Equipment' });
     }
+    
     return FirebaseService.getFirestore().collection('equipments').doc(equipmentId).get();
   },
   list: () => {

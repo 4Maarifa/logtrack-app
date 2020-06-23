@@ -58,6 +58,17 @@ const ColorService = {
     const OTHER_RGB_COLOR = ColorService.convertHEXtoRGB(ColorService.lightenDarkenColor(hexColor, amount));
     return `linear-gradient(to bottom right, rgb(${RGB_COLOR[0]}, ${RGB_COLOR[1]}, ${RGB_COLOR[2]}),
       rgb(${OTHER_RGB_COLOR[0]}, ${OTHER_RGB_COLOR[1]}, ${OTHER_RGB_COLOR[2]}))`
+  },
+
+  getPaletteForColor: color => {
+    const COLOR = EPalette[color];
+    if(!COLOR) { return null; }
+    return {
+      dark: EDarkPaletteDetails[COLOR],
+      medium: EMediumPaletteDetails[COLOR],
+      light: ELightPaletteDetails[COLOR],
+      veryLight: EVeryLightPaletteDetails[COLOR]
+    }
   }
 };
 

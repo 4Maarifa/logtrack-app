@@ -131,6 +131,10 @@
   display: block;
   position: relative;
   width: 100%;
+
+  .Checkbox {
+    margin-top: 0;
+  }
 }
 
 :global(.tooltip-parent)  {

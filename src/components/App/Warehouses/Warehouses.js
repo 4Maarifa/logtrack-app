@@ -62,7 +62,7 @@ const Warehouses = () => {
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
-    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
+    return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY);
   }, []);
   
   if(!computed.initialized) { return null; }

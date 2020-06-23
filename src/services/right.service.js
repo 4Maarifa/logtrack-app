@@ -5,7 +5,7 @@ import { ERole } from './../classes/Role';
 
 export const ERights = {
   APP_CAN_USE_GPS: 'APP_CAN_USE_GPS',
-  APP_CAN_USE_LOGTRACK: 'APP_CAN_USE_LOGTRACK',
+  APP_CAN_USE_LOGTRACKS: 'APP_CAN_USE_LOGTRACKS',
   APP_CAN_USE_CONTRACT_MANAGEMENT: 'APP_CAN_USE_CONTRACT_MANAGEMENT',
   APP_CAN_USE_EMPLOYEE_MANAGEMENT: 'APP_CAN_USE_EMPLOYEE_MANAGEMENT',
   APP_CAN_USE_EQUIPMENT_MANAGEMENT: 'APP_CAN_USE_EQUIPMENT_MANAGEMENT',
@@ -125,8 +125,9 @@ const RightService = {
       return DataService.computed.activeRole.role === ERole.DRIVER;
     }
 
-    if(right === ERights.APP_CAN_USE_LOGTRACK) {
-      return DataService.computed.activeRole.role === ERole.DRIVER ||
+    if(right === ERights.APP_CAN_USE_LOGTRACKS) {
+      return DataService.computed.activeRole.role === ERole.MANAGER || 
+        DataService.computed.activeRole.role === ERole.DRIVER ||
         DataService.computed.activeRole.role === ERole.MECHANIC;
     }
     if(right === ERights.APP_CAN_USE_CONTRACT_MANAGEMENT ||

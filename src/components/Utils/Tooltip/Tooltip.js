@@ -28,7 +28,7 @@ const ETooptipTrianglePositionCss = {
   [ETooltipTrianglePosition.END]: 'triangle-end',
 };
 
-const Tooltip = ({ defaultTooltipPosition, defaultTooltipTrianglePosition, show, label }) => {
+const Tooltip = ({ defaultTooltipPosition, defaultTooltipTrianglePosition, show, label, styles }) => {
   const tooltipPosition = (defaultTooltipPosition && ETooltipPosition[defaultTooltipPosition]) ? ETooltipPosition[defaultTooltipPosition] : 'BOTTOM';
   const tooltipTrianglePosition = (defaultTooltipTrianglePosition && ETooltipTrianglePosition[defaultTooltipTrianglePosition]) ? ETooltipTrianglePosition[defaultTooltipTrianglePosition] : 'MIDDLE';
 
@@ -39,7 +39,7 @@ const Tooltip = ({ defaultTooltipPosition, defaultTooltipTrianglePosition, show,
     return null;
   }
   return (
-    <div className={'Tooltip ' + ETooptipPositionCss[tooltipPosition]}>
+    <div className={'Tooltip ' + ETooptipPositionCss[tooltipPosition]} style={styles}>
       <span className={'triangle ' + ETooptipTrianglePositionCss[tooltipTrianglePosition]}></span>
       <span className="label">{label}</span>
     </div>

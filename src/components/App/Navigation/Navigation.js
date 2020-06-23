@@ -93,10 +93,10 @@ const Navigation = () => {
           <Icon source="fa" icon={faCompass} />
           <span className="nav-title">GPS</span>
         </NavLink>,
-      [ERights.APP_CAN_USE_LOGTRACK]: 
-        <NavLink key="logtrack" activeClassName="nav--active" to={`/logtrack`}>
+      [ERights.APP_CAN_USE_LOGTRACKS]: 
+        <NavLink key="logtracks" activeClassName="nav--active" to={`/logtracks`}>
           <Icon source="fa" icon={faMapPin} />
-          <span className="nav-title">LogTrack</span>
+          <span className="nav-title">LogTracks</span>
         </NavLink>,
       [ERights.APP_CAN_USE_WAREHOUSE_MANAGEMENT]: 
         <NavLink key="warehouses" activeClassName="nav--active" to={`/warehouses`}>

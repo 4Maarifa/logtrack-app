@@ -14,7 +14,7 @@ import DateService from './../../../services/date.service';
 
 import { ERole, ERoleDetails } from './../../../classes/Role';
 
-import LogTrack from './../LogTrack/LogTrack';
+import LogTracks from './../LogTracks/LogTracks';
 import Map from './../../Utils/Map/Map';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 
@@ -200,8 +200,8 @@ const Dashboard = () => {
         <div className="card map">
           <Map />
         </div>
-        <div className={'card card-stick logtrack ' + (computed.activeRole && computed.activeRole.role !== ERole.MANAGER ? 'logtrack-with-button' : '')}>
-          <LogTrack />
+        <div className={'card card-stick logtracks ' + (computed.activeRole && computed.activeRole.role !== ERole.MANAGER ? 'logtracks-with-button' : '')}>
+          <LogTracks isEmbed />
           <Icon containerclassname="icon-overlay" source="fa" icon={faMapPin} />
         </div>
       </div>

@@ -69,6 +69,7 @@ const DateService = {
   isTomorrow: date => DateService.areDatesTheSameDay(date, new Date(+(new Date()) + (24*60*60*1000))),
 
   getDifference: (date1, date2) => (+date2) - (+date1),
+  getTimestampDifference: (ts1, ts2) => ts2 - ts1,
   getRelativeDifference: date => DateService.getDifference(new Date(), date),
 
   _watcher: null,
