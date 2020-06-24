@@ -128,18 +128,12 @@
         position: relative;
 
         svg {
-          display: none;
-        }
-
-        &.li--active {
-          svg {
-            height: 3rem;
-            width: 3rem;
-            display: block;
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-          }
+          height: 3rem;
+          width: 3rem;
+          display: block;
+          position: absolute;
+          top: 1rem;
+          left: 1rem;
         }
 
         .input-color-choice {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { faInfinity } from '@fortawesome/pro-regular-svg-icons';
-import { faCircle, faTimesCircle, faCheckCircle } from '@fortawesome/pro-solid-svg-icons';
+import { faCircle, faTimesCircle, faCheckCircle } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../components/Utils/Icon/Icon';
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faTruck, faPlus } from '@fortawesome/pro-solid-svg-icons';
+import { faTruck, faPlus } from '@fortawesome/pro-light-svg-icons';
 
 import ActionButton from './../../Utils/ActionButton/ActionButton';
 import ExTable from './../../Utils/ExTable/ExTable';

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faCheck, faTimes, faEdit } from '@fortawesome/pro-solid-svg-icons';
+import { faCheck, faTimes, faEdit } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Icon/Icon';
 import Tooltip, { ETooltipPosition, ETooltipTrianglePosition } from './../../Tooltip/Tooltip';
@@ -8,18 +8,9 @@ import './FormAutoSuggestInput.scss';
 
 import { v4 as uuid } from 'uuid';
 
-const FormAutoSuggestInput = ({ value,
-                                fieldName,
-                                selectedItemKey, 
-                                selectedItem,
-                                possibleItems,
-                                inputRequired,
-                                label,
-                                inputName,
-                                inputAutoComplete,
-                                instructions,
-                                onValueChange,
-                                onSelectedItemChange }) => {
+const FormAutoSuggestInput = ({ value, fieldName, selectedItemKey, 
+      selectedItem, possibleItems, inputRequired, label, inputName,
+      inputAutoComplete, instructions, onValueChange, onSelectedItemChange }) => {
 
   const [isHover, setHover] = useState(false);
 

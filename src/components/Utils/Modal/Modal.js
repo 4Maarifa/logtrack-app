@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { faTimes } from '@fortawesome/pro-solid-svg-icons';
+import { faTimes } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../Icon/Icon';
 

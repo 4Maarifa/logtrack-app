@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faAward, faClipboardUser, faPortrait, faUserTie } from '@fortawesome/pro-solid-svg-icons';
+import { faAward, faClipboardUser, faPortrait, faUserTie } from '@fortawesome/pro-light-svg-icons';
 
 import DataService from './../../../services/data.service';
 import UtilsService from './../../../services/utils.service';

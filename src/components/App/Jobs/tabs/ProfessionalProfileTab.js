@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import DateTimePicker from 'react-datetime-picker';
-import { faArrowAltToRight, faArrowAltFromLeft, faCalendarAlt, faClipboardUser,
-  faInfoCircle, faBuilding, faAward, faUserTie } from '@fortawesome/pro-solid-svg-icons';
+import { faArrowAltToRight, faArrowAltFromLeft, faCalendarAlt, faClipboardUser, faInfoCircle, 
+  faBuilding, faAward, faUserTie } from '@fortawesome/pro-light-svg-icons';
 
 import DataService from '../../../../services/data.service';
 import UtilsService from '../../../../services/utils.service';
@@ -144,8 +144,8 @@ const ProfessionalProfileTab = () => {
   const ROLE_DETAILS = {};
   Object.keys(ERoleDetails).forEach(roleId => {
     ROLE_DETAILS[roleId] = {
-      content: <Fragment>
-        <Icon source="fa" icon={ERoleDetails[roleId].icon} />
+      content: ({ isActive }) => <Fragment>
+        <Icon source="fa" icon={isActive ? ERoleDetails[roleId].iconSolid : ERoleDetails[roleId].icon} />
         {ERoleDetails[roleId].name}
       </Fragment>
     }

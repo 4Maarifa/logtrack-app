@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faUsers } from '@fortawesome/pro-solid-svg-icons';
+import { faUsers } from '@fortawesome/pro-light-svg-icons';
 
 import Map from './../../Utils/Map/Map';
 import ExTable from './../../Utils/ExTable/ExTable';

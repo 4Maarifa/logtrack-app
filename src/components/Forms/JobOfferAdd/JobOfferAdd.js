@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
-import { faClipboardUser, faBars, faTag, faUser, faBuilding } from '@fortawesome/pro-solid-svg-icons';
+import { faClipboardUser, faBars, faTag, faUser, faBuilding } from '@fortawesome/pro-light-svg-icons';
 
 import DataService from './../../../services/data.service';
 import ErrorService from './../../../services/error.service';
@@ -126,8 +126,8 @@ const JobOfferAdd = ({ match }) => {
   const ROLE_DETAILS = {};
   Object.keys(ERoleDetails).forEach(roleId => {
     ROLE_DETAILS[roleId] = {
-      content: <Fragment>
-        <Icon source="fa" icon={ERoleDetails[roleId].icon} />
+      content: ({ isActive }) => <Fragment>
+        <Icon source="fa" icon={isActive ? ERoleDetails[roleId].iconSolid : ERoleDetails[roleId].icon} />
         {ERoleDetails[roleId].name}
       </Fragment>
     }

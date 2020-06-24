@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons';
+import { faExclamationTriangle } from '@fortawesome/pro-light-svg-icons';
 
 import Map from './../../Utils/Map/Map';
 import Icon from './../../Utils/Icon/Icon';

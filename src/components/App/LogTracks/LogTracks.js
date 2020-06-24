@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { faMapPin } from '@fortawesome/pro-light-svg-icons';
 import { Redirect } from 'react-router-dom';
 
-import Loader from '../../Utils/Loader/Loader';
+import Loader from './../../Utils/Loader/Loader';
+import Icon from './../../Utils/Icon/Icon';
 
-import DataService from '../../../services/data.service';
-import ErrorService from '../../../services/error.service';
+import DataService from './../../../services/data.service';
+import ErrorService from './../../../services/error.service';
 
-import { ERole } from '../../../classes/Role';
+import { ERole } from './../../../classes/Role';
 
 import LogTracksForManagers from './pages/LogTracksForManagers';
 import LogTracksForUsers from './pages/LogTracksForUsers';
@@ -57,8 +59,16 @@ const LogTracks = ({ isEmbed }) => {
 
   if(!computed.initialized) { return null; }
   if(!computed.activeRole) {
-    ErrorService.error('You need an active role to access this.');
-    return <Redirect to={`/dashboard`} />;
+    if(isEmbed) {
+      return <div className="LogTracks">
+        <span className="no-role-warning">Please activate a role to view your LogTracks!</span>
+        <Icon containerclassname="icon-overlay" source="fa" icon={faMapPin} />
+      </div>;
+    }
+    else {
+      ErrorService.error('You need an active role to access this.');
+      return <Redirect to={`/dashboard`} />;
+    }
   }
   if(!mode) {
     return <Loader />;

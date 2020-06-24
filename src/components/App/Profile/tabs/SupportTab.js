@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { faPhoneAlt, faInfoCircle, faExclamationTriangle, faEnvelope, faUserHeadset } from '@fortawesome/pro-solid-svg-icons';
+import { faPhoneAlt, faInfoCircle, faExclamationTriangle, faEnvelope, faUserHeadset } from '@fortawesome/pro-light-svg-icons';
 
 import DataService from './../../../../services/data.service';
 import DateService from './../../../../services/date.service';

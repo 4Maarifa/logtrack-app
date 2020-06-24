@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { faEdit } from '@fortawesome/pro-solid-svg-icons';
+import { faEdit } from '@fortawesome/pro-light-svg-icons';
 
 import ActionList from './../../Utils/ActionList/ActionList';
 import Icon from './../../Utils/Icon/Icon';

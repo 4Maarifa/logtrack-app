@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faBuilding, faUserTag, faEdit } from '@fortawesome/pro-solid-svg-icons';
+import { faBuilding, faUserTag, faEdit } from '@fortawesome/pro-light-svg-icons';
 
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import ActionList from './../../Utils/ActionList/ActionList';

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { faPlus, faBagsShopping, faCog, faSignature, faHandshakeAlt } from '@fortawesome/pro-solid-svg-icons';
+import { faPlus, faBagsShopping, faCog, faSignature, faHandshakeAlt } from '@fortawesome/pro-light-svg-icons';
+import { faBagsShopping as faBagsShoppingSolid, faCog as faCogSolid, faSignature as faSignatureSolid } from '@fortawesome/pro-solid-svg-icons';
 
 import DataService from './../../../services/data.service';
 import ContractService from './../../../services/entities/contract.service';
@@ -93,8 +94,8 @@ const Contracts = () => {
     <div className="Contracts">
       <Tabs default="execution" tabs={{
         execution: {
-          name: () => <span>
-            <Icon source="fa" icon={faCog} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faCogSolid : faCog} />
             Execution
           </span>,
           content: () => <ExTable key="EXECUTION"
@@ -105,8 +106,8 @@ const Contracts = () => {
                                   loading={isContractsLoading} />
         },
         order: {
-          name: () => <span>
-            <Icon source="fa" icon={faSignature} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faSignatureSolid : faSignature} />
             Orders
           </span>,
           content: () => <ExTable key="ORDER"
@@ -117,8 +118,8 @@ const Contracts = () => {
                                   loading={isContractsLoading} />
         },
         market: {
-          name: () => <span>
-            <Icon source="fa" icon={faBagsShopping} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faBagsShoppingSolid : faBagsShopping} />
             Market <span className="badge badge-inverse">soon</span>
           </span>,
           content: () => null,

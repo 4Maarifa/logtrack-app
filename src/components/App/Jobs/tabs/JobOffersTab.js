@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { faSuitcase } from '@fortawesome/pro-solid-svg-icons';
+import { faSuitcase } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../../Utils/Icon/Icon';
 import ExTable from './../../../Utils/ExTable/ExTable';

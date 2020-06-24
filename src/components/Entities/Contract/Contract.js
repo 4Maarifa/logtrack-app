@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { faHourglassStart, faCog, faCreditCard, faHandshakeAlt, faPlay, faMoneyBill, faArchive, faCheck, faEdit } from '@fortawesome/pro-solid-svg-icons';
+import { faHourglassStart, faCog, faCreditCard, faHandshakeAlt, faPlay, faMoneyBill,
+  faArchive, faCheck, faEdit } from '@fortawesome/pro-light-svg-icons';
 
 import DataService from './../../../services/data.service';
 import ContractService from './../../../services/entities/contract.service';
@@ -136,12 +137,12 @@ const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, 
           {IS_EXECUTOR ? 'You execute the contract for' : 'You ordered the contract from'}
           <PageLink type={PageLinkType.COMPANY} entityId={OTHER_COMPANY_ID} entityData={OTHER_COMPANY_DATA} white={isPage} />
           <span className="badge badge-mono">
-            {EContractTypeDetails[CONTRACT_DATA.contractType].icon}
+            <Icon source="fa" icon={EContractTypeDetails[CONTRACT_DATA.contractType].icon} />
             {EContractTypeDetails[CONTRACT_DATA.contractType].name}
           </span>
           <span className="sub">{computeStatus()}</span>
           <span className={'Element-badge badge ' + (isPage ? 'badge-inverse' : '')}>
-            {EContractStatusDetails[CONTRACT_DATA.status].icon}
+            <Icon source="fa" icon={EContractStatusDetails[CONTRACT_DATA.status].icon} />
             {EContractStatusDetails[CONTRACT_DATA.status].name}
           </span>
         </div>

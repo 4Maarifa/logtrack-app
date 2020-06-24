@@ -1,8 +1,7 @@
 import React from 'react';
 import { faChartPie, faPencil, faMapMarker, faRoute, faWrench, faPortrait, faWarehouseAlt,
   faUserTag, faHandshakeAlt, faFileInvoiceDollar, faTrafficCone, faCommentDots, faPalletAlt,
-  faHands, faExclamationTriangle } from '@fortawesome/pro-light-svg-icons';
-import { faInfoCircle } from '@fortawesome/pro-solid-svg-icons';
+  faHands, faExclamationTriangle, faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import { Link } from 'react-router-dom';
 
 import Icon from '../../../Utils/Icon/Icon';

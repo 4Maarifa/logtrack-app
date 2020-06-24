@@ -1,5 +1,5 @@
 import React from 'react';
-import { faReply, faComment, faCopy } from '@fortawesome/pro-solid-svg-icons';
+import { faReply, faComment, faCopy } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 import ActionList from './../../Utils/ActionList/ActionList';

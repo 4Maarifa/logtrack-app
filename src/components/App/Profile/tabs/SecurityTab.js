@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { faKey, faSignIn, faLock } from '@fortawesome/pro-solid-svg-icons';
+import { faKey, faSignIn, faLock } from '@fortawesome/pro-light-svg-icons';
 
 import FirebaseService from './../../../../services/firebase.service';
 import DataService from './../../../../services/data.service';

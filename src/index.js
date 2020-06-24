@@ -2,45 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { 
-    // Vehicles
-    faTruck, faTruckMoving, faTruckPickup, faTruckContainer, faCarSide, faHelicopter, faPlane, faShip, faTrain, faShippingFast, faShippingTimed,
-    // Loading
-    faTruckRamp, faTruckLoading, faTruckCouch, faPersonDollyEmpty, faPersonDolly, faPersonCarry, faDolly, faDollyEmpty, faPeopleCarry,
-    faRampLoading, faConveyorBelt, faConveyorBeltAlt, faForklift, faInventory, faShare, faReply,
-    // Problems
-    faCarBattery, faCarBump, faCarCrash, faCarGarage, faCarMechanic, faCarTilt, faEngineWarning, faOilCan, faOilTemp, 
-    faTireFlat, faTirePressureWarning, faGasPumpSlash, faTrafficCone,
-    // Parts
-    faTire, faMicrochip, faLightbulbOn,
-    // Pause
-    faChargingStation, faGasPump, faPause, faBed, faUtensils, faWeight, faParking, faWeightHanging, faCarWash,
-    // Service
-    faArrowAltFromLeft, faArrowAltToRight, faToolbox,
-    // Date / Monitoring
-    faCalendar, faCalendarAlt, faCalendarCheck, faCalendarTimes, faClock, faCalendarExclamation, faDigitalTachograph, faTemperatureLow, 
-    faTemperatureHigh, faAnalytics, faCalendarDay, faReceipt,
-    // Merchandise
-    faArchive, faCarrot, faCookie, faLaptop, faTv, faAppleAlt, faBacon, faBreadLoaf, faCheese, faCheeseburger, faCorn, faEgg, 
-    faFish, faHamburger, faIceCream, faLemon, faMeat, faPie, faPizza, faPizzaSlice, faPumpkin,faSalad, faSoup, faSteak, 
-    faTurkey, faWheat, faCow, faPig, faElephant, faHorse, faHippo, faDuck, faMonkey, faRabbit, faRam, faSheep, faSnake, faTurtle, 
-    faBoxAlt, faBoxesAlt, faContainerStorage, faCouch, faCapsules, faWater, faFlowerTulip, faPallet, faPalletAlt, faPills, 
-    faPrescriptionBottle, faPrescriptionBottleAlt, faRecycle, faTrash, faSandwich, faTshirt, faCogs,
-    // Places
-    faMap, faMapMarker, faMapMarkerAlt, faMapMarkerCheck, faMapMarkerExclamation, faMapMarkerQuestion, faMapMarkerTimes, 
-    faMapSigns, faRoute, faMapMarked, faMapMarkedAlt, faAtlas, faGlobe, faLocationArrow, faRouteInterstate, faRouteHighway, 
-    faFlag, faFlagAlt, faFlagCheckered, faLocation, faLocationSlash, faLocationCircle, faRoad, faDirections, 
-    // Weather
-    faBolt, faCloud, faCloudDrizzle, faCloudHail, faCloudHailMixed, faCloudMoon, faCloudMoonRain, faCloudRain, faCloudRainbow, 
-    faCloudShowers, faCloudShowersHeavy, faCloudSleet, faCloudSnow, faCloudSun, faCloudSunRain, faClouds, faCloudsMoon, 
-    faCloudsSun, faFog, faMoon, faSmog, faSmoke, faSnowBlowing, faSnowflake, faSnowflakes, faStars, faRaindrops, faSun, faSunCloud, 
-    faSunDust, faSunHaze, faSunrise, faSunset, faThunderstorm, faTornado, faWind, faWindWarning, faWindsock,
-    // Roles
-    faUsers, faWrench, faSteeringWheel,
-
-} from '@fortawesome/pro-solid-svg-icons';
-
 import 'transportation-font/dist/transportation-font.css';
 
 // COMPONENTS
@@ -87,11 +48,15 @@ import Contracts from './components/App/Contracts/Contracts';
 import ContractPage from './components/Pages/ContractPage/ContractPage';
 import ContractAdd from './components/Forms/ContractAdd/ContractAdd';
 
+import Invoices from './components/App/Invoices/Invoices';
+
 import Warehouses from './components/App/Warehouses/Warehouses';
 import WarehouseAdd from './components/Forms/WarehouseAdd/WarehouseAdd';
 import WarehousePage from './components/Pages/WarehousePage/WarehousePage';
 
 import Gps from './components/App/Gps/Gps';
+
+import Maintenance from './components/App/Maintenance/Maintenance';
 
 import LogTracks from './components/App/LogTracks/LogTracks';
 import LogTrackAdd from './components/Forms/LogTrackAdd/LogTrackAdd';
@@ -101,6 +66,7 @@ import Analytics from './components/App/Analytics/Analytics';
 import Search from './components/App/Search/Search';
 
 import Files from './components/App/Files/Files';
+
 
 // SERVICES
 import FirebaseService from './services/firebase.service';
@@ -115,42 +81,6 @@ import { ERole } from './classes/Role';
 import { v4 as uuid } from 'uuid';
 
 import './index.scss';
-
-// Vehicles
-library.add(faTruck, faTruckMoving, faTruckPickup, faTruckContainer, faCarSide, faHelicopter, faPlane, faShip, faTrain, faShippingFast, faShippingTimed);
-// Loading
-library.add(faTruckRamp, faTruckLoading, faTruckCouch, faPersonDollyEmpty, faPersonDolly, faPersonCarry, faDolly, faDollyEmpty, faPeopleCarry,
-    faRampLoading, faConveyorBelt, faConveyorBeltAlt, faForklift, faInventory, faShare, faReply);
-// Problems
-library.add(faCarBattery, faCarBump, faCarCrash, faCarCrash, faCarGarage, faCarMechanic, faCarTilt,faEngineWarning, faOilCan, faOilTemp, 
-    faTireFlat, faTirePressureWarning, faGasPumpSlash, faTrafficCone);
-// Parts
-library.add(faTire, faMicrochip, faLightbulbOn);
-// Pause
-library.add(faChargingStation, faGasPump, faPause, faBed, faUtensils, faWeight, faParking, faWeightHanging, faCarWash);
-// Service
-library.add(faArrowAltFromLeft, faArrowAltToRight, faToolbox);
-// Date / Monitoring
-library.add(faCalendar, faCalendarAlt, faCalendarCheck, faCalendarTimes, faClock, faCalendarExclamation, faDigitalTachograph, faTemperatureLow, 
-    faTemperatureHigh, faAnalytics, faCalendarDay, faReceipt);
-// Merchandise
-library.add(faArchive, faCarrot, faCookie, faLaptop, faTv, faAppleAlt, faBacon, faBreadLoaf, faCheese, faCheeseburger, faCorn, faEgg, 
-    faFish, faHamburger, faIceCream, faLemon, faMeat, faPie, faPizza, faPizzaSlice, faPumpkin,faSalad, faSoup, faSteak, 
-    faTurkey, faWheat, faCow, faPig, faElephant, faHorse, faHippo, faDuck, faMonkey, faRabbit, faRam, faSheep, faSnake, faTurtle, 
-    faBoxAlt, faBoxesAlt, faContainerStorage, faCouch, faCapsules, faWater, faFlowerTulip, faPallet, faPalletAlt, faPills, 
-    faPrescriptionBottle, faPrescriptionBottleAlt, faRecycle, faTrash, faSandwich, faTshirt, faCogs);
-// Places
-library.add(faMap, faMapMarker, faMapMarkerAlt, faMapMarkerCheck, faMapMarkerExclamation, faMapMarkerQuestion, faMapMarkerTimes, 
-    faMapSigns, faRoute, faMapMarked, faMapMarkedAlt, faAtlas, faGlobe, faLocationArrow, faRouteInterstate, faRouteHighway, 
-    faFlag, faFlagAlt, faFlagCheckered, faLocation, faLocationSlash, faLocationCircle, faRoad, faDirections);
-// Weather
-library.add(faBolt, faCloud, faCloudDrizzle, faCloudHail, faCloudHailMixed, faCloudMoon, faCloudMoonRain, faCloudRain, faCloudRainbow, 
-    faCloudShowers, faCloudShowersHeavy, faCloudSleet, faCloudSnow, faCloudSun, faCloudSunRain, faClouds, faCloudsMoon, 
-    faCloudsSun, faFog, faMoon, faSmog, faSmoke, faSnowBlowing, faSnowflake, faSnowflakes, faStars, faRaindrops, faSun, faSunCloud, 
-    faSunDust, faSunHaze, faSunrise, faSunset, faThunderstorm, faTornado, faWind, faWindWarning, faWindsock);
-
-// Roles
-library.add(faUsers, faWrench, faSteeringWheel);
 
 // Private route
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -255,12 +185,16 @@ const renderApp = () => {
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contract-add" component={ContractAdd} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contract-edit/:contractid" component={ContractAdd} />
 
+                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/invoices" component={Invoices} />
+
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/warehouses" component={Warehouses} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/warehouse-add" component={WarehouseAdd} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/warehouse-edit/:warehouseid" component={WarehouseAdd} />
                     <PrivateRoute exact path="/warehouse/:warehouseid" component={WarehousePage} />
 
                     <RoleLimitedRoute roles={[ERole.DRIVER]} exact path="/gps" component={Gps} />
+
+                    <RoleLimitedRoute roles={[ERole.MECHANIC]} exact path="/maintenance" component={Maintenance} />
                     
                     <RoleLimitedRoute roles={[ERole.DRIVER, ERole.MECHANIC, ERole.MANAGER]} exact path="/logtracks" component={LogTracks} />
                     <RoleLimitedRoute roles={[ERole.DRIVER, ERole.MECHANIC]} exact path="/logtrack-add" component={LogTrackAdd} />

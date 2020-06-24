@@ -1,4 +1,33 @@
 import React, { Component, Fragment } from 'react';
+import { faTruckContainer, faTruck, faTruckMoving, faTruckPickup, faCarSide, faHelicopter, 
+    faPlane, faShip, faTrain, faTrailer, faShippingFast, faShippingTimed, faWindsock, 
+    faWindWarning, faWind, faTornado, faThunderstorm, faSunset, faSunrise, faSunHaze, 
+    faSunDust, faSunCloud, faSun, faRaindrops, faStars, faSnowflake, faSnowflakes, 
+    faSnowBlowing, faSmoke, faSmog, faMoon, faFog, faTruckRamp, faTruckLoading, 
+    faTruckCouch, faDolly, faPersonCarry, faPersonDolly, faPersonDollyEmpty, faDollyEmpty, 
+    faPeopleCarry, faRampLoading, faConveyorBelt, faConveyorBeltAlt, faForklift, faInventory, 
+    faCarBattery, faCarBump, faLightbulbOn, faLightbulb, faMicrochip, faTire, faTrafficCone, 
+    faGasPumpSlash, faTirePressureWarning, faTireFlat, faOilTemp, faOilCan, faEngineWarning, 
+    faCarTilt, faCarMechanic, faCarCrash, faCarGarage, faChargingStation, faGasPump, 
+    faPause, faBed, faUtensils, faWeight, faParking, faWeightHanging, faCarWash, 
+    faShare, faReply, faWrench, faArrowAltFromLeft, faArrowAltToRight, faToolbox, 
+    faCloud, faCloudDrizzle, faCloudHail, faCloudHailMixed, faCloudMoon, faCloudMoonRain, 
+    faCloudRain, faCloudRainbow, faCloudShowers, faCloudShowersHeavy, faCloudSleet, 
+    faCloudSnow, faCloudSun, faCloudSunRain, faClouds, faCloudsMoon, faCloudsSun, 
+    faBolt, faCalendar, faCalendarAlt, faCalendarCheck, faCalendarTimes, faClock, 
+    faCalendarExclamation, faDigitalTachograph, faTemperatureLow, faTemperatureHigh, 
+    faAnalytics, faCalendarDay, faReceipt, faMap, faMapMarker, faMapMarkerAlt, faMapMarkerCheck,
+    faMapMarkerExclamation, faMapMarkerQuestion, faMapMarkerTimes, faMapSigns, faRoute, 
+    faMapMarked, faAtlas, faGlobe, faLocationArrow, faRouteHighway, faRouteInterstate, 
+    faFlag, faFlagAlt, faFlagCheckered, faLocationSlash, faLocation, faLocationCircle, 
+    faRoad, faDirections, faArchive, faCarrot, faLaptop, faCookie, faTv, faAppleAlt, 
+    faBacon, faBreadLoaf, faCheese, faCheeseburger, faCorn, faEgg, faFish, faHamburger, 
+    faIceCream, faLemon, faMeat, faPizza, faPie, faPizzaSlice, faPumpkin, faSalad, 
+    faSoup, faSteak, faTurkey, faWheat, faCow, faPig, faElephant, faHorse, faHippo, 
+    faDuck, faMonkey, faRabbit, faSheep, faSnake, faRam, faBoxAlt, faTurtle, faBoxesAlt, 
+    faContainerStorage, faCouch, faCapsules, faWater, faFlowerTulip, faFlower, faPallet, 
+    faPalletAlt, faPills, faPrescriptionBottle, faPrescription, faPrescriptionBottleAlt, 
+    faRecycle, faTrash, faSandwich, faTshirt, faCogs } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../Icon/Icon';
 
@@ -47,228 +76,232 @@ class Specs extends Component {
         <h1>Icons</h1>
         <h2>Vehicles</h2>
         <ul>
-            <li><Icon source="fa" icon="truck"/></li>
-            <li><Icon source="fa" icon="truck-moving"/></li>
-            <li><Icon source="fa" icon="truck-pickup"/></li>
-            <li><Icon source="fa" icon="truck-container"/></li>
-            <li><Icon source="fa" icon="car-side"/></li>
-            <li><Icon source="fa" icon="helicopter"/></li>
-            <li><Icon source="fa" icon="plane"/></li>
-            <li><Icon source="fa" icon="ship"/></li>
-            <li><Icon source="fa" icon="train"/></li>
-            <li><Icon source="fa" icon="shipping-fast"/></li>
-            <li><Icon source="fa" icon="shipping-timed"/></li>
+            <li><Icon source="fa" icon={faTruck} /></li>
+            <li><Icon source="fa" icon={faTruckMoving} /></li>
+            <li><Icon source="fa" icon={faTruckPickup} /></li>
+            <li><Icon source="fa" icon={faTruckContainer} /></li>
+            <li><Icon source="fa" icon={faCarSide} /></li>
+            <li><Icon source="fa" icon={faTrailer} /></li>
+            <li><Icon source="fa" icon={faHelicopter} /></li>
+            <li><Icon source="fa" icon={faPlane} /></li>
+            <li><Icon source="fa" icon={faShip} /></li>
+            <li><Icon source="fa" icon={faTrain} /></li>
+            <li><Icon source="fa" icon={faShippingFast} /></li>
+            <li><Icon source="fa" icon={faShippingTimed} /></li>
         </ul>
         <h2>Loading</h2>
         <ul>
-            <li><Icon source="fa" icon="truck-ramp"/></li>
-            <li><Icon source="fa" icon="truck-loading"/></li>
-            <li><Icon source="fa" icon="truck-couch"/></li>
-            <li><Icon source="fa" icon="person-dolly-empty"/></li>
-            <li><Icon source="fa" icon="person-dolly"/></li>
-            <li><Icon source="fa" icon="person-carry"/></li>
-            <li><Icon source="fa" icon="dolly"/></li>
-            <li><Icon source="fa" icon="dolly-empty"/></li>
-            <li><Icon source="fa" icon="people-carry"/></li>
-            <li><Icon source="fa" icon="ramp-loading"/></li>
-            <li><Icon source="fa" icon="conveyor-belt"/></li>
-            <li><Icon source="fa" icon="conveyor-belt-alt"/></li>
-            <li><Icon source="fa" icon="forklift"/></li>
-            <li><Icon source="fa" icon="inventory"/></li>
+            <li><Icon source="fa" icon={faTruckRamp} /></li>
+            <li><Icon source="fa" icon={faTruckLoading} /></li>
+            <li><Icon source="fa" icon={faTruckCouch} /></li>
+            <li><Icon source="fa" icon={faPersonDollyEmpty} /></li>
+            <li><Icon source="fa" icon={faPersonDolly} /></li>
+            <li><Icon source="fa" icon={faPersonCarry} /></li>
+            <li><Icon source="fa" icon={faDolly} /></li>
+            <li><Icon source="fa" icon={faDollyEmpty} /></li>
+            <li><Icon source="fa" icon={faPeopleCarry} /></li>
+            <li><Icon source="fa" icon={faRampLoading} /></li>
+            <li><Icon source="fa" icon={faConveyorBelt} /></li>
+            <li><Icon source="fa" icon={faConveyorBeltAlt} /></li>
+            <li><Icon source="fa" icon={faForklift} /></li>
+            <li><Icon source="fa" icon={faInventory} /></li>
         </ul>
         <h2>Problems</h2>
         <ul>
-            <li><Icon source="fa" icon="car-battery"/></li>
-            <li><Icon source="fa" icon="car-bump"/></li>
-            <li><Icon source="fa" icon="car-crash"/></li>
-            <li><Icon source="fa" icon="car-garage"/></li>
-            <li><Icon source="fa" icon="car-mechanic"/></li>
-            <li><Icon source="fa" icon="car-tilt"/></li>
-            <li><Icon source="fa" icon="engine-warning"/></li>
-            <li><Icon source="fa" icon="oil-can"/></li>
-            <li><Icon source="fa" icon="oil-temp"/></li>
-            <li><Icon source="fa" icon="tire-flat"/></li>
-            <li><Icon source="fa" icon="tire-pressure-warning"/></li>
-            <li><Icon source="fa" icon="gas-pump-slash"/></li>
-            <li><Icon source="fa" icon="traffic-cone"/></li>
+            <li><Icon source="fa" icon={faCarBattery} /></li>
+            <li><Icon source="fa" icon={faCarBump} /></li>
+            <li><Icon source="fa" icon={faCarCrash} /></li>
+            <li><Icon source="fa" icon={faCarGarage} /></li>
+            <li><Icon source="fa" icon={faCarMechanic} /></li>
+            <li><Icon source="fa" icon={faCarTilt} /></li>
+            <li><Icon source="fa" icon={faEngineWarning} /></li>
+            <li><Icon source="fa" icon={faOilCan} /></li>
+            <li><Icon source="fa" icon={faOilTemp} /></li>
+            <li><Icon source="fa" icon={faTireFlat} /></li>
+            <li><Icon source="fa" icon={faTirePressureWarning} /></li>
+            <li><Icon source="fa" icon={faGasPumpSlash} /></li>
+            <li><Icon source="fa" icon={faTrafficCone} /></li>
         </ul>
         <h2>Parts</h2>
         <ul>
-            <li><Icon source="fa" icon="tire"/></li>
-            <li><Icon source="fa" icon="microchip"/></li>
-            <li><Icon source="fa" icon="lightbulb-on"/></li>
-            <li><Icon source="custom" icon="Spring"/></li>
-            <li><Icon source="custom" icon="Fuel"/></li>
-            <li><Icon source="custom" icon="Exhaust"/></li>
-            <li><Icon source="custom" icon="CarSeat"/></li>
-            <li><Icon source="custom" icon="CarDoor"/></li>
-            <li><Icon source="custom" icon="Brake"/></li>
-            <li><Icon source="custom" icon="Engine"/></li>
-            <li><Icon source="custom" icon="Gearbox"/></li>
-            <li><Icon source="custom" icon="FifthWheel"/></li>
+            <li><Icon source="fa" icon={faTire} /></li>
+            <li><Icon source="fa" icon={faMicrochip} /></li>
+            <li><Icon source="fa" icon={faLightbulb} /></li>
+            <li><Icon source="fa" icon={faLightbulbOn} /></li>
+            <li><Icon source="custom" icon="Spring" /></li>
+            <li><Icon source="custom" icon="Fuel" /></li>
+            <li><Icon source="custom" icon="Exhaust" /></li>
+            <li><Icon source="custom" icon="CarSeat" /></li>
+            <li><Icon source="custom" icon="CarDoor" /></li>
+            <li><Icon source="custom" icon="Brake" /></li>
+            <li><Icon source="custom" icon="Engine" /></li>
+            <li><Icon source="custom" icon="Gearbox" /></li>
+            <li><Icon source="custom" icon="FifthWheel" /></li>
         </ul>
         <h2>Pause</h2>
         <ul>
-            <li><Icon source="fa" icon="charging-station"/></li>
-            <li><Icon source="fa" icon="gas-pump"/></li>
-            <li><Icon source="fa" icon="pause"/></li>
-            <li><Icon source="fa" icon="bed"/></li>
-            <li><Icon source="fa" icon="utensils"/></li>
-            <li><Icon source="fa" icon="weight"/></li>
-            <li><Icon source="fa" icon="parking"/></li>
-            <li><Icon source="fa" icon="weight-hanging"/></li>
-            <li><Icon source="fa" icon="car-wash"/></li>
-            <li><Icon source="fa" icon="truck" additional="share" /></li>
-            <li><Icon source="fa" icon="truck" additional="reply" /></li>
+            <li><Icon source="fa" icon={faChargingStation} /></li>
+            <li><Icon source="fa" icon={faGasPump} /></li>
+            <li><Icon source="fa" icon={faPause} /></li>
+            <li><Icon source="fa" icon={faBed} /></li>
+            <li><Icon source="fa" icon={faUtensils} /></li>
+            <li><Icon source="fa" icon={faWeight} /></li>
+            <li><Icon source="fa" icon={faParking} /></li>
+            <li><Icon source="fa" icon={faWeightHanging} /></li>
+            <li><Icon source="fa" icon={faCarWash} /></li>
+            <li><Icon source="fa" icon={faTruck} additional={faShare} /></li>
+            <li><Icon source="fa" icon={faTruck} additional={faReply} /></li>
         </ul>
         <h2>Service</h2>
         <ul>
-            <li><Icon source="fa" icon="wrench"/></li>
-            <li><Icon source="fa" icon="arrow-alt-from-left"/></li>
-            <li><Icon source="fa" icon="arrow-alt-to-right"/></li>
-            <li><Icon source="fa" icon="toolbox"/></li>
+            <li><Icon source="fa" icon={faWrench} /></li>
+            <li><Icon source="fa" icon={faArrowAltFromLeft} /></li>
+            <li><Icon source="fa" icon={faArrowAltToRight} /></li>
+            <li><Icon source="fa" icon={faToolbox} /></li>
         </ul>
         <h2>Date / Monitoring</h2>
         <ul>
-            <li><Icon source="fa" icon="calendar"/></li>
-            <li><Icon source="fa" icon="calendar-alt"/></li>
-            <li><Icon source="fa" icon="calendar-check"/></li>
-            <li><Icon source="fa" icon="calendar-times"/></li>
-            <li><Icon source="fa" icon="clock"/></li>
-            <li><Icon source="fa" icon="calendar-exclamation"/></li>
-            <li><Icon source="fa" icon="digital-tachograph"/></li>
-            <li><Icon source="fa" icon="temperature-low"/></li>
-            <li><Icon source="fa" icon="temperature-high"/></li>
-            <li><Icon source="fa" icon="analytics"/></li>
-            <li><Icon source="fa" icon="calendar-day"/></li>
-            <li><Icon source="fa" icon="receipt"/></li>
+            <li><Icon source="fa" icon={faCalendar} /></li>
+            <li><Icon source="fa" icon={faCalendarAlt} /></li>
+            <li><Icon source="fa" icon={faCalendarCheck} /></li>
+            <li><Icon source="fa" icon={faCalendarTimes} /></li>
+            <li><Icon source="fa" icon={faClock} /></li>
+            <li><Icon source="fa" icon={faCalendarExclamation} /></li>
+            <li><Icon source="fa" icon={faDigitalTachograph} /></li>
+            <li><Icon source="fa" icon={faTemperatureLow} /></li>
+            <li><Icon source="fa" icon={faTemperatureHigh} /></li>
+            <li><Icon source="fa" icon={faAnalytics} /></li>
+            <li><Icon source="fa" icon={faCalendarDay} /></li>
+            <li><Icon source="fa" icon={faReceipt} /></li>
         </ul>
         <h2>Merchandise</h2>
         <ul>
-            <li><Icon source="fa" icon="archive"/></li>
-            <li><Icon source="fa" icon="carrot"/></li>
-            <li><Icon source="fa" icon="cookie"/></li>
-            <li><Icon source="fa" icon="laptop"/></li>
-            <li><Icon source="fa" icon="tv"/></li>
-            <li><Icon source="fa" icon="apple-alt"/></li>
-            <li><Icon source="fa" icon="bacon"/></li>
-            <li><Icon source="fa" icon="bread-loaf"/></li>
-            <li><Icon source="fa" icon="cheese"/></li>
-            <li><Icon source="fa" icon="cheeseburger"/></li>
-            <li><Icon source="fa" icon="corn"/></li>
-            <li><Icon source="fa" icon="egg"/></li>
-            <li><Icon source="fa" icon="fish"/></li>
-            <li><Icon source="fa" icon="hamburger"/></li>
-            <li><Icon source="fa" icon="ice-cream"/></li>
-            <li><Icon source="fa" icon="lemon"/></li>
-            <li><Icon source="fa" icon="meat"/></li>
-            <li><Icon source="fa" icon="pie"/></li>
-            <li><Icon source="fa" icon="pizza"/></li>
-            <li><Icon source="fa" icon="pizza-slice"/></li>
-            <li><Icon source="fa" icon="pumpkin"/></li>
-            <li><Icon source="fa" icon="salad"/></li>
-            <li><Icon source="fa" icon="soup"/></li>
-            <li><Icon source="fa" icon="steak"/></li>
-            <li><Icon source="fa" icon="turkey"/></li>
-            <li><Icon source="fa" icon="wheat"/></li>
-            <li><Icon source="fa" icon="cow"/></li>
-            <li><Icon source="fa" icon="pig"/></li>
-            <li><Icon source="fa" icon="elephant"/></li>
-            <li><Icon source="fa" icon="horse"/></li>
-            <li><Icon source="fa" icon="hippo"/></li>
-            <li><Icon source="fa" icon="duck"/></li>
-            <li><Icon source="fa" icon="monkey"/></li>
-            <li><Icon source="fa" icon="rabbit"/></li>
-            <li><Icon source="fa" icon="ram"/></li>
-            <li><Icon source="fa" icon="sheep"/></li>
-            <li><Icon source="fa" icon="snake"/></li>
-            <li><Icon source="fa" icon="turtle"/></li>
-            <li><Icon source="fa" icon="box-alt"/></li>
-            <li><Icon source="fa" icon="boxes-alt"/></li>
-            <li><Icon source="fa" icon="container-storage"/></li>
-            <li><Icon source="fa" icon="car-side"/></li>
-            <li><Icon source="fa" icon="couch"/></li>
-            <li><Icon source="fa" icon="capsules"/></li>
-            <li><Icon source="fa" icon="water"/></li>
-            <li><Icon source="fa" icon="flower-tulip"/></li>
-            <li><Icon source="fa" icon="pallet"/></li>
-            <li><Icon source="fa" icon="pallet-alt"/></li>
-            <li><Icon source="fa" icon="pills"/></li>
-            <li><Icon source="fa" icon="prescription-bottle"/></li>
-            <li><Icon source="fa" icon="prescription-bottle-alt"/></li>
-            <li><Icon source="fa" icon="recycle"/></li>
-            <li><Icon source="fa" icon="trash"/></li>
-            <li><Icon source="fa" icon="sandwich"/></li>
-            <li><Icon source="fa" icon="tshirt"/></li>
-            <li><Icon source="fa" icon="cogs"/></li>
+            <li><Icon source="fa" icon={faArchive} /></li>
+            <li><Icon source="fa" icon={faCarrot} /></li>
+            <li><Icon source="fa" icon={faCookie} /></li>
+            <li><Icon source="fa" icon={faLaptop} /></li>
+            <li><Icon source="fa" icon={faTv} /></li>
+            <li><Icon source="fa" icon={faAppleAlt} /></li>
+            <li><Icon source="fa" icon={faBacon} /></li>
+            <li><Icon source="fa" icon={faBreadLoaf} /></li>
+            <li><Icon source="fa" icon={faCheese} /></li>
+            <li><Icon source="fa" icon={faCheeseburger} /></li>
+            <li><Icon source="fa" icon={faCorn} /></li>
+            <li><Icon source="fa" icon={faEgg} /></li>
+            <li><Icon source="fa" icon={faFish} /></li>
+            <li><Icon source="fa" icon={faHamburger} /></li>
+            <li><Icon source="fa" icon={faIceCream} /></li>
+            <li><Icon source="fa" icon={faLemon} /></li>
+            <li><Icon source="fa" icon={faMeat} /></li>
+            <li><Icon source="fa" icon={faPie} /></li>
+            <li><Icon source="fa" icon={faPizza} /></li>
+            <li><Icon source="fa" icon={faPizzaSlice} /></li>
+            <li><Icon source="fa" icon={faPumpkin} /></li>
+            <li><Icon source="fa" icon={faSalad} /></li>
+            <li><Icon source="fa" icon={faSoup} /></li>
+            <li><Icon source="fa" icon={faSteak} /></li>
+            <li><Icon source="fa" icon={faTurkey} /></li>
+            <li><Icon source="fa" icon={faWheat} /></li>
+            <li><Icon source="fa" icon={faCow} /></li>
+            <li><Icon source="fa" icon={faPig} /></li>
+            <li><Icon source="fa" icon={faElephant} /></li>
+            <li><Icon source="fa" icon={faHorse} /></li>
+            <li><Icon source="fa" icon={faHippo} /></li>
+            <li><Icon source="fa" icon={faDuck} /></li>
+            <li><Icon source="fa" icon={faMonkey} /></li>
+            <li><Icon source="fa" icon={faRabbit} /></li>
+            <li><Icon source="fa" icon={faRam} /></li>
+            <li><Icon source="fa" icon={faSheep} /></li>
+            <li><Icon source="fa" icon={faSnake} /></li>
+            <li><Icon source="fa" icon={faTurtle} /></li>
+            <li><Icon source="fa" icon={faBoxAlt} /></li>
+            <li><Icon source="fa" icon={faBoxesAlt} /></li>
+            <li><Icon source="fa" icon={faContainerStorage} /></li>
+            <li><Icon source="fa" icon={faCarSide} /></li>
+            <li><Icon source="fa" icon={faCouch} /></li>
+            <li><Icon source="fa" icon={faCapsules} /></li>
+            <li><Icon source="fa" icon={faWater} /></li>
+            <li><Icon source="fa" icon={faFlower} /></li>
+            <li><Icon source="fa" icon={faFlowerTulip} /></li>
+            <li><Icon source="fa" icon={faPallet} /></li>
+            <li><Icon source="fa" icon={faPalletAlt} /></li>
+            <li><Icon source="fa" icon={faPills} /></li>
+            <li><Icon source="fa" icon={faPrescription} /></li>
+            <li><Icon source="fa" icon={faPrescriptionBottle} /></li>
+            <li><Icon source="fa" icon={faPrescriptionBottleAlt} /></li>
+            <li><Icon source="fa" icon={faRecycle} /></li>
+            <li><Icon source="fa" icon={faTrash} /></li>
+            <li><Icon source="fa" icon={faSandwich} /></li>
+            <li><Icon source="fa" icon={faTshirt} /></li>
+            <li><Icon source="fa" icon={faCogs} /></li>
         </ul>
         <h2>Places</h2>
         <ul>
-            <li><Icon source="fa" icon="map"/></li>
-            <li><Icon source="fa" icon="map-marker"/></li>
-            <li><Icon source="fa" icon="map-marker-alt"/></li>
-            <li><Icon source="fa" icon="map-marker-check"/></li>
-            <li><Icon source="fa" icon="map-marker-exclamation"/></li>
-            <li><Icon source="fa" icon="map-marker-question"/></li>
-            <li><Icon source="fa" icon="map-marker-times"/></li>
-            <li><Icon source="fa" icon="map-signs"/></li>
-            <li><Icon source="fa" icon="route"/></li>
-            <li><Icon source="fa" icon="map-marked"/></li>
-            <li><Icon source="fa" icon="map-marked-alt"/></li>
-            <li><Icon source="fa" icon="atlas"/></li>
-            <li><Icon source="fa" icon="globe"/></li>
-            <li><Icon source="fa" icon="location-arrow"/></li>
-            <li><Icon source="fa" icon="route-interstate"/></li>
-            <li><Icon source="fa" icon="route-highway"/></li>
-            <li><Icon source="fa" icon="flag"/></li>
-            <li><Icon source="fa" icon="flag-alt"/></li>
-            <li><Icon source="fa" icon="flag-checkered"/></li>
-            <li><Icon source="fa" icon="location"/></li>
-            <li><Icon source="fa" icon="location-slash"/></li>
-            <li><Icon source="fa" icon="location-circle"/></li>
-            <li><Icon source="fa" icon="road"/></li>
-            <li><Icon source="fa" icon="directions"/></li>
+            <li><Icon source="fa" icon={faMap} /></li>
+            <li><Icon source="fa" icon={faMapMarker} /></li>
+            <li><Icon source="fa" icon={faMapMarkerAlt} /></li>
+            <li><Icon source="fa" icon={faMapMarkerCheck} /></li>
+            <li><Icon source="fa" icon={faMapMarkerExclamation} /></li>
+            <li><Icon source="fa" icon={faMapMarkerQuestion} /></li>
+            <li><Icon source="fa" icon={faMapMarkerTimes} /></li>
+            <li><Icon source="fa" icon={faMapSigns} /></li>
+            <li><Icon source="fa" icon={faRoute} /></li>
+            <li><Icon source="fa" icon={faMapMarked} /></li>
+            <li><Icon source="fa" icon={faMapMarked} /></li>
+            <li><Icon source="fa" icon={faAtlas} /></li>
+            <li><Icon source="fa" icon={faGlobe} /></li>
+            <li><Icon source="fa" icon={faLocationArrow} /></li>
+            <li><Icon source="fa" icon={faRouteInterstate} /></li>
+            <li><Icon source="fa" icon={faRouteHighway} /></li>
+            <li><Icon source="fa" icon={faFlag} /></li>
+            <li><Icon source="fa" icon={faFlagAlt} /></li>
+            <li><Icon source="fa" icon={faFlagCheckered} /></li>
+            <li><Icon source="fa" icon={faLocation} /></li>
+            <li><Icon source="fa" icon={faLocationSlash} /></li>
+            <li><Icon source="fa" icon={faLocationCircle} /></li>
+            <li><Icon source="fa" icon={faRoad} /></li>
+            <li><Icon source="fa" icon={faDirections} /></li>
         </ul>
         <h2>Weather</h2>
         <ul>
-            <li><Icon source="fa" icon="bolt"/></li>
-            <li><Icon source="fa" icon="cloud"/></li>
-            <li><Icon source="fa" icon="cloud-drizzle"/></li>
-            <li><Icon source="fa" icon="cloud-hail"/></li>
-            <li><Icon source="fa" icon="cloud-hail-mixed"/></li>
-            <li><Icon source="fa" icon="cloud-moon"/></li>
-            <li><Icon source="fa" icon="cloud-moon-rain"/></li>
-            <li><Icon source="fa" icon="cloud-rain"/></li>
-            <li><Icon source="fa" icon="cloud-rainbow"/></li>
-            <li><Icon source="fa" icon="cloud-showers"/></li>
-            <li><Icon source="fa" icon="cloud-showers-heavy"/></li>
-            <li><Icon source="fa" icon="cloud-sleet"/></li>
-            <li><Icon source="fa" icon="cloud-snow"/></li>
-            <li><Icon source="fa" icon="cloud-sun"/></li>
-            <li><Icon source="fa" icon="cloud-sun-rain"/></li>
-            <li><Icon source="fa" icon="clouds"/></li>
-            <li><Icon source="fa" icon="clouds-moon"/></li>
-            <li><Icon source="fa" icon="clouds-sun"/></li>
-            <li><Icon source="fa" icon="fog"/></li>
-            <li><Icon source="fa" icon="moon"/></li>
-            <li><Icon source="fa" icon="smog"/></li>
-            <li><Icon source="fa" icon="smoke"/></li>
-            <li><Icon source="fa" icon="snow-blowing"/></li>
-            <li><Icon source="fa" icon="snowflake"/></li>
-            <li><Icon source="fa" icon="snowflakes"/></li>
-            <li><Icon source="fa" icon="stars"/></li>
-            <li><Icon source="fa" icon="raindrops"/></li>
-            <li><Icon source="fa" icon="sun"/></li>
-            <li><Icon source="fa" icon="sun-cloud"/></li>
-            <li><Icon source="fa" icon="sun-dust"/></li>
-            <li><Icon source="fa" icon="sun-haze"/></li>
-            <li><Icon source="fa" icon="sunrise"/></li>
-            <li><Icon source="fa" icon="sunset"/></li>
-            <li><Icon source="fa" icon="thunderstorm"/></li>
-            <li><Icon source="fa" icon="tornado"/></li>
-            <li><Icon source="fa" icon="wind"/></li>
-            <li><Icon source="fa" icon="wind-warning"/></li>
-            <li><Icon source="fa" icon="windsock"/></li>
+            <li><Icon source="fa" icon={faBolt} /></li>
+            <li><Icon source="fa" icon={faCloud} /></li>
+            <li><Icon source="fa" icon={faCloudDrizzle} /></li>
+            <li><Icon source="fa" icon={faCloudHail} /></li>
+            <li><Icon source="fa" icon={faCloudHailMixed} /></li>
+            <li><Icon source="fa" icon={faCloudMoon} /></li>
+            <li><Icon source="fa" icon={faCloudMoonRain} /></li>
+            <li><Icon source="fa" icon={faCloudRain} /></li>
+            <li><Icon source="fa" icon={faCloudRainbow} /></li>
+            <li><Icon source="fa" icon={faCloudShowers} /></li>
+            <li><Icon source="fa" icon={faCloudShowersHeavy} /></li>
+            <li><Icon source="fa" icon={faCloudSleet} /></li>
+            <li><Icon source="fa" icon={faCloudSnow} /></li>
+            <li><Icon source="fa" icon={faCloudSun} /></li>
+            <li><Icon source="fa" icon={faCloudSunRain} /></li>
+            <li><Icon source="fa" icon={faClouds} /></li>
+            <li><Icon source="fa" icon={faCloudsMoon} /></li>
+            <li><Icon source="fa" icon={faCloudsSun} /></li>
+            <li><Icon source="fa" icon={faFog} /></li>
+            <li><Icon source="fa" icon={faMoon} /></li>
+            <li><Icon source="fa" icon={faSmog} /></li>
+            <li><Icon source="fa" icon={faSmoke} /></li>
+            <li><Icon source="fa" icon={faSnowBlowing} /></li>
+            <li><Icon source="fa" icon={faSnowflake} /></li>
+            <li><Icon source="fa" icon={faSnowflakes} /></li>
+            <li><Icon source="fa" icon={faStars} /></li>
+            <li><Icon source="fa" icon={faRaindrops} /></li>
+            <li><Icon source="fa" icon={faSun} /></li>
+            <li><Icon source="fa" icon={faSunCloud} /></li>
+            <li><Icon source="fa" icon={faSunDust} /></li>
+            <li><Icon source="fa" icon={faSunHaze} /></li>
+            <li><Icon source="fa" icon={faSunrise} /></li>
+            <li><Icon source="fa" icon={faSunset} /></li>
+            <li><Icon source="fa" icon={faThunderstorm} /></li>
+            <li><Icon source="fa" icon={faTornado} /></li>
+            <li><Icon source="fa" icon={faWind} /></li>
+            <li><Icon source="fa" icon={faWindWarning} /></li>
+            <li><Icon source="fa" icon={faWindsock} /></li>
         </ul>
       </div>
     );

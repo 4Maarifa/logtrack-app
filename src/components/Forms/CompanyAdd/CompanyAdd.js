@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { faBuilding, faUser, faImage, faPalette, faInfoCircle, faCheck, faWallet } from '@fortawesome/pro-solid-svg-icons';
+import { faBuilding, faUser, faImage, faPalette, faInfoCircle, faCheck, faWallet } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 import Choose from './../../Utils/FormElements/Choose/Choose';
@@ -27,9 +27,9 @@ import './CompanyAdd.scss';
 
 const DEFAULT_COLORS = {
   '#444444': {
-    content: <Fragment>
+    content: ({ isActive }) => <Fragment>
         <i className="input-color-choice" style={{ backgroundColor: '#444444' }} />
-        <Icon source="fa" icon={faCheck} />
+        {isActive ? <Icon source="fa" icon={faCheck} /> : null}
       </Fragment>
   }
 };
@@ -114,7 +114,7 @@ const CompanyAdd = ({ match }) => {
 
   const onLogoChange = newLogo => {
     setLogo(newLogo);
-    setSelectedColor('');
+    setSelectedColor(Object.keys(DEFAULT_COLORS)[0]);
     newLogo && newLogo.file && ColorService.getMainColorsOfImage(newLogo.url)
       .then(computeColors)
       .catch(ErrorService.manageError);
@@ -126,9 +126,9 @@ const CompanyAdd = ({ match }) => {
     };
     colors.filter(ColorService.isMedColor).map(ColorService.convertRGBtoHEX).forEach(color => {
       colorResults[color] = {
-        content: <Fragment>
+        content: ({ isActive }) => <Fragment>
           <i className="input-color-choice" style={{backgroundColor: color}} />
-          <Icon source="fa" icon={faCheck} />
+          {isActive ? <Icon source="fa" icon={faCheck} /> : null}
         </Fragment>
       }
     });
@@ -150,9 +150,9 @@ const CompanyAdd = ({ match }) => {
             
             let currentColors = colors;
             currentColors[companyDoc.data().color] = {
-              content: <Fragment>
+              content: ({ isActive }) => <Fragment>
                 <i className="input-color-choice" style={{ backgroundColor: companyDoc.data().color }} />
-                <Icon source="fa" icon={faCheck} />
+                {isActive ? <Icon source="fa" icon={faCheck} /> : null}
               </Fragment>
             };
             setColors(currentColors);

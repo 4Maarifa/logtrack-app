@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { faLocation, faCompress, faInfo, faChevronRight } from '@fortawesome/pro-solid-svg-icons';
+import { faLocation, faCompress, faInfo, faChevronRight } from '@fortawesome/pro-light-svg-icons';
 
 import OlMap from 'ol/Map';
 import View from 'ol/View';

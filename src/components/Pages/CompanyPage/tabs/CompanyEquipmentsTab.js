@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faTruck } from '@fortawesome/pro-solid-svg-icons';
+import { faTruck } from '@fortawesome/pro-light-svg-icons';
 
 import ErrorService from './../../../../services/error.service';
 import BrandService from './../../../../services/entities/brand.service';

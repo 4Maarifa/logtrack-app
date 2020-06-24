@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { faUser, faUserHeadset, faLock, faPortrait, faCog, faBug, faExclamationTriangle, faIndent, faDatabase } from '@fortawesome/pro-solid-svg-icons';
+import { faUser, faUserHeadset, faLock, faPortrait, faCog, faBug, faExclamationTriangle, 
+  faIndent, faDatabase } from '@fortawesome/pro-light-svg-icons';
 
 import DataService from './../../../../services/data.service';
 

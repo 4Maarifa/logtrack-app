@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { faUsers, faTruck, faWarehouseAlt, faClipboardUser } from '@fortawesome/pro-solid-svg-icons';
+import { faUsers, faTruck, faWarehouseAlt, faClipboardUser } from '@fortawesome/pro-light-svg-icons';
+import { faUsers as faUsersSolid, faTruck as faTruckSolid, faWarehouseAlt as faWarehouseAltSolid } from '@fortawesome/pro-solid-svg-icons';
 
 import DataService from './../../../services/data.service';
 import CompanyService from './../../../services/entities/company.service';
@@ -87,22 +88,22 @@ const CompanyPage = ({ match }) => {
       : null}
       <Tabs default="warehouses" tabs={{
         warehouses: {
-          name: () => <span>
-            <Icon source="fa" icon={faWarehouseAlt} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faWarehouseAltSolid : faWarehouseAlt} />
             Warehouses
           </span>,
           content: () => <CompanyWarehousesTab companyId={COMPANY_ID} />
         },
         employees: {
-          name: () => <span>
-            <Icon source="fa" icon={faUsers} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faUsersSolid : faUsers} />
             Employees
           </span>,
           content: () => <CompanyEmployeesTab companyId={COMPANY_ID} />
         },
         equipments: {
-          name: () => <span>
-            <Icon source="fa" icon={faTruck} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faTruckSolid : faTruck} />
             Equipments
           </span>,
           content: () => <CompanyEquipmentsTab companyId={COMPANY_ID} />

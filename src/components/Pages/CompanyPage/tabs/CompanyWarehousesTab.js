@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faWarehouseAlt } from '@fortawesome/pro-solid-svg-icons';
+import { faWarehouseAlt } from '@fortawesome/pro-light-svg-icons';
 
 import ErrorService from './../../../../services/error.service';
 import WarehouseService from './../../../../services/entities/warehouse.service';

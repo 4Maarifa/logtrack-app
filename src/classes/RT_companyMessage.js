@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { faExclamationTriangle, faBellOn } from "@fortawesome/pro-solid-svg-icons";
 import { faTriangle, faBell } from '@fortawesome/pro-light-svg-icons';
 

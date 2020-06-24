@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { faUser } from '@fortawesome/pro-solid-svg-icons';
+import { faUser } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 

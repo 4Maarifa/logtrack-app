@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Redirect, NavLink } from 'react-router-dom';
-import { faRectangleWide, faEdit, faTruck, faUser, faBuilding } from '@fortawesome/pro-solid-svg-icons';
+import { faRectangleWide, faEdit, faTruck, faUser, faBuilding } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
@@ -163,11 +163,11 @@ const EquipmentAdd = ({ match }) => {
     if(!equipmentModels || !Object.keys(equipmentModels).length) {
       return null;
     }
-    let equipmentTypes = {}, equipmentSubTypes = {}, newEquipmentModels = {};
+    const EQUIPMENT_TYPES = {}, EQUIPMENT_SUB_TYPES = {}, NEW_EQUIPMENT_MODELS = {};
 
     Object.keys(EEquipmentModelTypeDetails).forEach(key => {
-      equipmentTypes[key] = {
-        content: <Fragment>
+      EQUIPMENT_TYPES[key] = {
+        content: () => <Fragment>
           {EEquipmentModelTypeDetails[key].icon}
           {EEquipmentModelTypeDetails[key].name}
         </Fragment>,
@@ -177,8 +177,8 @@ const EquipmentAdd = ({ match }) => {
 
     if(selectedEquipmentType) {
       Object.keys(EEquipmentModelSubTypeDetails[selectedEquipmentType]).forEach(key => {
-        equipmentSubTypes[key] = {
-          content: <Fragment>
+        EQUIPMENT_SUB_TYPES[key] = {
+          content: () => <Fragment>
             {EEquipmentModelSubTypeDetails[selectedEquipmentType][key].icon}
             {EEquipmentModelSubTypeDetails[selectedEquipmentType][key].name}
           </Fragment>,
@@ -189,8 +189,8 @@ const EquipmentAdd = ({ match }) => {
 
     if(selectedEquipmentType && selectedEquipmentSubType) {
       Object.keys(filterEquipmentModels(selectedEquipmentType, selectedEquipmentSubType)).forEach(key => {
-        newEquipmentModels[key] = {
-          content: <Fragment>
+        NEW_EQUIPMENT_MODELS[key] = {
+          content: () => <Fragment>
             <img src={equipmentModels[key].photoUrl}
               alt={equipmentModels[key].name + '\'s photo'} />
             {equipmentModels[key].name}
@@ -216,7 +216,7 @@ const EquipmentAdd = ({ match }) => {
       {!selectedEquipmentType && 
         <Choose
           selection={selectedEquipmentType}
-          items={equipmentTypes} 
+          items={EQUIPMENT_TYPES} 
           fieldName="selectedEquipmentType"
           onSelectionChange={handleSelection} />
       }
@@ -237,7 +237,7 @@ const EquipmentAdd = ({ match }) => {
           </div>
           {!selectedEquipmentSubType &&
             <Choose
-              items={equipmentSubTypes}
+              items={EQUIPMENT_SUB_TYPES}
               selection={selectedEquipmentSubType}
               fieldName="selectedEquipmentSubType"
               onSelectionChange={handleSelection} />
@@ -263,7 +263,7 @@ const EquipmentAdd = ({ match }) => {
           {!selectedEquipmentModelId &&
             <Choose
               selection={selectedEquipmentModelId}
-              items={newEquipmentModels}
+              items={NEW_EQUIPMENT_MODELS}
               fieldName="selectedEquipmentModelId"
               onSelectionChange={handleSelection} />
           }

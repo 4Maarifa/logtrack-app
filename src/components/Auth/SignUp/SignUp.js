@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect, NavLink } from 'react-router-dom';
-import { faUser, faEnvelope, faKey, faImage, faExternalLink } from '@fortawesome/pro-solid-svg-icons';
+import { faUser, faEnvelope, faKey, faImage, faExternalLink } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';

@@ -1,11 +1,23 @@
-import React from 'react';
-import { faCarWash, faWrench, faWeight, faParking, faUtensils, faBed, faPause, faGasPump, faChargingStation, faCalendarTimes, faReply, faShare, faPlay, faSteeringWheel, faToolbox, faClock, faShippingFast, faShippingTimed, faArrowAltToRight, faArrowAltFromLeft, faTruck, faExclamationTriangle, faCarBattery, faCarCrash, faEngineWarning, faOilCan, faOilTemp, faTireFlat, faGasPumpSlash, faTrafficCone, faCrosshairs, faThermometerHalf } from '@fortawesome/pro-solid-svg-icons';
+import { faCarWash, faWrench, faWeight, faParking, faUtensils, faBed, faPause, faGasPump, 
+  faChargingStation, faCalendarTimes, faPlay, faSteeringWheel, 
+  faToolbox, faClock, faShippingFast, faShippingTimed, faArrowAltToRight, faArrowAltFromLeft, 
+  faTruck, faExclamationTriangle, faCarBattery, faCarCrash, faEngineWarning, faOilCan, 
+  faOilTemp, faTireFlat, faGasPumpSlash, faTrafficCone, faCrosshairs, faThermometerHalf } from '@fortawesome/pro-light-svg-icons';
+import { faReply as faReplySolid, faShare as faShareSolid, faClock as faClockSolid,
+  faTireFlat as faTireFlatSolid, faGasPumpSlash as faGasPumpSlashSolid, faThermometerHalf as faThermometerHalfSolid,
+  faCrosshairs as faCrosshairsSolid, faOilTemp as faOilTempSolid, faOilCan as faOilCanSolid,
+  faTruck as faTruckSolid, faCarBattery as faCarBatterySolid, faCarCrash as faCarCrashSolid,
+  faEngineWarning as faEngineWarningSolid, faPause as faPauseSolid, faSteeringWheel as faSteeringWheelSolid,
+  faParking as faParkingSolid, faToolbox as faToolboxSolid, faWrench as faWrenchSolid,
+  faCalendarTimes as faCalendarTimesSolid, faPlay as faPlaySolid, faExclamationTriangle as faExclamationTriangleSolid,
+  faGasPump as faGasPumpSolid, faArrowAltFromLeft as faArrowAltFromLeftSolid, faWeight as faWeightSolid,
+  faUtensils as faUtensilsSolid, faBed as faBedSolid, faArrowAltToRight as faArrowAltToRightSolid,
+  faChargingStation as faChargingStationSolid, faCarWash as faCarWashSolid, faShippingFast as faShippingFastSolid,
+  faShippingTimed as faShippingTimedSolid, faTrafficCone as faTrafficConeSolid } from '@fortawesome/pro-solid-svg-icons';
 
 import { ERole } from './Role';
 
 import { EPalette } from './../services/color.service';
-
-import Icon from './../components/Utils/Icon/Icon';
 
 /**
  * class LogTrack
@@ -109,7 +121,8 @@ export const LogTrackTrackerAvailability = {
 export const LogTrackCategoryDetails = {
   [LogTrackCategory.PAUSE]: {
     text: 'Pause',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faPause} />,
+    icon: faPause, 
+		iconSolid: faPauseSolid,
     activities: [LogTrackActivity.EAT, LogTrackActivity.PARK, LogTrackActivity.SLEEP],
     color: EPalette.BLUE,
     trackers: [LogTrackTrackers.TEMPERATURE, LogTrackTrackers.TIME],
@@ -117,7 +130,8 @@ export const LogTrackCategoryDetails = {
   },
   [LogTrackCategory.SERVICE]: {
     text: 'Service',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faWrench} />,
+    icon: faWrench, 
+		iconSolid: faWrenchSolid,
     activities: [LogTrackActivity.FIX, LogTrackActivity.READY_SERVICE, LogTrackActivity.END_SERVICE, 
       LogTrackActivity.MAINTENANCE],
     color: EPalette.YELLOW,
@@ -126,7 +140,8 @@ export const LogTrackCategoryDetails = {
   },
   [LogTrackCategory.NOT_AVAILABLE]: {
     text: 'Not Available',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faCalendarTimes} />,
+    icon: faCalendarTimes, 
+		iconSolid: faCalendarTimesSolid,
     activities: [LogTrackActivity.ABSENT, LogTrackActivity.WAITING],
     color: EPalette.GRAY,
     trackers: [LogTrackTrackers.TIME],
@@ -134,7 +149,8 @@ export const LogTrackCategoryDetails = {
   },
   [LogTrackCategory.OPERATION]: {
     text: 'Operation',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faPlay} />,
+    icon: faPlay, 
+		iconSolid: faPlaySolid,
     activities: [LogTrackActivity.REFUELING, LogTrackActivity.RECHARGING, LogTrackActivity.WASH, 
       LogTrackActivity.WEIGHT, LogTrackActivity.LOADING, LogTrackActivity.UNLOADING],
     color: EPalette.PURPLE,
@@ -143,7 +159,8 @@ export const LogTrackCategoryDetails = {
   },
   [LogTrackCategory.DRIVING]: {
     text: 'Driving',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faSteeringWheel} />,
+    icon: faSteeringWheel, 
+		iconSolid: faSteeringWheelSolid,
     activities: [LogTrackActivity.TRANSIT, LogTrackActivity.COMMUTE],
     color: EPalette.GREEN,
     trackers: [LogTrackTrackers.TIME, LogTrackTrackers.TEMPERATURE, LogTrackTrackers.GPS],
@@ -151,7 +168,8 @@ export const LogTrackCategoryDetails = {
   },
   [LogTrackCategory.PROBLEMS]: {
     text: 'Problems',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faExclamationTriangle} />,
+    icon: faExclamationTriangle, 
+		iconSolid: faExclamationTriangleSolid,
     activities: [LogTrackActivity.P_BATTERY, LogTrackActivity.P_ACCIDENT, LogTrackActivity.P_ENGINE, 
       LogTrackActivity.P_OIL, LogTrackActivity.P_TEMP, LogTrackActivity.P_FLAT, LogTrackActivity.P_OUT_OF_FUEL, 
       LogTrackActivity.P_OTHER],
@@ -164,156 +182,183 @@ export const LogTrackCategoryDetails = {
 export const LogTrackActivityDetails = {
   [LogTrackActivity.PARK]: {
     text: 'Parked',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faParking} />,
+    icon: faParking, 
+		iconSolid: faParkingSolid,
     roles: [ERole.DRIVER],
     parent: LogTrackCategory.PAUSE
   },
   [LogTrackActivity.EAT]: {
     text: 'Eating',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faUtensils} />,
+    icon: faUtensils, 
+		iconSolid: faUtensilsSolid,
     roles: [ERole.DRIVER],
     parent: LogTrackCategory.PAUSE
   },
   [LogTrackActivity.SLEEP]: {
     text: 'Sleeping',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faBed} />,
+    icon: faBed, 
+		iconSolid: faBedSolid,
     roles: [ERole.DRIVER],
     parent: LogTrackCategory.PAUSE
   },
 
   [LogTrackActivity.FIX]: {
     text: 'Fixing Equipment',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faWrench} />,
+    icon: faWrench, 
+		iconSolid: faWrenchSolid,
     roles: [ERole.MECHANIC],
     parent: LogTrackCategory.SERVICE
   },
   [LogTrackActivity.READY_SERVICE]: {
     text: 'Ready for Service',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faArrowAltFromLeft} />,
+    icon: faArrowAltFromLeft, 
+		iconSolid: faArrowAltFromLeftSolid,
     roles: [ERole.MECHANIC, ERole.DRIVER],
     parent: LogTrackCategory.SERVICE
   },
   [LogTrackActivity.END_SERVICE]: {
     text: 'Service ended',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faArrowAltToRight} />,
+    icon: faArrowAltToRight, 
+		iconSolid: faArrowAltToRightSolid,
     roles: [ERole.DRIVER, ERole.MECHANIC],
     parent: LogTrackCategory.SERVICE
   },
   [LogTrackActivity.MAINTENANCE]: {
     text: 'Maintencance',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faToolbox} />,
+    icon: faToolbox, 
+		iconSolid: faToolboxSolid,
     roles: [ERole.MECHANIC],
     parent: LogTrackCategory.SERVICE
   },
 
   [LogTrackActivity.ABSENT]: {
     text: 'Absent',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faCalendarTimes} />,
+    icon: faCalendarTimes, 
+		iconSolid: faCalendarTimesSolid,
     roles: [ERole.MECHANIC, ERole.DRIVER],
     parent: LogTrackCategory.NOT_AVAILABLE
   },
   [LogTrackActivity.WAITING]: {
     text: 'Waiting',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faClock} />,
+    icon: faClock, 
+		iconSolid: faClockSolid,
     roles: [ERole.DRIVER, ERole.MECHANIC],
     parent: LogTrackCategory.NOT_AVAILABLE
   },
 
   [LogTrackActivity.REFUELING]: {
     text: 'Refueling',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faGasPump} />,
+    icon: faGasPump, 
+		iconSolid: faGasPumpSolid,
     roles: [ERole.DRIVER],
     parent: LogTrackCategory.OPERATION
   },
   [LogTrackActivity.RECHARGING]: {
     text: 'Recharging',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faChargingStation} />,
+    icon: faChargingStation, 
+		iconSolid: faChargingStationSolid,
     roles: [ERole.DRIVER],
     parent: LogTrackCategory.OPERATION
   },
   [LogTrackActivity.WASH]: {
     text: 'Cleaning Equipment',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faCarWash} />,
+    icon: faCarWash, 
+		iconSolid: faCarWashSolid,
     roles: [ERole.DRIVER, ERole.MECHANIC],
     parent: LogTrackCategory.OPERATION
   },
   [LogTrackActivity.WEIGHT]: {
     text: 'Weighting Equipment',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faWeight} />,
+    icon: faWeight, 
+		iconSolid: faWeightSolid,
     roles: [ERole.DRIVER],
     parent: LogTrackCategory.OPERATION
   },
   [LogTrackActivity.LOADING]: {
     text: 'Loading',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faTruck} additional={faShare} />,
+    icon: faTruck, 
+		iconSolid: faTruckSolid,
+    additionalicon: faShareSolid,
     roles: [ERole.DRIVER],
     parent: LogTrackCategory.OPERATION
   },
   [LogTrackActivity.UNLOADING]: {
     text: 'Unloading',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faTruck} additional={faReply} />,
+    icon: faTruck, 
+		iconSolid: faTruckSolid,
+    additionalicon: faReplySolid, 
     roles: [ERole.DRIVER],
     parent: LogTrackCategory.OPERATION
   },
 
   [LogTrackActivity.TRANSIT]: {
     text: 'Transit',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faShippingFast} />,
+    icon: faShippingFast, 
+		iconSolid: faShippingFastSolid,
     roles: [ERole.DRIVER, ERole.MECHANIC],
     parent: LogTrackCategory.DRIVING
   },
   [LogTrackActivity.COMMUTE]: {
     text: 'Commute',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faShippingTimed} />,
+    icon: faShippingTimed, 
+		iconSolid: faShippingTimedSolid,
     roles: [ERole.MECHANIC, ERole.DRIVER],
     parent: LogTrackCategory.DRIVING
   },
 
   [LogTrackActivity.P_BATTERY]: {
     text: 'Battery Problem',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faCarBattery} />,
+    icon: faCarBattery, 
+		iconSolid: faCarBatterySolid,
     roles: [ERole.MECHANIC, ERole.DRIVER],
     parent: LogTrackCategory.PROBLEMS
   },
   [LogTrackActivity.P_ACCIDENT]: {
     text: 'Accident',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faCarCrash} />,
+    icon: faCarCrash, 
+		iconSolid: faCarCrashSolid,
     roles: [ERole.MECHANIC, ERole.DRIVER],
     parent: LogTrackCategory.PROBLEMS
   },
   [LogTrackActivity.P_ENGINE]: {
     text: 'Engine Problem',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faEngineWarning} />,
+    icon: faEngineWarning, 
+		iconSolid: faEngineWarningSolid,
     roles: [ERole.MECHANIC, ERole.DRIVER],
     parent: LogTrackCategory.PROBLEMS
   },
   [LogTrackActivity.P_OIL]: {
     text: 'Oil Problem',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faOilCan} />,
+    icon: faOilCan, 
+		iconSolid: faOilCanSolid,
     roles: [ERole.DRIVER],
     parent: LogTrackCategory.PROBLEMS
   },
   [LogTrackActivity.P_TEMP]: {
     text: 'Temperature Problem',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faOilTemp} />,
+    icon: faOilTemp, 
+		iconSolid: faOilTempSolid,
     roles: [ERole.DRIVER],
     parent: LogTrackCategory.PROBLEMS
   },
   [LogTrackActivity.P_FLAT]: {
     text: 'Flat Tire',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faTireFlat} />,
+    icon: faTireFlat, 
+		iconSolid: faTireFlatSolid,
     roles: [ERole.DRIVER],
     parent: LogTrackCategory.PROBLEMS
   },
   [LogTrackActivity.P_OUT_OF_FUEL]: {
     text: 'Out of Fuel',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faGasPumpSlash} />,
+    icon: faGasPumpSlash, 
+		iconSolid: faGasPumpSlashSolid,
     roles: [ERole.DRIVER],
     parent: LogTrackCategory.PROBLEMS
   },
   [LogTrackActivity.P_OTHER]: {
     text: 'Other Problem',
-    icon: (containerClassName, styles) => <Icon containerclassname={containerClassName} style={styles} source="fa" icon={faTrafficCone} />,
+    icon: faTrafficCone, 
+		iconSolid: faTrafficConeSolid,
     roles: [ERole.DRIVER, ERole.MECHANIC],
     parent: LogTrackCategory.PROBLEMS
   }
@@ -322,21 +367,24 @@ export const LogTrackActivityDetails = {
 export const LogTrackTrackersDetails = {
   [LogTrackTrackers.TIME]: {
     mandatory: true,
-    icon: <Icon source="fa" icon={faClock} />,
+    icon: faClock, 
+		iconSolid: faClockSolid,
     name: 'Time Tracker',
     description: 'Time-based statistics, along with other trackers.',
     availability: LogTrackTrackerAvailability.AVAILABLE
   },
   [LogTrackTrackers.GPS]: {
     mandatory: false,
-    icon: <Icon source="fa" icon={faCrosshairs} />,
+    icon: faCrosshairs, 
+		iconSolid: faCrosshairsSolid,
     name: 'GPS Tracker',
     description: 'Track your real-time position.',
     availability: LogTrackTrackerAvailability.NOT_AVAILABLE
   },
   [LogTrackTrackers.TEMPERATURE]: {
     mandatory: false,
-    icon: <Icon source="fa" icon={faThermometerHalf} />,
+    icon: faThermometerHalf, 
+		iconSolid: faThermometerHalfSolid,
     name: 'Temperature Tracker',
     description: 'Track the temperature of your load.',
     availability: LogTrackTrackerAvailability.NOT_AVAILABLE

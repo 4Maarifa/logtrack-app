@@ -1,5 +1,5 @@
 import React from 'react';
-import { faToolbox } from '@fortawesome/pro-solid-svg-icons';
+import { faToolbox } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../components/Utils/Icon/Icon';
 

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { faPlus, faWarehouseAlt } from '@fortawesome/pro-solid-svg-icons';
+import { faPlus, faWarehouseAlt } from '@fortawesome/pro-light-svg-icons';
 
 import Map from './../../Utils/Map/Map';
 import Icon from './../../Utils/Icon/Icon';

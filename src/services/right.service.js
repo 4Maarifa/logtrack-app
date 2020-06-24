@@ -10,8 +10,10 @@ export const ERights = {
   APP_CAN_USE_EMPLOYEE_MANAGEMENT: 'APP_CAN_USE_EMPLOYEE_MANAGEMENT',
   APP_CAN_USE_EQUIPMENT_MANAGEMENT: 'APP_CAN_USE_EQUIPMENT_MANAGEMENT',
   APP_CAN_USE_WAREHOUSE_MANAGEMENT: 'APP_CAN_USE_WAREHOUSE_MANAGEMENT',
+  APP_CAN_USE_INVOICE_MANAGEMENT: 'APP_CAN_USE_INVOICE_MANAGEMENT',
   APP_CAN_USE_ANALYTICS: 'APP_CAN_USE_ANALYTICS',
   APP_CAN_USE_JOBOFFERS_MANAGEMENT: 'APP_CAN_USE_JOBOFFERS_MANAGEMENT',
+  APP_CAN_USE_MAINTENANCE: 'APP_CAN_USE_MAINTENANCE',
   APP_CAN_USE_ADMIN_MANAGEMENT: 'APP_CAN_USE_ADMIN_MANAGEMENT',
 
   RIGHT_RT_USER_CREATE: 'RIGHT_RT_USER_CREATE',
@@ -125,6 +127,10 @@ const RightService = {
       return DataService.computed.activeRole.role === ERole.DRIVER;
     }
 
+    if(right === ERights.APP_CAN_USE_MAINTENANCE) {
+      return DataService.computed.activeRole.role === ERole.MECHANIC;
+    }
+
     if(right === ERights.APP_CAN_USE_LOGTRACKS) {
       return DataService.computed.activeRole.role === ERole.MANAGER || 
         DataService.computed.activeRole.role === ERole.DRIVER ||
@@ -134,6 +140,7 @@ const RightService = {
         right === ERights.APP_CAN_USE_EMPLOYEE_MANAGEMENT ||
         right === ERights.APP_CAN_USE_EQUIPMENT_MANAGEMENT ||
         right === ERights.APP_CAN_USE_WAREHOUSE_MANAGEMENT ||
+        right === ERights.APP_CAN_USE_INVOICE_MANAGEMENT ||
         right === ERights.APP_CAN_USE_ANALYTICS) {
 
       return DataService.computed.activeRole.role === ERole.MANAGER;

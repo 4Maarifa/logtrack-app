@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { faChevronUp } from '@fortawesome/pro-solid-svg-icons';
+import { faChevronUp } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 

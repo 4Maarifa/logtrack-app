@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { faSignIn, faSignOut, faUserPlus, faKey } from '@fortawesome/pro-solid-svg-icons';
+import { faSignIn, faSignOut, faUserPlus, faKey } from '@fortawesome/pro-light-svg-icons';
 
 import DateService from './../services/date.service';
 

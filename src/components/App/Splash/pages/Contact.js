@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { faQuestion, faEnvelope, faComment } from '@fortawesome/pro-solid-svg-icons';
+import { faQuestion, faEnvelope, faComment } from '@fortawesome/pro-light-svg-icons';
 
 import { EContactCategories, EContactCategoryDetails } from './../../../Entities/Contact/Contact';
 

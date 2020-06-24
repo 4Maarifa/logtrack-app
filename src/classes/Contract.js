@@ -1,7 +1,6 @@
-import React from 'react';
-import { faWrench, faShippingFast, faDraftingCompass, faPlay, faCheck, faMoneyBill, faArchive, faCalculator, faHands } from '@fortawesome/pro-solid-svg-icons';
-
-import Icon from './../components/Utils/Icon/Icon';
+import { faWrench, faShippingFast, faDraftingCompass, faPlay, faCheck, faMoneyBill, faArchive, faCalculator, faHands } from '@fortawesome/pro-light-svg-icons';
+import { faWrench as faWrenchSolid, faShippingFast as faShippingFastSolid, faHands as faHandsSolid,
+    faCalculator as faCalculatorSolid } from '@fortawesome/pro-solid-svg-icons';
 
 /**
  * class Contract
@@ -50,23 +49,23 @@ export const EContractStatus = Object.freeze({
 export const EContractStatusDetails = Object.freeze({
     [EContractStatus.DRAFT]: {
         name: 'Draft',
-        icon: <Icon source="fa" icon={faDraftingCompass} />
+        icon: faDraftingCompass
     },
     [EContractStatus.EXECUTION]: {
         name: 'Execution',
-        icon: <Icon source="fa" icon={faPlay} />
+        icon: faPlay
     },
     [EContractStatus.FINISHED]: {
         name: 'Finished',
-        icon: <Icon source="fa" icon={faCheck} />
+        icon: faCheck
     },
     [EContractStatus.PAID]: {
         name: 'Paid',
-        icon: <Icon source="fa" icon={faMoneyBill} />
+        icon: faMoneyBill
     },
     [EContractStatus.ARCHIVED]: {
         name: 'Archived',
-        icon: <Icon source="fa" icon={faArchive} />
+        icon: faArchive
     }
 });
 
@@ -80,22 +79,26 @@ export const EContractType = Object.freeze({
 export const EContractTypeDetails = Object.freeze({
     [EContractType.MAINTENANCE]: {
         name: 'Maintenance',
-        icon: <Icon source="fa" icon={faWrench} />,
+        icon: faWrench,
+        iconSolid: faWrenchSolid,
         disabled: false
     },
     [EContractType.TRANSPORTATION]: {
         name: 'Transportation',
-        icon: <Icon source="fa" icon={faShippingFast} />,
+        icon: faShippingFast,
+        iconSolid: faShippingFastSolid,
         disabled: false
     },
     [EContractType.INSURANCE]: {
         name: 'Insurance',
-        icon: <Icon source="fa" icon={faHands} />,
+        icon: faHands,
+        iconSolid: faHandsSolid,
         disabled: true
     },
     [EContractType.ACCOUNTING]: {
         name: 'Accounting',
-        icon: <Icon source="fa" icon={faCalculator} />,
+        icon: faCalculator,
+        iconSolid: faCalculatorSolid,
         disabled: true
     }
 });

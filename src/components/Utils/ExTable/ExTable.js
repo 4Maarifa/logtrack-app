@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { faThLarge, faAlignJustify, faSearch, faFilter, faSortCircle,
-  faTimes } from '@fortawesome/pro-solid-svg-icons';
+  faTimes } from '@fortawesome/pro-light-svg-icons';
+import { faSearch as faSearchSolid, faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons'
 
 import Loader from './../Loader/Loader';
 import Icon from './../Icon/Icon';
@@ -85,7 +86,7 @@ const ExTable = ({ header, loading, items, renderItem, isNoFrame, isSmallItems, 
               <span className={'ExTable-fss-button ' + (searchTerm ? 'ExTable-fss-button--active' : '')}
                     onClick={() => setFssDeployed(fssDeployed === 'SEARCH' ? '' : 'SEARCH')} title="Search">
                 
-                <Icon source="fa" icon={faSearch} />
+                <Icon source="fa" icon={searchTerm ? faSearchSolid : faSearch} />
               </span>
               <span className={'ExTable-fss-input ' + (fssDeployed === 'SEARCH' ? 'ExTable-fss-input--deployed' : '')}>
                 <FormInput
@@ -106,7 +107,7 @@ const ExTable = ({ header, loading, items, renderItem, isNoFrame, isSmallItems, 
               <span className={'ExTable-fss-button ' + (activeFilter ? 'ExTable-fss-button--active' : '')}
                     onClick={() => setFssDeployed(fssDeployed === 'FILTER' ? '' : 'FILTER')} title="Filter">
 
-                <Icon source="fa" icon={faFilter} />
+                <Icon source="fa" icon={activeFilter ? faFilterSolid : faFilter} />
               </span>
               <span className={'ExTable-fss-input ' + (fssDeployed === 'FILTER' ? 'ExTable-fss-input--deployed' : '')}>
                 <select value={activeFilter} onChange={e => setActiveFilter(e.target.value)}>

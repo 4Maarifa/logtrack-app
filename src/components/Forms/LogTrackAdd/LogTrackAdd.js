@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { faUser, faBuilding, faSearch, faHandPointer, faCrosshairs } from '@fortawesome/pro-solid-svg-icons';
+import { faUser, faBuilding, faSearch, faHandPointer, faCrosshairs } from '@fortawesome/pro-light-svg-icons';
 
 import DataService, { migratePrototype } from './../../../services/data.service';
 import ErrorService from './../../../services/error.service';
@@ -57,14 +57,13 @@ const LogTrackAdd = () => {
     }
   };
 
-  const renderActivityType = () =>
-   {
-    let ltCategories = {}, ltActivities = {};
+  const renderActivityType = () => {
+    const LT_CATEGORIES = {}, LT_ACTIVITIES = {};
 
     Object.keys(LogTrackCategory).forEach(categoryKey => {
-      ltCategories[categoryKey] = {
-        content: <Fragment>
-          {LogTrackCategoryDetails[categoryKey].icon()}
+      LT_CATEGORIES[categoryKey] = {
+        content: ({ isActive }) => <Fragment>
+          <Icon source="fa" icon={isActive ? LogTrackCategoryDetails[categoryKey].iconSolid : LogTrackCategoryDetails[categoryKey].icon} />
           {LogTrackCategoryDetails[categoryKey].text}
         </Fragment>,
         color: ColorService.getPaletteForColor(LogTrackCategoryDetails[categoryKey].color).medium.color
@@ -73,9 +72,9 @@ const LogTrackAdd = () => {
 
     if(selectedCategory) {
       LogTrackCategoryDetails[selectedCategory].activities.forEach(activityKey => {
-        ltActivities[activityKey] = {
-          content: <Fragment>
-            {LogTrackActivityDetails[activityKey].icon()}
+        LT_ACTIVITIES[activityKey] = {
+          content: ({ isActive }) => <Fragment>
+            <Icon source="fa" icon={isActive ? LogTrackActivityDetails[activityKey].iconSolid : LogTrackActivityDetails[activityKey].icon} additional={LogTrackActivityDetails[activityKey].additionalIcon} />
             {LogTrackActivityDetails[activityKey].text}
           </Fragment>,
           color: ColorService.getPaletteForColor(LogTrackCategoryDetails[selectedCategory].color).medium.color
@@ -91,7 +90,7 @@ const LogTrackAdd = () => {
         </span>
         <Choose
           selection={selectedCategory}
-          items={ltCategories}
+          items={LT_CATEGORIES}
           fieldName="selectedLtCategory"
           onSelectionChange={handleSelection} />
       </div>
@@ -104,7 +103,7 @@ const LogTrackAdd = () => {
           </span>
           <Choose
             selection={selectedActivity}
-            items={ltActivities}
+            items={LT_ACTIVITIES}
             fieldName="selectedLtActivity"
             onSelectionChange={handleSelection} />
         </div>}
@@ -221,12 +220,12 @@ const LogTrackAdd = () => {
     return <Redirect to={`/dashboard`} />;
   }
 
-  let trackerDetails = {};
+  const TRACKER_DETAILS = {};
   possibleTrackers.forEach(trackerKey => {
-    trackerDetails[trackerKey] = {
-      content: <Fragment>
+    TRACKER_DETAILS[trackerKey] = {
+      content: () => <Fragment>
         <span>
-          {LogTrackTrackersDetails[trackerKey].icon}
+          <Icon source="fa" icon={LogTrackTrackersDetails[trackerKey].icon} />
           {LogTrackTrackersDetails[trackerKey].name}
         </span>
         <span className="sub">
@@ -253,7 +252,7 @@ const LogTrackAdd = () => {
         </span>
         <Choose
           selection={selectedTrackers}
-          items={trackerDetails}
+          items={TRACKER_DETAILS}
           fieldName="selectedTrackers"
           onSelectionChange={handleSelection}
           isVertical

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { faInfoCircle, faCookieBite, faDesktop, faMobile, faMicrochip, 
-  faMemory, faEthernet, faWifi, faBroadcastTower, faArrowsH, faArrowsV, faBug} from '@fortawesome/pro-solid-svg-icons';
+  faMemory, faEthernet, faWifi, faBroadcastTower, faArrowsH, 
+  faArrowsV, faBug} from '@fortawesome/pro-light-svg-icons';
 import { faBluetooth } from '@fortawesome/free-brands-svg-icons';
 
 import Icon from '../Icon/Icon';

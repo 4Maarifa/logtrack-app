@@ -235,6 +235,15 @@
               display: block;
             }
           }
+
+          .icon-overlay {
+            bottom: 0;
+          }
+
+          .ExTable {
+            min-height: 100%;
+            box-shadow: none;
+          }
         }
       }
     }

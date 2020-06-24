@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { faUser, faUserCog, faUserPlus, faUserTag, faPortrait,
-  faAward, faClipboardUser, faTimes } from '@fortawesome/pro-solid-svg-icons';
+  faAward, faClipboardUser, faTimes } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';

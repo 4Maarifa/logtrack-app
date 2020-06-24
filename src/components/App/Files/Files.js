@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { faUpload, faFolder, faFolderPlus } from '@fortawesome/pro-solid-svg-icons';
+import { faUpload, faFolder, faFolderPlus } from '@fortawesome/pro-light-svg-icons';
 
 import FileService, { QUOTA_FOR_USER } from './../../../services/file.service';
 import DataService from './../../../services/data.service';

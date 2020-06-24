@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { faPlus, faUserTag, faBuilding, faUserPlus, faTag } from '@fortawesome/pro-solid-svg-icons';
+import { faPlus, faUserTag, faBuilding, faUserPlus, faTag } from '@fortawesome/pro-light-svg-icons';
 
 import ActionButton from './../../Utils/ActionButton/ActionButton';
 import ExTable from './../../Utils/ExTable/ExTable';

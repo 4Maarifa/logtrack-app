@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { faRectangleWide, faMapMarker, faUser, faBuilding, faWarehouse } from '@fortawesome/pro-solid-svg-icons';
+import { faRectangleWide, faMapMarker, faUser, faBuilding, faWarehouse } from '@fortawesome/pro-light-svg-icons';
 
 import Map from './../../Utils/Map/Map';
 import Icon from './../../Utils/Icon/Icon';

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { faHandshakeAlt, faReceipt } from '@fortawesome/pro-solid-svg-icons';
+import { faHandshakeAlt, faReceipt } from '@fortawesome/pro-light-svg-icons';
+import { faHandshakeAlt as faHandshakeAltSolid, faReceipt as faReceiptSolid } from '@fortawesome/pro-solid-svg-icons';
 
 import ErrorService from './../../../services/error.service';
 import CompanyService from './../../../services/entities/company.service';
@@ -57,15 +58,15 @@ const ContractPage = ({ match }) => {
       </div>
       <Tabs default="contracts" tabs={{
         contracts: {
-          name: () => <span>
-            <Icon source="fa" icon={faHandshakeAlt} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faHandshakeAltSolid : faHandshakeAlt} />
             Contract details
           </span>,
           content: () => null
         },
         invoices: {
-          name: () => <span>
-            <Icon source="fa" icon={faReceipt} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faReceiptSolid : faReceipt} />
             Invoices
           </span>,
           content: () => null

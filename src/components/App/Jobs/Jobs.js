@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { faSuitcase, faPortrait } from '@fortawesome/pro-solid-svg-icons';
+import { faSuitcase, faPortrait } from '@fortawesome/pro-light-svg-icons';
+import { faSuitcase as faSuitcaseSolid, faPortrait as faPortraitSolid } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 import Tabs from './../../Utils/Tabs/Tabs';
@@ -40,15 +41,15 @@ const Jobs = ({ match }) => {
       : null}
       <Tabs default="offers" tabs={{
         offers: {
-          name: () => <span>
-            <Icon source="fa" icon={faSuitcase} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faSuitcaseSolid : faSuitcase} />
             Offers
           </span>,
           content: () => <JobOffersTab companyId={COMPANY_ID} />,
         },
         profile: {
-          name: () => <span>
-            <Icon source="fa" icon={faPortrait} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faPortraitSolid : faPortrait} />
             Professional Profile
           </span>,
           content: () => <ProfessionalProfileTab />

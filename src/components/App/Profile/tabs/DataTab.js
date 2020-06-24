@@ -1,5 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { faExclamationTriangle, faEnvelope, faCalendar, faHashtag, faIndent, faUserPlus, faCog, faPortrait, faWarehouseAlt, faBuilding, faTruck, faAward, faUserTie, faClipboardUser, faSignIn, faUserHeadset, faFolders, faFile } from '@fortawesome/pro-solid-svg-icons';
+import { faExclamationTriangle, faEnvelope, faCalendar, faHashtag, faIndent, faUserPlus, 
+  faCog, faPortrait, faWarehouseAlt, faBuilding, faTruck, faAward, faUserTie, faClipboardUser, 
+  faSignIn, faUserHeadset, faFolders, faFile } from '@fortawesome/pro-light-svg-icons';
 
 import DataService from './../../../../services/data.service';
 import FileService from './../../../../services/file.service';
@@ -21,7 +23,9 @@ import Loader from './../../../Utils/Loader/Loader';
 import ExTable from './../../../Utils/ExTable/ExTable';
 import CompletionBar from './../../../Utils/CompletionBar/CompletionBar';
 
-import Employee, { employeeCertificatesExTableFSS, EmployeeCertificate, employeeExperienceExTableFSS, EmployeeExperience, employeeOtherExperiencesExTableFSS, EmployeeOtherExperience, employeeAccountActivityExTableFSS, EmployeeAccountActivity } from './../../../Entities/Employee/Employee';
+import Employee, { employeeCertificatesExTableFSS, EmployeeCertificate, employeeExperienceExTableFSS, 
+  EmployeeExperience, employeeOtherExperiencesExTableFSS, EmployeeOtherExperience, 
+  employeeAccountActivityExTableFSS, EmployeeAccountActivity } from './../../../Entities/Employee/Employee';
 import Warehouse, { warehousesExTableFSS } from './../../../Entities/Warehouse/Warehouse';
 import Company, { companiesExTableFSS } from './../../../Entities/Company/Company';
 import Equipment, { equipmentsExTableFSS } from './../../../Entities/Equipment/Equipment';

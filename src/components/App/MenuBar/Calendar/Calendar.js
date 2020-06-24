@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import { faCalendarAlt, faClock, faPlus, faAngleLeft, faMapMarker, faBars, faEdit } from '@fortawesome/pro-solid-svg-icons';
+import { faCalendarAlt, faClock, faPlus, faAngleLeft, faMapMarker, faBars, faEdit } from '@fortawesome/pro-light-svg-icons';
 
 import ColorService from './../../../../services/color.service';
 import DateService from './../../../../services/date.service';

@@ -35,7 +35,7 @@ const Tabs = ({ default: defaultTab, tabs, horizontalLayout }) => {
                   (tabs[tabKey].clearfix ? 'tab-clearfix' : '')} 
                 onClick={() => activateTab(tabKey)}>
 
-              {!tabs[tabKey].clearfix && tabs[tabKey].name()} 
+              {!tabs[tabKey].clearfix && tabs[tabKey].name({ isActive: tabKey === activeTab })} 
             </li>
           )
         }

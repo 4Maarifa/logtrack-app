@@ -64,6 +64,11 @@
         border-top-right-radius: .75rem;
         border-bottom-right-radius: .75rem;
       }
+
+      &:first-child {
+        border-top-left-radius: .75rem;
+        border-bottom-left-radius: .75rem;
+      }
     }
 
     &-marker {

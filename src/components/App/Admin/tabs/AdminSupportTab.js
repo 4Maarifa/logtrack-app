@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { faUserHeadset } from '@fortawesome/pro-solid-svg-icons';
+import { faUserHeadset } from '@fortawesome/pro-light-svg-icons';
 
 import DataService from './../../../../services/data.service';
 import ErrorService from './../../../../services/error.service';

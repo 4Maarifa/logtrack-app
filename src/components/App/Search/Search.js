@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { faSearch, faUsers, faBuilding, faTruck, faWarehouseAlt, faHandshakeAlt } from '@fortawesome/pro-solid-svg-icons';
+import { faSearch, faUsers, faBuilding, faTruck, faWarehouseAlt, faHandshakeAlt } from '@fortawesome/pro-light-svg-icons';
+import { faUsers as faUsersSolid, faWarehouseAlt as faWarehouseAltSolid, faHandshakeAlt as faHandshakeAltSolid,
+  faBuilding as faBuildingSolid, faTruck as faTruckSolid } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 import Tabs from './../../Utils/Tabs/Tabs';
@@ -143,8 +145,8 @@ const Search = () => {
         onValueChange={setSearchInput} />
       <Tabs default="companies" tabs={{
         employees: {
-          name: () => <span>
-            <Icon source="fa" icon={faUsers} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faUsersSolid : faUsers} />
             Employees / Users
             <span className="badge badge-inverse">{Object.keys(employees).length}</span>
           </span>,
@@ -156,8 +158,8 @@ const Search = () => {
                                   loading={isSearchLoading} />
         },
         companies: {
-          name: () => <span>
-            <Icon source="fa" icon={faBuilding} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faBuildingSolid : faBuilding} />
             Companies
             <span className="badge badge-inverse">{Object.keys(companies).length}</span>
           </span>,
@@ -169,8 +171,8 @@ const Search = () => {
                                   loading={isSearchLoading} />
         },
         equipments: {
-          name: () => <span>
-            <Icon source="fa" icon={faTruck} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faTruckSolid : faTruck} />
             Equipments
             <span className="badge badge-inverse">{Object.keys(equipments).length}</span>
           </span>,
@@ -182,8 +184,8 @@ const Search = () => {
                                   loading={isSearchLoading} />
         },
         contracts: {
-          name: () => <span>
-            <Icon source="fa" icon={faHandshakeAlt} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faHandshakeAltSolid : faHandshakeAlt} />
             Contracts
             <span className="badge badge-inverse">{Object.keys(contracts).length}</span>
           </span>,
@@ -195,8 +197,8 @@ const Search = () => {
                                   loading={isSearchLoading} />
         },
         warehouses: {
-          name: () => <span>
-            <Icon source="fa" icon={faWarehouseAlt} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faWarehouseAltSolid : faWarehouseAlt} />
             Warehouses
             <span className="badge badge-inverse">{Object.keys(warehouses).length}</span>
           </span>,

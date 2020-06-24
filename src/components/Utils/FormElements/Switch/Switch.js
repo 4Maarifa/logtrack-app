@@ -1,5 +1,5 @@
 import React from 'react';
-import { faToggleOn, faToggleOff } from '@fortawesome/pro-solid-svg-icons';
+import { faToggleOn, faToggleOff } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Icon/Icon';
 

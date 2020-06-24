@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import Loader from './../Loader/Loader';
 import Tooltip from './../Tooltip/Tooltip';
+import Icon from './../Icon/Icon';
 
 import { LogTrackActivityDetails, LogTrackCategoryDetails } from './../../../classes/LogTrack';
 
@@ -62,8 +63,8 @@ const LogTrackTimeline = ({ logtracks, isLoading }) => {
     const IS_PUNCTUAL = DateService.getTimestampDifference(logTrackData.startTimestamp, logTrackData.endTimestamp) < MIN_LENGTH_OF_NON_PUNCTUAL_EVENTS;
 
     return <span key={logTrackKey} className="logTrack logTrack-time-slot" title={LOGTRACK_ACTIVITY_DETAILS.text} style={{
-      left: LOGTRACK_POSITION * 100 + '%',
-      width: LOGTRACK_WIDTH * 100 + '%',
+      left: (LOGTRACK_POSITION < 0 ? 0 : LOGTRACK_POSITION) * 100 + '%',
+      width: (LOGTRACK_WIDTH > 1 ? 1 : LOGTRACK_WIDTH) * 100 + '%',
       backgroundColor: ColorService.getPaletteForColor(LogTrackCategoryDetails[LOGTRACK_ACTIVITY_DETAILS.parent].color).medium.color
     }}
       onMouseOver={() => setLogTrackHover(logTrackKey)}
@@ -107,7 +108,7 @@ const LogTrackTimeline = ({ logtracks, isLoading }) => {
             onMouseOver={() => setLogTrackHover(CURRENT_LOGTRACK_KEY)}
             onMouseOut={() => setLogTrackHover(null)}>
 
-            {CURRENT_LOGTRACK_ACTIVITY_DETAILS.icon(null, {color: 'white'})}
+            <Icon source="fa" icon={CURRENT_LOGTRACK_ACTIVITY_DETAILS.icon} style={{ color: '#FFFFFF' }} additional={CURRENT_LOGTRACK_ACTIVITY_DETAILS.additionalIcon} />
           </div>
       : <div className="timeline-current"></div>}
     </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { faCheck, faTimes, faEdit } from '@fortawesome/pro-solid-svg-icons';
+import { faCheck, faTimes, faEdit } from '@fortawesome/pro-light-svg-icons';
 import { DelayInput } from 'react-delay-input';
 
 import Icon from './../../Icon/Icon';

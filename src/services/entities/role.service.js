@@ -1,5 +1,5 @@
 import React from 'react';
-import { faCheck, faTimes, faToggleOff, faToggleOn } from '@fortawesome/pro-solid-svg-icons';
+import { faCheck, faTimes, faToggleOff, faToggleOn } from '@fortawesome/pro-light-svg-icons';
 
 import { ERights } from './../right.service';
 

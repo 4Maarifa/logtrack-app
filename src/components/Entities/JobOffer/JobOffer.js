@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faClipboardUser, faEye, faEdit, faCheck } from '@fortawesome/pro-solid-svg-icons';
+import { faClipboardUser, faEye, faEdit, faCheck } from '@fortawesome/pro-light-svg-icons';
 
 import DateService from './../../../services/date.service';
 import DataService from './../../../services/data.service';
@@ -38,7 +38,8 @@ const JobOffer = ({ jobOffer, isPage }) => {
     ACTIONS.push({ title: 'View', icon: <Icon source="fa" icon={faEye} />, link: `/joboffer/${JOB_OFFER_ID}` });
   }
 
-  if(JOB_OFFER_DATA.companyId === computed.activeRole.companyId &&
+  if(computed.activeRole &&
+      JOB_OFFER_DATA.companyId === computed.activeRole.companyId &&
       (computed.activeRole.role === ERole.MANAGER || computed.activeRole.role === ERole.RECRUITER) &&
       JOB_OFFER_DATA.status === EJobOfferStatus.OPENED) {
 

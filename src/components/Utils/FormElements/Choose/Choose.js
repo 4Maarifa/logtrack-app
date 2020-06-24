@@ -72,7 +72,7 @@ const Choose = ({ selection,
       onClick={() => {onValueChange(itemId); setForceUpdate(forceUpdate + 1)}}
       style={styles}>
         
-      {items[itemId].content}
+      {items[itemId].content({ isActive: IS_ACTIVE })}
     </li>;
   };
 

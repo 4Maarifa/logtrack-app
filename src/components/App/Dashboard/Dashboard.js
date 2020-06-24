@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { faCog, faClock, faMapMarker, faBuilding, faTag, faMapPin } from '@fortawesome/pro-light-svg-icons';
-import { faChevronRight, faTruck, faUsers, faWarehouseAlt, faThermometerHalf } from '@fortawesome/pro-solid-svg-icons';
+import { faCog, faClock, faMapMarker, faBuilding, faTag, faChevronRight,
+  faTruck, faUsers, faWarehouseAlt, faThermometerHalf } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 
@@ -202,7 +202,6 @@ const Dashboard = () => {
         </div>
         <div className={'card card-stick logtracks ' + (computed.activeRole && computed.activeRole.role !== ERole.MANAGER ? 'logtracks-with-button' : '')}>
           <LogTracks isEmbed />
-          <Icon containerclassname="icon-overlay" source="fa" icon={faMapPin} />
         </div>
       </div>
     </div>;

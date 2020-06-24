@@ -2,7 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { faTachometerFast, faHome, faSignIn, faUserPlus, faUserCog, faUsers,
   faTruck, faTag, faCompass, faAnalytics, faMapPin, faBuilding, faSearch,
-  faWarehouseAlt, faBars, faTimes, faHandshakeAlt, faSuitcase, faPortrait, faCrown, faFolders } from '@fortawesome/pro-solid-svg-icons';
+  faWarehouseAlt, faBars, faTimes, faHandshakeAlt, faSuitcase, faPortrait, faCrown,
+  faFolders, faReceipt, faWrench } from '@fortawesome/pro-light-svg-icons';
+import { faTag as faTagSolid, faCompass as faCompassSolid, faMapPin as faMapPinSolid,
+  faTruck as faTruckSolid, faWarehouseAlt as faWarehouseAltSolid, faAnalytics as faAnalyticsSolid,
+  faPortrait as faPortraitSolid, faHandshakeAlt as faHandshakeAltSolid, faUserCog as faUserCogSolid,
+  faCrown as faCrownSolid, faUsers as faUsersSolid, faTachometerFast as faTachometerFastSolid,
+  faHome as faHomeSolid, faUserPlus as faUserPlusSolid, faSuitcase as faSuitcaseSolid,
+  faSignIn as faSignInSolid, faSearch as faSearchSolid, faFolders as faFoldersSolid,
+  faBuilding as faBuildingSolid, faReceipt as faReceiptSolid, faWrench as faWrenchSolid } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 
@@ -46,12 +54,14 @@ const Navigation = () => {
   const renderActiveRole = () => {
     if(!computed.activeRole) {
       return (<NavLink activeClassName="nav--active" to={`/roles`} exact>
-        <Icon source="fa" icon={faTag} />
+        <Icon containerclassname="nav-icon--inactive" source="fa" icon={faTag} />
+        <Icon containerclassname="nav-icon--active" source="fa" icon={faTagSolid} />
         <span className="nav-title">No active role</span>
       </NavLink>);
     }
     return (<NavLink activeClassName="nav--active" to={`/roles`} exact>
-      <Icon source="fa" icon={ERoleDetails[computed.activeRole.role].icon} />
+      <Icon containerclassname="nav-icon--inactive" source="fa" icon={ERoleDetails[computed.activeRole.role].icon} />
+      <Icon containerclassname="nav-icon--active" source="fa" icon={ERoleDetails[computed.activeRole.role].iconSolid} />
       <span className="nav-title nav-title-role">
         {UtilsService.capitalize(computed.activeRole.role)}<br/>
         {computed.activeRoleCompany.name}
@@ -63,7 +73,8 @@ const Navigation = () => {
     if(computed.employee) {
       return (
         <NavLink activeClassName="nav--active" to={`/profile`} exact>
-          <Icon source="fa" icon={faUserCog} />
+          <Icon containerclassname="nav-icon--inactive" source="fa" icon={faUserCog} />
+          <Icon containerclassname="nav-icon--active" source="fa" icon={faUserCogSolid} />
           <span className="nav-title">
             {computed.employee.firstname + ' ' + computed.employee.lastname}
           </span>
@@ -71,7 +82,8 @@ const Navigation = () => {
       );
     }
     return (<NavLink activeClassName="nav--active" to={`/profile`} exact>
-      <Icon source="fa" icon={faUserCog} />
+      <Icon containerclassname="nav-icon--inactive" source="fa" icon={faUserCog} />
+      <Icon containerclassname="nav-icon--active" source="fa" icon={faUserCogSolid} />
     </NavLink>);
   };
 
@@ -85,47 +97,68 @@ const Navigation = () => {
     const TABS = {
       [ERights.APP_CAN_USE_ADMIN_MANAGEMENT]:
         <NavLink key="admin" activeClassName="nav--active" to={`/admin`}>
-          <Icon source="fa" icon={faCrown} />
+          <Icon containerclassname="nav-icon--inactive" source="fa" icon={faCrown} />
+          <Icon containerclassname="nav-icon--active" source="fa" icon={faCrownSolid} />
           <span className="nav-title">Admin</span>
         </NavLink>,
       [ERights.APP_CAN_USE_GPS]: 
         <NavLink key="gps" activeClassName="nav--active" to={`/gps`}>
-          <Icon source="fa" icon={faCompass} />
+          <Icon containerclassname="nav-icon--inactive" source="fa" icon={faCompass} />
+          <Icon containerclassname="nav-icon--active" source="fa" icon={faCompassSolid} />
           <span className="nav-title">GPS</span>
+        </NavLink>,
+      [ERights.APP_CAN_USE_MAINTENANCE]: 
+        <NavLink key="maintenance" activeClassName="nav--active" to={`/maintenance`}>
+          <Icon containerclassname="nav-icon--inactive" source="fa" icon={faWrench} />
+          <Icon containerclassname="nav-icon--active" source="fa" icon={faWrenchSolid} />
+          <span className="nav-title">Maintenance</span>
         </NavLink>,
       [ERights.APP_CAN_USE_LOGTRACKS]: 
         <NavLink key="logtracks" activeClassName="nav--active" to={`/logtracks`}>
-          <Icon source="fa" icon={faMapPin} />
+          <Icon containerclassname="nav-icon--inactive" source="fa" icon={faMapPin} />
+          <Icon containerclassname="nav-icon--active" source="fa" icon={faMapPinSolid} />
           <span className="nav-title">LogTracks</span>
         </NavLink>,
       [ERights.APP_CAN_USE_WAREHOUSE_MANAGEMENT]: 
         <NavLink key="warehouses" activeClassName="nav--active" to={`/warehouses`}>
-          <Icon source="fa" icon={faWarehouseAlt} />
+          <Icon containerclassname="nav-icon--inactive" source="fa" icon={faWarehouseAlt} />
+          <Icon containerclassname="nav-icon--active" source="fa" icon={faWarehouseAltSolid} />
           <span className="nav-title">Warehouses</span>
         </NavLink>,
       [ERights.APP_CAN_USE_EMPLOYEE_MANAGEMENT]: 
         <NavLink key="employees" activeClassName="nav--active" to={`/employees`}>
-          <Icon source="fa" icon={faUsers} />
+          <Icon containerclassname="nav-icon--inactive" source="fa" icon={faUsers} />
+          <Icon containerclassname="nav-icon--active" source="fa" icon={faUsersSolid} />
           <span className="nav-title">Employees</span>
         </NavLink>,
       [ERights.APP_CAN_USE_EQUIPMENT_MANAGEMENT]: 
         <NavLink key="equipments" activeClassName="nav--active" to={`/equipments`}>
-          <Icon source="fa" icon={faTruck} />
+          <Icon containerclassname="nav-icon--inactive" source="fa" icon={faTruck} />
+          <Icon containerclassname="nav-icon--active" source="fa" icon={faTruckSolid} />
           <span className="nav-title">Equipments</span>
         </NavLink>,
       [ERights.APP_CAN_USE_CONTRACT_MANAGEMENT]: 
         <NavLink key="contracts" activeClassName="nav--active" to={`/contracts`}>
-          <Icon source="fa" icon={faHandshakeAlt} />
+          <Icon containerclassname="nav-icon--inactive" source="fa" icon={faHandshakeAlt} />
+          <Icon containerclassname="nav-icon--active" source="fa" icon={faHandshakeAltSolid} />
           <span className="nav-title">Contracts</span>
+        </NavLink>,
+      [ERights.APP_CAN_USE_INVOICE_MANAGEMENT]: 
+        <NavLink key="invoices" activeClassName="nav--active" to={`/invoices`}>
+          <Icon containerclassname="nav-icon--inactive" source="fa" icon={faReceipt} />
+          <Icon containerclassname="nav-icon--active" source="fa" icon={faReceiptSolid} />
+          <span className="nav-title">Invoices</span>
         </NavLink>,
       [ERights.APP_CAN_USE_ANALYTICS]: 
         <NavLink key="analytics" activeClassName="nav--active" to={`/analytics`}>
-          <Icon source="fa" icon={faAnalytics} />
+          <Icon containerclassname="nav-icon--inactive" source="fa" icon={faAnalytics} />
+          <Icon containerclassname="nav-icon--active" source="fa" icon={faAnalyticsSolid} />
           <span className="nav-title">Analytics</span>
         </NavLink>,
       [ERights.APP_CAN_USE_JOBOFFERS_MANAGEMENT] :
         <NavLink key="joboffers" activeClassName="nav--active" to={`/joboffers`}>
-          <Icon source="fa" icon={faPortrait} />
+          <Icon containerclassname="nav-icon--inactive" source="fa" icon={faPortrait} />
+          <Icon containerclassname="nav-icon--active" source="fa" icon={faPortraitSolid} />
           <span className="nav-title">Job Offers</span>
         </NavLink>
     };
@@ -143,27 +176,32 @@ const Navigation = () => {
       {computed.user && 
         <nav>
           <NavLink activeClassName="nav--active" to={`/dashboard`}>
-            <Icon source="fa" icon={faTachometerFast} />
+            <Icon containerclassname="nav-icon--inactive" source="fa" icon={faTachometerFast} />
+            <Icon containerclassname="nav-icon--active" source="fa" icon={faTachometerFastSolid} />
             <span className="nav-title">Dashboard</span>
           </NavLink>
 
           {getNavigationTabs()}
           <span className="nav-clearfix"></span>
           <NavLink activeClassName="nav--active" to={`/search`}>
-            <Icon source="fa" icon={faSearch} />
+            <Icon containerclassname="nav-icon--inactive" source="fa" icon={faSearch} />
+            <Icon containerclassname="nav-icon--active" source="fa" icon={faSearchSolid} />
             <span className="nav-title">Search</span>
           </NavLink>
           <NavLink activeClassName="nav--active" to={`/jobs`}>
-            <Icon source="fa" icon={faSuitcase} />
+            <Icon containerclassname="nav-icon--inactive" source="fa" icon={faSuitcase} />
+            <Icon containerclassname="nav-icon--active" source="fa" icon={faSuitcaseSolid} />
             <span className="nav-title">Jobs</span>
           </NavLink>
           <NavLink activeClassName="nav--active" to={`/files`}>
-            <Icon source="fa" icon={faFolders} />
+            <Icon containerclassname="nav-icon--inactive" source="fa" icon={faFolders} />
+            <Icon containerclassname="nav-icon--active" source="fa" icon={faFoldersSolid} />
             <span className="nav-title">Files</span>
           </NavLink>
           {computed.activeRole &&
             <NavLink activeClassName="nav--active" to={`/company/${computed.activeRole.companyId}`}>
-              <Icon source="fa" icon={faBuilding} />
+              <Icon containerclassname="nav-icon--inactive" source="fa" icon={faBuilding} />
+              <Icon containerclassname="nav-icon--active" source="fa" icon={faBuildingSolid} />
               <span className="nav-title">Company</span>
             </NavLink>
           }
@@ -175,15 +213,18 @@ const Navigation = () => {
       {!computed.user &&
         <nav>
           <NavLink activeClassName="nav--active" to={`/`} exact>
-            <Icon source="fa" icon={faHome} />
+            <Icon containerclassname="nav-icon--inactive" source="fa" icon={faHome} />
+            <Icon containerclassname="nav-icon--active" source="fa" icon={faHomeSolid} />
             <span className="nav-title">Home</span>
           </NavLink>
           <NavLink activeClassName="nav--active" to={`/signin`}>
-            <Icon source="fa" icon={faSignIn} />
+            <Icon containerclassname="nav-icon--inactive" source="fa" icon={faSignIn} />
+            <Icon containerclassname="nav-icon--active" source="fa" icon={faSignInSolid} />
             <span className="nav-title">Sign in</span>
           </NavLink>
           <NavLink activeClassName="nav--active" to={`/signup`}>
-            <Icon source="fa" icon={faUserPlus} />
+            <Icon containerclassname="nav-icon--inactive" source="fa" icon={faUserPlus} />
+            <Icon containerclassname="nav-icon--active" source="fa" icon={faUserPlusSolid} />
             <span className="nav-title">Sign up</span>
           </NavLink>
           {renderMobileNavigation()}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { faUser, faRectangleWide, faBars, faMapMarker,
   faArrowAltToRight, faCalendarAlt, faArrowAltFromLeft, faCheck,
-  faPalette, faInfoCircle } from '@fortawesome/pro-solid-svg-icons';
+  faPalette, faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import DateTimePicker from 'react-datetime-picker';
 
 import DataService from './../../../services/data.service';
@@ -140,9 +140,9 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
   const POSSIBLE_COLORS = {};
   Object.keys(EPalette).forEach(colorKey => {
     POSSIBLE_COLORS[colorKey] = {
-      content: <Fragment>
+      content: ({ isActive }) => <Fragment>
         <i className="input-color-choice" style={{backgroundColor: EMediumPaletteDetails[colorKey].color}} />
-        <Icon source="fa" icon={faCheck} />
+        {isActive ? <Icon source="fa" icon={faCheck} /> : null}
       </Fragment>
     }
   });

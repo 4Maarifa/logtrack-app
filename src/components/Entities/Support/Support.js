@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { faReply, faUserHeadset, faInfoCircle, faDesktop, faCopy } from '@fortawesome/pro-solid-svg-icons';
+import { faReply, faUserHeadset, faInfoCircle, faDesktop, faCopy } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 import ActionList from './../../Utils/ActionList/ActionList';

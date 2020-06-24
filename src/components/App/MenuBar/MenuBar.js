@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Fragment } from 'react';
-import { faChevronDown, faChevronUp } from '@fortawesome/pro-solid-svg-icons';
+import { faChevronDown, faChevronUp } from '@fortawesome/pro-light-svg-icons';
 
 import DataService from './../../../services/data.service';
 import RT_Service from './../../../services/rt.service';

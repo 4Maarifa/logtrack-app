@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { faTruck } from '@fortawesome/pro-solid-svg-icons'
+import { faTruck } from '@fortawesome/pro-light-svg-icons';
+import { faTruck as faTruckSolid } from '@fortawesome/pro-solid-svg-icons';
 
 import DataService from './../../../services/data.service';
 import CompanyService from './../../../services/entities/company.service';
@@ -74,8 +75,8 @@ const WarehousePage = ({ match }) => {
       </div>
       <Tabs default="equipments" tabs={{
         equipments: {
-          name: () => <span>
-            <Icon source="fa" icon={faTruck} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faTruckSolid : faTruck} />
             Equipments
           </span>,
           content: () => <WarehouseEquipmentsTab warehouseId={WAREHOUSE_ID} />

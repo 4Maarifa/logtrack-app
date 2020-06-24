@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { faCheck, faTimes } from '@fortawesome/pro-solid-svg-icons';
+import { faCheck, faTimes } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Icon/Icon';
 import Tooltip, { ETooltipPosition, ETooltipTrianglePosition } from './../../Tooltip/Tooltip';

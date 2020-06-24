@@ -1,20 +1,21 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { faMapPin } from '@fortawesome/pro-solid-svg-icons';
+import { faMapPin } from '@fortawesome/pro-light-svg-icons';
 
-import DataService from '../../../../services/data.service';
-import ErrorService from '../../../../services/error.service';
-import ColorService from '../../../../services/color.service';
-import LogTrackService from '../../../../services/entities/logtrack.service';
+import DataService from './../../../../services/data.service';
+import ErrorService from './../../../../services/error.service';
+import ColorService from './../../../../services/color.service';
+import LogTrackService from './../../../../services/entities/logtrack.service';
+import CompanyService from './../../../../services/entities/company.service';
 
-import Icon from '../../../Utils/Icon/Icon';
-import ExTable from '../../../Utils/ExTable/ExTable';
-import LogTrackTimeline from '../../../Utils/LogTrackTimeline/LogTrackTimeline';
+import Icon from './../../../Utils/Icon/Icon';
+import ExTable from './../../../Utils/ExTable/ExTable';
+import LogTrackTimeline from './../../../Utils/LogTrackTimeline/LogTrackTimeline';
 
-import LogTrackAdd from '../../../Forms/LogTrackAdd/LogTrackAdd';
+import LogTrackAdd from './../../../Forms/LogTrackAdd/LogTrackAdd';
 
-import LogTrack, { logtracksExTableFSS } from '../../../Entities/LogTrack/LogTrack';
+import LogTrack, { logtracksExTableFSS } from './../../../Entities/LogTrack/LogTrack';
 
-import { LogTrackCategoryDetails, LogTrackActivityDetails } from '../../../../classes/LogTrack';
+import { LogTrackCategoryDetails, LogTrackActivityDetails } from './../../../../classes/LogTrack';
 
 import { v4 as uuid } from 'uuid';
 
@@ -27,8 +28,10 @@ const LogTrackForUsers = ({ isEmbed }) => {
   const [logtracks, setLogtracks] = useState({});
   const [isLogtracksLoading, setLogtracksLoading] = useState(true);
 
+  const [currentLogTrackCompany, setCurrentLogTrackCompany] = useState({});
+
   useEffect(() => {
-    if(computed.initialized && computed.activeRole) {
+    if(computed.initialized && computed.activeRole && computed.employee) {
       LogTrackService.getEndedForEmployeeIdPast24h(computed.user.uid)
         .then(logtracks => {
           if(computed.employee.currentLogTrack) {
@@ -39,8 +42,21 @@ const LogTrackForUsers = ({ isEmbed }) => {
           setLogtracksLoading(false);
         })
         .catch(ErrorService.manageError);
+      
+      if(computed.employee && computed.activeRole && computed.employee.currentLogTrack) {
+        const CURRENT_LOGTRACK_COMPANY_ID = computed.employee.currentLogTrack[Object.keys(computed.employee.currentLogTrack)[0]].companyId;
+
+        if(CURRENT_LOGTRACK_COMPANY_ID === computed.activeRole.companyId) {
+          setCurrentLogTrackCompany({ [computed.activeRole.companyId]: computed.activeRoleCompany });
+        }
+        else {
+          CompanyService.get(CURRENT_LOGTRACK_COMPANY_ID)
+            .then(companyDoc => setCurrentLogTrackCompany({ [companyDoc.id]: companyDoc.data() }))
+            .catch(ErrorService.manageError);
+        }
+      }
     }
-  }, [computed.initialized, computed.activeRole]);
+  }, [computed.initialized, computed.activeRole, computed.employee]);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
@@ -71,7 +87,7 @@ const LogTrackForUsers = ({ isEmbed }) => {
                 ].parent
               ].color).medium.color
           }}>
-            <LogTrack logtrack={computed.employee.currentLogTrack} isPage />
+            <LogTrack logtrack={computed.employee.currentLogTrack} company={currentLogTrackCompany} isPage />
           </div>
         </Fragment> : <h1>No current LogTrack</h1>}
 
@@ -79,13 +95,14 @@ const LogTrackForUsers = ({ isEmbed }) => {
       <h1>Last Logtracks</h1>
       <LogTrackTimeline logtracks={logtracks}
                         isLoading={isLogtracksLoading} />
-    </Fragment> : null}
+    </Fragment> : 
+          <Icon containerclassname="icon-overlay" source="fa" icon={faMapPin} />}
 
     <ExTable key="logtracks"
                 fss={logtracksExTableFSS}
                 items={logtracks}
                 renderItem={renderLogtrack}
-                header={<span><Icon source="fa" icon={faMapPin} /> Your Logtracks</span>}
+                header={<span><Icon source="fa" icon={faMapPin} /> Last Logtracks</span>}
                 loading={isLogtracksLoading} />
   </div>;
 };

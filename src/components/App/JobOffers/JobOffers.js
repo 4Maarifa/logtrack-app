@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { faClipboardUser, faPlus, faCheck, faPortrait } from '@fortawesome/pro-solid-svg-icons';
+import { faClipboardUser, faPlus, faCheck } from '@fortawesome/pro-light-svg-icons';
+import { faClipboardUser as faClipboardUserSolid, faCheck as faCheckSolid } from '@fortawesome/pro-solid-svg-icons';
 
 import DataService from './../../../services/data.service';
 import CompanyService from './../../../services/entities/company.service';
@@ -75,20 +76,20 @@ const JobOffers = () => {
   return <div className="JobOffers">
     <Tabs default="opened" tabs={{
       opened: {
-        name: () => <span>
-          <Icon source="fa" icon={faClipboardUser} />
+        name: ({ isActive }) => <span>
+          <Icon source="fa" icon={isActive ? faClipboardUserSolid : faClipboardUser} />
           Opened positions
         </span>,
         content: () => <ExTable key="opened"
                                 fss={jobsExTableFSS}
                                 items={openedJobOffers}
                                 renderItem={(itemId, itemData) => <JobOffer key={itemId} jobOffer={ {[itemId]: itemData} } />}
-                                header={<span><Icon source="fa" icon={faPortrait} /> Opened Positions</span>}
+                                header={<span><Icon source="fa" icon={faClipboardUser} /> Opened Positions</span>}
                                 loading={isJobOffersLoading} />
       },
       closed: {
-        name: () => <span>
-          <Icon source="fa" icon={faCheck} />
+        name: ({ isActive }) => <span>
+          <Icon source="fa" icon={isActive ? faCheckSolid : faCheck} />
           Closed applications
         </span>,
         content: () => <ExTable key="closed" 

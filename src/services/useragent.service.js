@@ -1,6 +1,6 @@
-import { faQuestion } from '@fortawesome/pro-solid-svg-icons';
-import { faOpera, faEdge, faInternetExplorer, faFirefox, faChrome, faSafari,
-  faWindows, faApple, faLinux, faAndroid } from '@fortawesome/free-brands-svg-icons';
+import { faQuestion } from '@fortawesome/pro-light-svg-icons';
+import { faOpera, faEdge, faInternetExplorer, faFirefox, faChrome, 
+  faSafari, faWindows, faApple, faLinux, faAndroid } from '@fortawesome/free-brands-svg-icons';
 
 import { migratePrototype } from './data.service';
 import ErrorService from './error.service';

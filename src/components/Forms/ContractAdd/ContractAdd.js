@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { faBuilding, faRectangleWide, faExchange, faUser } from '@fortawesome/pro-solid-svg-icons';
+import { faBuilding, faRectangleWide, faExchange, faUser } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 import Choose from './../../Utils/FormElements/Choose/Choose';
@@ -150,8 +150,8 @@ const ContractAdd = ({ match }) => {
   let contractDetails = {};
   Object.keys(EContractTypeDetails).forEach(contractTypeKey => {
     contractDetails[contractTypeKey] = {
-      content: <span title={EContractTypeDetails[contractTypeKey].disabled ? 'Not available in your plan' : 'Choose this type'}>
-        {EContractTypeDetails[contractTypeKey].icon}
+      content: ({ isActive }) => <span title={EContractTypeDetails[contractTypeKey].disabled ? 'Not available in your plan' : 'Choose this type'}>
+        <Icon source="fa" icon={isActive ? EContractTypeDetails[contractTypeKey].iconSolid : EContractTypeDetails[contractTypeKey].icon} />
         {EContractTypeDetails[contractTypeKey].name}
       </span>,
       disabled: EContractTypeDetails[contractTypeKey].disabled

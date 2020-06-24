@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { faMapPin } from '@fortawesome/pro-solid-svg-icons';
+import { faMapPin } from '@fortawesome/pro-light-svg-icons';
 
 import DataService from './../../../../services/data.service';
 import ErrorService from './../../../../services/error.service';
 import LogTrackService from './../../../../services/entities/logtrack.service';
+import EmployeeService from '../../../../services/entities/employee.service';
 
 import ExTable from './../../../Utils/ExTable/ExTable';
 import Icon from './../../../Utils/Icon/Icon';
@@ -11,7 +12,6 @@ import Icon from './../../../Utils/Icon/Icon';
 import LogTrack, { logtracksExTableFSS } from './../../../Entities/LogTrack/LogTrack';
 
 import { v4 as uuid } from 'uuid';
-import EmployeeService from '../../../../services/entities/employee.service';
 
 const LogTracksForManagers = ({ isEmbed }) => {
   
@@ -56,7 +56,8 @@ const LogTracksForManagers = ({ isEmbed }) => {
   );
 
   return <div className="LogTracks">
-    {!isEmbed ? <h1>Last LogTracks for your company</h1> : null}
+    {!isEmbed ? <h1>Last LogTracks for your company</h1> : 
+          <Icon containerclassname="icon-overlay" source="fa" icon={faMapPin} />}
 
     <ExTable key="logtracks"
                 fss={logtracksExTableFSS}

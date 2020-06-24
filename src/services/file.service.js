@@ -1,6 +1,6 @@
 import React from 'react';
-import { faFile, faFileWord, faFileExcel, faFileVideo, faFileMusic, faFilePdf, 
-    faFileChartPie, faFileImage, faFileArchive, faFileCsv, faCube, faFileAlt, faDownload, faEye, faTrash } from '@fortawesome/pro-solid-svg-icons';
+import { faFile, faFileWord, faFileExcel, faFileVideo, faFileMusic, faFilePdf, faFileChartPie, 
+    faFileImage, faFileArchive, faFileCsv, faCube, faFileAlt, faDownload, faEye, faTrash } from '@fortawesome/pro-light-svg-icons';
 
 import FirebaseService from './firebase.service';
 import ErrorService from './error.service';

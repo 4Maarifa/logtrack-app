@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { faBuilding, faTag, faUser, faInfoCircle } from '@fortawesome/pro-solid-svg-icons';
+import { faBuilding, faTag, faUser, faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 
 import Choose from './../../Utils/FormElements/Choose/Choose';
 import Icon from './../../Utils/Icon/Icon';
@@ -118,13 +118,13 @@ const RoleAdd = ({ match }) => {
 
   /**
    * RENDER
-   */  
-  let roleDetails = {};
+   */
+  const ROLE_DETAILS = {};
   Object.keys(ERoleDetails).forEach(roleId => {
-    roleDetails[roleId] = {
-      content: <Fragment>
+    ROLE_DETAILS[roleId] = {
+      content: ({ isActive }) => <Fragment>
         <span>
-          <Icon source="fa" icon={ERoleDetails[roleId].icon} />
+          <Icon source="fa" icon={isActive ? ERoleDetails[roleId].iconSolid : ERoleDetails[roleId].icon} />
           {ERoleDetails[roleId].name}
         </span>
         <span>
@@ -177,7 +177,7 @@ const RoleAdd = ({ match }) => {
               </span> : null}
               <Choose
                 selection={roleType}
-                items={roleDetails}
+                items={ROLE_DETAILS}
                 multiple={false} 
                 fieldName="roleType"
                 onSelectionChange={setRoleType}

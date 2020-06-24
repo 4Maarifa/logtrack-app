@@ -1,5 +1,5 @@
 import React from 'react';
-import { faCheck } from '@fortawesome/pro-solid-svg-icons';
+import { faCheck } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Icon/Icon';
 

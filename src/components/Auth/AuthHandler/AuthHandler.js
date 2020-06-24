@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { faInfoCircle, faKey } from '@fortawesome/pro-solid-svg-icons';
+import { faInfoCircle, faKey } from '@fortawesome/pro-light-svg-icons';
 import { Redirect } from 'react-router-dom';
 
 import ErrorService from './../../../services/error.service';

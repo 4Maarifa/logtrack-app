@@ -19,18 +19,12 @@
         position: relative;
 
         svg {
-          display: none;
-        }
-
-        &.li--active {
-          svg {
-            height: 2rem;
-            width: 2rem;
-            display: block;
-            position: absolute;
-            top: .5rem;
-            left: .5rem;
-          }
+          height: 2rem;
+          width: 2rem;
+          display: block;
+          position: absolute;
+          top: .5rem;
+          left: .5rem;
         }
 
         .input-color-choice {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { faInfoCircle } from '@fortawesome/pro-solid-svg-icons';
+import { faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 
 import DataService from './data.service';
 import ErrorService from './error.service';
