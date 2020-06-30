@@ -13,7 +13,7 @@ import './Analytics.scss';
 
 /**
  * Component: Analytics
- * Used by managers to see stats about logtracks
+ * Used by managers to see stats about logtracks, contracts, invoices...
  */
 const Analytics = () => {
   const GRAPHS = {

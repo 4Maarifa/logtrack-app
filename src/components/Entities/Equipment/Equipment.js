@@ -15,6 +15,12 @@ import { v4 as uuid } from 'uuid';
 
 import './Equipment.scss';
 
+/**
+ * Component: Equipment
+ * Print equipment details
+ * 
+ * You have to pass the related equipment model, fully popuplated!
+ */
 const Equipment = ({ equipment, equipmentModel, isPage }) => {
 
   const OBSERVER_KEY = uuid();
@@ -29,7 +35,7 @@ const Equipment = ({ equipment, equipmentModel, isPage }) => {
   if(!computed.initialized) { return null; }
   if(!equipment) { return null; }
 
-  
+  // Parse data
   const EQUIPMENT_ID = Object.keys(equipment)[0],
     EQUIPMENT_DATA = equipment[EQUIPMENT_ID],
     EQUIPMENT_MODEL_DATA = equipmentModel[Object.keys(equipmentModel)[0]];
@@ -38,6 +44,7 @@ const Equipment = ({ equipment, equipmentModel, isPage }) => {
    * RENDER
    */
 
+  // Compute actions
   const ACTIONS = [];
   if(computed.activeRole.role === ERole.MANAGER && EQUIPMENT_DATA.companyId === computed.activeRole.companyId) {
     ACTIONS.push({title: 'Edit', icon: <Icon source="fa" icon={faEdit} />, link: `/equipment-edit/${EQUIPMENT_ID}`});
@@ -46,18 +53,28 @@ const Equipment = ({ equipment, equipmentModel, isPage }) => {
   return (
     <div className="Equipment Element-content">
       <div className="Element-base">
-        <span className={'Element-badge badge ' + (isPage ? 'badge-inverse' : '')}>{EEquipmentModelSubTypeDetails[EQUIPMENT_MODEL_DATA.type][EQUIPMENT_MODEL_DATA.subType].icon}</span>
+
+        {/* Print badge of the equipment model's type */}
+        <span className={'Element-badge badge ' + (isPage ? 'badge-inverse' : '')}>
+          {EEquipmentModelSubTypeDetails[EQUIPMENT_MODEL_DATA.type][EQUIPMENT_MODEL_DATA.subType].icon}
+        </span>
+
         <div className="Element-photo">
+          {/* Print equipment model picture */}
           <img
             alt={EQUIPMENT_MODEL_DATA.name} 
             src={EQUIPMENT_MODEL_DATA.photoUrl} />
         </div>
+
+        {/* Equipment details */}
         <div className="Element-data">
           <span className="Element-title">
             <PageLink type={PageLinkType.EQUIPMENT} entityId={EQUIPMENT_ID} entityData={EQUIPMENT_DATA} white={isPage} />
           </span>
           <span className="sub">{EQUIPMENT_MODEL_DATA.name}</span>
         </div>
+
+        {/* Equipment actions */}
         <div className="Element-actions">
           <ActionList actions={ACTIONS} isFlatten={isPage} />
         </div>
@@ -66,6 +83,7 @@ const Equipment = ({ equipment, equipmentModel, isPage }) => {
   );
 };
 
+// FSS for equipments (used to filter, search and sort equipments) => sort on identification, search on identification
 export const equipmentsExTableFSS = {
   sort: {
     identification: {

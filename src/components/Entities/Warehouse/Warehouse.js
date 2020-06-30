@@ -14,6 +14,10 @@ import { v4 as uuid } from 'uuid';
 
 import './Warehouse.scss';
 
+/**
+ * Component: Warehouse
+ * Print warehouse details
+ */
 const Warehouse = ({ warehouse, isPage }) => {
 
   const OBSERVER_KEY = uuid();
@@ -31,7 +35,10 @@ const Warehouse = ({ warehouse, isPage }) => {
   const WAREHOUSE_ID = Object.keys(warehouse)[0],
     WAREHOUSE_DATA = warehouse[WAREHOUSE_ID];
 
+  // Compute actions
   const ACTIONS = [];
+
+  // If current user is manager on the company, propose him to see details as well as edit the warehouse
   if(computed.activeRole.role === ERole.MANAGER && WAREHOUSE_DATA.companyId === computed.activeRole.companyId) {
     if(!isPage) {
       ACTIONS.push({ title: 'View', icon: <Icon source="fa" icon={faEye} />, link: `/warehouse/${WAREHOUSE_ID}` });
@@ -44,15 +51,20 @@ const Warehouse = ({ warehouse, isPage }) => {
       <div className="Element-base">
         <Icon containerclassname="Element-icon" source="fa" icon={faWarehouseAlt} />
         <div className="Element-data">
+          {/* Warehouse details */}
           <span className="Element-title">
+            {/* Warehouse pagelink */}
             <PageLink type={PageLinkType.WAREHOUSE} entityId={WAREHOUSE_ID} white={isPage} entityData={WAREHOUSE_DATA} />
           </span>
+
+          {/* Print nb loading docks */}
           {WAREHOUSE_DATA.nbLoadingDocks && <span className={'badge ' + (isPage ? 'badge-inverse' : '')}>
             <Icon source="fa" icon={faWarehouse} />
             {WAREHOUSE_DATA.nbLoadingDocks}
           </span>}
         </div>
         <div className="Element-actions">
+          {/* Actions */}
           <ActionList actions={ACTIONS} isFlatten={isPage} />
         </div>
       </div>
@@ -60,6 +72,7 @@ const Warehouse = ({ warehouse, isPage }) => {
   );
 };
 
+// FSS for warehouses (used to filter, search and sort warehouses) => sort by name and nbLoading docls, search on name
 export const warehousesExTableFSS = {
   sort: {
     name: {

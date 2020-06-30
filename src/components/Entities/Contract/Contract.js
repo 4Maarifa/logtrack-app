@@ -19,23 +19,36 @@ import { v4 as uuid } from 'uuid';
 
 import './Contract.scss';
 
+/**
+ * Component: Contract
+ * Print contract details
+ * 
+ * You have to pass full CompanyExec and CompanyOrder, fully loaded
+ */
 const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, isPage }) => {
 
   if(!contract) { return null; }
 
   const CONTRACT_ID = Object.keys(contract)[0];
   const CONTRACT_DATA = contract[CONTRACT_ID];
+
   const OBSERVER_KEY = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
+  // Change contract status function
   const changeContractStatus = status => {
     let fieldsToUpdate = { status };
+
+    // If request to be archived, set the archiveIsoDate as well
     if(status === EContractStatus.ARCHIVED) {
       Object.assign(fieldsToUpdate, { archiveIsoDate: DateService.getCurrentIsoDateString() });
     }
+
+    // Update the contract
     ContractService.updateField(CONTRACT_ID, fieldsToUpdate)
       .then(() => {
+        // Notify changes
         ErrorService.success('Contract updated!');
         notifyContractChanges && notifyContractChanges(CONTRACT_ID);
       }).catch(ErrorService.manageError);
@@ -51,6 +64,8 @@ const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, 
   /**
    * RENDER
    */
+
+  // Render the status and actions about status
   const computeStatus = () => {
     const IS_EXECUTOR = (Object.keys(companyExec)[0] === computed.activeRole.companyId);
     const HAS_CREATED = CONTRACT_DATA.createdByCompanyId === computed.activeRole.companyId;
@@ -83,6 +98,7 @@ const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, 
     }
   };
 
+  // Compute other actions
   const computeAction = () => {
     const IS_EXECUTOR = (Object.keys(companyExec)[0] === computed.activeRole.companyId);
     const HAS_CREATED = CONTRACT_DATA.createdByCompanyId === computed.activeRole.companyId;
@@ -118,6 +134,7 @@ const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, 
   
   const IS_EXECUTOR = (Object.keys(companyExec)[0] === computed.activeRole.companyId);
 
+  // Compute actions about contract
   const ACTIONS = [...computeAction()];
 
   if(computed.activeRole.role === ERole.MANAGER && 
@@ -132,21 +149,31 @@ const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, 
         <Icon containerclassname="Element-icon" source="fa" icon={faHandshakeAlt} />
         <div className="Element-data">
           <span className="Element-title">
+            {/* Render pagelink */}
             <PageLink type={PageLinkType.CONTRACT} entityId={CONTRACT_ID} entityData={CONTRACT_DATA} white={isPage} />
           </span>
+          
+          {/* Render other company */}
           {IS_EXECUTOR ? 'You execute the contract for' : 'You ordered the contract from'}
           <PageLink type={PageLinkType.COMPANY} entityId={OTHER_COMPANY_ID} entityData={OTHER_COMPANY_DATA} white={isPage} />
+
+          {/* Render contract type */}
           <span className="badge badge-mono">
             <Icon source="fa" icon={EContractTypeDetails[CONTRACT_DATA.contractType].icon} />
             {EContractTypeDetails[CONTRACT_DATA.contractType].name}
           </span>
+
+          {/* Status */}
           <span className="sub">{computeStatus()}</span>
+
+          {/* Render status badge */}
           <span className={'Element-badge badge ' + (isPage ? 'badge-inverse' : '')}>
             <Icon source="fa" icon={EContractStatusDetails[CONTRACT_DATA.status].icon} />
             {EContractStatusDetails[CONTRACT_DATA.status].name}
           </span>
         </div>
         <span className="Element-actions">
+          {/* Actions */}
           <ActionList actions={ACTIONS} isFlatten={isPage} />
         </span>
       </div>
@@ -154,6 +181,9 @@ const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, 
   );
 };
 
+// FSS for contracts (used to filter, search and sort contracts) => 
+// sort on identification, status and type, search on identification, status and type
+// Filter on type and status
 export const contractsExTableFSS = {
   sort: {
     identification: {
@@ -184,6 +214,7 @@ export const contractsExTableFSS = {
   filter: {}
 };
 
+// Add type to filter
 Object.keys(EContractTypeDetails).filter(typeKey => !EContractTypeDetails[typeKey].disabled).forEach(typeKey => {
   contractsExTableFSS.filter[typeKey] = {
     title: 'Type - ' + EContractTypeDetails[typeKey].name,
@@ -191,6 +222,7 @@ Object.keys(EContractTypeDetails).filter(typeKey => !EContractTypeDetails[typeKe
   }
 });
 
+// add status to filter
 Object.keys(EContractStatusDetails).forEach(statusKey => {
   contractsExTableFSS.filter[statusKey] = {
     title: 'Status - ' + EContractStatusDetails[statusKey].name,

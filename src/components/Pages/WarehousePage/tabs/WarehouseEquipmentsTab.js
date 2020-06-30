@@ -16,12 +16,18 @@ import { v4 as uuid } from 'uuid';
 
 /**
  * Component: WarehouseEquipmentsTab
+ * Tab of WarehousePage
  */
 const WarehouseEquipmentsTab = ({ warehouseId }) => {
 
+  // Related equipments of the warehouse
   const [equipments, setEquipments] = useState({});
   const [isEquipmentsLoading, setEquipmentsLoading] = useState(true);
+
+  // all equipment models
   const [equipmentModels, setEquipmentsModels] = useState({});
+
+  // all brands
   const [brands, setBrands] = useState({});
 
   const OBSERVER_KEY = uuid();
@@ -29,17 +35,24 @@ const WarehouseEquipmentsTab = ({ warehouseId }) => {
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
   useEffect(() => {
+    // get all brands
     BrandService.list()
       .then(setBrands)
       .catch(ErrorService.manageError);
 
+    // get all equipment models
     EquipmentModelService.list()
       .then(setEquipmentsModels)
       .catch(ErrorService.manageError);
     
+    // get all equipments for this warehouse
     EquipmentService.getAllForWarehouseId(warehouseId)
       .then(equipments => {
+        
+        // save them
         setEquipments(equipments);
+
+        // then trigger end of load
         setEquipmentsLoading(false);
       })
       .catch(ErrorService.manageError);
@@ -67,6 +80,7 @@ const WarehouseEquipmentsTab = ({ warehouseId }) => {
       showDetails />
   };
 
+  // equipments list
   return <ExTable items={equipments}
             renderItem={renderEquipment}
             fss={equipmentsExTableFSS}

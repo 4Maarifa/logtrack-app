@@ -19,7 +19,21 @@ import ErrorService from './../../../services/error.service';
 
 import './Icon.scss';
 
+/**
+ * Component: Icon
+ * Shows an icon.
+ * /!\ Mandatory way to print an icon in the project.
+ *     this component contains commom styles for all icons
+ *     and ways to handle both custom and FontAwesome icons
+ * 
+ * source: 'fa'|'custom' | type of the icon
+ * containerclassname: string | optional, applies a class to the icon container
+ * additional: FA/IconReference | a smaller FA icon to print next to the other icon
+ * otherProps: object | other props to be passed to the icon. See FA docs for more
+ */
 const Icon = ({ source, containerclassname, icon, additional, ...otherProps }) => {
+
+  /* Declaring all custom icons */
   const CUSTOM_ICONS = {
     Spring,
     Fuel,
@@ -39,27 +53,39 @@ const Icon = ({ source, containerclassname, icon, additional, ...otherProps }) =
    * RENDER
    */
   if(source === 'fa') {
+
+    /* If source is FontAwesome, render the icon container as well as the inner icon */
     return (
       <div className={'Icon ' + (containerclassname || '')}>
         {icon && <FontAwesomeIcon icon={icon} fixedWidth {...otherProps} />}
+
+        {/* If an additional icon is passed, print it */}
         {additional && <div className="icon-2">
           <FontAwesomeIcon icon={additional} fixedWidth />
         </div>}
       </div>
     );
   }
+
   if(source === 'custom') {
-    let IconTag = CUSTOM_ICONS[icon];
+    /* If source is custom, get the icon */
+    const IconTag = CUSTOM_ICONS[icon];
+
+    /* Then render it inside the icon container */
     return (
-      <div className="Icon">
+      <div className={'Icon ' + (containerclassname || '')}>
         <IconTag className="custom-icon">Icon</IconTag>
       </div>
     );
   }
+
+  /* Handler other source */
   ErrorService.manageError('Icon was requested to render with invalid source', {
     source: source,
     icon: icon
   });
+
+  /* And render nothing */
   return null;
 };
 

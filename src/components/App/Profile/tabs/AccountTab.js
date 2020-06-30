@@ -14,19 +14,36 @@ import Loader from './../../../Utils/Loader/Loader';
 import { v4 as uuid } from 'uuid';
 import Switch from '../../../Utils/FormElements/Switch/Switch';
 
+/**
+ * Component: AccountTab
+ * Tab of Profile component
+ * 
+ * Modify account's details
+ */
 const AccountTab = () => {
+
+  // Current profile picture is stored here
   const [profilePicture, setProfilePicture] = useState(null);
 
   const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
   
+  // Profile picture change handler
   const handleProfilePictureChange = newProfilePicture => {
+
+    // If the user chosed a new file
     if(newProfilePicture && newProfilePicture.file) {
+
+      // Upload the file
       FileService.uploadProfilePhoto(newProfilePicture.file)
         .then(() => {
+
+          // Get the public URL of the newly uploaded file
           FileService.getDownloadURLForProfilePicture()
             .then(url => {
+
+              // Modify the current employee to store the new uploaded file URL
               EmployeeService.updateField(computed.user.uid, { profilePictureUrl: url })
                 .then(DataService.computed.notifyChanges)
                 .catch(ErrorService.manageError);
@@ -36,17 +53,27 @@ const AccountTab = () => {
         .catch(ErrorService.manageError);
     }
     else {
+      // Else, remove the current employee profile picture URL
       EmployeeService.updateField(computed.user.uid, { profilePictureUrl: null })
         .then(DataService.computed.notifyChanges)
         .catch(ErrorService.manageError);
     }
   };
 
+  // Modify legal information
   const setInformed = () => {
+    // Retrieving legal information
     const NEW_LEGAL = computed.employee.legal;
+
+    // Toggling newsletter boolean
     NEW_LEGAL.informed = !NEW_LEGAL.informed;
+
+    // Set the new legal information on the current employee
     EmployeeService.updateField(computed.user.uid, { legal: NEW_LEGAL })
       .then(() => {
+
+        // Once done, inform user and data service on successfull change
+        // Data service will reload the new information from the DB
         ErrorService.success('Saved!');
         DataService.computed.notifyChanges();
       })
@@ -55,6 +82,7 @@ const AccountTab = () => {
 
   useEffect(() => {
     if(computed.initialized) {
+      // Set current file of the profile picture FormFile element
       if(computed.employee.profilePictureUrl) {
         setProfilePicture({
           file: null,
@@ -62,6 +90,7 @@ const AccountTab = () => {
         });
       }
       else {
+        // Resetting Profile picture FormFile element
         setProfilePicture(null);
       }
     }
@@ -82,6 +111,8 @@ const AccountTab = () => {
   }
   else {
     return <div className="tab-content">
+
+      {/* Profile picture change */}
       <h2 className="profile-title">Profile Picture</h2>
       <div className="profile-picture-container">
         <FormInputFile
@@ -104,6 +135,8 @@ const AccountTab = () => {
           }
           accept="image/*" />
       </div>
+
+      {/* Other profile information */}
       <h2 className="profile-title">
         <Icon source="fa" icon={faUser} />
         Profile Information
@@ -115,6 +148,7 @@ const AccountTab = () => {
             Please contact the support to edit your firstname or lastname.
           </span>
         </div>
+        {/* Firstname and lastname fiels are read-only: users are not allowed to modify them directly! */}
         <div className="personal-info-line">
           <div className="input-container">
             <FormInput
@@ -143,6 +177,8 @@ const AccountTab = () => {
           </div>
         </div>
       </div>
+
+      {/* Newsletter subscription */}
       <h2 className="profile-title">
         <Icon source="fa" icon={faEnvelope} />
         Newsletter Subscription

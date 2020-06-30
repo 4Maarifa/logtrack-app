@@ -1,5 +1,5 @@
 import React from 'react';
-import { faInfinity } from '@fortawesome/pro-regular-svg-icons';
+import { faInfinity, faEnvelope } from '@fortawesome/pro-regular-svg-icons';
 import { faCircle, faTimesCircle, faCheckCircle } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../components/Utils/Icon/Icon';
@@ -28,7 +28,19 @@ class Company {
     }
 }
 
+/**
+ * Enum: ECompanyPlan
+ * Describes all available plans for companies
+ * 
+ * disabled: boolean | if plan can be selected or not
+ * name: string | printable name of the plan
+ * value: string | storable name of the plan
+ * icon: HTMLElement or FA/IconDefinition | Printable icon of the plan, light
+ * solidIcon: HTMLElement or FA/IconDefinition | Printable icon of the plan, solid
+ */
 export const ECompanyPlan = {
+
+    // Basic plan
     BASIC: {
         disabled: true,
         name: 'Basic',
@@ -47,6 +59,8 @@ export const ECompanyPlan = {
             <span><Icon containerclassname="not-included" source="fa" icon={faTimesCircle} /> Other Contracts<span className="plan-info">Insurance, Accounting</span></span>
         ]
     },
+
+    // Standard Plan
     STANDARD: {
         disabled: false,
         name: 'Standard',
@@ -68,6 +82,8 @@ export const ECompanyPlan = {
             <span><Icon containerclassname="not-included" source="fa" icon={faTimesCircle} /> Other Contracts<span className="mention">(2)</span><span className="plan-info">Insurance, Accounting</span></span>
         ]
     },
+
+    // Premium Plan
     PREMIUM: {
         disabled: true,
         name: 'Premium',
@@ -85,9 +101,34 @@ export const ECompanyPlan = {
             <span><Icon containerclassname="included" source="fa" icon={faCheckCircle} /> Operation Contracts<span className="plan-info">Transportation, Maintenance</span></span>,
             <span><Icon containerclassname="included" source="fa" icon={faCheckCircle} /> Other Contracts<span className="plan-info">Insurance, Accounting</span></span>
         ]
+    },
+
+    // Custom Plan
+    CUSTOM: {
+        disable: true,
+        name: 'Custom',
+        value: 'CUSTOM',
+        icon: <span>C</span>,
+        solidIcon: <span>C</span>,
+        price: <div><span className="plan-price-amount">N/A</span></div>,
+        attributes: [
+            <span><Icon source="fa" icon={faEnvelope} title="Contact Us" /> Contact Us to set up a custom plan</span>
+        ]
     }
 };
 
+/**
+ * class: JobOffer
+ * describes a job offer for a specified company
+ * 
+ * title: string | Title of the job offer
+ * description: string | Description of the job offer
+ * role: ERole | Specified role
+ * companyId: string | Job Offer proposed by this company
+ * creator: string | Creator of the job offer (employeeId)
+ * creationIsoDate: string | Creation date, as iso string
+ * status: EJobOfferStatus | Status of the job offer
+ */
 export class JobOffer {
     constructor(title, description, role, companyId, creator, creationIsoDate, status) {
         this.title = title;
@@ -100,8 +141,18 @@ export class JobOffer {
     }
 }
 
+/**
+ * Enum: EJobOfferStatus
+ * Describes the status of a job offer
+ * 
+ */
 export const EJobOfferStatus = {
+    // Visible to everyone, the company is actively looking for candidates
     OPENED: 'OPENED',
+
+    // TODO: Private
+
+    // Closed, the company is selecting / has already selected the future employee
     CLOSED: 'CLOSED'
 };
 

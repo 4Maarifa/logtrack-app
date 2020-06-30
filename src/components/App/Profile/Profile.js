@@ -27,6 +27,10 @@ import { v4 as uuid } from 'uuid';
 
 import './Profile.scss';
 
+/**
+ * Component: Profile
+ * Used by everyone to access their account, settings and sign out
+ */
 const Profile = () => {
 
   const OBSERVER_KEY = uuid();
@@ -45,6 +49,7 @@ const Profile = () => {
    */
   return (
     <div className="Profile">
+      {/* Sign out link */}
       {computed.employee && computed.user &&
         <div>
           Welcome back, <PageLink type={PageLinkType.EMPLOYEE} entityId={computed.user.uid} entityData={computed.employee} />!
@@ -54,7 +59,9 @@ const Profile = () => {
           </Link>
         </div>
       }
-      <Tabs default="root" horizontalLayout tabs={{
+
+      {/* All links to different sections of the profile and settings */}
+      <Tabs default="root" isHorizontalLayout tabs={{
         root: {
           name: ({ isActive }) => <span>
             <Icon source="fa" icon={isActive ? faUserCogSolid : faUserCog} />

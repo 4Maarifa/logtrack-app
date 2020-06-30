@@ -24,8 +24,18 @@ import { v4 as uuid } from 'uuid';
 
 import './CalendarEventAdd.scss';
 
+/**
+ * Component: CalendarEventAdd
+ * Form to add or edit calendar events
+ * 
+ * calendarEventId: calendar event id to edit
+ * calendarEvent: calendar event to edit
+ * 
+ * onFinished: callback on finish
+ */
 const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEvent: currentCalendarEvent, onFinished }) => {
 
+  // Form inputs
   const [title, setTitle] = useState('');
   const [isPunctualEvent, setPunctualEvent] = useState(true);
   const [startDateTime, setStartDateTime] = useState(null);
@@ -35,6 +45,7 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
 
   const [description, setDescription] = useState('');
 
+  // Creator
   const [creator, setCreator] = useState(null);
   const [creatorId, setCreatorId] = useState(null);
 
@@ -42,19 +53,24 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
+  // Form handler
   const handleSubmit = event => {
     event.preventDefault();
 
     const REVISION = uuid();
+    
+    // Building metadata
+    const RT_METADATA = ERT_userMessageDetails[ERT_userMessage.CALENDAR]
+    .buildMetadata(selectedColor,
+                    startDateTime ? DateService.getIsoDateString(startDateTime) : null,
+                    endDateTime ? DateService.getIsoDateString(endDateTime) : null,
+                    description,
+                    location);
 
+    // If edit, update current event
     if(currentCalendarEvent) {
-      const RT_METADATA = ERT_userMessageDetails[ERT_userMessage.CALENDAR]
-        .buildMetadata(selectedColor,
-                        startDateTime ? DateService.getIsoDateString(startDateTime) : null,
-                        endDateTime ? DateService.getIsoDateString(endDateTime) : null,
-                        description,
-                        location);
 
+      // Build a RT_message with both new form data and current data
       const RT_MESSAGE = new RT_userMessage(
         ERT_userMessage.CALENDAR,
         currentCalendarEvent.creationIsoDate,
@@ -65,21 +81,20 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
         REVISION
       );
 
+      // Update the RT_message
       RT_Service.user.update(currentCalendarEventId, RT_MESSAGE)
         .then(_ => {
           ErrorService.success('Calendar Event Edited!');
+
+          // Call callback when finished
           onFinished && onFinished();
         })
         .catch(ErrorService.manageError);
     }
     else {
-      const RT_METADATA = ERT_userMessageDetails[ERT_userMessage.CALENDAR]
-        .buildMetadata(selectedColor, 
-                        startDateTime ? DateService.getIsoDateString(startDateTime) : null,
-                        endDateTime ? DateService.getIsoDateString(endDateTime) : null,
-                        description,
-                        location);
+      // Else, add a new one
 
+      // Build a new RT_message with form data and new data
       const RT_MESSAGE = new RT_userMessage(
         ERT_userMessage.CALENDAR,
         DateService.getCurrentIsoDateString(),
@@ -90,9 +105,12 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
         REVISION
       );
 
+      // Create the new RT_MESSAGE
       RT_Service.user.create(RT_MESSAGE)
         .then(_ => {
           ErrorService.success('Calendar Event Created!');
+
+          //call the callback when finished
           onFinished && onFinished();
         })
         .catch(ErrorService.manageError);
@@ -101,7 +119,11 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
 
   useEffect(() => {
     if(computed.initialized) {
+
+      // On load, if we edit an existing event
       if(currentCalendarEventId && currentCalendarEvent) {
+
+        // setting form inputs
         setTitle(currentCalendarEvent.content);
         setSelectedColor(currentCalendarEvent.metadata.color);
         setStartDateTime(DateService.getDateFromIsoString(currentCalendarEvent.metadata.date));
@@ -113,14 +135,17 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
           setPunctualEvent(false);
         }
         
+        // Get the creator
         EmployeeService.get(currentCalendarEvent.creator)
           .then(employeeDoc => {
+            //set creator data
             setCreator(employeeDoc.data());
             setCreatorId(employeeDoc.id);
           })
           .catch(ErrorService.manageError);
       }
       else {
+        // else, if we add one, set creator as current user
         setCreatorId(computed.user.uid);
         setCreator(computed.employee);
       }
@@ -137,6 +162,8 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
   /**
    * RENDER
    */
+
+  // Build data for Choose component for color selection from ColorService.EPalette
   const POSSIBLE_COLORS = {};
   Object.keys(EPalette).forEach(colorKey => {
     POSSIBLE_COLORS[colorKey] = {
@@ -146,12 +173,16 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
       </Fragment>
     }
   });
+
+  // Set default color
   if(!selectedColor) {
     setSelectedColor(Object.keys(EPalette)[0]);
   }
 
   return <div className="CalendarEventAdd">
     <h1>{currentCalendarEventId ? 'Edit' : 'Add'} an event</h1>
+
+    {/* CalendarEventAdd form */}
     <form onSubmit={handleSubmit}>
       {/* Title */}
       <FormInput

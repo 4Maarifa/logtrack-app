@@ -83,6 +83,7 @@ import { v4 as uuid } from 'uuid';
 import './index.scss';
 
 // Private route
+// This route could only be fetched when connected. Otherwise, return to SignIn component
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => (
         FirebaseService.isUserConnected()
@@ -92,6 +93,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 );
 
 // Role-limited Route
+// This route could only be fetched if an active role within the list is activated.
+// Otherwise, return to dashboard
 const RoleLimitedRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => (
         FirebaseService.isUserConnected()
@@ -104,12 +107,17 @@ const RoleLimitedRoute = ({ component: Component, ...rest }) => (
     )} />
 );
 
+// Override styles with the company color
 const styleOverride = () => {
+
+    // If the user specifically chose to hide company color, or do not have an active role, do nothing
     if(SettingsService.getSettingValue(ESettings.SETTINGS_CUSTOM_COLORS) === 'BASIC' || 
         !DataService.computed.activeRoleCompany || !DataService.computed.activeRoleCompany.color) {
         
         return null;
     }
+
+    // Otherwise, return the company color as theme, and compute a lighter theme color as well
     return <style>
         {`:root {
             --theme: ${DataService.computed.activeRoleCompany.color} !important;
@@ -128,8 +136,16 @@ const renderApp = () => {
     ReactDOM.render(
         <Router>
             <div className={'app-container ' + (SettingsService.getSettingValue(ESettings.SETTINGS_FULL_PAGE_LAYOUT) === 'FULL' ? 'app-container--full' : '')}>
+
+                {/* LogTrack navigation */}
                 <Navigation />
+
+                {/* LogTrack menubar */}
                 <MenuBar />
+                
+                {/* LogTrack modal, unique to the entire app */}
+                <Modal />
+
                 <div className="page_content">
                     <Route exact path="/" component={Splash} />
                     <Route exact path="/terms" render={props => <Splash {...props} page='terms' />} />
@@ -205,24 +221,30 @@ const renderApp = () => {
 
                     <PrivateRoute exact path="/files" component={Files} />
                 </div>
-                <Modal />
             </div>
+
+            {/* Print the overwritten styles here */}
             {styleOverride()}
+
         </Router>,
         document.getElementById('root'),
         () => {
+
+            // Update observers after first render, to request rerenders of aspect-ratio dependent components
             setTimeout(ResizeService.updateObservers, 550);
         });
 };
 
 
 // Service Initialization
-DataService.initialize();
+DataService.computeValues();
 RT_Service.initialize();
 
 const OBSERVER_KEY = uuid();
 
 DataService.computed.observeComputedValues(computedValues => {
+
+    // Once the computed values are loaded, render the app
     if(computedValues.initialized) {
         renderApp();
     }

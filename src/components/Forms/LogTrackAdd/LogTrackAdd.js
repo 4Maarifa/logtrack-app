@@ -10,7 +10,8 @@ import LogTrackService from './../../../services/entities/logtrack.service';
 import EmployeeService from './../../../services/entities/employee.service';
 
 import { ERole } from './../../../classes/Role';
-import LogTrack, { LogTrackCategory, LogTrackCategoryDetails, LogTrackActivityDetails, LogTrackTrackersDetails, LogTrackTrackerAvailability, LogTrackActivity, LogTrackPunctuality } from './../../../classes/LogTrack';
+import LogTrack, { ELogTrackCategory, ELogTrackCategoryDetails, ELogTrackActivityDetails, 
+  ELogTrackTrackersDetails, ELogTrackTrackerAvailability, ELogTrackActivity, ELogTrackPunctuality } from './../../../classes/LogTrack';
 
 import Icon from './../../Utils/Icon/Icon';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
@@ -21,29 +22,46 @@ import { v4 as uuid } from 'uuid';
 
 import './LogTrackAdd.scss';
 
+/**
+ * Component: LogTrackAdd
+ * Standalone form to add new logtracks (no edit is permitted)
+ */
 const LogTrackAdd = () => {
 
+  // TODO: LogTrack equipments
+  // Concerned equipments by logtrack
+  /*const [companyEquipments, setCompanyEquipments] = useState({});*/
+  /*const [equipmentModels, setEquipmentModels] = useState({});*/
+  
+  // selected category of logtrack, one of enum ELogTrackCategory
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  // selected activity of logtrack, one of enum ELogTrackActivity and child of selectedCategory
+  const [selectedActivity, setSelectedActivity] = useState(null);
+  
+  // Trackers: selection from ELocTrackTrackers
+  const [possibleTrackers, setPossibleTrackers] = useState([]);
+  const [selectedTrackers, setSelectedTrackers] = useState([]);
+  
+  // Is this logtrack punctual?
+  // In that case, Logtrack has no duration (stratdate = enddate)
+  // Punctual logtracks happen during another logtrack, that stays active afterwards
+  // Punctuality can either be chosen by user, or, for some activities, are mandatory punctual or not punctual.
+  const [isPunctual, setPunctual] = useState(false);
+  
+  // creator data
   const [creatorId, setCreatorId] = useState(null);
   const [creator, setCreator] = useState(null);
 
+  // Company owner data
   const [companyId, setCompanyId] = useState(null);
   const [company, setCompany] = useState(null);
-  /*const [companyEquipments, setCompanyEquipments] = useState({});*/
-
-  /*const [equipmentModels, setEquipmentModels] = useState({});*/
-
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedActivity, setSelectedActivity] = useState(null);
-
-  const [possibleTrackers, setPossibleTrackers] = useState([]);
-  const [selectedTrackers, setSelectedTrackers] = useState([]);
-
-  const [isPunctual, setPunctual] = useState(false);
 
   const OBSERVER_KEY = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
+  // Handle selection for LogTrackCategory, LogTrackActivity and LogTrackTrackers selection
   const handleSelection = (value, fieldName) => {
     if(fieldName === 'selectedLtActivity') {
       setSelectedActivity(value ? value : '');
@@ -57,31 +75,35 @@ const LogTrackAdd = () => {
     }
   };
 
+  // Print input form for LogTrackActivity and LogTrackCategory
   const renderActivityType = () => {
     const LT_CATEGORIES = {}, LT_ACTIVITIES = {};
 
-    Object.keys(LogTrackCategory).forEach(categoryKey => {
+    // build Choose component compatible data for categories
+    Object.keys(ELogTrackCategory).forEach(categoryKey => {
       LT_CATEGORIES[categoryKey] = {
         content: ({ isActive }) => <Fragment>
-          <Icon source="fa" icon={isActive ? LogTrackCategoryDetails[categoryKey].iconSolid : LogTrackCategoryDetails[categoryKey].icon} />
-          {LogTrackCategoryDetails[categoryKey].text}
+          <Icon source="fa" icon={isActive ? ELogTrackCategoryDetails[categoryKey].iconSolid : ELogTrackCategoryDetails[categoryKey].icon} />
+          {ELogTrackCategoryDetails[categoryKey].text}
         </Fragment>,
-        color: ColorService.getPaletteForColor(LogTrackCategoryDetails[categoryKey].color).medium.color
+        color: ColorService.getPaletteForColor(ELogTrackCategoryDetails[categoryKey].color).medium.color
       };
     });
 
+    // If a category is selected, build Choose component compatible data from childs of this category
     if(selectedCategory) {
-      LogTrackCategoryDetails[selectedCategory].activities.forEach(activityKey => {
+      ELogTrackCategoryDetails[selectedCategory].activities.forEach(activityKey => {
         LT_ACTIVITIES[activityKey] = {
           content: ({ isActive }) => <Fragment>
-            <Icon source="fa" icon={isActive ? LogTrackActivityDetails[activityKey].iconSolid : LogTrackActivityDetails[activityKey].icon} additional={LogTrackActivityDetails[activityKey].additionalIcon} />
-            {LogTrackActivityDetails[activityKey].text}
+            <Icon source="fa" icon={isActive ? ELogTrackActivityDetails[activityKey].iconSolid : ELogTrackActivityDetails[activityKey].icon} additional={ELogTrackActivityDetails[activityKey].additionalIcon} />
+            {ELogTrackActivityDetails[activityKey].text}
           </Fragment>,
-          color: ColorService.getPaletteForColor(LogTrackCategoryDetails[selectedCategory].color).medium.color
+          color: ColorService.getPaletteForColor(ELogTrackCategoryDetails[selectedCategory].color).medium.color
         };
       });
     }
 
+    // return choose component for category, as well as a choose component for activities if a category is selected
     return <Fragment>
       <div className="input-container">
         <span className="fake-label">
@@ -111,13 +133,20 @@ const LogTrackAdd = () => {
 
   };
 
+  // reset form
   const resetForm = () => {
+    //reset selection for activity and category
     setSelectedActivity(null);
     setSelectedCategory(null);
+
+    // reset punctual switch to default value
     setPunctual(false);
+
+    // set selected trackers to empty
     setSelectedTrackers([]);
   };
 
+  // LogTrack add Form handler
   const handleSubmit = e => {
     e.preventDefault();
 
@@ -126,11 +155,15 @@ const LogTrackAdd = () => {
       return;
     }
 
+    // Compute the start date for the new event, that will be the end date of the current event,
+    // if the new event is not punctual
+    // If the event is punctual, this date will be its start date as well as its end date
     const ISO_DATE_CHANGE = DateService.getCurrentIsoDateString();
     const TIMESTAMP_CHANGE = DateService.getCurrentTimeStampNumber();
 
+    // Create the new logtrack instance with form data
     const LOGTRACK_TO_ADD = new LogTrack(
-      LogTrackActivity[selectedActivity],
+      ELogTrackActivity[selectedActivity],
       computed.user.uid,
       computed.activeRole.companyId,
       ISO_DATE_CHANGE,
@@ -143,23 +176,29 @@ const LogTrackAdd = () => {
       computed.user.uid
     );
 
+    // Push data to DB
     LogTrackService.create(LOGTRACK_TO_ADD).then(logTrackDoc => {
       if(!isPunctual) {
+        // if event is not punctual,
         new Promise((resolve, reject) => {
           if(!computed.employee.currentLogTrack) {
             resolve();
           }
           else {
+            // and if user has a current logtrack,
+            // update the current logtrack to put the endDate
             LogTrackService.updateField(Object.keys(computed.employee.currentLogTrack)[0], {
               endIsoDate: ISO_DATE_CHANGE,
               endTimestamp: TIMESTAMP_CHANGE
             }).then(resolve).catch(e => ErrorService.manageErrorThenReject(e, reject));
           }
         }).then(() => {
+          // And update the currentLogtrack field of the current user to the newly created logtrack
           EmployeeService.updateField(computed.user.uid, {
             currentLogTrack: {[logTrackDoc.id]: migratePrototype(LOGTRACK_TO_ADD)}
           })
           .then(() => {
+            // then, reload current user, inform user and reset form
             DataService.computed.notifyChanges().then(() => {
               ErrorService.success('LogTrack updated!');
               resetForm();
@@ -168,6 +207,8 @@ const LogTrackAdd = () => {
         }).catch(ErrorService.manageError);
       }
       else {
+        // If event is punctual, everything's done!
+        // Just inform user, and reset form
         ErrorService.success('LogTrack updated!');
         resetForm();
       }
@@ -176,13 +217,17 @@ const LogTrackAdd = () => {
 
   useEffect(() => {
     if(selectedActivity) {
-      setPossibleTrackers(LogTrackCategoryDetails[selectedCategory].trackers);
-      setSelectedTrackers(LogTrackCategoryDetails[selectedCategory].trackers.filter(trackerKey =>
-        LogTrackTrackersDetails[trackerKey].mandatory));
+      // once the activity is selected, load compatible trackers for this activity,
+      // select the ones that are mandatory (from ELogTrackCategoryDetails)
+      setPossibleTrackers(ELogTrackCategoryDetails[selectedCategory].trackers);
+      setSelectedTrackers(ELogTrackCategoryDetails[selectedCategory].trackers.filter(trackerKey =>
+        ELogTrackTrackersDetails[trackerKey].mandatory));
 
-      setPunctual(LogTrackCategoryDetails[selectedCategory].punctuality === LogTrackPunctuality.MUST);
+      // as well as set punctuality according to the ones that are compatible with this activity (from ELogTrackCategoryDetails)
+      setPunctual(ELogTrackCategoryDetails[selectedCategory].punctuality === ELogTrackPunctuality.MUST);
     }
     else {
+      // If no activity is selected, reset tracker selection
       setSelectedTrackers([]);
       setPossibleTrackers([]);
     }
@@ -190,11 +235,17 @@ const LogTrackAdd = () => {
 
   useEffect(() => {
     if (computed.initialized) {
+
+      // set creator data
       setCreatorId(computed.user.uid);
       setCreator(computed.employee);
+
+      // set company data
       setCompanyId(computed.activeRole.companyId);
       setCompany(computed.activeRoleCompany);
 
+      // TODO: LogTrack Equipments
+      // Fetch company available equipments
       /*EquipmentService.getAllForCompanyId(computed.activeRole.companyId)
         .then(setCompanyEquipments)
         .catch(ErrorService.manageError);*/
@@ -204,6 +255,7 @@ const LogTrackAdd = () => {
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
 
+    // Fetch all equipments models to print equipments
     /*EquipmentModelService.list()
         .then(setEquipmentModels)
         .catch(ErrorService.manageError);*/
@@ -216,29 +268,35 @@ const LogTrackAdd = () => {
   if(computed.activeRole.role !== ERole.DRIVER &&
       computed.activeRole.role !== ERole.MECHANIC) {
 
+    // If the role is not comptible with logtracking, return to dashboard
     ErrorService.error('LogTrack add is reserved for Drivers and Mechanics!');
     return <Redirect to={`/dashboard`} />;
   }
 
+  // Concert tracker data to Choose component compatible data
   const TRACKER_DETAILS = {};
   possibleTrackers.forEach(trackerKey => {
     TRACKER_DETAILS[trackerKey] = {
       content: () => <Fragment>
         <span>
-          <Icon source="fa" icon={LogTrackTrackersDetails[trackerKey].icon} />
-          {LogTrackTrackersDetails[trackerKey].name}
+          <Icon source="fa" icon={ELogTrackTrackersDetails[trackerKey].icon} />
+          {ELogTrackTrackersDetails[trackerKey].name}
         </span>
         <span className="sub">
-          {LogTrackTrackersDetails[trackerKey].description}
+          {ELogTrackTrackersDetails[trackerKey].description}
         </span>
       </Fragment>,
-      disabled: LogTrackTrackersDetails[trackerKey].availability === LogTrackTrackerAvailability.NOT_AVAILABLE || 
-                LogTrackTrackersDetails[trackerKey].mandatory
+
+      // disabled unavailable trackers
+      disabled: ELogTrackTrackersDetails[trackerKey].availability === ELogTrackTrackerAvailability.NOT_AVAILABLE || 
+                ELogTrackTrackersDetails[trackerKey].mandatory
     };
   });
 
   return <div className="LogTrackAdd">
     <h1>Add a LogTrack</h1>
+
+    {/* LogTrack add form */}
     <form onSubmit={handleSubmit}>
 
       {/* LT Activity */}
@@ -264,7 +322,7 @@ const LogTrackAdd = () => {
         value={isPunctual}
         fieldName="punctuality"
         inputName="punctuality"
-        inputDisabled={LogTrackCategoryDetails[selectedCategory].punctuality !== LogTrackPunctuality.CAN_BE}
+        inputDisabled={ELogTrackCategoryDetails[selectedCategory].punctuality !== ELogTrackPunctuality.CAN_BE}
         label={<span>
           Punctuality<br/>
           <span className="sub">If checked, your current LogTrack will not be replaced by this one.<br/>

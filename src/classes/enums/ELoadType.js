@@ -11,6 +11,17 @@ import { faWater, faSeedling, faTrees, faGem, faWheat, faSteak, faEgg, faFish,
 import ELoadMeasure from './ELoadMeasure';
 import ELoadCool from './ELoadCool';
 
+/**
+ * Enum: ELoadType
+ * Descibes a type of load / merchandise
+ * 
+ * Strucured like:
+ * TYPE: [subType, subType]
+ * Each type has a code, name, icon, iconSource
+ * Each subType has a code, name, icon, iconSource (only if one subType in the list is not a FA icon), 
+ *  type of Coolness that may be required, type of measurements for that type of merchandise
+ * 
+ */
 const ELoadType = Object.freeze({
     RAW_MATERIALS: {
         code: 'RAW_MATERIALS', 

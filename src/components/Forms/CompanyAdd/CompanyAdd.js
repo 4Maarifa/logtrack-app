@@ -25,6 +25,7 @@ import { v4 as uuid } from 'uuid';
 
 import './CompanyAdd.scss';
 
+// Build a default color object
 const DEFAULT_COLORS = {
   '#444444': {
     content: ({ isActive }) => <Fragment>
@@ -34,16 +35,27 @@ const DEFAULT_COLORS = {
   }
 };
 
+/**
+ * Component: CompanyAdd
+ * Form to add or edit a new company
+ * 
+ * Standalone form to add or edit a company
+ * On eidtion, just pass the company Id as a GET param
+ */
 const CompanyAdd = ({ match }) => {
   const CURRENT_COMPANY_ID = match.params.companyid;
 
+  // Current company data, fetched on load
   const [currentCompany, setCurrentCompany] = useState(null);
 
+  // Save the new companyId here to redirect the user once finished
   const [newCompanyId, setNewCompanyId] = useState(null);
 
+  // Creator data
   const [creatorId, setCreatorId] = useState(null);
   const [creator, setCreator] = useState(null);
 
+  // Form inputs
   const [name, setName] = useState('');
   const [plan, setPlan] = useState('');
   const [logo, setLogo] = useState(null);
@@ -54,6 +66,7 @@ const CompanyAdd = ({ match }) => {
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
+  // Form handler
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -67,18 +80,27 @@ const CompanyAdd = ({ match }) => {
       return;
     }
 
+    // Declare a util function taht will update company fields on edit, or create a new company on add
     const endCompanyProcess = logoURL => {
       if(CURRENT_COMPANY_ID) {
+
+        // if company exists, just update the updatable fields
         CompanyService.updateField(CURRENT_COMPANY_ID, {
           logoURL,
           color: selectedColor || '#444444'
         }).then(() => {
+
+            // Set new id to redirect the user
             setNewCompanyId(CURRENT_COMPANY_ID);
+
+            // And notify changes, as only managers have an active role on company can edit them,
+            // It means that activeRoleCompany has been updated, so we have to reload it
             DataService.computed.notifyChanges();
           })
           .catch(ErrorService.manageError);
       }
       else {
+        // Create the company
         CompanyService.create(
           new Company(name,
                       logoURL,
@@ -88,6 +110,10 @@ const CompanyAdd = ({ match }) => {
                       plan))
 
           .then(docRef => {
+
+            // Once created, create a first role of manager, already confirmed, for the creator
+            // This is a very special situation where rights approve the creation of a pre-confirmed role, only if creator id match the role employee's id
+            // Then set the company id to redirect the user
             RoleService.create(new Role(computed.user.uid, docRef.id, ERoleStatus.CONFIRMED, ERole.MANAGER, DateService.getCurrentIsoDateString(), null))
               .then(() => setNewCompanyId(docRef.id))
               .catch(ErrorService.manageError);
@@ -96,6 +122,8 @@ const CompanyAdd = ({ match }) => {
       }
     };
 
+    // If the logo was uploaded / updated, upload it and get the url
+    // Then, complete the company add / edition process
     if(logo.file) {
       FileService.uploadCompanyLogo(logo.file)
       .then(fileRef => {
@@ -107,23 +135,32 @@ const CompanyAdd = ({ match }) => {
       .catch(ErrorService.manageError);
     }
     else {
+      // Otherwise, just end the company process
       endCompanyProcess(currentCompany.logoURL);
     }
     
   };
 
+  // When the logo change, save it and compute corresponding colors
   const onLogoChange = newLogo => {
     setLogo(newLogo);
     setSelectedColor(Object.keys(DEFAULT_COLORS)[0]);
+
+    // If there's a new logo (not just a delete of the current one), get main colors of the image
+    // So that the user can select company's color from new colors
     newLogo && newLogo.file && ColorService.getMainColorsOfImage(newLogo.url)
       .then(computeColors)
       .catch(ErrorService.manageError);
   };
 
+  // Compute colors permits to convert a color array to a comprehensive array for the Choose component
   const computeColors = colors => {
     let colorResults = {
       ...DEFAULT_COLORS
     };
+
+    // Remove all colors that are too dark or too light to be both understandable for users and compatible with the interface
+    // Then, convert to HEX and convert data to Choose component compatible array
     colors.filter(ColorService.isMedColor).map(ColorService.convertRGBtoHEX).forEach(color => {
       colorResults[color] = {
         content: ({ isActive }) => <Fragment>
@@ -132,15 +169,23 @@ const CompanyAdd = ({ match }) => {
         </Fragment>
       }
     });
+
+    // Then set the color array to state
     setColors(colorResults);
   };
 
   useEffect(() => {
     if(computed.initialized) {
+
+      // If there's a current company = there's an edit, fetch the company
       if(CURRENT_COMPANY_ID) {
         CompanyService.get(CURRENT_COMPANY_ID)
           .then(companyDoc => {
+
+            // Then set the current company, as well as its data, to the state
             setCurrentCompany(companyDoc.data());
+
+            // set form data
             setName(companyDoc.data().name);
             setPlan(companyDoc.data().plan);
             setLogo({
@@ -148,6 +193,7 @@ const CompanyAdd = ({ match }) => {
               url: companyDoc.data().logoURL
             });
             
+            // Add the company color to the possible color
             let currentColors = colors;
             currentColors[companyDoc.data().color] = {
               content: ({ isActive }) => <Fragment>
@@ -156,10 +202,15 @@ const CompanyAdd = ({ match }) => {
               </Fragment>
             };
             setColors(currentColors);
+
+            // and select it (as it was the one that was selected)
             setSelectedColor(companyDoc.data().color);
             
+            // And get the creator of that company
             EmployeeService.get(companyDoc.data().creator)
               .then(employeeDoc => {
+
+                // and save him to the state
                 setCreatorId(employeeDoc.id);
                 setCreator(employeeDoc.data());
               })
@@ -187,6 +238,8 @@ const CompanyAdd = ({ match }) => {
   if(!computed.employee) {
     return null;
   }
+
+  // When finished, redirect to this company page
   if(newCompanyId) {
     return <Redirect to={`/company/${newCompanyId}`} />;
   }
@@ -194,9 +247,12 @@ const CompanyAdd = ({ match }) => {
   return (
     <div className="CompanyAdd">
       <h1>{CURRENT_COMPANY_ID ? 'Edit' : 'Add'} a company</h1>
+
+      {/* Company add form */}
       <form onSubmit={handleSubmit}>
 
         {/* Name field */}
+        {/* This field is disabled on edit => no edition of name is permitted */}
         <FormInput
           value={name}
           inputType="text"
@@ -218,6 +274,7 @@ const CompanyAdd = ({ match }) => {
           }
           onValueChange={setName} />
 
+        {/* Imnforming the user here that the name could not be edited by him */}
         {CURRENT_COMPANY_ID ? <span className="input-color-info">
           <Icon source="fa" icon={faInfoCircle} />
           Please contact the support to edit your company's name.
@@ -230,6 +287,7 @@ const CompanyAdd = ({ match }) => {
             Plan
           </span>
           <div className="plan-selection-content">
+            {/* Printing all plan features */}
             {Object.keys(ECompanyPlan).map(planKey => <div key={planKey}>
               <span className="plan-icon">{ECompanyPlan[planKey].icon}</span>
               <h2 className="plan-name">{ECompanyPlan[planKey].name}</h2>
@@ -298,6 +356,7 @@ const CompanyAdd = ({ match }) => {
             <Icon source="fa" icon={faUser} />
             Creator
           </span>
+          {/* Just a pagelink to the employee */}
           <PageLink type={PageLinkType.EMPLOYEE} entityId={creatorId} entityData={creator} />
         </div>
 

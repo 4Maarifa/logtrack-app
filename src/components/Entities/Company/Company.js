@@ -14,6 +14,10 @@ import { v4 as uuid } from 'uuid';
 
 import './Company.scss';
 
+/**
+ * Component: Company
+ * Print company details
+ */
 const Company = ({ company, isPage }) => {
   if(!company) { return null; }
   
@@ -31,14 +35,17 @@ const Company = ({ company, isPage }) => {
 
   if(!computed.initialized) { return null; }
 
+  // Computing actions
   const ACTIONS = [
     { title: 'Request a role', icon: <Icon source="fa" icon={faUserTag} />, link: `/role-add/${COMPANY_ID}` }
   ];
 
+  // Put edit link if the user has rights to do so
   if(computed.activeRole.role === ERole.MANAGER && computed.activeRole.companyId === COMPANY_ID) {
     ACTIONS.unshift({ title: 'Edit', icon: <Icon source="fa" icon={faEdit} />, link: `/company-edit/${COMPANY_ID}` });
   }
 
+  // Don't put the page link if the user is already on page!
   if(!isPage) {
     ACTIONS.unshift({ title: 'View', icon: <Icon source="fa" icon={faBuilding} />, link: `/company/${COMPANY_ID}` });
   }
@@ -46,6 +53,8 @@ const Company = ({ company, isPage }) => {
   return (
     <div className="Company Element-content">
       <div className="Element-base">
+
+        {/* If the company logo is present (nromally it's the case as it's mandatory), print it, otherwise print an icon */}
         {COMPANY_DATA.logoURL ?
           <div className="Element-photo">
             <img
@@ -55,10 +64,12 @@ const Company = ({ company, isPage }) => {
         : <Icon containerclassname="Element-icon" source="fa" icon={faBuilding} /> }
         <div className="Element-data">
           <span className="Element-title">
+            {/* Print a pagelink */}
             <PageLink type={PageLinkType.COMPANY} entityId={COMPANY_ID} entityData={COMPANY_DATA} white={isPage} noPhoto />
           </span>
         </div>
         <div className="Element-actions">
+          {/* Actions on this company */}
           <ActionList actions={ACTIONS} isFlatten={isPage} />
         </div>
       </div>
@@ -66,6 +77,7 @@ const Company = ({ company, isPage }) => {
   );
 };
 
+// FSS for companies (used to filter, search and sort companies) => sort on name, and search on name
 export const companiesExTableFSS = {
   sort: {
     name: {

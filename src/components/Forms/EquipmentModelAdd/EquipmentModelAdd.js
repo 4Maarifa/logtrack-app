@@ -14,6 +14,13 @@ import { v4 as uuid } from 'uuid';
 
 import './EquipmentModelAdd.scss';
 
+/**
+ * Component: EquipmentModelAdd
+ * Standalone form to add a new equipmnent model
+ * 
+    // TODO / To be deleted
+ * 
+ */
 const EquipmentModelAdd = () => {
 
   const OBSERVER_KEY = uuid();
@@ -35,6 +42,7 @@ const EquipmentModelAdd = () => {
   const handleSubmit = event => {
     event.preventDefault();
 
+    // TODO / To be deleted
     EquipmentModelService.create(new EquipmentModel());
   };
 

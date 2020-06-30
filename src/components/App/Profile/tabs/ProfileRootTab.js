@@ -11,6 +11,12 @@ import ActionLink from './../../../Utils/ActionLink/ActionLink';
 
 import { v4 as uuid } from 'uuid';
 
+/**
+ * Component: ProfileRootTab
+ * Tab of Profile component
+ * 
+ * Root of profile and settings
+ */
 const ProfileRootTab = () => {
 
   const OBSERVER_KEY = uuid();
@@ -28,9 +34,12 @@ const ProfileRootTab = () => {
    * RENDER
    */
   return <div className="tab-content">
+    {/* Showing current empoyee entity */}
     <div className="Element Element--page">
       <Employee employee={{ [computed.user.uid]: computed.employee }} isPage />
     </div>
+
+    {/* All links to profile and settings sections */}
     <div className="profile-root-content">
       <ActionLink url="/profile?tab=account" className="Element--full-width Element Element--tile" content={
         <div className="Element-content">

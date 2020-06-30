@@ -5,87 +5,109 @@ import { faArrowAltToRight, faArrowAltFromLeft, faCalendarAlt, faClipboardUser, 
 
 import DataService from '../../../../services/data.service';
 import UtilsService from '../../../../services/utils.service';
-import EmployeeService from '../../../../services/entities/employee.service';
+import DateService from '../../../../services/date.service';
 import ErrorService from '../../../../services/error.service';
+import EmployeeService from '../../../../services/entities/employee.service';
 import RoleService from '../../../../services/entities/role.service';
 import CompanyService from '../../../../services/entities/company.service';
-import DateService from '../../../../services/date.service';
 
 import Icon from '../../../Utils/Icon/Icon';
-import FormInput from '../../../Utils/FormElements/FormInput/FormInput';
 import ExTable from '../../../Utils/ExTable/ExTable';
 import Choose from '../../../Utils/FormElements/Choose/Choose';
+import FormInput from '../../../Utils/FormElements/FormInput/FormInput';
 import Switch from '../../../Utils/FormElements/Switch/Switch';
+import FormTextarea from './../../../Utils/FormElements/FormTextarea/FormTextarea';
 
 import { ERoleDetails, ERoleStatus } from '../../../../classes/Role';
 
 import { EmployeeCertificate, EmployeeExperience, EmployeeOtherExperience, employeeCertificatesExTableFSS, employeeExperienceExTableFSS, employeeOtherExperiencesExTableFSS } from '../../../Entities/Employee/Employee';
 
 import { v4 as uuid } from 'uuid';
-import FormTextarea from '../../../Utils/FormElements/FormTextarea/FormTextarea';
 
+/**
+ * component: ProfessionalProfileTab
+ * Tab of the Jobs component (as well as Profile compnent), view to edit current search
+ */
 const ProfessionalProfileTab = () => {
   const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
+  // Current search
   const [looking, setLooking] = useState(false);
   const [roleSelection, setRoleSelection] = useState([]);
   const [resume, setResume] = useState('');
   
+  // New certificate form data
   const [certificateName, setCertificateName] = useState('');
   const [certificateDate, setCertificateDate] = useState(null);
   
+  // New experience form data
   const [experienceName, setExperienceName] = useState('');
   const [experienceCompamyName, setExperienceCompanyName] = useState('');
   const [experienceStartDate, setExperienceStartDate] = useState(null);
   const [experienceEndDate, setExperienceEndDate] = useState(null);
   
+  // All current and revoked roles
   const [roles, setRoles] = useState({});
+  // and related companies to these roles
   const [companies, setCompanies] = useState({});
 
+  // new certificate form handler
   const handleSubmitCertificate = event => {
     event.preventDefault();
 
+    // verify if the user has already this certificate
     if(computed.employee.certificates.filter(certificate => certificate.name === certificateName).length) {
       ErrorService.warning('You already have this certificate!');
       return;
     }
 
+    // Pushing the new certificate in the old array
     const CERTIFICATES = computed.employee.certificates || [];
     CERTIFICATES.push({
       name: certificateName,
       date: DateService.getIsoDateString(certificateDate)
     });
 
+    // Updating his certificates
     EmployeeService.updateField(computed.user.uid, { certificates: CERTIFICATES })
+      // Telling the data service something has changed for current user
       .then(() => DataService.computed.notifyChanges()
         .then(() => {
+          // resetting form
           setCertificateName('');
           setCertificateDate(null);
         }))
       .catch(ErrorService.manageError);
   };
 
+  // New experience form handler
   const handleSubmitExperience = event => {
     event.preventDefault();
 
+    // If an end date was mentioned and if it's before the start => error
     if(experienceEndDate && experienceStartDate > experienceEndDate) {
       ErrorService.manageError('Experience start date muse be before end date!');
       return;
     }
 
+    // Pushing the new experience in the experience array
     const EXPERIENCE = computed.employee.experience || [];
     EXPERIENCE.push({
       name: experienceName,
       company: experienceCompamyName,
       start: DateService.getIsoDateString(experienceStartDate),
+      // End is optional
       end: experienceEndDate ? DateService.getIsoDateString(experienceEndDate) : null
     });
 
+    // Updating the employee with the new experience
     EmployeeService.updateField(computed.user.uid, { experience: EXPERIENCE })
+      // telling the data service something has changed for current user
       .then(() => DataService.computed.notifyChanges()
         .then(() => {
+          // resetting the form
           setExperienceName('');
           setExperienceCompanyName('');
           setExperienceStartDate(null);
@@ -94,6 +116,7 @@ const ProfessionalProfileTab = () => {
       .catch(ErrorService.manageError);
   };
 
+  // Saving the current job search
   const saveSearch = e => {
     e.preventDefault();
 
@@ -102,15 +125,20 @@ const ProfessionalProfileTab = () => {
       roles: roleSelection,
       resume
     };
+    // Updating the employee with new job search
     EmployeeService.updateField(computed.user.uid, { search: SEARCH })
       .then(() => {
         ErrorService.success('Search Saved');
+        // Telling the dataservice something hsa changed for the current user
         DataService.computed.notifyChanges();
       })
       .catch(ErrorService.manageError);
   };
 
   useEffect(() => {
+    // If roles change, then loading related companies
+
+    // getting and removing duplicates for role companies
     let companyIds = UtilsService.removeDuplicateFromArray(Object.keys(roles).map(roleId => roles[roleId].companyId));
     CompanyService.getAllForIdList(companyIds)
       .then(setCompanies)
@@ -119,10 +147,13 @@ const ProfessionalProfileTab = () => {
 
   useEffect(() => {
     if(computed.initialized) {
+      // Get all confirmed and revoked roles for current user.
+      // Those are roles that were or are available and accepted by companies managers (legit roles)
       RoleService.getRolesForEmployeeId(computed.user.uid, [ERoleStatus.CONFIRMED, ERoleStatus.REVOKED])
         .then(setRoles)
         .catch(ErrorService.manageError);
       
+      // setting the search form fields values
       if(computed.employee.search) {
         setLooking(computed.employee.search.looking || false);
         setRoleSelection(computed.employee.search.roles || []);
@@ -141,6 +172,7 @@ const ProfessionalProfileTab = () => {
   /**
    * RENDER
    */
+  // reparing current search roles fields
   const ROLE_DETAILS = {};
   Object.keys(ERoleDetails).forEach(roleId => {
     ROLE_DETAILS[roleId] = {
@@ -151,7 +183,7 @@ const ProfessionalProfileTab = () => {
     }
   });
 
-
+  // Preparing the employee experience (loading only confirmed or revoked roles - safeguard - we only load that type of roles normally)
   const EMPLOYEE_EXPERIENCE = {};
   if(roles) {
     Object.keys(roles)

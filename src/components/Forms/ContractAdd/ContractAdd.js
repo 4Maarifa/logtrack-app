@@ -22,47 +22,71 @@ import { v4 as uuid } from 'uuid';
 
 import './ContractAdd.scss';
 
+/**
+ * Component: ContractAddForm
+ * 
+ * Standalone form to add or edit cntracts
+ * Pass a contract id via get parameter for edition
+ */
 const ContractAdd = ({ match }) => {
   const CURRENT_CONTRACT_ID = match.params.contractid;
 
+  // Current contract, populated on load with edition
   const [currentContract, setCurrentContract] = useState(null);
 
+  // Save new contract id here, to redirect user
   const [newContractId, setNewContractId] = useState(null);
 
+  // Form data
   const [identification, setIdentification] = useState('');
 
+  // Form auto complete for companies
   const [possibleCompaniesInput, setPossibleCompaniesInput] = useState('');
   const [possibleCompanies, setPossibleCompanies] = useState([]);
   const [selectedCompanyId, setSelectedCompanyId] = useState('');
   const [selectedCompanyItem, setSelectedCompanyItem] = useState(null);
 
+  // Contract type selection
   const [contractType, setContractType] = useState('');
 
+  // Creator data
   const [creatorId, setCreatorId] = useState(null);
   const [creator, setCreator] = useState(null);
 
+  // Boolean. If isExecutor, it means that active company will execute the contract
+  // Otherwise, it will order the contract for the other company (selectedCompanyId)
   const [isExecutor, setExecutor] = useState(false);
 
   const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
+  // On company auto complete changes
   const onCompanyAutoCompleteChange = value => {
+
+    // Save value of input
     setPossibleCompaniesInput(value);
+
     if(value.trim().length < 3) {
       setPossibleCompanies({});
     } 
     else {
+      // Search for companies with that name
       CompanyService.search(value.trim().toLowerCase()).then(companies => {
+
+        // Convert them to Choose component compatible data
         Object.keys(companies).forEach(companyId => companies[companyId] = {
           content: <PageLink noLink type={PageLinkType.COMPANY} entityId={companyId} entityData={companies[companyId]} />,
           value: companies[companyId]
         });
+
+        // Save reult
         setPossibleCompanies(companies);
       });
     }
   };
 
+  // Form handler
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -76,18 +100,33 @@ const ContractAdd = ({ match }) => {
       return;
     }
 
-    // TODO
+    // TODO: Contract detils: merchandise? goal? date? price?
 
+    // On edition, just update the contract with new identification
+    // Because only that field can be edited
+    // Then set new contract id to redirect user
     if(CURRENT_CONTRACT_ID) {
       ContractService.updateField(CURRENT_CONTRACT_ID, {identification})
         .then(() => setNewContractId(CURRENT_CONTRACT_ID))
         .catch(ErrorService.manageError);
     }
     else {
+      // Otherwise, compute data and create the new contract
       const COMPANY_ORDER_ID = isExecutor ? selectedCompanyId : computed.activeRole.companyId;
       const COMPANY_EXEC_ID = isExecutor ? computed.activeRole.companyId : selectedCompanyId;
       
-      ContractService.create(new Contract(identification, [], COMPANY_ORDER_ID, COMPANY_EXEC_ID, computed.activeRole.companyId, contractType, EContractStatus.DRAFT, computed.user.uid, DateService.getCurrentIsoDateString(), null))
+      // When finished, just set new contract id to redirect user
+      ContractService.create(new Contract(
+                                  identification,
+                                  [],
+                                  COMPANY_ORDER_ID,
+                                  COMPANY_EXEC_ID,
+                                  computed.activeRole.companyId,
+                                  contractType,
+                                  EContractStatus.DRAFT,
+                                  computed.user.uid,
+                                  DateService.getCurrentIsoDateString(),
+                                  null))
         .then(contractDoc => setNewContractId(contractDoc.id))
         .catch(ErrorService.manageError);
     }
@@ -95,39 +134,49 @@ const ContractAdd = ({ match }) => {
 
   useEffect(() => {
     if(computed.initialized) {
+
+      // If id was passed => fetch contract details
       if(CURRENT_CONTRACT_ID) {
-      ContractService.get(CURRENT_CONTRACT_ID)
-        .then(contractDoc => {
-          setContractType(contractDoc.data().contractType);
-          setIdentification(contractDoc.data().identification);
-          setCurrentContract(contractDoc.data());
+        // Fetch the existing contract
+        ContractService.get(CURRENT_CONTRACT_ID)
+          .then(contractDoc => {
 
-          const IS_CURRENT_EXECUTOR = contractDoc.data().companyExecId === computed.activeRole.companyId;
-          setExecutor(IS_CURRENT_EXECUTOR);
-          
-          CompanyService.get(IS_CURRENT_EXECUTOR ? contractDoc.data().companyOrderId : contractDoc.data().companyExecId)
-            .then(companyDoc => {
-              setSelectedCompanyId(companyDoc.id);
-              setSelectedCompanyItem({
-                content: <PageLink noLink type={PageLinkType.COMPANY} entityId={companyDoc.id} entityData={companyDoc.data()} />,
-                value: companyDoc.data()
-              });
-            })
-            .catch(ErrorService.manageError);
+            // set form input values
+            setContractType(contractDoc.data().contractType);
+            setIdentification(contractDoc.data().identification);
 
-          EmployeeService.get(contractDoc.data().creator)
-            .then(employeeDoc => {
-              setCreatorId(employeeDoc.id);
-              setCreator(employeeDoc.data());
-            })
-            .catch(ErrorService.manageError);
-        })
-        .catch(ErrorService.manageError);
-    }
-    else {
-      setCreatorId(computed.user.uid);
-      setCreator(computed.employee);
-    }
+            // set the current contract data
+            setCurrentContract(contractDoc.data());
+
+            const IS_CURRENT_EXECUTOR = contractDoc.data().companyExecId === computed.activeRole.companyId;
+            setExecutor(IS_CURRENT_EXECUTOR);
+            
+            // Get the other company's details
+            CompanyService.get(IS_CURRENT_EXECUTOR ? contractDoc.data().companyOrderId : contractDoc.data().companyExecId)
+              .then(companyDoc => {
+                setSelectedCompanyId(companyDoc.id);
+                setSelectedCompanyItem({
+                  content: <PageLink noLink type={PageLinkType.COMPANY} entityId={companyDoc.id} entityData={companyDoc.data()} />,
+                  value: companyDoc.data()
+                });
+              })
+              .catch(ErrorService.manageError);
+
+            // get the creator
+            EmployeeService.get(contractDoc.data().creator)
+              .then(employeeDoc => {
+                setCreatorId(employeeDoc.id);
+                setCreator(employeeDoc.data());
+              })
+              .catch(ErrorService.manageError);
+          })
+          .catch(ErrorService.manageError);
+      }
+      else {
+        // otherwise, on add, just set the creator as current user
+        setCreatorId(computed.user.uid);
+        setCreator(computed.employee);
+      }
     }
   }, [computed]);
 
@@ -147,6 +196,7 @@ const ContractAdd = ({ match }) => {
    * RENDER
    */
 
+  // Convert contract types to Choose component compatible data
   let contractDetails = {};
   Object.keys(EContractTypeDetails).forEach(contractTypeKey => {
     contractDetails[contractTypeKey] = {
@@ -162,16 +212,19 @@ const ContractAdd = ({ match }) => {
     return null;
   }
 
+  // when finished, redirect user to contract list
   if(newContractId) {
-    let contractsUrl = '/contracts';
-    return <Redirect to={contractsUrl} />;
+    return <Redirect to={`/contracts`} />;
   }
 
   return (
     <div className="ContractAdd">
       <h1>{CURRENT_CONTRACT_ID ? 'Edit' : 'Add'} a contract</h1>
+
+      {/* Contract add form */}
       <form onSubmit={handleSubmit}>
 
+        {/* Identification */}
         <FormInput
           value={identification}
           inputType="text"
@@ -193,7 +246,7 @@ const ContractAdd = ({ match }) => {
           }
           onValueChange={setIdentification} />
 
-        {/* Company */}
+        {/* Company (hidden if current company orders the contract) */}
         {!isExecutor && 
         <Fragment>
           <div className="input-container">
@@ -245,6 +298,7 @@ const ContractAdd = ({ match }) => {
         }
 
         {/* Company */}
+        {/* Company (hidden if current company executes the contract) */}
         {isExecutor && 
         <Fragment>
           {CURRENT_CONTRACT_ID ? null : <div className="company-swap">
@@ -263,7 +317,7 @@ const ContractAdd = ({ match }) => {
         </Fragment>
         }
 
-        {/* Role field */}
+        {/* Type field */}
         <div className="type-selection">
           <span className="fake-label">
             Contract Type
@@ -283,6 +337,7 @@ const ContractAdd = ({ match }) => {
             <Icon source="fa" icon={faUser} />
             Creator
           </span>
+          {/* Creator pagelink */}
           <PageLink type={PageLinkType.EMPLOYEE} entityId={creatorId} entityData={creator} />
         </div>
 

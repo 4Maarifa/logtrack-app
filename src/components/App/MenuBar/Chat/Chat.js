@@ -2,6 +2,12 @@ import React from 'react';
 
 import './Chat.scss';
 
+/**
+ * Component: Chat
+ * Used by everyone to chat with each other
+ * 
+ * TODO: Migrate chats
+ */
 const Chat = ({ rt }) => {
 
   /**

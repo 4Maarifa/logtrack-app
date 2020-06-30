@@ -6,8 +6,25 @@ import Icon from './../Icon/Icon';
 
 import './ActionList.scss';
 
+/**
+ * Conponent: ActionList
+ * Collapsible action menu (that is a flat list when on mobile)
+ * 
+ * actions: [] | The action array
+ * isFlatten: boolean | Force flatten list mode
+ * isHideLabels: boolean | Only show icons for the actions
+ * 
+ * An action has:
+ * - a title: string
+ * - an icon: string
+ * - a callback: function OR a link: string OR a pureLink: string
+ *    callback: called when clicked
+ *    link: link to another view
+ *    pureLink: will open a new tab with the link. Useful for external links
+ */
 const ActionList = ({ actions, isFlatten, isHideLabels }) => {
 
+  // is deployed? if deployed, the action list is printed
   const [isDeployed, setDeployed] = useState(false);
 
   /**
@@ -23,6 +40,7 @@ const ActionList = ({ actions, isFlatten, isHideLabels }) => {
   return (
     <div className={'ActionList ' + (isDeployed ? ' ActionList--deployed ' : '') + (isFlatten ? ' ActionList--flat ' : '') + (isHideLabels || actions.length > 2 ? 'ActionList--manyItems ' : '')}>
       {actions ? <ul>
+        {/* Loop through actions */}
         {actions.map(action =>
             <li key={action.title}>
               {action.link ? <NavLink to={action.link} title={action.title}>{renderInner(action)}</NavLink> : null}
@@ -31,6 +49,8 @@ const ActionList = ({ actions, isFlatten, isHideLabels }) => {
             </li>
         )}
       </ul> : null}
+
+      {/* Main button for triggering the list */}
       {actions && actions.length ? <span className="trigger" onClick={() => setDeployed(!isDeployed)}>
         <Icon source="fa" icon={faEllipsisV} />
       </span> : null}

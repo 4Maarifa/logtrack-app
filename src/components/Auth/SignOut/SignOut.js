@@ -11,13 +11,23 @@ import { AccountActivity, EAccountActivityType } from './../../../classes/Employ
 
 import './SignOut.scss';
 
+/**
+ * Component: Signout
+ * Used to sign out
+ * 
+ * This component does not render anything
+ */
 const SignOut = () => {
 
   const [isSignOut, setSignOut] = useState(false);
 
   useEffect(() => {
+
+    // On load, try to sign out
     FirebaseService.signOut()
       .then(() => {
+
+        // Generate an account activity
         EmployeeService.accountActivity.create(
           new AccountActivity(
             DataService.computed.user.email,
@@ -36,6 +46,7 @@ const SignOut = () => {
    * RENDER
    */
   if(isSignOut) {
+    // Once signed out, redirect to /
     return <Redirect to='/' />;
   }
   return null;

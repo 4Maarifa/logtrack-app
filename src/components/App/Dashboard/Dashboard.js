@@ -28,10 +28,13 @@ import './Dashboard.scss';
  */
 const Dashboard = () => {
 
+  // Prevents most of React updates if component is not mounted anymore
   const [isMounted, setMounted] = useState(false);
 
+  // Save weather
   const [weather, setWeather] = useState(null);
 
+  // Save realtime date
   const [datetime, setDateTime] = useState({date: null, time: null});
 
   const OBSERVER_KEY = uuid();
@@ -39,7 +42,9 @@ const Dashboard = () => {
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
   useEffect(() => {
+    // If the user selected to view the weather on his dashboard
     if(computed.initialized && SettingsService.getSettingValue(ESettings.SETTINGS_DASHBOARD_WEATHER) === 'ON') {
+      // Loading location permission as well as weather when location is loaded
       PermissionService.location.askPermission()
         .then(() => {
           PermissionService.location.getLocation()
@@ -57,6 +62,8 @@ const Dashboard = () => {
   useEffect(() => {
     setMounted(true);
     DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+
+    // Triggering DateService observers to observe real-time date & time
     DateService.addObserver(() => setDateTime({
       date: DateService.getDateString(new Date(), false, false),
       time: DateService.getTimeString(new Date())
@@ -74,6 +81,7 @@ const Dashboard = () => {
   /**
    * RENDER
    */
+  // Render dashboard according to role
   const renderRolePart = () => {
     return <div className="role-container">
       <div className="line">

@@ -19,8 +19,13 @@ import Employee, { AccountActivity, EAccountActivityType } from './../../../clas
 
 import './SignUp.scss';
 
+/**
+ * Component: SignUp
+ * Used to register a new user
+ */
 const SignUp = () => {
 
+  // Register form inputs
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
@@ -28,13 +33,17 @@ const SignUp = () => {
   const [secondPassword, setSecondPassword] = useState('');
   const [profilePicture, setProfilePicture] = useState(null);
 
+  // Legal information
   const [isAcceptTerms, setAcceptTerms] = useState(true);
   const [isKeepInformed, setKeepInformed] = useState(false);
 
+  // Is registration finished?
   const [newUser, setNewUser] = useState(null);
   const [isFinishedConfig, setFinishConfig] = useState(false);
 
   useEffect(() => {
+    // Firebase sign in any new user.
+    // So we wait for a user to be signed in to set it to the state and redirect it to dashboard
     const unsubscribe = FirebaseService.getFirebaseObject().auth().onAuthStateChanged(user => {
         if (user) {
           setNewUser(user);
@@ -43,6 +52,8 @@ const SignUp = () => {
     return unsubscribe;
   }, []); 
 
+  // Function called to finish the user configuration, once registration is successful
+  // This function create the related employee, upload profile picture, update profile piucture url...
   const finishConfiguration = () => {
     EmployeeService.create(newUser.uid, new Employee(firstname, lastname, [], null, null, null, DateService.getCurrentIsoDateString(), 
         { terms: isAcceptTerms, informed: isKeepInformed, version: UserAgentService.getAppVersion(), acceptDate: DateService.getCurrentIsoDateString() }))
@@ -68,6 +79,7 @@ const SignUp = () => {
       .catch(ErrorService.manageError);
   };
 
+  // Register form handler
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -80,6 +92,7 @@ const SignUp = () => {
       .catch(ErrorService.manageError);
   };
 
+  // Upload profile photo to user's files, and retrieve file's URL
   const uploadProfilePhoto = () => {
     return new Promise ((resolve, reject) => {
       // If profile picture is known, then first upload it then update the user
@@ -99,6 +112,7 @@ const SignUp = () => {
     });
   };
 
+  // Create the account activity for registering
   if(newUser && !isFinishedConfig) {
     GeoService.getApproximateLocation()
         .then(location => {
@@ -129,6 +143,8 @@ const SignUp = () => {
   return (
     <div className="SignUp">
       <h1>Sign Up</h1>
+
+      {/* Sign up form */}
       <form onSubmit={handleSubmit}>
 
         {/* Firstname field */}
@@ -278,6 +294,8 @@ const SignUp = () => {
 
         <input type="submit" value="Sign Up" />
       </form>
+
+      {/* Related link */}
       <NavLink className="signup-link" to={`/signin`}>Already have an account?</NavLink>
     </div>
   );

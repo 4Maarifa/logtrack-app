@@ -11,22 +11,32 @@ import FormTextarea from './../../../Utils/FormElements/FormTextarea/FormTextare
 import ErrorService from './../../../../services/error.service';
 import ContactService from './../../../../services/entities/contact.service';
 
+/**
+ * Component: Contact
+ * Page of Splash component
+ */
 const Contact = () => {
 
+  // Contact form elements
   const [category, setCategory] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
+  // Newly created contact id
   const [contactId, setContactId] = useState(null);
 
+  // Contact form handler
   const handleSubmit = e => {
     e.preventDefault();
 
+    // Create contact message
+    // Once done, set the contact id to redirect the user
     ContactService.createWithData(message, email, EContactCategories[category])
       .then(contactDoc => setContactId(contactDoc.id))
       .catch(ErrorService.manageError);
   };
 
+  // When contact message is created, inform user and redirect to /
   if(contactId) {
     ErrorService.success('Your message was sent successfully!');
     return <Redirect to={`/`} />;
@@ -36,6 +46,7 @@ const Contact = () => {
     <div className="Contact">
       <h1>Contact Us</h1>
 
+      {/* Contact form */}
       <form onSubmit={handleSubmit}>
         {/* Reason */}
         <div className="input-container">

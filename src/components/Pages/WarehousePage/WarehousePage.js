@@ -23,11 +23,16 @@ import './WarehousePage.scss';
 /**
  * Component: WarehousePage
  * Use by everyone to see details about a warehouse (linked equipments)
+ * 
+ * You have to pass a warehouse id
  */
 const WarehousePage = ({ match }) => {
   const WAREHOUSE_ID = match.params.warehouseid;
 
+  // warehouse data, populated on load
   const [warehouse, setWarehouse] = useState(null);
+
+  // corresponding company
   const [company, setCompany] = useState(null);
 
   const OBSERVER_KEY = uuid();
@@ -35,6 +40,8 @@ const WarehousePage = ({ match }) => {
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
   useEffect(() => {
+    // when setting the warehouse, get the corresponding company and save it
+
     if(warehouse) {
       CompanyService.get(warehouse.companyId)
         .then(companyDoc => setCompany(companyDoc.data()))
@@ -43,6 +50,8 @@ const WarehousePage = ({ match }) => {
   }, [warehouse]);
 
   useEffect(() => {
+
+    // get and save the warehouse
     WarehouseService.get(WAREHOUSE_ID)
       .then(warehouseDoc => setWarehouse(warehouseDoc.data()))
       .catch(ErrorService.manageError);

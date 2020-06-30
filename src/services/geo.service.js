@@ -30,6 +30,7 @@ import THUNDERFOREST_TRANSPORT_DARK_PREVIEW from './../assets/map/tilelayers/THU
 import Keys from './../params.inc';
 import { XYZ } from 'ol/source';
 
+// Global styles for the location marker and other markers
 export const MarkerStyles = {
   getLocationStyle: () => {
     return new Style({
@@ -49,6 +50,16 @@ export const MarkerStyles = {
   }
 };
 
+/**
+ * Enum: TileLayersDetails
+ * Details about the tile layer list
+ * 
+ * value: string | same as key of object, savable string value representing the user's choice
+ * layer: OL/TileLayer | Tile layer
+ * name: string | printable tile layer label
+ * attributions: HTML | Attributions content
+ * preview: img | Image representing the tile layer
+ */
 export const TileLayersDetails = {
   OSM: {
     value: 'OSM',
@@ -248,19 +259,31 @@ export const TileLayersDetails = {
   }
 };
 
+/**
+ * Service: GeoService
+ * Operations on geo data and coordinates
+ */
 const GeoService = {
+
+  // return a BBOX containing all markers
   computeBoundingBox: (markers, margin = .5) => buffer(boundingExtent(markers), margin),
+
+  // transform coordinates into EPSG:3857 projection
   transformCoordinates: lonLat => fromLonLat(lonLat, 'EPSG:3857'),
 
+  // search for places. Pass the searchString
   // Don't spam this function! Go for a debounce (one call each 1100ms max!)
   searchPlaces: (searchString, options = {}) => new Promise((resolve, reject) => {
+
+    // If nothing is provided, don't do anything
     if(!searchString) { resolve([]); }
-    Nominatim.search({ q: searchString, ...options }, (err, _, res) => {
-      err && ErrorService.manageErrorThenReject(err, reject);
-      resolve(res);
-    });
+
+    // Launch nominatim search
+    Nominatim.search({ q: searchString, ...options }, (err, _, res) => 
+      err ? ErrorService.manageErrorThenReject(err, reject) : resolve(res));
   }),
 
+  // Get approximate location
   getApproximateLocation: () => new Promise((resolve, reject) => {
     fetch(`https://geolocation-db.com/json/`)
       .then(response => response.json())

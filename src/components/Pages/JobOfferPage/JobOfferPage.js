@@ -13,18 +13,28 @@ import './JobOfferPage.scss';
 /**
  * Component: JobOfferPage
  * Use by everyone to see details about a job offer
+ * 
+ * You have to pass a job offer id
  */
 const JobOfferPage = ({ match }) => {
   const JOB_OFFER_ID = match.params.jobofferid;
 
+  // Corresponding job offer, populated on load
   const [jobOffer, setJobOffer] = useState(null);
+
+  // Jon offer's company
   const [company, setCompany] = useState(null);
 
   useEffect(() => {
+
+    // Get the job offer
     CompanyService.jobOffer.get(JOB_OFFER_ID)
       .then(jobOfferDoc => {
+
+        // save its data
         setJobOffer(jobOfferDoc.data());
 
+        // get and save corresponding company
         CompanyService.get(jobOfferDoc.data().companyId)
           .then(companyDoc => setCompany({[companyDoc.id]: companyDoc.data()}))
           .catch(ErrorService.manageError);

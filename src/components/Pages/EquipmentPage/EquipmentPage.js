@@ -17,18 +17,28 @@ import './EquipmentPage.scss';
 /**
  * Component: EquipmentPage
  * Use by everyone to see details about an equipment
+ * 
+ * You have to pass an equipment id
  */
 const EquipmentPage = ({ match }) => {
   const EQUIPMENT_ID = match.params.equipmentid;
 
+  // equipmnent
   const [equipment, setEquipment] = useState(null);
+
+  // corresponding equipment model
   const [equipmentModel, setEquipmentModel] = useState(null);
 
   useEffect(() => {
+
+    // get the equipment
     EquipmentService.get(EQUIPMENT_ID)
       .then(equipmentDoc => {
+
+        // save the equipment
         setEquipment(equipmentDoc.data());
         
+        // get and save the equipment model for the equipment
         EquipmentModelService.get(equipmentDoc.data().equipmentModelId)
           .then(equipmentModelDoc => setEquipmentModel(equipmentModelDoc.data()))
           .catch(ErrorService.manageError);

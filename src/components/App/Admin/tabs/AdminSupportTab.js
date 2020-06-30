@@ -15,9 +15,11 @@ import { v4 as uuid } from 'uuid';
 
 /**
  * Component: AdminSupportTab
+ * Support Tab of the Admin component. Print all Support messages sent via the component Profile/tabs/SupportTab
  */
 const AdminSupportTab = () => {
 
+  // Support Messages
   const [supports, setSupports] = useState({});
   const [isSupportsLoading, setSupportsLoading] = useState(true);
 
@@ -29,11 +31,16 @@ const AdminSupportTab = () => {
     setSupports({});
     setSupportsLoading(true);
 
-    if(!computed.activeRole) { return; }
+    // Employee must be part of the staff to load the messages
+    if(!computed.employee || !computed.employee.staff) { return; }
 
+    // load support messages
     SupportService.list()
       .then(supports => {
+        // Set Data
         setSupports(supports);
+
+        // Then trigger end of load
         setSupportsLoading(false);
       })
       .catch(ErrorService.manageError);
@@ -46,6 +53,7 @@ const AdminSupportTab = () => {
   
   if(!computed.initialized) { return null; }
   if(!computed.employee || !computed.employee.staff) {
+    // If employee is not part of the staff => redirect to dashboard (safeguard - already managed by route)
     return <Redirect to={`/dashboard`} />;
   }
 

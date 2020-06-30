@@ -18,8 +18,13 @@ import { v4 as uuid } from 'uuid';
 
 import './Employees.scss';
 
+/**
+ * Component: Employees
+ * Used by managers to view and manage employee roles and rights
+ */
 const Employees = () => {
 
+  // Company Employees, with their respective roles
   const [companyEmployees, setCompanyEmployees] = useState({});
   const [isCompanyEmployeesLoading, setCompanyEmployeesLoading] = useState(true);
   const [rolesOfCompanyEmployees, setRolesOfCompanyEmployees] = useState({});
@@ -30,17 +35,24 @@ const Employees = () => {
 
   useEffect(() => {
     if(computed.activeRole) {
+
+      // loading all the roles for the company (default loaded roles have the CONFIRMED status only.
+      // draft, revoked or denied roles are not laoded here)
       RoleService.getRolesForCompanyId(computed.activeRole.companyId)
         .then(rolesOfCompanyEmployees => {
-          setRolesOfCompanyEmployees(rolesOfCompanyEmployees);
   
+          // For each role, get the employeeId amd remove duplicates
           let employeesIds = UtilsService.removeDuplicateFromArray(
-            Object.keys(rolesOfCompanyEmployees)
-              .map(roleId => rolesOfCompanyEmployees[roleId].employeeId));
+            Object.keys(rolesOfCompanyEmployees).map(roleId => rolesOfCompanyEmployees[roleId].employeeId));
             
+          // Then, get all the employees for these roles
           EmployeeService.getAllForIdList(employeesIds)
             .then(companyEmployees => {
+              // Setting all the data
+              setRolesOfCompanyEmployees(rolesOfCompanyEmployees);
               setCompanyEmployees(companyEmployees);
+
+              // Then trigger end of load
               setCompanyEmployeesLoading(false);
             })
             .catch(ErrorService.manageError);

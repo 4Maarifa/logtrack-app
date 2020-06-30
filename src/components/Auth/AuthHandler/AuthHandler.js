@@ -11,24 +11,36 @@ import Icon from './../../Utils/Icon/Icon';
 
 import './AuthHandler.scss';
 
+/**
+ * Component: AuthHandler
+ * This component permits to handle Firebase redirected requests
+ * 
+ * This component, for the moment, is used only for reset password 
+ */
 const AuthHandler = () => {
 
+  // Firebase send tokens to the app via GET parameters. getting them here
   const MODE = UtilsService.getUrlGetParam('mode');
   const CODE = UtilsService.getUrlGetParam('oobCode');
 
+  // Password change (signed out) form
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
 
+  // Save if the change is the success
   const [changePasswordDone, setChangePasswordDone] = useState(false);
 
+  // Form handler
   const resetPasswordSubmit = event => {
     event.preventDefault();
 
+    // Of passwords does not match => error
     if(newPassword !== newPasswordConfirm) {
       ErrorService.manageError({code: 'auth/passwords-not-match'});
       return;
     }
 
+    // change the password passing the code
     FirebaseService.getFirebaseObject().auth().confirmPasswordReset(CODE, newPassword)
       .then(() => setChangePasswordDone(true))
       .catch(ErrorService.manageError);
@@ -40,6 +52,7 @@ const AuthHandler = () => {
   }
 
   if(changePasswordDone) {
+    // Once the password is changed, notify and redirect the user
     ErrorService.success('Password changed! You can now sign in!');
     return <Redirect to={`/signin`} />;
   }
@@ -51,11 +64,14 @@ const AuthHandler = () => {
     {
       MODE === 'resetPassword' ? 
         <Fragment>
+          
           <h1>Reset your password</h1>
           <span className="sub">
             <Icon source="fa" icon={faInfoCircle} />
             Enter your new password!
           </span>
+          
+          {/* Reset password form */}
           <form onSubmit={resetPasswordSubmit}>
             {/* Password field */}
             <FormInput
@@ -102,7 +118,7 @@ const AuthHandler = () => {
             <input type="submit" value="Change password!" />
           </form>
         </Fragment>
-      : null
+      : <span>Unkown mode</span>
     }
   </div>);
 };

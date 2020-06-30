@@ -34,6 +34,7 @@ import { EPalette } from './../services/color.service';
  * endTimestamp: number | End date, timestamp-formatted. Null if LogTrack is current
  * isPunctual: boolean | If the logtrack did not take time, creator can create it as punctual event.
  *    In that case, startIsoDate = endIsoDate, and isPunctual = true.
+ *    A punctual event, by definition, has no duration. It happens during another logtrack that was active and stays active afterwards.
  * equipmentIds: number[] | concerned Equipments
  * creator: string | The id of the creator.
  *    Different from employeeId when created by a manager or dispatcher
@@ -41,7 +42,7 @@ import { EPalette } from './../services/color.service';
 class LogTrack {
   constructor(activity, employeeId, companyId, creationIsoDate, startIsoDate, startTimestamp,
               endIsoDate, endTimestamp, isPunctual, equipmentIds, creator) {
-      this.activity = activity;
+      this.activity = ELogTrackActivity[activity];
       this.employeeId = employeeId;
       this.companyId = companyId;
       this.creationIsoDate =  creationIsoDate;
@@ -55,32 +56,51 @@ class LogTrack {
   }
 }
 
-export const LogTrackCategory = {
+/**
+ * Enum: ELogTrackCategory
+ * Category of the logtrack's activity
+ */
+export const ELogTrackCategory = {
+  // Not moving, pause
   PAUSE: 'PAUSE',
+
+  // Service, maintenance
   SERVICE: 'SERVICE',
 
+  // Not available, outside of work or waiting for something
   NOT_AVAILABLE: 'NOT_AVAILABLE',
 
+  // Operation on equipment or employee that lock the set
   OPERATION: 'OPERATION',
+
+  // Normal 
   DRIVING: 'DRIVING',
 
+  // Problems
   PROBLEMS: 'PROBLEMS'
 };
 
-
-export const LogTrackActivity = {
+/**
+ * Enum: ELogTrackActivity
+ * Describes the real activity of the logtrack
+ */
+export const ELogTrackActivity = {
+  // PAUSE
   PARK: 'PARK',
   EAT: 'EAT',
   SLEEP: 'SLEEP',
 
+  // SERVICE
   READY_SERVICE: 'READY_SERVICE',
   FIX: 'FIX',
   MAINTENANCE: 'MAINTENANCE',
   END_SERVICE: 'END_SERVICE',
 
+  // NOT_AVAILABLE
   ABSENT: 'ABSENT',
   WAITING: 'WAITING',
 
+  // OPERATION
   REFUELING: 'REFUELING',
   RECHARGING: 'RECHARGING',
   WASH: 'WASH',
@@ -88,9 +108,11 @@ export const LogTrackActivity = {
   LOADING: 'LOADING',
   UNLOADING: 'UNLOADING',
 
+  // DRIVING
   TRANSIT: 'TRANSIT',
   COMMUTE: 'COMMUTE',
 
+  // PROBLEMS
   P_BATTERY: 'P_BATTERY',
   P_ACCIDENT: 'P_ACCIDENT',
   P_ENGINE: 'P_ENGINE',
@@ -101,293 +123,350 @@ export const LogTrackActivity = {
   P_OTHER: 'P_OTHER'
 };
 
-export const LogTrackTrackers = {
+/**
+ * Enum: ELogTrackTrackers
+ * Possible registered trackers to track activity of the set
+ */
+export const ELogTrackTrackers = {
+  // Track by time
   TIME: 'TIME',
+
+  // Track by location
   GPS: 'GPS',
+
+  // Track the temperature
   TEMPERATURE: 'TEMPERATURE'
 };
 
-export const LogTrackPunctuality = {
+/**
+ * Enum: ELogTrackPunctuality
+ * Tells if the logtrack activity should, must or must not be punctual
+ */
+export const ELogTrackPunctuality = {
   MUST_NOT: 'MUST_NOT',
   MUST: 'MUST',
   CAN_BE: 'CAN_BE'
 };
 
-export const LogTrackTrackerAvailability = {
+/**
+ * Enum: ELogTrackTrackerAvailability
+ * Describes the availability of the tracker. Mainly used to block employees to track inexistent data
+ */
+export const ELogTrackTrackerAvailability = {
   AVAILABLE: 'AVAILABLE',
+  // Tracker should never be used if not available
   NOT_AVAILABLE: 'NOT_AVAILABLE'
 };
 
-export const LogTrackCategoryDetails = {
-  [LogTrackCategory.PAUSE]: {
+/**
+ * Enum: ELogTrackCategoryDetails
+ * Details about the enum ELogTrackCategory
+ * 
+ * text: string | Printable text
+ * icon: FA/IconDefinition | Icon of the category, light
+ * iconSolid: FA/IconDefinition | Icon of the category, solid
+ * activities: [ELogTrackActivity] | Related activities for that category
+ * color: EPalette | Color of an existing palette
+ * trackers: [ELogTrackTrackers] | List of available trackers for that category (Tracking location on punctual or pause events is pointless!)
+ * punctuality: ELogTrackPunctuality | Tells if category contains punctual events
+ */
+export const ELogTrackCategoryDetails = {
+  [ELogTrackCategory.PAUSE]: {
     text: 'Pause',
     icon: faPause, 
 		iconSolid: faPauseSolid,
-    activities: [LogTrackActivity.EAT, LogTrackActivity.PARK, LogTrackActivity.SLEEP],
+    activities: [ELogTrackActivity.EAT, ELogTrackActivity.PARK, ELogTrackActivity.SLEEP],
     color: EPalette.BLUE,
-    trackers: [LogTrackTrackers.TEMPERATURE, LogTrackTrackers.TIME],
-    punctuality: LogTrackPunctuality.MUST_NOT
+    trackers: [ELogTrackTrackers.TEMPERATURE, ELogTrackTrackers.TIME],
+    punctuality: ELogTrackPunctuality.MUST_NOT
   },
-  [LogTrackCategory.SERVICE]: {
+  [ELogTrackCategory.SERVICE]: {
     text: 'Service',
     icon: faWrench, 
 		iconSolid: faWrenchSolid,
-    activities: [LogTrackActivity.FIX, LogTrackActivity.READY_SERVICE, LogTrackActivity.END_SERVICE, 
-      LogTrackActivity.MAINTENANCE],
+    activities: [ELogTrackActivity.FIX, ELogTrackActivity.READY_SERVICE, ELogTrackActivity.END_SERVICE, 
+      ELogTrackActivity.MAINTENANCE],
     color: EPalette.YELLOW,
-    trackers: [LogTrackTrackers.GPS, LogTrackTrackers.TIME, LogTrackTrackers.TEMPERATURE],
-    punctuality: LogTrackPunctuality.CAN_BE
+    trackers: [ELogTrackTrackers.GPS, ELogTrackTrackers.TIME, ELogTrackTrackers.TEMPERATURE],
+    punctuality: ELogTrackPunctuality.CAN_BE
   },
-  [LogTrackCategory.NOT_AVAILABLE]: {
+  [ELogTrackCategory.NOT_AVAILABLE]: {
     text: 'Not Available',
     icon: faCalendarTimes, 
 		iconSolid: faCalendarTimesSolid,
-    activities: [LogTrackActivity.ABSENT, LogTrackActivity.WAITING],
+    activities: [ELogTrackActivity.ABSENT, ELogTrackActivity.WAITING],
     color: EPalette.GRAY,
-    trackers: [LogTrackTrackers.TIME],
-    punctuality: LogTrackPunctuality.MUST_NOT
+    trackers: [ELogTrackTrackers.TIME],
+    punctuality: ELogTrackPunctuality.MUST_NOT
   },
-  [LogTrackCategory.OPERATION]: {
+  [ELogTrackCategory.OPERATION]: {
     text: 'Operation',
     icon: faPlay, 
 		iconSolid: faPlaySolid,
-    activities: [LogTrackActivity.REFUELING, LogTrackActivity.RECHARGING, LogTrackActivity.WASH, 
-      LogTrackActivity.WEIGHT, LogTrackActivity.LOADING, LogTrackActivity.UNLOADING],
+    activities: [ELogTrackActivity.REFUELING, ELogTrackActivity.RECHARGING, ELogTrackActivity.WASH, 
+      ELogTrackActivity.WEIGHT, ELogTrackActivity.LOADING, ELogTrackActivity.UNLOADING],
     color: EPalette.PURPLE,
-    trackers: [LogTrackTrackers.TIME, LogTrackTrackers.TEMPERATURE],
-    punctuality: LogTrackPunctuality.CAN_BE
+    trackers: [ELogTrackTrackers.TIME, ELogTrackTrackers.TEMPERATURE],
+    punctuality: ELogTrackPunctuality.CAN_BE
   },
-  [LogTrackCategory.DRIVING]: {
+  [ELogTrackCategory.DRIVING]: {
     text: 'Driving',
     icon: faSteeringWheel, 
 		iconSolid: faSteeringWheelSolid,
-    activities: [LogTrackActivity.TRANSIT, LogTrackActivity.COMMUTE],
+    activities: [ELogTrackActivity.TRANSIT, ELogTrackActivity.COMMUTE],
     color: EPalette.GREEN,
-    trackers: [LogTrackTrackers.TIME, LogTrackTrackers.TEMPERATURE, LogTrackTrackers.GPS],
-    punctuality: LogTrackPunctuality.MUST_NOT
+    trackers: [ELogTrackTrackers.TIME, ELogTrackTrackers.TEMPERATURE, ELogTrackTrackers.GPS],
+    punctuality: ELogTrackPunctuality.MUST_NOT
   },
-  [LogTrackCategory.PROBLEMS]: {
+  [ELogTrackCategory.PROBLEMS]: {
     text: 'Problems',
     icon: faExclamationTriangle, 
 		iconSolid: faExclamationTriangleSolid,
-    activities: [LogTrackActivity.P_BATTERY, LogTrackActivity.P_ACCIDENT, LogTrackActivity.P_ENGINE, 
-      LogTrackActivity.P_OIL, LogTrackActivity.P_TEMP, LogTrackActivity.P_FLAT, LogTrackActivity.P_OUT_OF_FUEL, 
-      LogTrackActivity.P_OTHER],
+    activities: [ELogTrackActivity.P_BATTERY, ELogTrackActivity.P_ACCIDENT, ELogTrackActivity.P_ENGINE, 
+      ELogTrackActivity.P_OIL, ELogTrackActivity.P_TEMP, ELogTrackActivity.P_FLAT, ELogTrackActivity.P_OUT_OF_FUEL, 
+      ELogTrackActivity.P_OTHER],
     color: EPalette.RED,
-    trackers: [LogTrackTrackers.TIME, LogTrackTrackers.TEMPERATURE],
-    punctuality: LogTrackPunctuality.MUST
+    trackers: [ELogTrackTrackers.TIME, ELogTrackTrackers.TEMPERATURE],
+    punctuality: ELogTrackPunctuality.MUST
   }
 };
 
-export const LogTrackActivityDetails = {
-  [LogTrackActivity.PARK]: {
+/**
+ * Enum: ELogTrackActivityDetails
+ * Details about the enum ELogTrackActivity
+ * 
+ * text: string | Printable text
+ * icon: FA/IconDefinition | Icon of the activity, light
+ * iconSolid: FA/IconDefinition | Icon of the activity, solid
+ * roles: [ERole] | List of roles that can create LogTracks with that activity (Drivers must not be able to create maintenance logtracks!)
+ * parent: ELogTrackCategory | Parent Category
+ */
+export const ELogTrackActivityDetails = {
+  // PAUSE
+  [ELogTrackActivity.PARK]: {
     text: 'Parked',
     icon: faParking, 
 		iconSolid: faParkingSolid,
     roles: [ERole.DRIVER],
-    parent: LogTrackCategory.PAUSE
+    parent: ELogTrackCategory.PAUSE
   },
-  [LogTrackActivity.EAT]: {
+  [ELogTrackActivity.EAT]: {
     text: 'Eating',
     icon: faUtensils, 
 		iconSolid: faUtensilsSolid,
     roles: [ERole.DRIVER],
-    parent: LogTrackCategory.PAUSE
+    parent: ELogTrackCategory.PAUSE
   },
-  [LogTrackActivity.SLEEP]: {
+  [ELogTrackActivity.SLEEP]: {
     text: 'Sleeping',
     icon: faBed, 
 		iconSolid: faBedSolid,
     roles: [ERole.DRIVER],
-    parent: LogTrackCategory.PAUSE
+    parent: ELogTrackCategory.PAUSE
   },
 
-  [LogTrackActivity.FIX]: {
+  // SERVICE
+  [ELogTrackActivity.FIX]: {
     text: 'Fixing Equipment',
     icon: faWrench, 
 		iconSolid: faWrenchSolid,
     roles: [ERole.MECHANIC],
-    parent: LogTrackCategory.SERVICE
+    parent: ELogTrackCategory.SERVICE
   },
-  [LogTrackActivity.READY_SERVICE]: {
+  [ELogTrackActivity.READY_SERVICE]: {
     text: 'Ready for Service',
     icon: faArrowAltFromLeft, 
 		iconSolid: faArrowAltFromLeftSolid,
     roles: [ERole.MECHANIC, ERole.DRIVER],
-    parent: LogTrackCategory.SERVICE
+    parent: ELogTrackCategory.SERVICE
   },
-  [LogTrackActivity.END_SERVICE]: {
+  [ELogTrackActivity.END_SERVICE]: {
     text: 'Service ended',
     icon: faArrowAltToRight, 
 		iconSolid: faArrowAltToRightSolid,
     roles: [ERole.DRIVER, ERole.MECHANIC],
-    parent: LogTrackCategory.SERVICE
+    parent: ELogTrackCategory.SERVICE
   },
-  [LogTrackActivity.MAINTENANCE]: {
+  [ELogTrackActivity.MAINTENANCE]: {
     text: 'Maintencance',
     icon: faToolbox, 
 		iconSolid: faToolboxSolid,
     roles: [ERole.MECHANIC],
-    parent: LogTrackCategory.SERVICE
+    parent: ELogTrackCategory.SERVICE
   },
 
-  [LogTrackActivity.ABSENT]: {
+  // NOT)AVAILABLE
+  [ELogTrackActivity.ABSENT]: {
     text: 'Absent',
     icon: faCalendarTimes, 
 		iconSolid: faCalendarTimesSolid,
     roles: [ERole.MECHANIC, ERole.DRIVER],
-    parent: LogTrackCategory.NOT_AVAILABLE
+    parent: ELogTrackCategory.NOT_AVAILABLE
   },
-  [LogTrackActivity.WAITING]: {
+  [ELogTrackActivity.WAITING]: {
     text: 'Waiting',
     icon: faClock, 
 		iconSolid: faClockSolid,
     roles: [ERole.DRIVER, ERole.MECHANIC],
-    parent: LogTrackCategory.NOT_AVAILABLE
+    parent: ELogTrackCategory.NOT_AVAILABLE
   },
 
-  [LogTrackActivity.REFUELING]: {
+  // OPERATION
+  [ELogTrackActivity.REFUELING]: {
     text: 'Refueling',
     icon: faGasPump, 
 		iconSolid: faGasPumpSolid,
     roles: [ERole.DRIVER],
-    parent: LogTrackCategory.OPERATION
+    parent: ELogTrackCategory.OPERATION
   },
-  [LogTrackActivity.RECHARGING]: {
+  [ELogTrackActivity.RECHARGING]: {
     text: 'Recharging',
     icon: faChargingStation, 
 		iconSolid: faChargingStationSolid,
     roles: [ERole.DRIVER],
-    parent: LogTrackCategory.OPERATION
+    parent: ELogTrackCategory.OPERATION
   },
-  [LogTrackActivity.WASH]: {
+  [ELogTrackActivity.WASH]: {
     text: 'Cleaning Equipment',
     icon: faCarWash, 
 		iconSolid: faCarWashSolid,
     roles: [ERole.DRIVER, ERole.MECHANIC],
-    parent: LogTrackCategory.OPERATION
+    parent: ELogTrackCategory.OPERATION
   },
-  [LogTrackActivity.WEIGHT]: {
+  [ELogTrackActivity.WEIGHT]: {
     text: 'Weighting Equipment',
     icon: faWeight, 
 		iconSolid: faWeightSolid,
     roles: [ERole.DRIVER],
-    parent: LogTrackCategory.OPERATION
+    parent: ELogTrackCategory.OPERATION
   },
-  [LogTrackActivity.LOADING]: {
+  [ELogTrackActivity.LOADING]: {
     text: 'Loading',
     icon: faTruck, 
 		iconSolid: faTruckSolid,
     additionalicon: faShareSolid,
     roles: [ERole.DRIVER],
-    parent: LogTrackCategory.OPERATION
+    parent: ELogTrackCategory.OPERATION
   },
-  [LogTrackActivity.UNLOADING]: {
+  [ELogTrackActivity.UNLOADING]: {
     text: 'Unloading',
     icon: faTruck, 
 		iconSolid: faTruckSolid,
     additionalicon: faReplySolid, 
     roles: [ERole.DRIVER],
-    parent: LogTrackCategory.OPERATION
+    parent: ELogTrackCategory.OPERATION
   },
 
-  [LogTrackActivity.TRANSIT]: {
+  // DRIVING
+  [ELogTrackActivity.TRANSIT]: {
     text: 'Transit',
     icon: faShippingFast, 
 		iconSolid: faShippingFastSolid,
     roles: [ERole.DRIVER, ERole.MECHANIC],
-    parent: LogTrackCategory.DRIVING
+    parent: ELogTrackCategory.DRIVING
   },
-  [LogTrackActivity.COMMUTE]: {
+  [ELogTrackActivity.COMMUTE]: {
     text: 'Commute',
     icon: faShippingTimed, 
 		iconSolid: faShippingTimedSolid,
     roles: [ERole.MECHANIC, ERole.DRIVER],
-    parent: LogTrackCategory.DRIVING
+    parent: ELogTrackCategory.DRIVING
   },
 
-  [LogTrackActivity.P_BATTERY]: {
+  // PROBLEMS
+  [ELogTrackActivity.P_BATTERY]: {
     text: 'Battery Problem',
     icon: faCarBattery, 
 		iconSolid: faCarBatterySolid,
     roles: [ERole.MECHANIC, ERole.DRIVER],
-    parent: LogTrackCategory.PROBLEMS
+    parent: ELogTrackCategory.PROBLEMS
   },
-  [LogTrackActivity.P_ACCIDENT]: {
+  [ELogTrackActivity.P_ACCIDENT]: {
     text: 'Accident',
     icon: faCarCrash, 
 		iconSolid: faCarCrashSolid,
     roles: [ERole.MECHANIC, ERole.DRIVER],
-    parent: LogTrackCategory.PROBLEMS
+    parent: ELogTrackCategory.PROBLEMS
   },
-  [LogTrackActivity.P_ENGINE]: {
+  [ELogTrackActivity.P_ENGINE]: {
     text: 'Engine Problem',
     icon: faEngineWarning, 
 		iconSolid: faEngineWarningSolid,
     roles: [ERole.MECHANIC, ERole.DRIVER],
-    parent: LogTrackCategory.PROBLEMS
+    parent: ELogTrackCategory.PROBLEMS
   },
-  [LogTrackActivity.P_OIL]: {
+  [ELogTrackActivity.P_OIL]: {
     text: 'Oil Problem',
     icon: faOilCan, 
 		iconSolid: faOilCanSolid,
     roles: [ERole.DRIVER],
-    parent: LogTrackCategory.PROBLEMS
+    parent: ELogTrackCategory.PROBLEMS
   },
-  [LogTrackActivity.P_TEMP]: {
+  [ELogTrackActivity.P_TEMP]: {
     text: 'Temperature Problem',
     icon: faOilTemp, 
 		iconSolid: faOilTempSolid,
     roles: [ERole.DRIVER],
-    parent: LogTrackCategory.PROBLEMS
+    parent: ELogTrackCategory.PROBLEMS
   },
-  [LogTrackActivity.P_FLAT]: {
+  [ELogTrackActivity.P_FLAT]: {
     text: 'Flat Tire',
     icon: faTireFlat, 
 		iconSolid: faTireFlatSolid,
     roles: [ERole.DRIVER],
-    parent: LogTrackCategory.PROBLEMS
+    parent: ELogTrackCategory.PROBLEMS
   },
-  [LogTrackActivity.P_OUT_OF_FUEL]: {
+  [ELogTrackActivity.P_OUT_OF_FUEL]: {
     text: 'Out of Fuel',
     icon: faGasPumpSlash, 
 		iconSolid: faGasPumpSlashSolid,
     roles: [ERole.DRIVER],
-    parent: LogTrackCategory.PROBLEMS
+    parent: ELogTrackCategory.PROBLEMS
   },
-  [LogTrackActivity.P_OTHER]: {
+  [ELogTrackActivity.P_OTHER]: {
     text: 'Other Problem',
     icon: faTrafficCone, 
 		iconSolid: faTrafficConeSolid,
     roles: [ERole.DRIVER, ERole.MECHANIC],
-    parent: LogTrackCategory.PROBLEMS
+    parent: ELogTrackCategory.PROBLEMS
   }
 };
 
-export const LogTrackTrackersDetails = {
-  [LogTrackTrackers.TIME]: {
+/**
+ * Enum: ELogTrackTrackersDetails
+ * Details about ELogTrackTrackers
+ * 
+ * mandatory: boolean | Tells if the tracker is mandatory (if data acquisition must not be disabled by employees)
+ * icon: FA/IconDefinition | Icon of the Tracker, light
+ * iconSolid: FA/IconDefinition | Icon of the Tracker, solid
+ * name: string | Printable name
+ * description: string | Printable description
+ * availability: ELogTrackTrackerAvailability | Tells if the tracker could be used or not
+ */
+export const ELogTrackTrackersDetails = {
+  [ELogTrackTrackers.TIME]: {
     mandatory: true,
     icon: faClock, 
 		iconSolid: faClockSolid,
     name: 'Time Tracker',
     description: 'Time-based statistics, along with other trackers.',
-    availability: LogTrackTrackerAvailability.AVAILABLE
+    availability: ELogTrackTrackerAvailability.AVAILABLE
   },
-  [LogTrackTrackers.GPS]: {
+  [ELogTrackTrackers.GPS]: {
     mandatory: false,
     icon: faCrosshairs, 
 		iconSolid: faCrosshairsSolid,
     name: 'GPS Tracker',
     description: 'Track your real-time position.',
-    availability: LogTrackTrackerAvailability.NOT_AVAILABLE
+    availability: ELogTrackTrackerAvailability.NOT_AVAILABLE
   },
-  [LogTrackTrackers.TEMPERATURE]: {
+  [ELogTrackTrackers.TEMPERATURE]: {
     mandatory: false,
     icon: faThermometerHalf, 
 		iconSolid: faThermometerHalfSolid,
     name: 'Temperature Tracker',
     description: 'Track the temperature of your load.',
-    availability: LogTrackTrackerAvailability.NOT_AVAILABLE
+    availability: ELogTrackTrackerAvailability.NOT_AVAILABLE
   }
 };
 

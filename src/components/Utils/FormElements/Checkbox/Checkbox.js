@@ -7,6 +7,18 @@ import { v4 as uuid } from 'uuid';
 
 import './Checkbox.scss';
 
+/**
+ * Component: Checkbox
+ * Form component that can be checked and unchecked
+ * 
+ * value: boolean | default value of the checkbox
+ * fieldName: string | a specific string that will be passed at each call of the callback onValueChange
+ * inputName: string | unique input name
+ * inputDisabled: boolean | Should the input be blocked
+ * inputRequired: boolean | if the input must be checked to be valid
+ * label: HTML | Printable label for the user
+ * onValueChange: function(newValue, fieldName) | Callback called each time the value changes
+ */
 const Checkbox = ({ value,
                     fieldName,
                     inputName,
@@ -15,6 +27,7 @@ const Checkbox = ({ value,
                     label,
                     onValueChange }) => {
 
+  // at each change, call the callback with the new value and the unique fieldName
   const onChange = newValue => onValueChange && onValueChange(newValue, fieldName);
 
   /**
@@ -26,6 +39,7 @@ const Checkbox = ({ value,
     <div className={'Checkbox '
         + (fieldName ? 'input-' + fieldName : '')}>
 
+      {/* Real checkbox, always hidden */}
       <input
         id={INPUT_ID}
         className="input"
@@ -36,6 +50,7 @@ const Checkbox = ({ value,
         required={inputRequired}
         onChange={e => onChange(e.target.checked)} />
 
+      {/* Input label, with the square and checkmark */}
       <label htmlFor={INPUT_ID}>
         <span className="square">
           <Icon source="fa" containerclassname="check-icon" icon={faCheck} />

@@ -7,14 +7,24 @@ import UtilsService from './../../../services/utils.service';
 import DateService from './../../../services/date.service';
 import ColorService from './../../../services/color.service';
 
-import { LogTrackActivityDetails, LogTrackCategoryDetails } from './../../../classes/LogTrack';
+import { ELogTrackActivityDetails, ELogTrackCategoryDetails } from './../../../classes/LogTrack';
 
+import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import ActionList from './../../Utils/ActionList/ActionList';
 import Icon from './../../Utils/Icon/Icon';
 
 import { v4 as uuid } from 'uuid';
-import PageLink, { PageLinkType } from '../../Utils/PageLink/PageLink';
 
+/**
+ * Component: LogTrack
+ * Pritn LogTrack details
+ * 
+ * If you want, you can pass:
+ * 1. Full Employee data
+ * 2. Full company data
+ * 
+ * Those are optional. If nothing is passed, they will not be printed
+ */
 const LogTrack = ({ logtrack, employee, company, isPage }) => {
   if(!logtrack) { return null; }
 
@@ -37,33 +47,47 @@ const LogTrack = ({ logtrack, employee, company, isPage }) => {
     return <Redirect to={`/dashboard`} />;
   }
 
-  const ACTIONS = [
-    
-  ];
+  const ACTIONS = [];
 
-  const LOGTRACK_ACTIVITY_DETAILS = LogTrackActivityDetails[LOGTRACK_DATA.activity];
-  const LOGTRACK_COLOR = ColorService.getPaletteForColor(LogTrackCategoryDetails[LOGTRACK_ACTIVITY_DETAILS.parent].color).medium.color;
+  // Compute details and color
+  const LOGTRACK_ACTIVITY_DETAILS = ELogTrackActivityDetails[LOGTRACK_DATA.activity];
+  const LOGTRACK_COLOR = ColorService.getPaletteForColor(ELogTrackCategoryDetails[LOGTRACK_ACTIVITY_DETAILS.parent].color).medium.color;
 
   return (
     <div className="Company Element-content">
       <div className="Element-base">
-        <Icon source="fa" containerclassname="Element-icon" icon={LOGTRACK_ACTIVITY_DETAILS.icon} style={isPage ? {} : { color: LOGTRACK_COLOR }} />
+
+        {/* Activity icon */}
+        <Icon source="fa" 
+              containerclassname="Element-icon"
+              icon={LOGTRACK_ACTIVITY_DETAILS.icon}
+              style={isPage ? {} : { color: LOGTRACK_COLOR }} />
+
         <div className="Element-data">
-          <h1 className="Element-title">
-            {LOGTRACK_ACTIVITY_DETAILS.text}
-          </h1>
+          {/* Details */}
+          <h1 className="Element-title">{LOGTRACK_ACTIVITY_DETAILS.text}</h1>
           <span>
+            {/* If logtrack is not punctual and 
+               1. has an end date, print as ended
+               2. Has not an end date => print as current */}
             {!LOGTRACK_DATA.isPunctual ? 
               LOGTRACK_DATA.endIsoDate ? 
-                <Fragment>Ended on {DateService.getDateTimeString(DateService.getDateFromIsoString(LOGTRACK_DATA.endIsoDate), false)}<br/></Fragment>
+                <Fragment>Ended {DateService.getDateTimeString(DateService.getDateFromIsoString(LOGTRACK_DATA.endIsoDate), false, false, 'on')}<br/></Fragment>
                 : <Fragment>Current<br/></Fragment>
               : null}
-            {LOGTRACK_DATA.isPunctual ? 'Done' : 'Started'} on {DateService.getDateTimeString(DateService.getDateFromIsoString(LOGTRACK_DATA.startIsoDate), false)}<br/>
+
+            {/* If logtrack is punctual, say it's done (as it's already done when inserted). Otherwise, say it started */}
+            {LOGTRACK_DATA.isPunctual ? 'Done' : 'Started'} {DateService.getDateTimeString(DateService.getDateFromIsoString(LOGTRACK_DATA.startIsoDate), false, false, 'on')}<br/>
+
+            {/* If an employee is passed, print his Pagelink */}
             {employee ? <PageLink type={PageLinkType.EMPLOYEE} entityId={LOGTRACK_DATA.employeeId} entityData={employee[LOGTRACK_DATA.employeeId]} /> : null}
+
+            {/* If a company is passed, print its pagelink */}
             {company ? <PageLink type={PageLinkType.COMPANY} entityId={LOGTRACK_DATA.companyId} entityData={company[LOGTRACK_DATA.companyId]} /> : null}
           </span>
         </div>
         <div className="Element-actions">
+          {/* Actions */}
           <ActionList actions={ACTIONS} />
         </div>
       </div>
@@ -71,6 +95,7 @@ const LogTrack = ({ logtrack, employee, company, isPage }) => {
   );
 };
 
+// FSS for logTracks (used to filter, search and sort logtracks) => sort on time
 export const logtracksExTableFSS = {
   sort: {
     time: {

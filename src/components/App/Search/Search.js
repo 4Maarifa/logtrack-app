@@ -27,10 +27,16 @@ import { v4 as uuid } from 'uuid';
 
 import './Search.scss';
 
+/**
+ * Component: Search
+ * Search functions on companies, employees, contracts, warehouses, equipments
+ */
 const Search = () => {
 
+  // Search form input
   const [searchInput, setSearchInput] = useState('');
 
+  // Results of the search
   const [employees, setEmployees] = useState({});
   const [contracts, setContracts] = useState({});
   const [contractCompanies, setContractCompanies] = useState({});
@@ -38,28 +44,36 @@ const Search = () => {
   const [companies, setCompanies] = useState({});
   const [warehouses, setWarehouses] = useState({});
 
+  // All models and brands of equipments
   const [equipmentModels, setEquipmentModels] = useState({});
   const [brands, setBrands] = useState({});
 
+  // is searching?
   const [isSearchLoading, setSearchLoading] = useState(true);
 
   const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
+  // Form handler
   const searchEntities = () => {
     if(searchInput.length <= 3) { return; }
     DataService.computed.search([ESearchType.EMPLOYEES, ESearchType.COMPANIES, ESearchType.WAREHOUSES, ESearchType.CONTRACTS, ESearchType.EQUIPMENTS], 
         searchInput, computed.activeRole.companyId)
       .then(results => {
+        // Get all related companies to search data
         CompanyService.getAllForIdList(UtilsService.removeDuplicateFromArray(Object.keys(results.data.contracts).map(contractId => [results.data.contracts[contractId].companyExecId, results.data.contracts[contractId].companyOrderId]).flat(Infinity)))
           .then(contractCompanies => {
+
+            // set data
             setEmployees(results.data.employees);
             setContracts(results.data.contracts);
             setEquipments(results.data.equipments);
             setCompanies(results.data.companies);
             setWarehouses(results.data.warehouses);
             setContractCompanies(contractCompanies);
+
+            // Triggering end of load
             setSearchLoading(false);
           }).catch(ErrorService.manageError);
       })
@@ -67,11 +81,13 @@ const Search = () => {
   };
 
   useEffect(() => {
+    // If search input value is modified, trigger search function
     setSearchLoading(true);
     searchEntities();
   }, [searchInput]);
 
   useEffect(() => {
+    // Load all brands and equipment models on load
     BrandService.list()
       .then(setBrands)
       .catch(ErrorService.manageError);
@@ -91,6 +107,9 @@ const Search = () => {
   /**
    * RENDER
    */
+
+  // Util render functions
+
   const renderEmployee = (itemId, itemData) => {
     return <Employee employee={{[itemId]: itemData}} />;
   };
@@ -127,6 +146,8 @@ const Search = () => {
 
   return (
     <div className={'Search ' + (searchInput.length >= 3 ? 'Search--valid' : '')}>
+
+      {/* Search input */}
       <FormDebounceInput 
         inputType="text"
         inputPattern=".{2,}"
@@ -143,6 +164,8 @@ const Search = () => {
             Search
           </span>}
         onValueChange={setSearchInput} />
+
+      {/* Search results */}
       <Tabs default="companies" tabs={{
         employees: {
           name: ({ isActive }) => <span>

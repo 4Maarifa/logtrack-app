@@ -8,6 +8,20 @@ import { v4 as uuid } from 'uuid';
 
 import './FormTextarea.scss';
 
+/**
+ * Component: TextArea
+ * Form element, input with multiple lines, corresponding to an HTML textarea element
+ * 
+ * value: string | value of the textarea
+ * fieldName: string | unique identifier of this form element
+ * inputName: string | unique identifier in the form
+ * inputAutocomplete: string | browser compatible autocomplete for name, address...
+ * inputRequired: boolean | tells if the input must be fulfilled or not
+ * inputDisabled: boolean | stop interaction, and avoid modiciation by the user
+ * label: HTML | printable label for the input
+ * instructions: HTML | printable instructions
+ * onValueChange: function(value, fieldName) | callback called when textarea value is modified
+ */
 const FormTextarea = ({ value,
                         fieldName,
                         inputName,
@@ -18,8 +32,10 @@ const FormTextarea = ({ value,
                         instructions,
                         onValueChange }) => {
 
+  // Save the hover state of the validation indicator, that shows insturctions when true
   const [isHover, setHover] = useState(false);
 
+  // call callback when the value changed
   const onChange = newValue => onValueChange && onValueChange(newValue, fieldName);
 
   /**
@@ -31,6 +47,7 @@ const FormTextarea = ({ value,
     <div className={'FormTextarea '
         + (fieldName ? 'input-' + fieldName : '')}>
 
+      {/* Text area element */}
       <textarea
         id={INPUT_ID}
         className={'input ' + (!value ? 'input--empty' : '')}
@@ -40,6 +57,8 @@ const FormTextarea = ({ value,
         disabled={inputDisabled}
         onChange={e => onChange(e.target.value)}
         required={inputRequired} />
+
+      {/* Validation indicator */}
       <span className="indicator"
         onMouseOver={() => setHover(true)}
         onMouseOut={() => setHover(false)}>
@@ -47,11 +66,15 @@ const FormTextarea = ({ value,
         <Icon containerclassname="valid" source="fa" icon={faCheck} />
         <Icon containerclassname="invalid" source="fa" icon={faTimes} />
       </span>
+
+      {/* Label */}
       {label && 
         <label htmlFor={INPUT_ID}>
           {label}
         </label>
       }
+
+      {/* Instructions */}
       {instructions && !inputDisabled ? <Tooltip 
         show={isHover} 
         label={instructions}

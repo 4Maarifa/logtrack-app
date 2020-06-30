@@ -26,14 +26,23 @@ import { v4 as uuid } from 'uuid';
 
 import './Navigation.scss';
 
+/**
+ * Custom hook when the route changes, even if it's not a React Router route handling (if a HTML GET parameter was changed for example)
+ */
 const TrackRouteChange = ({ onChange }) => {
   const LOCATION = useLocation();
-  useEffect(() => onChange(), [LOCATION]);
+  useEffect(onChange, [LOCATION]);
   return null;
 };
 
+/**
+ * Component: Navigation
+ * Main menu of LogTrack
+ * Printed on the side on desktop, at the top on mobile
+ */
 const Navigation = () => {
 
+  // On mobile, the navbar is toggled. This boolean indicated if the menu is opened (fullscreen) or closed (top bar only)
   const [isOpenedOnMobile, setOpenedOnMobile] = useState(false);
 
   const OBSERVER_KEY = uuid();
@@ -51,6 +60,7 @@ const Navigation = () => {
    * RENDER
    */ 
 
+  // Render the active role menu item
   const renderActiveRole = () => {
     if(!computed.activeRole) {
       return (<NavLink activeClassName="nav--active" to={`/roles`} exact>
@@ -69,6 +79,7 @@ const Navigation = () => {
     </NavLink>);
   };
   
+  // Render the username menu item
   const renderUsername = () => {
     if(computed.employee) {
       return (
@@ -87,12 +98,16 @@ const Navigation = () => {
     </NavLink>);
   };
 
+  // Render the active menu part, shown on mobile on top of the screen
+  // When tapped, this section does not open the link, it toggles the menu in full screen
   const renderMobileNavigation = () => {
    return <div className="Navigation-mobile" onClick={() => setOpenedOnMobile(!isOpenedOnMobile)}>
      <Icon source="fa" icon={isOpenedOnMobile ? faTimes : faBars} />
    </div>;
   }
 
+  // All other navigation tabs
+  // For each, verifying if the current user has the right to access it before printing it
   const getNavigationTabs = () => {
     const TABS = {
       [ERights.APP_CAN_USE_ADMIN_MANAGEMENT]:
@@ -163,16 +178,22 @@ const Navigation = () => {
         </NavLink>
     };
 
+    // Filtering menu items, returning an array with all correponding menu items according to each right
     return Object.keys(TABS).filter(key => RightService.hasAppRight(key)).map(key => TABS[key]);
   };
+
 
   return (
     <div className={'Navigation ' 
       + (SettingsService.getSettingValue(ESettings.SETTINGS_NAV_COLLAPSED) === 'COLLAPSED' ? '' : 'Navigation--deployed')
       + (isOpenedOnMobile ? ' Navigation--opened' : '')}>
 
+      {/* Tracking each route change to :
+       1: indicating correctly the current menu on topbar on mobile
+       2: Closing the fullscreen menu on mobile when the URL changes */}
       <TrackRouteChange onChange={() => setOpenedOnMobile(false)} />
       
+      {/* Printing all the menu items that are available if the user is connected */}
       {computed.user && 
         <nav>
           <NavLink activeClassName="nav--active" to={`/dashboard`}>
@@ -210,6 +231,8 @@ const Navigation = () => {
           {renderMobileNavigation()}
         </nav>
       }
+
+      {/* Printing all the menu items that are available if the user is not connected */}
       {!computed.user &&
         <nav>
           <NavLink activeClassName="nav--active" to={`/`} exact>

@@ -34,15 +34,37 @@ class EquipmentModel {
     }
 }
 
+/**
+ * Enum: EEquipmentModelType
+ * Type of the equipment
+ */
 export const EEquipmentModelType = Object.freeze({
+    // Truck / Semi truck tractor
     SEMI_TRUCK: 'SEMI_TRUCK',
+
+    // Motorized part of a tamdem truck
     TANDEM: 'TANDEM',
+
+    // Trailer of a semi
     SEMI_TRAILER: 'SEMI_TRAILER',
+
+    // Trailer of a tandem
     TANDEM_TRAILER: 'TANDEM_TRAILER',
+
+    // Van
     VAN: 'VAN',
+
+    // Other
     TOOL: 'TOOL'
 });
 
+/**
+ * Enum: EEquipmentModelTypeDetails
+ * Details about the enum EEquipmentModelType
+ * 
+ * name: string | Printable name of the type
+ * icon: HTMLElement | Icon set of the type
+ */
 export const EEquipmentModelTypeDetails = Object.freeze({
     [EEquipmentModelType.SEMI_TRUCK]: {
         name: 'Semi Truck',
@@ -86,26 +108,43 @@ export const EEquipmentModelTypeDetails = Object.freeze({
     }
 });
 
+/**
+ * Enum: EEquipmentModelSubType
+ * SubType of an equipment model type
+ * Structurized as : TYPE: { SUBTYPE, SUBTYPE }
+ */
 export const EEquipmentModelSubType = Object.freeze({
     [EEquipmentModelType.SEMI_TRUCK]: {
+        // 4x2 transmission
         T4x2: 'T4x2',
+        // 6x2 Transmission
         T6x2: 'T6x2',
+        // 4x2 with big hood
         T4x2_big: 'T4x2_big',
+        // 6x2 with bug hood
         T6x2_big: 'T6x2_big'
     },
     [EEquipmentModelType.TANDEM]: {
+        // 4x2 transmission (one rear axle)
         T4x2: 'T4x2',
+        // 6x2 transmission (two rear axles)
         T6x2: 'T6x2'
     },
     [EEquipmentModelType.SEMI_TRAILER]: {
+        // Trailer
         TRAILER: 'TRAILER',
+        // Flatbed trailer
         FLATBED: 'FLATBED'
     },
     [EEquipmentModelType.TANDEM_TRAILER]: {
+        // Tandem trailer
         TRAILER: 'TRAILER',
+        // Tandem flatbed trailer
         FLATBED: 'FLATBED'
     },
     [EEquipmentModelType.VAN]: {
+        // All different variants of a van
+
         L1H1: 'L1H1',
         L1H2: 'L1H2',
         L1H3: 'L1H3',
@@ -118,15 +157,23 @@ export const EEquipmentModelSubType = Object.freeze({
         L3H2: 'L3H2',
         L3H3: 'L3H3',
 
+        // Body means no rear equipment
         L1BODY: 'L1BODY',
         L2BODY: 'L2BODY',
         L3BODY: 'L3BODY'
     },
     [EEquipmentModelType.TOOL]: {
-
+        // Nothing here for the moment :)
     }
 });
 
+/**
+ * Enum: EEquipmentModelSubTypeDetails
+ * Details about the enum EEquipmentModelSubType
+ * 
+ * name: string | Printable name
+ * icon: HTMLElement | Icon set for the subType
+ */
 export const EEquipmentModelSubTypeDetails = Object.freeze({
     [EEquipmentModelType.SEMI_TRUCK]: {
         [EEquipmentModelSubType.SEMI_TRUCK.T4x2]: {
@@ -298,7 +345,7 @@ export const EEquipmentModelSubTypeDetails = Object.freeze({
         }
     },
     [EEquipmentModelType.TOOL]: {
-
+        // Nothing here for the moment :)
     }
 });
 

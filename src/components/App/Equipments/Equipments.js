@@ -17,8 +17,13 @@ import { v4 as uuid } from 'uuid';
 
 import './Equipments.scss';
 
+/**
+ * Component: Equipments
+ * Used by managers to create and manage equipments
+ */
 const Equipments = () => {
 
+  // Equipments, and their models
   const [equipments, setEquipments] = useState({});
   const [isEquipmentsLoading, setEquipmentsLoading] = useState(true);
   const [equipmentModels, setEquipmentModels] = useState({});
@@ -29,13 +34,17 @@ const Equipments = () => {
 
   useEffect(() => {
     if(computed.activeRole) {
+      // Loading all equipment Models
       EquipmentModelService.list()
         .then(setEquipmentModels)
         .catch(ErrorService.manageError);
         
+      // Loading all equipments for the current company
       EquipmentService.getAllForCompanyId(computed.activeRole.companyId)
         .then(equipments => {
           setEquipments(equipments);
+
+          // Triggering end of load
           setEquipmentsLoading(false);
         })
         .catch(ErrorService.manageError);
@@ -52,13 +61,11 @@ const Equipments = () => {
   /**
    * RENDER
    */
-  const renderEquipment = (itemId, itemData) => {
-    const equipmentModel = { [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] };
-
-    return <Equipment key={itemId}
+  const renderEquipment = (itemId, itemData) => (
+    <Equipment key={itemId}
       equipment={ {[itemId]: itemData} }
-      equipmentModel={equipmentModel} />
-  };
+      equipmentModel={{ [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] }} />
+  );
 
   return (
     <div className="Equipments">

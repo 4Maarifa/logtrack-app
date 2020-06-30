@@ -21,27 +21,39 @@ import { v4 as uuid } from 'uuid';
 
 import './JobOfferAdd.scss';
 
+/**
+ * Component: JobOfferAdd
+ * Standalone form to add a new job offer or edit an existing one
+ * 
+ * Pass a job id to edit one instead of adding a new one
+ */
 const JobOfferAdd = ({ match }) => {
   const CURRENT_JOB_OFFER_ID = match.params.jobofferid;
 
+  // Current job offer to be edited, populated on load if an id is passed
   const [currentJobOffer, setCurrentJobOffer] = useState(null);
 
+  // New job offer id, set it to redirect user once finished
   const [newJobOfferId, setNewJobOfferId] = useState(null);
 
-  const OBSERVER_KEY = uuid();
-
+  // Form values
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [roleType, setRoleType] = useState('');
 
+  // Creator data
   const [creatorId, setCreatorId] = useState(null);
   const [creator, setCreator] = useState(null);
 
+  // Company data
   const [companyId, setCompanyId] = useState(null);
   const [company, setCompany] = useState(null);
   
+  const OBSERVER_KEY = uuid();
+
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
+  // Form handler
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -51,41 +63,49 @@ const JobOfferAdd = ({ match }) => {
     }
 
     if(CURRENT_JOB_OFFER_ID) {
+      // Update existing job offer on edit, only with updatable fields
       CompanyService.jobOffer.updateField(CURRENT_JOB_OFFER_ID, {
         title,
         description
       }).then(() => {
-          setNewJobOfferId(CURRENT_JOB_OFFER_ID);
-        })
-        .catch(ErrorService.manageError);
+        // set job offer id to redirect user
+        setNewJobOfferId(CURRENT_JOB_OFFER_ID);
+      }).catch(ErrorService.manageError);
     }
     else {
+      // otherwise, create job offer
       CompanyService.jobOffer.create(
-        new JobOffer(title, description, roleType, computed.activeRole.companyId, computed.user.uid, DateService.getCurrentIsoDateString(), EJobOfferStatus.OPENED))
-        .then(docRef => {
-          setNewJobOfferId(docRef.id);
-        })
-        .catch(ErrorService.manageError);
+        new JobOffer(title, description, roleType, computed.activeRole.companyId, computed.user.uid, DateService.getCurrentIsoDateString(), EJobOfferStatus.OPENED)
+      ).then(docRef => {
+        // then set new job offer id to redirect user
+        setNewJobOfferId(docRef.id);
+      }).catch(ErrorService.manageError);
     } 
   };
 
   useEffect(() => {
     if(computed.initialized && computed.activeRole) {
+      // on load, if an id is provided
+
+      // set company data
+      setCompanyId(computed.activeRole.companyId);
+      setCompany(computed.activeRoleCompany);
+
       if(CURRENT_JOB_OFFER_ID) {
+
+        // load the job offer
         CompanyService.jobOffer.get(CURRENT_JOB_OFFER_ID)
           .then(jobOfferDoc => {
+
+            // set form values with existing attributes
             setTitle(jobOfferDoc.data().title);
             setDescription(jobOfferDoc.data().description);
             setRoleType(jobOfferDoc.data().role);
+
+            // and save the job offer for further uses
             setCurrentJobOffer(jobOfferDoc.data());
   
-            CompanyService.get(jobOfferDoc.data().companyId)
-              .then(companyDoc => {
-                setCompanyId(companyDoc.id);
-                setCompany(companyDoc.data());
-              })
-              .catch(ErrorService.manageError);
-  
+            // get creator info
             EmployeeService.get(jobOfferDoc.data().creator)
               .then(employeeDoc => {
                 setCreatorId(employeeDoc.id);
@@ -96,10 +116,9 @@ const JobOfferAdd = ({ match }) => {
           .catch(ErrorService.manageError);
       }
       else {
+        // if adding a new job offer, set current user as creator
         setCreatorId(computed.user.uid);
         setCreator(computed.employee);
-        setCompanyId(computed.activeRole.companyId);
-        setCompany(computed.activeRoleCompany);
       }
     }
   }, [computed]);
@@ -123,6 +142,7 @@ const JobOfferAdd = ({ match }) => {
     return <Redirect to={`/joboffers`} />;
   }
 
+  // Convert the enum ERoleDetails to compatible data for Choose component
   const ROLE_DETAILS = {};
   Object.keys(ERoleDetails).forEach(roleId => {
     ROLE_DETAILS[roleId] = {
@@ -136,6 +156,8 @@ const JobOfferAdd = ({ match }) => {
   return (
     <div className="JobOfferAdd">
       <h1>{CURRENT_JOB_OFFER_ID ? 'Edit' : 'Add'} a Job Offer</h1>
+
+      {/* Job offer add form */}
       <form onSubmit={handleSubmit}>
 
         {/* Title field */}

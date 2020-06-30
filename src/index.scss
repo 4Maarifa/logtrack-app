@@ -406,13 +406,6 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    &.Element-icon--small {
-      min-height: 4rem;
-      width: 5rem;
-      flex: 0 0 5rem;
-      font-size: 120%;
-    }
   }
 
   &-photo {
@@ -447,7 +440,7 @@ body, html {
 
   &-data {
     flex: 1;
-    min-height: 6rem;
+    min-height: 7rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -546,15 +539,18 @@ body, html {
   }
 
   &--tile, &--row {
-    min-height: 7rem;
-    display: block;
-    background-color: var(--inverse);
-    position: relative;
 
     &:hover {
       transform: scale(1.015);
       z-index: 2;
     }
+  }
+
+  &--tile, &--row, &--condensed {
+    min-height: 7rem;
+    display: block;
+    background-color: var(--inverse);
+    position: relative;
   }
 
   &--page {
@@ -583,35 +579,36 @@ body, html {
     }
   }
 
-  &.Element-small {
-    &.Element--tile:hover,
-    &.Element--row:hover {
-      transform: scale(1);
+  &--condensed {
+    min-height: 3rem;
+    display: block;
+    background-color: var(--inverse);
+    position: relative;
+    margin: 0;
+    width: 100%;
+    border-bottom: 1px solid var(--light-gray);
+
+    &:first-child {
+      border-top: 1px solid var(--light-gray);
     }
 
     .Element {
+      &-base, &-icon, &-data, &-actions, &-photo {
+        min-height: 2.5rem;
+      }
 
-      &-icon {
-        min-height: 4rem;
+      &-icon, &-photo {
+        width: 5rem;
+        flex: 0 0 5rem;
       }
 
       &-photo {
-        min-height: 4rem;
-
         img {
-          width: 3.2rem;
-          height: 3.2rem;
+          height: 2.5rem;
+          width: 2.5rem;
         }
       }
-
-      &-data {
-        min-height: 4rem;
-      }
     }
-  }
-
-  &.Element--tile, &.Element--row {
-    min-height: 3rem;
   }
 }
 

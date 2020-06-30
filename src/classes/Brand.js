@@ -1,9 +1,9 @@
 
 /**
  * class Brand
- * This class represents the brand
+ * This class represents an equipment brand
  * 
- * id: string | The id of the brand
+ * id: string
  * name: string | The name of the brand
  * logoUrl: string | The logo of the brand
  */

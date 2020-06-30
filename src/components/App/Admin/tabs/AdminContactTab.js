@@ -15,9 +15,11 @@ import { v4 as uuid } from 'uuid';
 
 /**
  * Component: AdminContactTab
+ * Tab of the Admin component that prints all messaged from the contact form (Splash/pages/Contact)
  */
 const AdminContactTab = () => {
 
+  // Load contact messages
   const [contacts, setContacts] = useState({});
   const [isContactsLoading, setContactsLoading] = useState(true);
 
@@ -29,11 +31,16 @@ const AdminContactTab = () => {
     setContacts({});
     setContactsLoading(true);
 
-    if(!computed.activeRole) { return; }
+    // Employee must be part of the staff to load this
+    if(!computed.employee || !computed.employee.staff) { return; }
 
+    // Fetch the contact messages
     ContactService.list()
       .then(contacts => {
+        // Set data
         setContacts(contacts);
+
+        // Then trigger end of load
         setContactsLoading(false);
       })
       .catch(ErrorService.manageError);
@@ -46,6 +53,7 @@ const AdminContactTab = () => {
   
   if(!computed.initialized) { return null; }
   if(!computed.employee || !computed.employee.staff) {
+    // If employee is not part of the staff, we redirect him to the dashboard (safeguard - already managed by route)
     return <Redirect to={`/dashboard`} />;
   }
 

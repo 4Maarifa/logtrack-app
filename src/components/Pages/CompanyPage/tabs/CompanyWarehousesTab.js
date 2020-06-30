@@ -11,16 +11,28 @@ import Warehouse, { warehousesExTableFSS } from './../../../Entities/Warehouse/W
 
 /**
  * Component: CompanyWarehousesTab
+ * Tab of CompanyPage
+ * 
+ * used to get and print company's warehouses
+ * you have to pass the company id
  */
-const CompanyWarehousesTab = ({ companyId }) => {  
+const CompanyWarehousesTab = ({ companyId }) => {
+
+  // warehouses of the company
   const [warehouses, setWarehouses] = useState({});
   const [isWarehousesLoading, setWarehousesLoading] = useState(true);
 
   useEffect(() => {
     if(companyId) {
+
+      // get warehouses of the company
       WarehouseService.getAllForCompanyId(companyId)
         .then(warehouses => {
+
+          // set warehouses
           setWarehouses(warehouses);
+
+          // trigger end of load
           setWarehousesLoading(false);
         })
         .catch(ErrorService.manageError);
@@ -37,6 +49,7 @@ const CompanyWarehousesTab = ({ companyId }) => {
       showDetails />
   );
 
+  // render the warehouses extable
   return <ExTable key="warehouses"
                   fss={warehousesExTableFSS}
                   items={warehouses}

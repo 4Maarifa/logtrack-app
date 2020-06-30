@@ -9,23 +9,27 @@ import { faSteeringWheel as faSteeringWheelSolid, faUserTie as faUserTieSolid, f
  * 
  * employeeId: string | The employeeId of the employee authorized
  * companyId: string | The concerned company
- * status: ERoleStatus | The status of the role : 'DRAFT'|'CONFIRMED'|'REVOKED'|'DENIED'
- * role: The role as Enum: 'MANAGER'|'DRIVER'|'OBSERVER'|'MECHANIC'
+ * status: ERoleStatus | The status of the role
+ * role: ERole | The role from the emum ERole
  * creationIsoDate: The creation date, as iso string
- * revokedIsoDate: The revoked date, as iso string
+ * revokedIsoDate: The revoked date, as iso string. Null if not revoked
  */
 
 class Role {
     constructor(employeeId, companyId, status, role, creationIsoDate, revokedIsoDate) {
         this.employeeId = employeeId;
         this.companyId = companyId;
-        this.status = status;
-        this.role = role;
+        this.status = ERoleStatus[status];
+        this.role = ERole[role];
         this.creationIsoDate = creationIsoDate;
         this.revokedIsoDate = revokedIsoDate;
     }
 }
 
+/**
+ * Enum: ERole
+ * Type of the role an employee will hold
+ */
 export const ERole = Object.freeze({
     DRIVER: 'DRIVER',
     MANAGER: 'MANAGER',
@@ -38,6 +42,15 @@ export const ERole = Object.freeze({
     DISPATCHER: 'DISPATCHER'
 });
 
+/**
+ * Enum: ERoleDetails
+ * Details about the enum ERole
+ * 
+ * name: string | printable name
+ * icon: FA/IconDefinition | icon of the role, light
+ * iconSolid: FA/IconDefinition | icon of the role, solid
+ * description: string | printable description
+ */
 export const ERoleDetails = {
     [ERole.DRIVER]: {
         name: 'Driver',
@@ -95,10 +108,23 @@ export const ERoleDetails = {
     }
 };
 
+/**
+ * Enum: ERoleStatus
+ * Describes the status of the role
+ */
 export const ERoleStatus = Object.freeze({
-    CONFIRMED: 'CONFIRMED',
+    // User requested the role, still not available for him. Printed as requested for managers of the company
     DRAFT: 'DRAFT',
+
+    // Managed confirmed the role. The user can now enjoy his new role!
+    CONFIRMED: 'CONFIRMED',
+
+    // Manager revoked the role : The user is not anymore an employee of that company (regarding this role anyway)
     REVOKED: 'REVOKED',
+
+    // Manager denied the request of the user to join the company. 
+    // In that case, the user cannot request this role for that company (he can still request other role for this company and can still request any role for other companies).
+    // Managers of that company can still invite the user to join the company for the role they denied him. In that case, a new role will be created (the denied role is still denied)
     DENIED: 'DENIED'
 });
 

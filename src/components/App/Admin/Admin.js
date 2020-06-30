@@ -13,10 +13,13 @@ import './Admin.scss';
 
 /**
  * Component: Admin
+ * Let admin have access to contact and support messages
  */
 const Admin = () => (
   <div className="Admin">
     <Tabs default="support" tabs={{
+
+      // Support Messages Tab
       support: {
         name: ({ isActive }) => <span>
           <Icon source="fa" icon={isActive ? faUserHeadsetSolid : faUserHeadset} />
@@ -24,7 +27,9 @@ const Admin = () => (
         </span>,
         content: () => <AdminSupportTab />
       },
-      order: {
+
+      // Contact Messages tab
+      contact: {
         name: ({ isActive }) => <span>
           <Icon source="fa" icon={isActive ? faCommentSolid : faComment} />
           Contact

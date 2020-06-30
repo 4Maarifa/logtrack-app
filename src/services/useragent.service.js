@@ -5,6 +5,7 @@ import { faOpera, faEdge, faInternetExplorer, faFirefox, faChrome,
 import { migratePrototype } from './data.service';
 import ErrorService from './error.service';
 
+// os with their regex
 const OS_REQUEST_CONSTANTS = [
   { name: 'Windows 10', regex: /(Windows 10.0|Windows NT 10.0)/},
   { name: 'Windows 8.1', regex: /(Windows 8.1|Windows NT 6.3)/},
@@ -34,15 +35,34 @@ const OS_REQUEST_CONSTANTS = [
   { name: 'Search Bot', regex: /(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/}
 ];
 
+/**
+ * Service: UserAgentService
+ * Get descriptive and advanced 
+ */
 const UserAgentService = {
+
   /* Clipboard */
   copyToClipboard: text => {
+
+    // Create a textarea element
     const el = document.createElement('textarea');
+
+    // set its value to the text that have to be copied
     el.value = text;
+
+    // Append the text area to the body
     document.body.appendChild(el);
+
+    // Select all the text inside it
     el.select();
+
+    // execute the copy command to copy to the clipboard
     document.execCommand('copy');
+
+    // Remove the textarea from the body
     document.body.removeChild(el);
+
+    // Notify user
     ErrorService.success('Copied to Clipboad!');
   },
 
@@ -71,14 +91,21 @@ const UserAgentService = {
     };
   },
 
-  /* Version */
+  /* Get LogTrack version from the environment variable */
   getAppVersion: () => process.env.REACT_APP_VERSION,
 
   /* Browser */
+
+  // Is the browser a mobile version
   isMobile: () => !navigator.appVersion || /Mobile|mini|Fennec|Android|iP(ad|od|hone)/.test(navigator.appVersion),
+
+  // Are cookies enabled and compatible with the browser?
   isCookiesEnabled: () => {
+
+    // Get browser information about cookies
     let cookieEnabled = navigator.cookieEnabled;
 
+    // If unable to get it, try to create a test cookie
     if (typeof navigator.cookieEnabled === 'undefined' && !cookieEnabled) {
         document.cookie = 'testcookie';
         cookieEnabled = document.cookie.indexOf('testcookie') !== -1;
@@ -86,14 +113,21 @@ const UserAgentService = {
 
     return cookieEnabled;
   },
+
+  // Get browser agent as well as browser name and version
   getBrowserInfos: () => ({ agent: navigator.userAgent, name: navigator.appName, version: navigator.appVersion }),
+
+  // Parse existing browser infos
   parseBrowserInfos: ({ name: appName, version: appVersion, agent }) => {
     const nAgt = agent;
 
-    let browser = appName,
-      icon = faQuestion;
+    // browser descriptive variables
+    let browser = appName, icon = faQuestion;
+
+    // version
     let version = '' + parseFloat(appVersion);
     let majorVersion = parseInt(appVersion, 10);
+
     let nameOffset, verOffset, ix;
 
     // Opera
@@ -145,6 +179,7 @@ const UserAgentService = {
         browser = appName;
       }
     }
+
     // trim the version string
     if ((ix = version.indexOf(';')) !== -1) {
       version = version.substring(0, ix);
@@ -156,28 +191,34 @@ const UserAgentService = {
       version = version.substring(0, ix);
     }
 
+    // Parse version
     majorVersion = parseInt('' + version, 10);
     if (isNaN(majorVersion)) {
       version = '' + parseFloat(appVersion);
       majorVersion = parseInt(appVersion, 10);
     }
 
+    // Return the name, icon, version of the browser
     return { name: browser, icon, majorVersion, completeVersion: version };
   },
 
   /* OS */
+
+  // Parse Operating system from the browser agent
   parseOS({ agent: nAgt }) {
 
     let os = '-';
     let version = '-';
     let icon = '';
 
+    // Test all existing regex
     OS_REQUEST_CONSTANTS.forEach(clientString => {
       if (clientString.regex.test(nAgt) && os === '-') {
         os = clientString.name;
       }
     });
 
+    // Windows
     if (/Windows/.test(os)) {
       version = /Windows (.*)/.exec(os)[1];
       os = 'Windows';
@@ -185,96 +226,154 @@ const UserAgentService = {
     }
 
     switch (os) {
+
+      // Mac OS
       case 'Mac OS X':
         version = /Mac OS X (10[._\d]+)/.exec(nAgt)[1];
         icon = faApple;
         break;
+
+      // Android
       case 'Android':
         version = /Android ([._\d]+)/.exec(nAgt)[1];
         icon = faAndroid;
         break;
+
+      // iOS
       case 'iOS':
         const osVersionIOS = /OS (\d+)_(\d+)_?(\d+)?/.exec(nAgt);
         version = osVersionIOS[1] + '.' + osVersionIOS[2] + '.' + (osVersionIOS[3] || 0);
         icon = faApple;
         break;
+
+      // All Linux systems
       case 'Linux':
         icon = faLinux;
         break;
+
       default:
         break;
     }
 
+    // Return Operating system name, version and icon
     return { os: os, osVersion: version, osIcon: icon };
   },
 
   /* Screen */
+
+  // Get number of touchpoints
   getNbTouchpoints: () => navigator.maxTouchPoints || 0,
+
+  // is the screen tactile?
   isTactile: () => navigator.maxTouchPoints > 0,
+
+  // Get screen dimensions
   getScreenProperties: () => {
     return {
       height: {
+          // height of the window
           outer: window.outerHeight + ' px',
+          // inner height of the window, available to the app
           inner: window.innerHeight + ' px',
+          // height of the screen
           screen : window.screen.height + ' px',
+          // available height of the screen (typically without topbar and taskbar)
           available: window.screen.availHeight + ' px'
       },
       width: {
+          // width of the window
           outer: window.outerWidth + ' px',
+          // inner width of the window, available to the app
           inner: window.innerWidth + ' px',
+          // width of the screen
           screen: window.screen.width + ' px',
+          // available width of the screen
           available: window.screen.availWidth + ' px'
       },
+      // Is the screen landscape or portrait
       isLandscapeScreen: (window.screen.width > window.screen.height),
+      // Is the window in landscape or portrait mode
       isLandscapeWindow: (window.outerWidth > window.outerHeight)
     };
   },
 
   /* Internet connection */
+
+  // Get full connection details
   getConnection: () => {
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || navigator.msConnection || {};
       connection.online = navigator.onLine;
+
+      // If connection type is not recognized, return 'ethernet' type
       if (!connection.type) {
           connection.type = 'ethernet';
       }
+
+      // Return connection, migrating prototype to remove browser prototypes
       return migratePrototype(connection);
   },
 
   /* Language */
+
+  // Get browser language
   getLanguage: () => {
     return {
+
+      // Language name
       name: navigator.language || navigator.userLanguage,
+
+      // ISO language code, as defined in ISO 639-1
       iso: (navigator.language || navigator.userLanguage).indexOf('-') > 1 ? (navigator.language || navigator.userLanguage).split('-')[0]  : ''
     }
   },
 
   /* Memory */
+
+  // Get number of GB in user RAM. Compatible up to 8GB
   getMemory: () => navigator.deviceMemory ? ((navigator.deviceMemory === 8) ? '>= 8' : navigator.deviceMemory) + ' GB' : 'Unknown',
+
+  // Get RAM usage, as well as Browser usage
   getMemoryUsage: () => {
+
+    // If browser is not compatible, return 'Unknown usage'
     if(!window.performance || !window.performance.memory) {
       return 'Unknown Usage';
     }
+
+    // If couldn't get data of memory, return 'Unknown usage'
     let memoryTemp = window.performance.memory;
     if(!memoryTemp.jsHeapSizeLimit || !memoryTemp.totalJSHeapSize || !memoryTemp.usedJSHeapSize) {
       return 'Unknown Usage';
     }
+
+    // Return all details
     return {
+      // JS heap limit, in MB
       jsHeapSizeLimit: memoryTemp.jsHeapSizeLimit / 1000000,
+      // JS current heap size, in MB
       totalJSHeapSize: memoryTemp.totalJSHeapSize / 1000000,
+      // used heap size, in MB
       usedJSHeapSize: memoryTemp.usedJSHeapSize / 1000000,
+
+      // Percentage used of heap size
       percentageUsedOfTotal: Math.floor((memoryTemp.usedJSHeapSize / memoryTemp.totalJSHeapSize) * 100)/100,
+      // percentage used of heap limit
       percentageTotalOfLimit: Math.floor((memoryTemp.totalJSHeapSize / memoryTemp.jsHeapSizeLimit) * 100)/100,
+      // global percentage of used heap size on the limit
       percentageTotalOfTotal: Math.floor((memoryTemp.usedJSHeapSize / memoryTemp.jsHeapSizeLimit) * 100)/100
     };
   },
 
   /* Processor */
+  // Get the number of threads
   getNbThreads: () => (navigator.hardwareConcurrency || 1) + ' vCores',
 
   /* Plugins */
+  // get browser plugins. (plugins are not extensions!)
   getPlugins: () => {
     const plugins = [];
 
+    // As navigator.plugins in not an array, we have to convert it to an array
     for (let i = 0; i < navigator.plugins.length; i++) {
         plugins.push(navigator.plugins[i].name);
     }
