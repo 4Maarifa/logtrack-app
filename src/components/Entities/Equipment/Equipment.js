@@ -4,6 +4,8 @@ import { faEdit } from '@fortawesome/pro-light-svg-icons';
 import ActionList from './../../Utils/ActionList/ActionList';
 import Icon from './../../Utils/Icon/Icon';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
+import Radio from './../../Utils/FormElements/Radio/Radio';
+import Checkbox from './../../Utils/FormElements/Checkbox/Checkbox';
 
 import DataService from './../../../services/data.service';
 import UtilsService from './../../../services/utils.service';
@@ -21,7 +23,7 @@ import './Equipment.scss';
  * 
  * You have to pass the related equipment model, fully popuplated!
  */
-const Equipment = ({ equipment, equipmentModel, isPage }) => {
+const Equipment = ({ equipment, isPage, selection }) => {
 
   const OBSERVER_KEY = uuid();
 
@@ -58,6 +60,22 @@ const Equipment = ({ equipment, equipmentModel, isPage }) => {
         <span className={'Element-badge badge ' + (isPage ? 'badge-inverse' : '')} title={EEquipmentModelSubTypeDetails[EQUIPMENT_MODEL_DATA.type][EQUIPMENT_MODEL_DATA.subType].name}>
           {EEquipmentModelSubTypeDetails[EQUIPMENT_MODEL_DATA.type][EQUIPMENT_MODEL_DATA.subType].icon}
         </span>
+
+        {selection ?
+          <div className="Element-selection">
+            {selection.multiple ? 
+              <Checkbox
+                value={selection.selected === EQUIPMENT_ID}
+                fieldName={EQUIPMENT_ID}
+                inputName="Equipment"
+                onValueChange={selection.setSelected} /> :
+              <Radio
+                value={selection.selected}
+                fieldName={EQUIPMENT_ID}
+                inputName="Equipment"
+                onValueChange={selection.setSelected} />}
+          </div>
+        : null}
 
         <div className="Element-photo">
           {/* Print equipment model picture */}
