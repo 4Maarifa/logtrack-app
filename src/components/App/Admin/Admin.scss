@@ -15,4 +15,118 @@
       }
     }
   }
+
+  &BrandTab {
+    flex: 1;
+    display: flex;
+    overflow: auto;
+
+    .ExTable {
+      height: 0;
+      min-height: min-content;
+    }
+  }
+
+  &EquipmentModelCreationTab {
+    display: flex;
+    width: 100%;
+    flex: 1;
+    flex-direction: column;
+
+    & > div {
+      width: calc(100% - 2rem);
+      flex: 1;
+      margin: 1rem;
+      display: flex;
+      flex-direction: column;
+
+      .container-image {
+        width: auto;
+        margin: 1rem 0;
+        flex: 1;
+        height: 0;
+        display: flex;
+
+        & > div {
+          position: relative;
+          max-width: 60%;
+          height: min-content;
+          margin: 0 auto;
+          border: 1px solid var(--theme);
+
+          .part {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--inverse);
+            height: 2rem;
+            width: 2rem;
+            border-radius: 50%;
+            position: absolute;
+            cursor: pointer;
+            z-index: 3;
+
+            .delete-icon {
+              display: none;
+            }
+
+            &:hover {
+
+              .Icon {
+                display: none;
+
+                &.delete-icon {
+                  display: block;
+                }
+              }
+            }
+          }
+
+          .link {
+            position: absolute;
+            z-index: 1;
+          }
+
+          .img-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            cursor: pointer;
+            z-index: 2;
+          }
+        
+          img {
+            object-fit: contain;
+            display: block;
+          }
+        }
+      }
+
+      .part-types {
+        flex: 0 0 3rem;
+        width: 100%;
+
+        & > span {
+          height: 3rem;
+          width: 3rem;
+          margin-right: 1rem;
+          margin-bottom: 1rem;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          font-size: 150%;
+          border-width: 2px;
+          border-style: solid;
+          cursor: pointer;
+          position: relative;
+        }
+      }
+
+      .FormInputFile {
+        min-width: 50%;
+      }
+    }
+  }
 }
