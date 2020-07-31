@@ -14,11 +14,11 @@ const ColorService = {
   getMainColorsOfImage: image => getPaletteFromURL(image, 8, 1),
 
   // Get the company color, or the theme color if the user has no active role or if he chose to not personalize the color
-  getSecondColor: () => {
+  getThemeColor: () => {
     if(SettingsService.getSettingValue(ESettings.SETTINGS_CUSTOM_COLORS) === 'CUSTOM' && DataService.computed.activeRoleCompany && DataService.computed.activeRoleCompany.color) {
       return DataService.computed.activeRoleCompany.color;
     }
-    return DEFAULT_SECOND_COLOR;
+    return DEFAULT_THEME_COLOR;
   },
 
   // Convert a #HEX color to an array [ R, G, B ]
@@ -88,8 +88,7 @@ const ColorService = {
     const OTHER_RGB_COLOR = ColorService.convertHEXtoRGB(ColorService.lightenDarkenColor(hexColor, amount));
 
     // return the CSS gradient
-    return `linear-gradient(to bottom right, rgb(${RGB_COLOR[0]}, ${RGB_COLOR[1]}, ${RGB_COLOR[2]}),
-      rgb(${OTHER_RGB_COLOR[0]}, ${OTHER_RGB_COLOR[1]}, ${OTHER_RGB_COLOR[2]}))`
+    return `linear-gradient(to bottom right, rgb(${RGB_COLOR[0]}, ${RGB_COLOR[1]}, ${RGB_COLOR[2]}), rgb(${OTHER_RGB_COLOR[0]}, ${OTHER_RGB_COLOR[1]}, ${OTHER_RGB_COLOR[2]}))`
   },
 
   // by providing an EPalette color, return full details about it
@@ -105,7 +104,7 @@ const ColorService = {
       medium: EMediumPaletteDetails[COLOR],
       light: ELightPaletteDetails[COLOR],
       veryLight: EVeryLightPaletteDetails[COLOR]
-    }
+    };
   }
 };
 
@@ -322,7 +321,11 @@ export const EVeryLightPaletteDetails = {
   }
 };
 
-// default theme color
-export const DEFAULT_SECOND_COLOR = '#113885';
+// color exports
+export const DEFAULT_THEME_COLOR = '#113885';
+export const DEFAULT_MAIN_COLOR = '#F1B5FF';
+export const TEXT_COLOR = '#252525';
+export const LIGHT_GRAY = '#F0F0F0';
+export const GRAY = '#969696';
 
 export default ColorService;

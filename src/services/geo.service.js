@@ -43,7 +43,7 @@ export const MarkerStyles = {
   getMarkerStyle: () => {
     return new Style({
       image: new Icon({
-        color: ColorService.getSecondColor(),
+        color: ColorService.getThemeColor(),
         src: DotMarkerIcon
       })
     });
