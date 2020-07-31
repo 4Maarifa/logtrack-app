@@ -31,7 +31,6 @@ const LogTrackAdd = () => {
   // TODO: LogTrack equipments
   // Concerned equipments by logtrack
   /*const [companyEquipments, setCompanyEquipments] = useState({});*/
-  /*const [equipmentModels, setEquipmentModels] = useState({});*/
   
   // selected category of logtrack, one of enum ELogTrackCategory
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -254,12 +253,6 @@ const LogTrackAdd = () => {
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
-
-    // Fetch all equipments models to print equipments
-    /*EquipmentModelService.list()
-        .then(setEquipmentModels)
-        .catch(ErrorService.manageError);*/
-
     return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY);
   }, []);
 

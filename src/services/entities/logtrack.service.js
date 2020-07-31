@@ -161,7 +161,7 @@ const LogTrackService = {
   // Get all logtracks linked to an employee and generated in the past 24H
   // Warning: this method does not return the current employee LogTrack
   // You can fetch it in employee.currentLogTrack
-  getEndedForEmployeeIdPast24h: employeeId => {
+  getEndedForEmployeeIdAndCompanyIdPast24h: (employeeId, companyId) => {
 
     // Rights
     if(!LogTrackService.rights[ERights.RIGHT_LOGTRACK_LIST]()) {
@@ -177,6 +177,7 @@ const LogTrackService = {
     return new Promise((resolve, reject) => {
       FirebaseService.getFirestore().collection('logtracks')
         .where('employeeId', '==', employeeId)
+        .where('companyId', '==', companyId)
         .where('endTimestamp', '>=', past24hTimestamp)
         .get()
         .then(querySnapshot => {

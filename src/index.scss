@@ -180,6 +180,13 @@
   display: none;
 }
 
+:global(.rotate) {
+  &-90 {
+    transform-origin: 50% 50%;
+    transform: rotate(90deg);
+  }
+}
+
 :global(a) {
   &, &:active, &:visited, &:link, &:focus {
     text-decoration: none;
@@ -208,6 +215,70 @@
   font-weight: 400;
   margin: 0;
   padding: 0 .2rem;
+}
+
+:global(.doc) {
+  &-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 6rem;
+  }
+
+  &-square {
+    width: 3rem;
+    height: 3rem;
+    border-radius: .5rem;
+    flex: 0 0 3rem;
+    margin-right: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-code {
+    background-color: var(--text);
+    color: var(--inverse);
+    margin: 2rem 0 1rem 0;
+    padding: .5rem 1rem;
+    display: block;
+    position: relative;
+
+    &-indicator {
+      position: absolute;
+      background-color: var(--text);
+      color: var(--inverse);
+      display: block;
+      font-size: 08%;
+      bottom: 100%;
+      left: 1rem;
+      padding: 0 1rem;
+
+      &:before {
+        bottom: 0;
+        left: -1px;
+        height: .9rem;
+        width: .9rem;
+        position: absolute;
+        display: block;
+        content: '';
+        background-color: var(--inverse);
+        clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
+      }
+
+      &:after {
+        bottom: 0;
+        right: -1px;
+        height: .9rem;
+        width: .9rem;
+        position: absolute;
+        display: block;
+        content: '';
+        background-color: var(--inverse);
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
+      }
+    }
+  }
 }
 
 :global(button), :global(.button) {
@@ -370,6 +441,10 @@ body, html {
   transition: all .5s;
   position: relative;
 
+  &-selection {
+    padding: 0 .5rem;
+  }
+
   &-date {
     height: 100%;
     min-height: 7rem;
@@ -416,6 +491,19 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+
+    &-badge {
+      width: auto;
+      max-width: 7rem;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      background-color: var(--theme);
+      color: var(--inverse);
+      display: flex;
+      align-items: center;
+    }
 
     img {
       height: 6.2rem;
@@ -468,6 +556,7 @@ body, html {
     position: absolute;
     top: -.5rem;
     right: 1rem;
+    max-width: 7rem;
     transition: top .5s;
   }
 

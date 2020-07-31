@@ -76,7 +76,7 @@ class Map extends Component {
 
     // Get permission of getting the user location
     PermissionService.location.askPermission()
-      .then(() => PermissionService.location.addLocationObserver(this.onUserPositionChanged, this.OBSERVER_KEY))
+      .then(() => PermissionService.addObserver(this.onUserPositionChanged, this.OBSERVER_KEY))
       .catch(ErrorService.manageError);
   };
 
@@ -84,7 +84,7 @@ class Map extends Component {
 
     // remove observers
     ResizeService.removeObserver(this.OBSERVER_KEY);
-    PermissionService.location.removeLocationObserver(this.OBSERVER_KEY);
+    PermissionService.removeObserver(this.OBSERVER_KEY);
 
     // deleting map
     this.map.dispose();
@@ -207,6 +207,8 @@ class Map extends Component {
 
   // When the geolocation is got or changed
   onUserPositionChanged = userPosition => {
+
+    if(!userPosition) { return; }
 
     // saving the new user posiiton
     this.setState({userPosition});

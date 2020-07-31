@@ -34,7 +34,7 @@ const Tabs = ({ default: defaultTab, tabs, isHorizontalLayout }) => {
   useEffect(() => {
 
     // listend for URL change
-    UtilsService.addObserver(() => {
+    UtilsService.url.addObserver(() => {
 
       // If url change, try to get the 'tab' GET param
       const TAB = UtilsService.getUrlGetParam('tab');
@@ -46,7 +46,7 @@ const Tabs = ({ default: defaultTab, tabs, isHorizontalLayout }) => {
     }, OBSERVER_KEY);
 
     // Remove observer on delete
-    return () => UtilsService.removeObserver(OBSERVER_KEY);
+    return () => UtilsService.url.removeObserver(OBSERVER_KEY);
   }, []);
 
   return (

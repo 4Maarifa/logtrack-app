@@ -61,6 +61,8 @@ const Contact = ({ contact }) => {
 export const EContactCategories = {
   BUSINESS_INQUIRY: 'BUSINESS_INQUIRY',
   PROBLEM_WITH_ACCOUNT: 'PROBLEM_WITH_ACCOUNT',
+  PRICING: 'PRICING',
+  CUSTOM_PLAN: 'CUSTOM_PLAN',
   OTHER: 'OTHER'
 };
 
@@ -79,6 +81,14 @@ export const EContactCategoryDetails = {
   [EContactCategories.PROBLEM_WITH_ACCOUNT]: {
     title: 'I have a problem with my account',
     adminTitle: 'Account'
+  },
+  [EContactCategories.PRICING]: {
+    title: 'Question about pricing',
+    adminTitle: 'Pricing'
+  },
+  [EContactCategories.CUSTOM_PLAN]: {
+    title: 'Set up a custom plan',
+    adminTitle: 'Custom Plan'
   },
   [EContactCategories.OTHER]: {
     title: 'Other Reason',

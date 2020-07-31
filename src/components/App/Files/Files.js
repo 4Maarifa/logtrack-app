@@ -63,7 +63,8 @@ const Files = () => {
     if(computed.initialized && computed.user) {
 
       // Adding an observer. Each time a file is uploaded or a folder created
-      FileService.addObserver((personalFiles, structure) => {
+      FileService.addObserver(({ personalFiles, structure }) => {
+        
         // Setting the new files and structure
         setPersonalFiles(personalFiles);
         setStructure(structure);

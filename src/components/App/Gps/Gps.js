@@ -28,7 +28,7 @@ const Gps = () => {
   useEffect(() => {
     // Getting the location on load
     PermissionService.location.askPermission()
-      .then(() => PermissionService.location.addLocationObserver(setCurrentUserPosition, OBSERVER_KEY))
+      .then(() => PermissionService.addObserver(setCurrentUserPosition, OBSERVER_KEY))
       .catch(ErrorService.manageError);
   }, []);
 

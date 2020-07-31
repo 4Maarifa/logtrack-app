@@ -40,7 +40,7 @@ const LogTrackForUsers = ({ isEmbed }) => {
   useEffect(() => {
     if(computed.initialized && computed.activeRole && computed.employee) {
       //Get all logtrakcs ended in the past 24h for this employee
-      LogTrackService.getEndedForEmployeeIdPast24h(computed.user.uid)
+      LogTrackService.getEndedForEmployeeIdAndCompanyIdPast24h(computed.user.uid, computed.activeRole.companyId)
         .then(logtracks => {
           // If the employee has a current LogTrack (not finished yet), add this to the data
           if(computed.employee.currentLogTrack) {
