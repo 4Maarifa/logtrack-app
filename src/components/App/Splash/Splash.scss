@@ -8,6 +8,116 @@
     text-align: center;
   }
 
+.plan-selection {
+  margin: 1.5rem 0 1rem 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  &-mentions {
+    margin-top: 2rem;
+    font-size: .7rem;
+    color: var(--gray);
+  }
+
+  &-content {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: .5rem;
+    margin-top: 1rem;
+
+    & > div {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      background-color: var(--inverse);
+      position: relative;
+      z-index: 1;
+
+      &:nth-child(2) {
+        z-index: 2;
+        transform: scale(1.1);
+      }
+
+      &:nth-child(4) {
+        z-index: 0;
+        transform: scale(.9);
+        margin-left: -1rem;
+      }
+
+      .plan-icon {
+        font-size: 300%;
+        padding: .5rem 0;
+        color: var(--theme);
+      }
+
+      .plan-name {
+        margin-top: 1rem;
+      }
+
+      .plan-info {
+        display: block;
+        font-size: .7rem;
+        color: var(--gray);
+      }
+
+      .plan-price {
+        width: calc(100% - 4rem);
+        margin: .5rem 1rem;
+        border-top: 2px solid var(--theme);
+
+        &-amount {
+          display: block;
+          font-size: 200%;
+          color: var(--theme);
+          margin-bottom: -.5rem;
+        }
+      }
+
+      ul {
+        font-size: 85%;
+        margin: .5rem 1rem;
+        padding: 0;
+        flex: 1;
+        list-style-type: none;
+
+        li {
+          padding: .2rem 0;
+
+          &:first-child {
+            margin-bottom: 1rem;
+          }
+        }
+
+        span {
+
+          .included {
+            color: var(--green);
+          }
+
+          .optional {
+            color: var(--orange);
+          }
+
+          .not-included {
+            color: var(--red);
+          }
+        }
+      }
+
+      span.button {
+        margin: .5rem;
+      }
+    }
+  }
+}
+
   .name-container {
     position: relative;
     height: 50vh;
@@ -171,6 +281,30 @@
   }
 }
 
+@media screen and (min-width: 500px) and (orientation: portrait) {
+  .Splash {
+
+    .plan-selection {
+
+      &-content {
+  
+        & > div {
+  
+          ul {
+            width: 90%;
+            display: flex;
+            flex-flow: wrap;
+  
+            li {
+              width: 50%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 @media screen and (orientation: portrait) {
   .Splash {
     footer {
@@ -183,6 +317,22 @@
 
         & + a {
           margin: .5rem 1rem;
+        }
+      }
+    }
+
+    .plan-selection {
+
+      &-content {
+        margin: 0;
+        flex-direction: column;
+
+        & > div {
+          margin: 1rem 0 0 0;
+
+          &:nth-child(2) {
+            transform: scale(1);
+          }
         }
       }
     }
