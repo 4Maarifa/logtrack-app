@@ -83,6 +83,10 @@
           left: 10%;
           background-color: var(--light-gray);
         }
+
+        .custom-icon {
+          fill: var(--theme);
+        }
       }
 
       &.tab--disabled {
@@ -90,7 +94,7 @@
         opacity: .7;
       }
 
-      svg {
+      .Icon {
         margin-right: .5rem;
       }
     }
@@ -126,8 +130,10 @@
             display: inline-flex;
           }
 
-          *:not(:first-child) {
-            display: none;
+          span, a {
+            & > *:not(:first-child) {
+              display: none;
+            }
           }
         }
       }

@@ -344,15 +344,17 @@ export const ELogTrackActivityDetails = {
     text: 'Loading',
     icon: faTruck, 
 		iconSolid: faTruckSolid,
-    additionalicon: faShareSolid,
+    additionalSource: 'fa',
+    additionalIcon: faShareSolid,
     roles: [ERole.DRIVER],
     parent: ELogTrackCategory.OPERATION
   },
   [ELogTrackActivity.UNLOADING]: {
     text: 'Unloading',
     icon: faTruck, 
-		iconSolid: faTruckSolid,
-    additionalicon: faReplySolid, 
+    iconSolid: faTruckSolid,
+    additionalSource: 'fa',
+    additionalIcon: faReplySolid, 
     roles: [ERole.DRIVER],
     parent: ELogTrackCategory.OPERATION
   },

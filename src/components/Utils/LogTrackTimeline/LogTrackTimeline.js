@@ -153,7 +153,11 @@ const LogTrackTimeline = ({ logtracks, isLoading }) => {
             onMouseOver={() => setLogTrackHover(CURRENT_LOGTRACK_KEY)}
             onMouseOut={() => setLogTrackHover(null)}>
 
-            <Icon source="fa" icon={CURRENT_LOGTRACK_ACTIVITY_DETAILS.icon} style={{ color: '#FFFFFF' }} additional={CURRENT_LOGTRACK_ACTIVITY_DETAILS.additionalIcon} />
+            <Icon source="fa"
+                  icon={CURRENT_LOGTRACK_ACTIVITY_DETAILS.icon} 
+                  style={{ color: '#FFFFFF' }}
+                  additional={CURRENT_LOGTRACK_ACTIVITY_DETAILS.additionalIcon}
+                  additionalSource={CURRENT_LOGTRACK_ACTIVITY_DETAILS.additionalSource} />
           </div>
       : <div className="timeline-current"></div>}
     </div>

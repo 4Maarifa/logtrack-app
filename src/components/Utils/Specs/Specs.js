@@ -149,8 +149,8 @@ class Specs extends Component {
             <li><Icon source="fa" icon={faParking} /></li>
             <li><Icon source="fa" icon={faWeightHanging} /></li>
             <li><Icon source="fa" icon={faCarWash} /></li>
-            <li><Icon source="fa" icon={faTruck} additional={faShare} /></li>
-            <li><Icon source="fa" icon={faTruck} additional={faReply} /></li>
+            <li><Icon source="fa" icon={faTruck} additionalSource="fa" additional={faShare} /></li>
+            <li><Icon source="fa" icon={faTruck} additionalSource="fa" additional={faReply} /></li>
         </ul>
         <h2>Service</h2>
         <ul>

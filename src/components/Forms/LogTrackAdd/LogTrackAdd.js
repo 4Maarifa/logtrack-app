@@ -94,7 +94,11 @@ const LogTrackAdd = () => {
       ELogTrackCategoryDetails[selectedCategory].activities.forEach(activityKey => {
         LT_ACTIVITIES[activityKey] = {
           content: ({ isActive }) => <Fragment>
-            <Icon source="fa" icon={isActive ? ELogTrackActivityDetails[activityKey].iconSolid : ELogTrackActivityDetails[activityKey].icon} additional={ELogTrackActivityDetails[activityKey].additionalIcon} />
+            <Icon source="fa" 
+                  icon={isActive ? ELogTrackActivityDetails[activityKey].iconSolid : ELogTrackActivityDetails[activityKey].icon} 
+                  additionalSource={ELogTrackActivityDetails[activityKey].additionalSource} 
+                  additional={ELogTrackActivityDetails[activityKey].additionalIcon} />
+
             {ELogTrackActivityDetails[activityKey].text}
           </Fragment>,
           color: ColorService.getPaletteForColor(ELogTrackCategoryDetails[selectedCategory].color).medium.color
