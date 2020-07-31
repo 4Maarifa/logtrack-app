@@ -1,5 +1,8 @@
 
 import ErrorService from './error.service';
+import ObserverService from './observer.service';
+
+const GEOLOCATION_API_OPTIONS = { enableHighAccuracy: true, timeout: 10000, maximumAge: 5000 };
 
 /**
  * Service: PermissionService
@@ -80,102 +83,20 @@ const PermissionService = {
         // Else, if it is granted, get the current position
         navigator.geolocation.getCurrentPosition(position => resolve(position.coords));
       });
-    },
+    }
+  },
 
-    // add an observer about location. Ask permission first!
-    addLocationObserver: (locationObserverCallback, observerKey) => {
-
-      return new Promise((resolve, reject) => {
-        
-        // If permission is not granted, it means that the permission was not given first.
-        if(!PermissionService.location.__granted) {
-          return reject('Location Observation was asked before permission was given. Ask for location permission before trying to locate.');
-        }
-
-        // Add the observer to the observer array
-        PermissionService.location.__observers[observerKey] = locationObserverCallback;
-
-        // If there is at least one observer
-        if(PermissionService.location.__computeObserverNumber() >= 1) {
-
-          // watch for location
-          PermissionService.location.__watchLocation();
-        }
-
-        // also, get the locaiton and notify all location observers so that all components have the same position
-        PermissionService.location.getLocation()
-          .then(positionCoords => PermissionService.location.__notifyLocationObservers(positionCoords))
-          .catch(ErrorService.manageError);
-        resolve(observerKey);
-      });
-    },
-
-    // Remove an observer. Pass the same unique observer key that passed when registering your obserer
-    removeLocationObserver: observerKey => {
-
-      // If the observer is already not part of the observers anymore, just return
-      if(!PermissionService.location.__observers[observerKey]) { return; }
-
-      // Delete the observer
-      delete PermissionService.location.__observers[observerKey];
-      PermissionService.location.__observers[observerKey] = null;
-
-      // If there is no observers anymore, remove location watcher
-      if(PermissionService.location.__computeObserverNumber() === 0) {
-        PermissionService.location.__unwatchLocation();
-      }
-    },
-
-    // Watch for location
-    __watchLocation: () => {
-
-      // If permission is not granted, just ignore
-      if(!PermissionService.location.__granted) {
-        return;
-      }
-
-      // Watch the location and save the watcher id
-      PermissionService.location.__watchId = navigator.geolocation.watchPosition(
-
-        // at each position update, notify the location observers
-        position => PermissionService.location.__notifyLocationObservers(position.coords),
-
-        // If there is an error, manage it
-        ErrorService.manageError,
-
-        // Options: enable high accuracy
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 5000
-        });
-    },
-
-    // Notify all observers with the position passed as parameter
-    __notifyLocationObservers: positionCoords => {
-
-      // loop through observers
-      Object.values(PermissionService.location.__observers).forEach(observer => {
-
-        // and call them with the new position
-        observer && observer(positionCoords);
-      });
-    },
-
-    // Remove the watcher
-    __unwatchLocation: () => {
-
-      // If a watcher is registered
-      if(PermissionService.location.__watchId) {
-
-        // Clear the watcher
-        navigator.geolocation.clearWatch(PermissionService.location.__watchId);
-      }
-    },
-
-    // Compute the number of location observers
-    __computeObserverNumber: () => Object.values(PermissionService.location.__observers).filter(obs => !!obs).length
-  }
+  _watcher: null,
+  _location: null
 };
+
+ObserverService.initialize(PermissionService, 'LOCATION', {
+  startWatcher: ({ updateObservers }) => PermissionService._watcher = navigator.geolocation.watchPosition(p => {
+    PermissionService._location = p;
+    updateObservers();
+  }, ErrorService.manageError, GEOLOCATION_API_OPTIONS),
+  endWatcher: () => navigator.geolocation.clearWatch(PermissionService._watcher),
+  getData: () => PermissionService._location
+});
 
 export default PermissionService;

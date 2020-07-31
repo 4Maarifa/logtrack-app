@@ -10,6 +10,7 @@ import ModalService from './modal.service';
 import Icon from './../components/Utils/Icon/Icon';
 
 import { v4 as uuid } from 'uuid';
+import ObserverService from './observer.service';
 
 // number of bits authorized for the personal files of each user
 export const QUOTA_FOR_USER = 20971520;
@@ -30,67 +31,11 @@ export const QUOTA_FOR_USER = 20971520;
  */
 const FileService = {
 
-    // File observer list
-    _observers: {},
-
     // List of personal files
     _personalFiles: [],
 
     // structure of personal files
     _structure: {},
-
-    // add an observer to the file list
-    addObserver: (observerCallback, observerKey) => {
-        return new Promise((resolve, reject) => {
-
-            // add the observer to the observer list
-            FileService._observers[observerKey] = observerCallback;
-
-            // call the observer with the current value
-            observerCallback(FileService._personalFiles, FileService._structure);
-
-            // If there is more than one observer
-            if(FileService._computeObserverNumber() >= 1) {
-
-                // notify all observers
-                /*FileService.notifyChanges()
-                    .then(resolve)
-                    .catch(err => ErrorService.manageErrorThenReject(err, reject));*/
-            }
-            else {
-                // resolve immediately
-                resolve(observerKey);
-            }
-        });
-    },
-
-    // remove an observer, providing the same unique observer key you provided when registering the observer
-    removeObserver: observerKey => {
-        delete FileService._observers[observerKey];
-        FileService._observers[observerKey] = null;
-    },
-
-    // update all observers with the current data
-    // loop through each observer and call them with personal files and structure
-    updateObservers: () => Object.values(FileService._observers)
-        .forEach(observer => observer && (typeof observer === 'function') && observer(FileService._personalFiles, FileService._structure)),
-
-    // Notify that there was a change to personal files and / or structure
-    // Reload the personal files and structure, save them into the service, and notify all observers
-    notifyChanges: () => {
-        if(DataService.computed.user) {
-            return Promise.all([
-                FileService.getPersonalFiles().then(personalFiles => FileService._personalFiles = personalFiles),
-                FileService.getStructure().then(structure => FileService._structure = structure)
-            ])
-            .then(FileService.updateObservers)
-            .catch(ErrorService.manageError);
-        }
-        return Promise.resolve();
-    },
-
-    // Compute the number of observers
-    _computeObserverNumber: () => Object.values(FileService._observers).filter(obs => obs && typeof obs === 'function').length,
 
     // Get the Firebase Storage reference
     getStorageRef: () => FirebaseService.getFirebaseObject().storage().ref(),
@@ -203,6 +148,24 @@ const FileService = {
                     .catch(err => ErrorService.manageErrorThenReject(err, reject));
                 })
                 .catch(err => ErrorService.manageErrorThenReject(err, reject));
+        });
+    },
+
+    // Create an ObjectURL from the file, and get the image dimesions from the Image API
+    getImageDimensions: file => {
+        const IMG_URL = URL.createObjectURL(file);
+        const IMG_COMPONENT = new Image();
+
+        return new Promise(resolve => {
+            IMG_COMPONENT.onload = function() {
+                resolve({
+                    width: IMG_COMPONENT.width,
+                    height: IMG_COMPONENT.height
+                });
+                URL.revokeObjectURL(IMG_COMPONENT.src);
+            };
+            
+            IMG_COMPONENT.src = IMG_URL;
         });
     },
 
@@ -438,14 +401,23 @@ const FileService = {
     getReadableSize: size => {
 
         // if size is 0, return
-        if(size === 0) { return '0.00 B'; }
+        if(size === 0) { return '0 B'; }
 
         // compute the real size, dividing by 1024
         let e = Math.floor(Math.log(size) / Math.log(1024));
 
         // return the size
-        return (size / Math.pow(1024, e)).toFixed(2) + ' ' + ' KMGTP'.charAt(e) + 'B';
+        return (size / Math.pow(1024, e)).toFixed(0) + ' ' + ['B', 'KB', 'MB', 'GB', 'TB'][e];
     }
 };
+
+ObserverService.initialize(FileService, 'FILES', {
+    startWatcher: ({ notifyChanges }) => notifyChanges(),
+    computeChanges: () => Promise.all([
+        FileService.getPersonalFiles().then(personalFiles => FileService._personalFiles = personalFiles),
+        FileService.getStructure().then(structure => FileService._structure = structure)
+    ]),
+    getData: () => ({ personalFiles: FileService._personalFiles, structure: FileService._structure })
+});
 
 export default FileService;

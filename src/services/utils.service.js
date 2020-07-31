@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import ObserverService from './observer.service';
 
 /**
  * Service: UtilsService
@@ -6,46 +7,7 @@ import { useEffect, useRef } from 'react';
  */
 const UtilsService = {
 
-    // Observer list, that listen for URL changes
-    _observers: {},
-
-    // Add an observer
-    addObserver: (observerCallback, observerKey) => {
-
-        // add the observer to the list
-        UtilsService._observers[observerKey] = observerCallback;
-
-        // call it immediately to refresh
-        observerCallback();
-
-        // If there is more than one listener, initialize listener
-        UtilsService._computeObserverNumber() >= 1 && UtilsService._initializeListener();
-        return observerKey;
-    },
-
-    // Remove an obserer, passing the same unique observer key than on observer registration
-    removeObserver: observerKey => {
-
-        // delete the observer
-        delete UtilsService._observers[observerKey];
-        UtilsService._observers[observerKey] = null;
-
-        // If there is no more observers, delete the listener
-        UtilsService._computeObserverNumber() === 0 && UtilsService._deleteListener();
-    },
-
-    // Update all observers
-    updateObservers: () => Object.values(UtilsService._observers)
-      .forEach(observer => observer && (typeof observer === 'function') && observer()),
-
-    // Initialize URL listener
-    _initializeListener: () => window.addEventListener('popstate', UtilsService.updateObservers),
-
-    // Delete the URL listener
-    _deleteListener: () => window.removeEventListener('popstate', UtilsService.updateObservers),
-
-    // Compute the number of observers
-    _computeObserverNumber: () => Object.values(UtilsService._observers).filter(obs => obs && typeof obs === 'function').length,
+    url: {},
 
     // Get a specific URL GET parameter
     getUrlGetParam: paramKey => new URLSearchParams(window.location.search).get(paramKey),
@@ -154,5 +116,11 @@ const UtilsService = {
         return REF.current;
     }
 };
+
+ObserverService.initialize(UtilsService.url, 'URL', {
+    startWatcher: ({ updateObservers }) => window.addEventListener('popstate', updateObservers),
+    stopWatcher: ({ updateObservers }) => window.removeEventListener('popstate', updateObservers),
+    getData: () => window.location.href
+});
 
 export default UtilsService;

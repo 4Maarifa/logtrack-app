@@ -1,3 +1,4 @@
+import ObserverService from "./observer.service";
 
 /**
  * Service: DateService
@@ -97,6 +98,12 @@ const DateService = {
     date.toLocaleDateString([], transformOptions)
   ),
 
+  // Format a date into a custom printable time string
+  // date: Date | the date to be formated
+  //transformOptions: Object | propreties as specified here ( https://tc39.es/ecma402/#sec-intl-datetimeformat-constructor )
+  getTimePartString: (date, transformOptions) => (
+    date.toLocaleTimeString([], transformOptions)
+  ),
 
   // check if two dates are the same day or not
   areDatesTheSameDay: (date1, date2) => date1.getFullYear() === date2.getFullYear()
@@ -121,55 +128,12 @@ const DateService = {
   // Get relative difference between a date and now (negative means before, postiive means after)
   getRelativeDifference: date => DateService.getDifference(new Date(), date),
 
-  // Watcher for date
-  // This watcher refresh the date every 20 seconds
-  _watcher: null,
-
-  // watch date, and notify date observers every 20 seconds
-  _watchDate: () => {
-    // remove previous watcher if present
-    DateService._watcher && clearInterval(DateService._watcher);
-
-    // add a new watcher
-    DateService._watcher = setInterval(DateService.notifyNewDate, 20000);
-  },
-  // unwatch date (remove the watcher if not needed)
-  _unwatchDate: () => DateService._watcher && clearInterval(DateService._watcher),
-
-  // date observers list
-  _observers: {},
-
-  // add an observer
-  // pass a callback that will be called each time the date changed
-  addObserver: (observerCallback, observerKey) => {
-
-    // storing the callback
-    DateService._observers[observerKey] = observerCallback;
-
-    // notify the observer immediately
-    observerCallback();
-
-    // If needed, launch the date watcher
-    DateService._computeObserverNumber() >= 1 && DateService._watchDate();
-  },
-
-  // remove observer passing the same unique observer key you passed when adding it
-  // This is used to clean your component from receiving new date
-  removeObserver: observerKey => {
-
-    // remove the observer
-    delete DateService._observers[observerKey];
-    DateService._observers[observerKey] = null;
-
-    // if there's no observer anymore, stop the watcher
-    DateService._computeObserverNumber() === 0 && DateService._unwatchDate();
-  },
-
-  // Notify all observer when the date changed
-  notifyNewDate: () => Object.values(DateService._observers).filter(obs => obs && typeof obs === 'function').forEach(obs => obs()),
-
-  // compute the number of current date observers
-  _computeObserverNumber: () => Object.values(DateService._observers).filter(obs => obs && typeof obs === 'function').length
+  _watcher: null
 };
+
+ObserverService.initialize(DateService, 'DATE', {
+  startWatcher: ({ updateObservers }) => DateService._watcher = setInterval(updateObservers, 20000),
+  stopWatcher: () => clearInterval(DateService._watcher)
+});
 
 export default DateService;
