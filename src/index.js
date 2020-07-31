@@ -11,6 +11,8 @@ import Modal from './components/Utils/Modal/Modal';
 
 import Admin from './components/App/Admin/Admin';
 
+import DevDoc from './components/App/DevDoc/DevDoc';
+
 import Dashboard from './components/App/Dashboard/Dashboard';
 import Splash from './components/App/Splash/Splash';
 import Navigation from './components/App/Navigation/Navigation';
@@ -157,6 +159,8 @@ const renderApp = () => {
                     <Route exact path="/specs" component={Specs} />
 
                     <PrivateRoute exact path="/admin" component={Admin} />
+
+                    <Route exact path="/dev-doc" component={DevDoc} />
 
                     <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
