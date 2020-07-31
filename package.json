@@ -24,7 +24,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "2.1.8",
     "toastr": "^2.1.4",
-    "transportation-font": "^1.2.0",
+    "transportation-font": "^1.6.0",
     "uuid": "^8.1.0"
   },
   "scripts": {
