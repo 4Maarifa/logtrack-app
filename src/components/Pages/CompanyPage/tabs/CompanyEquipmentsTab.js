@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { faTruck } from '@fortawesome/pro-light-svg-icons';
 
 import ErrorService from './../../../../services/error.service';
-import BrandService from './../../../../services/entities/brand.service';
-import EquipmentModelService from './../../../../services/entities/equipmentModel.service';
 import EquipmentService from './../../../../services/entities/equipment.service';
 
 import Icon from './../../../Utils/Icon/Icon';
@@ -24,23 +22,7 @@ const CompanyEquipmentsTab = ({ companyId }) => {
   const [equipments, setEquipments] = useState({});
   const [isEquipmentsLoading, setEquipmentsLoading] = useState(true);
 
-  // ALl Equipment models
-  const [equipmentModels, setEquipmentModels] = useState({});
-  // All Brands
-  const [brands, setBrands] = useState({});
-
   useEffect(() => {
-
-    // get all brands
-    BrandService.list()
-      .then(setBrands)
-      .catch(ErrorService.manageError);
-
-    // get all equipment models
-    EquipmentModelService.list()
-      .then(setEquipmentModels)
-      .catch(ErrorService.manageError);
-
     if(companyId) {
       // get all equipments of company
       EquipmentService.getAllForCompanyId(companyId)
@@ -59,17 +41,7 @@ const CompanyEquipmentsTab = ({ companyId }) => {
   /**
    * RENDER
    */
-  const renderEquipment = (itemId, itemData) => {
-    const EQUIPMENT_MODEL = { [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] }, 
-      BRAND = { [EQUIPMENT_MODEL[itemData.equipmentModelId].brand]: brands[EQUIPMENT_MODEL[itemData.equipmentModelId].brand] };
-
-    return <Equipment key={itemId}
-      equipment={ {[itemId]: itemData} }
-      brand={BRAND}
-      equipmentModel={EQUIPMENT_MODEL}
-      options={ {} }
-      showDetails />
-  };
+  const renderEquipment = (itemId, itemData) => <Equipment key={itemId} equipment={ {[itemId]: itemData} } options={ {} } showDetails />;
 
   // render the equipments extable
   return <ExTable key="equipments"

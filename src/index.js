@@ -44,7 +44,6 @@ import RoleOffer from './components/Forms/RoleOffer/RoleOffer';
 import Equipments from './components/App/Equipments/Equipments';
 import EquipmentAdd from './components/Forms/EquipmentAdd/EquipmentAdd';
 import EquipmentPage from './components/Pages/EquipmentPage/EquipmentPage';
-import EquipmentModelAdd from './components/Forms/EquipmentModelAdd/EquipmentModelAdd';
 
 import Contracts from './components/App/Contracts/Contracts';
 import ContractPage from './components/Pages/ContractPage/ContractPage';
@@ -198,7 +197,6 @@ const renderApp = () => {
                     <PrivateRoute exact path="/equipment/:equipmentid" component={EquipmentPage} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/equipment-add" component={EquipmentAdd} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/equipment-edit/:equipmentid" component={EquipmentAdd} />
-                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/equipment-model-add" component={EquipmentModelAdd} />
 
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contracts" component={Contracts} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contract/:contractid" component={ContractPage} />

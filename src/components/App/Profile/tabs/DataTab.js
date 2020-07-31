@@ -10,8 +10,6 @@ import ErrorService from './../../../../services/error.service';
 import UtilsService from './../../../../services/utils.service';
 import { ESettingsDetails } from './../../../../services/settings.service';
 import EquipmentService from './../../../../services/entities/equipment.service';
-import EquipmentModelService from './../../../../services/entities/equipmentModel.service';
-import BrandService from './../../../../services/entities/brand.service';
 import WarehouseService from './../../../../services/entities/warehouse.service';
 import CompanyService from './../../../../services/entities/company.service';
 import RoleService from './../../../../services/entities/role.service';
@@ -55,10 +53,6 @@ const DataTab = () => {
   // Generated report
   const [report, setReport] = useState(null);
 
-  // other linked data useful for details about report's data
-  const [brands, setBrands] = useState(null);
-  const [equipmentModels, setEquipmentModels] = useState(null);
-
   // Hook on generating
   useEffect(() => {
     if(isGenerating) {
@@ -67,8 +61,6 @@ const DataTab = () => {
       // PASS1: equipments, warehouses, companies, roles, files, account activities, job offers, support
       Promise.all([
         EquipmentService.getAllForCreatorId(computed.user.uid),
-        EquipmentModelService.list(),
-        BrandService.list(),
         WarehouseService.getAllForCreatorId(computed.user.uid),
         CompanyService.getAllForCreatorId(computed.user.uid),
         RoleService.getRolesForEmployeeId(computed.user.uid, [ERoleStatus.CONFIRMED, ERoleStatus.DENIED, ERoleStatus.DRAFT, ERoleStatus.REVOKED]),
@@ -81,20 +73,20 @@ const DataTab = () => {
         // this variable stores temporarly all the report's data that is already fetched
         const RESULT = {
           equipments: results[0],
-          warehouses: results[3],
-          companies: results[4],
-          roles: results[5],
-          files: results[6],
-          accountActivity: results[7],
-          jobOffers: results[8],
-          supports: results[9]
+          warehouses: results[1],
+          companies: results[2],
+          roles: results[3],
+          files: results[4],
+          accountActivity: results[5],
+          jobOffers: results[6],
+          supports: results[7]
         };
 
         // PASS 2
         // Second pass is mandatory: retrieving linked data for roles
 
         // Here, retrieving the companyes roles are set upon
-        const roleCompanyIds = UtilsService.removeDuplicateFromArray(Object.keys(results[5]).map(roleKey => results[5][roleKey].companyId));
+        const roleCompanyIds = UtilsService.removeDuplicateFromArray(Object.keys(results[3]).map(roleKey => results[3][roleKey].companyId));
         CompanyService.getAllForIdList(roleCompanyIds)
           .then(companies => {
 
@@ -103,8 +95,6 @@ const DataTab = () => {
 
             // then, setting all the data
             setReport(RESULT);
-            setEquipmentModels(results[1]);
-            setBrands(results[2]);
 
             // And triggering end of load
             setGenerating(false);
@@ -134,17 +124,7 @@ const DataTab = () => {
     return <Company company={{[itemId]: itemData}} />;
   };
   
-  const renderEquipment = (itemId, itemData) => {
-    const EQUIPMENT_MODEL = { [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] },
-      BRAND = { [EQUIPMENT_MODEL[itemData.equipmentModelId].brand]: brands[EQUIPMENT_MODEL[itemData.equipmentModelId].brand] };
-
-    return <Equipment key={itemId}
-      equipment={ {[itemId]: itemData} }
-      brand={BRAND}
-      equipmentModel={EQUIPMENT_MODEL}
-      options={ {} }
-      showDetails />
-  };
+  const renderEquipment = (itemId, itemData) => <Equipment key={itemId} equipment={ {[itemId]: itemData} } options={ {} } showDetails />;
 
   const renderSupport = (itemId, itemData) => <Support support={{[itemId]: itemData}} />;
 

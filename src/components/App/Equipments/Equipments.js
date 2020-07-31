@@ -8,7 +8,6 @@ import Icon from './../../Utils/Icon/Icon';
 
 import DataService from './../../../services/data.service';
 import ErrorService from './../../../services/error.service';
-import EquipmentModelService from './../../../services/entities/equipmentModel.service';
 import EquipmentService from './../../../services/entities/equipment.service';
 
 import Equipment, { equipmentsExTableFSS } from './../../Entities/Equipment/Equipment';
@@ -26,19 +25,13 @@ const Equipments = () => {
   // Equipments, and their models
   const [equipments, setEquipments] = useState({});
   const [isEquipmentsLoading, setEquipmentsLoading] = useState(true);
-  const [equipmentModels, setEquipmentModels] = useState({});
 
   const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
   useEffect(() => {
-    if(computed.activeRole) {
-      // Loading all equipment Models
-      EquipmentModelService.list()
-        .then(setEquipmentModels)
-        .catch(ErrorService.manageError);
-        
+    if(computed.activeRole) {        
       // Loading all equipments for the current company
       EquipmentService.getAllForCompanyId(computed.activeRole.companyId)
         .then(equipments => {
@@ -61,11 +54,7 @@ const Equipments = () => {
   /**
    * RENDER
    */
-  const renderEquipment = (itemId, itemData) => (
-    <Equipment key={itemId}
-      equipment={ {[itemId]: itemData} }
-      equipmentModel={{ [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] }} />
-  );
+  const renderEquipment = (itemId, itemData) => <Equipment key={itemId} equipment={ {[itemId]: itemData} } />;
 
   return (
     <div className="Equipments">

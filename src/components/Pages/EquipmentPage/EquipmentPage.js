@@ -4,7 +4,6 @@ import { faTruck as faTruckSolid } from '@fortawesome/pro-solid-svg-icons';
 
 import ErrorService from './../../../services/error.service';
 import EquipmentService from './../../../services/entities/equipment.service';
-import EquipmentModelService from './../../../services/entities/equipmentModel.service';
 
 import Loader from './../../Utils/Loader/Loader';
 import Tabs from './../../Utils/Tabs/Tabs';
@@ -26,9 +25,6 @@ const EquipmentPage = ({ match }) => {
   // equipmnent
   const [equipment, setEquipment] = useState(null);
 
-  // corresponding equipment model
-  const [equipmentModel, setEquipmentModel] = useState(null);
-
   useEffect(() => {
 
     // get the equipment
@@ -36,17 +32,12 @@ const EquipmentPage = ({ match }) => {
       .then(equipmentDoc => {
 
         // save the equipment
-        setEquipment(equipmentDoc.data());
-        
-        // get and save the equipment model for the equipment
-        EquipmentModelService.get(equipmentDoc.data().equipmentModelId)
-          .then(equipmentModelDoc => setEquipmentModel(equipmentModelDoc.data()))
-          .catch(ErrorService.manageError);
+        setEquipment(equipmentDoc.data());;
       })
       .catch(ErrorService.manageError);
   }, []);
 
-  if(!equipment || !equipmentModel) {
+  if(!equipment) {
     return (
       <div className="EquipmentPage">
         <Loader />
@@ -56,7 +47,7 @@ const EquipmentPage = ({ match }) => {
   return (
     <div className="EquipmentPage">
       <div className="Element Element--page">
-        <Equipment equipment={{[EQUIPMENT_ID]: equipment}} equipmentModel={{[equipment.equipmentModelId]: equipmentModel}} isPage />
+        <Equipment equipment={{[EQUIPMENT_ID]: equipment}} isPage />
       </div>
       <Tabs default="equipments" tabs={{
         equipments: {

@@ -10,12 +10,11 @@ import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import DataService from './../../../services/data.service';
 import DateService from './../../../services/date.service';
 import ErrorService from './../../../services/error.service';
-import EquipmentModelService from './../../../services/entities/equipmentModel.service';
 import EquipmentService from './../../../services/entities/equipment.service';
 import EmployeeService from './../../../services/entities/employee.service';
 
 import Equipment from './../../../classes/Equipment';
-import { EEquipmentModelTypeDetails, EEquipmentModelSubTypeDetails } from './../../../classes/EquipmentModel';
+import EEquipmentModel, { EEquipmentModelTypeDetails, EEquipmentModelSubTypeDetails, EEquipmentModelDetails } from './../../../classes/enums/EEquipmentModel';
 
 import { v4 as uuid } from 'uuid';
 
@@ -39,9 +38,6 @@ const EquipmentAdd = ({ match }) => {
   const [selectedEquipmentType, setSelectedEquipmentType] = useState('');
   const [selectedEquipmentSubType, setSelectedEquipmentSubType] = useState('');
   const [selectedEquipmentModelId, setSelectedEquipmentModelId] = useState('');
-
-  // All possible models
-  const [equipmentModels, setEquipmentModels] = useState({});
 
   // Creator data
   const [creatorId, setCreatorId] = useState(null);
@@ -109,29 +105,30 @@ const EquipmentAdd = ({ match }) => {
   const filterEquipmentModels = (type, subType = null) => {
     let newEquipmentModels = {};
 
+    Object.keys(EEquipmentModel).forEach(k => {
+      if(!EEquipmentModelDetails[k]) {
+        console.log(k);
+      }
+    })
+
     // If there's no subtype available, filter by type only
     if(!subType) {
-      Object.keys(equipmentModels)
-        .filter(equipmentModelId => equipmentModels[equipmentModelId].type === type)
-        .forEach(equipmentModelId => newEquipmentModels[equipmentModelId] = equipmentModels[equipmentModelId]);
+      Object.keys(EEquipmentModel)
+        .filter(equipmentModelId => EEquipmentModelDetails[equipmentModelId].type === type)
+        .forEach(equipmentModelId => newEquipmentModels[equipmentModelId] = EEquipmentModelDetails[equipmentModelId]);
     }
     else {
       // Otherwise, filter by both type and subtype
-      Object.keys(equipmentModels)
-        .filter(equipmentModelId => equipmentModels[equipmentModelId].type === type)
-        .filter(equipmentModelId => equipmentModels[equipmentModelId].subType === subType)
-        .forEach(equipmentModelId => newEquipmentModels[equipmentModelId] = equipmentModels[equipmentModelId]);
+      Object.keys(EEquipmentModel)
+        .filter(equipmentModelId => EEquipmentModelDetails[equipmentModelId].type === type)
+        .filter(equipmentModelId => EEquipmentModelDetails[equipmentModelId].subType === subType)
+        .forEach(equipmentModelId => newEquipmentModels[equipmentModelId] = EEquipmentModelDetails[equipmentModelId]);
     }
     return newEquipmentModels;
   };
 
   useEffect(() => {
     if(computed.initialized && computed.activeRole){
-
-      // Get all equipment models
-      EquipmentModelService.list()
-        .then(setEquipmentModels)
-        .catch(ErrorService.manageError);
 
       // set company owner
       setCompanyId(computed.activeRole.companyId);
@@ -182,9 +179,6 @@ const EquipmentAdd = ({ match }) => {
 
   // used to render choose component as well as selected data
   const renderModels = () => {
-    if(!equipmentModels || !Object.keys(equipmentModels).length) {
-      return null;
-    }
     const EQUIPMENT_TYPES = {}, EQUIPMENT_SUB_TYPES = {}, NEW_EQUIPMENT_MODELS = {};
 
     // Compute equipment types
@@ -215,9 +209,9 @@ const EquipmentAdd = ({ match }) => {
         Object.keys(filterEquipmentModels(selectedEquipmentType, selectedEquipmentSubType)).forEach(key => {
           NEW_EQUIPMENT_MODELS[key] = {
             content: () => <Fragment>
-              <img src={equipmentModels[key].photoUrl}
-                alt={equipmentModels[key].name + '\'s photo'} />
-              {equipmentModels[key].name}
+              <img src={EEquipmentModelDetails[key].image}
+                alt={EEquipmentModelDetails[key].name + '\'s photo'} />
+              {EEquipmentModelDetails[key].name}
             </Fragment>
           }
         });
@@ -276,9 +270,9 @@ const EquipmentAdd = ({ match }) => {
 
                       <Fragment>
                         {/* Otherwise, print it with edit link */}
-                        <img src={equipmentModels[selectedEquipmentModelId].photoUrl}
-                          alt={equipmentModels[selectedEquipmentModelId].name + '\'s photo'} />
-                        {equipmentModels[selectedEquipmentModelId].name}
+                        <img src={EEquipmentModelDetails[selectedEquipmentModelId].image}
+                          alt={EEquipmentModelDetails[selectedEquipmentModelId].name + '\'s photo'} />
+                        {EEquipmentModelDetails[selectedEquipmentModelId].name}
                         <span className="action" onClick={() => handleSelection(null, 'selectedEquipmentModelId')}>
                           <Icon source="fa" icon={faEdit} />
                         </span>
@@ -329,11 +323,11 @@ const EquipmentAdd = ({ match }) => {
               <div className="RoleCompany Element-content">
                 <div className="Element-base">
                   <div className="Element-photo">
-                    <img src={equipmentModels[currentEquipment.equipmentModelId].photoUrl}
-                          alt={equipmentModels[currentEquipment.equipmentModelId].name + '\'s photo'} />
+                    <img src={EEquipmentModelDetails[currentEquipment.equipmentModelId].image}
+                          alt={EEquipmentModelDetails[currentEquipment.equipmentModelId].name + '\'s photo'} />
                   </div>
                   <div className="Element-data">
-                    <span className="Element-title">{equipmentModels[currentEquipment.equipmentModelId].name}</span>
+                    <span className="Element-title">{EEquipmentModelDetails[currentEquipment.equipmentModelId].name}</span>
                   </div>
                 </div>
               </div>

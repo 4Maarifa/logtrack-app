@@ -9,8 +9,6 @@ import ExTable from './../../Utils/ExTable/ExTable';
 import FormDebounceInput from './../../Utils/FormElements/FormDebounceInput/FormDebounceInput';
 
 import DataService from './../../../services/data.service';
-import BrandService from './../../../services/entities/brand.service';
-import EquipmentModelService from './../../../services/entities/equipmentModel.service';
 import ErrorService from './../../../services/error.service';
 import CompanyService from './../../../services/entities/company.service';
 import UtilsService from './../../../services/utils.service';
@@ -43,10 +41,6 @@ const Search = () => {
   const [equipments, setEquipments] = useState({});
   const [companies, setCompanies] = useState({});
   const [warehouses, setWarehouses] = useState({});
-
-  // All models and brands of equipments
-  const [equipmentModels, setEquipmentModels] = useState({});
-  const [brands, setBrands] = useState({});
 
   // is searching?
   const [isSearchLoading, setSearchLoading] = useState(true);
@@ -87,17 +81,6 @@ const Search = () => {
   }, [searchInput]);
 
   useEffect(() => {
-    // Load all brands and equipment models on load
-    BrandService.list()
-      .then(setBrands)
-      .catch(ErrorService.manageError);
-
-    EquipmentModelService.list()
-      .then(setEquipmentModels)
-      .catch(ErrorService.manageError);
-  }, [computed]);
-
-  useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
     return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
@@ -132,17 +115,7 @@ const Search = () => {
       companyOrder={{[itemData.companyOrderId]: contractCompanies[itemData.companyOrderId]}} />
   };
 
-  const renderEquipment = (itemId, itemData) => {
-    const EQUIPMENT_MODEL = { [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] },
-      BRAND = { [EQUIPMENT_MODEL[itemData.equipmentModelId].brand]: brands[EQUIPMENT_MODEL[itemData.equipmentModelId].brand] };
-
-    return <Equipment key={itemId}
-      equipment={ {[itemId]: itemData} }
-      brand={BRAND}
-      equipmentModel={EQUIPMENT_MODEL}
-      options={ {} }
-      showDetails />
-  };
+  const renderEquipment = (itemId, itemData) => <Equipment key={itemId} equipment={ {[itemId]: itemData} } options={ {} } showDetails />;
 
   return (
     <div className={'Search ' + (searchInput.length >= 3 ? 'Search--valid' : '')}>

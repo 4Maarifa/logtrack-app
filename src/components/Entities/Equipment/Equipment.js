@@ -8,7 +8,7 @@ import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import DataService from './../../../services/data.service';
 import UtilsService from './../../../services/utils.service';
 
-import { EEquipmentModelSubTypeDetails } from './../../../classes/EquipmentModel';
+import { EEquipmentModelDetails, EEquipmentModelSubTypeDetails } from './../../../classes/enums/EEquipmentModel';
 import { ERole } from './../../../classes/Role';
 
 import { v4 as uuid } from 'uuid';
@@ -38,7 +38,7 @@ const Equipment = ({ equipment, equipmentModel, isPage }) => {
   // Parse data
   const EQUIPMENT_ID = Object.keys(equipment)[0],
     EQUIPMENT_DATA = equipment[EQUIPMENT_ID],
-    EQUIPMENT_MODEL_DATA = equipmentModel[Object.keys(equipmentModel)[0]];
+    EQUIPMENT_MODEL_DATA = EEquipmentModelDetails[EQUIPMENT_DATA.equipmentModelId];
 
   /** 
    * RENDER
@@ -55,7 +55,7 @@ const Equipment = ({ equipment, equipmentModel, isPage }) => {
       <div className="Element-base">
 
         {/* Print badge of the equipment model's type */}
-        <span className={'Element-badge badge ' + (isPage ? 'badge-inverse' : '')}>
+        <span className={'Element-badge badge ' + (isPage ? 'badge-inverse' : '')} title={EEquipmentModelSubTypeDetails[EQUIPMENT_MODEL_DATA.type][EQUIPMENT_MODEL_DATA.subType].name}>
           {EEquipmentModelSubTypeDetails[EQUIPMENT_MODEL_DATA.type][EQUIPMENT_MODEL_DATA.subType].icon}
         </span>
 
@@ -63,7 +63,7 @@ const Equipment = ({ equipment, equipmentModel, isPage }) => {
           {/* Print equipment model picture */}
           <img
             alt={EQUIPMENT_MODEL_DATA.name} 
-            src={EQUIPMENT_MODEL_DATA.photoUrl} />
+            src={EQUIPMENT_MODEL_DATA.image} />
         </div>
 
         {/* Equipment details */}
