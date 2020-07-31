@@ -72,7 +72,7 @@ const Files = () => {
         setNewFolderName('');
       }, OBSERVER_KEY);
     }
-  }, [computed.user]);
+  }, [computed, computed.user]);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);

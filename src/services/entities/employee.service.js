@@ -3,12 +3,13 @@ import { ERights } from './../right.service';
 import DataService, { ensureFilledFields, migratePrototype } from './../data.service';
 import FirebaseService from './../firebase.service';
 import ErrorService from './../error.service';
+import RT_Service from './../rt.service';
+import RoleService from './role.service';
 
 import Employee, { AccountActivity } from './../../classes/Employee';
+import { ERoleStatus } from './../../classes/Role';
 import ESearchType from './../../classes/enums/ESearchType';
-import RT_Service from '../rt.service';
-import RoleService from './role.service';
-import { ERoleStatus } from '../../classes/Role';
+
 
 /**
  * Service: EmployeeService

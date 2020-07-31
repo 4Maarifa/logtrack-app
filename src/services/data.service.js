@@ -7,7 +7,7 @@ import EmployeeService from './entities/employee.service';
 import RT_Service from './rt.service';
 
 import { ERoleStatus } from './../classes/Role';
-import ESearchType from '../classes/enums/ESearchType';
+import ESearchType from './../classes/enums/ESearchType';
 
 // ensure that all fields of the object contains a value
 export const ensureFilledFields = (object, fields) => {

@@ -3,24 +3,24 @@ import DateTimePicker from 'react-datetime-picker';
 import { faArrowAltToRight, faArrowAltFromLeft, faCalendarAlt, faClipboardUser, faInfoCircle, 
   faBuilding, faAward, faUserTie } from '@fortawesome/pro-light-svg-icons';
 
-import DataService from '../../../../services/data.service';
-import UtilsService from '../../../../services/utils.service';
-import DateService from '../../../../services/date.service';
-import ErrorService from '../../../../services/error.service';
-import EmployeeService from '../../../../services/entities/employee.service';
-import RoleService from '../../../../services/entities/role.service';
-import CompanyService from '../../../../services/entities/company.service';
+import DataService from './../../../../services/data.service';
+import UtilsService from './../../../../services/utils.service';
+import DateService from './../../../../services/date.service';
+import ErrorService from './../../../../services/error.service';
+import EmployeeService from './../../../../services/entities/employee.service';
+import RoleService from './../../../../services/entities/role.service';
+import CompanyService from './../../../../services/entities/company.service';
 
-import Icon from '../../../Utils/Icon/Icon';
-import ExTable from '../../../Utils/ExTable/ExTable';
-import Choose from '../../../Utils/FormElements/Choose/Choose';
-import FormInput from '../../../Utils/FormElements/FormInput/FormInput';
-import Switch from '../../../Utils/FormElements/Switch/Switch';
+import Icon from './../../../Utils/Icon/Icon';
+import ExTable from './../../../Utils/ExTable/ExTable';
+import Choose from './../../../Utils/FormElements/Choose/Choose';
+import FormInput from './../../../Utils/FormElements/FormInput/FormInput';
+import Switch from './../../../Utils/FormElements/Switch/Switch';
 import FormTextarea from './../../../Utils/FormElements/FormTextarea/FormTextarea';
 
-import { ERoleDetails, ERoleStatus } from '../../../../classes/Role';
+import { ERoleDetails, ERoleStatus } from './../../../../classes/Role';
 
-import { EmployeeCertificate, EmployeeExperience, EmployeeOtherExperience, employeeCertificatesExTableFSS, employeeExperienceExTableFSS, employeeOtherExperiencesExTableFSS } from '../../../Entities/Employee/Employee';
+import { EmployeeCertificate, EmployeeExperience, EmployeeOtherExperience, employeeCertificatesExTableFSS, employeeExperienceExTableFSS, employeeOtherExperiencesExTableFSS } from './../../../Entities/Employee/Employee';
 
 import { v4 as uuid } from 'uuid';
 

@@ -27,7 +27,7 @@ const FAQ = () => {
           name: () => 'Who are we?',
           content: () => <span>
             I'm Bertrand Choubert, and I entirely designed and developed LogTrack.
-            I aim to give companies the resources and tools to improve their deily working life.
+            I aim to give companies the resources and tools to improve their daily working life.
           </span>
         }
       }} />

@@ -47,6 +47,7 @@ const DateService = {
   getDateTimeString: (date, withYear = true, fullDate = false, prefix = '') => {
     return `${DateService.getDateString(date, true, withYear, prefix)}${fullDate ? ` (${DateService.getDateString(date, false, withYear)})` : ''}, ${DateService.getTimeString(date)}`;
   },
+
   // Format a date into a printable string
   // date: Date | the date to be formatted
   // descriptiveDate: boolean | if true, this function may return 'today', 'tomorrow' or other keywords if applicable. If false, always print the full date
@@ -68,6 +69,7 @@ const DateService = {
     }
     return (prefix ? `${prefix} ` : '') + date.toLocaleDateString([], DATE_TRANSFORM_OPTIONS);
   },
+
   // format a date to a month/year string
   // date: Date | the date to format
   getMonthYearString: date => {
@@ -77,6 +79,7 @@ const DateService = {
     };
     return date.toLocaleDateString([], DATE_TRANSFORM_OPTIONS);
   },
+
   // Format a time into a printable string (HH:MM)
   // date: Date | the date to be formatted
   getTimeString: date => {
@@ -86,6 +89,7 @@ const DateService = {
     };
     return date.toLocaleTimeString([], TIME_TRANSFORM_OPTIONS);
   },
+
   // Format a date into a custom printable string
   // date: Date | the date to be formated
   //transformOptions: Object | propreties as specified here ( https://tc39.es/ecma402/#sec-intl-datetimeformat-constructor )
@@ -93,21 +97,27 @@ const DateService = {
     date.toLocaleDateString([], transformOptions)
   ),
 
+
   // check if two dates are the same day or not
   areDatesTheSameDay: (date1, date2) => date1.getFullYear() === date2.getFullYear()
       && date1.getMonth() === date2.getMonth()
       && date1.getDate() === date2.getDate(),
+
   // Check if the date is today
   isToday: date => DateService.areDatesTheSameDay(date, new Date()),
+
   // check if the date is yesterday
   isYesterday: date => DateService.areDatesTheSameDay(date, new Date(+(new Date()) - (24*60*60*1000))),
+
   // check if the date is tomorrow
   isTomorrow: date => DateService.areDatesTheSameDay(date, new Date(+(new Date()) + (24*60*60*1000))),
 
   // get numerical difference between two dates (number of milliseconds between two dates)
   getDifference: (date1, date2) => (+date2) - (+date1),
+
   // Get numerical difference between two timestamp numbers (number of milliseconds)
   getTimestampDifference: (ts1, ts2) => ts2 - ts1,
+
   // Get relative difference between a date and now (negative means before, postiive means after)
   getRelativeDifference: date => DateService.getDifference(new Date(), date),
 

@@ -12,7 +12,7 @@ import Icon from './../../Utils/Icon/Icon';
 import Tabs from './../../Utils/Tabs/Tabs';
 
 import Warehouse from './../../Entities/Warehouse/Warehouse';
-import Company from '../../Entities/Company/Company';
+import Company from './../../Entities/Company/Company';
 
 import { v4 as uuid } from 'uuid';
 

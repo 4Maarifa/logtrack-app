@@ -5,7 +5,7 @@ import Chart from 'react-apexcharts';
 import ColorService from './../../../services/color.service';
 import DataService from './../../../services/data.service';
 
-import PageLink, { PageLinkType } from '../../Utils/PageLink/PageLink';
+import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 
 import { v4 as uuid } from 'uuid';
 

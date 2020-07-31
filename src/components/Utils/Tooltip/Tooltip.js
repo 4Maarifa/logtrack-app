@@ -37,19 +37,19 @@ const ETooptipTrianglePositionCss = {
  * Used to show a tooltip / help popin
  * The parent must have a relative position
  * 
- * defaultTooltipPosition: ETooltipPosition | position of the tooltip
- * defaultTooltipTrianglePosition: ETooltipTrianglePosition | position of the tooltip triangle
+ * tooltipPosition: ETooltipPosition | position of the tooltip
+ * tooltipTrianglePosition: ETooltipTrianglePosition | position of the tooltip triangle
  * show: boolean | May the tooltip be shown or not
  * label: HTML | content of the tooltip
  * styles: Object | custom styles
  */
-const Tooltip = ({ defaultTooltipPosition, defaultTooltipTrianglePosition, show, label, styles }) => {
+const Tooltip = ({ tooltipPosition, tooltipTrianglePosition, show, label, styles }) => {
 
   // Compute the tooltip position, or get a default
-  const tooltipPosition = (defaultTooltipPosition && ETooltipPosition[defaultTooltipPosition]) ? ETooltipPosition[defaultTooltipPosition] : ETooltipPosition.BOTTOM;
+  const TOOLTIP_POSITION = (tooltipPosition && ETooltipPosition[tooltipPosition]) ? ETooltipPosition[tooltipPosition] : ETooltipPosition.BOTTOM;
 
   // compute the tooltip triangle position, or get the default
-  const tooltipTrianglePosition = (defaultTooltipTrianglePosition && ETooltipTrianglePosition[defaultTooltipTrianglePosition]) ? ETooltipTrianglePosition[defaultTooltipTrianglePosition] : ETooltipTrianglePosition.MIDDLE;
+  const TOOLTIP_TRIANGLE_POSITION = (tooltipTrianglePosition && ETooltipTrianglePosition[tooltipTrianglePosition]) ? ETooltipTrianglePosition[tooltipTrianglePosition] : ETooltipTrianglePosition.MIDDLE;
 
   /**
    * RENDER
@@ -62,10 +62,10 @@ const Tooltip = ({ defaultTooltipPosition, defaultTooltipTrianglePosition, show,
 
   // Else, return it
   return (
-    <div className={'Tooltip ' + ETooptipPositionCss[tooltipPosition]} style={styles}>
+    <div className={'Tooltip ' + ETooptipPositionCss[TOOLTIP_POSITION]} style={styles}>
 
       {/* Triangle */}
-      <span className={'triangle ' + ETooptipTrianglePositionCss[tooltipTrianglePosition]}></span>
+      <span className={'triangle ' + ETooptipTrianglePositionCss[TOOLTIP_TRIANGLE_POSITION]}></span>
 
       {/* Content */}
       <span className="label">{label}</span>

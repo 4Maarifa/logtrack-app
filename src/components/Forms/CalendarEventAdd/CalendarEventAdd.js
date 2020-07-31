@@ -18,7 +18,7 @@ import FormInput from './../../Utils/FormElements/FormInput/FormInput';
 import FormTextarea from './../../Utils/FormElements/FormTextarea/FormTextarea';
 import Switch from './../../Utils/FormElements/Switch/Switch';
 
-import RT_userMessage, { ERT_userMessageDetails, ERT_userMessage } from '../../../classes/RT_userMessage';
+import RT_userMessage, { ERT_userMessageDetails, ERT_userMessage } from './../../../classes/RT_userMessage';
 
 import { v4 as uuid } from 'uuid';
 

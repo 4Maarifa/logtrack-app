@@ -16,7 +16,7 @@ import DataService from './../../../services/data.service';
 import AccountTab from './tabs/AccountTab';
 import SecurityTab from './tabs/SecurityTab';
 import SupportTab from './tabs/SupportTab';
-import Debug from '../../Utils/Debug/Debug';
+import Debug from './../../Utils/Debug/Debug';
 import ProfessionalProfileTab from './../Jobs/tabs/ProfessionalProfileTab';
 import DataTab from './tabs/DataTab';
 import TermsTab from './tabs/TermsTab';

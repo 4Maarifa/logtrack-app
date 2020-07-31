@@ -5,7 +5,7 @@ import DataService from './../../../../services/data.service';
 import UtilsService from './../../../../services/utils.service';
 import ErrorService from './../../../../services/error.service';
 import LogTrackService from './../../../../services/entities/logtrack.service';
-import EmployeeService from '../../../../services/entities/employee.service';
+import EmployeeService from './../../../../services/entities/employee.service';
 
 import ExTable, { EXTABLE_VIEWS } from './../../../Utils/ExTable/ExTable';
 import Icon from './../../../Utils/Icon/Icon';

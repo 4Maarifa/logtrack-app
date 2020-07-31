@@ -1,4 +1,5 @@
 import toastr from 'toastr';
+
 import 'toastr/build/toastr.min.css';
 
 // Toastr options overwrite
@@ -56,7 +57,7 @@ const ErrorService = {
                     errorMessage = 'Sign in failed. Please retry.';
                     break;
                 case 'auth/passwords-not-match':
-                    errorMessage = 'The two passwords don\'ont match';
+                    errorMessage = 'The two passwords don\'t match';
                     break;
                 case 'auth/expired-action-code':
                     errorMessage = 'Your reset code has expired';

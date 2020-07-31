@@ -4,11 +4,11 @@ import { faInfoCircle, faCookieBite, faDesktop, faMobile, faMicrochip,
   faArrowsV, faBug} from '@fortawesome/pro-light-svg-icons';
 import { faBluetooth } from '@fortawesome/free-brands-svg-icons';
 
-import Icon from '../Icon/Icon';
-import Tooltip from '../Tooltip/Tooltip';
+import Icon from './../Icon/Icon';
+import Tooltip from './../Tooltip/Tooltip';
+import CompletionBar from './../CompletionBar/CompletionBar';
 
-import UserAgentService from '../../../services/useragent.service';
-import CompletionBar from '../CompletionBar/CompletionBar';
+import UserAgentService from './../../../services/useragent.service';
 
 // Print the connection icon from the connection type from https://wicg.github.io/netinfo/#connectiontype-enum
 const connectionTypeIcon = connectionType => {

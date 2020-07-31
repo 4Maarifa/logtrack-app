@@ -7,12 +7,12 @@ import FileService from './../../../../services/file.service';
 import EmployeeService from './../.././../../services/entities/employee.service';
 
 import Icon from './../../../Utils/Icon/Icon';
+import Loader from './../../../Utils/Loader/Loader';
 import FormInput from './../../../Utils/FormElements/FormInput/FormInput';
 import FormInputFile from './../../../Utils/FormElements/FormInputFile/FormInputFile';
-import Loader from './../../../Utils/Loader/Loader';
+import Switch from './../../../Utils/FormElements/Switch/Switch';
 
 import { v4 as uuid } from 'uuid';
-import Switch from '../../../Utils/FormElements/Switch/Switch';
 
 /**
  * Component: AccountTab

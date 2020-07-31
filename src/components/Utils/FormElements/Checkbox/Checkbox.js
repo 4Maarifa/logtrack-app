@@ -37,7 +37,7 @@ const Checkbox = ({ value,
 
   return (
     <div className={'Checkbox '
-        + (fieldName ? 'input-' + fieldName : '')}>
+        + (fieldName ? 'input-' + fieldName : '') + (!label ? ' input--nolabel' : '')}>
 
       {/* Real checkbox, always hidden */}
       <input

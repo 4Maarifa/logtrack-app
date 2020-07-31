@@ -4,7 +4,7 @@ import { faChartPie, faPencil, faMapMarker, faRoute, faWrench, faPortrait, faWar
   faHands, faExclamationTriangle, faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import { Link } from 'react-router-dom';
 
-import Icon from '../../../Utils/Icon/Icon';
+import Icon from './../../../Utils/Icon/Icon';
 
 // All functionalities of LogTrack that are presented on Home
 const FUNCTIONALITIES = [

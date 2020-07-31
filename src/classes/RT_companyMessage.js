@@ -2,8 +2,8 @@ import React from 'react';
 import { faExclamationTriangle, faBellOn } from "@fortawesome/pro-solid-svg-icons";
 import { faTriangle, faBell } from '@fortawesome/pro-light-svg-icons';
 
-import Alerts from '../components/App/MenuBar/Alerts/Alerts';
-import Notifications from '../components/App/MenuBar/Notifications/Notifications';
+import Alerts from './../components/App/MenuBar/Alerts/Alerts';
+import Notifications from './../components/App/MenuBar/Notifications/Notifications';
 
 import { ERole } from './Role';
 
