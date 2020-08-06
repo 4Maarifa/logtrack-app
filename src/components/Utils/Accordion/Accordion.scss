@@ -24,6 +24,7 @@
       cursor: pointer;
 
       .Icon {
+        transform: rotate(180deg);
         transition: transform .5s;
       }
     }
@@ -39,7 +40,7 @@
       .item {
         &-header {
           .Icon {
-            transform: rotate(180deg);
+            transform: rotate(0deg);
           }
         }
         &-data {
@@ -47,6 +48,10 @@
           max-height: 100vh;
         }
       }
+    }
+
+    &--disabled .item-header {
+      cursor: not-allowed;
     }
   }
 }

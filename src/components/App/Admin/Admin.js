@@ -1,5 +1,6 @@
 import React from 'react';
-import { faComment, faUserHeadset, faStar, faTruck, faPlus } from '@fortawesome/pro-light-svg-icons';
+import { Link } from 'react-router-dom';
+import { faComment, faUserHeadset, faStar, faTruck, faPlus, faExternalLink } from '@fortawesome/pro-light-svg-icons';
 import { faComment as faCommentSolid, faUserHeadset as faUserHeadsetSolid, faStar as faStarSolid,
         faTruck as faTruckSolid } from '@fortawesome/pro-solid-svg-icons';
 
@@ -70,6 +71,19 @@ const Admin = () => (
           Model Creation
         </span>,
         content: () => <AdminEquipmentModelCreationTab />
+      },
+
+      clearfix2: {
+        clearfix: true
+      },
+      goToDevDoc: {
+        name: ({ isActive }) => <Link className={isActive ? '' : 'whiteLink'} to={'/dev-doc'} target="_blank">
+          <Icon source="fa" icon={faExternalLink} />
+          <span>Go to Dev Doc</span>
+        </Link>,
+        content: () => <span>
+          If the redirection didn't work, <a target="_blank" href="/">click here</a>.
+        </span>
       }
 
     }} isHorizontalLayout />

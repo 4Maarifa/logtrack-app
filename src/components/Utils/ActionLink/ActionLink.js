@@ -17,7 +17,7 @@ const ActionLink = ({ content, url, className }) => {
   // triggering the URL observer
   const triggerAction = () => {
     window.history.pushState({}, '', url);
-    UtilsService.updateObservers();
+    UtilsService.url.updateObservers();
   };
 
   return (

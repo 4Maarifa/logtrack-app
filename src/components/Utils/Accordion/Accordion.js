@@ -43,7 +43,7 @@ const Accordion = ({ default: defaultItem, items }) => {
             <span className="item-header">
               {/* Render the name */}
               {items[itemId].name({ isActive: itemId === activeItem })}
-              <Icon source="fa" icon={faChevronUp} />
+              {items[itemId].disabled ? null : <Icon source="fa" icon={faChevronUp} />}
             </span>
             <div className="item-data">
               {/* Render the content if active */}
