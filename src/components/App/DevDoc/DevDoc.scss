@@ -123,15 +123,24 @@
       position: absolute;
     }
 
-    .ActionList {
-      margin-left: 15rem;
+    .Tabs.Tabs--horizontal, .Map {
+      min-height: 30rem;
     }
 
-    .Range {
+    .Range, .ExTable, .FormTextarea, .FormInput, .FormAutoSuggestInput, .FormDebounceInput, 
+      .FormDebounceAutoSuggestInput, .Accordion, .FormInputFile, .Tabs, .Map, .LogTrackTimeline {
       width: 90%;
     }
 
-    .Tabs {
+    .ExTable, .Map {
+      margin-top: 1rem;
+    }
+
+    .Map ~ button {
+      margin-top: 1rem;
+    }
+
+    & > .Tabs {
       flex: 1;
       margin: 0;
       height: 100%;
