@@ -1339,7 +1339,7 @@ const DevDocComponentsTab = () => {
             </div>
             <div className="doc-code">
               <span className="doc-code-indicator">JavaScript</span>
-              <Code language="jsx" codeSnippet={``} />
+              <Code language="jsx" codeSnippet={`<LogTrackTimeline logtracks={computeLogTracks()} />`} />
             </div>
           </div>
           <span className="doc-example-desc">
