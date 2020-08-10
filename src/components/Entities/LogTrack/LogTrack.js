@@ -41,7 +41,8 @@ const LogTrack = ({ logtrack, employee, company, isPage }) => {
   }, []);
 
   if(!computed.initialized) { return null; }
-  if(!computed.activeRole || (computed.activeRole.companyId !== LOGTRACK_DATA.companyId && LOGTRACK_DATA.employeeId !== computed.user.uid)) {
+
+  if(LOGTRACK_DATA.companyId !== -1 && (!computed.activeRole || (computed.activeRole.companyId !== LOGTRACK_DATA.companyId && LOGTRACK_DATA.employeeId !== computed.user.uid))) {
       
     ErrorService.error(`You don't have right to view this!`);
     return <Redirect to={`/dashboard`} />;

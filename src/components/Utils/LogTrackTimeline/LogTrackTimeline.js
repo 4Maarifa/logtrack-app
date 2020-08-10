@@ -81,7 +81,7 @@ const LogTrackTimeline = ({ logtracks, isLoading }) => {
     const LOGTRACK_ACTIVITY_DETAILS = ELogTrackActivityDetails[logTrackData.activity];
 
     // comppute the width and the position of the logtrack
-    const LOGTRACK_WIDTH = DateService.getTimestampDifference(logTrackData.startTimestamp, logTrackData.endTimestamp || END_TIME) / DURATION_24H;
+    const LOGTRACK_WIDTH = DateService.getTimestampDifference(Math.max(logTrackData.startTimestamp, START_TIME), logTrackData.endTimestamp || END_TIME) / DURATION_24H;
     const LOGTRACK_POSITION = DateService.getTimestampDifference(START_TIME, logTrackData.startTimestamp) / DURATION_24H;
 
     // Save the fact that this logtrack is also printed as a marker

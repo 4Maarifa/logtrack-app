@@ -26,6 +26,8 @@ const DateService = {
 
   // Get an ISO string from a JS date
   getIsoDateString: date => date.toISOString(),
+  // Get a TimeStamp from a JS date
+  getTimeStampNumber: date => +date,
 
   // Clone a JS date and return another JS date with no link between them (apart they are the same date)
   cloneDate: date => new Date(date.getTime()),

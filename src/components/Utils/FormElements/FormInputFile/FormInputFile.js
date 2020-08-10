@@ -19,7 +19,7 @@ import './FormInputFile.scss';
  * instructions: HTML | label of the input
  * imagePreview: boolean | tells if a file preview should be presented to user
  *   /!\ you have to set image accept parameter. If the selected file is not an image and this option is active, it may crash the component
- * value: object | value of the input, following the sturcutre: { file, url }
+ * value: object | value of the input, following the sturcture: { file, url }
  * onValueChange: function(value, fieldName) | Callback called each time the input value is modified. value is null if file is removed by user
  *   You have to set the value prop with the callback when you receive the onValueChange event
  */

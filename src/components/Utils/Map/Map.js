@@ -377,6 +377,13 @@ class Map extends Component {
     this.setState({nbFeatures: this.state.nbFeatures - 1});
   };
 
+  // delete all markers
+  deleteAllMarkers = () => {
+    this.markerVectorSource.clear();
+
+    this.setState({ nbFeatures: 0 });
+  };
+
   // center on a specific marker
   centerOnMarker = markerId => {
 

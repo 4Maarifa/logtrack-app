@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { faCheck, faTimes, faEdit } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Icon/Icon';
@@ -30,7 +30,7 @@ import { v4 as uuid } from 'uuid';
  * 1. The user enter a search term
  * 2. at each change, the callback onValueChange is called
  * 3. YOU have to compute the possibleItems, and set them
- * 4. the item proposes the different items
+ * 4. the input proposes the different items
  * 5. the user selects an item
  * 6. the callback onSelectedItemChange is called with the item data
  * 7. you save the value and pass it
@@ -99,13 +99,13 @@ const FormAutoSuggestInput = ({ value,
       }
 
       {/* If an item is selected, show the selected item */}
-      {selectedItemKey && selectedItem && 
+      {selectedItemKey && selectedItem ? 
         <div className="selected-item">
           {selectedItem.content}
           <span className="action" onClick={reset}>
             <Icon source="fa" icon={faEdit} />
           </span>
-        </div>
+        </div> : null
       }
 
       {/* Generating a hidden input for validation purposes */}
@@ -116,14 +116,14 @@ const FormAutoSuggestInput = ({ value,
         value={selectedItemKey} />
 
       {/* If no item is selected and some items are proposed, show also the possible items */}
-      {!selectedItemKey && possibleItems && Object.keys(possibleItems).length && 
+      {!selectedItemKey && possibleItems && Object.keys(possibleItems).length ? 
         <ul className="items">
           {Object.keys(possibleItems).map(key =>
             <li key={key} onClick={() => onItemChange(key)}>
               {possibleItems[key].content}
             </li>
           )}
-        </ul>
+        </ul> : null
       }
 
       {/* Validation indicator. Used to tell the user if the input is valid or not at all times */}

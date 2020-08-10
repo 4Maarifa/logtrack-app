@@ -59,6 +59,65 @@ import ErrorService from './../../../services/error.service';
 
 import './Icon.scss';
 
+
+/* Declaring all custom icons */
+export const CUSTOM_ICONS = {
+  Brake,
+  BrakeDisk,
+  BrakeDrum,
+  BrakePad,
+  BrakeMasterCylinder,
+  CarDoor,
+  CarMirror,
+  CarSeat,
+  CarSideWindow,
+  Coil,
+  ColdGaz,
+  ConstructionMaterial,
+  Differential,
+  DoorClose,
+  Doors,
+  ElectricEngine,
+  Engine,
+  Exhaust,
+  FifthWheel,
+  Fuel,
+  FuelPump,
+  Fuse,
+  Gearbox,
+  GearboxFork,
+  Gimbal,
+  Hinge,
+  Hook,
+  Hose,
+  Hydraulic,
+  Injector,
+  Load,
+  Obd,
+  Rim,
+  Rocks,
+  Rope,
+  Sensor,
+  Shaft,
+  ShockAbsorber,
+  SilentBloc,
+  Spring,
+  Support,
+  SuspensionLeaf,
+  SuspensionTriangle,
+  Tire,
+  TrailerHarness,
+  TrailerHook,
+  Winch,
+  Windshield,
+
+  EnterKey,
+  LogTrack,
+  LogTrackAlt,
+  LogTrackAlt2
+};
+
+
 /**
  * Component: Icon
  * Shows an icon.
@@ -74,63 +133,6 @@ import './Icon.scss';
  * otherProps: object | other props to be passed to the icon. See FA docs for more
  */
 const Icon = ({ source, containerclassname, icon, additionalSource, additional, ...otherProps }) => {
-
-  /* Declaring all custom icons */
-  const CUSTOM_ICONS = {
-    Brake,
-    BrakeDisk,
-    BrakeDrum,
-    BrakePad,
-    BrakeMasterCylinder,
-    CarDoor,
-    CarMirror,
-    CarSeat,
-    CarSideWindow,
-    Coil,
-    ColdGaz,
-    ConstructionMaterial,
-    Differential,
-    DoorClose,
-    Doors,
-    ElectricEngine,
-    Engine,
-    Exhaust,
-    FifthWheel,
-    Fuel,
-    FuelPump,
-    Fuse,
-    Gearbox,
-    GearboxFork,
-    Gimbal,
-    Hinge,
-    Hook,
-    Hose,
-    Hydraulic,
-    Injector,
-    Load,
-    Obd,
-    Rim,
-    Rocks,
-    Rope,
-    Sensor,
-    Shaft,
-    ShockAbsorber,
-    SilentBloc,
-    Spring,
-    Support,
-    SuspensionLeaf,
-    SuspensionTriangle,
-    Tire,
-    TrailerHarness,
-    TrailerHook,
-    Winch,
-    Windshield,
-
-    EnterKey,
-    LogTrack,
-    LogTrackAlt,
-    LogTrackAlt2
-  };
 
   const printAdditionalIcon = () => {
     if(!additional || !additionalSource) {
