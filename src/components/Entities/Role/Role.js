@@ -12,7 +12,12 @@ import { v4 as uuid } from 'uuid';
 
 import './Role.scss';
 
-
+/**
+ * Component: role
+ * Print details about a role
+ * 
+ * Pass a fully loaded role
+ */
 const Role = ({ role }) => {
   if(!role) { return null; }
 
@@ -20,11 +25,17 @@ const Role = ({ role }) => {
     ROLE_DATA = role[ROLE_ID];
   
   const OBSERVER_KEY = uuid();
-  const [actions, setActions] = useState(null);
+
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
+  
+  // Actions available for that role
+  // State for them as they may update depending on current role and other things
+  const [actions, setActions] = useState(null);
 
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
+
+    // Observing actions on that particular role
     RoleService.observeActions(role, setActions, OBSERVER_KEY);
     return () => {
       DataService.computed.unobserveComputedValues(OBSERVER_KEY);
@@ -43,8 +54,13 @@ const Role = ({ role }) => {
      data-id={ROLE_ID}>
 
       <span>
+        {/* Role icon */}
         <Icon source="fa" icon={ERoleDetails[ROLE_DATA.role].icon} />
+
+        {/* Role name */}
         {ERoleDetails[ROLE_DATA.role].name}
+
+        {/* If role is the active role for current user, say it's the one that's active */}
         {computed.employee && computed.employee.activeRoleId === ROLE_ID && <span className="badge">active</span> }
       </span>
       {actions}

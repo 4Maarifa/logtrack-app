@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { faTruck } from '@fortawesome/pro-solid-svg-icons';
+import { faTruck } from '@fortawesome/pro-light-svg-icons';
+import { faTruck as faTruckSolid } from '@fortawesome/pro-solid-svg-icons';
 
 import ErrorService from './../../../services/error.service';
 import EquipmentService from './../../../services/entities/equipment.service';
-import EquipmentModelService from './../../../services/entities/equipmentModel.service';
 
 import Loader from './../../Utils/Loader/Loader';
 import Tabs from './../../Utils/Tabs/Tabs';
@@ -16,26 +16,28 @@ import './EquipmentPage.scss';
 /**
  * Component: EquipmentPage
  * Use by everyone to see details about an equipment
+ * 
+ * You have to pass an equipment id
  */
 const EquipmentPage = ({ match }) => {
   const EQUIPMENT_ID = match.params.equipmentid;
 
+  // equipmnent
   const [equipment, setEquipment] = useState(null);
-  const [equipmentModel, setEquipmentModel] = useState(null);
 
   useEffect(() => {
+
+    // get the equipment
     EquipmentService.get(EQUIPMENT_ID)
       .then(equipmentDoc => {
-        setEquipment(equipmentDoc.data());
-        
-        EquipmentModelService.get(equipmentDoc.data().equipmentModelId)
-          .then(equipmentModelDoc => setEquipmentModel(equipmentModelDoc.data()))
-          .catch(ErrorService.manageError);
+
+        // save the equipment
+        setEquipment(equipmentDoc.data());;
       })
       .catch(ErrorService.manageError);
   }, []);
 
-  if(!equipment || !equipmentModel) {
+  if(!equipment) {
     return (
       <div className="EquipmentPage">
         <Loader />
@@ -45,12 +47,12 @@ const EquipmentPage = ({ match }) => {
   return (
     <div className="EquipmentPage">
       <div className="Element Element--page">
-        <Equipment equipment={{[EQUIPMENT_ID]: equipment}} equipmentModel={{[equipment.equipmentModelId]: equipmentModel}} isPage />
+        <Equipment equipment={{[EQUIPMENT_ID]: equipment}} isPage />
       </div>
       <Tabs default="equipments" tabs={{
         equipments: {
-          name: () => <span>
-            <Icon source="fa" icon={faTruck} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faTruckSolid : faTruck} />
             Equipment details
           </span>,
           content: () => null

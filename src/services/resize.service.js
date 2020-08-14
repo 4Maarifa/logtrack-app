@@ -1,17 +1,18 @@
 
+import ObserverService from './observer.service';
+import UserAgentService from './useragent.service';
+
+/**
+ * Service: ResizeService
+ * Listen for resize and reload events
+ */
 const ResizeService = {
-  _observers: {},
-  addObserver: (observerCallback, observerKey) => {
-    ResizeService._observers[observerKey] = observerCallback;
-    observerCallback();
-    return observerKey;
-  },
-  removeObserver: observerKey => {
-    delete ResizeService._observers[observerKey];
-    ResizeService._observers[observerKey] = null;
-  },
-  updateObservers: () => Object.values(ResizeService._observers)
-    .forEach(observer => observer && (typeof observer === 'function') && observer())
+  size: {
+    height: UserAgentService.getScreenProperties().height.inner,
+    width: UserAgentService.getScreenProperties().width.inner
+  }
 };
+
+ObserverService.initialize(ResizeService, 'RESIZE', {});
 
 export default ResizeService;

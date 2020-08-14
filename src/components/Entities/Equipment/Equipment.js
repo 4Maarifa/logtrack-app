@@ -1,21 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { faEdit } from '@fortawesome/pro-solid-svg-icons';
+import { faEdit } from '@fortawesome/pro-light-svg-icons';
 
 import ActionList from './../../Utils/ActionList/ActionList';
 import Icon from './../../Utils/Icon/Icon';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
+import Radio from './../../Utils/FormElements/Radio/Radio';
+import Checkbox from './../../Utils/FormElements/Checkbox/Checkbox';
 
 import DataService from './../../../services/data.service';
 import UtilsService from './../../../services/utils.service';
 
-import { EEquipmentModelSubTypeDetails } from './../../../classes/EquipmentModel';
+import { EEquipmentModelDetails, EEquipmentModelSubTypeDetails } from './../../../classes/enums/EEquipmentModel';
 import { ERole } from './../../../classes/Role';
 
 import { v4 as uuid } from 'uuid';
 
 import './Equipment.scss';
 
-const Equipment = ({ equipment, equipmentModel, isPage }) => {
+/**
+ * Component: Equipment
+ * Print equipment details
+ * 
+ * You have to pass the related equipment model, fully popuplated!
+ */
+const Equipment = ({ equipment, isPage, selection }) => {
 
   const OBSERVER_KEY = uuid();
 
@@ -29,15 +37,16 @@ const Equipment = ({ equipment, equipmentModel, isPage }) => {
   if(!computed.initialized) { return null; }
   if(!equipment) { return null; }
 
-  
+  // Parse data
   const EQUIPMENT_ID = Object.keys(equipment)[0],
     EQUIPMENT_DATA = equipment[EQUIPMENT_ID],
-    EQUIPMENT_MODEL_DATA = equipmentModel[Object.keys(equipmentModel)[0]];
+    EQUIPMENT_MODEL_DATA = EEquipmentModelDetails[EQUIPMENT_DATA.equipmentModelId];
 
   /** 
    * RENDER
    */
 
+  // Compute actions
   const ACTIONS = [];
   if(computed.activeRole.role === ERole.MANAGER && EQUIPMENT_DATA.companyId === computed.activeRole.companyId) {
     ACTIONS.push({title: 'Edit', icon: <Icon source="fa" icon={faEdit} />, link: `/equipment-edit/${EQUIPMENT_ID}`});
@@ -46,18 +55,44 @@ const Equipment = ({ equipment, equipmentModel, isPage }) => {
   return (
     <div className="Equipment Element-content">
       <div className="Element-base">
-        <span className={'Element-badge badge ' + (isPage ? 'badge-inverse' : '')}>{EEquipmentModelSubTypeDetails[EQUIPMENT_MODEL_DATA.type][EQUIPMENT_MODEL_DATA.subType].icon}</span>
+
+        {/* Print badge of the equipment model's type */}
+        <span className={'Element-badge badge ' + (isPage ? 'badge-inverse' : '')} title={EEquipmentModelSubTypeDetails[EQUIPMENT_MODEL_DATA.type][EQUIPMENT_MODEL_DATA.subType].name}>
+          {EEquipmentModelSubTypeDetails[EQUIPMENT_MODEL_DATA.type][EQUIPMENT_MODEL_DATA.subType].icon}
+        </span>
+
+        {selection ?
+          <div className="Element-selection">
+            {selection.multiple ? 
+              <Checkbox
+                value={selection.selected === EQUIPMENT_ID}
+                fieldName={EQUIPMENT_ID}
+                inputName="Equipment"
+                onValueChange={selection.setSelected} /> :
+              <Radio
+                value={selection.selected}
+                fieldName={EQUIPMENT_ID}
+                inputName="Equipment"
+                onValueChange={selection.setSelected} />}
+          </div>
+        : null}
+
         <div className="Element-photo">
+          {/* Print equipment model picture */}
           <img
             alt={EQUIPMENT_MODEL_DATA.name} 
-            src={EQUIPMENT_MODEL_DATA.photoUrl} />
+            src={EQUIPMENT_MODEL_DATA.image} />
         </div>
+
+        {/* Equipment details */}
         <div className="Element-data">
           <span className="Element-title">
             <PageLink type={PageLinkType.EQUIPMENT} entityId={EQUIPMENT_ID} entityData={EQUIPMENT_DATA} white={isPage} />
           </span>
           <span className="sub">{EQUIPMENT_MODEL_DATA.name}</span>
         </div>
+
+        {/* Equipment actions */}
         <div className="Element-actions">
           <ActionList actions={ACTIONS} isFlatten={isPage} />
         </div>
@@ -66,6 +101,7 @@ const Equipment = ({ equipment, equipmentModel, isPage }) => {
   );
 };
 
+// FSS for equipments (used to filter, search and sort equipments) => sort on identification, search on identification
 export const equipmentsExTableFSS = {
   sort: {
     identification: {

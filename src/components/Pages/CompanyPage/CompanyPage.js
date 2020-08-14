@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { faUsers, faTruck, faWarehouseAlt, faClipboardUser } from '@fortawesome/pro-solid-svg-icons';
+import { faUsers, faTruck, faWarehouseAlt, faClipboardUser } from '@fortawesome/pro-light-svg-icons';
+import { faUsers as faUsersSolid, faTruck as faTruckSolid, faWarehouseAlt as faWarehouseAltSolid } from '@fortawesome/pro-solid-svg-icons';
 
 import DataService from './../../../services/data.service';
 import CompanyService from './../../../services/entities/company.service';
@@ -23,31 +24,34 @@ import './CompanyPage.scss';
 /**
  * Component: CompanyPage
  * Use by everyone to see details about a company (warehouses / equipments / employees)
+ * 
+ * You have to pass the company's id
  */
 const CompanyPage = ({ match }) => {
   const COMPANY_ID = match.params.companyid;
 
+  // Company entity
   const [company, setCompany] = useState(null);
 
+  // Number of job offers related to that company
   const [nbJobOffers, setNbJobOffers] = useState(0);
 
   const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  const computeCompany = () => {
-    CompanyService.get(COMPANY_ID)
-      .then(companyDoc => setCompany(companyDoc.data()))
-      .catch(ErrorService.manageError);
-
-    CompanyService.jobOffer.countOpenedForCompanyId(COMPANY_ID)
-      .then(setNbJobOffers)
-      .catch(ErrorService.manageError);
-  };
-
   useEffect(() => {
     if(computed.initialized) {
-      computeCompany();
+
+      // Get company details
+      CompanyService.get(COMPANY_ID)
+        .then(companyDoc => setCompany(companyDoc.data()))
+        .catch(ErrorService.manageError);
+
+      // Get number of opened job offers
+      CompanyService.jobOffer.countOpenedForCompanyId(COMPANY_ID)
+        .then(setNbJobOffers)
+        .catch(ErrorService.manageError);
     }
   }, [computed]);
 
@@ -65,7 +69,7 @@ const CompanyPage = ({ match }) => {
   if(!company) {
     return <div className="CompanyPage">
       <Loader />
-    </div>
+    </div>;
   }
 
   return (
@@ -73,6 +77,8 @@ const CompanyPage = ({ match }) => {
       <div className="Element Element--page">
         <Company key={COMPANY_ID} company={ {[COMPANY_ID]: company} } options={{ }} showDetails isPage />
       </div>
+
+      {/* Job offers section */}
       {nbJobOffers ? 
         <NavLink className="Element Element--row joboffers" to={`/jobs/${COMPANY_ID}`}>
           <div className="Element-base">
@@ -85,24 +91,26 @@ const CompanyPage = ({ match }) => {
           </div>
         </NavLink>
       : null}
+
+      {/* Company details */}
       <Tabs default="warehouses" tabs={{
         warehouses: {
-          name: () => <span>
-            <Icon source="fa" icon={faWarehouseAlt} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faWarehouseAltSolid : faWarehouseAlt} />
             Warehouses
           </span>,
           content: () => <CompanyWarehousesTab companyId={COMPANY_ID} />
         },
         employees: {
-          name: () => <span>
-            <Icon source="fa" icon={faUsers} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faUsersSolid : faUsers} />
             Employees
           </span>,
           content: () => <CompanyEmployeesTab companyId={COMPANY_ID} />
         },
         equipments: {
-          name: () => <span>
-            <Icon source="fa" icon={faTruck} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faTruckSolid : faTruck} />
             Equipments
           </span>,
           content: () => <CompanyEquipmentsTab companyId={COMPANY_ID} />

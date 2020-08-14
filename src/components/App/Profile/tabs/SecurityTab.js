@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { faKey, faSignIn, faLock } from '@fortawesome/pro-solid-svg-icons';
+import { faKey, faSignIn, faLock } from '@fortawesome/pro-light-svg-icons';
 
 import FirebaseService from './../../../../services/firebase.service';
 import DataService from './../../../../services/data.service';
@@ -9,7 +9,7 @@ import EmployeeService from './../.././../../services/entities/employee.service'
 
 import Icon from './../../../Utils/Icon/Icon';
 import FormInput from './../../../Utils/FormElements/FormInput/FormInput';
-import ExTable from './../../../Utils/ExTable/ExTable';
+import ExTable, { EXTABLE_VIEWS } from './../../../Utils/ExTable/ExTable';
 
 import { AccountActivity, EAccountActivityType } from './../../../../classes/Employee';
 
@@ -17,36 +17,53 @@ import { EmployeeAccountActivity, employeeAccountActivityExTableFSS } from './..
 
 import { v4 as uuid } from 'uuid';
 
+/**
+ * Component: SecurityTab
+ * Tab of Profile Component
+ * 
+ * Password change and account activities
+ */
 const SecurityTab = () => {
 
   const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
+  // Account activities
   const [accountActivities, setAccountActivities] = useState([]);
   const [isAccountActivitiesLoading, setAccountActivitiesLoading] = useState(true);
 
+  // Password change form elements
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
 
+  // Password change handler
   const handleChangePasswordSubmit = event => {
     event.preventDefault();
 
+    // If both passwords does not match => error
     if(newPassword !== newPasswordConfirm) {
       ErrorService.manageError({code: 'auth/passwords-not-match'});
       return;
     }
 
+    // Requiring a new credential to change password (or any sensitive information anyway)
+    // passing the current password mentioned by user
     const CREDENTIAL = FirebaseService.getFirebaseObject().auth.EmailAuthProvider.credential(
       computed.user.email,
       currentPassword
     );
 
+    // Reauthenticate the user
     FirebaseService.getCurrentUser().reauthenticateWithCredential(CREDENTIAL)
       .then(() => {
+
+        // Update the password
         FirebaseService.getCurrentUser().updatePassword(newPassword)
           .then(() => {
+
+            //Create the account activity password change
             EmployeeService.accountActivity.create(
               new AccountActivity(
                 computed.user.email,
@@ -57,7 +74,11 @@ const SecurityTab = () => {
                 EAccountActivityType.PASSWORD_CHANGE)
             )
               .then(() => {
+
+                // Success: notify the user
                 ErrorService.success('Password modified!');
+
+                // and resetting password change form
                 setCurrentPassword('');
                 setNewPassword('');
                 setNewPasswordConfirm('');
@@ -72,7 +93,9 @@ const SecurityTab = () => {
 
   useEffect(() => {
     if(computed.initialized) {
-      EmployeeService.accountActivity.getAllByEmail(computed.user.email)
+
+      // Get all account activity by email
+      EmployeeService.accountActivity.getAllForCurrentUser()
         .then(accountActivities => {
           setAccountActivities(accountActivities);
           setAccountActivitiesLoading(false);
@@ -93,11 +116,17 @@ const SecurityTab = () => {
       <Icon source="fa" icon={faLock} />
       Security
     </h2>
+
+    {/* Password change section */}
     <h3>Change your password</h3>
     <form onSubmit={handleChangePasswordSubmit}>
       <div className="personal-info-line">
         <div className="input-container">
           {/* Current Password field */}
+          {/* Needed to reauchenticate user and make sure the user behind the screen knows the password and
+             1: does not try to take over an account where the user has forgot to sign out
+             2: does not try to take over an account using a stolen signed in token
+          */}
           <FormInput
             value={currentPassword}
             inputType="password"
@@ -120,6 +149,8 @@ const SecurityTab = () => {
             onValueChange={setCurrentPassword} />
         </div>
       </div>
+      
+      {/* new password fields */}
       <div className="personal-info-line">
         <div className="input-container">
           {/* Password field */}
@@ -170,19 +201,21 @@ const SecurityTab = () => {
       </div>
       <input type="submit" value="Change password" />
     </form>
+
+    {/* Account activities section */}
     <h2 className="profile-title">
       <Icon source="fa" icon={faSignIn} />
       Account Activity
     </h2>
-    <div className="personal-info-container">
+    <div className="ExTable-container">
       <ExTable key="accountActivities" 
               items={accountActivities}
+              defaultView={EXTABLE_VIEWS.CONDENSED}
               fss={employeeAccountActivityExTableFSS}
               renderItem={(_, activity) => <EmployeeAccountActivity activity={activity} />}
               loading={isAccountActivitiesLoading}
               header={<span><Icon source="fa" icon={faSignIn} /> Account Activity</span>}
-              isNoFrame
-              isSmallItems />
+              isNoFrame />
     </div>
   </div>;
 };

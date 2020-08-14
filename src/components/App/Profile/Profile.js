@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { faSignOut, faUser, faCog, faUserHeadset, faLock, faBug, faIndent, faUserCog, faDatabase, faPortrait } from '@fortawesome/pro-solid-svg-icons';
+import { faSignOut, faUser, faCog, faUserHeadset, faLock, faBug, faIndent, faUserCog, 
+  faDatabase, faPortrait } from '@fortawesome/pro-light-svg-icons';
+import { faUser as faUserSolid, faUserCog as faUserCogSolid, faLock as faLockSolid,
+  faBug as faBugSolid, faPortrait as faPortraitSolid, faUserHeadset as faUserHeadsetSolid,
+  faDatabase as faDatabaseSolid, faIndent as faIndentSolid, faCog as faCogSolid } from '@fortawesome/pro-solid-svg-icons';
 
 import Tabs from './../../Utils/Tabs/Tabs';
 import Icon from './../../Utils/Icon/Icon';
@@ -12,7 +16,7 @@ import DataService from './../../../services/data.service';
 import AccountTab from './tabs/AccountTab';
 import SecurityTab from './tabs/SecurityTab';
 import SupportTab from './tabs/SupportTab';
-import Debug from '../../Utils/Debug/Debug';
+import Debug from './../../Utils/Debug/Debug';
 import ProfessionalProfileTab from './../Jobs/tabs/ProfessionalProfileTab';
 import DataTab from './tabs/DataTab';
 import TermsTab from './tabs/TermsTab';
@@ -23,6 +27,10 @@ import { v4 as uuid } from 'uuid';
 
 import './Profile.scss';
 
+/**
+ * Component: Profile
+ * Used by everyone to access their account, settings and sign out
+ */
 const Profile = () => {
 
   const OBSERVER_KEY = uuid();
@@ -41,6 +49,7 @@ const Profile = () => {
    */
   return (
     <div className="Profile">
+      {/* Sign out link */}
       {computed.employee && computed.user &&
         <div>
           Welcome back, <PageLink type={PageLinkType.EMPLOYEE} entityId={computed.user.uid} entityData={computed.employee} />!
@@ -50,67 +59,69 @@ const Profile = () => {
           </Link>
         </div>
       }
-      <Tabs default="root" horizontalLayout tabs={{
+
+      {/* All links to different sections of the profile and settings */}
+      <Tabs default="root" isHorizontalLayout tabs={{
         root: {
-          name: () => <span>
-            <Icon source="fa" icon={faUserCog} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faUserCogSolid : faUserCog} />
             <span>Home</span>
           </span>,
           content: () => <ProfileRootTab />
         },
         account: {
-          name: () => <span>
-            <Icon source="fa" icon={faUser} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faUserSolid : faUser} />
             <span>Account</span>
           </span>,
           content: () => <AccountTab />
         },
         security: {
-          name: () => <span>
-            <Icon source="fa" icon={faLock} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faLockSolid : faLock} />
             <span>Security</span>
           </span>,
           content: () => <SecurityTab />
         },
         support: {
-          name: () => <span>
-            <Icon source="fa" icon={faUserHeadset} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faUserHeadsetSolid : faUserHeadset} />
             <span>Support</span>
           </span>,
           content: () => <SupportTab />
         },
         pro: {
-          name: () => <span>
-            <Icon source="fa" icon={faPortrait} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faPortraitSolid : faPortrait} />
             <span>Professional</span>
           </span>,
           content: () => <ProfessionalProfileTab />
         },
         settings: {
-          name: () => <span>
-            <Icon source="fa" icon={faCog} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faCogSolid : faCog} />
             <span>Settings</span>
           </span>,
           content: () => <SettingsTab />
         },
         clearfix: { clearfix: true },
         device: {
-          name: () => <span>
-            <Icon source="fa" icon={faBug} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faBugSolid : faBug} />
             <span>Debug</span>
           </span>,
           content: () => <Debug initialData={UserAgentService.getAll()} isLive />
         },
         terms: {
-          name: () => <span>
-            <Icon source="fa" icon={faIndent} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faIndentSolid : faIndent} />
             <span>Terms</span>
           </span>,
           content: () => <TermsTab />
         },
         data: {
-          name: () => <span>
-            <Icon source="fa" icon={faDatabase} />
+          name: ({ isActive }) => <span>
+            <Icon source="fa" icon={isActive ? faDatabaseSolid : faDatabase} />
             <span>Data</span>
           </span>,
           content: () => <DataTab />

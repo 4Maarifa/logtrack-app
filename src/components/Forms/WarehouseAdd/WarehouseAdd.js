@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { faRectangleWide, faMapMarker, faUser, faBuilding, faWarehouse } from '@fortawesome/pro-solid-svg-icons';
+import { faRectangleWide, faMapMarker, faUser, faBuilding, faWarehouse } from '@fortawesome/pro-light-svg-icons';
 
 import Map from './../../Utils/Map/Map';
 import Icon from './../../Utils/Icon/Icon';
@@ -22,73 +22,115 @@ import { v4 as uuid } from 'uuid';
 
 import './WarehouseAdd.scss';
 
+/**
+ * Component: WarehouseAdd
+ * Standalone form to add new warehouses or edit existing ones
+ * 
+ * pass an id if you want to edit a warehouse, otherwise the form is add
+ */
 const WarehouseAdd = ({ match }) => {
   const CURRENT_WAREHOUSE_ID = match.params.warehouseid;
 
+  // Current warehouse to be edited, popuplated on load if an id is passed
   const [currentWarehouse, setCurrentWarehouse] = useState(null);
 
+  // Creator data
   const [creator, setCreator] = useState(null);
   const [creatorId, setCreatorId] = useState(null);
 
+  // new warehouse id, set it to redirect the user once finished
   const [newWarehouseId, setNewWarehouseId] = useState(null);
 
+  // Form values
   const [identification, setIdentification] = useState('');
   const [nbLoadingDocks, setNbLoadingDocks] = useState(0);
 
+  // warehouse location autosuugest input
   const [possibleLocationsInput, setPossibleLocationsInput] = useState('');
   const [possibleLocations, setPossibleLocations] = useState({});
+  // selected location
   const [selectedLocationKey, setSelectedLocationKey] = useState('');
   const [selectedLocationItem, setSelectedLocationItem] = useState(null);
 
+  // if of the map marker that points to a location
   const [locationMarkerId, setLocationMarkerId] = useState(null);
 
+  // Reference to the map component
   const REF_MAP = useRef(null);
 
   const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
+  // Autosuggest location function
   const onLocationAutoCompleteChange = inputValue => {
+
+    // save input value
     setPossibleLocationsInput(inputValue);
 
+    // search for places
     GeoService.searchPlaces(inputValue, { addressdetails: 0 })
       .then(values => {
-        let newPossibleLocations = {};
+
+        // parse results
+        const NEW_POSSIBLE_LOCATIONS = {};
         values.forEach(value => {
+
+          // parse coordinates
           value.coordinates = GeoService.transformCoordinates([
             parseFloat(value.lon),
             parseFloat(value.lat)
           ]);
-          newPossibleLocations[value.osm_id] = {
+
+          // parse values to be printed into autosuggest input
+          NEW_POSSIBLE_LOCATIONS[value.osm_id] = {
             content: <span>
               {value.display_name}
             </span>,
             value: value
           };
         });
-        setPossibleLocations(newPossibleLocations);
+
+        // set data for autosuggest input to print values
+        setPossibleLocations(NEW_POSSIBLE_LOCATIONS);
       })
       .catch(ErrorService.manageError);
   };
 
+  // When a new location is selected
   const onSelectedLocationItem = (selectedLocationKey, _, selectedLocationItem) => {
+
+    // save it as selected location
     setSelectedLocationKey(selectedLocationKey);
     setSelectedLocationItem(selectedLocationItem);
 
     if(!selectedLocationItem) {
+
+      // If location was removed, delete marker and marker reference
       REF_MAP.current.deleteMarker(locationMarkerId);
       setLocationMarkerId(null);
       return;
     }
+    // else, if new location is selected
+
+    // If a marker is already present
     if(locationMarkerId) {
+
+      // move the marker to the new place, with new content
       REF_MAP.current.switchMarker(
         locationMarkerId,
         selectedLocationItem.value.coordinates[0],
         selectedLocationItem.value.coordinates[1],
         selectedLocationItem.value.display_name);
+
+      // then center the map on the moved marker
       centerOnLocationMarker();
     }
     else {
+
+      // otherwise, if no marker is present, create a new marker
+      // The map will center itself automatically on the newly created marker
+      // Then, save the unique marker id for further reference
       setLocationMarkerId(REF_MAP.current.addMarker(
         selectedLocationItem.value.coordinates[0],
         selectedLocationItem.value.coordinates[1],
@@ -96,8 +138,10 @@ const WarehouseAdd = ({ match }) => {
     }
   };
 
+  // Center on marker
   const centerOnLocationMarker = () => locationMarkerId && REF_MAP.current.centerOnMarker(locationMarkerId);
 
+  // Form handler
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -106,18 +150,25 @@ const WarehouseAdd = ({ match }) => {
       return;
     }
 
+    // If edition mode
     if(currentWarehouse) {
+
+      // Update only updatable fields
+      // Then, set the warehouse id to redirect user
       WarehouseService.updateField(CURRENT_WAREHOUSE_ID, {
         identification,
         latitude: selectedLocationItem.value.coordinates[0],
         longitude: selectedLocationItem.value.coordinates[1],
         address: selectedLocationItem.value.display_name,
         nbLoadingDocks
-      })
-        .then(() => setNewWarehouseId(CURRENT_WAREHOUSE_ID))
-        .catch(ErrorService.manageError);        
+      }).then(() => setNewWarehouseId(CURRENT_WAREHOUSE_ID)
+      ).catch(ErrorService.manageError);        
     }
     else {
+      // Add mode
+
+      // Create the new warehouse with form data
+      // Then, set the warehouse id to redirect the user
       WarehouseService.create(
         new Warehouse(
           identification, 
@@ -127,25 +178,35 @@ const WarehouseAdd = ({ match }) => {
           computed.activeRole.companyId, 
           computed.user.uid, 
           DateService.getCurrentIsoDateString(),
-          nbLoadingDocks))
-        .then(warehouseDoc => setNewWarehouseId(warehouseDoc.id))
-        .catch(ErrorService.manageError);
+          nbLoadingDocks)
+      ).then(warehouseDoc => setNewWarehouseId(warehouseDoc.id)
+      ).catch(ErrorService.manageError);
     }
   };
   
+  // When the marker id is changed, center automatically the map
   useEffect(() => {
     centerOnLocationMarker()
   }, [locationMarkerId]);
 
   useEffect(() => {
     if(computed.initialized) {
+      
+      // If an id is passed
       if(CURRENT_WAREHOUSE_ID) {
+
+        // Load the corresponding warehouse
         WarehouseService.get(CURRENT_WAREHOUSE_ID)
           .then(warehouseDoc => {
+
+            // Then, save it for further uses
             setCurrentWarehouse(warehouseDoc.data());
+
+            // and update form values
             setIdentification(warehouseDoc.data().name);
             setNbLoadingDocks(warehouseDoc.data().nbLoadingDocks);
   
+            // Also, save the current location, as well as create the location marker
             onSelectedLocationItem('CURRENT', null, {
               content: <span>{warehouseDoc.data().address}</span>,
               value: {
@@ -154,8 +215,11 @@ const WarehouseAdd = ({ match }) => {
               }
             });
   
+            // Get the creator details
             EmployeeService.get(warehouseDoc.data().creator)
               .then(employeeDoc => {
+
+                // save creator
                 setCreatorId(employeeDoc.id);
                 setCreator(employeeDoc.data());
               })
@@ -164,6 +228,7 @@ const WarehouseAdd = ({ match }) => {
           .catch(ErrorService.manageError);
       }
       else {
+        // set creator as current user
         setCreatorId(computed.user.uid);
         setCreator(computed.employee);
       }
@@ -195,13 +260,15 @@ const WarehouseAdd = ({ match }) => {
   }
 
   if(newWarehouseId) {
-    let dashboardUrl = '/dashboard';
-    return <Redirect to={dashboardUrl} />;
+    // When new id is set, redirect the user
+    return <Redirect to={`/dashboard`} />;
   }
 
   return (
     <div className="WarehouseAdd">
       <h1>{currentWarehouse ? `Edit "${currentWarehouse.name}" warehouse` : 'Add  a Warehouse'}</h1>
+
+      {/* Warehouse add form */}
       <form onSubmit={handleSubmit}>
         
         {/* Identification */}
@@ -272,6 +339,7 @@ const WarehouseAdd = ({ match }) => {
             <Icon source="fa" icon={faUser} />
             Creator
           </span>
+          {/* Employee pagelink */}
           <PageLink type={PageLinkType.EMPLOYEE} entityId={creatorId} entityData={creator} />
         </div>
 

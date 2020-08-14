@@ -11,10 +11,12 @@
 
     .icon--on {
       color: var(--theme);
+      display: inline;
     }
   
     .icon--off {
       color: var(--theme);
+      display: inline;
     }
 
     span {

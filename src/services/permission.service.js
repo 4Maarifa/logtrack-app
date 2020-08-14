@@ -1,102 +1,102 @@
 
 import ErrorService from './error.service';
+import ObserverService from './observer.service';
 
+const GEOLOCATION_API_OPTIONS = { enableHighAccuracy: true, timeout: 10000, maximumAge: 5000 };
+
+/**
+ * Service: PermissionService
+ * Service that manages browser permissions
+ */
 const PermissionService = {
+
+  // Loaction permission
   location: {
+
+    // save if permission is granted or not
     __granted: false,
+
+    // location listeneres
     __observers: {},
+
+    // Watcher id for permission
     __watchId: null,
 
+    // Ask the location permission
     askPermission: () => {
+
+      // warning: if the user does not interact with the permission tooltip, the promise will stay opened
       return new Promise((resolve, reject) => {
+
+        // If browser is not compatible, reject
         if(!('geolocation' in navigator)) {
           return reject('Geolocation is not compatible with your browser');
         }
   
+        // if permission is already granted, resolve
         if(PermissionService.location.__granted) {
           return resolve();
         }
+
+        // ask for permission
         navigator.permissions.query({name: 'geolocation'}).then(result => {
+
+          // listen for permission result 
           PermissionService.location.__onLocationPermissionChanged(result, resolve, reject);
         });
       });
     },
+
+    // When the location permission changed
+    __onLocationPermissionChanged: (result, resolve, reject) => {
+
+      // if the permission is granted
+      if(result.state === 'granted') {
+
+        // save this
+        PermissionService.location.__granted = true;
+
+        // and resolve
+        resolve && resolve();
+      }
+      else if(result.state === 'prompt') {
+
+        // If the prompt is re-opened, re-register this function as the location permission listener
+        result.onchange = PermissionService.location.__onLocationPermissionChanged;
+      }
+      else {
+
+        // else, permission is either in unknown state (not compatible) or denied, so reject
+        reject && reject('Location permission was denied');
+      }
+    },
+
+    // Get the location. Ask the permission first and wait for result!
     getLocation: () => {
       return new Promise((resolve, reject) => {
+
+        // If permission is not granted, it means that permission was not asked at first
         if(!PermissionService.location.__granted) {
           return reject('Location was asked before permission was given. Ask for location permission before trying to locate.');
         }
 
-        navigator.geolocation.getCurrentPosition(position => {
-          return resolve(position.coords);
-        });
+        // Else, if it is granted, get the current position
+        navigator.geolocation.getCurrentPosition(position => resolve(position.coords));
       });
-    },
-    addLocationObserver: (locationObserverCallback, observerKey) => {
-      return new Promise((resolve, reject) => {
-        
-        if(!PermissionService.location.__granted) {
-          return reject('Location Observation was asked before permission was given. Ask for location permission before trying to locate.');
-        }
+    }
+  },
 
-        PermissionService.location.__observers[observerKey] = locationObserverCallback;
-        if(PermissionService.location.__computeObserverNumber() >= 1) {
-          PermissionService.location.__watchLocation();
-        }
-        PermissionService.location.getLocation()
-          .then(positionCoords => PermissionService.location.__notifyLocationObservers(positionCoords))
-          .catch(ErrorService.manageError);
-        resolve(observerKey);
-      });
-    },
-    removeLocationObserver: observerKey => {
-      if(!PermissionService.location.__observers[observerKey]) { return; }
-      delete PermissionService.location.__observers[observerKey];
-      PermissionService.location.__observers[observerKey] = null;
-      if(PermissionService.location.__computeObserverNumber() === 0) {
-        PermissionService.location.__unwatchLocation();
-      }
-    },
-    __watchLocation: () => {
-      if(!PermissionService.location.__granted) {
-        return;
-      }
-
-      PermissionService.location.__watchId = navigator.geolocation.watchPosition(
-        position => {
-          PermissionService.location.__notifyLocationObservers(position.coords);
-        },
-        ErrorService.manageError,
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 5000
-        });
-    },
-    __notifyLocationObservers: positionCoords => {
-      Object.values(PermissionService.location.__observers).forEach(observer => {
-        observer && observer(positionCoords);
-      });
-    },
-    __unwatchLocation: () => {
-      if(PermissionService.location.__watchId) {
-        navigator.geolocation.clearWatch(PermissionService.location.__watchId);
-      }
-    },
-    __onLocationPermissionChanged: (result, resolve, reject) => {
-      if(result.state === 'granted') {
-        PermissionService.location.__granted = true;
-        resolve && resolve();
-      }
-      else if(result.state === 'prompt') {
-        result.onchange = PermissionService.location.__onLocationPermissionChanged;
-      }
-      else {
-        reject && reject('Location permission was denied');
-      }
-    },
-    __computeObserverNumber: () => Object.values(PermissionService.location.__observers).filter(obs => obs).length
-  }
+  _watcher: null,
+  _location: null
 };
+
+ObserverService.initialize(PermissionService, 'LOCATION', {
+  startWatcher: ({ updateObservers }) => PermissionService._watcher = navigator.geolocation.watchPosition(p => {
+    PermissionService._location = p;
+    updateObservers();
+  }, ErrorService.manageError, GEOLOCATION_API_OPTIONS),
+  endWatcher: () => navigator.geolocation.clearWatch(PermissionService._watcher),
+  getData: () => PermissionService._location
+});
 
 export default PermissionService;

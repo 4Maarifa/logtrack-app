@@ -50,10 +50,17 @@
           box-shadow: var(--shadow);
           background-color: var(--inverse);
           position: relative;
+          z-index: 1;
 
           &:nth-child(2) {
             z-index: 2;
             transform: scale(1.1);
+          }
+
+          &:nth-child(4) {
+            z-index: 0;
+            transform: scale(.9);
+            margin-left: -1rem;
           }
 
           .plan-icon {
@@ -89,10 +96,15 @@
             font-size: 85%;
             margin: .5rem 1rem;
             padding: 0;
+            flex: 1;
             list-style-type: none;
 
             li {
               padding: .2rem 0;
+
+              &:first-child {
+                margin-bottom: 1rem;
+              }
             }
 
             span {
@@ -128,18 +140,12 @@
         position: relative;
 
         svg {
-          display: none;
-        }
-
-        &.li--active {
-          svg {
-            height: 3rem;
-            width: 3rem;
-            display: block;
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-          }
+          height: 3rem;
+          width: 3rem;
+          display: block;
+          position: absolute;
+          top: 1rem;
+          left: 1rem;
         }
 
         .input-color-choice {

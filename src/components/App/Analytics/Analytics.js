@@ -5,7 +5,7 @@ import Chart from 'react-apexcharts';
 import ColorService from './../../../services/color.service';
 import DataService from './../../../services/data.service';
 
-import PageLink, { PageLinkType } from '../../Utils/PageLink/PageLink';
+import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 
 import { v4 as uuid } from 'uuid';
 
@@ -13,7 +13,7 @@ import './Analytics.scss';
 
 /**
  * Component: Analytics
- * Used by managers to see stats about logtracks
+ * Used by managers to see stats about logtracks, contracts, invoices...
  */
 const Analytics = () => {
   const GRAPHS = {
@@ -21,7 +21,7 @@ const Analytics = () => {
       options: {
         chart: { id: "basic-bar" },
         xaxis: { categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998] },
-        colors: [ColorService.getSecondColor()]
+        colors: [ColorService.getThemeColor()]
       },
       series: [ { name: "series-1", data: [30, 40, 45, 50, 49, 60, 70, 91] } ]
     },
@@ -34,7 +34,7 @@ const Analytics = () => {
             dataLabels: { value: { show: false } }
           }
         },
-        colors: [ColorService.getSecondColor()]
+        colors: [ColorService.getThemeColor()]
       },
       series: [70]
     },

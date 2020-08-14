@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg12"
+   version="1.1"
+   viewBox="0 0 79.188 79.188005"
+   height="79.188004"
+   width="79.188004">
+  <g
+     id="g10"
+     transform="translate(-692.132,-696.0365)">
+    <circle fill="currentColor"
+       id="circle2"
+       transform="translate(692.132,754.691)"
+       r="9.7550001"
+       cy="9.7550001"
+       cx="9.7550001" />
+    <circle fill="currentColor"
+       id="circle4"
+       transform="translate(751.81,697.06)"
+       r="9.7550001"
+       cy="9.7550001"
+       cx="9.7550001" />
+    <path fill="currentColor"
+       id="path6"
+       transform="translate(-6990.19,-12736.395)"
+       d="m 7731.673,13473.281 v 0 l -10.673,-11.051 20.006,-19.316 a 10.758,10.758 0 0 0 10.673,11.049 l -20,19.318 z" />
+    <path fill="currentColor"
+       id="path8"
+       transform="translate(-7029.87,-12705.441)"
+       d="m 7739.227,13477.627 v 0 0 a 10.755049,10.755049 0 0 0 -14.86,-15.552 l 35.286,-34.071 14.94,15.472 -35.365,34.153 v 0 z" />
+  </g>
+</svg>

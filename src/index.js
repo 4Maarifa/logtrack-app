@@ -2,45 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { 
-    // Vehicles
-    faTruck, faTruckMoving, faTruckPickup, faTruckContainer, faCarSide, faHelicopter, faPlane, faShip, faTrain, faShippingFast, faShippingTimed,
-    // Loading
-    faTruckRamp, faTruckLoading, faTruckCouch, faPersonDollyEmpty, faPersonDolly, faPersonCarry, faDolly, faDollyEmpty, faPeopleCarry,
-    faRampLoading, faConveyorBelt, faConveyorBeltAlt, faForklift, faInventory, faShare, faReply,
-    // Problems
-    faCarBattery, faCarBump, faCarCrash, faCarGarage, faCarMechanic, faCarTilt, faEngineWarning, faOilCan, faOilTemp, 
-    faTireFlat, faTirePressureWarning, faGasPumpSlash, faTrafficCone,
-    // Parts
-    faTire, faMicrochip, faLightbulbOn,
-    // Pause
-    faChargingStation, faGasPump, faPause, faBed, faUtensils, faWeight, faParking, faWeightHanging, faCarWash,
-    // Service
-    faArrowAltFromLeft, faArrowAltToRight, faToolbox,
-    // Date / Monitoring
-    faCalendar, faCalendarAlt, faCalendarCheck, faCalendarTimes, faClock, faCalendarExclamation, faDigitalTachograph, faTemperatureLow, 
-    faTemperatureHigh, faAnalytics, faCalendarDay, faReceipt,
-    // Merchandise
-    faArchive, faCarrot, faCookie, faLaptop, faTv, faAppleAlt, faBacon, faBreadLoaf, faCheese, faCheeseburger, faCorn, faEgg, 
-    faFish, faHamburger, faIceCream, faLemon, faMeat, faPie, faPizza, faPizzaSlice, faPumpkin,faSalad, faSoup, faSteak, 
-    faTurkey, faWheat, faCow, faPig, faElephant, faHorse, faHippo, faDuck, faMonkey, faRabbit, faRam, faSheep, faSnake, faTurtle, 
-    faBoxAlt, faBoxesAlt, faContainerStorage, faCouch, faCapsules, faWater, faFlowerTulip, faPallet, faPalletAlt, faPills, 
-    faPrescriptionBottle, faPrescriptionBottleAlt, faRecycle, faTrash, faSandwich, faTshirt, faCogs,
-    // Places
-    faMap, faMapMarker, faMapMarkerAlt, faMapMarkerCheck, faMapMarkerExclamation, faMapMarkerQuestion, faMapMarkerTimes, 
-    faMapSigns, faRoute, faMapMarked, faMapMarkedAlt, faAtlas, faGlobe, faLocationArrow, faRouteInterstate, faRouteHighway, 
-    faFlag, faFlagAlt, faFlagCheckered, faLocation, faLocationSlash, faLocationCircle, faRoad, faDirections, 
-    // Weather
-    faBolt, faCloud, faCloudDrizzle, faCloudHail, faCloudHailMixed, faCloudMoon, faCloudMoonRain, faCloudRain, faCloudRainbow, 
-    faCloudShowers, faCloudShowersHeavy, faCloudSleet, faCloudSnow, faCloudSun, faCloudSunRain, faClouds, faCloudsMoon, 
-    faCloudsSun, faFog, faMoon, faSmog, faSmoke, faSnowBlowing, faSnowflake, faSnowflakes, faStars, faRaindrops, faSun, faSunCloud, 
-    faSunDust, faSunHaze, faSunrise, faSunset, faThunderstorm, faTornado, faWind, faWindWarning, faWindsock,
-    // Roles
-    faUsers, faWrench, faSteeringWheel,
-
-} from '@fortawesome/pro-solid-svg-icons';
-
 import 'transportation-font/dist/transportation-font.css';
 
 // COMPONENTS
@@ -49,6 +10,8 @@ import Specs from './components/Utils/Specs/Specs';
 import Modal from './components/Utils/Modal/Modal';
 
 import Admin from './components/App/Admin/Admin';
+
+import DevDoc from './components/App/DevDoc/DevDoc';
 
 import Dashboard from './components/App/Dashboard/Dashboard';
 import Splash from './components/App/Splash/Splash';
@@ -81,11 +44,12 @@ import RoleOffer from './components/Forms/RoleOffer/RoleOffer';
 import Equipments from './components/App/Equipments/Equipments';
 import EquipmentAdd from './components/Forms/EquipmentAdd/EquipmentAdd';
 import EquipmentPage from './components/Pages/EquipmentPage/EquipmentPage';
-import EquipmentModelAdd from './components/Forms/EquipmentModelAdd/EquipmentModelAdd';
 
 import Contracts from './components/App/Contracts/Contracts';
 import ContractPage from './components/Pages/ContractPage/ContractPage';
 import ContractAdd from './components/Forms/ContractAdd/ContractAdd';
+
+import Invoices from './components/App/Invoices/Invoices';
 
 import Warehouses from './components/App/Warehouses/Warehouses';
 import WarehouseAdd from './components/Forms/WarehouseAdd/WarehouseAdd';
@@ -93,12 +57,17 @@ import WarehousePage from './components/Pages/WarehousePage/WarehousePage';
 
 import Gps from './components/App/Gps/Gps';
 
-import LogTrack from './components/App/LogTrack/LogTrack';
+import Maintenance from './components/App/Maintenance/Maintenance';
+
+import LogTracks from './components/App/LogTracks/LogTracks';
 import LogTrackAdd from './components/Forms/LogTrackAdd/LogTrackAdd';
 
 import Analytics from './components/App/Analytics/Analytics';
 
 import Search from './components/App/Search/Search';
+
+import Files from './components/App/Files/Files';
+
 
 // SERVICES
 import FirebaseService from './services/firebase.service';
@@ -114,43 +83,8 @@ import { v4 as uuid } from 'uuid';
 
 import './index.scss';
 
-// Vehicles
-library.add(faTruck, faTruckMoving, faTruckPickup, faTruckContainer, faCarSide, faHelicopter, faPlane, faShip, faTrain, faShippingFast, faShippingTimed);
-// Loading
-library.add(faTruckRamp, faTruckLoading, faTruckCouch, faPersonDollyEmpty, faPersonDolly, faPersonCarry, faDolly, faDollyEmpty, faPeopleCarry,
-    faRampLoading, faConveyorBelt, faConveyorBeltAlt, faForklift, faInventory, faShare, faReply);
-// Problems
-library.add(faCarBattery, faCarBump, faCarCrash, faCarCrash, faCarGarage, faCarMechanic, faCarTilt,faEngineWarning, faOilCan, faOilTemp, 
-    faTireFlat, faTirePressureWarning, faGasPumpSlash, faTrafficCone);
-// Parts
-library.add(faTire, faMicrochip, faLightbulbOn);
-// Pause
-library.add(faChargingStation, faGasPump, faPause, faBed, faUtensils, faWeight, faParking, faWeightHanging, faCarWash);
-// Service
-library.add(faArrowAltFromLeft, faArrowAltToRight, faToolbox);
-// Date / Monitoring
-library.add(faCalendar, faCalendarAlt, faCalendarCheck, faCalendarTimes, faClock, faCalendarExclamation, faDigitalTachograph, faTemperatureLow, 
-    faTemperatureHigh, faAnalytics, faCalendarDay, faReceipt);
-// Merchandise
-library.add(faArchive, faCarrot, faCookie, faLaptop, faTv, faAppleAlt, faBacon, faBreadLoaf, faCheese, faCheeseburger, faCorn, faEgg, 
-    faFish, faHamburger, faIceCream, faLemon, faMeat, faPie, faPizza, faPizzaSlice, faPumpkin,faSalad, faSoup, faSteak, 
-    faTurkey, faWheat, faCow, faPig, faElephant, faHorse, faHippo, faDuck, faMonkey, faRabbit, faRam, faSheep, faSnake, faTurtle, 
-    faBoxAlt, faBoxesAlt, faContainerStorage, faCouch, faCapsules, faWater, faFlowerTulip, faPallet, faPalletAlt, faPills, 
-    faPrescriptionBottle, faPrescriptionBottleAlt, faRecycle, faTrash, faSandwich, faTshirt, faCogs);
-// Places
-library.add(faMap, faMapMarker, faMapMarkerAlt, faMapMarkerCheck, faMapMarkerExclamation, faMapMarkerQuestion, faMapMarkerTimes, 
-    faMapSigns, faRoute, faMapMarked, faMapMarkedAlt, faAtlas, faGlobe, faLocationArrow, faRouteInterstate, faRouteHighway, 
-    faFlag, faFlagAlt, faFlagCheckered, faLocation, faLocationSlash, faLocationCircle, faRoad, faDirections);
-// Weather
-library.add(faBolt, faCloud, faCloudDrizzle, faCloudHail, faCloudHailMixed, faCloudMoon, faCloudMoonRain, faCloudRain, faCloudRainbow, 
-    faCloudShowers, faCloudShowersHeavy, faCloudSleet, faCloudSnow, faCloudSun, faCloudSunRain, faClouds, faCloudsMoon, 
-    faCloudsSun, faFog, faMoon, faSmog, faSmoke, faSnowBlowing, faSnowflake, faSnowflakes, faStars, faRaindrops, faSun, faSunCloud, 
-    faSunDust, faSunHaze, faSunrise, faSunset, faThunderstorm, faTornado, faWind, faWindWarning, faWindsock);
-
-// Roles
-library.add(faUsers, faWrench, faSteeringWheel);
-
 // Private route
+// This route could only be fetched when connected. Otherwise, return to SignIn component
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => (
         FirebaseService.isUserConnected()
@@ -160,6 +94,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 );
 
 // Role-limited Route
+// This route could only be fetched if an active role within the list is activated.
+// Otherwise, return to dashboard
 const RoleLimitedRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => (
         FirebaseService.isUserConnected()
@@ -172,12 +108,17 @@ const RoleLimitedRoute = ({ component: Component, ...rest }) => (
     )} />
 );
 
+// Override styles with the company color
 const styleOverride = () => {
+
+    // If the user specifically chose to hide company color, or do not have an active role, do nothing
     if(SettingsService.getSettingValue(ESettings.SETTINGS_CUSTOM_COLORS) === 'BASIC' || 
         !DataService.computed.activeRoleCompany || !DataService.computed.activeRoleCompany.color) {
         
         return null;
     }
+
+    // Otherwise, return the company color as theme, and compute a lighter theme color as well
     return <style>
         {`:root {
             --theme: ${DataService.computed.activeRoleCompany.color} !important;
@@ -196,8 +137,16 @@ const renderApp = () => {
     ReactDOM.render(
         <Router>
             <div className={'app-container ' + (SettingsService.getSettingValue(ESettings.SETTINGS_FULL_PAGE_LAYOUT) === 'FULL' ? 'app-container--full' : '')}>
+
+                {/* LogTrack navigation */}
                 <Navigation />
+
+                {/* LogTrack menubar */}
                 <MenuBar />
+                
+                {/* LogTrack modal, unique to the entire app */}
+                <Modal />
+
                 <div className="page_content">
                     <Route exact path="/" component={Splash} />
                     <Route exact path="/terms" render={props => <Splash {...props} page='terms' />} />
@@ -209,6 +158,8 @@ const renderApp = () => {
                     <Route exact path="/specs" component={Specs} />
 
                     <PrivateRoute exact path="/admin" component={Admin} />
+
+                    <Route exact path="/dev-doc" component={DevDoc} />
 
                     <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
@@ -246,12 +197,13 @@ const renderApp = () => {
                     <PrivateRoute exact path="/equipment/:equipmentid" component={EquipmentPage} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/equipment-add" component={EquipmentAdd} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/equipment-edit/:equipmentid" component={EquipmentAdd} />
-                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/equipment-model-add" component={EquipmentModelAdd} />
 
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contracts" component={Contracts} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contract/:contractid" component={ContractPage} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contract-add" component={ContractAdd} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contract-edit/:contractid" component={ContractAdd} />
+
+                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/invoices" component={Invoices} />
 
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/warehouses" component={Warehouses} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/warehouse-add" component={WarehouseAdd} />
@@ -259,32 +211,42 @@ const renderApp = () => {
                     <PrivateRoute exact path="/warehouse/:warehouseid" component={WarehousePage} />
 
                     <RoleLimitedRoute roles={[ERole.DRIVER]} exact path="/gps" component={Gps} />
+
+                    <RoleLimitedRoute roles={[ERole.MECHANIC]} exact path="/maintenance" component={Maintenance} />
                     
-                    <RoleLimitedRoute roles={[ERole.DRIVER, ERole.MECHANIC]} exact path="/logtrack" component={LogTrack} />
+                    <RoleLimitedRoute roles={[ERole.DRIVER, ERole.MECHANIC, ERole.MANAGER]} exact path="/logtracks" component={LogTracks} />
                     <RoleLimitedRoute roles={[ERole.DRIVER, ERole.MECHANIC]} exact path="/logtrack-add" component={LogTrackAdd} />
 
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/analytics" component={Analytics} />
 
                     <PrivateRoute exact path="/search" component={Search} />
+
+                    <PrivateRoute exact path="/files" component={Files} />
                 </div>
-                <Modal />
             </div>
+
+            {/* Print the overwritten styles here */}
             {styleOverride()}
+
         </Router>,
         document.getElementById('root'),
         () => {
+
+            // Update observers after first render, to request rerenders of aspect-ratio dependent components
             setTimeout(ResizeService.updateObservers, 550);
         });
 };
 
 
 // Service Initialization
-DataService.initialize();
+DataService.computeValues();
 RT_Service.initialize();
 
 const OBSERVER_KEY = uuid();
 
 DataService.computed.observeComputedValues(computedValues => {
+
+    // Once the computed values are loaded, render the app
     if(computedValues.initialized) {
         renderApp();
     }

@@ -44,11 +44,6 @@ service cloud.firestore {
       allow get, list: if isSignedIn(request) && resource.data.email == request.auth.token.email;
     }
     
-    match /brands/{brandId} {
-    	allow get, list: if isSignedIn(request);
-      allow create, update, delete: if false;
-    }
-    
     match /chats/{chatId} {
     	allow get, list: if isSignedIn(request)
       	&& request.auth.uid in resource.data.users;
@@ -121,12 +116,6 @@ service cloud.firestore {
       allow list, get: if isSignedIn(request);
     }
     
-    match /equipmentModels/{equipmentModelId} {
-    	allow get, list: if isSignedIn(request);
-      allow create: if isSignedIn(request) && request.resource.data.creator == request.auth.uid;
-    	allow update, delete: if false;
-    }
-    
   	match /equipments/{equipmentId} {
     	allow get, list: if isSignedIn(request);
       allow create, update: if isSignedIn(request) && 
@@ -153,7 +142,7 @@ service cloud.firestore {
       allow get, list: if isSignedIn(request) &&
       	isActiveRoleEqualsForCompany(
           getActiveRoleId(request.auth.uid), 
-          request.resource.data.companyId);
+          resource.data.companyId);
           
       allow create, update: if isSignedIn(request) &&
       	isActiveRoleEqualsForCompany(

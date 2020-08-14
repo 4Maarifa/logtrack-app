@@ -18,13 +18,14 @@
     "ol": "^6.1.1",
     "react": "^16.12.0",
     "react-apexcharts": "^1.3.3",
+    "react-code-blocks": "0.0.8",
     "react-datetime-picker": "^3.0.2",
     "react-delay-input": "^4.1.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "2.1.8",
     "toastr": "^2.1.4",
-    "transportation-font": "^1.2.0",
+    "transportation-font": "^1.6.0",
     "uuid": "^8.1.0"
   },
   "scripts": {

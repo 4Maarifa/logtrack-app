@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { faPhoneAlt, faInfoCircle, faExclamationTriangle, faEnvelope, faUserHeadset } from '@fortawesome/pro-solid-svg-icons';
+import { faPhoneAlt, faInfoCircle, faExclamationTriangle, faEnvelope, faUserHeadset } from '@fortawesome/pro-light-svg-icons';
 
 import DataService from './../../../../services/data.service';
 import DateService from './../../../../services/date.service';
@@ -9,19 +9,29 @@ import SupportService from './../../../../services/entities/support.service';
 
 import Icon from './../../../Utils/Icon/Icon';
 import ActionLink from './../../../Utils/ActionLink/ActionLink';
+import FormTextarea from './../../../Utils/FormElements/FormTextarea/FormTextarea';
 
 import { v4 as uuid } from 'uuid';
-import FormTextarea from '../../../Utils/FormElements/FormTextarea/FormTextarea';
 
+/**
+ * Component: SupportTab
+ * Tab of Profile Component
+ * 
+ * Used to send a support message to admins
+ */
 const SupportTab = () => {
 
+  // Support message form elements
   const [supportMessage, setSupportMessage] = useState('');
+
+  // Support message metadata
   const [supportMetadata, setSupportMetadata] = useState({});
 
   const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
+  // support message form handler
   const handleSubmitSupport = event => {
     event.preventDefault();
 
@@ -35,6 +45,8 @@ const SupportTab = () => {
 
   useEffect(() => {
     if(computed.initialized) {
+      // Once user is loaded, computing metadata:
+      // all user and active role metadata
       setSupportMetadata({
         userId: computed.user.uid,
         userName: computed.employee.firstname + ' ' + computed.employee.lastname,
@@ -55,6 +67,8 @@ const SupportTab = () => {
   if(!computed.initialized) { return null; }
 
   return <div className="tab-content tab-support">
+
+    {/* Phone support section. TODO: Phone support */}
     <h2 className="profile-title">
       <Icon source="fa" icon={faPhoneAlt} />
       Reach Phone Support
@@ -68,6 +82,7 @@ const SupportTab = () => {
       </a>
     </span>
     <span>Contact by phone will be available soon!</span>
+    {/* User's metadata (we have to print it because we might ask the user about it) */}
     <details>
         <summary>
           <Icon source="fa" icon={faInfoCircle} />
@@ -81,12 +96,15 @@ const SupportTab = () => {
           <span key={metadataKey}>{metadataKey} : {supportMetadata[metadataKey]}</span>
         )}
     </details>
+
+    {/* Support message section */}
     <h2 className="profile-title">
       <Icon source="fa" icon={faEnvelope} />
       Send us a message
     </h2>
     <form className="support-form" onSubmit={handleSubmitSupport}>
 
+      {/* User's message */}
       <FormTextarea
         inputName="supportMessage"
         value={supportMessage}
@@ -96,6 +114,8 @@ const SupportTab = () => {
           Your Message
         </span>}
         inputRequired />
+
+      {/* User's metadata (we have to print it to let the user know we will join this information) */}
       <details>
         <summary>
           <Icon source="fa" icon={faInfoCircle} />

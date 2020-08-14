@@ -14,6 +14,7 @@ import video_intersection_webm from './../../../assets/backgrounds/intersection_
 
 import './Splash.scss';
 
+// Render page accoring to the parameter
 const renderPage = page => {
   switch(page) {
     case 'terms':
@@ -33,6 +34,7 @@ const renderPage = page => {
   }
 };
 
+// Render footer
 const renderFooter = () => {
   return <footer>
     <Link to='/'>Home</Link>
@@ -45,9 +47,15 @@ const renderFooter = () => {
   </footer>;
 };
 
+/**
+ * Component: Splash
+ * SplashScreen of LogTrack
+ */
 const Splash = ({ page }) => {
   return (
     <div className="Splash">
+
+      {/* Header of Splash screen, with video and logo */}
       <div className="name-container">
         <video width="1280" height="720" autoPlay loop muted>
           <source src={video_intersection_webm} type="video/webm" />
@@ -73,7 +81,11 @@ const Splash = ({ page }) => {
           </svg>
           <span className="headline">Your everyday logistics partner</span>
         </div>
+
+        {/* Render page content */}
         {renderPage(page)}
+
+        {/* Footer */}
         {renderFooter()}
       </div>
     </div>

@@ -1,12 +1,12 @@
 import React from 'react';
 import { faChartPie, faPencil, faMapMarker, faRoute, faWrench, faPortrait, faWarehouseAlt,
   faUserTag, faHandshakeAlt, faFileInvoiceDollar, faTrafficCone, faCommentDots, faPalletAlt,
-  faHands, faExclamationTriangle } from '@fortawesome/pro-light-svg-icons';
-import { faInfoCircle } from '@fortawesome/pro-solid-svg-icons';
+  faHands, faExclamationTriangle, faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import { Link } from 'react-router-dom';
 
-import Icon from '../../../Utils/Icon/Icon';
+import Icon from './../../../Utils/Icon/Icon';
 
+// All functionalities of LogTrack that are presented on Home
 const FUNCTIONALITIES = [
   { title: 'Plan.', icon: faPencil, description: 'Plan and dispatch your missions accross your workers.' },
   { title: 'Ship.', icon: faPalletAlt, description: 'From initial need to effective delivery and invoicing. No surpises.' },
@@ -25,11 +25,17 @@ const FUNCTIONALITIES = [
   { title: 'Insurance, Accounting, Mechanics.', icon: faHands, description: 'All your partners, on LogTrack.' }
 ];
 
+/**
+ * Component: Home
+ * Page of Splash component
+ */
 const Home = () => {
   return (
     <div className="Home">
       <h1>Main Functionalities</h1>
       <div className="functionalities">
+
+        {/* List of all functionalities, along with their icon and name */}
         {FUNCTIONALITIES.map((functionality, index) => (
           <div className="functionality" key={functionality.title}>
             <span className="icon-wrapper">

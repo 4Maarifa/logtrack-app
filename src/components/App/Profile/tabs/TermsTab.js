@@ -2,6 +2,12 @@ import React from 'react';
 
 import Terms from './../../../Utils/Terms/Terms';
 
+/**
+ * Component: TermsTab
+ * Tab of Profile Component
+ * 
+ * TODO: Terms & Conditions
+ */
 const TermsTab = () => {
 
   /**

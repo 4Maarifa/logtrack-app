@@ -1,5 +1,5 @@
 import React from 'react';
-import { faInfoCircle } from '@fortawesome/pro-solid-svg-icons';
+import { faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 
 import DataService from './data.service';
 import ErrorService from './error.service';
@@ -18,40 +18,74 @@ import { ReactComponent as SettingsNavCollapsedExtended } from './../assets/sett
  * Used to read and write settings from user / employee
  */
 const SettingsService = {
+
+  // Tells if a setting update is already en-route. Mutex that prevent setting override themselves
   _settingsUpdating: false,
-  // Get a specific settings from uers
+
+  // Get a specific settings from the user
   getSettingValue: settingKey => {
+
+    // If a user is signedin and his settings could be loaded and contain the setting, return it
     if(DataService.computed.employee && DataService.computed.employee.settings && DataService.computed.employee.settings[settingKey]) {
       return DataService.computed.employee.settings[settingKey];
     }
+
+    // Otehrwise, return the default setting value
     return ESettingsDetails[settingKey].default;
   },
+
+  // Update a specific setting for the user
   updateSetting: (settingKey, settingValue) => {
+
+    // If settings are already updating, tell user and return
     if(SettingsService._settingsUpdating) {
       ErrorService.warning('Settings are already updating. Please wait and repeat your operation.');
       return;
     }
+
+    // Tells that user settings are updating
     SettingsService._settingsUpdating = true;
 
-    let settings = DataService.computed.employee.settings || {};
-    settings[settingKey] = settingValue;
+    // build new settings
+    const NEW_SETTINGS = DataService.computed.employee.settings || {};
+
+    // set new value
+    NEW_SETTINGS[settingKey] = settingValue;
 
     return new Promise((resolve, reject) => {
-      EmployeeService.updateField(DataService.computed.user.uid, {settings})
-        .then(() => DataService.computed.notifyChanges()
-          .then(() => {
-            ResizeService.updateObservers();
-            resolve();
+
+      // Update settings
+      EmployeeService.updateField(DataService.computed.user.uid, { settings: NEW_SETTINGS })
+        .then(() => 
+
+          // reload user with new settings
+          DataService.computed.notifyChanges()
+            .then(() => {
+
+              // Tells the settings are updated
+              ResizeService.updateObservers();
+              resolve();
+
+              // Free the mutext
+              SettingsService._settingsUpdating = false;
+            }))
+          .catch(e => {
+
+            // Else, if there was an error, throw it, reject
+            ErrorService.manageErrorThenReject(e, reject);
+
+            // and free the mutex
             SettingsService._settingsUpdating = false;
-          }))
-        .catch(e => {
-          ErrorService.manageErrorThenReject(e, reject);
-          SettingsService._settingsUpdating = false;
-        });
+          });
     });
   }
 };
 
+
+/**
+ * Enum: ESettings
+ * All the different settings
+ */
 export const ESettings = {
   SETTINGS_CUSTOM_COLORS: 'SETTINGS_CUSTOM_COLORS',
   SETTINGS_FULL_PAGE_LAYOUT: 'SETTINGS_FULL_PAGE_LAYOUT',
@@ -59,6 +93,14 @@ export const ESettings = {
   SETTINGS_DASHBOARD_WEATHER: 'SETTINGS_DASHBOARD_WEATHER'
 };
 
+
+/**
+ * Enum: ESettingsDetails
+ * Details of the enum ESettings
+ * title: HTML | printable setting text
+ * options: Array[ { value: string, print: function } ] | different possible values for this setting
+ * default: string | default value of the setting
+ */
 export const ESettingsDetails = {
   [ESettings.SETTINGS_CUSTOM_COLORS]: {
     title: <h2 className="profile-title">Company Colors</h2>,

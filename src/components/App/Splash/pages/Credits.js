@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 
 import UserAgentService from './../../../../services/useragent.service';
 
+/**
+ * Component: Credits
+ * Page of Splash component
+ */
 const Credits = () => {
   return (
     <div className="Credits">

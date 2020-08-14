@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect, NavLink } from 'react-router-dom';
-import { faEnvelope, faKey } from '@fortawesome/pro-solid-svg-icons';
+import { faEnvelope, faKey } from '@fortawesome/pro-light-svg-icons';
 
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
 import Icon from './../../Utils/Icon/Icon';
@@ -18,10 +18,16 @@ import { v4 as uuid } from 'uuid';
 
 import './SignIn.scss';
 
+/**
+ * Component: SignIn
+ * Used to sign in into LogTrack
+ */
 const SignIn = () => {
 
+  // User: populated on sign in
   const [user, setUser] = useState(null);
 
+  // Signin form inputs
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -34,9 +40,11 @@ const SignIn = () => {
     return () => DataService.computed.unobserveComputedValues(OBSERVER_KEY)
   }, []);
 
+  // Signin form handler
   const handleSubmit = event => {
     event.preventDefault();
 
+    // Save the account activity retrieving location and IP
     const registerAttempt = (user, isSuccess) => (
       GeoService.getApproximateLocation()
         .then(location => {
@@ -60,6 +68,7 @@ const SignIn = () => {
         .catch(ErrorService.manageError)
     );
 
+    // Try to signin
     FirebaseService.signIn(email, password)
       .then(user => registerAttempt(user, true))
       .catch(e => {
@@ -80,6 +89,8 @@ const SignIn = () => {
   return (
     <div className="SignIn">
       <h1>Sign In</h1>
+
+      {/* Signin form */}
       <form onSubmit={handleSubmit}>
 
         {/* E-Mail field */}
@@ -123,6 +134,8 @@ const SignIn = () => {
 
         <input type="submit" value="Sign In" />
       </form>
+
+      {/* Other links to related pages */}
       <NavLink className="signin-link" to={`/signup`}>Don't have an account yet?</NavLink>
       <NavLink className="signin-link" to={`/forgotten`}>Lost your password?</NavLink>
     </div>

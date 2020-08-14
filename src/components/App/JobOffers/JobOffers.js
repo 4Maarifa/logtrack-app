@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { faClipboardUser, faPlus, faCheck, faPortrait } from '@fortawesome/pro-solid-svg-icons';
+import { faClipboardUser, faPlus, faCheck } from '@fortawesome/pro-light-svg-icons';
+import { faClipboardUser as faClipboardUserSolid, faCheck as faCheckSolid } from '@fortawesome/pro-solid-svg-icons';
 
 import DataService from './../../../services/data.service';
 import CompanyService from './../../../services/entities/company.service';
@@ -26,6 +27,7 @@ import './JobOffers.scss';
  */
 const JobOffers = () => {
 
+  // All job offers
   const [openedJobOffers, setOpenedJobOffers] = useState(null);
   const [closedApplications, setClosedApplications] = useState(null);
   const [isJobOffersLoading, setJobOffersLoading] = useState(true);
@@ -36,10 +38,13 @@ const JobOffers = () => {
 
   useEffect(() => {
     if(computed.activeRole) {
+      // Getting all jobOffers for this company
       CompanyService.jobOffer.getAllForCompanyId(computed.activeRole.companyId)
         .then(jobOffers => {
           const NEW_OPENED_JOB_OFFERS = {};
           const NEW_CLOSED_JOB_OFFERS = {};
+
+          // Sorting job offers
           Object.keys(jobOffers).forEach(jobOfferId => {
             if(jobOffers[jobOfferId].status === EJobOfferStatus.CLOSED) {
               NEW_CLOSED_JOB_OFFERS[jobOfferId] = jobOffers[jobOfferId];
@@ -48,8 +53,12 @@ const JobOffers = () => {
               NEW_OPENED_JOB_OFFERS[jobOfferId] = jobOffers[jobOfferId];
             }
           });
+
+          // setting data
           setOpenedJobOffers(NEW_OPENED_JOB_OFFERS);
           setClosedApplications(NEW_CLOSED_JOB_OFFERS);
+
+          // triggering end of load
           setJobOffersLoading(false);
         })
         .catch(ErrorService.manageError);
@@ -74,21 +83,27 @@ const JobOffers = () => {
    */
   return <div className="JobOffers">
     <Tabs default="opened" tabs={{
+
+      // Opened job offers
       opened: {
-        name: () => <span>
-          <Icon source="fa" icon={faClipboardUser} />
+        name: ({ isActive }) => <span>
+          <Icon source="fa" icon={isActive ? faClipboardUserSolid : faClipboardUser} />
           Opened positions
         </span>,
         content: () => <ExTable key="opened"
                                 fss={jobsExTableFSS}
                                 items={openedJobOffers}
                                 renderItem={(itemId, itemData) => <JobOffer key={itemId} jobOffer={ {[itemId]: itemData} } />}
-                                header={<span><Icon source="fa" icon={faPortrait} /> Opened Positions</span>}
+                                header={<span><Icon source="fa" icon={faClipboardUser} /> Opened Positions</span>}
                                 loading={isJobOffersLoading} />
       },
+
+      // TODO: Private job offers
+
+      // Closed applications
       closed: {
-        name: () => <span>
-          <Icon source="fa" icon={faCheck} />
+        name: ({ isActive }) => <span>
+          <Icon source="fa" icon={isActive ? faCheckSolid : faCheck} />
           Closed applications
         </span>,
         content: () => <ExTable key="closed" 

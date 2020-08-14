@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { faTruck } from '@fortawesome/pro-solid-svg-icons';
+import { faTruck } from '@fortawesome/pro-light-svg-icons';
 
 import ErrorService from './../../../../services/error.service';
-import BrandService from './../../../../services/entities/brand.service';
-import EquipmentModelService from './../../../../services/entities/equipmentModel.service';
 import EquipmentService from './../../../../services/entities/equipment.service';
 
 import Icon from './../../../Utils/Icon/Icon';
@@ -13,27 +11,27 @@ import Equipment, { equipmentsExTableFSS } from './../../../Entities/Equipment/E
 
 /**
  * Component: CompanyEquipmentsTab
+ * Tab of CompanyPage
+ * 
+ * used to get and show company's equipments
+ * You have to pass the company id
  */
 const CompanyEquipmentsTab = ({ companyId }) => {
 
+  // company's equipments
   const [equipments, setEquipments] = useState({});
   const [isEquipmentsLoading, setEquipmentsLoading] = useState(true);
-  const [equipmentModels, setEquipmentModels] = useState({});
-  const [brands, setBrands] = useState({});
 
   useEffect(() => {
-    BrandService.list()
-      .then(setBrands)
-      .catch(ErrorService.manageError);
-
-    EquipmentModelService.list()
-      .then(setEquipmentModels)
-      .catch(ErrorService.manageError);
-
     if(companyId) {
+      // get all equipments of company
       EquipmentService.getAllForCompanyId(companyId)
         .then(equipments => {
+
+          // set equipments
           setEquipments(equipments);
+
+          // trigger end of load
           setEquipmentsLoading(false);
         })
         .catch(ErrorService.manageError);
@@ -43,18 +41,9 @@ const CompanyEquipmentsTab = ({ companyId }) => {
   /**
    * RENDER
    */
-  const renderEquipment = (itemId, itemData) => {
-    const EQUIPMENT_MODEL = { [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] }, 
-      BRAND = { [EQUIPMENT_MODEL[itemData.equipmentModelId].brand]: brands[EQUIPMENT_MODEL[itemData.equipmentModelId].brand] };
+  const renderEquipment = (itemId, itemData) => <Equipment key={itemId} equipment={ {[itemId]: itemData} } options={ {} } showDetails />;
 
-    return <Equipment key={itemId}
-      equipment={ {[itemId]: itemData} }
-      brand={BRAND}
-      equipmentModel={EQUIPMENT_MODEL}
-      options={ {} }
-      showDetails />
-  };
-
+  // render the equipments extable
   return <ExTable key="equipments"
                   fss={equipmentsExTableFSS}
                   items={equipments}

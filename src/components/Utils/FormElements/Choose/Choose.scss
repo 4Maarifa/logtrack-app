@@ -25,6 +25,13 @@
       border-radius: var(--border-radius);
       margin-right: .5rem;
 
+      &.li--disabled {
+        cursor: not-allowed;
+        border: 1px solid var(--gray);
+        color: var(--gray);
+        opacity: .8;
+      }
+
       &.li--active {
         background-color: var(--theme);
         color: var(--inverse);
@@ -33,12 +40,6 @@
           transition: color .5s;
           color: var(--inverse);
         }
-      }
-
-      &.li--disabled {
-        cursor: not-allowed;
-        border: 1px solid var(--gray);
-        color: var(--gray);
       }
 
       img {

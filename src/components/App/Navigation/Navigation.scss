@@ -45,6 +45,10 @@
       width: calc(100% - 1rem);
       position: relative;
 
+      .Icon.nav-icon--active {
+        display: none;
+      }
+
       &.nav--active {
         background-color: var(--light-gray);
         border-radius: var(--border-radius) 0 0 var(--border-radius);
@@ -73,6 +77,13 @@
           display: block;
           background-color: var(--light-gray);
           clip-path: polygon(0 0, 100% 0, 100% 100%, 90% 40%, 80% 20%, 60% 10%);
+        }
+
+        .Icon.nav-icon--active {
+          display: inline-flex;
+        }
+        .Icon.nav-icon--inactive {
+          display: none;
         }
       }
 

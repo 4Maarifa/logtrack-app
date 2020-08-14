@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { faTruck } from '@fortawesome/pro-solid-svg-icons'
+import { faTruck } from '@fortawesome/pro-light-svg-icons'
 
 import DataService from './../../../../services/data.service';
 import ErrorService from './../../../../services/error.service';
-import BrandService from './../../../../services/entities/brand.service';
-import EquipmentModelService from './../../../../services/entities/equipmentModel.service';
 import EquipmentService from './../../../../services/entities/equipment.service';
 
 import ExTable from './../../../Utils/ExTable/ExTable';
@@ -16,30 +14,27 @@ import { v4 as uuid } from 'uuid';
 
 /**
  * Component: WarehouseEquipmentsTab
+ * Tab of WarehousePage
  */
 const WarehouseEquipmentsTab = ({ warehouseId }) => {
 
+  // Related equipments of the warehouse
   const [equipments, setEquipments] = useState({});
   const [isEquipmentsLoading, setEquipmentsLoading] = useState(true);
-  const [equipmentModels, setEquipmentsModels] = useState({});
-  const [brands, setBrands] = useState({});
 
   const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  useEffect(() => {
-    BrandService.list()
-      .then(setBrands)
-      .catch(ErrorService.manageError);
-
-    EquipmentModelService.list()
-      .then(setEquipmentsModels)
-      .catch(ErrorService.manageError);
-    
+  useEffect(() => {    
+    // get all equipments for this warehouse
     EquipmentService.getAllForWarehouseId(warehouseId)
       .then(equipments => {
+        
+        // save them
         setEquipments(equipments);
+
+        // then trigger end of load
         setEquipmentsLoading(false);
       })
       .catch(ErrorService.manageError);
@@ -55,18 +50,9 @@ const WarehouseEquipmentsTab = ({ warehouseId }) => {
   /**
    * RENDER
    */
-  const renderEquipment = (itemId, itemData) => {
-    const EQUIPMENT_MODEL = { [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] }, 
-      BRAND = { [EQUIPMENT_MODEL[itemData.equipmentModelId].brand]: brands[EQUIPMENT_MODEL[itemData.equipmentModelId].brand] };
+  const renderEquipment = (itemId, itemData) => <Equipment key={itemId} equipment={ {[itemId]: itemData} } options={ {} } showDetails />;
 
-    return <Equipment key={itemId}
-      equipment={ {[itemId]: itemData} }
-      brand={BRAND}
-      equipmentModel={EQUIPMENT_MODEL}
-      options={ {} }
-      showDetails />
-  };
-
+  // equipments list
   return <ExTable items={equipments}
             renderItem={renderEquipment}
             fss={equipmentsExTableFSS}

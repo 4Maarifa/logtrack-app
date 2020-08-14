@@ -1,0 +1,288 @@
+.Maintenance {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-height: calc(100% - 2rem);
+
+  .ExTable {
+    flex: 1;
+  }
+
+  .selected-equipment {
+    flex: 1;
+    width: 100%;
+    display: grid;
+    height: 100%;
+    box-sizing: border-box;
+    row-gap: 1rem;
+    grid-template-columns: 1fr 25rem;
+    grid-template-rows: 4.5rem 40% 1fr;
+    grid-template-areas: "topbar current"
+                        "maintenance current"
+                        "maintenance current";
+
+    &-topbar {
+      grid-area: topbar;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background-color: var(--inverse);
+      border-radius: 2.25rem 0 0 2.25rem;
+      position: relative;
+
+      &:before {
+        content: '';
+        background-color: var(--inverse);
+        top: calc(100% - 1px);
+        right: -1px;
+        position: absolute;
+        height: 1.5rem;
+        width: 1.5rem;
+        display: block;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 95% 40%, 90% 26%, 85% 15%, 74% 10%, 60% 5%);
+      }
+
+      button {
+
+        &.btn-previous {
+          width: 4.5rem;
+          height: 4.5rem;
+          flex: 0 0 4.5rem;
+          border-radius: 2.25rem;
+          margin-right: 1.5rem;
+          background-color: var(--theme);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          box-shadow: var(--shadow);
+        }
+
+        &.btn-more {
+          position: absolute;
+          top: 3rem;
+          left: calc(50% - 1.5rem);
+          width: 3rem;
+          height: 3rem;
+          background-color: var(--inverse);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 0 0 1.5rem 1.5rem;
+          color: var(--theme);
+          box-shadow: none;
+          transition: top .5s;
+
+          &:hover {
+            top: 3.4rem;
+          }
+        }
+      }
+
+      .equipment {
+
+        &-name {
+          display: flex;
+          flex-direction: column;
+  
+          .PageLink {
+            justify-content: start;
+          }
+        }
+
+        &-clearfix {
+          flex: 1;
+        }
+
+        &-props {
+          display: flex;
+          flex-direction: column;
+
+          .Icon {
+            margin-right: .3rem;
+          }
+        }
+
+        &-icon {
+          display: flex;
+          height: 4.5rem;
+          font-size: 200%;
+          align-items: center;
+          padding: 0 1rem;
+          color: var(--theme);
+        }
+
+        &-brand {
+          height: 1.5rem;
+
+          svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-right: .5rem;
+            display: inline-block;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+
+    &-image {
+      grid-area: maintenance;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      &-content {
+        display: block;
+        height: 100%;
+        width: fit-content;
+        position: relative;
+        max-height: 100%;
+        max-width: 100%;
+        overflow: hidden;
+
+        .overlay {
+          z-index: 2;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          display: block;
+
+          .part {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--inverse);
+            height: 2rem;
+            width: 2rem;
+            border-radius: 50%;
+            font-size: 100%;
+            position: absolute;
+            cursor: pointer;
+            z-index: 3;
+            transition: width .5s, height .5s, font-size .5s, top .5s, left .5s;
+
+            &--selected {
+              height: 3rem;
+              width: 3rem;
+              font-size: 150%;
+            }
+          }
+
+          .link {
+            position: absolute;
+            z-index: 2;
+          }
+        }
+
+        img {
+          height: 100%;
+          max-width: none;
+          display: block;
+          opacity: 1;
+          filter: grayscale(0%);
+          transition: opacity .5s, filter .5s;
+          
+          &.img-low-opacity {
+            opacity: .4;
+            filter: grayscale(70%);
+          }
+        }
+      }
+
+      &-options {
+        background-color: var(--inverse);
+        box-shadow: var(--shadow);
+        height: 2.5rem;
+        padding: 0 1rem;
+        border-radius: 1.25rem;
+        display: block;
+        position: absolute;
+        bottom: -.5rem;
+        left: 1rem;
+        z-index: 4;
+      }
+    }
+
+    &-current {
+      grid-area: current;
+      background-color: var(--inverse);
+      margin: 0;
+      padding: .5rem;
+      border-radius: 0 2.25rem 2.25rem 2.25rem;
+      display: flex;
+      flex-direction: column;
+
+      h2 {
+        width: 100%;
+        padding: 1rem 0;
+        text-align: center;
+        border-bottom: 1px solid var(--light-gray);
+
+        .Icon {
+          margin-right: .5rem;
+        }
+      }
+
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+
+        li {
+          height: 3rem;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          border-width: 2px;
+          border-style: solid;
+          border-radius: .5rem;
+          margin-top: .7rem;
+
+          .Icon {
+            font-size: 160%;
+            margin-left: .5rem;
+
+            .custom-icon {
+              fill: var(--text);
+            }
+
+            .icon-2 {
+              left: 80%;
+              top: 80%;
+              color: var(--text);
+            }
+          }
+
+          span + span {
+            font-size: 120%;
+            margin-left: 1.2rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-device-aspect-ratio: 1500/1000) {
+  .Maintenance {
+    .selected-equipment {
+      grid-template-columns: 1fr 15rem;
+
+      &-image {
+        
+        &-content {
+          width: 100%;
+          height: fit-content;
+
+          img {
+            height: auto;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

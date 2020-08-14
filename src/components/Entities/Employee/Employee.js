@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { faUser, faUserCog, faUserPlus, faUserTag, faPortrait,
-  faAward, faClipboardUser, faTimes } from '@fortawesome/pro-solid-svg-icons';
+  faAward, faClipboardUser, faTimes } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
@@ -12,13 +12,17 @@ import UtilsService from './../../../services/utils.service';
 import EmployeeService from './../../../services/entities/employee.service';
 import ErrorService from './../../../services/error.service';
 
-import { ERole, ERoleDetails } from './../../../classes/Role';
-import { printAccountActivityDetails, EAccountActivityTypeDetails } from './../../../classes/Employee';
+import { ERole, ERoleDetails, ERoleStatus } from './../../../classes/Role';
+import { EAccountActivityTypeDetails } from './../../../classes/Employee';
 
 import { v4 as uuid } from 'uuid';
 
 import './Employee.scss';
 
+/**
+ * Component: Employee
+ * Print employee details
+ */
 const Employee = ({ employee, isPage }) => {
   if(!employee) { return null; }
 
@@ -36,6 +40,7 @@ const Employee = ({ employee, isPage }) => {
 
   if(!computed.initialized) { return null; }
 
+  // Computing actions
   const ACTIONS = [];
 
   if(!isPage) {
@@ -43,12 +48,14 @@ const Employee = ({ employee, isPage }) => {
   }
 
   if(computed.user.uid === EMPLOYEE_ID) {
+    // If current user, add actions about modifications and role request
     ACTIONS.push({ title: 'Modify Profile', icon: <Icon source="fa" icon={faUserCog} />, link: '/profile' });
     ACTIONS.push({ title: 'Modify Pro Profile', icon: <Icon source="fa" icon={faPortrait} />, link: '/jobs?tab=profile' });
     ACTIONS.push({ title: 'Request a role', icon: <Icon source="fa" icon={faUserTag} />, link: '/role-add' });
   }
   else {
     if (computed.activeRole.role === ERole.MANAGER) {
+      // If current user is manager, propose to offer a role
       ACTIONS.push({ title: 'Offer a role', icon: <Icon source="fa" icon={faUserPlus} />, link: `/role-offer/${EMPLOYEE_ID}` });
     }
   }
@@ -68,10 +75,12 @@ const Employee = ({ employee, isPage }) => {
         : <Icon containerclassname="Element-icon" source="fa" icon={faUser} /> }
         <div className="Element-data">
           <span className="Element-title">
+            {/* Employee pagelink */}
             <PageLink type={PageLinkType.EMPLOYEE} entityId={EMPLOYEE_ID} entityData={EMPLOYEE_DATA} noPhoto white={isPage} />
           </span>
         </div>
         <div className="Element-actions">
+          {/* actions */}
           <ActionList actions={ACTIONS} isFlatten={isPage} />
         </div>
       </div>
@@ -79,6 +88,7 @@ const Employee = ({ employee, isPage }) => {
   );
 };
 
+// FSS for employees (used to filter, search and sort employees) => sort on name, search on name
 export const employeesExTableFSS = {
   sort: {
     name: {
@@ -104,13 +114,23 @@ export const employeesExTableFSS = {
    *   *   **   *   *  *    *  *   * *  *  *     *
    *** *** * *  *  *** *   *** *** * *  *  *** ***
 */
+
+/**
+ * Component: EmployeeCertificate
+ * Render a user's certificate
+ */
 export const EmployeeCertificate = ({ certificate, employeeId }) => {
   const OBSERVER_KEY = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
   const deleteCertificate = () => {
+    // delete certificate
+
+    // Remove it via filter
     let certificates = computed.employee.certificates.filter(c => c.name !== certificate.name);
+    
+    // Update current employee
     EmployeeService.updateField(computed.user.uid, {certificates})
       .then(DataService.computed.notifyChanges)
       .catch(ErrorService.manageError);
@@ -127,6 +147,7 @@ export const EmployeeCertificate = ({ certificate, employeeId }) => {
     <div className="Element-base">
       <Icon containerclassname="Element-icon" source="fa" icon={faAward} />
       <div className="Element-data">
+        {/* Certificate details */}
         <span className="Element-title">
           {certificate.name}
         </span>
@@ -136,6 +157,7 @@ export const EmployeeCertificate = ({ certificate, employeeId }) => {
       </div>
       {computed.user.uid === employeeId ?
         <div className="Element-actions">
+          {/* Certificate actions */}
           <ActionList actions={[
             { title: 'Delete certificate', icon: <Icon source="fa" icon={faTimes} />, callback: deleteCertificate }
           ]} />
@@ -145,6 +167,7 @@ export const EmployeeCertificate = ({ certificate, employeeId }) => {
   </div>);
 };
 
+// FSS about certificates (filter, search and sort certificates) => sort on date and name, search on name
 export const employeeCertificatesExTableFSS = {
   sort: {
     date: {
@@ -173,6 +196,11 @@ export const employeeCertificatesExTableFSS = {
   *   * * *   *   **   *  *   * ** *   *
   *** * * *   *** * * *** *** * ** *** ***
 */
+
+/**
+ * Component: EmployeeExperience
+ * Used to print user's Experience (via existing role)
+ */
 export const EmployeeExperience = ({ exp, company }) => {
   let companyId = Object.keys(company)[0];
 
@@ -180,19 +208,27 @@ export const EmployeeExperience = ({ exp, company }) => {
     <div className="Element-base">
       <Icon containerclassname="Element-icon" source="fa" icon={ERoleDetails[exp.role].icon} />
       <div className="Element-data">
+
+        {/* Role details */}
         <span className="Element-title">
+          {/* Company pagelink */}
           {ERoleDetails[exp.role].name} @
           <PageLink type={PageLinkType.COMPANY} entityId={companyId} entityData={company[companyId]} />
         </span>
         <span className="sub">
           {DateService.getMonthYearString(
             DateService.getDateFromIsoString(exp.creationIsoDate)) + ' - ' + 
-            (exp.status === 'CONFIRMED' ? 'Current' : DateService.getMonthYearString(DateService.getDateFromIsoString(exp.revokedIsoDate)))}
+            (exp.status !== ERoleStatus.REVOKED ? 'Current' : DateService.getMonthYearString(DateService.getDateFromIsoString(exp.revokedIsoDate)))}
         </span>
+
+        {/* Print if request is draft or denied */}
+        {exp.status === ERoleStatus.DRAFT ? <span className="Element-badge badge">DRAFT</span> : null}
+        {exp.status === ERoleStatus.DENIED ? <span className="Element-badge badge">DENIED</span> : null}
       </div>
     </div>
   </div>};
 
+// FSS for EmployeeExperience (filter, search, sort employee experience) => sort by end date and role, search on role
 export const employeeExperienceExTableFSS = {
   sort: {
     end: {
@@ -221,13 +257,23 @@ export const employeeExperienceExTableFSS = {
   * *  *  * * *   **
   ***  *  * * *** * *
 */
+
+/**
+ * Component: EmployeeOtherExperience
+ * Print details about an employee's other experience
+ */
 export const EmployeeOtherExperience = ({ otherExp, employeeId }) => {
   const OBSERVER_KEY = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
   const deleteOtherExperience = () => {
+    // Delete other experience
+
+    // Filter the experience from the other experience array
     let experience = computed.employee.experience.filter(e => !(e.name === otherExp.name && e.company === otherExp.company));
+
+    // Update the employee
     EmployeeService.updateField(computed.user.uid, {experience})
       .then(DataService.computed.notifyChanges)
       .catch(ErrorService.manageError);
@@ -244,6 +290,7 @@ export const EmployeeOtherExperience = ({ otherExp, employeeId }) => {
     <div className="Element-base">
       <Icon containerclassname="Element-icon" source="fa" icon={faClipboardUser} />
       <div className="Element-data">
+        {/* Other experience details */}
         <span className="Element-title">{otherExp.name} @ {otherExp.company}</span>
         <span className="sub">
           {DateService.getMonthYearString(DateService.getDateFromIsoString(otherExp.start))} - 
@@ -252,6 +299,7 @@ export const EmployeeOtherExperience = ({ otherExp, employeeId }) => {
       </div>
       {computed.user.uid === employeeId ?
         <div className="Element-actions">
+          {/* Other experience actions */}
           <ActionList actions={[
             { title: 'Delete experience', icon: <Icon source="fa" icon={faTimes} />, callback: deleteOtherExperience }
           ]} />
@@ -261,6 +309,7 @@ export const EmployeeOtherExperience = ({ otherExp, employeeId }) => {
   </div>);
 };
 
+// FSS for other experience (used to filter, search and sort other expericence) => sort by end date and title search on title and company
 export const employeeOtherExperiencesExTableFSS = {
   sort: {
     end: {
@@ -290,22 +339,33 @@ export const employeeOtherExperiencesExTableFSS = {
   * * *    *   *  * *  *   *   *
   * * ***  *  ***  *  ***  *   *
 */
+
+/**
+ * Component: EmployeeAccountActivity
+ * Print details about an employee's account activity
+ */
 export const EmployeeAccountActivity = ({ activity }) => (
   <div className="Equipment Element-content Element-content-small">
     <div className="Element-base">
       <Icon containerclassname="Element-icon" source="fa" icon={EAccountActivityTypeDetails[activity.type].icon} />
       <div className="Element-data">
+        {/* Details, with its metadata and dates */}
         <span className="Element-title">
           {EAccountActivityTypeDetails[activity.type].title}
         </span>
         <span className="sub">
-          {printAccountActivityDetails(activity)}
+          {DateService.getDateTimeString(DateService.getDateFromIsoString(activity.creationIsoDate), false)}
+          {activity.metadata.city && activity.metadata.country ?
+              `, Near ${activity.metadata.city}, ${activity.metadata.country}`
+          : null}
+          {activity.metadata.ip ? `, IP: ${activity.metadata.ip}` : null}
         </span>
       </div>
     </div>
   </div>
 );
 
+// FSS for EmployeeAccountActivity (used to search, sort and filter them) => sort on creation date and type, search on type
 export const employeeAccountActivityExTableFSS = {
   sort: {
     creationIsoDate: {

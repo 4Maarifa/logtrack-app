@@ -1,33 +1,62 @@
+import ObserverService from "./observer.service";
 
+/**
+ * Service: DateService
+ * Operations on date
+ * 
+ * This service manipulates JS dates, ISO string as described in ISO 8601, and timestamp (number of milliseconds since 1970, Jan 1st 00:00:00).
+ * 
+ * Date are present in the app to do operations on them
+ * ISO strings are saved into DB as readable dates
+ * Timestamp may also be saved into DB, but only along with an ISO string because they permit to be compared to other timestamps easily
+ */
 const DateService = {
+
+  // Get a JS date from an ISO string
   getDateFromIsoString: isoDateString => new Date(isoDateString),
+  // Get a JS date from a timestamp
   getDateFromTimeStampNumber: timeStampNumber => new Date(timeStampNumber),
 
+  // Get the current date, as ISO string
   getCurrentIsoDateString: () => new Date().toISOString(),
+  // get the current date, as JS date
   getCurrentDate: () => new Date(),
-  getIsoDateString: date => date.toISOString(),
+  // Get the current timestamp
   getCurrentTimeStampNumber: () => +new Date(),
 
+  // Get an ISO string from a JS date
+  getIsoDateString: date => date.toISOString(),
+  // Get a TimeStamp from a JS date
+  getTimeStampNumber: date => +date,
+
+  // Clone a JS date and return another JS date with no link between them (apart they are the same date)
   cloneDate: date => new Date(date.getTime()),
 
+  // add an amout of days (or remove some days by passing a negative amount of days)
   addOrRemoveDays: (date, amount) => {
+    // clone the date
     let newDate = DateService.cloneDate(date);
+
+    // add the number of days to the date
     newDate.setDate(newDate.getDate() + amount);
     return newDate;
   },
 
-  getDateTimeString: (date, withYear = true) => {
-    let DATETIME_TRANSFORM_OPTIONS = {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit'
-    };
-    !withYear && delete DATETIME_TRANSFORM_OPTIONS.year;
-    return date.toLocaleTimeString([], DATETIME_TRANSFORM_OPTIONS);
+  // format a date and time into a printable string
+  // date: Date | the date to be formatted
+  // withYear: boolean | If the year should be printed or not
+  // fullDate: boolean | if true, always print the full date (day/month) event if a descriptive keyword (like 'today') is printed
+  // prefix: string | If a prefix should be used (like 'on'), pass it here. The keyword will not be printed if a descriptive keyword (like 'today') is used.
+  getDateTimeString: (date, withYear = true, fullDate = false, prefix = '') => {
+    return `${DateService.getDateString(date, true, withYear, prefix)}${fullDate ? ` (${DateService.getDateString(date, false, withYear)})` : ''}, ${DateService.getTimeString(date)}`;
   },
-  getDateString: (date, descriptiveDate = true, withYear = true) => {
+
+  // Format a date into a printable string
+  // date: Date | the date to be formatted
+  // descriptiveDate: boolean | if true, this function may return 'today', 'tomorrow' or other keywords if applicable. If false, always print the full date
+  // withYear: boolean | print along with the year. if false, only print the day and month
+  // prefix: string | prefix of the date (like 'on'). If a keyword is returned (like 'today'), the prefix is not concatenated.
+  getDateString: (date, descriptiveDate = true, withYear = true, prefix = '') => {
     let DATE_TRANSFORM_OPTIONS = {
       year: 'numeric',
       month: '2-digit',
@@ -41,8 +70,11 @@ const DateService = {
 
       DATE_TRANSFORM_OPTIONS['month'] = 'short';
     }
-    return date.toLocaleDateString([], DATE_TRANSFORM_OPTIONS);
+    return (prefix ? `${prefix} ` : '') + date.toLocaleDateString([], DATE_TRANSFORM_OPTIONS);
   },
+
+  // format a date to a month/year string
+  // date: Date | the date to format
   getMonthYearString: date => {
     const DATE_TRANSFORM_OPTIONS = {
       year: 'numeric',
@@ -50,6 +82,9 @@ const DateService = {
     };
     return date.toLocaleDateString([], DATE_TRANSFORM_OPTIONS);
   },
+
+  // Format a time into a printable string (HH:MM)
+  // date: Date | the date to be formatted
   getTimeString: date => {
     const TIME_TRANSFORM_OPTIONS = {
       hour: '2-digit',
@@ -57,37 +92,50 @@ const DateService = {
     };
     return date.toLocaleTimeString([], TIME_TRANSFORM_OPTIONS);
   },
+
+  // Format a date into a custom printable string
+  // date: Date | the date to be formated
+  //transformOptions: Object | propreties as specified here ( https://tc39.es/ecma402/#sec-intl-datetimeformat-constructor )
   getDatePartString: (date, transformOptions) => (
     date.toLocaleDateString([], transformOptions)
   ),
 
+  // Format a date into a custom printable time string
+  // date: Date | the date to be formated
+  //transformOptions: Object | propreties as specified here ( https://tc39.es/ecma402/#sec-intl-datetimeformat-constructor )
+  getTimePartString: (date, transformOptions) => (
+    date.toLocaleTimeString([], transformOptions)
+  ),
+
+  // check if two dates are the same day or not
   areDatesTheSameDay: (date1, date2) => date1.getFullYear() === date2.getFullYear()
       && date1.getMonth() === date2.getMonth()
       && date1.getDate() === date2.getDate(),
+
+  // Check if the date is today
   isToday: date => DateService.areDatesTheSameDay(date, new Date()),
+
+  // check if the date is yesterday
   isYesterday: date => DateService.areDatesTheSameDay(date, new Date(+(new Date()) - (24*60*60*1000))),
+
+  // check if the date is tomorrow
   isTomorrow: date => DateService.areDatesTheSameDay(date, new Date(+(new Date()) + (24*60*60*1000))),
 
+  // get numerical difference between two dates (number of milliseconds between two dates)
   getDifference: (date1, date2) => (+date2) - (+date1),
+
+  // Get numerical difference between two timestamp numbers (number of milliseconds)
+  getTimestampDifference: (ts1, ts2) => ts2 - ts1,
+
+  // Get relative difference between a date and now (negative means before, postiive means after)
   getRelativeDifference: date => DateService.getDifference(new Date(), date),
 
-  _watcher: null,
-  _watchDate: () => DateService._watcher = setInterval(DateService.notifyNewDate, 20000),
-  _unwatchDate: () => DateService._watcher && clearInterval(DateService._watcher),
-
-  _observers: {},
-  addObserver: (observerCallback, observerKey) => {
-    DateService._observers[observerKey] = observerCallback;
-    observerCallback();
-    DateService._computeObserverNumber() >= 1 && DateService._watchDate();
-  },
-  removeObserver: observerKey => {
-    delete DateService._observers[observerKey];
-    DateService._observers[observerKey] = null;
-    DateService._computeObserverNumber() === 0 && DateService._unwatchDate();
-  },
-  notifyNewDate: () => Object.values(DateService._observers).filter(obs => obs && typeof obs === 'function').forEach(obs => obs()),
-  _computeObserverNumber: () => Object.values(DateService._observers).filter(obs => obs && typeof obs === 'function').length
+  _watcher: null
 };
+
+ObserverService.initialize(DateService, 'DATE', {
+  startWatcher: ({ updateObservers }) => DateService._watcher = setInterval(updateObservers, 20000),
+  stopWatcher: () => clearInterval(DateService._watcher)
+});
 
 export default DateService;

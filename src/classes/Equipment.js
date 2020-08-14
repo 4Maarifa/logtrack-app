@@ -8,6 +8,7 @@
  * equipmentModelId: string | The model of the equipment
  * creator: string | The creator of the company (employeeId)
  * creationIsoDate: string | The creation date, as iso string
+ * currentLogTrack: LogTrack | The current LogTrack of the equipment (TODO: LogTrack for Equipments)
  */
 class Equipment {
     constructor(companyId, identification, equipmentModelId, creator, creationIsoDate) {
@@ -16,6 +17,7 @@ class Equipment {
         this.equipmentModelId = equipmentModelId;
         this.creator = creator;
         this.creationIsoDate = creationIsoDate;
+        this.currentLogTrack = null;
     }
 }
 

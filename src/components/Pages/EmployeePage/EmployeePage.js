@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faAward, faClipboardUser, faPortrait, faUserTie } from '@fortawesome/pro-solid-svg-icons';
+import { faAward, faClipboardUser, faPortrait, faUserTie } from '@fortawesome/pro-light-svg-icons';
 
 import DataService from './../../../services/data.service';
 import UtilsService from './../../../services/utils.service';
@@ -23,13 +23,18 @@ import { v4 as uuid } from 'uuid';
 /**
  * Component: EmployeePage
  * Used to visit employee profile
+ * 
+ * You have to pass the employee id
  */
 const EmployeePage = ({ match }) => {
   const EMPLOYEE_ID = match.params.employeeid;
 
+  // Employee data is populated on load
   const [employeeData, setEmployeeData] = useState(null);
 
+  // roles of the employee
   const [roles, setRoles] = useState({});
+  // corresponding companies
   const [companies, setCompanies] = useState({});
 
   const OBSERVER_KEY = uuid();
@@ -37,6 +42,7 @@ const EmployeePage = ({ match }) => {
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
   useEffect(() => {
+    // When setting roles, getting corresponding companies
     CompanyService.getAllForIdList(UtilsService.removeDuplicateFromArray(Object.keys(roles).map(itemId => roles[itemId].companyId)))
       .then(setCompanies)
       .catch(ErrorService.manageError);
@@ -44,10 +50,13 @@ const EmployeePage = ({ match }) => {
 
   useEffect(() => {
     if(EMPLOYEE_ID) {
+
+      // Getting the employee data
       EmployeeService.get(EMPLOYEE_ID)
         .then(employeeDoc => setEmployeeData(employeeDoc.data()))
         .catch(ErrorService.manageError);
       
+      // Get the employee roles
       RoleService.getRolesForEmployeeId(EMPLOYEE_ID, [ERoleStatus.CONFIRMED, ERoleStatus.REVOKED])
         .then(setRoles)
         .catch(ErrorService.manageError);
@@ -72,6 +81,7 @@ const EmployeePage = ({ match }) => {
     );
   }
 
+  // safeguard about role status + converting data to usable and printable data
   const EMPLOYEE_EXPERIENCE = {};
   if(roles) {
     Object.keys(roles)
@@ -85,6 +95,8 @@ const EmployeePage = ({ match }) => {
       <div className="Element Element--page">
         <Employee employee={{ [EMPLOYEE_ID]: employeeData }} isPage />
       </div>
+
+      {/* Employee current status about job search */}
       {employeeData.search && employeeData.search.looking ?
         <div className="Element Element--row employee-search">
           <div className="Element-base">
@@ -101,7 +113,10 @@ const EmployeePage = ({ match }) => {
           </div>
         </div>
       : null}
+
       <div className="employee-content">
+
+        {/* Employee certificates */}
         {employeeData.certificates && employeeData.certificates.length ? <div className="certificates">
           <h2 className="profile-title">Certificates</h2>
           <ExTable key="certificates" 
@@ -112,6 +127,8 @@ const EmployeePage = ({ match }) => {
                   isNoFrame />
         </div> : null}
         <div className="roles">
+
+          {/* Employee computed experience from his roles */}
           <h2 className="profile-title">Experience</h2>
           <ExTable key="experience" 
                   items={EMPLOYEE_EXPERIENCE} 
@@ -120,6 +137,8 @@ const EmployeePage = ({ match }) => {
                   header={<span><Icon source="fa" icon={faUserTie} /> Experience</span>}
                   isNoFrame />
         </div>
+
+        {/* Employee other experience (outside of logtrack, freely editable) */}
         {employeeData.experience && employeeData.experience.length ? <div className="experience">
           <h2 className="profile-title">Other Experience</h2>
           <ExTable key="otherExperience" 

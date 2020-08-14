@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faTruck, faPlus } from '@fortawesome/pro-solid-svg-icons';
+import { faTruck, faPlus } from '@fortawesome/pro-light-svg-icons';
 
 import ActionButton from './../../Utils/ActionButton/ActionButton';
 import ExTable from './../../Utils/ExTable/ExTable';
@@ -8,7 +8,6 @@ import Icon from './../../Utils/Icon/Icon';
 
 import DataService from './../../../services/data.service';
 import ErrorService from './../../../services/error.service';
-import EquipmentModelService from './../../../services/entities/equipmentModel.service';
 import EquipmentService from './../../../services/entities/equipment.service';
 
 import Equipment, { equipmentsExTableFSS } from './../../Entities/Equipment/Equipment';
@@ -17,25 +16,28 @@ import { v4 as uuid } from 'uuid';
 
 import './Equipments.scss';
 
+/**
+ * Component: Equipments
+ * Used by managers to create and manage equipments
+ */
 const Equipments = () => {
 
+  // Equipments, and their models
   const [equipments, setEquipments] = useState({});
   const [isEquipmentsLoading, setEquipmentsLoading] = useState(true);
-  const [equipmentModels, setEquipmentModels] = useState({});
 
   const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
   useEffect(() => {
-    if(computed.activeRole) {
-      EquipmentModelService.list()
-        .then(setEquipmentModels)
-        .catch(ErrorService.manageError);
-        
+    if(computed.activeRole) {        
+      // Loading all equipments for the current company
       EquipmentService.getAllForCompanyId(computed.activeRole.companyId)
         .then(equipments => {
           setEquipments(equipments);
+
+          // Triggering end of load
           setEquipmentsLoading(false);
         })
         .catch(ErrorService.manageError);
@@ -52,13 +54,7 @@ const Equipments = () => {
   /**
    * RENDER
    */
-  const renderEquipment = (itemId, itemData) => {
-    const equipmentModel = { [itemData.equipmentModelId]: equipmentModels[itemData.equipmentModelId] };
-
-    return <Equipment key={itemId}
-      equipment={ {[itemId]: itemData} }
-      equipmentModel={equipmentModel} />
-  };
+  const renderEquipment = (itemId, itemData) => <Equipment key={itemId} equipment={ {[itemId]: itemData} } />;
 
   return (
     <div className="Equipments">
