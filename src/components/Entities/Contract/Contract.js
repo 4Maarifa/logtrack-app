@@ -146,7 +146,7 @@ const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, 
   return (
     <div className="Contract Element-content" key={CONTRACT_ID}>
       <div className="Element-base">
-        <Icon containerclassname="Element-icon" source="fa" icon={faHandshakeAlt} />
+        <Icon containerclassname="Element-icon" source="fa" icon={faHandshakeAlt} additionalSource="fa" additional={EContractTypeDetails[CONTRACT_DATA.contractType].icon} title={EContractTypeDetails[CONTRACT_DATA.contractType].name} />
         <div className="Element-data">
           <span className="Element-title">
             {/* Render pagelink */}
@@ -154,14 +154,10 @@ const Contract = ({ notifyContractChanges, contract, companyExec, companyOrder, 
           </span>
           
           {/* Render other company */}
-          {IS_EXECUTOR ? 'You execute the contract for' : 'You ordered the contract from'}
-          <PageLink type={PageLinkType.COMPANY} entityId={OTHER_COMPANY_ID} entityData={OTHER_COMPANY_DATA} white={isPage} />
-
-          {/* Render contract type */}
-          <span className="badge badge-mono">
-            <Icon source="fa" icon={EContractTypeDetails[CONTRACT_DATA.contractType].icon} />
-            {EContractTypeDetails[CONTRACT_DATA.contractType].name}
-          </span>
+          <div>
+            <span>{IS_EXECUTOR ? 'You execute the contract for ' : 'You ordered the contract from '}</span>
+            <PageLink type={PageLinkType.COMPANY} entityId={OTHER_COMPANY_ID} entityData={OTHER_COMPANY_DATA} white={isPage} />
+          </div>
 
           {/* Status */}
           <span className="sub">{computeStatus()}</span>
