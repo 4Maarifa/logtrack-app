@@ -12,7 +12,7 @@ const ObserverService = {
   //    startWatcher: function | function to call when registering the first observer. Serves as initialization of data and event adding
   //    stopWatcher: function | function to call when unregistering last observer. Serves as data cleaning and event removing
   //    computeChanges: function | When a component notify that he changed the data, this function is called. It must update the oberved data
-  //    getData: function | Return the compputed data. This function should not compute data
+  //    getData: function | Return the computed data. This function should not compute data
   initialize: (obj, type, options) => {
 
     const RES_OBJECT = {};

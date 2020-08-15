@@ -84,6 +84,10 @@ const Debug = ({ initialData, isLive }) => {
     <h3>App</h3>
     <span>You're using LogTrack v{USER_AGENT_INFOS.appVersion}</span>
 
+    {/* React version */}
+    <h3>React App</h3>
+    <span>You're using React {USER_AGENT_INFOS.reactVersion ? `v${USER_AGENT_INFOS.reactVersion}` : 'unknown version'}</span>
+
     {/* Browser info */}
     <h3>Browser</h3>
     <span className="tooltip-parent">

@@ -1,3 +1,4 @@
+import React from 'react';
 import { faQuestion } from '@fortawesome/pro-light-svg-icons';
 import { faOpera, faEdge, faInternetExplorer, faFirefox, faChrome, 
   faSafari, faWindows, faApple, faLinux, faAndroid } from '@fortawesome/free-brands-svg-icons';
@@ -70,6 +71,7 @@ const UserAgentService = {
   getAll: () => {
     return {
       appVersion: UserAgentService.getAppVersion(),
+      reactVersion: UserAgentService.getReactVersion(),
       browser: {
         isMobile: UserAgentService.isMobile(),
         isCookiesEnabled: UserAgentService.isCookiesEnabled(),
@@ -93,6 +95,9 @@ const UserAgentService = {
 
   /* Get LogTrack version from the environment variable */
   getAppVersion: () => process.env.REACT_APP_VERSION,
+
+  /* Get React version */
+  getReactVersion: () => React.version,
 
   /* Browser */
 
