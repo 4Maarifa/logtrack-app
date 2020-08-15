@@ -6,11 +6,11 @@ import FirebaseService from './firebase.service';
 import ErrorService from './error.service';
 import DataService from './data.service';
 import ModalService from './modal.service';
+import ObserverService from './observer.service';
 
 import Icon from './../components/Utils/Icon/Icon';
 
 import { v4 as uuid } from 'uuid';
-import ObserverService from './observer.service';
 
 // number of bits authorized for the personal files of each user
 export const QUOTA_FOR_USER = 20971520;

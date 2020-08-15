@@ -114,6 +114,51 @@
     }
   }
 
+  &ServicesTab {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    & > .Tabs {
+      flex: 1;
+      margin: 0;
+      height: 100%;
+      max-height: 100%;
+
+      .tab-container {
+        padding: 0 1em;
+      }
+
+      & > ul {
+        background-color: unset;
+        border-right: 1px solid var(--theme);
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        li.tab {
+          color: var(--gray);
+          position: relative;
+          border-top: 1px solid var(--inverse);
+          border-bottom: 1px solid var(--inverse);
+          border-left: 1px solid var(--inverse);
+
+          &.tab--selected {
+            border-color: var(--theme);
+
+            &:after {
+              height: 100%;
+              width: 1px;
+              background-color: var(--inverse);
+              content: '';
+              position: absolute;
+              right: -1px;
+            }
+          }
+        }
+      }
+    }
+  }
+
   &ComponentsTab {
     height: 100%;
     display: flex;
@@ -171,6 +216,82 @@
       }
     }
   }
+
+  &RootTab {
+    height: 100%;
+    gap: 1rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    display: grid;
+    grid-template: auto 1fr 1fr / 1fr 1fr;
+    grid-template-areas: "head head"
+                          "identity components"
+                          "identity services";
+
+    .root {
+      &-head { grid-area: head; }
+      &-identity { grid-area: identity; }
+      &-components { grid-area: components; }
+      &-services { grid-area: services; }
+
+      &-identity, &-components, &-services {
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        font-size: 150%;
+        background-color: unset;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        color: var(--text);
+        transition: color .5s;
+
+        &:hover {
+          color: var(--inverse);
+
+          &:after {
+            height: 100%;
+          }
+        }
+
+        & > .Icon {
+          flex: 1;
+          font-size: 250%;
+          margin: 0 auto;
+          position: relative;
+          z-index: 1;
+        }
+
+        div:not(.Icon) {
+          flex: 0 0 2.5rem;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          padding: .5rem 1rem;
+          color: var(--inverse);
+          position: relative;
+          z-index: 1;
+
+          .Icon {
+            padding: 0;
+          }
+        }
+
+        &:after {
+          width: 100%;
+          height: 3.5rem;
+          left: 0;
+          bottom: 0;
+          content: '';
+          position: absolute;
+          z-index: 0;
+          background-color: var(--theme);
+          transition: height .5s;
+        }
+      }
+    }
+  }
 }
 
 @media screen and (orientation: portrait) {
@@ -184,6 +305,14 @@
                               "third";
         }
       }
+    }
+
+    &RootTab {
+      grid-template: auto 1fr 1fr 1fr / 1fr;
+      grid-template-areas: "head"
+                            "identity"
+                            "components"
+                            "services";
     }
   }
 }
