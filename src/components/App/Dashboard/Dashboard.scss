@@ -78,7 +78,7 @@
           transition: all .33s;
         }
 
-        & + .card:not(.card-stick) {
+        & + .card {
           margin-left: 1rem;
         }
 
@@ -206,6 +206,9 @@
         &.map {
           padding: 0;
           height: calc(100% - 1rem);
+          flex: 0 0 50%;
+          min-width: 50%;
+          position: relative;
 
           .Map {
             border-radius: var(--border-radius);
@@ -221,9 +224,22 @@
           flex: 1;
           padding: 0;
           overflow-y: auto;
-          margin: .5rem 0;
+          margin-top: .5rem;
+          margin-bottom: .5rem;
           border-top-left-radius: 0;
           border-bottom-left-radius: 0;
+          position: relative;
+          overflow: visible;
+
+          &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 100%;
+            height: 100%;
+            width: 1rem;
+            background-color: var(--inverse);
+          }
 
           .ActionButton {
             display: none;
@@ -323,7 +339,7 @@
             display: none;
           }
 
-          & + .card:not(.card-stick) {
+          & + .card {
             margin-left: .5rem;
           }
 
