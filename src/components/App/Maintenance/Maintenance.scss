@@ -59,10 +59,10 @@
 
         &.btn-more {
           position: absolute;
-          top: 3rem;
+          top: 4.5rem;
           left: calc(50% - 1.5rem);
           width: 3rem;
-          height: 3rem;
+          height: 1.5rem;
           background-color: var(--inverse);
           display: flex;
           justify-content: center;
@@ -70,10 +70,10 @@
           border-radius: 0 0 1.5rem 1.5rem;
           color: var(--theme);
           box-shadow: none;
-          transition: top .5s;
+          transition: height .5s;
 
           &:hover {
-            top: 3.4rem;
+            height: 3rem;
           }
         }
       }
@@ -214,6 +214,11 @@
       border-radius: 0 2.25rem 2.25rem 2.25rem;
       display: flex;
       flex-direction: column;
+      position: relative;
+
+      .close-current {
+        display: none;
+      }
 
       h2 {
         width: 100%;
@@ -282,6 +287,74 @@
             width: 100%;
           }
         }
+      }
+    }
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .Maintenance {
+    .selected-equipment {
+      grid-template-columns: 1fr;
+      grid-template-rows: 4.5rem 1fr;
+      grid-template-areas: "topbar"
+                          "maintenance";
+
+      &-image {
+        padding: 0 10rem;
+      }
+
+      &-current {
+        position: fixed;
+        bottom: 2.5rem;
+        left: 0;
+        height: 0vh;
+        width: 100%;
+        margin: 0;
+        box-sizing: border-box;
+        z-index: 4;
+        border-radius: 2.25rem 2.25rem 0 0;
+        box-shadow: var(--shadow);
+        transition: height .5s;
+
+        .category {
+          height: 100%;
+          max-height: 100%;
+          overflow-y: auto;
+        }
+      }
+
+      &--part {
+
+        .selected-equipment {
+
+          &-current {
+            height: 60vh;
+
+            .close-current {
+              display: flex;
+              position: absolute;
+              height: 3rem;
+              font-size: 150%;
+              width: 3rem;
+              justify-content: center;
+              align-items: center;
+              top: -1.5rem;
+              left: calc(50% - 1.5rem);
+              border-radius: 50%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .Maintenance {
+    .selected-equipment {
+      &-image {
+        padding: 0;
       }
     }
   }
