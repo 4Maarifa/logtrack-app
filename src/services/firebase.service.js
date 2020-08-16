@@ -6,6 +6,7 @@ require('firebase/database');
 require('firebase/auth');
 require('firebase/storage');
 require('firebase/functions');
+require('firebase/analytics');
 
 /**
  * Service: FirebaseService
@@ -34,6 +35,8 @@ const FirebaseService = {
         if(!FirebaseService.rtDb) {
             FirebaseService.rtDb = firebase.database();
         }
+
+        firebase.analytics();
     },
 
     // Get the global firebase object
