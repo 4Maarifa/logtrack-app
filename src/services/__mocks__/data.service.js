@@ -92,10 +92,10 @@ const DataService = {
       search: {
         looking: true,
         resume: 'MY RESUME',
-        roles: [ 'MANAGER', 'ACCOUNTANT' ],
-        settings: {
-          
-        }
+        roles: [ 'MANAGER', 'ACCOUNTANT' ]
+      },
+      settings: {
+        SETTINGS_FULL_PAGE_LAYOUT: 'CLEAR'
       }
     },
     initialized: true

@@ -4,8 +4,6 @@ import FileService from './../../services/file.service';
 jest.mock('./../../services/firebase.service');
 jest.mock('./../../services/data.service');
 
-import SpecUtils from './../SpecUtils';
-
 const TEST_FILES = [
   { name: 'file1',
     metadata: { name: 'file1', size: 500, contentType: 'audio/mpeg', customMetadata: { realName: 'File 1.mp3', folder: null } },
