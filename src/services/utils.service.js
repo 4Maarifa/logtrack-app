@@ -23,7 +23,7 @@ const UtilsService = {
     // return key list according to a predicate
     filterKeysOnPropertyValue: (obj, predicate) => Object.keys(obj).filter(key => predicate(obj[key])),
 
-    // Filter object keys according to a predicate
+    // Filter object values according to a predicate
     filterObjectsOnPropertyValue: (obj, predicate) => UtilsService.filterKeysOnPropertyValue(obj, predicate).map(key => obj[key]),
 
     // Building a resulting object from a key filter predicate
