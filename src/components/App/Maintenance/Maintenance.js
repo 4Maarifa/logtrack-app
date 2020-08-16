@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { faTruck, faArrowLeft, faTachometer, faPlus } from '@fortawesome/pro-solid-svg-icons';
 import { Redirect } from 'react-router-dom';
+import { faTruck, faArrowLeft, faTachometer, faPlus } from '@fortawesome/pro-solid-svg-icons';
+import { faAngleDown } from '@fortawesome/pro-light-svg-icons';
 
 import DataService from './../../../services/data.service';
 import ErrorService from './../../../services/error.service';
@@ -20,7 +21,6 @@ import { EBrandDetails } from './../../../classes/enums/EBrand';
 import { v4 as uuid } from 'uuid';
 
 import './Maintenance.scss';
-import { faAngleDown } from '@fortawesome/pro-light-svg-icons';
 
 /**
  * component: Maintenance
