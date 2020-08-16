@@ -208,7 +208,7 @@ const Dashboard = () => {
         <div className="card map">
           <Map />
         </div>
-        <div className={'card card-stick logtracks ' + (computed.activeRole && computed.activeRole.role !== ERole.MANAGER ? 'logtracks-with-button' : '')}>
+        <div className={'card logtracks ' + (computed.activeRole && computed.activeRole.role !== ERole.MANAGER ? 'logtracks-with-button' : '')}>
           <LogTracks isEmbed />
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { faTruck, faArrowLeft, faTachometer, faPlus } from '@fortawesome/pro-solid-svg-icons';
 import { Redirect } from 'react-router-dom';
+import { faTruck, faArrowLeft, faTachometer, faPlus } from '@fortawesome/pro-solid-svg-icons';
+import { faAngleDown } from '@fortawesome/pro-light-svg-icons';
 
 import DataService from './../../../services/data.service';
 import ErrorService from './../../../services/error.service';
@@ -81,7 +82,7 @@ const Maintenance = () => {
 
 
   return <div className="Maintenance">
-    {selectedEquipment ? <div className="selected-equipment">
+    {selectedEquipment ? <div className={'selected-equipment ' + (selectedPartIndex != null ? 'selected-equipment--part' : '')}>
       <div className="selected-equipment-topbar">
         <button className="btn-previous" onClick={() => {
           setSelectedPartIndex(null);
@@ -165,6 +166,9 @@ const Maintenance = () => {
       <div className="selected-equipment-current">
 
         {selectedPartIndex !== null ? <div className="category">
+          <button className="close-current" onClick={() => setSelectedPartIndex(null)} style={{ backgroundColor: SELECTED_PART_COLOR }}>
+            <Icon source="fa" icon={faAngleDown} />
+          </button>
           <h2 style={{ color: SELECTED_PART_COLOR }}>
             <Icon source={SELECTED_PART.iconSource} icon={SELECTED_PART.icon} />
             <span>{SELECTED_PART.name}</span>

@@ -27,7 +27,12 @@ const Tabs = ({ default: defaultTab, tabs, isHorizontalLayout }) => {
   
   // activate tab handler
   // If the tab is not disabled and is not a clearfix, set it as active tab to render its content
-  const activateTab = newActiveTab => !tabs[newActiveTab].disabled && !tabs[newActiveTab].clearfix && setActiveTab(newActiveTab);
+  const activateTab = newActiveTab => {
+    !tabs[newActiveTab].disabled && !tabs[newActiveTab].clearfix && setActiveTab(newActiveTab);
+
+    // Remove GET parameters when chaning tabs to avoid the router to put the user on the previous tab again and again
+    window.history.pushState({}, '', '?');
+  };
 
   const OBSERVER_KEY = uuid();
 

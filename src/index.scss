@@ -567,6 +567,14 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    .icon-2 {
+      top: auto;
+      left: auto;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      font-size: 1.2rem;
+    }
   }
 
   &-photo {
