@@ -7,12 +7,11 @@ import Icon from './../../../Utils/Icon/Icon';
 import UtilsService from './../../../../services/utils.service';
 
 import { EEquipmentModelDetails, EEquipmentModelSubTypeDetails } from './../../../../classes/enums/EEquipmentModel';
-import { EBrandDetails } from './../../../../classes/enums/EBrand';
+import { EquipmentModelImage, EquipmentBrandImage } from './../../../Entities/Equipment/Equipment';
 
 const AdminEquipmentModelTab = () => {
   
   const renderEquipmentModel = (itemId, itemData) => {
-    const BrandIcon = EBrandDetails[itemData.brand].icons.mono;
 
     return <div className="Element-content" key={itemId}>
       <div className="Element-base">
@@ -21,16 +20,14 @@ const AdminEquipmentModelTab = () => {
         </span>
 
         <div className="Element-photo">
-          <img
-            alt={itemData.name} 
-            src={itemData.image} />
+          <EquipmentModelImage equipmentModelId={itemId} />
         </div>
 
         <div className="Element-data">
           <span className="Element-title">
+            <EquipmentBrandImage brandId={itemData.brand} type="symbol" size="25" />
             {itemData.name}
           </span>
-          <BrandIcon width="50" height="50" />
         </div>
       </div>
     </div>

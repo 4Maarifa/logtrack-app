@@ -7,28 +7,26 @@ import Icon from './../../../Utils/Icon/Icon';
 import { EBrandDetails } from './../../../../classes/enums/EBrand';
 
 import UtilsService from './../../../../services/utils.service';
+import { EquipmentBrandImage } from '../../../Entities/Equipment/Equipment';
 
 const AdminBrandTab = () => {
   
   const renderBrand = (itemId, itemData) => {
-    const IconTagSymbol = itemData.icons.symbol ? itemData.icons.symbol : null;
-    const IconTagMono = itemData.icons.mono;
-    const IconTagColor = itemData.icons.color;
-
     return <div className="Element-content" key={itemId}>
       <div className="Element-base">
         <div className="Element-icon">
-          {IconTagSymbol ? <IconTagSymbol width="50" height="50" fill={itemData.color} />
-            : <IconTagMono width="50" height="50" fill={itemData.color} />}
+          <EquipmentBrandImage size="50" brandId={itemId} type="symbol" />
         </div>
         <div className="Element-data">
           <span className="Element-title">
             {itemData.name}
           </span>
           <span>
-            Colored: <IconTagColor width="25" height="25" /> / Mono: <IconTagMono width="25" height="25" fill={itemData.color} /> {IconTagSymbol ? <Fragment> / Symbol: <IconTagSymbol width="25" height="25" fill={itemData.color} /></Fragment> : null}
+            Mono: <EquipmentBrandImage size="40" brandId={itemId} type="mono" /><br/>
+            Colored: <EquipmentBrandImage size="40" brandId={itemId} type="color" isDowngradeType={false} /><br/>
+            {EBrandDetails[itemId].icons.symbol ? <Fragment>Symbol: <EquipmentBrandImage size="40" brandId={itemId} type="symbol" isDowngradeType={false} /></Fragment> : null}
           </span>
-        </div>        
+        </div>
       </div>
     </div>
   };

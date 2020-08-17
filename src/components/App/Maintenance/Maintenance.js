@@ -13,10 +13,10 @@ import ExTable from './../../Utils/ExTable/ExTable';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import Switch from './../../Utils/FormElements/Switch/Switch';
 
-import Equipment, { equipmentsExTableFSS } from './../../Entities/Equipment/Equipment';
+import Equipment, { equipmentsExTableFSS, EquipmentModelImage, EquipmentBrandImage } from './../../Entities/Equipment/Equipment';
 
-import { EEquipmentModelDetails, EEquipmentPartDetails, EEquipmentPartTypeDetails, EEquipmentModelSubTypeDetails, EEquipmentPartMaintenance } from './../../../classes/enums/EEquipmentModel';
-import { EBrandDetails } from './../../../classes/enums/EBrand';
+import { EEquipmentModelDetails, EEquipmentPartDetails, EEquipmentPartTypeDetails, 
+  EEquipmentModelSubTypeDetails, EEquipmentPartMaintenance } from './../../../classes/enums/EEquipmentModel';
 
 import { v4 as uuid } from 'uuid';
 
@@ -38,6 +38,12 @@ const Maintenance = () => {
   const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
+
+  const SELECTED_EQUIPMENT_DATA = selectedEquipment ? equipments[selectedEquipment] : null,
+    SELECTED_EQUIPMENT_MODEL_DATA = selectedEquipment ? EEquipmentModelDetails[SELECTED_EQUIPMENT_DATA.equipmentModelId] : null;
+
+  const SELECTED_PART = SELECTED_EQUIPMENT_MODEL_DATA && selectedPartIndex !== null ? EEquipmentPartDetails[SELECTED_EQUIPMENT_MODEL_DATA.parts[selectedPartIndex].type] : null,
+    SELECTED_PART_COLOR = SELECTED_EQUIPMENT_MODEL_DATA && selectedPartIndex !== null ? ColorService.getPaletteForColor(EEquipmentPartTypeDetails[SELECTED_PART.parent].palette).medium.color : null;
 
   useEffect(() => {
     if(computed.initialized && computed.activeRole) {
@@ -73,14 +79,6 @@ const Maintenance = () => {
     return <Equipment key={itemId} equipment={ {[itemId]: itemData} } selection={SELECTION} />;
   };
 
-  const SELECTED_EQUIPMENT_DATA = selectedEquipment ? equipments[selectedEquipment] : null,
-    SELECTED_EQUIPMENT_MODEL_DATA = selectedEquipment ? EEquipmentModelDetails[SELECTED_EQUIPMENT_DATA.equipmentModelId] : null,
-    SelectedEquipmentBrandIconTag = selectedEquipment ? EBrandDetails[SELECTED_EQUIPMENT_MODEL_DATA.brand].icons.symbol ? EBrandDetails[SELECTED_EQUIPMENT_MODEL_DATA.brand].icons.symbol : EBrandDetails[SELECTED_EQUIPMENT_MODEL_DATA.brand].icons.mono : null;
-
-  const SELECTED_PART = SELECTED_EQUIPMENT_MODEL_DATA && selectedPartIndex !== null ? EEquipmentPartDetails[SELECTED_EQUIPMENT_MODEL_DATA.parts[selectedPartIndex].type] : null,
-    SELECTED_PART_COLOR = SELECTED_EQUIPMENT_MODEL_DATA && selectedPartIndex !== null ? ColorService.getPaletteForColor(EEquipmentPartTypeDetails[SELECTED_PART.parent].palette).medium.color : null;
-
-
   return <div className="Maintenance">
     {selectedEquipment ? <div className={'selected-equipment ' + (selectedPartIndex != null ? 'selected-equipment--part' : '')}>
       <div className="selected-equipment-topbar">
@@ -96,10 +94,7 @@ const Maintenance = () => {
         <div className="equipment-name">
           <PageLink type={PageLinkType.EQUIPMENT} entityId={selectedEquipment} entityData={SELECTED_EQUIPMENT_DATA} />
           <span className="equipment-brand">
-            <SelectedEquipmentBrandIconTag
-                alt={EBrandDetails[SELECTED_EQUIPMENT_MODEL_DATA.brand].name}
-                title={EBrandDetails[SELECTED_EQUIPMENT_MODEL_DATA.brand].name}
-                style={{ fill: EBrandDetails[SELECTED_EQUIPMENT_MODEL_DATA.brand].color }} />
+            <EquipmentBrandImage brandId={SELECTED_EQUIPMENT_MODEL_DATA.brand} type="symbol" size="25" />
             <span className="sub">{SELECTED_EQUIPMENT_MODEL_DATA.name}</span>
           </span>
         </div>
@@ -117,7 +112,7 @@ const Maintenance = () => {
       </div>
       <div className="selected-equipment-image">
         <div className="selected-equipment-image-content">
-          <img className={'' + (isImageLowOpacity ? 'img-low-opacity' : '')} src={SELECTED_EQUIPMENT_MODEL_DATA.image} alt={SELECTED_EQUIPMENT_MODEL_DATA.name} />
+          <EquipmentModelImage className={'' + (isImageLowOpacity ? 'img-low-opacity' : '')} equipmentModelId={SELECTED_EQUIPMENT_DATA.equipmentModelId} />
           <div className="overlay">
             {SELECTED_EQUIPMENT_MODEL_DATA.parts.map((part, index) => {
               const COLOR = ColorService.getPaletteForColor([EEquipmentPartTypeDetails[EEquipmentPartDetails[part.type].parent].palette]).medium.color;

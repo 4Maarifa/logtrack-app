@@ -12,6 +12,7 @@ import UtilsService from './../../../services/utils.service';
 
 import { EEquipmentModelDetails, EEquipmentModelSubTypeDetails } from './../../../classes/enums/EEquipmentModel';
 import { ERole } from './../../../classes/Role';
+import { EBrandDetails } from './../../../classes/enums/EBrand';
 
 import { v4 as uuid } from 'uuid';
 
@@ -28,6 +29,11 @@ const Equipment = ({ equipment, isPage, selection }) => {
   const OBSERVER_KEY = uuid();
 
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
+
+  // Parse data
+  const EQUIPMENT_ID = Object.keys(equipment)[0],
+    EQUIPMENT_DATA = equipment[EQUIPMENT_ID],
+    EQUIPMENT_MODEL_DATA = EEquipmentModelDetails[EQUIPMENT_DATA.equipmentModelId];
   
   useEffect(() => {
     DataService.computed.observeComputedValues(setComputed, OBSERVER_KEY);
@@ -36,11 +42,6 @@ const Equipment = ({ equipment, isPage, selection }) => {
 
   if(!computed.initialized) { return null; }
   if(!equipment) { return null; }
-
-  // Parse data
-  const EQUIPMENT_ID = Object.keys(equipment)[0],
-    EQUIPMENT_DATA = equipment[EQUIPMENT_ID],
-    EQUIPMENT_MODEL_DATA = EEquipmentModelDetails[EQUIPMENT_DATA.equipmentModelId];
 
   /** 
    * RENDER
@@ -79,9 +80,7 @@ const Equipment = ({ equipment, isPage, selection }) => {
 
         <div className="Element-photo">
           {/* Print equipment model picture */}
-          <img
-            alt={EQUIPMENT_MODEL_DATA.name} 
-            src={EQUIPMENT_MODEL_DATA.image} />
+          <EquipmentModelImage equipmentModelId={EQUIPMENT_DATA.equipmentModelId} />
         </div>
 
         {/* Equipment details */}
@@ -89,7 +88,10 @@ const Equipment = ({ equipment, isPage, selection }) => {
           <span className="Element-title">
             <PageLink type={PageLinkType.EQUIPMENT} entityId={EQUIPMENT_ID} entityData={EQUIPMENT_DATA} white={isPage} />
           </span>
-          <span className="sub">{EQUIPMENT_MODEL_DATA.name}</span>
+          <span className="sub">
+            <EquipmentBrandImage brandId={EQUIPMENT_MODEL_DATA.brand} type="symbol" size="25" />
+            {EQUIPMENT_MODEL_DATA.name}
+          </span>
         </div>
 
         {/* Equipment actions */}
@@ -115,6 +117,52 @@ export const equipmentsExTableFSS = {
   search: (_, itemData, searchTerm) => (
     itemData.identification.toLowerCase().includes(searchTerm.toLowerCase())
   )
+};
+
+// Used to print dynamically an equipment model image
+export const EquipmentModelImage = ({ equipmentModelId, className }) => {
+
+  const [equipmentModelImage, setEquipmentModelImage] = useState(null);
+
+  useEffect(() => {
+    // at start, import the equipment model image
+    import('./../../../assets/equipmentModels/' + EEquipmentModelDetails[equipmentModelId].image)
+      .then(image => setEquipmentModelImage(image.default));
+  }, []);
+
+  // Then, print it as an <img />
+  return <img alt={EEquipmentModelDetails[equipmentModelId].name} className={className} src={equipmentModelImage} />;
+};
+
+// Used to print dynamically an equipment brand image
+// type is either color, mono or symbol
+export const EquipmentBrandImage = ({ brandId, className = '', type, style, size, isDowngradeType = true }) => {
+
+  const [inlineSvg, setInlineSvg] = useState(null);
+
+  if(!EBrandDetails[brandId].icons[type] && isDowngradeType) {
+    type = 'color';
+  }
+
+  useEffect(() => {
+    fetch(`https://raw.githubusercontent.com/LogTrack/logtrack-app/master/src/assets/brands/${brandId}/${type}.svg`)
+      .then(response => {
+        if(!response.ok) {
+          console.warn('An equipment brand was requested but does not exist!');
+          return '';
+        }
+
+        return response.text();
+      })
+      .then(svg => {
+        setInlineSvg(svg);
+      });
+  }, []);
+
+  return <span className={'equipment-brand ' + className}
+                style={{ ...style, maxHeight: `${size}px`, maxWidth: `${size}px`, fill: EBrandDetails[brandId].color }}
+                dangerouslySetInnerHTML={{__html: inlineSvg}} />;
+
 };
 
 export default Equipment;
