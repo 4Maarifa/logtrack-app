@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { faCog, faClock, faMapMarker, faBuilding, faTag, faChevronRight,
-  faTruck, faUsers, faWarehouseAlt, faThermometerHalf } from '@fortawesome/pro-light-svg-icons';
+  faTruck, faUsers, faWarehouseAlt, faThermometerHalf, faBullhorn } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 
@@ -10,6 +10,7 @@ import ErrorService from './../../../services/error.service';
 import WeatherService, { EWeatherIcons } from './../../../services/weather.service';
 import PermissionService from './../../../services/permission.service';
 import SettingsService, { ESettings } from './../../../services/settings.service';
+import ModalService from './../../../services/modal.service';
 import DateService from './../../../services/date.service';
 
 import { ERole, ERoleDetails } from './../../../classes/Role';
@@ -21,6 +22,7 @@ import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import { v4 as uuid } from 'uuid';
 
 import './Dashboard.scss';
+import News from '../News/News';
 
 /**
  * Component: Dashboard
@@ -217,9 +219,12 @@ const Dashboard = () => {
 
   return (
     <div className="Dashboard">
-      {computed.employee && computed.user && <h1>
-        Welcome back, <PageLink type={PageLinkType.EMPLOYEE} entityId={computed.user.uid} entityData={computed.employee} />!
-      </h1>}
+      <button className="Dashboard-news" onClick={() => {
+        ModalService.showModal('News', <News />, { actions: [] });
+      }}>
+        <Icon source="fa" icon={faBullhorn} />
+      </button>
+      <h1>Welcome back, <PageLink type={PageLinkType.EMPLOYEE} entityId={computed.user.uid} entityData={computed.employee} />!</h1>
       {renderRolePart()}
     </div>
   );
