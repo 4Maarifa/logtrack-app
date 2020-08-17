@@ -535,6 +535,13 @@ const DevDocServicesTab = () => {
               <tr><td>usePrevious</td><td>value | the new value</td><td>A hook that memorize values, with always a value late.</td></tr>
             </tbody>
           </table>
+          <h3>Other exports</h3>
+          <table className="doc-props" border="1">
+            <thead><tr><th>Name</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>ASSETS_URL</td><td>The endpoint to load all LogTrack assets.</td></tr>
+            </tbody>
+          </table>
         </div>
       },
       weather: {

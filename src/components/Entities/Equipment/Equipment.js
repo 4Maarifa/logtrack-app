@@ -8,7 +8,7 @@ import Radio from './../../Utils/FormElements/Radio/Radio';
 import Checkbox from './../../Utils/FormElements/Checkbox/Checkbox';
 
 import DataService from './../../../services/data.service';
-import UtilsService from './../../../services/utils.service';
+import UtilsService, { ASSETS_URL } from './../../../services/utils.service';
 
 import { EEquipmentModelDetails, EEquipmentModelSubTypeDetails } from './../../../classes/enums/EEquipmentModel';
 import { ERole } from './../../../classes/Role';
@@ -122,16 +122,8 @@ export const equipmentsExTableFSS = {
 // Used to print dynamically an equipment model image
 export const EquipmentModelImage = ({ equipmentModelId, className }) => {
 
-  const [equipmentModelImage, setEquipmentModelImage] = useState(null);
-
-  useEffect(() => {
-    // at start, import the equipment model image
-    import('./../../../assets/equipmentModels/' + EEquipmentModelDetails[equipmentModelId].image)
-      .then(image => setEquipmentModelImage(image.default));
-  }, []);
-
-  // Then, print it as an <img />
-  return <img alt={EEquipmentModelDetails[equipmentModelId].name} className={className} src={equipmentModelImage} />;
+  // Print it as an <img />
+  return <img alt={EEquipmentModelDetails[equipmentModelId].name} className={className} src={`${ASSETS_URL}equipmentModels/${EEquipmentModelDetails[equipmentModelId].image}`} />;
 };
 
 // Used to print dynamically an equipment brand image
@@ -145,7 +137,7 @@ export const EquipmentBrandImage = ({ brandId, className = '', type, style, size
   }
 
   useEffect(() => {
-    fetch(`https://raw.githubusercontent.com/LogTrack/logtrack-app/master/src/assets/brands/${brandId}/${type}.svg`)
+    fetch(`${ASSETS_URL}brands/${brandId}/${type}.svg`)
       .then(response => {
         if(!response.ok) {
           console.warn('An equipment brand was requested but does not exist!');

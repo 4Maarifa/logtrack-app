@@ -117,6 +117,8 @@ const UtilsService = {
     }
 };
 
+export const ASSETS_URL = 'https://logtrack.github.io/logtrack-assets/assets/';
+
 ObserverService.initialize(UtilsService.url, 'URL', {
     startWatcher: ({ updateObservers }) => window.addEventListener('popstate', updateObservers),
     stopWatcher: ({ updateObservers }) => window.removeEventListener('popstate', updateObservers),
