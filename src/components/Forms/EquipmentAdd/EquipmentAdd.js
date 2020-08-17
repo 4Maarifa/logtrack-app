@@ -13,8 +13,11 @@ import ErrorService from './../../../services/error.service';
 import EquipmentService from './../../../services/entities/equipment.service';
 import EmployeeService from './../../../services/entities/employee.service';
 
+import { EquipmentModelImage } from './../../Entities/Equipment/Equipment';
+
 import Equipment from './../../../classes/Equipment';
-import EEquipmentModel, { EEquipmentModelTypeDetails, EEquipmentModelSubTypeDetails, EEquipmentModelDetails } from './../../../classes/enums/EEquipmentModel';
+import EEquipmentModel, { EEquipmentModelTypeDetails, EEquipmentModelSubTypeDetails, 
+  EEquipmentModelDetails } from './../../../classes/enums/EEquipmentModel';
 
 import { v4 as uuid } from 'uuid';
 
@@ -104,12 +107,6 @@ const EquipmentAdd = ({ match }) => {
   // Used to filter equipment models according to equipment model type and subtype
   const filterEquipmentModels = (type, subType = null) => {
     let newEquipmentModels = {};
-
-    Object.keys(EEquipmentModel).forEach(k => {
-      if(!EEquipmentModelDetails[k]) {
-        console.log(k);
-      }
-    })
 
     // If there's no subtype available, filter by type only
     if(!subType) {
@@ -209,8 +206,7 @@ const EquipmentAdd = ({ match }) => {
         Object.keys(filterEquipmentModels(selectedEquipmentType, selectedEquipmentSubType)).forEach(key => {
           NEW_EQUIPMENT_MODELS[key] = {
             content: () => <Fragment>
-              <img src={EEquipmentModelDetails[key].image}
-                alt={EEquipmentModelDetails[key].name + '\'s photo'} />
+              <EquipmentModelImage equipmentModelId={key} />
               {EEquipmentModelDetails[key].name}
             </Fragment>
           }
@@ -270,8 +266,7 @@ const EquipmentAdd = ({ match }) => {
 
                       <Fragment>
                         {/* Otherwise, print it with edit link */}
-                        <img src={EEquipmentModelDetails[selectedEquipmentModelId].image}
-                          alt={EEquipmentModelDetails[selectedEquipmentModelId].name + '\'s photo'} />
+                        <EquipmentModelImage equipmentModelId={selectedEquipmentModelId} />
                         {EEquipmentModelDetails[selectedEquipmentModelId].name}
                         <span className="action" onClick={() => handleSelection(null, 'selectedEquipmentModelId')}>
                           <Icon source="fa" icon={faEdit} />

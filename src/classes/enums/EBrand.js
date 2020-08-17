@@ -1,398 +1,4 @@
 
-import { ReactComponent as ARDOR_MONO } from './../../assets/brands/ARDOR/mono.svg';
-import { ReactComponent as ARDOR_COLOR } from './../../assets/brands/ARDOR/color.svg';
-import { ReactComponent as ARDOR_SYMBOL } from './../../assets/brands/ARDOR/symbol.svg';
-
-import { ReactComponent as ASTRA_MONO } from './../../assets/brands/ASTRA/mono.svg';
-import { ReactComponent as ASTRA_COLOR } from './../../assets/brands/ASTRA/color.svg';
-import { ReactComponent as ASTRA_SYMBOL } from './../../assets/brands/ASTRA/symbol.svg';
-
-import { ReactComponent as CARRIER_MONO } from './../../assets/brands/CARRIER/mono.svg';
-import { ReactComponent as CARRIER_COLOR } from './../../assets/brands/CARRIER/color.svg';
-
-import { ReactComponent as CHASSIS_KING_MONO } from './../../assets/brands/CHASSIS_KING/mono.svg';
-import { ReactComponent as CHASSIS_KING_COLOR } from './../../assets/brands/CHASSIS_KING/color.svg';
-
-import { ReactComponent as CHEETAH_MONO } from './../../assets/brands/CHEETAH/mono.svg';
-import { ReactComponent as CHEETAH_COLOR } from './../../assets/brands/CHEETAH/color.svg';
-import { ReactComponent as CHEETAH_SYMBOL } from './../../assets/brands/CHEETAH/symbol.svg';
-
-import { ReactComponent as CITROEN_MONO } from './../../assets/brands/CITROEN/mono.svg';
-import { ReactComponent as CITROEN_COLOR } from './../../assets/brands/CITROEN/color.svg';
-import { ReactComponent as CITROEN_SYMBOL } from './../../assets/brands/CITROEN/symbol.svg';
-
-import { ReactComponent as CONTRAL_MONO } from './../../assets/brands/CONTRAL/mono.svg';
-import { ReactComponent as CONTRAL_COLOR } from './../../assets/brands/CONTRAL/color.svg';
-
-import { ReactComponent as CUMMINS_MONO } from './../../assets/brands/CUMMINS/mono.svg';
-import { ReactComponent as CUMMINS_COLOR } from './../../assets/brands/CUMMINS/color.svg';
-
-import { ReactComponent as DAF_MONO } from './../../assets/brands/DAF/mono.svg';
-import { ReactComponent as DAF_COLOR } from './../../assets/brands/DAF/color.svg';
-
-import { ReactComponent as DENNISON_MONO } from './../../assets/brands/DENNISON/mono.svg';
-import { ReactComponent as DENNISON_COLOR } from './../../assets/brands/DENNISON/color.svg';
-
-import { ReactComponent as DHOLLANDIA_MONO } from './../../assets/brands/DHOLLANDIA/mono.svg';
-import { ReactComponent as DHOLLANDIA_COLOR } from './../../assets/brands/DHOLLANDIA/color.svg';
-import { ReactComponent as DHOLLANDIA_SYMBOL } from './../../assets/brands/DHOLLANDIA/symbol.svg';
-
-import { ReactComponent as DOEPKER_MONO } from './../../assets/brands/DOEPKER/mono.svg';
-import { ReactComponent as DOEPKER_COLOR } from './../../assets/brands/DOEPKER/color.svg';
-
-import { ReactComponent as DOONAN_MONO } from './../../assets/brands/DOONAN/mono.svg';
-import { ReactComponent as DOONAN_COLOR } from './../../assets/brands/DOONAN/color.svg';
-import { ReactComponent as DOONAN_SYMBOL } from './../../assets/brands/DOONAN/symbol.svg';
-
-import { ReactComponent as DORSEY_MONO } from './../../assets/brands/DORSEY/mono.svg';
-import { ReactComponent as DORSEY_COLOR } from './../../assets/brands/DORSEY/color.svg';
-
-import { ReactComponent as EAGER_BEAVER_MONO } from './../../assets/brands/EAGER_BEAVER/mono.svg';
-import { ReactComponent as EAGER_BEAVER_COLOR } from './../../assets/brands/EAGER_BEAVER/color.svg';
-
-import { ReactComponent as EAST_MONO } from './../../assets/brands/EAST/mono.svg';
-import { ReactComponent as EAST_COLOR } from './../../assets/brands/EAST/color.svg';
-import { ReactComponent as EAST_SYMBOL } from './../../assets/brands/EAST/symbol.svg';
-
-import { ReactComponent as ELITE_TRAILERS_MONO } from './../../assets/brands/ELITE_TRAILERS/mono.svg';
-import { ReactComponent as ELITE_TRAILERS_COLOR } from './../../assets/brands/ELITE_TRAILERS/color.svg';
-import { ReactComponent as ELITE_TRAILERS_SYMBOL } from './../../assets/brands/ELITE_TRAILERS/symbol.svg';
-
-import { ReactComponent as FAYMONVILLE_MONO } from './../../assets/brands/FAYMONVILLE/mono.svg';
-import { ReactComponent as FAYMONVILLE_COLOR } from './../../assets/brands/FAYMONVILLE/color.svg';
-import { ReactComponent as FAYMONVILLE_SYMBOL } from './../../assets/brands/FAYMONVILLE/symbol.svg';
-
-import { ReactComponent as FELLING_MONO } from './../../assets/brands/FELLING/mono.svg';
-import { ReactComponent as FELLING_COLOR } from './../../assets/brands/FELLING/color.svg';
-
-import { ReactComponent as FERREE_MONO } from './../../assets/brands/FERREE/mono.svg';
-import { ReactComponent as FERREE_COLOR } from './../../assets/brands/FERREE/color.svg';
-import { ReactComponent as FERREE_SYMBOL } from './../../assets/brands/FERREE/symbol.svg';
-
-import { ReactComponent as FIAT_MONO } from './../../assets/brands/FIAT/mono.svg';
-import { ReactComponent as FIAT_COLOR } from './../../assets/brands/FIAT/color.svg';
-
-import { ReactComponent as FONTAINE_MONO } from './../../assets/brands/FONTAINE/mono.svg';
-import { ReactComponent as FONTAINE_COLOR } from './../../assets/brands/FONTAINE/color.svg';
-import { ReactComponent as FONTAINE_SYMBOL } from './../../assets/brands/FONTAINE/symbol.svg';
-
-import { ReactComponent as FORD_MONO } from './../../assets/brands/FORD/mono.svg';
-import { ReactComponent as FORD_COLOR } from './../../assets/brands/FORD/color.svg';
-import { ReactComponent as FORD_SYMBOL } from './../../assets/brands/FORD/symbol.svg';
-
-import { ReactComponent as FREIGHTLINER_MONO } from './../../assets/brands/FREIGHTLINER/mono.svg';
-import { ReactComponent as FREIGHTLINER_COLOR } from './../../assets/brands/FREIGHTLINER/color.svg';
-import { ReactComponent as FREIGHTLINER_SYMBOL } from './../../assets/brands/FREIGHTLINER/symbol.svg';
-
-import { ReactComponent as FRUEHAUF_MONO } from './../../assets/brands/FRUEHAUF/mono.svg';
-import { ReactComponent as FRUEHAUF_COLOR } from './../../assets/brands/FRUEHAUF/color.svg';
-import { ReactComponent as FRUEHAUF_SYMBOL } from './../../assets/brands/FRUEHAUF/symbol.svg';
-
-import { ReactComponent as FUSO_MONO } from './../../assets/brands/FUSO/mono.svg';
-import { ReactComponent as FUSO_COLOR } from './../../assets/brands/FUSO/color.svg';
-import { ReactComponent as FUSO_SYMBOL } from './../../assets/brands/FUSO/symbol.svg';
-
-import { ReactComponent as GOLDHOFER_MONO } from './../../assets/brands/GOLDHOFER/mono.svg';
-import { ReactComponent as GOLDHOFER_COLOR } from './../../assets/brands/GOLDHOFER/color.svg';
-
-import { ReactComponent as GREAT_DANE_MONO } from './../../assets/brands/GREAT_DANE/mono.svg';
-import { ReactComponent as GREAT_DANE_COLOR } from './../../assets/brands/GREAT_DANE/color.svg';
-import { ReactComponent as GREAT_DANE_SYMBOL } from './../../assets/brands/GREAT_DANE/symbol.svg';
-
-import { ReactComponent as GT_SEMITRAILER_MONO } from './../../assets/brands/GT_SEMITRAILER/mono.svg';
-import { ReactComponent as GT_SEMITRAILER_COLOR } from './../../assets/brands/GT_SEMITRAILER/color.svg';
-import { ReactComponent as GT_SEMITRAILER_SYMBOL } from './../../assets/brands/GT_SEMITRAILER/symbol.svg';
-
-import { ReactComponent as HEIL_MONO } from './../../assets/brands/HEIL/mono.svg';
-import { ReactComponent as HEIL_COLOR } from './../../assets/brands/HEIL/color.svg';
-import { ReactComponent as HEIL_SYMBOL } from './../../assets/brands/HEIL/symbol.svg';
-
-import { ReactComponent as HERCULES_CHASSIS_MONO } from './../../assets/brands/HERCULES_CHASSIS/mono.svg';
-import { ReactComponent as HERCULES_CHASSIS_COLOR } from './../../assets/brands/HERCULES_CHASSIS/color.svg';
-import { ReactComponent as HERCULES_CHASSIS_SYMBOL } from './../../assets/brands/HERCULES_CHASSIS/symbol.svg';
-
-import { ReactComponent as HINO_MOTORS_MONO } from './../../assets/brands/HINO_MOTORS/mono.svg';
-import { ReactComponent as HINO_MOTORS_COLOR } from './../../assets/brands/HINO_MOTORS/color.svg';
-import { ReactComponent as HINO_MOTORS_SYMBOL } from './../../assets/brands/HINO_MOTORS/symbol.svg';
-
-import { ReactComponent as HOET_MONO } from './../../assets/brands/HOET/mono.svg';
-import { ReactComponent as HOET_COLOR } from './../../assets/brands/HOET/color.svg';
-import { ReactComponent as HOET_SYMBOL } from './../../assets/brands/HOET/symbol.svg';
-
-import { ReactComponent as HYUNDAI_MONO } from './../../assets/brands/HYUNDAI/mono.svg';
-import { ReactComponent as HYUNDAI_COLOR } from './../../assets/brands/HYUNDAI/color.svg';
-import { ReactComponent as HYUNDAI_SYMBOL } from './../../assets/brands/HYUNDAI/symbol.svg';
-
-import { ReactComponent as ISUZU_MONO } from './../../assets/brands/ISUZU/mono.svg';
-import { ReactComponent as ISUZU_COLOR } from './../../assets/brands/ISUZU/color.svg';
-
-import { ReactComponent as IVECO_MONO } from './../../assets/brands/IVECO/mono.svg';
-import { ReactComponent as IVECO_COLOR } from './../../assets/brands/IVECO/color.svg';
-
-import { ReactComponent as J_J_BODIES_MONO } from './../../assets/brands/J_J_BODIES/mono.svg';
-import { ReactComponent as J_J_BODIES_COLOR } from './../../assets/brands/J_J_BODIES/color.svg';
-import { ReactComponent as J_J_BODIES_SYMBOL } from './../../assets/brands/J_J_BODIES/symbol.svg';
-
-import { ReactComponent as KASSBOHRER_MONO } from './../../assets/brands/KASSBOHRER/mono.svg';
-import { ReactComponent as KASSBOHRER_COLOR } from './../../assets/brands/KASSBOHRER/color.svg';
-import { ReactComponent as KASSBOHRER_SYMBOL } from './../../assets/brands/KASSBOHRER/symbol.svg';
-
-import { ReactComponent as KENTUCKY_TRAILER_MONO } from './../../assets/brands/KENTUCKY_TRAILER/mono.svg';
-import { ReactComponent as KENTUCKY_TRAILER_COLOR } from './../../assets/brands/KENTUCKY_TRAILER/color.svg';
-import { ReactComponent as KENTUCKY_TRAILER_SYMBOL } from './../../assets/brands/KENTUCKY_TRAILER/symbol.svg';
-
-import { ReactComponent as KOGEL_MONO } from './../../assets/brands/KOGEL/mono.svg';
-import { ReactComponent as KOGEL_COLOR } from './../../assets/brands/KOGEL/color.svg';
-import { ReactComponent as KOGEL_SYMBOL } from './../../assets/brands/KOGEL/symbol.svg';
-
-import { ReactComponent as LAMBERET_MONO } from './../../assets/brands/LAMBERET/mono.svg';
-import { ReactComponent as LAMBERET_COLOR } from './../../assets/brands/LAMBERET/color.svg';
-import { ReactComponent as LAMBERET_SYMBOL } from './../../assets/brands/LAMBERET/symbol.svg';
-
-import { ReactComponent as KAMAZ_MONO } from './../../assets/brands/KAMAZ/mono.svg';
-import { ReactComponent as KAMAZ_COLOR } from './../../assets/brands/KAMAZ/color.svg';
-import { ReactComponent as KAMAZ_SYMBOL } from './../../assets/brands/KAMAZ/symbol.svg';
-
-import { ReactComponent as KENWORTH_MONO } from './../../assets/brands/KENWORTH/mono.svg';
-import { ReactComponent as KENWORTH_COLOR } from './../../assets/brands/KENWORTH/color.svg';
-import { ReactComponent as KENWORTH_SYMBOL } from './../../assets/brands/KENWORTH/symbol.svg';
-
-import { ReactComponent as KRONE_MONO } from './../../assets/brands/KRONE/mono.svg';
-import { ReactComponent as KRONE_COLOR } from './../../assets/brands/KRONE/color.svg';
-import { ReactComponent as KRONE_SYNBOL } from './../../assets/brands/KRONE/symbol.svg';
-
-import { ReactComponent as LANDOLL_MONO } from './../../assets/brands/LANDOLL/mono.svg';
-import { ReactComponent as LANDOLL_COLOR } from './../../assets/brands/LANDOLL/color.svg';
-
-import { ReactComponent as LANDSPORT_MONO } from './../../assets/brands/LANDSPORT/mono.svg';
-import { ReactComponent as LANDSPORT_COLOR } from './../../assets/brands/LANDSPORT/color.svg';
-import { ReactComponent as LANDSPORT_SYMBOL } from './../../assets/brands/LANDSPORT/symbol.svg';
-
-import { ReactComponent as LAWRENCE_DAVID_MONO } from './../../assets/brands/LAWRENCE_DAVID/mono.svg';
-import { ReactComponent as LAWRENCE_DAVID_COLOR } from './../../assets/brands/LAWRENCE_DAVID/color.svg';
-import { ReactComponent as LAWRENCE_DAVID_SYMBOL } from './../../assets/brands/LAWRENCE_DAVID/symbol.svg';
-
-import { ReactComponent as MAC_TRAILER_MONO } from './../../assets/brands/MAC_TRAILER/mono.svg';
-import { ReactComponent as MAC_TRAILER_COLOR } from './../../assets/brands/MAC_TRAILER/color.svg';
-
-import { ReactComponent as MACK_MONO } from './../../assets/brands/MACK/mono.svg';
-import { ReactComponent as MACK_COLOR } from './../../assets/brands/MACK/color.svg';
-import { ReactComponent as MACK_SYMBOL } from './../../assets/brands/MACK/symbol.svg';
-
-import { ReactComponent as MAGYAR_MONO } from './../../assets/brands/MAGYAR/mono.svg';
-import { ReactComponent as MAGYAR_COLOR } from './../../assets/brands/MAGYAR/color.svg';
-import { ReactComponent as MAGYAR_SYMBOL } from './../../assets/brands/MAGYAR/symbol.svg';
-
-import { ReactComponent as MAN_MONO } from './../../assets/brands/MAN/mono.svg';
-import { ReactComponent as MAN_COLOR } from './../../assets/brands/MAN/color.svg';
-
-import { ReactComponent as MANAC_MONO } from './../../assets/brands/MANAC/mono.svg';
-import { ReactComponent as MANAC_COLOR } from './../../assets/brands/MANAC/color.svg';
-import { ReactComponent as MANAC_SYMBOL } from './../../assets/brands/MANAC/symbol.svg';
-
-import { ReactComponent as MANITOU_MONO } from './../../assets/brands/MANITOU/mono.svg';
-import { ReactComponent as MANITOU_COLOR } from './../../assets/brands/MANITOU/color.svg';
-import { ReactComponent as MANITOU_SYMBOL } from './../../assets/brands/MANITOU/symbol.svg';
-
-import { ReactComponent as MAX_TRAILER_MONO } from './../../assets/brands/MAX_TRAILER/mono.svg';
-import { ReactComponent as MAX_TRAILER_COLOR } from './../../assets/brands/MAX_TRAILER/color.svg';
-import { ReactComponent as MAX_TRAILER_SYMBOL } from './../../assets/brands/MAX_TRAILER/symbol.svg';
-
-import { ReactComponent as MAXITRANS_MONO } from './../../assets/brands/MAXITRANS/mono.svg';
-import { ReactComponent as MAXITRANS_COLOR } from './../../assets/brands/MAXITRANS/color.svg';
-import { ReactComponent as MAXITRANS_SYMBOL } from './../../assets/brands/MAXITRANS/symbol.svg';
-
-import { ReactComponent as MAZ_MONO } from './../../assets/brands/MAZ/mono.svg';
-import { ReactComponent as MAZ_COLOR } from './../../assets/brands/MAZ/color.svg';
-
-import { ReactComponent as MAZ_MAN_MONO } from './../../assets/brands/MAZ_MAN/mono.svg';
-import { ReactComponent as MAZ_MAN_COLOR } from './../../assets/brands/MAZ_MAN/color.svg';
-import { ReactComponent as MAZ_MAN_SYMBOL } from './../../assets/brands/MAZ_MAN/symbol.svg';
-
-import { ReactComponent as MC_CAULEY_TRAILERS_MONO } from './../../assets/brands/MC_CAULEY_TRAILERS/mono.svg';
-import { ReactComponent as MC_CAULEY_TRAILERS_COLOR } from './../../assets/brands/MC_CAULEY_TRAILERS/color.svg';
-
-import { ReactComponent as MERCEDES_MONO } from './../../assets/brands/MERCEDES/mono.svg';
-import { ReactComponent as MERCEDES_COLOR } from './../../assets/brands/MERCEDES/color.svg';
-import { ReactComponent as MERCEDES_SYMBOL } from './../../assets/brands/MERCEDES/symbol.svg';
-
-import { ReactComponent as MONTRACON_MONO } from './../../assets/brands/MONTRACON/mono.svg';
-import { ReactComponent as MONTRACON_COLOR } from './../../assets/brands/MONTRACON/color.svg';
-import { ReactComponent as MONTRACON_SYMBOL } from './../../assets/brands/MONTRACON/symbol.svg';
-
-import { ReactComponent as NAVISTAR_MONO } from './../../assets/brands/NAVISTAR/mono.svg';
-import { ReactComponent as NAVISTAR_COLOR } from './../../assets/brands/NAVISTAR/color.svg';
-
-import { ReactComponent as NIKOLA_MONO } from './../../assets/brands/NIKOLA/mono.svg';
-import { ReactComponent as NIKOLA_COLOR } from './../../assets/brands/NIKOLA/color.svg';
-import { ReactComponent as NIKOLA_SYMBOL } from './../../assets/brands/NIKOLA/symbol.svg';
-
-import { ReactComponent as NISSAN_MONO } from './../../assets/brands/NISSAN/mono.svg';
-import { ReactComponent as NISSAN_COLOR } from './../../assets/brands/NISSAN/color.svg';
-import { ReactComponent as NISSAN_SYMBOL } from './../../assets/brands/NISSAN/symbol.svg';
-
-import { ReactComponent as OPEL_MONO } from './../../assets/brands/OPEL/mono.svg';
-import { ReactComponent as OPEL_COLOR } from './../../assets/brands/OPEL/color.svg';
-import { ReactComponent as OPEL_SYMBOL } from './../../assets/brands/OPEL/symbol.svg';
-
-import { ReactComponent as PACCAR_MONO } from './../../assets/brands/PACCAR/mono.svg';
-import { ReactComponent as PACCAR_COLOR } from './../../assets/brands/PACCAR/color.svg';
-
-import { ReactComponent as PETERBILT_MONO } from './../../assets/brands/PETERBILT/mono.svg';
-import { ReactComponent as PETERBILT_COLOR } from './../../assets/brands/PETERBILT/color.svg';
-
-import { ReactComponent as PEUGEOT_MONO } from './../../assets/brands/PEUGEOT/mono.svg';
-import { ReactComponent as PEUGEOT_COLOR } from './../../assets/brands/PEUGEOT/color.svg';
-import { ReactComponent as PEUGEOT_SYMBOL } from './../../assets/brands/PEUGEOT/symbol.svg';
-
-import { ReactComponent as PITTS_MONO } from './../../assets/brands/PITTS/mono.svg';
-import { ReactComponent as PITTS_COLOR } from './../../assets/brands/PITTS/color.svg';
-import { ReactComponent as PITTS_SYMBOL } from './../../assets/brands/PITTS/symbol.svg';
-
-import { ReactComponent as POLAR_TANK_MONO } from './../../assets/brands/POLAR_TANK/mono.svg';
-import { ReactComponent as POLAR_TANK_COLOR } from './../../assets/brands/POLAR_TANK/color.svg';
-
-import { ReactComponent as PRATT_MONO } from './../../assets/brands/PRATT/mono.svg';
-import { ReactComponent as PRATT_COLOR } from './../../assets/brands/PRATT/color.svg';
-import { ReactComponent as PRATT_SYMBOL } from './../../assets/brands/PRATT/symbol.svg';
-
-import { ReactComponent as PREMIER_TRAILER_MONO } from './../../assets/brands/PREMIER_TRAILER/mono.svg';
-import { ReactComponent as PREMIER_TRAILER_COLOR } from './../../assets/brands/PREMIER_TRAILER/color.svg';
-
-import { ReactComponent as REINKE_MONO } from './../../assets/brands/REINKE/mono.svg';
-import { ReactComponent as REINKE_COLOR } from './../../assets/brands/REINKE/color.svg';
-import { ReactComponent as REINKE_SYMBOL } from './../../assets/brands/REINKE/symbol.svg';
-
-import { ReactComponent as REITNOUER_MONO } from './../../assets/brands/REITNOUER/mono.svg';
-import { ReactComponent as REITNOUER_COLOR } from './../../assets/brands/REITNOUER/color.svg';
-
-import { ReactComponent as RENAULT_MONO } from './../../assets/brands/RENAULT/mono.svg';
-import { ReactComponent as RENAULT_COLOR } from './../../assets/brands/RENAULT/color.svg';
-import { ReactComponent as RENAULT_SYMBOL } from './../../assets/brands/RENAULT/symbol.svg';
-
-import { ReactComponent as SCANIA_MONO } from './../../assets/brands/SCANIA/mono.svg';
-import { ReactComponent as SCANIA_COLOR } from './../../assets/brands/SCANIA/color.svg';
-import { ReactComponent as SCANIA_SYMBOL } from './../../assets/brands/SCANIA/symbol.svg';
-
-import { ReactComponent as SCHMITZ_CARGOBULL_MONO } from './../../assets/brands/SCHMITZ_CARGOBULL/mono.svg';
-import { ReactComponent as SCHMITZ_CARGOBULL_COLOR } from './../../assets/brands/SCHMITZ_CARGOBULL/color.svg';
-import { ReactComponent as SCHMITZ_CARGOBULL_SYMBOL } from './../../assets/brands/SCHMITZ_CARGOBULL/symbol.svg';
-
-import { ReactComponent as SCHWARZMUELLER_MONO } from './../../assets/brands/SCHWARZMUELLER/mono.svg';
-import { ReactComponent as SCHWARZMUELLER_COLOR } from './../../assets/brands/SCHWARZMUELLER/color.svg';
-import { ReactComponent as SCHWARZMUELLER_SYMBOL } from './../../assets/brands/SCHWARZMUELLER/symbol.svg';
-
-import { ReactComponent as SDC_TRAILERS_MONO } from './../../assets/brands/SDC_TRAILERS/mono.svg';
-import { ReactComponent as SDC_TRAILERS_COLOR } from './../../assets/brands/SDC_TRAILERS/color.svg';
-
-import { ReactComponent as STAS_MONO } from './../../assets/brands/STAS/mono.svg';
-import { ReactComponent as STAS_COLOR } from './../../assets/brands/STAS/color.svg';
-import { ReactComponent as STAS_SYMBOL } from './../../assets/brands/STAS/symbol.svg';
-
-import { ReactComponent as STERLING_TRUCKS_MONO } from './../../assets/brands/STERLING_TRUCKS/mono.svg';
-import { ReactComponent as STERLING_TRUCKS_COLOR } from './../../assets/brands/STERLING_TRUCKS/color.svg';
-import { ReactComponent as STERLING_TRUCKS_SYMBOL } from './../../assets/brands/STERLING_TRUCKS/symbol.svg';
-
-import { ReactComponent as STOUGHTON_MONO } from './../../assets/brands/STOUGHTON/mono.svg';
-import { ReactComponent as STOUGHTON_COLOR } from './../../assets/brands/STOUGHTON/color.svg';
-import { ReactComponent as STOUGHTON_SYMBOL } from './../../assets/brands/STOUGHTON/symbol.svg';
-
-import { ReactComponent as STRICK_MONO } from './../../assets/brands/STRICK/mono.svg';
-import { ReactComponent as STRICK_COLOR } from './../../assets/brands/STRICK/color.svg';
-
-import { ReactComponent as SUZUKI_MONO } from './../../assets/brands/SUZUKI/mono.svg';
-import { ReactComponent as SUZUKI_COLOR } from './../../assets/brands/SUZUKI/color.svg';
-import { ReactComponent as SUZUKI_SYMBOL } from './../../assets/brands/SUZUKI/symbol.svg';
-
-import { ReactComponent as TARAS_PORT_TRAILERS_MONO } from './../../assets/brands/TARAS_PORT_TRAILERS/mono.svg';
-import { ReactComponent as TARAS_PORT_TRAILERS_COLOR } from './../../assets/brands/TARAS_PORT_TRAILERS/color.svg';
-import { ReactComponent as TARAS_PORT_TRAILERS_SYMBOL } from './../../assets/brands/TARAS_PORT_TRAILERS/symbol.svg';
-
-import { ReactComponent as TATA_MONO } from './../../assets/brands/TATA/mono.svg';
-import { ReactComponent as TATA_COLOR } from './../../assets/brands/TATA/color.svg';
-import { ReactComponent as TATA_SYMBOL } from './../../assets/brands/TATA/symbol.svg';
-
-import { ReactComponent as TEREX_MONO } from './../../assets/brands/TEREX/mono.svg';
-import { ReactComponent as TEREX_COLOR } from './../../assets/brands/TEREX/color.svg';
-import { ReactComponent as TEREX_SYMBOL } from './../../assets/brands/TEREX/symbol.svg';
-
-import { ReactComponent as TESLA_MONO } from './../../assets/brands/TESLA/mono.svg';
-import { ReactComponent as TESLA_COLOR } from './../../assets/brands/TESLA/color.svg';
-import { ReactComponent as TESLA_SYMBOL } from './../../assets/brands/TESLA/symbol.svg';
-
-import { ReactComponent as THERMO_KING_MONO } from './../../assets/brands/THERMO_KING/mono.svg';
-import { ReactComponent as THERMO_KING_COLOR } from './../../assets/brands/THERMO_KING/color.svg';
-import { ReactComponent as THERMO_KING_SYMBOL } from './../../assets/brands/THERMO_KING/symbol.svg';
-
-import { ReactComponent as TIGER_MONO } from './../../assets/brands/TIGER/mono.svg';
-import { ReactComponent as TIGER_COLOR } from './../../assets/brands/TIGER/color.svg';
-import { ReactComponent as TIGER_SYMBOL } from './../../assets/brands/TIGER/symbol.svg';
-
-import { ReactComponent as TIMPTE_MONO } from './../../assets/brands/TIMPTE/mono.svg';
-import { ReactComponent as TIMPTE_COLOR } from './../../assets/brands/TIMPTE/color.svg';
-
-import { ReactComponent as TRAIL_EZE_MONO } from './../../assets/brands/TRAIL_EZE/mono.svg';
-import { ReactComponent as TRAIL_EZE_COLOR } from './../../assets/brands/TRAIL_EZE/color.svg';
-import { ReactComponent as TRAIL_EZE_SYMBOL } from './../../assets/brands/TRAIL_EZE/symbol.svg';
-
-import { ReactComponent as TRAIL_KING_IND_MONO } from './../../assets/brands/TRAIL_KING_IND/mono.svg';
-import { ReactComponent as TRAIL_KING_IND_COLOR } from './../../assets/brands/TRAIL_KING_IND/color.svg';
-
-import { ReactComponent as TRANSCRAFT_MONO } from './../../assets/brands/TRANSCRAFT/mono.svg';
-import { ReactComponent as TRANSCRAFT_COLOR } from './../../assets/brands/TRANSCRAFT/color.svg';
-
-import { ReactComponent as TRAVIS_BODY_TRAILERS_MONO } from './../../assets/brands/TRAVIS_BODY_TRAILERS/mono.svg';
-import { ReactComponent as TRAVIS_BODY_TRAILERS_COLOR } from './../../assets/brands/TRAVIS_BODY_TRAILERS/color.svg';
-import { ReactComponent as TRAVIS_BODY_TRAILERS_SYMBOL } from './../../assets/brands/TRAVIS_BODY_TRAILERS/symbol.svg';
-
-import { ReactComponent as TRI_TANK_CORP_MONO } from './../../assets/brands/TRI_TANK_CORP/mono.svg';
-import { ReactComponent as TRI_TANK_CORP_COLOR } from './../../assets/brands/TRI_TANK_CORP/color.svg';
-
-import { ReactComponent as TRINITY_MONO } from './../../assets/brands/TRINITY/mono.svg';
-import { ReactComponent as TRINITY_COLOR } from './../../assets/brands/TRINITY/color.svg';
-import { ReactComponent as TRINITY_SYMBOL } from './../../assets/brands/TRINITY/symbol.svg';
-
-import { ReactComponent as UTM_CORPORATE_MONO } from './../../assets/brands/UTM_CORPORATE/mono.svg';
-import { ReactComponent as UTM_CORPORATE_COLOR } from './../../assets/brands/UTM_CORPORATE/color.svg';
-import { ReactComponent as UTM_CORPORATE_SYMBOL } from './../../assets/brands/UTM_CORPORATE/symbol.svg';
-
-import { ReactComponent as VANGUARD_MONO } from './../../assets/brands/VANGUARD/mono.svg';
-import { ReactComponent as VANGUARD_COLOR } from './../../assets/brands/VANGUARD/color.svg';
-
-import { ReactComponent as VOLKSWAGEN_MONO } from './../../assets/brands/VOLKSWAGEN/mono.svg';
-import { ReactComponent as VOLKSWAGEN_COLOR } from './../../assets/brands/VOLKSWAGEN/color.svg';
-import { ReactComponent as VOLKSWAGEN_SYMBOL } from './../../assets/brands/VOLKSWAGEN/symbol.svg';
-
-import { ReactComponent as VOLVO_MONO } from './../../assets/brands/VOLVO/mono.svg';
-import { ReactComponent as VOLVO_COLOR } from './../../assets/brands/VOLVO/color.svg';
-import { ReactComponent as VOLVO_SYMBOL } from './../../assets/brands/VOLVO/symbol.svg';
-
-import { ReactComponent as WABASH_MONO } from './../../assets/brands/WABASH/mono.svg';
-import { ReactComponent as WABASH_COLOR } from './../../assets/brands/WABASH/color.svg';
-import { ReactComponent as WABASH_SYMBOL } from './../../assets/brands/WABASH/symbol.svg';
-
-import { ReactComponent as WARREN_MONO } from './../../assets/brands/WARREN/mono.svg';
-import { ReactComponent as WARREN_COLOR } from './../../assets/brands/WARREN/color.svg';
-import { ReactComponent as WARREN_SYMBOL } from './../../assets/brands/WARREN/symbol.svg';
-
-import { ReactComponent as WESTERN_TRAILERS_MONO } from './../../assets/brands/WESTERN_TRAILERS/mono.svg';
-import { ReactComponent as WESTERN_TRAILERS_COLOR } from './../../assets/brands/WESTERN_TRAILERS/color.svg';
-
-import { ReactComponent as WESTERN_STAR_TRUCKS_MONO } from './../../assets/brands/WESTERN_STAR_TRUCKS/mono.svg';
-import { ReactComponent as WESTERN_STAR_TRUCKS_COLOR } from './../../assets/brands/WESTERN_STAR_TRUCKS/color.svg';
-import { ReactComponent as WESTERN_STAR_TRUCKS_SYMBOL } from './../../assets/brands/WESTERN_STAR_TRUCKS/symbol.svg';
-
-import { ReactComponent as WILSON_TRAILER_MONO } from './../../assets/brands/WILSON_TRAILER/mono.svg';
-import { ReactComponent as WILSON_TRAILER_COLOR } from './../../assets/brands/WILSON_TRAILER/color.svg';
-import { ReactComponent as WILSON_TRAILER_SYMBOL } from './../../assets/brands/WILSON_TRAILER/symbol.svg';
-
-import { ReactComponent as XL_SPECIALIZED_TRAILERS_MONO } from './../../assets/brands/XL_SPECIALIZED_TRAILERS/mono.svg';
-import { ReactComponent as XL_SPECIALIZED_TRAILERS_COLOR } from './../../assets/brands/XL_SPECIALIZED_TRAILERS/color.svg';
-import { ReactComponent as XL_SPECIALIZED_TRAILERS_SYMBOL } from './../../assets/brands/XL_SPECIALIZED_TRAILERS/symbol.svg';
-
-import { ReactComponent as XPO_TRAILERS_MONO } from './../../assets/brands/XPO_TRAILERS/mono.svg';
-import { ReactComponent as XPO_TRAILERS_COLOR } from './../../assets/brands/XPO_TRAILERS/color.svg';
-
 const EBrand = Object.freeze({
   ARDOR: 'ARDOR',
   ASTRA: 'ASTRA',
@@ -509,9 +115,9 @@ export const EBrandDetails = {
     website: 'https://www.th-group.eu/en/trailers/brands/ardor',
     color: '#FF4A40',
     icons: {
-      mono: ARDOR_MONO,
-      color: ARDOR_COLOR,
-      symbol: ARDOR_SYMBOL
+      mono: 'ARDOR/mono.svg',
+      color: 'ARDOR/color.svg',
+      symbol: 'ARDOR/symbol.svg'
     }
   },
   [EBrand.ASTRA]: {
@@ -519,9 +125,9 @@ export const EBrandDetails = {
     website: 'https://www.iveco-astra.com/',
     color: '#1A171B',
     icons: {
-      mono: ASTRA_MONO,
-      color: ASTRA_COLOR,
-      symbol: ASTRA_SYMBOL
+      mono: 'ASTRA/mono.svg',
+      color: 'ASTRA/color.svg',
+      symbol: 'ASTRA/symbol.svg'
     }
   },
   [EBrand.CARRIER]: {
@@ -529,8 +135,8 @@ export const EBrandDetails = {
     website: 'https://www.carrier.com/',
     color: '#152C73',
     icons: {
-      mono: CARRIER_MONO,
-      color: CARRIER_COLOR
+      mono: 'CARRIER/mono.svg',
+      color: 'CARRIER/color.svg'
     }
   },
   [EBrand.CHASSIS_KING]: {
@@ -539,8 +145,8 @@ export const EBrandDetails = {
     website: 'http://www.chassisking.com/',
     color: '#B51A12',
     icons: {
-      mono: CHASSIS_KING_MONO,
-      color: CHASSIS_KING_COLOR
+      mono: 'CHASSIS_KING/mono.svg',
+      color: 'CHASSIS_KING/color.svg'
     }
   },
   [EBrand.CHEETAH]: {
@@ -549,9 +155,9 @@ export const EBrandDetails = {
     website: 'https://www.cheetahchassis.com/',
     color: '#0087E6',
     icons: {
-      mono: CHEETAH_MONO,
-      color: CHEETAH_COLOR,
-      symbol: CHEETAH_SYMBOL
+      mono: 'CHEETAH/mono.svg',
+      color: 'CHEETAH/color.svg',
+      symbol: 'CHEETAH/symbol.svg'
     }
   },
   [EBrand.CITROEN]: {
@@ -559,9 +165,9 @@ export const EBrandDetails = {
     website: 'https://www.citroen.fr/',
     color: '#6E6E6E',
     icons: {
-      mono: CITROEN_MONO,
-      color: CITROEN_COLOR,
-      symbol: CITROEN_SYMBOL
+      mono: 'CITROEN/mono.svg',
+      color: 'CITROEN/color.svg',
+      symbol: 'CITROEN/symbol.svg'
     }
   },
   [EBrand.CONTRAL]: {
@@ -570,8 +176,8 @@ export const EBrandDetails = {
     website: 'https://thechaindrive.com/',
     color: '#890000',
     icons: {
-      mono: CONTRAL_MONO,
-      color: CONTRAL_COLOR
+      mono: 'CONTRAL/mono.svg',
+      color: 'CONTRAL/color.svg'
     }
   },
   [EBrand.CUMMINS]: {
@@ -579,8 +185,8 @@ export const EBrandDetails = {
     website: 'https://www.cummins.com/',
     color: '#000000',
     icons: {
-      mono: CUMMINS_MONO,
-      color: CUMMINS_COLOR
+      mono: 'CUMMINS/mono.svg',
+      color: 'CUMMINS/color.svg'
     }
   },
   [EBrand.DAF]: {
@@ -589,8 +195,8 @@ export const EBrandDetails = {
     website: 'https://www.daf.com/',
     color: '#00529b',
     icons: {
-      mono: DAF_MONO,
-      color: DAF_COLOR
+      mono: 'DAF/mono.svg',
+      color: 'DAF/color.svg'
     }
   },
   [EBrand.DENNISON]: {
@@ -599,8 +205,8 @@ export const EBrandDetails = {
     website: 'https://dennisontrailers.com/',
     color: '#BD252C',
     icons: {
-      mono: DENNISON_MONO,
-      color: DENNISON_COLOR
+      mono: 'DENNISON/mono.svg',
+      color: 'DENNISON/color.svg'
     }
   },
   [EBrand.DHOLLANDIA]: {
@@ -608,9 +214,9 @@ export const EBrandDetails = {
     website: 'http://www.dhollandia.co.uk/GB/en',
     color: '#FD7E3C',
     icons: {
-      mono: DHOLLANDIA_MONO,
-      color: DHOLLANDIA_COLOR,
-      symbol: DHOLLANDIA_SYMBOL
+      mono: 'DHOLLANDIA/mono.svg',
+      color: 'DHOLLANDIA/color.svg',
+      symbol: 'DHOLLANDIA/symbol.svg'
     }
   },
   [EBrand.DOEPKER]: {
@@ -618,8 +224,8 @@ export const EBrandDetails = {
     website: 'https://www.doepker.com/',
     color: '#FB3129',
     icons: {
-      mono: DOEPKER_MONO,
-      color: DOEPKER_COLOR
+      mono: 'DOEPKER/mono.svg',
+      color: 'DOEPKER/color.svg'
     }
   },
   [EBrand.DOONAN]: {
@@ -628,9 +234,9 @@ export const EBrandDetails = {
     website: 'http://www.doonan.com/',
     color: '#CF2221',
     icons: {
-      mono: DOONAN_MONO,
-      color: DOONAN_COLOR,
-      symbol: DOONAN_SYMBOL
+      mono: 'DOONAN/mono.svg',
+      color: 'DOONAN/color.svg',
+      symbol: 'DOONAN/symbol.svg'
     }
   },
   [EBrand.DORSEY]: {
@@ -638,8 +244,8 @@ export const EBrandDetails = {
     website: 'http://www.dorseytrailer.net/',
     color: '#EC1C2D',
     icons: {
-      mono: DORSEY_MONO,
-      color: DORSEY_COLOR
+      mono: 'DORSEY/mono.svg',
+      color: 'DORSEY/color.svg'
     }
   },
   [EBrand.EAGER_BEAVER]: {
@@ -647,8 +253,8 @@ export const EBrandDetails = {
     website: 'https://www.eagerbeavertrailers.com/',
     color: '#F0B510',
     icons: {
-      mono: EAGER_BEAVER_MONO,
-      color: EAGER_BEAVER_COLOR
+      mono: 'EAGER_BEAVER/mono.svg',
+      color: 'EAGER_BEAVER/color.svg'
     }
   },
   [EBrand.EAST]: {
@@ -656,9 +262,9 @@ export const EBrandDetails = {
     website: 'https://www.eastmfg.com/',
     color: '#0A58A6',
     icons: {
-      mono: EAST_MONO,
-      color: EAST_COLOR,
-      symbol: EAST_SYMBOL
+      mono: 'EAST/mono.svg',
+      color: 'EAST/color.svg',
+      symbol: 'EAST/symbol.svg'
     }
   },
   [EBrand.ELITE_TRAILERS]: {
@@ -667,9 +273,9 @@ export const EBrandDetails = {
     website: 'https://elitetrailers.com/',
     color: '#6C6C6C',
     icons: {
-      mono: ELITE_TRAILERS_MONO,
-      color: ELITE_TRAILERS_COLOR,
-      symbol: ELITE_TRAILERS_SYMBOL
+      mono: 'ELITE_TRAILERS/mono.svg',
+      color: 'ELITE_TRAILERS/color.svg',
+      symbol: 'ELITE_TRAILERS/symbol.svg'
     }
   },
   [EBrand.FAYMONVILLE]: {
@@ -678,9 +284,9 @@ export const EBrandDetails = {
     website: 'https://www.faymonville.com/',
     color: '#E30613',
     icons: {
-      mono: FAYMONVILLE_MONO,
-      color: FAYMONVILLE_COLOR,
-      symbol: FAYMONVILLE_SYMBOL
+      mono: 'FAYMONVILLE/mono.svg',
+      color: 'FAYMONVILLE/color.svg',
+      symbol: 'FAYMONVILLE/symbol.svg'
     }
   },
   [EBrand.FELLING]: {
@@ -688,8 +294,8 @@ export const EBrandDetails = {
     website: 'https://www.felling.com/',
     color: '#C62026',
     icons: {
-      mono: FELLING_MONO,
-      color: FELLING_COLOR
+      mono: 'FELLING/mono.svg',
+      color: 'FELLING/color.svg'
     }
   },
   [EBrand.FERREE]: {
@@ -698,9 +304,9 @@ export const EBrandDetails = {
     website: 'http://www.ferreetrailers.com/',
     color: '#B42016',
     icons: {
-      mono: FERREE_MONO,
-      color: FERREE_COLOR,
-      symbol: FERREE_SYMBOL
+      mono: 'FERREE/mono.svg',
+      color: 'FERREE/color.svg',
+      symbol: 'FERREE/symbol.svg'
     }
   },
   [EBrand.FIAT]: {
@@ -708,8 +314,8 @@ export const EBrandDetails = {
     website: 'https://www.fiat.com/',
     color: '#AD0C33',
     icons: {
-      mono: FIAT_MONO,
-      color: FIAT_COLOR
+      mono: 'FIAT/mono.svg',
+      color: 'FIAT/color.svg'
     }
   },
   [EBrand.FONTAINE]: {
@@ -717,9 +323,9 @@ export const EBrandDetails = {
     website: 'https://fontainetrailer.com/',
     color: '#CC1042',
     icons: {
-      mono: FONTAINE_MONO,
-      color: FONTAINE_COLOR,
-      symbol: FONTAINE_SYMBOL
+      mono: 'FONTAINE/mono.svg',
+      color: 'FONTAINE/color.svg',
+      symbol: 'FONTAINE/symbol.svg'
     }
   },
   [EBrand.FORD]: {
@@ -727,9 +333,9 @@ export const EBrandDetails = {
     website: 'https://www.ford.com/',
     color: '#003479',
     icons: {
-      mono: FORD_MONO,
-      color: FORD_COLOR,
-      symbol: FORD_SYMBOL
+      mono: 'FORD/mono.svg',
+      color: 'FORD/color.svg',
+      symbol: 'FORD/symbol.svg'
     }
   },
   [EBrand.FREIGHTLINER]: {
@@ -738,9 +344,9 @@ export const EBrandDetails = {
     website: 'https://freightliner.com/',
     color: '#000000',
     icons: {
-      mono: FREIGHTLINER_MONO,
-      color: FREIGHTLINER_COLOR,
-      symbol: FREIGHTLINER_SYMBOL
+      mono: 'FREIGHTLINER/mono.svg',
+      color: 'FREIGHTLINER/color.svg',
+      symbol: 'FREIGHTLINER/symbol.svg'
     }
   },
   [EBrand.FRUEHAUF]: {
@@ -749,9 +355,9 @@ export const EBrandDetails = {
     website: 'http://www.fruehauf.co.uk/',
     color: '#EC1B24',
     icons: {
-      mono: FRUEHAUF_MONO,
-      color: FRUEHAUF_COLOR,
-      symbol: FRUEHAUF_SYMBOL
+      mono: 'FRUEHAUF/mono.svg',
+      color: 'FRUEHAUF/color.svg',
+      symbol: 'FRUEHAUF/symbol.svg'
     }
   },
   [EBrand.FUSO]: {
@@ -760,9 +366,9 @@ export const EBrandDetails = {
     website: 'https://www.fuso-trucks.com/',
     color: '#ED1C24',
     icons: {
-      mono: FUSO_MONO,
-      color: FUSO_COLOR,
-      symbol: FUSO_SYMBOL
+      mono: 'FUSO/mono.svg',
+      color: 'FUSO/color.svg',
+      symbol: 'FUSO/symbol.svg'
     }
   },
   [EBrand.GOLDHOFER]: {
@@ -770,8 +376,8 @@ export const EBrandDetails = {
     website: 'https://www.goldhofer.com/',
     color: '#333333',
     icons: {
-      mono: GOLDHOFER_MONO,
-      color: GOLDHOFER_COLOR
+      mono: 'GOLDHOFER/mono.svg',
+      color: 'GOLDHOFER/color.svg'
     }
   },
   [EBrand.GREAT_DANE]: {
@@ -779,9 +385,9 @@ export const EBrandDetails = {
     website: 'https://greatdane.com/',
     color: '#BC0029',
     icons: {
-      mono: GREAT_DANE_MONO,
-      color: GREAT_DANE_COLOR,
-      symbol: GREAT_DANE_SYMBOL
+      mono: 'GREAT_DANE/mono.svg',
+      color: 'GREAT_DANE/color.svg',
+      symbol: 'GREAT_DANE/symbol.svg'
     }
   },
   [EBrand.GT_SEMITRAILER]: {
@@ -789,9 +395,9 @@ export const EBrandDetails = {
     website: 'https://www.trailersgt.com/',
     color: '#D6031E',
     icons: {
-      mono: GT_SEMITRAILER_MONO,
-      color: GT_SEMITRAILER_COLOR,
-      symbol: GT_SEMITRAILER_SYMBOL
+      mono: 'GT_SEMITRAILER/mono.svg',
+      color: 'GT_SEMITRAILER/color.svg',
+      symbol: 'GT_SEMITRAILER/symbol.svg'
     }
   },
   [EBrand.HEIL]: {
@@ -800,9 +406,9 @@ export const EBrandDetails = {
     website: 'https://www.heiltrailer.com/',
     color: '#CB2627',
     icons: {
-      mono: HEIL_MONO,
-      color: HEIL_COLOR,
-      symbol: HEIL_SYMBOL
+      mono: 'HEIL/mono.svg',
+      color: 'HEIL/color.svg',
+      symbol: 'HEIL/symbol.svg'
     }
   },
   [EBrand.HERCULES_CHASSIS]: {
@@ -811,9 +417,9 @@ export const EBrandDetails = {
     website: 'https://www.herculeschassis.com/',
     color: '#F1EB1C',
     icons: {
-      mono: HERCULES_CHASSIS_MONO,
-      color: HERCULES_CHASSIS_COLOR,
-      symbol: HERCULES_CHASSIS_SYMBOL
+      mono: 'HERCULES_CHASSIS/mono.svg',
+      color: 'HERCULES_CHASSIS/color.svg',
+      symbol: 'HERCULES_CHASSIS/symbol.svg'
     }
   },
   [EBrand.HINO_MOTORS]: {
@@ -822,9 +428,9 @@ export const EBrandDetails = {
     website: 'https://www.hino-global.com/',
     color: '#FB0000',
     icons: {
-      mono: HINO_MOTORS_MONO,
-      color: HINO_MOTORS_COLOR,
-      symbol: HINO_MOTORS_SYMBOL
+      mono: 'HINO_MOTORS/mono.svg',
+      color: 'HINO_MOTORS/color.svg',
+      symbol: 'HINO_MOTORS/symbol.svg'
     }
   },
   [EBrand.HOET]: {
@@ -832,9 +438,9 @@ export const EBrandDetails = {
     website: 'https://www.th-group.eu/en/trailers/brands/hoet-trailers',
     color: '#0070BE',
     icons: {
-      mono: HOET_MONO,
-      color: HOET_COLOR,
-      symbol: HOET_SYMBOL
+      mono: 'HOET/mono.svg',
+      color: 'HOET/color.svg',
+      symbol: 'HOET/symbol.svg'
     }
   },
   [EBrand.HYUNDAI]: {
@@ -842,9 +448,9 @@ export const EBrandDetails = {
     website: 'http://www.hyundai.com/',
     color: '#003082',
     icons: {
-      mono: HYUNDAI_MONO,
-      color: HYUNDAI_COLOR,
-      symbol: HYUNDAI_SYMBOL
+      mono: 'HYUNDAI/mono.svg',
+      color: 'HYUNDAI/color.svg',
+      symbol: 'HYUNDAI/symbol.svg'
     }
   },
   [EBrand.ISUZU]: {
@@ -852,8 +458,8 @@ export const EBrandDetails = {
     website: 'http://isuzu.com/',
     color: '#ED1F24',
     icons: {
-      mono: ISUZU_MONO,
-      color: ISUZU_COLOR
+      mono: 'ISUZU/mono.svg',
+      color: 'ISUZU/color.svg'
     }
   },
   [EBrand.IVECO]: {
@@ -861,8 +467,8 @@ export const EBrandDetails = {
     website: 'https://www.iveco.com/',
     color: '#043671',
     icons: {
-      mono: IVECO_MONO,
-      color: IVECO_COLOR
+      mono: 'IVECO/mono.svg',
+      color: 'IVECO/color.svg'
     }
   },
   [EBrand.J_J_BODIES]: {
@@ -871,9 +477,9 @@ export const EBrandDetails = {
     website: 'https://www.jjbodies.com/',
     color: '#070101',
     icons: {
-      mono: J_J_BODIES_MONO,
-      color: J_J_BODIES_COLOR,
-      symbol: J_J_BODIES_SYMBOL
+      mono: 'J_J_BODIES/mono.svg',
+      color: 'J_J_BODIES/color.svg',
+      symbol: 'J_J_BODIES/symbol.svg'
     }
   },
   [EBrand.KAMAZ]: {
@@ -881,9 +487,9 @@ export const EBrandDetails = {
     website: 'https://kamaz.ru/',
     color: '#0D53A0',
     icons: {
-      mono: KAMAZ_MONO,
-      color: KAMAZ_COLOR,
-      symbol: KAMAZ_SYMBOL
+      mono: 'KAMAZ/mono.svg',
+      color: 'KAMAZ/color.svg',
+      symbol: 'KAMAZ/symbol.svg'
     }
   },
   [EBrand.KASSBOHRER]: {
@@ -891,9 +497,9 @@ export const EBrandDetails = {
     website: 'https://www.kaessbohrer.com/',
     color: '#FF0000',
     icons: {
-      mono: KASSBOHRER_MONO,
-      color: KASSBOHRER_COLOR,
-      symbol: KASSBOHRER_SYMBOL
+      mono: 'KASSBOHRER/mono.svg',
+      color: 'KASSBOHRER/color.svg',
+      symbol: 'KASSBOHRER/symbol.svg'
     }
   },
   [EBrand.KENTUCKY_TRAILER]: {
@@ -902,9 +508,9 @@ export const EBrandDetails = {
     website: 'https://www.kytrailer.com/',
     color: '#00477F',
     icons: {
-      mono: KENTUCKY_TRAILER_MONO,
-      color: KENTUCKY_TRAILER_COLOR,
-      symbol: KENTUCKY_TRAILER_SYMBOL
+      mono: 'KENTUCKY_TRAILER/mono.svg',
+      color: 'KENTUCKY_TRAILER/color.svg',
+      symbol: 'KENTUCKY_TRAILER/symbol.svg'
     }
   },
   [EBrand.KENWORTH]: {
@@ -913,9 +519,9 @@ export const EBrandDetails = {
     website: 'https://www.kenworth.com/',
     color: '#DF002B',
     icons: {
-      mono: KENWORTH_MONO,
-      color: KENWORTH_COLOR,
-      symbol: KENWORTH_SYMBOL
+      mono: 'KENWORTH/mono.svg',
+      color: 'KENWORTH/color.svg',
+      symbol: 'KENWORTH/symbol.svg'
     }
   },
   [EBrand.KOGEL]: {
@@ -924,9 +530,9 @@ export const EBrandDetails = {
     website: 'https://www.koegel.com/',
     color: '#E3051C',
     icons: {
-      mono: KOGEL_MONO,
-      color: KOGEL_COLOR,
-      symbol: KOGEL_SYMBOL
+      mono: 'KOGEL/mono.svg',
+      color: 'KOGEL/color.svg',
+      symbol: 'KOGEL/symbol.svg'
     }
   },
   [EBrand.KRONE]: {
@@ -935,9 +541,9 @@ export const EBrandDetails = {
     website: 'https://www.krone-trailer.com/',
     color: '#0064A3',
     icons: {
-      mono: KRONE_MONO,
-      color: KRONE_COLOR,
-      symbol: KRONE_SYNBOL
+      mono: 'KRONE/mono.svg',
+      color: 'KRONE/color.svg',
+      symbol: 'KRONE/symbol.svg'
     }
   },
   [EBrand.LAMBERET]: {
@@ -946,9 +552,9 @@ export const EBrandDetails = {
     website: 'http://www.lamberet.fr/',
     color: '#00458A',
     icons: {
-      mono: LAMBERET_MONO,
-      color: LAMBERET_COLOR,
-      symbol: LAMBERET_SYMBOL
+      mono: 'LAMBERET/mono.svg',
+      color: 'LAMBERET/color.svg',
+      symbol: 'LAMBERET/symbol.svg'
     }
   },
   [EBrand.LANDOLL]: {
@@ -956,8 +562,8 @@ export const EBrandDetails = {
     website: 'https://landoll.com/',
     color: '#FCD700',
     icons: {
-      mono: LANDOLL_MONO,
-      color: LANDOLL_COLOR
+      mono: 'LANDOLL/mono.svg',
+      color: 'LANDOLL/color.svg'
     }
   },
   [EBrand.LANDSPORT]: {
@@ -966,9 +572,9 @@ export const EBrandDetails = {
     website: 'http://www.landsport.com/',
     color: '#282A74',
     icons: {
-      mono: LANDSPORT_MONO,
-      color: LANDSPORT_COLOR,
-      symbol: LANDSPORT_SYMBOL
+      mono: 'LANDSPORT/mono.svg',
+      color: 'LANDSPORT/color.svg',
+      symbol: 'LANDSPORT/symbol.svg'
     }
   },
   [EBrand.LAWRENCE_DAVID]: {
@@ -977,9 +583,9 @@ export const EBrandDetails = {
     website: 'https://www.lawrencedavid.co.uk/',
     color: '#EA0000',
     icons: {
-      mono: LAWRENCE_DAVID_MONO,
-      color: LAWRENCE_DAVID_COLOR,
-      symbol: LAWRENCE_DAVID_SYMBOL
+      mono: 'LAWRENCE_DAVID/mono.svg',
+      color: 'LAWRENCE_DAVID/color.svg',
+      symbol: 'LAWRENCE_DAVID/symbol.svg'
     }
   },
   [EBrand.MAC_TRAILER]: {
@@ -987,8 +593,8 @@ export const EBrandDetails = {
     website: 'https://www.mactrailer.com/',
     color: '#A52E44',
     icons: {
-      mono: MAC_TRAILER_MONO,
-      color: MAC_TRAILER_COLOR
+      mono: 'MAC_TRAILER/mono.svg',
+      color: 'MAC_TRAILER/color.svg'
     }
   },
   [EBrand.MACK]: {
@@ -996,9 +602,9 @@ export const EBrandDetails = {
     website: 'https://www.macktrucks.com/',
     color: '#231F20',
     icons: {
-      mono: MACK_MONO,
-      color: MACK_COLOR,
-      symbol: MACK_SYMBOL
+      mono: 'MACK/mono.svg',
+      color: 'MACK/color.svg',
+      symbol: 'MACK/symbol.svg'
     }
   },
   [EBrand.MAGYAR]: {
@@ -1007,9 +613,9 @@ export const EBrandDetails = {
     website: 'http://www.gmagyar.com/',
     color: '#E3001B',
     icons: {
-      mono: MAGYAR_MONO,
-      color: MAGYAR_COLOR,
-      symbol: MAGYAR_SYMBOL
+      mono: 'MAGYAR/mono.svg',
+      color: 'MAGYAR/color.svg',
+      symbol: 'MAGYAR/symbol.svg'
     }
   },
   [EBrand.MAN]: {
@@ -1017,8 +623,8 @@ export const EBrandDetails = {
     website: 'https://www.mantruckandbus.com/',
     color: '#303C49',
     icons: {
-      mono: MAN_MONO,
-      color: MAN_COLOR
+      mono: 'MAN/mono.svg',
+      color: 'MAN/color.svg'
     }
   },
   [EBrand.MANAC]: {
@@ -1026,9 +632,9 @@ export const EBrandDetails = {
     website: 'https://www.manac.com/',
     color: '#ED3423',
     icons: {
-      mono: MANAC_MONO,
-      color: MANAC_COLOR,
-      symbol: MANAC_SYMBOL
+      mono: 'MANAC/mono.svg',
+      color: 'MANAC/color.svg',
+      symbol: 'MANAC/symbol.svg'
     }
   },
   [EBrand.MANITOU]: {
@@ -1037,9 +643,9 @@ export const EBrandDetails = {
     website: 'https://www.manitou.com/',
     color: '#F70000',
     icons: {
-      mono: MANITOU_MONO,
-      color: MANITOU_COLOR,
-      symbol: MANITOU_SYMBOL
+      mono: 'MANITOU/mono.svg',
+      color: 'MANITOU/color.svg',
+      symbol: 'MANITOU/symbol.svg'
     }
   },
   [EBrand.MAX_TRAILER]: {
@@ -1047,9 +653,9 @@ export const EBrandDetails = {
     website: 'https://www.maxtrailer.eu/',
     color: '#E30613',
     icons: {
-      mono: MAX_TRAILER_MONO,
-      color: MAX_TRAILER_COLOR,
-      symbol: MAX_TRAILER_SYMBOL
+      mono: 'MAX_TRAILER/mono.svg',
+      color: 'MAX_TRAILER/color.svg',
+      symbol: 'MAX_TRAILER/symbol.svg'
     }
   },
   [EBrand.MAXITRANS]: {
@@ -1057,9 +663,9 @@ export const EBrandDetails = {
     website: 'https://www.maxitrans.com/',
     color: '#042242',
     icons: {
-      mono: MAXITRANS_MONO,
-      color: MAXITRANS_COLOR,
-      symbol: MAXITRANS_SYMBOL
+      mono: 'MAXITRANS/mono.svg',
+      color: 'MAXITRANS/color.svg',
+      symbol: 'MAXITRANS/symbol.svg'
     }
   },
   [EBrand.MAZ]: {
@@ -1067,8 +673,8 @@ export const EBrandDetails = {
     website: 'http://maz.by/',
     color: '#E81C2C',
     icons: {
-      mono: MAZ_MONO,
-      color: MAZ_COLOR
+      mono: 'MAZ/mono.svg',
+      color: 'MAZ/color.svg'
     }
   },
   [EBrand.MAZ_MAN]: {
@@ -1076,9 +682,9 @@ export const EBrandDetails = {
     website: 'http://en.maz-man.by/',
     color: '#2D2B2B',
     icons: {
-      mono: MAZ_MAN_MONO,
-      color: MAZ_MAN_COLOR,
-      symbol: MAZ_MAN_SYMBOL
+      mono: 'MAZ_MAN/mono.svg',
+      color: 'MAZ_MAN/color.svg',
+      symbol: 'MAZ_MAN/symbol.svg'
     }
   },
   [EBrand.MC_CAULEY_TRAILERS]: {
@@ -1086,8 +692,8 @@ export const EBrandDetails = {
     website: 'https://www.mccauleys.co.uk/',
     color: '#AE2726',
     icons: {
-      mono: MC_CAULEY_TRAILERS_MONO,
-      color: MC_CAULEY_TRAILERS_COLOR
+      mono: 'MC_CAULEY_TRAILERS/mono.svg',
+      color: 'MC_CAULEY_TRAILERS/color.svg'
     }
   },
   [EBrand.MERCEDES]: {
@@ -1095,9 +701,9 @@ export const EBrandDetails = {
     website: 'https://www.mercedes-benz.com/',
     color: '#74777C',
     icons: {
-      mono: MERCEDES_MONO,
-      color: MERCEDES_COLOR,
-      symbol: MERCEDES_SYMBOL
+      mono: 'MERCEDES/mono.svg',
+      color: 'MERCEDES/color.svg',
+      symbol: 'MERCEDES/symbol.svg'
     }
   },
   [EBrand.MONTRACON]: {
@@ -1106,9 +712,9 @@ export const EBrandDetails = {
     website: 'https://www.montracon.com/',
     color: '#EE3B38',
     icons: {
-      mono: MONTRACON_MONO,
-      color: MONTRACON_COLOR,
-      symbol: MONTRACON_SYMBOL
+      mono: 'MONTRACON/mono.svg',
+      color: 'MONTRACON/color.svg',
+      symbol: 'MONTRACON/symbol.svg'
     }
   },
   [EBrand.NAVISTAR]: {
@@ -1117,8 +723,8 @@ export const EBrandDetails = {
     website: 'https://www.navistar.com/',
     color: '#3377AB',
     icons: {
-      mono: NAVISTAR_MONO,
-      color: NAVISTAR_COLOR
+      mono: 'NAVISTAR/mono.svg',
+      color: 'NAVISTAR/color.svg'
     }
   },
   [EBrand.NIKOLA]: {
@@ -1126,9 +732,9 @@ export const EBrandDetails = {
     website: 'https://nikolamotor.com/',
     color: '#00AEEF',
     icons: {
-      mono: NIKOLA_MONO,
-      color: NIKOLA_COLOR,
-      symbol: NIKOLA_SYMBOL
+      mono: 'NIKOLA/mono.svg',
+      color: 'NIKOLA/color.svg',
+      symbol: 'NIKOLA/symbol.svg'
     }
   },
   [EBrand.NISSAN]: {
@@ -1136,9 +742,9 @@ export const EBrandDetails = {
     website: 'https://www.nissan-global.com/',
     color: '#231F20',
     icons: {
-      mono: NISSAN_MONO,
-      color: NISSAN_COLOR,
-      symbol: NISSAN_SYMBOL
+      mono: 'NISSAN/mono.svg',
+      color: 'NISSAN/color.svg',
+      symbol: 'NISSAN/symbol.svg'
     }
   },
   [EBrand.OPEL]: {
@@ -1146,9 +752,9 @@ export const EBrandDetails = {
     website: 'https://www.opel.com/',
     color: '#F7DA0D',
     icons: {
-      mono: OPEL_MONO,
-      color: OPEL_COLOR,
-      symbol: OPEL_SYMBOL
+      mono: 'OPEL/mono.svg',
+      color: 'OPEL/color.svg',
+      symbol: 'OPEL/symbol.svg'
     }
   },
   [EBrand.PACCAR]: {
@@ -1156,8 +762,8 @@ export const EBrandDetails = {
     website: 'https://www.paccar.com/',
     color: '#005098',
     icons: {
-      mono: PACCAR_MONO,
-      color: PACCAR_COLOR
+      mono: 'PACCAR/mono.svg',
+      color: 'PACCAR/color.svg'
     }
   },
   [EBrand.PETERBILT]: {
@@ -1166,8 +772,8 @@ export const EBrandDetails = {
     website: 'https://www.peterbilt.com/',
     color: '#C00102',
     icons: {
-      mono: PETERBILT_MONO,
-      color: PETERBILT_COLOR
+      mono: 'PETERBILT/mono.svg',
+      color: 'PETERBILT/color.svg'
     }
   },
   [EBrand.PEUGEOT]: {
@@ -1176,9 +782,9 @@ export const EBrandDetails = {
     website: 'http://www.peugeot.com/',
     color: '#231F20',
     icons: {
-      mono: PEUGEOT_MONO,
-      color: PEUGEOT_COLOR,
-      symbol: PEUGEOT_SYMBOL
+      mono: 'PEUGEOT/mono.svg',
+      color: 'PEUGEOT/color.svg',
+      symbol: 'PEUGEOT/symbol.svg'
     }
   },
   [EBrand.PITTS]: {
@@ -1187,9 +793,9 @@ export const EBrandDetails = {
     website: 'https://pittstrailers.com/',
     color: '#EA1D2D',
     icons: {
-      mono: PITTS_MONO,
-      color: PITTS_COLOR,
-      symbol: PITTS_SYMBOL
+      mono: 'PITTS/mono.svg',
+      color: 'PITTS/color.svg',
+      symbol: 'PITTS/symbol.svg'
     }
   },
   [EBrand.POLAR_TANK]: {
@@ -1198,8 +804,8 @@ export const EBrandDetails = {
     website: 'https://polartank.com/',
     color: '#004B85',
     icons: {
-      mono: POLAR_TANK_MONO,
-      color: POLAR_TANK_COLOR
+      mono: 'POLAR_TANK/mono.svg',
+      color: 'POLAR_TANK/color.svg'
     }
   },
   [EBrand.PRATT]: {
@@ -1208,9 +814,9 @@ export const EBrandDetails = {
     website: 'https://prattinc.com/',
     color: '#0C428A',
     icons: {
-      mono: PRATT_MONO,
-      color: PRATT_COLOR,
-      symbol: PRATT_SYMBOL
+      mono: 'PRATT/mono.svg',
+      color: 'PRATT/color.svg',
+      symbol: 'PRATT/symbol.svg'
     }
   },
   [EBrand.PREMIER_TRAILER]: {
@@ -1218,8 +824,8 @@ export const EBrandDetails = {
     website: 'http://www.premiertrailers.net/',
     color: '#000000',
     icons: {
-      mono: PREMIER_TRAILER_MONO,
-      color: PREMIER_TRAILER_COLOR
+      mono: 'PREMIER_TRAILER/mono.svg',
+      color: 'PREMIER_TRAILER/color.svg'
     }
   },
   [EBrand.REINKE]: {
@@ -1228,9 +834,9 @@ export const EBrandDetails = {
     website: 'https://rdss.reinke.com/',
     color: '#222222',
     icons: {
-      mono: REINKE_MONO,
-      color: REINKE_COLOR,
-      symbol: REINKE_SYMBOL
+      mono: 'REINKE/mono.svg',
+      color: 'REINKE/color.svg',
+      symbol: 'REINKE/symbol.svg'
     }
   },
   [EBrand.REITNOUER]: {
@@ -1239,8 +845,8 @@ export const EBrandDetails = {
     website: 'https://reitnouer-trailers.com/',
     color: '#DB271F',
     icons: {
-      mono: REITNOUER_MONO,
-      color: REITNOUER_COLOR
+      mono: 'REITNOUER/mono.svg',
+      color: 'REITNOUER/color.svg'
     }
   },
   [EBrand.RENAULT]: {
@@ -1248,9 +854,9 @@ export const EBrandDetails = {
     website: 'https://group.renault.com/',
     color: '#FFCC33',
     icons: {
-      mono: RENAULT_MONO,
-      color: RENAULT_COLOR,
-      symbol: RENAULT_SYMBOL
+      mono: 'RENAULT/mono.svg',
+      color: 'RENAULT/color.svg',
+      symbol: 'RENAULT/symbol.svg'
     }
   },
   [EBrand.SCANIA]: {
@@ -1258,9 +864,9 @@ export const EBrandDetails = {
     website: 'https://www.scania.com/',
     color: '#09285B',
     icons: {
-      mono: SCANIA_MONO,
-      color: SCANIA_COLOR,
-      symbol: SCANIA_SYMBOL
+      mono: 'SCANIA/mono.svg',
+      color: 'SCANIA/color.svg',
+      symbol: 'SCANIA/symbol.svg'
     }
   },
   [EBrand.SCHMITZ_CARGOBULL]: {
@@ -1269,9 +875,9 @@ export const EBrandDetails = {
     website: 'https://www.cargobull.com/',
     color: '#164194',
     icons: {
-      mono: SCHMITZ_CARGOBULL_MONO,
-      color: SCHMITZ_CARGOBULL_COLOR,
-      symbol: SCHMITZ_CARGOBULL_SYMBOL
+      mono: 'SCHMITZ_CARGOBULL/mono.svg',
+      color: 'SCHMITZ_CARGOBULL/color.svg',
+      symbol: 'SCHMITZ_CARGOBULL/symbol.svg'
     }
   },
   [EBrand.SCHWARZMUELLER]: {
@@ -1280,9 +886,9 @@ export const EBrandDetails = {
     website: 'https://www.schwarzmueller.com/',
     color: '#E31B2E',
     icons: {
-      mono: SCHWARZMUELLER_MONO,
-      color: SCHWARZMUELLER_COLOR,
-      symbol: SCHWARZMUELLER_SYMBOL
+      mono: 'SCHWARZMUELLER/mono.svg',
+      color: 'SCHWARZMUELLER/color.svg',
+      symbol: 'SCHWARZMUELLER/symbol.svg'
     }
   },
   [EBrand.SDC_TRAILERS]: {
@@ -1291,8 +897,8 @@ export const EBrandDetails = {
     website: 'https://www.sdctrailers.com/',
     color: '#D70812',
     icons: {
-      mono: SDC_TRAILERS_MONO,
-      color: SDC_TRAILERS_COLOR
+      mono: 'SDC_TRAILERS/mono.svg',
+      color: 'SDC_TRAILERS/color.svg'
     }
   },
   [EBrand.STAS]: {
@@ -1301,18 +907,18 @@ export const EBrandDetails = {
     website: 'https://www.stas.be/',
     color: '#1C2F55',
     icons: {
-      mono: STAS_MONO,
-      color: STAS_COLOR,
-      symbol: STAS_SYMBOL
+      mono: 'STAS/mono.svg',
+      color: 'STAS/color.svg',
+      symbol: 'STAS/symbol.svg'
     }
   },
   [EBrand.STERLING_TRUCKS]: {
     name: 'Sterling Trucks',
     color: '#89C1E3',
     icons: {
-      mono: STERLING_TRUCKS_MONO,
-      color: STERLING_TRUCKS_COLOR,
-      symbol: STERLING_TRUCKS_SYMBOL
+      mono: 'STERLING_TRUCKS/mono.svg',
+      color: 'STERLING_TRUCKS/color.svg',
+      symbol: 'STERLING_TRUCKS/symbol.svg'
     }
   },
   [EBrand.STOUGHTON]: {
@@ -1321,9 +927,9 @@ export const EBrandDetails = {
     website: 'https://www.stoughtontrailers.com/',
     color: '#0079C2',
     icons: {
-      mono: STOUGHTON_MONO,
-      color: STOUGHTON_COLOR,
-      symbol: STOUGHTON_SYMBOL
+      mono: 'STOUGHTON/mono.svg',
+      color: 'STOUGHTON/color.svg',
+      symbol: 'STOUGHTON/symbol.svg'
     }
   },
   [EBrand.STRICK]: {
@@ -1332,8 +938,8 @@ export const EBrandDetails = {
     website: 'https://www.stricktrailers.com/',
     color: '#174E7E',
     icons: {
-      mono: STRICK_MONO,
-      color: STRICK_COLOR
+      mono: 'STRICK/mono.svg',
+      color: 'STRICK/color.svg'
     }
   },
   [EBrand.SUZUKI]: {
@@ -1341,9 +947,9 @@ export const EBrandDetails = {
     website: 'https://www.globalsuzuki.com/',
     color: '#E1261C',
     icons: {
-      mono: SUZUKI_MONO,
-      color: SUZUKI_COLOR,
-      symbol: SUZUKI_SYMBOL
+      mono: 'SUZUKI/mono.svg',
+      color: 'SUZUKI/color.svg',
+      symbol: 'SUZUKI/symbol.svg'
     }
   },
   [EBrand.TARAS_PORT_TRAILERS]: {
@@ -1351,9 +957,9 @@ export const EBrandDetails = {
     website: 'http://www.tarasport.com/',
     color: '#0F0D9E',
     icons: {
-      mono: TARAS_PORT_TRAILERS_MONO,
-      color: TARAS_PORT_TRAILERS_COLOR,
-      symbol: TARAS_PORT_TRAILERS_SYMBOL
+      mono: 'TARAS_PORT_TRAILERS/mono.svg',
+      color: 'TARAS_PORT_TRAILERS/color.svg',
+      symbol: 'TARAS_PORT_TRAILERS/symbol.svg'
     }
   },
   [EBrand.TATA]: {
@@ -1361,9 +967,9 @@ export const EBrandDetails = {
     website: 'https://www.tata.com/',
     color: '#466AAF',
     icons: {
-      mono: TATA_MONO,
-      color: TATA_COLOR,
-      symbol: TATA_SYMBOL
+      mono: 'TATA/mono.svg',
+      color: 'TATA/color.svg',
+      symbol: 'TATA/symbol.svg'
     }
   },
   [EBrand.TEREX]: {
@@ -1371,9 +977,9 @@ export const EBrandDetails = {
     website: 'http://www.terextrucks.com/',
     color: '#D3171F',
     icons: {
-      mono: TEREX_MONO,
-      color: TEREX_COLOR,
-      symbol: TEREX_SYMBOL
+      mono: 'TEREX/mono.svg',
+      color: 'TEREX/color.svg',
+      symbol: 'TEREX/symbol.svg'
     }
   },
   [EBrand.TESLA]: {
@@ -1381,9 +987,9 @@ export const EBrandDetails = {
     website: 'https://www.tesla.com/',
     color: '#E22026',
     icons: {
-      mono: TESLA_MONO,
-      color: TESLA_COLOR,
-      symbol: TESLA_SYMBOL
+      mono: 'TESLA/mono.svg',
+      color: 'TESLA/color.svg',
+      symbol: 'TESLA/symbol.svg'
     }
   },
   [EBrand.THERMO_KING]: {
@@ -1391,9 +997,9 @@ export const EBrandDetails = {
     website: 'https://www.thermoking.com/',
     color: '#00B3E6',
     icons: {
-      mono: THERMO_KING_MONO,
-      color: THERMO_KING_COLOR,
-      symbol: THERMO_KING_SYMBOL
+      mono: 'THERMO_KING/mono.svg',
+      color: 'THERMO_KING/color.svg',
+      symbol: 'THERMO_KING/symbol.svg'
     }
   },
   [EBrand.TIGER]: {
@@ -1401,9 +1007,9 @@ export const EBrandDetails = {
     website: 'https://www.tigertrailers.co.uk/',
     color: '#F15424',
     icons: {
-      mono: TIGER_MONO,
-      color: TIGER_COLOR,
-      symbol: TIGER_SYMBOL
+      mono: 'TIGER/mono.svg',
+      color: 'TIGER/color.svg',
+      symbol: 'TIGER/symbol.svg'
     }
   },
   [EBrand.TIMPTE]: {
@@ -1411,8 +1017,8 @@ export const EBrandDetails = {
     website: 'https://timpte.com/',
     color: '#EA6A2A',
     icons: {
-      mono: TIMPTE_MONO,
-      color: TIMPTE_COLOR
+      mono: 'TIMPTE/mono.svg',
+      color: 'TIMPTE/color.svg'
     }
   },
   [EBrand.TRAIL_EZE]: {
@@ -1421,9 +1027,9 @@ export const EBrandDetails = {
     website: 'http://traileze.com/',
     color: '#002A61',
     icons: {
-      mono: TRAIL_EZE_MONO,
-      color: TRAIL_EZE_COLOR,
-      symbol: TRAIL_EZE_SYMBOL
+      mono: 'TRAIL_EZE/mono.svg',
+      color: 'TRAIL_EZE/color.svg',
+      symbol: 'TRAIL_EZE/symbol.svg'
     }
   },
   [EBrand.TRAIL_KING_IND]: {
@@ -1432,8 +1038,8 @@ export const EBrandDetails = {
     website: 'https://www.trailking.com/',
     color: '#C0C0C0',
     icons: {
-      mono: TRAIL_KING_IND_MONO,
-      color: TRAIL_KING_IND_COLOR
+      mono: 'TRAIL_KING_IND/mono.svg',
+      color: 'TRAIL_KING_IND/color.svg'
     }
   },
   [EBrand.TRANSCRAFT]: {
@@ -1441,8 +1047,8 @@ export const EBrandDetails = {
     website: 'https://www.wabashnational.com/brands/transcraft',
     color: '#B20837',
     icons: {
-      mono: TRANSCRAFT_MONO,
-      color: TRANSCRAFT_COLOR
+      mono: 'TRANSCRAFT/mono.svg',
+      color: 'TRANSCRAFT/color.svg'
     }
   },
   [EBrand.TRAVIS_BODY_TRAILERS]: {
@@ -1451,9 +1057,9 @@ export const EBrandDetails = {
     website: 'https://travistrailers.com/',
     color: '#D72C27',
     icons: {
-      mono: TRAVIS_BODY_TRAILERS_MONO,
-      color: TRAVIS_BODY_TRAILERS_COLOR,
-      symbol: TRAVIS_BODY_TRAILERS_SYMBOL
+      mono: 'TRAVIS_BODY_TRAILERS/mono.svg',
+      color: 'TRAVIS_BODY_TRAILERS/color.svg',
+      symbol: 'TRAVIS_BODY_TRAILERS/symbol.svg'
     }
   },
   [EBrand.TRI_TANK_CORP]: {
@@ -1462,8 +1068,8 @@ export const EBrandDetails = {
     website: 'https://www.tritank.com/',
     color: '#FE0000',
     icons: {
-      mono: TRI_TANK_CORP_MONO,
-      color: TRI_TANK_CORP_COLOR
+      mono: 'TRI_TANK_CORP/mono.svg',
+      color: 'TRI_TANK_CORP/color.svg'
     }
   },
   [EBrand.TRINITY]: {
@@ -1472,9 +1078,9 @@ export const EBrandDetails = {
     website: 'https://trinitytrailer.com/',
     color: '#0D4B81',
     icons: {
-      mono: TRINITY_MONO,
-      color: TRINITY_COLOR,
-      symbol: TRINITY_SYMBOL
+      mono: 'TRINITY/mono.svg',
+      color: 'TRINITY/color.svg',
+      symbol: 'TRINITY/symbol.svg'
     }
   },
   [EBrand.UTM_CORPORATE]: {
@@ -1482,9 +1088,9 @@ export const EBrandDetails = {
     website: 'https://www.utilitytrailer.com/',
     color: '#0C5291',
     icons: {
-      mono: UTM_CORPORATE_MONO,
-      color: UTM_CORPORATE_COLOR,
-      symbol: UTM_CORPORATE_SYMBOL
+      mono: 'UTM_CORPORATE/mono.svg',
+      color: 'UTM_CORPORATE/color.svg',
+      symbol: 'UTM_CORPORATE/symbol.svg'
     }
   },
   [EBrand.VANGUARD]: {
@@ -1492,8 +1098,8 @@ export const EBrandDetails = {
     website: 'http://www.vanguardtrailer.com/',
     color: '#0068B3',
     icons: {
-      mono: VANGUARD_MONO,
-      color: VANGUARD_COLOR
+      mono: 'VANGUARD/mono.svg',
+      color: 'VANGUARD/color.svg'
     }
   },
   [EBrand.VOLKSWAGEN]: {
@@ -1501,9 +1107,9 @@ export const EBrandDetails = {
     website: 'https://volkswagen.com/',
     color: '#001E50',
     icons: {
-      mono: VOLKSWAGEN_MONO,
-      color: VOLKSWAGEN_COLOR,
-      symbol: VOLKSWAGEN_SYMBOL
+      mono: 'VOLKSWAGEN/mono.svg',
+      color: 'VOLKSWAGEN/color.svg',
+      symbol: 'VOLKSWAGEN/symbol.svg'
     }
   },
   [EBrand.VOLVO]: {
@@ -1511,9 +1117,9 @@ export const EBrandDetails = {
     website: 'https://www.volvo.com/',
     color: '#00105D',
     icons: {
-      mono: VOLVO_MONO,
-      color: VOLVO_COLOR,
-      symbol: VOLVO_SYMBOL
+      mono: 'VOLVO/mono.svg',
+      color: 'VOLVO/color.svg',
+      symbol: 'VOLVO/symbol.svg'
     }
   },
   [EBrand.WABASH]: {
@@ -1521,9 +1127,9 @@ export const EBrandDetails = {
     website: 'https://www.wabashnational.com/',
     color: '#A51E36',
     icons: {
-      mono: WABASH_MONO,
-      color: WABASH_COLOR,
-      symbol: WABASH_SYMBOL
+      mono: 'WABASH/mono.svg',
+      color: 'WABASH/color.svg',
+      symbol: 'WABASH/symbol.svg'
     }
   },
   [EBrand.WARREN]: {
@@ -1531,9 +1137,9 @@ export const EBrandDetails = {
     website: 'http://www.dumptrucks.com/',
     color: '#0070AC',
     icons: {
-      mono: WARREN_MONO,
-      color: WARREN_COLOR,
-      symbol: WARREN_SYMBOL
+      mono: 'WARREN/mono.svg',
+      color: 'WARREN/color.svg',
+      symbol: 'WARREN/symbol.svg'
     }
   },
   [EBrand.WESTERN_TRAILERS]: {
@@ -1542,8 +1148,8 @@ export const EBrandDetails = {
     website: 'http://www.westerntrailer.com/',
     color: '#D10000',
     icons: {
-      mono: WESTERN_TRAILERS_MONO,
-      color: WESTERN_TRAILERS_COLOR
+      mono: 'WESTERN_TRAILERS/mono.svg',
+      color: 'WESTERN_TRAILERS/color.svg'
     }
   },
   [EBrand.WESTERN_STAR_TRUCKS]: {
@@ -1552,9 +1158,9 @@ export const EBrandDetails = {
     website: 'https://www.westernstartrucks.com/',
     color: '#EE2027',
     icons: {
-      mono: WESTERN_STAR_TRUCKS_MONO,
-      color: WESTERN_STAR_TRUCKS_COLOR,
-      symbol: WESTERN_STAR_TRUCKS_SYMBOL
+      mono: 'WESTERN_STAR_TRUCKS/mono.svg',
+      color: 'WESTERN_STAR_TRUCKS/color.svg',
+      symbol: 'WESTERN_STAR_TRUCKS/symbol.svg'
     }
   },
   [EBrand.WILSON_TRAILER]: {
@@ -1563,9 +1169,9 @@ export const EBrandDetails = {
     website: 'http://www.wilsontrailer.com/',
     color: '#F23F2D',
     icons: {
-      mono: WILSON_TRAILER_MONO,
-      color: WILSON_TRAILER_COLOR,
-      symbol: WILSON_TRAILER_SYMBOL
+      mono: 'WILSON_TRAILER/mono.svg',
+      color: 'WILSON_TRAILER/color.svg',
+      symbol: 'WILSON_TRAILER/symbol.svg'
     }
   },
   [EBrand.XL_SPECIALIZED_TRAILERS]: {
@@ -1574,9 +1180,9 @@ export const EBrandDetails = {
     website: 'https://www.xlspecializedtrailer.com/',
     color: '#E21E3C',
     icons: {
-      mono: XL_SPECIALIZED_TRAILERS_MONO,
-      color: XL_SPECIALIZED_TRAILERS_COLOR,
-      symbol: XL_SPECIALIZED_TRAILERS_SYMBOL
+      mono: 'XL_SPECIALIZED_TRAILERS/mono.svg',
+      color: 'XL_SPECIALIZED_TRAILERS/color.svg',
+      symbol: 'XL_SPECIALIZED_TRAILERS/symbol.svg'
     }
   },
   [EBrand.XPO_TRAILERS]: {
@@ -1584,8 +1190,8 @@ export const EBrandDetails = {
     website: 'https://full-truckload.xpo.com/',
     color: '#CC0000',
     icons: {
-      mono: XPO_TRAILERS_MONO,
-      color: XPO_TRAILERS_COLOR
+      mono: 'XPO_TRAILERS/mono.svg',
+      color: 'XPO_TRAILERS/color.svg'
     }
   }
 };

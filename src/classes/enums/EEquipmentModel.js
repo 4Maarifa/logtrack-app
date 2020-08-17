@@ -9,581 +9,6 @@ import Icon from './../../components/Utils/Icon/Icon';
 
 import { EPalette } from './../../services/color.service';
 
-import ASTRA_HD9_RIGID_IMG from './../../assets/equipmentModels/ASTRA_HD9_RIGID.png';
-import ASTRA_HD9_TRACTOR_IMG from './../../assets/equipmentModels/ASTRA_HD9_TRACTOR.png';
-import ASTRA_HHD9_RIGID_IMG from './../../assets/equipmentModels/ASTRA_HHD9_RIGID.png';
-import ASTRA_HHD9_TRACTOR_IMG from './../../assets/equipmentModels/ASTRA_HHD9_TRACTOR.png';
-import CHEETAH_CONTAINER_20_40_MAXIMIZER_12_PIN_IMG from './../../assets/equipmentModels/CHEETAH_CONTAINER_20_40_MAXIMIZER_12_PIN.png';
-import CHEETAH_FLATBED_IMG from './../../assets/equipmentModels/CHEETAH_FLATBED.png';
-import CHEETAH_CONTAINER_GOOSENECK_41_45_IMG from './../../assets/equipmentModels/CHEETAH_CONTAINER_GOOSENECK_41_45.png';
-import CHEETAH_CONTAINER_20_40_SPREAD_CITY_IMG from './../../assets/equipmentModels/CHEETAH_CONTAINER_20_40_SPREAD_CITY.png';
-import CITROEN_JUMPER_L2H2_IMG from './../../assets/equipmentModels/CITROEN_JUMPER_L2H2.png';
-import CITROEN_JUMPER_L1H1_FRAME_IMG from './../../assets/equipmentModels/CITROEN_JUMPER_L1H1_FRAME.png';
-import CONTRAL_CDU_53_CONTAINER_IMG from './../../assets/equipmentModels/CONTRAL_CDU_53_CONTAINER.png';
-import DAF_CF_6x2_IMG from './../../assets/equipmentModels/DAF_CF_6x2.png';
-import DAF_LF_TANDEM_4x2_IMG from './../../assets/equipmentModels/DAF_LF_TANDEM_4x2.png';
-import DAF_XF_105_4x2_IMG from './../../assets/equipmentModels/DAF_XF_105_4x2.png';
-import DAF_XF_105_6x2_IMG from './../../assets/equipmentModels/DAF_XF_105_6x2.png';
-import DAF_XF_106_4x2_IMG from './../../assets/equipmentModels/DAF_XF_106_4x2.png';
-import DAF_XF_106_6x2_IMG from './../../assets/equipmentModels/DAF_XF_106_6x2.png';
-import DAF_XF_106_8x4_IMG from './../../assets/equipmentModels/DAF_XF_106_8x4.png';
-import DOEPKER_55T_SINGLE_DROP_LOWBED_IMG from './../../assets/equipmentModels/DOEPKER_55T_SINGLE_DROP_LOWBED.png';
-import DOONAN_DOUBLE_DROP_LOWBED_IMG from './../../assets/equipmentModels/DOONAN_DOUBLE_DROP_LOWBED.png';
-import DOONAN_FLATBED_CHAP_1_1_IMG from './../../assets/equipmentModels/DOONAN_FLATBED_CHAP_1_1.png';
-import DOONAN_FIXED_DOUBLE_DROP_LOWBED_IMG from './../../assets/equipmentModels/DOONAN_FIXED_DOUBLE_DROP_LOWBED.png';
-import DORSEY_FLATBED_ALUMINIUM_GIANT_IMG from './../../assets/equipmentModels/DORSEY_FLATBED_ALUMINIUM_GIANT.png';
-import DORSEY_FLATBED_STEEL_GIANT_IMG from './../../assets/equipmentModels/DORSEY_FLATBED_STEEL_GIANT.png';
-import EAST_FLATBED_BEAST_IMG from './../../assets/equipmentModels/EAST_FLATBED_BEAST.png';
-import EAST_FLATBED_BEAST_2_IMG from './../../assets/equipmentModels/EAST_FLATBED_BEAST_2.png';
-import EAST_LOWBED_BEAST_DROP_DECK_IMG from './../../assets/equipmentModels/EAST_LOWBED_BEAST_DROP_DECK.png';
-import EAST_STEEL_DUMP_IMG from './../../assets/equipmentModels/EAST_STEEL_DUMP.png';
-import FELLING_FLATBED_IMG from './../../assets/equipmentModels/FELLING_FLATBED.png';
-import FELLING_LOWBED_IMG from './../../assets/equipmentModels/FELLING_LOWBED.png';
-import FERREE_LTV35_LOWBED_IMG from './../../assets/equipmentModels/FERREE_LTV35_LOWBED.png';
-import FERREE_LTV51_LOWBED_IMG from './../../assets/equipmentModels/FERREE_LTV51_LOWBED.png';
-import FERREE_LTTV51DS_LOWBED_IMG from './../../assets/equipmentModels/FERREE_LTTV51DS_LOWBED.png';
-import FERREE_LTTV55_LOWBED_IMG from './../../assets/equipmentModels/FERREE_LTTV55_LOWBED.png';
-import FIAT_DUCATO_L2H2_IMG from './../../assets/equipmentModels/FIAT_DUCATO_L2H2.png';
-import FONTAINE_INFINITY_TOP_FLATBED_IMG from './../../assets/equipmentModels/FONTAINE_INFINITY_TOP_FLATBED.png';
-import FONTAINE_VELOCITY_TOP_FLATBED_IMG from './../../assets/equipmentModels/FONTAINE_VELOCITY_TOP_FLATBED.png';
-import FONTAINE_MAGNITUDE_51_IMG from './../../assets/equipmentModels/FONTAINE_MAGNITUDE_51.png';
-import FONTAINE_MAGNITUDE_55H_FLD_IMG from './../../assets/equipmentModels/FONTAINE_MAGNITUDE_55H_FLD.png';
-import FONTAINE_MAGNITUDE_55H_DSR_IMG from './../../assets/equipmentModels/FONTAINE_MAGNITUDE_55H_DSR.png';
-import FONTAINE_MAGNITUDE_55L_IMG from './../../assets/equipmentModels/FONTAINE_MAGNITUDE_55L.png';
-import FONTAINE_MAGNITUDE_55L_PLUS_IMG from './../../assets/equipmentModels/FONTAINE_MAGNITUDE_55L_PLUS.png';
-import FONTAINE_MAGNITUDE_55H_MFLD_IMG from './../../assets/equipmentModels/FONTAINE_MAGNITUDE_55H_MFLD.png';
-import FONTAINE_MAGNITUDE_55H_MDSR_IMG from './../../assets/equipmentModels/FONTAINE_MAGNITUDE_55H_MDSR.png';
-import FONTAINE_MAGNITUDE_55H_MBMD_IMG from './../../assets/equipmentModels/FONTAINE_MAGNITUDE_55H_MBMD.png';
-import FONTAINE_MAGNITUDE_55H_MX_IMG from './../../assets/equipmentModels/FONTAINE_MAGNITUDE_55H_MX.png';
-import FONTAINE_RENEGADE_LXL_IMG from './../../assets/equipmentModels/FONTAINE_RENEGADE_LXL.png';
-import FONTAINE_RENEGADE_LX40_IMG from './../../assets/equipmentModels/FONTAINE_RENEGADE_LX40.png';
-import FONTAINE_RENEGADE_LXT40_IMG from './../../assets/equipmentModels/FONTAINE_RENEGADE_LXT40.png';
-import FONTAINE_RENEGADE_LX40C_IMG from './../../assets/equipmentModels/FONTAINE_RENEGADE_LX40C.png';
-import FONTAINE_RENEGADE_LXT40C_IMG from './../../assets/equipmentModels/FONTAINE_RENEGADE_LXT40C.png';
-import FONTAINE_RENEGADE_LXLN12_IMG from './../../assets/equipmentModels/FONTAINE_RENEGADE_LXLN12.png';
-import FONTAINE_RENEGADE_LXLN14_IMG from './../../assets/equipmentModels/FONTAINE_RENEGADE_LXLN14.png';
-import FONTAINE_RENEGADE_LXN40_IMG from './../../assets/equipmentModels/FONTAINE_RENEGADE_LXN40.png';
-import FONTAINE_RENEGADE_LXTN40_IMG from './../../assets/equipmentModels/FONTAINE_RENEGADE_LXTN40.png';
-import FORD_1842T_IMG from './../../assets/equipmentModels/FORD_1842T.png';
-import FORD_1833_IMG from './../../assets/equipmentModels/FORD_1833.png';
-import FORD_4142D_IMG from './../../assets/equipmentModels/FORD_4142D.png';
-import FORD_FMAX_IMG from './../../assets/equipmentModels/FORD_FMAX.png';
-import FORD_TRANSIT_L2H2_IMG from './../../assets/equipmentModels/FORD_TRANSIT_L2H2.png';
-import FORD_TRANSIT_L1H1_FRAME_IMG from './../../assets/equipmentModels/FORD_TRANSIT_L1H1_FRAME.png';
-import FREIGHTLINER_CASCADIA_DAY_IMG from './../../assets/equipmentModels/FREIGHTLINER_CASCADIA_DAY.png';
-import FREIGHTLINER_CASCADIA_SLEEPER_IMG from './../../assets/equipmentModels/FREIGHTLINER_CASCADIA_SLEEPER.png';
-import FREIGHTLINER_M2_106_IMG from './../../assets/equipmentModels/FREIGHTLINER_M2_106.png';
-import FREIGHTLINER_M2_112_IMG from './../../assets/equipmentModels/FREIGHTLINER_M2_112.png';
-import FREIGHTLINER_114SD_IMG from './../../assets/equipmentModels/FREIGHTLINER_114SD.png';
-import FREIGHTLINER_122SD_IMG from './../../assets/equipmentModels/FREIGHTLINER_122SD.png';
-import FUSO_CANTER_L1_FRAME_IMG from './../../assets/equipmentModels/FUSO_CANTER_L1_FRAME.png';
-import FUSO_CANTER_L1_TIPPER_IMG from './../../assets/equipmentModels/FUSO_CANTER_L1_TIPPER.png';
-import FUSO_FIGHTER_6x4_IMG from './../../assets/equipmentModels/FUSO_FIGHTER_6x4.png';
-import FUSO_SHOGUN_6x4_IMG from './../../assets/equipmentModels/FUSO_SHOGUN_6x4.png';
-import FUSO_SHOGUN_8x4_IMG from './../../assets/equipmentModels/FUSO_SHOGUN_8x4.png';
-import GOLDHOFER_TU_IMG from './../../assets/equipmentModels/GOLDHOFER_TU.png';
-import GOLDHOFER_TN_L_IMG from './../../assets/equipmentModels/GOLDHOFER_TN_L.png';
-import GREAT_DANE_EVEREST_SINGLE_TEMP_IMG from './../../assets/equipmentModels/GREAT_DANE_EVEREST_SINGLE_TEMP.png';
-import GREAT_DANE_EVEREST_MULTI_TEMP_IMG from './../../assets/equipmentModels/GREAT_DANE_EVEREST_MULTI_TEMP.png';
-import GREAT_DANE_ALPINE_IMG from './../../assets/equipmentModels/GREAT_DANE_ALPINE.png';
-import GREAT_DANE_CHAMPION_SP2_IMG from './../../assets/equipmentModels/GREAT_DANE_CHAMPION_SP2.png';
-import GREAT_DANE_CHAMPION_CP_IMG from './../../assets/equipmentModels/GREAT_DANE_CHAMPION_CP.png';
-import GREAT_DANE_SAHARA_S_IMG from './../../assets/equipmentModels/GREAT_DANE_SAHARA_S.png';
-import GREAT_DANE_SAHARA_C_IMG from './../../assets/equipmentModels/GREAT_DANE_SAHARA_C.png';
-import GREAT_DANE_FREEDOM_LT_IMG from './../../assets/equipmentModels/GREAT_DANE_FREEDOM_LT.png';
-import GREAT_DANE_FREEDOM_SE_IMG from './../../assets/equipmentModels/GREAT_DANE_FREEDOM_SE.png';
-import GREAT_DANE_FREEDOM_XP_IMG from './../../assets/equipmentModels/GREAT_DANE_FREEDOM_XP.png';
-import HEIL_STANDARD_DUTY_9500_LTD_D4_IMG from './../../assets/equipmentModels/HEIL_STANDARD_DUTY_9500_LTD_D4.png';
-import HEIL_STANDARD_DUTY_9300_DT_S4_IMG from './../../assets/equipmentModels/HEIL_STANDARD_DUTY_9300_DT_S4.png';
-import HEIL_8500_E_DOUBLE_CONICAL_S1_DOT_TC407_IMG from './../../assets/equipmentModels/HEIL_8500_E_DOUBLE_CONICAL_S1_DOT_TC407.png';
-import HEIL_ST_7000_316L_SSSR_JS1_IMG from './../../assets/equipmentModels/HEIL_ST_7000_316L_SSSR_JS1.png';
-import HERCURLES_CHASSIS_CONTAINER_IMG from './../../assets/equipmentModels/HERCURLES_CHASSIS_CONTAINER.png';
-import HERCULES_CHASSIS_LOWBED_IMG from './../../assets/equipmentModels/HERCULES_CHASSIS_LOWBED.png';
-import HINO_300_IMG from './../../assets/equipmentModels/HINO_300.png';
-import HINO_500_4x2_IMG from './../../assets/equipmentModels/HINO_500_4x2.png';
-import HINO_500_6x2_IMG from './../../assets/equipmentModels/HINO_500_6x2.png';
-import HINO_600_IMG from './../../assets/equipmentModels/HINO_600.png';
-import HINO_700_IMG from './../../assets/equipmentModels/HINO_700.png';
-import HYUNDAI_H36L_IMG from './../../assets/equipmentModels/HYUNDAI_H36L.png';
-import HYUNDAI_H120_IMG from './../../assets/equipmentModels/HYUNDAI_H120.png';
-import HYUNDAI_HD35_IMG from './../../assets/equipmentModels/HYUNDAI_HD35.png';
-import HYUNDAI_HD170_IMG from './../../assets/equipmentModels/HYUNDAI_HD170.png';
-import HYUNDAI_PAVISE_IMG from './../../assets/equipmentModels/HYUNDAI_PAVISE.png';
-import HYUNDAI_XCIENT_IMG from './../../assets/equipmentModels/HYUNDAI_XCIENT.png';
-import ISUZU_EXR_IMG from './../../assets/equipmentModels/ISUZU_EXR.png';
-import ISUZU_EXZ_IMG from './../../assets/equipmentModels/ISUZU_EXZ.png';
-import ISUZU_FRR_IMG from './../../assets/equipmentModels/ISUZU_FRR.png';
-import ISUZU_FSR_IMG from './../../assets/equipmentModels/ISUZU_FSR.png';
-import ISUZU_FVZ_IMG from './../../assets/equipmentModels/ISUZU_FVZ.png';
-import ISUZU_FYH_IMG from './../../assets/equipmentModels/ISUZU_FYH.png';
-import ISUZU_GXZ_IMG from './../../assets/equipmentModels/ISUZU_GXZ.png';
-import ISUZU_NLR_IMG from './../../assets/equipmentModels/ISUZU_NLR.png';
-import ISUZU_NMR_IMG from './../../assets/equipmentModels/ISUZU_NMR.png';
-import ISUZU_NPR_IMG from './../../assets/equipmentModels/ISUZU_NPR.png';
-import ISUZU_NPS_IMG from './../../assets/equipmentModels/ISUZU_NPS.png';
-import IVECO_DAILY_L3H2_IMG from './../../assets/equipmentModels/IVECO_DAILY_L3H2.png';
-import IVECO_EUROCARGO_IMG from './../../assets/equipmentModels/IVECO_EUROCARGO.png';
-import IVECO_S_WAY_IMG from './../../assets/equipmentModels/IVECO_S_WAY.png';
-import IVECO_S_WAY_TANDEM_IMG from './../../assets/equipmentModels/IVECO_S_WAY_TANDEM.png';
-import Iveco_Stralis_4x2_IMG from './../../assets/equipmentModels/Iveco_Stralis_4x2.png';
-import Iveco_Stralis_6x2_IMG from './../../assets/equipmentModels/Iveco_Stralis_6x2.png';
-import Iveco_Stralis_Hiway_4x2_IMG from './../../assets/equipmentModels/Iveco_Stralis_Hiway_4x2.png';
-import Iveco_Stralis_Hiway_6x2_IMG from './../../assets/equipmentModels/Iveco_Stralis_Hiway_6x2.png';
-import IVECO_TRAKKER_IMG from './../../assets/equipmentModels/IVECO_TRAKKER.png';
-import J_J_BODIES_210_LARGE_DT_IMG from './../../assets/equipmentModels/J_J_BODIES_210_LARGE_DT.png';
-import J_J_BODIES_211_LARGE_DT_FTA_IMG from './../../assets/equipmentModels/J_J_BODIES_211_LARGE_DT_FTA.png';
-import J_J_BODIES_267_LARGE_DT_FL_IMG from './../../assets/equipmentModels/J_J_BODIES_267_LARGE_DT_FL.png';
-import J_J_BODIES_266_LARGE_TT_LFEVO_IMG from './../../assets/equipmentModels/J_J_BODIES_266_LARGE_TT_LFEVO.png';
-import J_J_BODIES_215_LARGE_TT_AT_IMG from './../../assets/equipmentModels/J_J_BODIES_215_LARGE_TT_AT.png';
-import J_J_BODIES_697_MH_EVO_IMG from './../../assets/equipmentModels/J_J_BODIES_697_MH_EVO.png';
-import KAMAZ_5490_IMG from './../../assets/equipmentModels/KAMAZ_5490.png';
-import KASSBOHRER_BOX_DRY_K_SBT_20_12_27_IMG from './../../assets/equipmentModels/KASSBOHRER_BOX_DRY_K_SBT_20_12_27.png';
-import KASSBOHRER_CONTAINER_EXTENDABLE_K_SHG_AH_45_12_27_IMG from './../../assets/equipmentModels/KASSBOHRER_CONTAINER_EXTENDABLE_K_SHG_AH_45_12_27.png';
-import KASSBOHRER_CONTAINER_EXTENDABLE_K_SHG_AMH_40_12_27_IMG from './../../assets/equipmentModels/KASSBOHRER_CONTAINER_EXTENDABLE_K_SHG_AMH_40_12_27.png';
-import KASSBOHRER_FLATBED_LIGHT_K_SFS_X_PLUS_90_12_27_IMG from './../../assets/equipmentModels/KASSBOHRER_FLATBED_LIGHT_K_SFS_X_PLUS_90_12_27.png';
-import KASSBOHRER_FLATBED_LIGHT_K_SPS_3_0N_12_27_IMG from './../../assets/equipmentModels/KASSBOHRER_FLATBED_LIGHT_K_SPS_3_0N_12_27.png';
-import KASSBOHRER_LIGHT_K_SCL_X_PLUS_150_12_27_IMG from './../../assets/equipmentModels/KASSBOHRER_LIGHT_K_SCL_X_PLUS_150_12_27.png';
-import KASSBOHRER_LOWBED_K_SLS_3_0N_12_27_IMG from './../../assets/equipmentModels/KASSBOHRER_LOWBED_K_SLS_3_0N_12_27.png';
-import KASSBOHRER_REEFER_STANDARD_K_SRI_C_10_12_27_IMG from './../../assets/equipmentModels/KASSBOHRER_REEFER_STANDARD_K_SRI_C_10_12_27.png';
-import KASSBOHRER_SILO_TIPPING_K_SSK_40_3_10_24_IMG from './../../assets/equipmentModels/KASSBOHRER_SILO_TIPPING_K_SSK_40_3_10_24.png';
-import KASSBOHRER_SILO_TIPPING_K_SSK_60_5_10_24_IMG from './../../assets/equipmentModels/KASSBOHRER_SILO_TIPPING_K_SSK_60_5_10_24.png';
-import KASSBOHRER_STANDARD_K_SCD_M_90_12_27_IMG from './../../assets/equipmentModels/KASSBOHRER_STANDARD_K_SCD_M_90_12_27.png';
-import KASSBOHRER_STANDARD_K_SCX_X_125_12_27_IMG from './../../assets/equipmentModels/KASSBOHRER_STANDARD_K_SCX_X_125_12_27.png';
-import KASSBOHRER_TANK_DANGEROUS_K_STB_E_39_5_11_24_IMG from './../../assets/equipmentModels/KASSBOHRER_TANK_DANGEROUS_K_STB_E_39_5_11_24.png';
-import KASSBOHRER_TANK_DANGEROUS_K_STS_32_1_10_24_IMG from './../../assets/equipmentModels/KASSBOHRER_TANK_DANGEROUS_K_STS_32_1_10_24.png';
-import KASSBOHRER_TANK_FOOD_K_STL_30_3_10_24_IMG from './../../assets/equipmentModels/KASSBOHRER_TANK_FOOD_K_STL_30_3_10_24.png';
-import KASSBOHRER_TIPPER_ALU_K_SKA_B_26_12_27_IMG from './../../assets/equipmentModels/KASSBOHRER_TIPPER_ALU_K_SKA_B_26_12_27.png';
-import KASSBOHRER_TIPPER_STEEL_K_SKS_B_24_15_18_IMG from './../../assets/equipmentModels/KASSBOHRER_TIPPER_STEEL_K_SKS_B_24_15_18.png';
-import KASSBOHRER_TIPPER_STEEL_K_SKS_BS_24_12_27_IMG from './../../assets/equipmentModels/KASSBOHRER_TIPPER_STEEL_K_SKS_BS_24_12_27.png';
-import KENTUCKY_TRAILER_53_COMPOSITE_STRAIGHT_FLOOR_IMG from './../../assets/equipmentModels/KENTUCKY_TRAILER_53_COMPOSITE_STRAIGHT_FLOOR.png';
-import KENTUCKY_TRAILER_BEVERAGE_IMG from './../../assets/equipmentModels/KENTUCKY_TRAILER_BEVERAGE.png';
-import KENTUCKY_TRAILER_MOVING_IMG from './../../assets/equipmentModels/KENTUCKY_TRAILER_MOVING.png';
-import KENWORTH_C500_IMG from './../../assets/equipmentModels/KENWORTH_C500.png';
-import KENWORTH_K270_IMG from './../../assets/equipmentModels/KENWORTH_K270.png';
-import KENWORTH_T660_IMG from './../../assets/equipmentModels/KENWORTH_T660.png';
-import KENWORTH_T800_IMG from './../../assets/equipmentModels/KENWORTH_T800.png';
-import KENWORTH_W900_IMG from './../../assets/equipmentModels/KENWORTH_W900.png';
-import KENWORTH_W990_IMG from './../../assets/equipmentModels/KENWORTH_W990.png';
-import KENWORTH_W990_3_IMG from './../../assets/equipmentModels/KENWORTH_W990_3.png';
-import KOGEL_BOX_IMG from './../../assets/equipmentModels/KOGEL_BOX.png';
-import KOGEL_TIPPER_IMG from './../../assets/equipmentModels/KOGEL_TIPPER.png';
-import KOGEL_FLATBED_IMG from './../../assets/equipmentModels/KOGEL_FLATBED.png';
-import KOGEL_TRAILER_IMG from './../../assets/equipmentModels/KOGEL_TRAILER.png';
-import KRONE_BOX_LINER_IMG from './../../assets/equipmentModels/KRONE_BOX_LINER.png';
-import KRONE_COOL_LINER_IMG from './../../assets/equipmentModels/KRONE_COOL_LINER.png';
-import KRONE_MEGA_LINER_IMG from './../../assets/equipmentModels/KRONE_MEGA_LINER.png';
-import LAMBERET_DAF_CF_PORTEUR_IMG from './../../assets/equipmentModels/LAMBERET_DAF_CF_PORTEUR.png';
-import LAMBERET_FRIGOLINE_CITY_IMG from './../../assets/equipmentModels/LAMBERET_FRIGOLINE_CITY.png';
-import LAMBERET_RENAULT_DCab_Frigoline_City_IMG from './../../assets/equipmentModels/LAMBERET_RENAULT_DCab_Frigoline_City.png';
-import LAMBERET_SR2_green_liner_IMG from './../../assets/equipmentModels/LAMBERET_SR2_green_liner.png';
-import LAMBERET_SR2_HD_IMG from './../../assets/equipmentModels/LAMBERET_SR2_HD.png';
-import LAMBERET_SR2_super_duplex_IMG from './../../assets/equipmentModels/LAMBERET_SR2_super_duplex.png';
-import LANDOLL_LOWBED_IMG from './../../assets/equipmentModels/LANDOLL_LOWBED.png';
-import LAWRENCE_DAVID_BOX_TRAILER_IMG from './../../assets/equipmentModels/LAWRENCE_DAVID_BOX_TRAILER.png';
-import LAWRENCE_DAVID_CURTAIN_TANDEM_IMG from './../../assets/equipmentModels/LAWRENCE_DAVID_CURTAIN_TANDEM.png';
-import LAWRENCE_DAVID_CURTAIN_TANDEM_2_IMG from './../../assets/equipmentModels/LAWRENCE_DAVID_CURTAIN_TANDEM_2.png';
-import LAWRENCE_DAVID_CURTAIN_TRAILER_IMG from './../../assets/equipmentModels/LAWRENCE_DAVID_CURTAIN_TRAILER.png';
-import LAWRENCE_DAVID_FLATBED_TRAILER_IMG from './../../assets/equipmentModels/LAWRENCE_DAVID_FLATBED_TRAILER.png';
-import LAWRENCE_DAVID_RIGID_BOX_VAN_IMG from './../../assets/equipmentModels/LAWRENCE_DAVID_RIGID_BOX_VAN.png';
-import MAC_TRAILER_TANK_IMG from './../../assets/equipmentModels/MAC_TRAILER_TANK.png';
-import MACK_ANTHEM_48_SLEEPER_IMG from './../../assets/equipmentModels/MACK_ANTHEM_48_SLEEPER.png';
-import MACK_ANTHEM_70_SLEEPER_IMG from './../../assets/equipmentModels/MACK_ANTHEM_70_SLEEPER.png';
-import MACK_ANTHEM_DAYCAB_IMG from './../../assets/equipmentModels/MACK_ANTHEM_DAYCAB.png';
-import MACK_GRANITE_SEMI_6x4_IMG from './../../assets/equipmentModels/MACK_GRANITE_SEMI_6x4.png';
-import MACK_GRANITE_TIPPER_6x4_IMG from './../../assets/equipmentModels/MACK_GRANITE_TIPPER_6x4.png';
-import MAN_TGE_CAB_TIPPER_IMG from './../../assets/equipmentModels/MAN_TGE_CAB_TIPPER.png';
-import MAN_TGE_L2H2_IMG from './../../assets/equipmentModels/MAN_TGE_L2H2.png';
-import MAN_TGE_TIPPER_IMG from './../../assets/equipmentModels/MAN_TGE_TIPPER.png';
-import MAN_TGL_TANDEM_4x2_IMG from './../../assets/equipmentModels/MAN_TGL_TANDEM_4x2.png';
-import MAN_TGS_4x2_IMG from './../../assets/equipmentModels/MAN_TGS_4x2.png';
-import MAN_TGS_4x2_TALL_IMG from './../../assets/equipmentModels/MAN_TGS_4x2_TALL.png';
-import MAN_TGS_TANDEM_4x2_IMG from './../../assets/equipmentModels/MAN_TGS_TANDEM_4x2.png';
-import MAN_TGS_TANDEM_4x2_TALL_IMG from './../../assets/equipmentModels/MAN_TGS_TANDEM_4x2_TALL.png';
-import MAN_TGS_TANDEM_6x4_IMG from './../../assets/equipmentModels/MAN_TGS_TANDEM_6x4.png';
-import MAN_TGS_TANDEM_6x4_TALL_IMG from './../../assets/equipmentModels/MAN_TGS_TANDEM_6x4_TALL.png';
-import MAN_TGS_TANDEM_8x4_IMG from './../../assets/equipmentModels/MAN_TGS_TANDEM_8x4.png';
-import MAN_TGX_1_4x2_IMG from './../../assets/equipmentModels/MAN_TGX_1_4x2.png';
-import MAN_TGX_1_6x2_IMG from './../../assets/equipmentModels/MAN_TGX_1_6x2.png';
-import MAN_TGX_2_4x2_IMG from './../../assets/equipmentModels/MAN_TGX_2_4x2.png';
-import MAN_TGX_2_6x2_IMG from './../../assets/equipmentModels/MAN_TGX_2_6x2.png';
-import MAN_TGX_3_4x2_IMG from './../../assets/equipmentModels/MAN_TGX_3_4x2.png';
-import MAN_TGX_3_4x2_TALL_IMG from './../../assets/equipmentModels/MAN_TGX_3_4x2_TALL.png';
-import MAN_TGX_TANDEM_4x2_IMG from './../../assets/equipmentModels/MAN_TGX_TANDEM_4x2.png';
-import MAN_TGX_TANDEM_6x4_IMG from './../../assets/equipmentModels/MAN_TGX_TANDEM_6x4.png';
-import MAN_TGX_TANDEM_6x4_TALL_IMG from './../../assets/equipmentModels/MAN_TGX_TANDEM_6x4_TALL.png';
-import MAN_TGX_TANDEM_8x4_IMG from './../../assets/equipmentModels/MAN_TGX_TANDEM_8x4.png';
-import MANAC_ALU_TIPPER_IMG from './../../assets/equipmentModels/MANAC_ALU_TIPPER.png';
-import MANAC_BOX_IMG from './../../assets/equipmentModels/MANAC_BOX.png';
-import MANAC_BOX_2_IMG from './../../assets/equipmentModels/MANAC_BOX_2.png';
-import MANAC_FLATBED_IMG from './../../assets/equipmentModels/MANAC_FLATBED.png';
-import MANAC_FLATBED_2_IMG from './../../assets/equipmentModels/MANAC_FLATBED_2.png';
-import MANAC_FLATBED_3_IMG from './../../assets/equipmentModels/MANAC_FLATBED_3.png';
-import MANAC_LOWBED_IMG from './../../assets/equipmentModels/MANAC_LOWBED.png';
-import MANAC_LOWBED_2_IMG from './../../assets/equipmentModels/MANAC_LOWBED_2.png';
-import MANAC_REEFER_IMG from './../../assets/equipmentModels/MANAC_REEFER.png';
-import MANAC_STEEL_TIPPER_IMG from './../../assets/equipmentModels/MANAC_STEEL_TIPPER.png';
-import MAXI_TRANS_Freighter_SafeTliner_IMG from './../../assets/equipmentModels/MAXI_TRANS_Freighter_SafeTliner.png';
-import MAXI_TRANS_Freighter_skel_2_IMG from './../../assets/equipmentModels/MAXI_TRANS_Freighter_skel_2.png';
-import MAXI_TRANS_Freighter_Ultra_Lo_Skel_IMG from './../../assets/equipmentModels/MAXI_TRANS_Freighter_Ultra_Lo_Skel.png';
-import MAXI_TRANS_HxW_semi_tipper_IMG from './../../assets/equipmentModels/MAXI_TRANS_HxW_semi_tipper.png';
-import MAXI_TRANS_Maxi_CUBE_Classic_2_IMG from './../../assets/equipmentModels/MAXI_TRANS_Maxi_CUBE_Classic_2.png';
-import MAXI_TRANS_Maxi_CUBE_DryFreight_3_IMG from './../../assets/equipmentModels/MAXI_TRANS_Maxi_CUBE_DryFreight_3.png';
-import MAZ_5440C_IMG from './../../assets/equipmentModels/MAZ_5440C.png';
-import MAZ_5440E_IMG from './../../assets/equipmentModels/MAZ_5440E.png';
-import MAZ_6430C_IMG from './../../assets/equipmentModels/MAZ_6430C.png';
-import MERCEDES_ACTROS_MP3_4x2_IMG from './../../assets/equipmentModels/MERCEDES_ACTROS_MP3_4x2.png';
-import MERCEDES_ACTROS_MP3_6x2_IMG from './../../assets/equipmentModels/MERCEDES_ACTROS_MP3_6x2.png';
-import MERCEDES_ACTROS_MP4_4x2_IMG from './../../assets/equipmentModels/MERCEDES_ACTROS_MP4_4x2.png';
-import MERCEDES_ACTROS_MP4_6x2_IMG from './../../assets/equipmentModels/MERCEDES_ACTROS_MP4_6x2.png';
-import MERCEDES_ACTROS_MP5_4x2_IMG from './../../assets/equipmentModels/MERCEDES_ACTROS_MP5_4x2.png';
-import MERCEDES_ACTROS_MP5_SLT_IMG from './../../assets/equipmentModels/MERCEDES_ACTROS_MP5_SLT.png';
-import MERCEDES_ACTROS_TANDEM_6x2_IMG from './../../assets/equipmentModels/MERCEDES_ACTROS_TANDEM_6x2.png';
-import MERCEDES_AROCS_4x2_IMG from './../../assets/equipmentModels/MERCEDES_AROCS_4x2.png';
-import MERCEDES_AROCS_8x4_IMG from './../../assets/equipmentModels/MERCEDES_AROCS_8x4.png';
-import MERCEDES_ATEGO_TANDEM_4x2_IMG from './../../assets/equipmentModels/MERCEDES_ATEGO_TANDEM_4x2.png';
-import MERCEDES_SPRINTER_FRAME_IMG from './../../assets/equipmentModels/MERCEDES_SPRINTER_FRAME.png';
-import MERCEDES_SPRINTER_L3H2_IMG from './../../assets/equipmentModels/MERCEDES_SPRINTER_L3H2.png';
-import MERCEDES_SPRINTER_TIPPER_IMG from './../../assets/equipmentModels/MERCEDES_SPRINTER_TIPPER.png';
-import MERCEDES_VITO_L1H1_IMG from './../../assets/equipmentModels/MERCEDES_VITO_L1H1.png';
-import NAVISTAR_INTERNATIONAL_DURASTAR_BOX_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_DURASTAR_BOX.png';
-import NAVISTAR_INTERNATIONAL_DURASTAR_SEMI_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_DURASTAR_SEMI.png';
-import NAVISTAR_INTERNATIONAL_HV_SEMI_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_HV_SEMI.png';
-import NAVISTAR_INTERNATIONAL_HV_TIPPER_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_HV_TIPPER.png';
-import NAVISTAR_INTERNATIONAL_HX_SEMI_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_HX_SEMI.png';
-import NAVISTAR_INTERNATIONAL_HX_TIPPER_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_HX_TIPPER.png';
-import NAVISTAR_INTERNATIONAL_LONESTAR_DAYCAB_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_LONESTAR_DAYCAB.png';
-import NAVISTAR_INTERNATIONAL_LONESTAR_HIGH_SLEEPER_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_LONESTAR_HIGH_SLEEPER.png';
-import NAVISTAR_INTERNATIONAL_LONESTAR_LOW_SLEEPER_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_LONESTAR_LOW_SLEEPER.png';
-import NAVISTAR_INTERNATIONAL_LT_DAYCAB_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_LT_DAYCAB.png';
-import NAVISTAR_INTERNATIONAL_LT_HIGH_SLEEPER_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_LT_HIGH_SLEEPER.png';
-import NAVISTAR_INTERNATIONAL_LT_LOW_SLEEPER_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_LT_LOW_SLEEPER.png';
-import NAVISTAR_INTERNATIONAL_MV_BOX_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_MV_BOX.png';
-import NAVISTAR_INTERNATIONAL_MV_SEMI_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_MV_SEMI.png';
-import NAVISTAR_INTERNATIONAL_MV_TIPPER_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_MV_TIPPER.png';
-import NAVISTAR_INTERNATIONAL_PROSTAR_DAYCAB_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_PROSTAR_DAYCAB.png';
-import NAVISTAR_INTERNATIONAL_PROSTAR_HIGH_SLEEPER_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_PROSTAR_HIGH_SLEEPER.png';
-import NAVISTAR_INTERNATIONAL_PROSTAR_LOW_SLEEPER_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_PROSTAR_LOW_SLEEPER.png';
-import NAVISTAR_INTERNATIONAL_RH_DAYCAB_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_RH_DAYCAB.png';
-import NAVISTAR_INTERNATIONAL_RH_HIGH_SLEEPER_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_RH_HIGH_SLEEPER.png';
-import NAVISTAR_INTERNATIONAL_RH_LOW_SLEEPER_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_RH_LOW_SLEEPER.png';
-import NAVISTAR_INTERNATIONAL_WORKSTAR_4x2_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_WORKSTAR_4x2.png';
-import NAVISTAR_INTERNATIONAL_WORKSTAR_6x4_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_WORKSTAR_6x4.png';
-import NAVISTAR_INTERNATIONAL_WORKSTAR_8x6_IMG from './../../assets/equipmentModels/NAVISTAR_INTERNATIONAL_WORKSTAR_8x6.png';
-import NIKOLA_ONE_IMG from './../../assets/equipmentModels/NIKOLA_ONE.png';
-import NIKOLA_TRE_IMG from './../../assets/equipmentModels/NIKOLA_TRE.png';
-import NIKOLA_TWO_IMG from './../../assets/equipmentModels/NIKOLA_TWO.png';
-import NISSAN_CABSTAR_BOX_IMG from './../../assets/equipmentModels/NISSAN_CABSTAR_BOX.png';
-import NISSAN_CABSTAR_TIPPER_IMG from './../../assets/equipmentModels/NISSAN_CABSTAR_TIPPER.png';
-import NISSAN_NV300_L1H1_IMG from './../../assets/equipmentModels/NISSAN_NV300_L1H1.png';
-import NISSAN_NV400_L3H3_IMG from './../../assets/equipmentModels/NISSAN_NV400_L3H3.png';
-import OPEL_MOVANO_L1_CAB_TIPPER_IMG from './../../assets/equipmentModels/OPEL_MOVANO_L1_CAB_TIPPER.png';
-import OPEL_MOVANO_L1_FRAME_IMG from './../../assets/equipmentModels/OPEL_MOVANO_L1_FRAME.png';
-import OPEL_MOVANO_L2H2_IMG from './../../assets/equipmentModels/OPEL_MOVANO_L2H2.png';
-import OPEL_MOVANO_L4H2_IMG from './../../assets/equipmentModels/OPEL_MOVANO_L4H2.png';
-import OPEL_VIVARO_IMG from './../../assets/equipmentModels/OPEL_VIVARO.png';
-import PETERBILT_220_IMG from './../../assets/equipmentModels/PETERBILT_220.png';
-import PETERBILT_325_IMG from './../../assets/equipmentModels/PETERBILT_325.png';
-import PETERBILT_330_IMG from './../../assets/equipmentModels/PETERBILT_330.png';
-import PETERBILT_337_IMG from './../../assets/equipmentModels/PETERBILT_337.png';
-import PETERBILT_348_IMG from './../../assets/equipmentModels/PETERBILT_348.png';
-import PETERBILT_365_IMG from './../../assets/equipmentModels/PETERBILT_365.png';
-import PETERBILT_367_IMG from './../../assets/equipmentModels/PETERBILT_367.png';
-import PETERBILT_389_IMG from './../../assets/equipmentModels/PETERBILT_389.png';
-import PETERBILT_567_IMG from './../../assets/equipmentModels/PETERBILT_567.png';
-import PETERBILT_579_IMG from './../../assets/equipmentModels/PETERBILT_579.png';
-import PEUGEOT_BOXER_L1H1_IMG from './../../assets/equipmentModels/PEUGEOT_BOXER_L1H1.png';
-import PEUGEOT_BOXER_L2H2_IMG from './../../assets/equipmentModels/PEUGEOT_BOXER_L2H2.png';
-import PEUGEOT_EXPERT_IMG from './../../assets/equipmentModels/PEUGEOT_EXPERT.png';
-import PITTS_FLATBED_LB35_IMG from './../../assets/equipmentModels/PITTS_FLATBED_LB35.png';
-import PITTS_LOWBED_LB35_DC_IMG from './../../assets/equipmentModels/PITTS_LOWBED_LB35_DC.png';
-import PITTS_LOWBED_LB51_DC_IMG from './../../assets/equipmentModels/PITTS_LOWBED_LB51_DC.png';
-import PITTS_LOWBED_LB55_DC_IMG from './../../assets/equipmentModels/PITTS_LOWBED_LB55_DC.png';
-import POLAR_TANK_CHEMICAL_IMG from './../../assets/equipmentModels/POLAR_TANK_CHEMICAL.png';
-import POLAR_TANK_DEEP_DROP_IMG from './../../assets/equipmentModels/POLAR_TANK_DEEP_DROP.png';
-import POLAR_TANK_ENERGY_IMG from './../../assets/equipmentModels/POLAR_TANK_ENERGY.png';
-import POLAR_TANK_FOOD_IMG from './../../assets/equipmentModels/POLAR_TANK_FOOD.png';
-import POLAR_TANK_HOT_IMG from './../../assets/equipmentModels/POLAR_TANK_HOT.png';
-import POLAR_TANK_PETROLEUM_IMG from './../../assets/equipmentModels/POLAR_TANK_PETROLEUM.png';
-import PRATT_CONTAINER_CC242_IMG from './../../assets/equipmentModels/PRATT_CONTAINER_CC242.png';
-import PRATT_CONTAINER_CC243_IMG from './../../assets/equipmentModels/PRATT_CONTAINER_CC243.png';
-import PRATT_CONTAINER_D3141_IMG from './../../assets/equipmentModels/PRATT_CONTAINER_D3141.png';
-import PRATT_CONTAINER_GN2040EZ_IMG from './../../assets/equipmentModels/PRATT_CONTAINER_GN2040EZ.png';
-import PRATT_FLATBED_FB472SA_IMG from './../../assets/equipmentModels/PRATT_FLATBED_FB472SA.png';
-import PRATT_FLATBED_FB533_IMG from './../../assets/equipmentModels/PRATT_FLATBED_FB533.png';
-import PRATT_FLATBED_FB4228P_IMG from './../../assets/equipmentModels/PRATT_FLATBED_FB4228P.png';
-import PRATT_LOWBED_LB5374_40_IMG from './../../assets/equipmentModels/PRATT_LOWBED_LB5374_40.png';
-import PRATT_LOWBED_MD482A_IMG from './../../assets/equipmentModels/PRATT_LOWBED_MD482A.png';
-import PRATT_LOWBED_MDE48702A_IMG from './../../assets/equipmentModels/PRATT_LOWBED_MDE48702A.png';
-import REINKE_FLATBED_IMG from './../../assets/equipmentModels/REINKE_FLATBED.png';
-import RENAULT_MAGNUM_4x2_IMG from './../../assets/equipmentModels/RENAULT_MAGNUM_4x2.png';
-import RENAULT_MAGNUM_6x2_IMG from './../../assets/equipmentModels/RENAULT_MAGNUM_6x2.png';
-import RENAULT_MASTER_BOX_L2_IMG from './../../assets/equipmentModels/RENAULT_MASTER_BOX_L2.png';
-import RENAULT_MASTER_FRAME_L2_IMG from './../../assets/equipmentModels/RENAULT_MASTER_FRAME_L2.png';
-import RENAULT_MASTER_L2H2_IMG from './../../assets/equipmentModels/RENAULT_MASTER_L2H2.png';
-import RENAULT_MASTER_TIPPER_L2_IMG from './../../assets/equipmentModels/RENAULT_MASTER_TIPPER_L2.png';
-import RENAULT_PREMIUM_4x2_IMG from './../../assets/equipmentModels/RENAULT_PREMIUM_4x2.png';
-import RENAULT_PREMIUM_6x2_IMG from './../../assets/equipmentModels/RENAULT_PREMIUM_6x2.png';
-import RENAULT_RANGE_T_4x2_IMG from './../../assets/equipmentModels/RENAULT_RANGE_T_4x2.png';
-import RENAULT_RANGE_T_6x2_IMG from './../../assets/equipmentModels/RENAULT_RANGE_T_6x2.png';
-import RENAULT_TRAFIC_IMG from './../../assets/equipmentModels/RENAULT_TRAFIC.png';
-import SCANIA_G_DAYCAB_SEMI_4x2_IMG from './../../assets/equipmentModels/SCANIA_G_DAYCAB_SEMI_4x2.png';
-import SCANIA_G_DAYCAB_SEMI_6x2_IMG from './../../assets/equipmentModels/SCANIA_G_DAYCAB_SEMI_6x2.png';
-import SCANIA_G_DAYCAB_TANDEM_4x2_IMG from './../../assets/equipmentModels/SCANIA_G_DAYCAB_TANDEM_4x2.png';
-import SCANIA_G_DAYCAB_TANDEM_6x2_IMG from './../../assets/equipmentModels/SCANIA_G_DAYCAB_TANDEM_6x2.png';
-import SCANIA_G_DAYCAB_TANDEM_8x4_IMG from './../../assets/equipmentModels/SCANIA_G_DAYCAB_TANDEM_8x4.png';
-import SCANIA_G_SLEEPER_SEMI_4x2_IMG from './../../assets/equipmentModels/SCANIA_G_SLEEPER_SEMI_4x2.png';
-import SCANIA_G_SLEEPER_SEMI_6x2_IMG from './../../assets/equipmentModels/SCANIA_G_SLEEPER_SEMI_6x2.png';
-import SCANIA_G_SLEEPER_TANDEM_4x2_IMG from './../../assets/equipmentModels/SCANIA_G_SLEEPER_TANDEM_4x2.png';
-import SCANIA_G_SLEEPER_TANDEM_6x2_IMG from './../../assets/equipmentModels/SCANIA_G_SLEEPER_TANDEM_6x2.png';
-import SCANIA_G_SLEEPER_TANDEM_8x4_IMG from './../../assets/equipmentModels/SCANIA_G_SLEEPER_TANDEM_8x4.png';
-import SCANIA_L_SEMI_4x2_IMG from './../../assets/equipmentModels/SCANIA_L_SEMI_4x2.png';
-import SCANIA_L_SEMI_6x2_IMG from './../../assets/equipmentModels/SCANIA_L_SEMI_6x2.png';
-import SCANIA_L_TANDEM_4x2_IMG from './../../assets/equipmentModels/SCANIA_L_TANDEM_4x2.png';
-import SCANIA_L_TANDEM_6x2_IMG from './../../assets/equipmentModels/SCANIA_L_TANDEM_6x2.png';
-import SCANIA_OR_G_DAYCAB_SEMI_6x2_IMG from './../../assets/equipmentModels/SCANIA_OR_G_DAYCAB_SEMI_6x2.png';
-import SCANIA_OR_G_DAYCAB_TANDEM_6x2_IMG from './../../assets/equipmentModels/SCANIA_OR_G_DAYCAB_TANDEM_6x2.png';
-import SCANIA_OR_G_DAYCAB_TANDEM_8x4_IMG from './../../assets/equipmentModels/SCANIA_OR_G_DAYCAB_TANDEM_8x4.png';
-import SCANIA_OR_G_SLEEPER_SEMI_6x2_IMG from './../../assets/equipmentModels/SCANIA_OR_G_SLEEPER_SEMI_6x2.png';
-import SCANIA_OR_G_SLEEPER_TANDEM_6x2_IMG from './../../assets/equipmentModels/SCANIA_OR_G_SLEEPER_TANDEM_6x2.png';
-import SCANIA_OR_G_SLEEPER_TANDEM_8x4_IMG from './../../assets/equipmentModels/SCANIA_OR_G_SLEEPER_TANDEM_8x4.png';
-import SCANIA_OR_P_DAYCAB_SEMI_6x2_IMG from './../../assets/equipmentModels/SCANIA_OR_P_DAYCAB_SEMI_6x2.png';
-import SCANIA_OR_P_DAYCAB_TANDEM_6x2_IMG from './../../assets/equipmentModels/SCANIA_OR_P_DAYCAB_TANDEM_6x2.png';
-import SCANIA_OR_P_DAYCAB_TANDEM_8x4_IMG from './../../assets/equipmentModels/SCANIA_OR_P_DAYCAB_TANDEM_8x4.png';
-import SCANIA_OR_P_SLEEPER_SEMI_6x2_IMG from './../../assets/equipmentModels/SCANIA_OR_P_SLEEPER_SEMI_6x2.png';
-import SCANIA_OR_P_SLEEPER_TANDEM_6x2_IMG from './../../assets/equipmentModels/SCANIA_OR_P_SLEEPER_TANDEM_6x2.png';
-import SCANIA_OR_P_SLEEPER_TANDEM_8x4_IMG from './../../assets/equipmentModels/SCANIA_OR_P_SLEEPER_TANDEM_8x4.png';
-import SCANIA_OR_R_DAYCAB_SEMI_6x2_IMG from './../../assets/equipmentModels/SCANIA_OR_R_DAYCAB_SEMI_6x2.png';
-import SCANIA_OR_R_DAYCAB_TANDEM_6x2_IMG from './../../assets/equipmentModels/SCANIA_OR_R_DAYCAB_TANDEM_6x2.png';
-import SCANIA_OR_R_DAYCAB_TANDEM_8x4_IMG from './../../assets/equipmentModels/SCANIA_OR_R_DAYCAB_TANDEM_8x4.png';
-import SCANIA_OR_R_SLEEPER_SEMI_6x2_IMG from './../../assets/equipmentModels/SCANIA_OR_R_SLEEPER_SEMI_6x2.png';
-import SCANIA_OR_R_SLEEPER_TANDEM_6x2_IMG from './../../assets/equipmentModels/SCANIA_OR_R_SLEEPER_TANDEM_6x2.png';
-import SCANIA_OR_R_SLEEPER_TANDEM_8x4_IMG from './../../assets/equipmentModels/SCANIA_OR_R_SLEEPER_TANDEM_8x4.png';
-import SCANIA_OR_S_SEMI_6x2_IMG from './../../assets/equipmentModels/SCANIA_OR_S_SEMI_6x2.png';
-import SCANIA_OR_S_TANDEM_6x2_IMG from './../../assets/equipmentModels/SCANIA_OR_S_TANDEM_6x2.png';
-import SCANIA_OR_S_TANDEM_8x4_IMG from './../../assets/equipmentModels/SCANIA_OR_S_TANDEM_8x4.png';
-import SCANIA_P_DAYCAB_SEMI_4x2_IMG from './../../assets/equipmentModels/SCANIA_P_DAYCAB_SEMI_4x2.png';
-import SCANIA_P_DAYCAB_SEMI_6x2_IMG from './../../assets/equipmentModels/SCANIA_P_DAYCAB_SEMI_6x2.png';
-import SCANIA_P_DAYCAB_TANDEM_4x2_IMG from './../../assets/equipmentModels/SCANIA_P_DAYCAB_TANDEM_4x2.png';
-import SCANIA_P_DAYCAB_TANDEM_6x2_IMG from './../../assets/equipmentModels/SCANIA_P_DAYCAB_TANDEM_6x2.png';
-import SCANIA_P_DAYCAB_TANDEM_8x4_IMG from './../../assets/equipmentModels/SCANIA_P_DAYCAB_TANDEM_8x4.png';
-import SCANIA_P_SLEEPER_SEMI_4x2_IMG from './../../assets/equipmentModels/SCANIA_P_SLEEPER_SEMI_4x2.png';
-import SCANIA_P_SLEEPER_SEMI_6x2_IMG from './../../assets/equipmentModels/SCANIA_P_SLEEPER_SEMI_6x2.png';
-import SCANIA_P_SLEEPER_TANDEM_4x2_IMG from './../../assets/equipmentModels/SCANIA_P_SLEEPER_TANDEM_4x2.png';
-import SCANIA_P_SLEEPER_TANDEM_6x2_IMG from './../../assets/equipmentModels/SCANIA_P_SLEEPER_TANDEM_6x2.png';
-import SCANIA_P_SLEEPER_TANDEM_8x4_IMG from './../../assets/equipmentModels/SCANIA_P_SLEEPER_TANDEM_8x4.png';
-import SCANIA_R_DAYCAB_SEMI_4x2_IMG from './../../assets/equipmentModels/SCANIA_R_DAYCAB_SEMI_4x2.png';
-import SCANIA_R_DAYCAB_SEMI_6x2_IMG from './../../assets/equipmentModels/SCANIA_R_DAYCAB_SEMI_6x2.png';
-import SCANIA_R_DAYCAB_TANDEM_4x2_IMG from './../../assets/equipmentModels/SCANIA_R_DAYCAB_TANDEM_4x2.png';
-import SCANIA_R_DAYCAB_TANDEM_6x2_IMG from './../../assets/equipmentModels/SCANIA_R_DAYCAB_TANDEM_6x2.png';
-import SCANIA_R_DAYCAB_TANDEM_8x4_IMG from './../../assets/equipmentModels/SCANIA_R_DAYCAB_TANDEM_8x4.png';
-import SCANIA_R_PRT1_4x2_IMG from './../../assets/equipmentModels/SCANIA_R_PRT1_4x2.png';
-import SCANIA_R_PRT1_6x2_IMG from './../../assets/equipmentModels/SCANIA_R_PRT1_6x2.png';
-import SCANIA_R_SLEEPER_SEMI_4x2_IMG from './../../assets/equipmentModels/SCANIA_R_SLEEPER_SEMI_4x2.png';
-import SCANIA_R_SLEEPER_SEMI_6x2_IMG from './../../assets/equipmentModels/SCANIA_R_SLEEPER_SEMI_6x2.png';
-import SCANIA_R_SLEEPER_TANDEM_4x2_IMG from './../../assets/equipmentModels/SCANIA_R_SLEEPER_TANDEM_4x2.png';
-import SCANIA_R_SLEEPER_TANDEM_6x2_IMG from './../../assets/equipmentModels/SCANIA_R_SLEEPER_TANDEM_6x2.png';
-import SCANIA_R_SLEEPER_TANDEM_8x4_IMG from './../../assets/equipmentModels/SCANIA_R_SLEEPER_TANDEM_8x4.png';
-import SCANIA_S_SEMI_4x2_IMG from './../../assets/equipmentModels/SCANIA_S_SEMI_4x2.png';
-import SCANIA_S_SEMI_6x2_IMG from './../../assets/equipmentModels/SCANIA_S_SEMI_6x2.png';
-import SCANIA_S_TANDEM_4x2_IMG from './../../assets/equipmentModels/SCANIA_S_TANDEM_4x2.png';
-import SCANIA_S_TANDEM_6x2_IMG from './../../assets/equipmentModels/SCANIA_S_TANDEM_6x2.png';
-import SCANIA_S_TANDEM_8x4_IMG from './../../assets/equipmentModels/SCANIA_S_TANDEM_8x4.png';
-import SCHMITZ_CARGOBULL_SEMI_REEFER_IMG from './../../assets/equipmentModels/SCHMITZ_CARGOBULL_SEMI_REEFER.png';
-import SCHMITZ_CARGOBULL_TANDEM_CURTAIN_IMG from './../../assets/equipmentModels/SCHMITZ_CARGOBULL_TANDEM_CURTAIN.png';
-import SCHWARZMUELLER_FLATBED_3_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_FLATBED_3.png';
-import SCHWARZMUELLER_FLATBED_3_1_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_FLATBED_3_1.png';
-import SCHWARZMUELLER_FLATBED_3_2_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_FLATBED_3_2.png';
-import SCHWARZMUELLER_FLATBED_TANDEM_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_FLATBED_TANDEM.png';
-import SCHWARZMUELLER_FLATBED_TANDEM_1_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_FLATBED_TANDEM_1.png';
-import SCHWARZMUELLER_FLATBED_TANDEM_2_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_FLATBED_TANDEM_2.png';
-import SCHWARZMUELLER_FLATBED_TANDEM_3_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_FLATBED_TANDEM_3.png';
-import SCHWARZMUELLER_FLATBED_TANDEM_4_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_FLATBED_TANDEM_4.png';
-import SCHWARZMUELLER_FLATBED_TANDEM_5_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_FLATBED_TANDEM_5.png';
-import SCHWARZMUELLER_FLATBED_TANDEM_6_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_FLATBED_TANDEM_6.png';
-import SCHWARZMUELLER_SEMI_REEFER_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_REEFER.png';
-import SCHWARZMUELLER_SEMI_TIPPER_2_ALU_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TIPPER_2_ALU.png';
-import SCHWARZMUELLER_SEMI_TIPPER_2_ALU_1_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TIPPER_2_ALU_1.png';
-import SCHWARZMUELLER_SEMI_TIPPER_2_STEEL_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TIPPER_2_STEEL.png';
-import SCHWARZMUELLER_SEMI_TIPPER_2_STEEL_1_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TIPPER_2_STEEL_1.png';
-import SCHWARZMUELLER_SEMI_TIPPER_3_ALU_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TIPPER_3_ALU.png';
-import SCHWARZMUELLER_SEMI_TIPPER_3_STEEL_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TIPPER_3_STEEL.png';
-import SCHWARZMUELLER_SEMI_TIPPER_HOLLOW_3_ALU_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TIPPER_HOLLOW_3_ALU.png';
-import SCHWARZMUELLER_SEMI_TIPPER_HOLLOW_3_ALU_1_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TIPPER_HOLLOW_3_ALU_1.png';
-import SCHWARZMUELLER_SEMI_TRAILER_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TRAILER.png';
-import SCHWARZMUELLER_SEMI_TRAILER_1_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TRAILER_1.png';
-import SCHWARZMUELLER_SEMI_TRAILER_JUMBO_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TRAILER_JUMBO.png';
-import SCHWARZMUELLER_SEMI_TRAILER_MEGA_COIL_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TRAILER_MEGA_COIL.png';
-import SCHWARZMUELLER_SEMI_TRAILER_MEGA_COIL_1_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TRAILER_MEGA_COIL_1.png';
-import SCHWARZMUELLER_SEMI_TRAILER_PIGGYBACK_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TRAILER_PIGGYBACK.png';
-import SCHWARZMUELLER_SEMI_TRAILER_PIGGYBACK_1_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TRAILER_PIGGYBACK_1.png';
-import SCHWARZMUELLER_SEMI_TRAILER_PIGGYBACK_2_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TRAILER_PIGGYBACK_2.png';
-import SCHWARZMUELLER_SEMI_TRAILER_STANDARD_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TRAILER_STANDARD.png';
-import SCHWARZMUELLER_SEMI_TRAILER_STANDARD_1_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TRAILER_STANDARD_1.png';
-import SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT.png';
-import SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_1_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_1.png';
-import SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_2_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_2.png';
-import SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_3_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_3.png';
-import SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_MEGA_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_MEGA.png';
-import SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_MEGA_1_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_MEGA_1.png';
-import SCHWARZMUELLER_TANDEM_4x2_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANDEM_4x2.png';
-import SCHWARZMUELLER_TANDEM_6x2_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANDEM_6x2.png';
-import SCHWARZMUELLER_TANDEM_TIPPER_2A_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANDEM_TIPPER_2A.png';
-import SCHWARZMUELLER_TANDEM_TIPPER_2A_1_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANDEM_TIPPER_2A_1.png';
-import SCHWARZMUELLER_TANDEM_TIPPER_3A_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANDEM_TIPPER_3A.png';
-import SCHWARZMUELLER_TANDEM_TIPPER_3A_1_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANDEM_TIPPER_3A_1.png';
-import SCHWARZMUELLER_TANDEM_TIPPER_3A_ALU_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANDEM_TIPPER_3A_ALU.png';
-import SCHWARZMUELLER_TANDEM_TIPPER_4A_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANDEM_TIPPER_4A.png';
-import SCHWARZMUELLER_TANDEM_TIPPER_4A_STEEL_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANDEM_TIPPER_4A_STEEL.png';
-import SCHWARZMUELLER_TANDEM_TRUCK_2A_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANDEM_TRUCK_2A.png';
-import SCHWARZMUELLER_TANDEM_TRUCK_2A_1_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANDEM_TRUCK_2A_1.png';
-import SCHWARZMUELLER_TANDEM_TRUCK_3A_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANDEM_TRUCK_3A.png';
-import SCHWARZMUELLER_TANDEM_TRUCK_MEDIUM_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANDEM_TRUCK_MEDIUM.png';
-import SCHWARZMUELLER_TANK_SEMI_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANK_SEMI.png';
-import SCHWARZMUELLER_TANK_SEMI_1_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANK_SEMI_1.png';
-import SCHWARZMUELLER_TANK_SEMI_2_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANK_SEMI_2.png';
-import SCHWARZMUELLER_TANK_TANDEM_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANK_TANDEM.png';
-import SCHWARZMUELLER_TANK_TANDEM_1_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANK_TANDEM_1.png';
-import SCHWARZMUELLER_TANK_TANDEM_2_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANK_TANDEM_2.png';
-import SCHWARZMUELLER_TANK_TANDEM_3_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANK_TANDEM_3.png';
-import SCHWARZMUELLER_TANK_TANDEM_TRUCK_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANK_TANDEM_TRUCK.png';
-import SCHWARZMUELLER_TANK_TANDEM_TRUCK_1_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANK_TANDEM_TRUCK_1.png';
-import SCHWARZMUELLER_TANK_TANDEM_TRUCK_2_IMG from './../../assets/equipmentModels/SCHWARZMUELLER_TANK_TANDEM_TRUCK_2.png';
-import SDC_BOXVAN_ALU_IMG from './../../assets/equipmentModels/SDC_BOXVAN_ALU.png';
-import SDC_BOXVAN_DOUBLE_DECK_IMG from './../../assets/equipmentModels/SDC_BOXVAN_DOUBLE_DECK.png';
-import SDC_BOXVAN_GRP_IMG from './../../assets/equipmentModels/SDC_BOXVAN_GRP.png';
-import SDC_BOXVAN_URBAN_IMG from './../../assets/equipmentModels/SDC_BOXVAN_URBAN.png';
-import SDC_CURTAIN_IMG from './../../assets/equipmentModels/SDC_CURTAIN.png';
-import SDC_CURTAIN_CHIPLINER_IMG from './../../assets/equipmentModels/SDC_CURTAIN_CHIPLINER.png';
-import SDC_CURTAIN_COILWELL_IMG from './../../assets/equipmentModels/SDC_CURTAIN_COILWELL.png';
-import SDC_CURTAIN_DOUBLE_DECK_IMG from './../../assets/equipmentModels/SDC_CURTAIN_DOUBLE_DECK.png';
-import SDC_CURTAIN_EUROLINER_IMG from './../../assets/equipmentModels/SDC_CURTAIN_EUROLINER.png';
-import SDC_CURTAIN_INSULINER_IMG from './../../assets/equipmentModels/SDC_CURTAIN_INSULINER.png';
-import SDC_CURTAIN_MEGA_IMG from './../../assets/equipmentModels/SDC_CURTAIN_MEGA.png';
-import SDC_CURTAIN_URBAN_IMG from './../../assets/equipmentModels/SDC_CURTAIN_URBAN.png';
-import SDC_PLATFORM_IMG from './../../assets/equipmentModels/SDC_PLATFORM.png';
-import SDC_PLATFORM_EXTENDABLE_IMG from './../../assets/equipmentModels/SDC_PLATFORM_EXTENDABLE.png';
-import SDC_PLATFORM_OIL_SPEC_IMG from './../../assets/equipmentModels/SDC_PLATFORM_OIL_SPEC.png';
-import SDC_PLATFORM_PSK_IMG from './../../assets/equipmentModels/SDC_PLATFORM_PSK.png';
-import SDC_PLATFORM_STEP_FRAME_IMG from './../../assets/equipmentModels/SDC_PLATFORM_STEP_FRAME.png';
-import SDC_SKELETAL_EXTANDABLE_IMG from './../../assets/equipmentModels/SDC_SKELETAL_EXTANDABLE.png';
-import SDC_SKELETAL_FIXED_IMG from './../../assets/equipmentModels/SDC_SKELETAL_FIXED.png';
-import SDC_SKELETAL_FIXED_GOOSENECK_IMG from './../../assets/equipmentModels/SDC_SKELETAL_FIXED_GOOSENECK.png';
-import SDC_SKELETAL_GOOSENECK_EXTENDING_IMG from './../../assets/equipmentModels/SDC_SKELETAL_GOOSENECK_EXTENDING.png';
-import SDC_SKELETAL_ISO_TANK_IMG from './../../assets/equipmentModels/SDC_SKELETAL_ISO_TANK.png';
-import SDC_SKELETAL_TIPPING_IMG from './../../assets/equipmentModels/SDC_SKELETAL_TIPPING.png';
-import STAS_TIPPER_AGGREGATE_STAR_IMG from './../../assets/equipmentModels/STAS_TIPPER_AGGREGATE_STAR.png';
-import STAS_TIPPER_BUILD_STARX_IMG from './../../assets/equipmentModels/STAS_TIPPER_BUILD_STARX.png';
-import STAS_TIPPER_ROCK_STAR_IMG from './../../assets/equipmentModels/STAS_TIPPER_ROCK_STAR.png';
-import STAS_TIPPER_U_ROCKSTAR_IMG from './../../assets/equipmentModels/STAS_TIPPER_U_ROCKSTAR.png';
-import STOUGHTON_TRAILERS_CHASSIS_IMG from './../../assets/equipmentModels/STOUGHTON_TRAILERS_CHASSIS.png';
-import STOUGHTON_TRAILERS_REEFER_PUREBLUE_IMG from './../../assets/equipmentModels/STOUGHTON_TRAILERS_REEFER_PUREBLUE.png';
-import STOUGHTON_TRAILERS_SEMI_TRAILER_EXTRA_WIDE_IMG from './../../assets/equipmentModels/STOUGHTON_TRAILERS_SEMI_TRAILER_EXTRA_WIDE.png';
-import STOUGHTON_TRAILERS_SEMI_TRAILER_TOUGH_PLATE_IMG from './../../assets/equipmentModels/STOUGHTON_TRAILERS_SEMI_TRAILER_TOUGH_PLATE.png';
-import STOUGHTON_TRAILERS_SEMI_TRAILER_Z_PLATE_IMG from './../../assets/equipmentModels/STOUGHTON_TRAILERS_SEMI_TRAILER_Z_PLATE.png';
-import STRICK_TRAILERS_SEMI_TRAILER_COMPOSITE_IMG from './../../assets/equipmentModels/STRICK_TRAILERS_SEMI_TRAILER_COMPOSITE.png';
-import STRICK_TRAILERS_SEMI_TRAILER_SHEET_POST_IMG from './../../assets/equipmentModels/STRICK_TRAILERS_SEMI_TRAILER_SHEET_POST.png';
-import STRICK_TRAILERS_TANDEM_4x2_IMG from './../../assets/equipmentModels/STRICK_TRAILERS_TANDEM_4x2.png';
-import TATA_1821_TANDEM_6x2_IMG from './../../assets/equipmentModels/TATA_1821_TANDEM_6x2.png';
-import TATA_1918T_TANDEM_4x2_IMG from './../../assets/equipmentModels/TATA_1918T_TANDEM_4x2.png';
-import TATA_1923_TANDEM_TIPPER_4x2_IMG from './../../assets/equipmentModels/TATA_1923_TANDEM_TIPPER_4x2.png';
-import TATA_2818_TANDEM_6x2_IMG from './../../assets/equipmentModels/TATA_2818_TANDEM_6x2.png';
-import TATA_2823_TANDEM_TIPPER_6x2_IMG from './../../assets/equipmentModels/TATA_2823_TANDEM_TIPPER_6x2.png';
-import TATA_2825_TANDEM_TIPPER_6x2_IMG from './../../assets/equipmentModels/TATA_2825_TANDEM_TIPPER_6x2.png';
-import TATA_3518_TANDEM_8x4_IMG from './../../assets/equipmentModels/TATA_3518_TANDEM_8x4.png';
-import TATA_3521_TANDEM_8x4_IMG from './../../assets/equipmentModels/TATA_3521_TANDEM_8x4.png';
-import TATA_4018_SEMI_4x2_IMG from './../../assets/equipmentModels/TATA_4018_SEMI_4x2.png';
-import TATA_4625_SEMI_4x2_IMG from './../../assets/equipmentModels/TATA_4625_SEMI_4x2.png';
-import TATA_5530_SEMI_6x2_IMG from './../../assets/equipmentModels/TATA_5530_SEMI_6x2.png';
-import TRAIL_KING_TIPPER_IMG from './../../assets/equipmentModels/TRAIL_KING_TIPPER.png';
-import TRAIL_KING_TIPPER_1_IMG from './../../assets/equipmentModels/TRAIL_KING_TIPPER_1.png';
-import TRANSCRAFT_FLATBED_COMBO_IMG from './../../assets/equipmentModels/TRANSCRAFT_FLATBED_COMBO.png';
-import TRANSCRAFT_FLATBED_DROP_DECK_COMBO_IMG from './../../assets/equipmentModels/TRANSCRAFT_FLATBED_DROP_DECK_COMBO.png';
-import TRANSCRAFT_FLATBED_DROP_DECK_STEEL_IMG from './../../assets/equipmentModels/TRANSCRAFT_FLATBED_DROP_DECK_STEEL.png';
-import TRANSCRAFT_FLATBED_STEEL_IMG from './../../assets/equipmentModels/TRANSCRAFT_FLATBED_STEEL.png';
-import UTM_FLATBED_4000AE_IMG from './../../assets/equipmentModels/UTM_FLATBED_4000AE.png';
-import UTM_FLATBED_4000AE_DROP_DECK_IMG from './../../assets/equipmentModels/UTM_FLATBED_4000AE_DROP_DECK.png';
-import UTM_FLATBED_DROP_DECK_IMG from './../../assets/equipmentModels/UTM_FLATBED_DROP_DECK.png';
-import UTM_TRAILER_3000R_IMG from './../../assets/equipmentModels/UTM_TRAILER_3000R.png';
-import UTM_TRAILER_3000R_MULTI_TEMP_IMG from './../../assets/equipmentModels/UTM_TRAILER_3000R_MULTI_TEMP.png';
-import UTM_TRAILER_4000D_IMG from './../../assets/equipmentModels/UTM_TRAILER_4000D.png';
-import UTM_TRAILER_4000D_X_COMPOSITE_IMG from './../../assets/equipmentModels/UTM_TRAILER_4000D_X_COMPOSITE.png';
-import UTM_TRAILER_4000D_X_COMPOSITE_100_IMG from './../../assets/equipmentModels/UTM_TRAILER_4000D_X_COMPOSITE_100.png';
-import UTM_TRAILER_4000D_X_COMPOSITE_TBR_IMG from './../../assets/equipmentModels/UTM_TRAILER_4000D_X_COMPOSITE_TBR.png';
-import UTM_TRAILER_TAUTLINER_IMG from './../../assets/equipmentModels/UTM_TRAILER_TAUTLINER.png';
-import VANGUARD_CIE_20_40_CITYCOMBO_WS_TANDEM_IMG from './../../assets/equipmentModels/VANGUARD_CIE_20_40_CITYCOMBO_WS_TANDEM.png';
-import VANGUARD_CIE_20_40_SL_COMBO_TANDEM_WS_IMG from './../../assets/equipmentModels/VANGUARD_CIE_20_40_SL_COMBO_TANDEM_WS.png';
-import VANGUARD_CIE_20_40_SL_COMBO_TRIDEM_IMG from './../../assets/equipmentModels/VANGUARD_CIE_20_40_SL_COMBO_TRIDEM.png';
-import VANGUARD_CIE_23_5_TANDEM_IMG from './../../assets/equipmentModels/VANGUARD_CIE_23_5_TANDEM.png';
-import VANGUARD_CIE_33_LIGHTWEIGHT_TRIDEM_IMG from './../../assets/equipmentModels/VANGUARD_CIE_33_LIGHTWEIGHT_TRIDEM.png';
-import VANGUARD_CIE_33_SLIDER_TRIDEM_IMG from './../../assets/equipmentModels/VANGUARD_CIE_33_SLIDER_TRIDEM.png';
-import VANGUARD_CIE_40_45_EXTANDABLE_IMG from './../../assets/equipmentModels/VANGUARD_CIE_40_45_EXTANDABLE.png';
-import VANGUARD_CIE_40_53_EXTENDABLE_TRIDEM_IMG from './../../assets/equipmentModels/VANGUARD_CIE_40_53_EXTENDABLE_TRIDEM.png';
-import VANGUARD_CIE_40_GOOSENECK_LIGHTWEIGHT_IMG from './../../assets/equipmentModels/VANGUARD_CIE_40_GOOSENECK_LIGHTWEIGHT.png';
-import VANGUARD_CIE_40_GOOSENECK_TANDEM_IMG from './../../assets/equipmentModels/VANGUARD_CIE_40_GOOSENECK_TANDEM.png';
-import VANGUARD_CIE_40_GOOSENECK_TRIDEM_IMG from './../../assets/equipmentModels/VANGUARD_CIE_40_GOOSENECK_TRIDEM.png';
-import VANGUARD_CIE_43_DROP_FRAME_IMG from './../../assets/equipmentModels/VANGUARD_CIE_43_DROP_FRAME.png';
-import VANGUARD_CIE_53_GOOSENECK_IMG from './../../assets/equipmentModels/VANGUARD_CIE_53_GOOSENECK.png';
-import VANGUARD_MAXCUBE_IMG from './../../assets/equipmentModels/VANGUARD_MAXCUBE.png';
-import VANGUARD_REEFER_IMG from './../../assets/equipmentModels/VANGUARD_REEFER.png';
-import VANGUARD_VAF_IMG from './../../assets/equipmentModels/VANGUARD_VAF.png';
-import VANGUARD_VIP_4000_IMG from './../../assets/equipmentModels/VANGUARD_VIP_4000.png';
-import VANGUARD_VSF_IMG from './../../assets/equipmentModels/VANGUARD_VSF.png';
-import VANGUARD_VXP_IMG from './../../assets/equipmentModels/VANGUARD_VXP.png';
-import VOLKSWAGEN_CONSTELLATION_15190_ROBUST_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CONSTELLATION_15190_ROBUST.png';
-import VOLKSWAGEN_CONSTELLATION_17190_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CONSTELLATION_17190.png';
-import VOLKSWAGEN_CONSTELLATION_17230_ROBUST_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CONSTELLATION_17230_ROBUST.png';
-import VOLKSWAGEN_CONSTELLATION_17280_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CONSTELLATION_17280.png';
-import VOLKSWAGEN_CONSTELLATION_17280_TRACTOR_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CONSTELLATION_17280_TRACTOR.png';
-import VOLKSWAGEN_CONSTELLATION_19330_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CONSTELLATION_19330.png';
-import VOLKSWAGEN_CONSTELLATION_19360_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CONSTELLATION_19360.png';
-import VOLKSWAGEN_CONSTELLATION_19420_VTRONIC_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CONSTELLATION_19420_VTRONIC.png';
-import VOLKSWAGEN_CONSTELLATION_25360_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CONSTELLATION_25360.png';
-import VOLKSWAGEN_CONSTELLATION_25420_VTRONIC_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CONSTELLATION_25420_VTRONIC.png';
-import VOLKSWAGEN_CONSTELLATION_26280_6x4_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CONSTELLATION_26280_6x4.png';
-import VOLKSWAGEN_CONSTELLATION_26420_VTRONIC_6x4_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CONSTELLATION_26420_VTRONIC_6x4.png';
-import VOLKSWAGEN_CONSTELLATION_31280_6x4_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CONSTELLATION_31280_6x4.png';
-import VOLKSWAGEN_CONSTELLATION_31330_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CONSTELLATION_31330.png';
-import VOLKSWAGEN_CRAFTER_FRAME_L3_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CRAFTER_FRAME_L3.png';
-import VOLKSWAGEN_CRAFTER_FRAME_L4_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CRAFTER_FRAME_L4.png';
-import VOLKSWAGEN_CRAFTER_FRAME_L5_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CRAFTER_FRAME_L5.png';
-import VOLKSWAGEN_CRAFTER_L3H3_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CRAFTER_L3H3.png';
-import VOLKSWAGEN_CRAFTER_L4H3_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CRAFTER_L4H3.png';
-import VOLKSWAGEN_CRAFTER_L5H3_IMG from './../../assets/equipmentModels/VOLKSWAGEN_CRAFTER_L5H3.png';
-import VOLKSWAGEN_DELIVERY_6160_IMG from './../../assets/equipmentModels/VOLKSWAGEN_DELIVERY_6160.png';
-import VOLKSWAGEN_DELIVERY_9170_IMG from './../../assets/equipmentModels/VOLKSWAGEN_DELIVERY_9170.png';
-import VOLKSWAGEN_DELIVERY_11180_IMG from './../../assets/equipmentModels/VOLKSWAGEN_DELIVERY_11180.png';
-import VOLKSWAGEN_TRANSPORTER_L1_IMG from './../../assets/equipmentModels/VOLKSWAGEN_TRANSPORTER_L1.png';
-import VOLKSWAGEN_TRANSPORTER_L2_IMG from './../../assets/equipmentModels/VOLKSWAGEN_TRANSPORTER_L2.png';
-import VOLVO_FH_2_4x2_IMG from './../../assets/equipmentModels/VOLVO_FH_2_4x2.png';
-import VOLVO_FH_2_6x2_IMG from './../../assets/equipmentModels/VOLVO_FH_2_6x2.png';
-import VOLVO_FH_3_4x2_IMG from './../../assets/equipmentModels/VOLVO_FH_3_4x2.png';
-import VOLVO_FH_3_6x2_IMG from './../../assets/equipmentModels/VOLVO_FH_3_6x2.png';
-import VOLVO_FH_4_IMG from './../../assets/equipmentModels/VOLVO_FH_4.png';
-import VOLVO_FMX_IMG from './../../assets/equipmentModels/VOLVO_FMX.png';
-import VOLVO_VNL_300_4x2_IMG from './../../assets/equipmentModels/VOLVO_VNL_300_4x2.png';
-import VOLVO_VNL_300_6x2_IMG from './../../assets/equipmentModels/VOLVO_VNL_300_6x2.png';
-import VOLVO_VNL_400_IMG from './../../assets/equipmentModels/VOLVO_VNL_400.png';
-import VOLVO_VNL_740_6x2_IMG from './../../assets/equipmentModels/VOLVO_VNL_740_6x2.png';
-import VOLVO_VNL_760_IMG from './../../assets/equipmentModels/VOLVO_VNL_760.png';
-import VOLVO_VNL_860_IMG from './../../assets/equipmentModels/VOLVO_VNL_860.png';
-import VOLVO_VNR_300_4x2_IMG from './../../assets/equipmentModels/VOLVO_VNR_300_4x2.png';
-import VOLVO_VNR_300_6x2_IMG from './../../assets/equipmentModels/VOLVO_VNR_300_6x2.png';
-import VOLVO_VNR_400_IMG from './../../assets/equipmentModels/VOLVO_VNR_400.png';
-import VOLVO_VNR_640_IMG from './../../assets/equipmentModels/VOLVO_VNR_640.png';
-import WABASH_FLATBED_ALU_IMG from './../../assets/equipmentModels/WABASH_FLATBED_ALU.png';
-import WABASH_FLATBED_ALU_DROP_DECK_IMG from './../../assets/equipmentModels/WABASH_FLATBED_ALU_DROP_DECK.png';
-import WABASH_REEFER_ARCTIC_LITE_IMG from './../../assets/equipmentModels/WABASH_REEFER_ARCTIC_LITE.png';
-import WABASH_REEFER_MSC_IMG from './../../assets/equipmentModels/WABASH_REEFER_MSC.png';
-import WABASH_TANK_3A_SANITARY_IMG from './../../assets/equipmentModels/WABASH_TANK_3A_SANITARY.png';
-import WABASH_TANK_ALU_DRY_BULK_IMG from './../../assets/equipmentModels/WABASH_TANK_ALU_DRY_BULK.png';
-import WABASH_TANK_ALU_PETROLEUM_IMG from './../../assets/equipmentModels/WABASH_TANK_ALU_PETROLEUM.png';
-import WABASH_TANK_DEF_IMG from './../../assets/equipmentModels/WABASH_TANK_DEF.png';
-import WABASH_TANK_FOOD_IMG from './../../assets/equipmentModels/WABASH_TANK_FOOD.png';
-import WABASH_TRAILER_DURAPLATE_IMG from './../../assets/equipmentModels/WABASH_TRAILER_DURAPLATE.png';
-import WABASH_TRAILER_DURAPLATE_HD_IMG from './../../assets/equipmentModels/WABASH_TRAILER_DURAPLATE_HD.png';
-import WESTERN_STAR_TRUCKS_5700_FE_IMG from './../../assets/equipmentModels/WESTERN_STAR_TRUCKS_5700_FE.png';
-import WESTERN_STAR_TRUCKS_5800_FE_IMG from './../../assets/equipmentModels/WESTERN_STAR_TRUCKS_5800_FE.png';
-
 export const EEquipmentPartType = {
   AXLES: 'AXLES',
   BODY: 'BODY',
@@ -3062,7 +2487,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T8x4,
     brand: EBrand.ASTRA,
-    image: ASTRA_HD9_RIGID_IMG,
+    image: 'ASTRA_HD9_RIGID.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":78}},{"type":"SUSPENSION","position":{"x":40,"y":59}},
           {"type":"WHEELS","position":{"x":30,"y":79}},{"type":"BODY","position":{"x":50,"y":46}},
           {"type":"FRAME","position":{"x":61,"y":81}},{"type":"INTERIOR","position":{"x":45,"y":31}},
@@ -3077,7 +2502,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T8x4,
     brand: EBrand.ASTRA,
-    image: ASTRA_HHD9_RIGID_IMG,
+    image: 'ASTRA_HHD9_RIGID.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":78}},{"type":"SUSPENSION","position":{"x":40,"y":59}},
           {"type":"WHEELS","position":{"x":30,"y":79}},{"type":"BODY","position":{"x":50,"y":46}},
           {"type":"FRAME","position":{"x":61,"y":81}},{"type":"INTERIOR","position":{"x":45,"y":31}},
@@ -3092,7 +2517,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.ASTRA,
-    image: ASTRA_HD9_TRACTOR_IMG,
+    image: 'ASTRA_HD9_TRACTOR.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":78}},{"type":"SUSPENSION","position":{"x":40,"y":59}},
           {"type":"WHEELS","position":{"x":30,"y":79}},{"type":"BODY","position":{"x":50,"y":46}},
           {"type":"FRAME","position":{"x":61,"y":81}},{"type":"INTERIOR","position":{"x":45,"y":31}},
@@ -3107,7 +2532,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.ASTRA,
-    image: ASTRA_HHD9_TRACTOR_IMG,
+    image: 'ASTRA_HHD9_TRACTOR.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":78}},{"type":"SUSPENSION","position":{"x":40,"y":59}},
           {"type":"WHEELS","position":{"x":30,"y":79}},{"type":"BODY","position":{"x":50,"y":46}},
           {"type":"FRAME","position":{"x":61,"y":81}},{"type":"INTERIOR","position":{"x":45,"y":31}},
@@ -3122,7 +2547,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_1_1_AXLES,
     brand: EBrand.CHEETAH,
-    image: CHEETAH_CONTAINER_20_40_MAXIMIZER_12_PIN_IMG,
+    image: 'CHEETAH_CONTAINER_20_40_MAXIMIZER_12_PIN.png',
     parts: [{"type":"BRAKES","position":{"x":58,"y":55}},{"type":"WHEELS","position":{"x":52,"y":56}},
             {"type":"SUSPENSION","position":{"x":54,"y":49}},{"type":"FRAME","position":{"x":43,"y":49}},
             {"type":"LIGHTS","position":{"x":91,"y":55}},{"type":"TRAILER_ATTACHMENT","position":{"x":9,"y":46}},
@@ -3133,7 +2558,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_2_AXLES,
     brand: EBrand.CHEETAH,
-    image: CHEETAH_FLATBED_IMG,
+    image: 'CHEETAH_FLATBED.png',
     parts: [{"type":"BRAKES","position":{"x":67,"y":65}},{"type":"WHEELS","position":{"x":55,"y":66}},
             {"type":"SUSPENSION","position":{"x":58,"y":61}},{"type":"FRAME","position":{"x":37,"y":50}},
             {"type":"SUPPORT","position":{"x":15,"y":46}},{"type":"LIGHTS","position":{"x":89,"y":57}},
@@ -3144,7 +2569,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.CHEETAH,
-    image: CHEETAH_CONTAINER_GOOSENECK_41_45_IMG,
+    image: 'CHEETAH_CONTAINER_GOOSENECK_41_45.png',
     parts: [{"type":"BRAKES","position":{"x":34,"y":53}},{"type":"SUSPENSION","position":{"x":38,"y":49}},
     {"type":"WHEELS","position":{"x":42,"y":53}},{"type":"FRAME","position":{"x":61,"y":44}},
     {"type":"SUPPORT","position":{"x":83,"y":44}},{"type":"LIGHTS","position":{"x":21,"y":57}},
@@ -3155,7 +2580,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_2_AXLES,
     brand: EBrand.CHEETAH,
-    image: CHEETAH_CONTAINER_20_40_SPREAD_CITY_IMG,
+    image: 'CHEETAH_CONTAINER_20_40_SPREAD_CITY.png',
     parts: [{"type":"BRAKES","position":{"x":34,"y":53}},{"type":"SUSPENSION","position":{"x":38,"y":49}},
     {"type":"WHEELS","position":{"x":42,"y":53}},{"type":"FRAME","position":{"x":61,"y":44}},
     {"type":"SUPPORT","position":{"x":83,"y":44}},{"type":"LIGHTS","position":{"x":21,"y":57}},
@@ -3166,7 +2591,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L2H2,
     brand: EBrand.CITROEN,
-    image: CITROEN_JUMPER_L2H2_IMG,
+    image: 'CITROEN_JUMPER_L2H2.png',
     parts: [{"type":"BRAKES","position":{"x":65,"y":66}},{"type":"WHEELS","position":{"x":56,"y":65}},
             {"type":"SUSPENSION","position":{"x":60,"y":58}},{"type":"INTERIOR","position":{"x":64,"y":40}},
             {"type":"FRAME","position":{"x":40,"y":64}},{"type":"BODY","position":{"x":50,"y":54}},
@@ -3181,7 +2606,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1BODY,
     brand: EBrand.CITROEN,
-    image: CITROEN_JUMPER_L1H1_FRAME_IMG,
+    image: 'CITROEN_JUMPER_L1H1_FRAME.png',
     parts: [{"type":"BRAKES","position":{"x":78,"y":61}},{"type":"SUSPENSION","position":{"x":81,"y":54}},
     {"type":"WHEELS","position":{"x":83,"y":62}},{"type":"BODY","position":{"x":65,"y":53}},
     {"type":"FRAME","position":{"x":53,"y":60}},{"type":"INTERIOR","position":{"x":70,"y":43}},
@@ -3195,7 +2620,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_2_AXLES,
     brand: EBrand.CONTRAL,
-    image: CONTRAL_CDU_53_CONTAINER_IMG,
+    image: 'CONTRAL_CDU_53_CONTAINER.png',
     parts: [{"type":"BRAKES","position":{"x":18,"y":48}},{"type":"SUSPENSION","position":{"x":15,"y":47}},
             {"type":"WHEELS","position":{"x":14,"y":51}},{"type":"FRAME","position":{"x":39,"y":51}},
             {"type":"SUPPORT","position":{"x":58,"y":59}},{"type":"LIGHTS","position":{"x":8,"y":47}},
@@ -3206,7 +2631,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.DAF,
-    image: DAF_CF_6x2_IMG,
+    image: 'DAF_CF_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":44,"y":78}},{"type":"SUSPENSION","position":{"x":49,"y":64}},
     {"type":"WHEELS","position":{"x":55,"y":75}},{"type":"BODY","position":{"x":35,"y":53}},
     {"type":"FRAME","position":{"x":28,"y":77}},{"type":"INTERIOR","position":{"x":30,"y":40}},
@@ -3221,7 +2646,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.DAF,
-    image: DAF_LF_TANDEM_4x2_IMG,
+    image: 'DAF_LF_TANDEM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":62,"y":77}},{"type":"SUSPENSION","position":{"x":57,"y":68}},
     {"type":"WHEELS","position":{"x":55,"y":78}},{"type":"BODY","position":{"x":53,"y":58}},
     {"type":"FRAME","position":{"x":49,"y":75}},{"type":"INTERIOR","position":{"x":60,"y":48}},
@@ -3236,7 +2661,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.DAF,
-    image: DAF_XF_105_4x2_IMG,
+    image: 'DAF_XF_105_4x2.png',
     parts: [{"type":"SUSPENSION","position":{"x":57,"y":68}},{"type":"WHEELS","position":{"x":59,"y":79}},
             {"type":"BRAKES","position":{"x":52,"y":78}},{"type":"FIFTH_WHEEL","position":{"x":73,"y":60}},
             {"type":"COMPRESSOR","position":{"x":16,"y":70}},{"type":"ENGINE","position":{"x":25,"y":77}},
@@ -3251,7 +2676,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.DAF,
-    image: DAF_XF_105_6x2_IMG,
+    image: 'DAF_XF_105_6x2.png',
     parts: [{"type":"WHEELS","position":{"x":56,"y":78}},{"type":"SUSPENSION","position":{"x":53,"y":67}},
             {"type":"BRAKES","position":{"x":45,"y":77}},{"type":"ENGINE","position":{"x":22,"y":73}},
             {"type":"COMPRESSOR","position":{"x":15,"y":70}},{"type":"GEARBOX","position":{"x":28,"y":70}},
@@ -3266,7 +2691,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.DAF,
-    image: DAF_XF_106_4x2_IMG,
+    image: 'DAF_XF_106_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":52,"y":79}},{"type":"SUSPENSION","position":{"x":54,"y":68}},
             {"type":"WHEELS","position":{"x":58,"y":78}},{"type":"LIGHTS","position":{"x":11,"y":71}},
             {"type":"BATTERY","position":{"x":38,"y":68}},{"type":"ELECTRONIC","position":{"x":23,"y":62}},
@@ -3281,7 +2706,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.DAF,
-    image: DAF_XF_106_6x2_IMG,
+    image: 'DAF_XF_106_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":52,"y":79}},{"type":"WHEELS","position":{"x":58,"y":78}},
             {"type":"SUSPENSION","position":{"x":56,"y":67}},{"type":"FIFTH_WHEEL","position":{"x":73,"y":58}},
             {"type":"FUEL","position":{"x":67,"y":68}},{"type":"GEARBOX","position":{"x":33,"y":77}},
@@ -3296,7 +2721,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T8x4,
     brand: EBrand.DAF,
-    image: DAF_XF_106_8x4_IMG,
+    image: 'DAF_XF_106_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":47,"y":82}},{"type":"SUSPENSION","position":{"x":52,"y":66}},
     {"type":"WHEELS","position":{"x":55,"y":77}},{"type":"BODY","position":{"x":38,"y":57}},
     {"type":"FRAME","position":{"x":41,"y":82}},{"type":"INTERIOR","position":{"x":34,"y":41}},
@@ -3311,7 +2736,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.DOEPKER,
-    image: DOEPKER_55T_SINGLE_DROP_LOWBED_IMG,
+    image: 'DOEPKER_55T_SINGLE_DROP_LOWBED.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":52}},{"type":"WHEELS","position":{"x":41,"y":56}},
             {"type":"SUSPENSION","position":{"x":42,"y":49}},{"type":"FRAME","position":{"x":63,"y":53}},
             {"type":"SUPPORT","position":{"x":59,"y":59}},{"type":"LIGHTS","position":{"x":5,"y":42}},
@@ -3323,7 +2748,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_2_AXLES,
     brand: EBrand.DOONAN,
-    image: DOONAN_DOUBLE_DROP_LOWBED_IMG,
+    image: 'DOONAN_DOUBLE_DROP_LOWBED.png',
     parts: [{"type":"BRAKES","position":{"x":26,"y":53}},{"type":"WHEELS","position":{"x":33,"y":55}},
             {"type":"SUSPENSION","position":{"x":32,"y":50}},{"type":"SUPPORT","position":{"x":88,"y":50}},
             {"type":"FRAME","position":{"x":62,"y":51}},{"type":"LIGHTS","position":{"x":16,"y":53}},
@@ -3335,7 +2760,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.DOONAN,
-    image: DOONAN_FLATBED_CHAP_1_1_IMG,
+    image: 'DOONAN_FLATBED_CHAP_1_1.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":52}},{"type":"WHEELS","position":{"x":35,"y":53}},
             {"type":"SUSPENSION","position":{"x":39,"y":46}},{"type":"SUPPORT","position":{"x":13,"y":39}},
             {"type":"FRAME","position":{"x":28,"y":40}},{"type":"LIGHTS","position":{"x":68,"y":56}},
@@ -3346,7 +2771,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_2_AXLES,
     brand: EBrand.DOONAN,
-    image: DOONAN_FIXED_DOUBLE_DROP_LOWBED_IMG,
+    image: 'DOONAN_FIXED_DOUBLE_DROP_LOWBED.png',
     parts: [{"type":"BRAKES","position":{"x":65,"y":57}},{"type":"SUSPENSION","position":{"x":61,"y":52}},
           {"type":"WHEELS","position":{"x":60,"y":59}},{"type":"SUPPORT","position":{"x":10,"y":47}},
           {"type":"FRAME","position":{"x":21,"y":48}},{"type":"LIGHTS","position":{"x":79,"y":59}},
@@ -3357,7 +2782,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.DORSEY,
-    image: DORSEY_FLATBED_ALUMINIUM_GIANT_IMG,
+    image: 'DORSEY_FLATBED_ALUMINIUM_GIANT.png',
     parts: [{"type":"BRAKES","position":{"x":81,"y":47}},{"type":"SUSPENSION","position":{"x":83,"y":42}},
             {"type":"WHEELS","position":{"x":88,"y":47}},{"type":"FRAME","position":{"x":55,"y":46}},
             {"type":"SUPPORT","position":{"x":46,"y":60}},{"type":"LIGHTS","position":{"x":95,"y":41}},
@@ -3368,7 +2793,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_2_AXLES,
     brand: EBrand.DORSEY,
-    image: DORSEY_FLATBED_STEEL_GIANT_IMG,
+    image: 'DORSEY_FLATBED_STEEL_GIANT.png',
     parts: [{"type":"BRAKES","position":{"x":60,"y":56}},{"type":"WHEELS","position":{"x":52,"y":62}},
             {"type":"SUSPENSION","position":{"x":53,"y":51}},{"type":"SUPPORT","position":{"x":12,"y":45}},
             {"type":"FRAME","position":{"x":25,"y":42}},{"type":"LIGHTS","position":{"x":81,"y":55}},
@@ -3379,7 +2804,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.EAST,
-    image: EAST_FLATBED_BEAST_IMG,
+    image: 'EAST_FLATBED_BEAST.png',
     parts: [{"type":"BRAKES","position":{"x":55,"y":50}},{"type":"WHEELS","position":{"x":62,"y":51}},
             {"type":"SUSPENSION","position":{"x":61,"y":43}},{"type":"FRAME","position":{"x":72,"y":41}},
             {"type":"SUPPORT","position":{"x":86,"y":46}},{"type":"LIGHTS","position":{"x":17,"y":44}},
@@ -3390,7 +2815,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.EAST,
-    image: EAST_FLATBED_BEAST_2_IMG,
+    image: 'EAST_FLATBED_BEAST_2.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":54}},{"type":"SUSPENSION","position":{"x":41,"y":45}},
             {"type":"WHEELS","position":{"x":36,"y":57}},{"type":"FRAME","position":{"x":23,"y":44}},
             {"type":"SUPPORT","position":{"x":13,"y":50}},{"type":"LIGHTS","position":{"x":61,"y":44}},
@@ -3401,7 +2826,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.EAST,
-    image: EAST_LOWBED_BEAST_DROP_DECK_IMG,
+    image: 'EAST_LOWBED_BEAST_DROP_DECK.png',
     parts: [{"type":"BRAKES","position":{"x":14,"y":51}},{"type":"SUSPENSION","position":{"x":9,"y":48}},
             {"type":"WHEELS","position":{"x":7,"y":54}},{"type":"FRAME","position":{"x":51,"y":52}},
             {"type":"SUPPORT","position":{"x":53,"y":58}},{"type":"LIGHTS","position":{"x":2,"y":49}},
@@ -3412,7 +2837,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_2_AXLES,
     brand: EBrand.EAST,
-    image: EAST_STEEL_DUMP_IMG,
+    image: 'EAST_STEEL_DUMP.png',
     parts: [{"type":"BRAKES","position":{"x":70,"y":66}},{"type":"SUSPENSION","position":{"x":76,"y":60}},
             {"type":"WHEELS","position":{"x":80,"y":67}},{"type":"SUPPORT","position":{"x":53,"y":72}},
             {"type":"FRAME","position":{"x":41,"y":59}},{"type":"LIGHTS","position":{"x":95,"y":57}},
@@ -3424,7 +2849,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_3_AXLES,
     brand: EBrand.FELLING,
-    image: FELLING_FLATBED_IMG,
+    image: 'FELLING_FLATBED.png',
     parts: [{"type":"BRAKES","position":{"x":36,"y":53}},{"type":"WHEELS","position":{"x":45,"y":53}},
             {"type":"SUSPENSION","position":{"x":38,"y":47}},{"type":"FRAME","position":{"x":72,"y":45}},
             {"type":"SUPPORT","position":{"x":86,"y":51}},{"type":"LIGHTS","position":{"x":17,"y":46}},
@@ -3435,7 +2860,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.FELLING,
-    image: FELLING_LOWBED_IMG,
+    image: 'FELLING_LOWBED.png',
     parts: [{"type":"BRAKES","position":{"x":71,"y":53}},{"type":"SUSPENSION","position":{"x":76,"y":47}},
             {"type":"WHEELS","position":{"x":79,"y":57}},{"type":"LIGHTS","position":{"x":94,"y":52}},
             {"type":"SUPPORT","position":{"x":27,"y":59}},{"type":"FRAME","position":{"x":48,"y":57}},
@@ -3446,7 +2871,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_2_AXLES,
     brand: EBrand.FERREE,
-    image: FERREE_LTV35_LOWBED_IMG,
+    image: 'FERREE_LTV35_LOWBED.png',
     parts: [{"type":"BRAKES","position":{"x":49,"y":46}},{"type":"WHEELS","position":{"x":38,"y":52}},
             {"type":"SUSPENSION","position":{"x":40,"y":39}},{"type":"FRAME","position":{"x":22,"y":49}},
             {"type":"SUPPORT","position":{"x":3,"y":45}},{"type":"LIGHTS","position":{"x":69,"y":47}},
@@ -3457,7 +2882,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.FERREE,
-    image: FERREE_LTV51_LOWBED_IMG,
+    image: 'FERREE_LTV51_LOWBED.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":53}},{"type":"WHEELS","position":{"x":43,"y":55}},
             {"type":"SUSPENSION","position":{"x":44,"y":45}},{"type":"SUPPORT","position":{"x":11,"y":44}},
             {"type":"FRAME","position":{"x":28,"y":49}},{"type":"LOAD","position":{"x":34,"y":45}},
@@ -3468,7 +2893,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.FERREE,
-    image: FERREE_LTTV51DS_LOWBED_IMG,
+    image: 'FERREE_LTTV51DS_LOWBED.png',
     parts: [{"type":"BRAKES","position":{"x":81,"y":47}},{"type":"SUSPENSION","position":{"x":88,"y":47}},
             {"type":"WHEELS","position":{"x":83,"y":56}},{"type":"SUPPORT","position":{"x":38,"y":60}},
             {"type":"FRAME","position":{"x":57,"y":55}},{"type":"LIGHTS","position":{"x":96,"y":49}},
@@ -3479,7 +2904,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.FERREE,
-    image: FERREE_LTTV55_LOWBED_IMG,
+    image: 'FERREE_LTTV55_LOWBED.png',
     parts: [{"type":"BRAKES","position":{"x":80,"y":46}},{"type":"WHEELS","position":{"x":85,"y":49}},
             {"type":"SUSPENSION","position":{"x":86,"y":43}},{"type":"FRAME","position":{"x":55,"y":53}},
             {"type":"SUPPORT","position":{"x":44,"y":55}},{"type":"LIGHTS","position":{"x":94,"y":43}},
@@ -3490,7 +2915,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L2H2,
     brand: EBrand.FIAT,
-    image: FIAT_DUCATO_L2H2_IMG,
+    image: 'FIAT_DUCATO_L2H2.png',
     parts: [{"type":"BRAKES","position":{"x":54,"y":73}},{"type":"SUSPENSION","position":{"x":47,"y":60}},
             {"type":"WHEELS","position":{"x":46,"y":72}},{"type":"FRAME","position":{"x":29,"y":70}},
             {"type":"BODY","position":{"x":37,"y":54}},{"type":"INTERIOR","position":{"x":54,"y":38}},
@@ -3505,7 +2930,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_INFINITY_TOP_FLATBED_IMG,
+    image: 'FONTAINE_INFINITY_TOP_FLATBED.png',
     parts: [{"type":"BRAKES","position":{"x":34,"y":54}},{"type":"SUSPENSION","position":{"x":20,"y":39}},
             {"type":"WHEELS","position":{"x":18,"y":61}},{"type":"FRAME","position":{"x":53,"y":43}},
             {"type":"SUPPORT","position":{"x":5,"y":36}},{"type":"LIGHTS","position":{"x":33,"y":40}},
@@ -3516,7 +2941,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_VELOCITY_TOP_FLATBED_IMG,
+    image: 'FONTAINE_VELOCITY_TOP_FLATBED.png',
     parts: [{"type":"BRAKES","position":{"x":86,"y":45}},{"type":"SUSPENSION","position":{"x":86,"y":42}},
             {"type":"WHEELS","position":{"x":93,"y":46}},{"type":"FRAME","position":{"x":74,"y":44}},
             {"type":"SUPPORT","position":{"x":69,"y":54}},{"type":"LIGHTS","position":{"x":97,"y":37}},
@@ -3527,7 +2952,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_MAGNITUDE_51_IMG,
+    image: 'FONTAINE_MAGNITUDE_51.png',
     parts: [{"type":"BRAKES","position":{"x":73,"y":52}},{"type":"SUSPENSION","position":{"x":77,"y":50}},
           {"type":"WHEELS","position":{"x":75,"y":55}},{"type":"SUPPORT","position":{"x":19,"y":56}},
           {"type":"FRAME","position":{"x":38,"y":52}},{"type":"LIGHTS","position":{"x":95,"y":52}},
@@ -3538,7 +2963,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_MAGNITUDE_55H_FLD_IMG,
+    image: 'FONTAINE_MAGNITUDE_55H_FLD.png',
     parts: [{"type":"BRAKES","position":{"x":15,"y":45}},{"type":"SUSPENSION","position":{"x":8,"y":43}},
         {"type":"WHEELS","position":{"x":10,"y":49}},{"type":"FRAME","position":{"x":41,"y":58}},
         {"type":"SUPPORT","position":{"x":52,"y":58}},{"type":"LIGHTS","position":{"x":2,"y":43}},
@@ -3549,7 +2974,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_MAGNITUDE_55H_DSR_IMG,
+    image: 'FONTAINE_MAGNITUDE_55H_DSR.png',
     parts: [{"type":"BRAKES","position":{"x":14,"y":45}},{"type":"SUSPENSION","position":{"x":8,"y":42}},
           {"type":"WHEELS","position":{"x":9,"y":50}},{"type":"FRAME","position":{"x":34,"y":55}},
           {"type":"SUPPORT","position":{"x":50,"y":62}},{"type":"LIGHTS","position":{"x":0,"y":43}},
@@ -3560,7 +2985,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_MAGNITUDE_55L_IMG,
+    image: 'FONTAINE_MAGNITUDE_55L.png',
     parts: [{"type":"BRAKES","position":{"x":79,"y":44}},{"type":"SUSPENSION","position":{"x":84,"y":41}},
             {"type":"WHEELS","position":{"x":86,"y":47}},{"type":"SUPPORT","position":{"x":33,"y":57}},
             {"type":"FRAME","position":{"x":52,"y":53}},{"type":"LIGHTS","position":{"x":96,"y":41}},
@@ -3571,7 +2996,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_MAGNITUDE_55L_PLUS_IMG,
+    image: 'FONTAINE_MAGNITUDE_55L_PLUS.png',
     parts: [{"type":"BRAKES","position":{"x":77,"y":45}},{"type":"SUSPENSION","position":{"x":83,"y":41}},
             {"type":"WHEELS","position":{"x":87,"y":46}},{"type":"SUPPORT","position":{"x":31,"y":60}},
             {"type":"FRAME","position":{"x":52,"y":52}},{"type":"LIGHTS","position":{"x":96,"y":41}},
@@ -3582,7 +3007,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_MAGNITUDE_55H_MFLD_IMG,
+    image: 'FONTAINE_MAGNITUDE_55H_MFLD.png',
     parts: [{"type":"BRAKES","position":{"x":14,"y":44}},{"type":"WHEELS","position":{"x":7,"y":47}},
           {"type":"SUSPENSION","position":{"x":9,"y":42}},{"type":"SUPPORT","position":{"x":50,"y":59}},
           {"type":"FRAME","position":{"x":31,"y":54}},{"type":"LIGHTS","position":{"x":0,"y":43}},
@@ -3593,7 +3018,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_MAGNITUDE_55H_MDSR_IMG,
+    image: 'FONTAINE_MAGNITUDE_55H_MDSR.png',
     parts: [{"type":"BRAKES","position":{"x":14,"y":44}},{"type":"WHEELS","position":{"x":8,"y":49}},
           {"type":"SUSPENSION","position":{"x":7,"y":42}},{"type":"FRAME","position":{"x":34,"y":55}},
           {"type":"SUPPORT","position":{"x":51,"y":59}},{"type":"LIGHTS","position":{"x":2,"y":43}},
@@ -3604,7 +3029,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_MAGNITUDE_55H_MBMD_IMG,
+    image: 'FONTAINE_MAGNITUDE_55H_MBMD.png',
     parts: [{"type":"BRAKES","position":{"x":16,"y":48}},{"type":"SUSPENSION","position":{"x":11,"y":44}},
           {"type":"WHEELS","position":{"x":9,"y":50}},{"type":"SUPPORT","position":{"x":57,"y":60}},
           {"type":"FRAME","position":{"x":31,"y":53}},{"type":"LIGHTS","position":{"x":3,"y":45}},
@@ -3615,7 +3040,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_MAGNITUDE_55H_MX_IMG,
+    image: 'FONTAINE_MAGNITUDE_55H_MX.png',
     parts: [{"type":"BRAKES","position":{"x":37,"y":43}},{"type":"SUSPENSION","position":{"x":35,"y":37}},
           {"type":"WHEELS","position":{"x":23,"y":51}},{"type":"SUPPORT","position":{"x":2,"y":29}},
           {"type":"FRAME","position":{"x":13,"y":33}},{"type":"LIGHTS","position":{"x":43,"y":51}},
@@ -3626,7 +3051,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_2_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_RENEGADE_LXL_IMG,
+    image: 'FONTAINE_RENEGADE_LXL.png',
     parts: [{"type":"BRAKES","position":{"x":55,"y":54}},{"type":"WHEELS","position":{"x":48,"y":61}},
           {"type":"SUSPENSION","position":{"x":53,"y":49}},{"type":"LIGHTS","position":{"x":70,"y":53}},
           {"type":"SUPPORT","position":{"x":7,"y":53}},{"type":"FRAME","position":{"x":29,"y":57}},
@@ -3637,7 +3062,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_2_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_RENEGADE_LX40_IMG,
+    image: 'FONTAINE_RENEGADE_LX40.png',
     parts: [{"type":"BRAKES","position":{"x":53,"y":56}},{"type":"SUSPENSION","position":{"x":54,"y":49}},
           {"type":"WHEELS","position":{"x":46,"y":57}},{"type":"SUPPORT","position":{"x":9,"y":50}},
           {"type":"FRAME","position":{"x":29,"y":54}},{"type":"LIGHTS","position":{"x":67,"y":51}},
@@ -3648,7 +3073,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_2_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_RENEGADE_LXT40_IMG,
+    image: 'FONTAINE_RENEGADE_LXT40.png',
     parts: [{"type":"BRAKES","position":{"x":59,"y":55}},{"type":"WHEELS","position":{"x":51,"y":56}},
           {"type":"SUSPENSION","position":{"x":54,"y":50}},{"type":"FRAME","position":{"x":39,"y":51}},
           {"type":"SUPPORT","position":{"x":7,"y":50}},{"type":"LIGHTS","position":{"x":72,"y":52}},
@@ -3659,7 +3084,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_2_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_RENEGADE_LX40C_IMG,
+    image: 'FONTAINE_RENEGADE_LX40C.png',
     parts: [{"type":"BRAKES","position":{"x":83,"y":57}},{"type":"SUSPENSION","position":{"x":86,"y":54}},
           {"type":"WHEELS","position":{"x":87,"y":58}},{"type":"FRAME","position":{"x":37,"y":57}},
           {"type":"SUPPORT","position":{"x":18,"y":58}},{"type":"LIGHTS","position":{"x":97,"y":54}},
@@ -3670,7 +3095,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_2_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_RENEGADE_LXT40C_IMG,
+    image: 'FONTAINE_RENEGADE_LXT40C.png',
     parts: [{"type":"BRAKES","position":{"x":88,"y":55}},{"type":"WHEELS","position":{"x":89,"y":59}},
           {"type":"SUSPENSION","position":{"x":91,"y":54}},{"type":"SUPPORT","position":{"x":13,"y":57}},
           {"type":"FRAME","position":{"x":40,"y":56}},{"type":"LIGHTS","position":{"x":98,"y":54}},
@@ -3681,7 +3106,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_2_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_RENEGADE_LXLN12_IMG,
+    image: 'FONTAINE_RENEGADE_LXLN12.png',
     parts: [{"type":"BRAKES","position":{"x":84,"y":56}},{"type":"SUSPENSION","position":{"x":86,"y":52}},
           {"type":"WHEELS","position":{"x":88,"y":58}},{"type":"SUPPORT","position":{"x":16,"y":57}},
           {"type":"FRAME","position":{"x":45,"y":57}},{"type":"LIGHTS","position":{"x":98,"y":53}},
@@ -3692,7 +3117,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_2_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_RENEGADE_LXLN14_IMG,
+    image: 'FONTAINE_RENEGADE_LXLN14.png',
     parts: [{"type":"BRAKES","position":{"x":83,"y":56}},{"type":"SUSPENSION","position":{"x":86,"y":52}},
           {"type":"WHEELS","position":{"x":87,"y":57}},{"type":"SUPPORT","position":{"x":17,"y":58}},
           {"type":"FRAME","position":{"x":41,"y":56}},{"type":"LIGHTS","position":{"x":97,"y":54}},
@@ -3703,7 +3128,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_2_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_RENEGADE_LXN40_IMG,
+    image: 'FONTAINE_RENEGADE_LXN40.png',
     parts: [{"type":"BRAKES","position":{"x":83,"y":56}},{"type":"WHEELS","position":{"x":86,"y":60}},
             {"type":"SUSPENSION","position":{"x":87,"y":52}},{"type":"LIGHTS","position":{"x":98,"y":54}},
             {"type":"SUPPORT","position":{"x":18,"y":58}},{"type":"FRAME","position":{"x":46,"y":55}},
@@ -3714,7 +3139,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_2_AXLES,
     brand: EBrand.FONTAINE,
-    image: FONTAINE_RENEGADE_LXTN40_IMG,
+    image: 'FONTAINE_RENEGADE_LXTN40.png',
     parts: [{"type":"BRAKES","position":{"x":89,"y":57}},{"type":"WHEELS","position":{"x":94,"y":58}},
           {"type":"SUSPENSION","position":{"x":93,"y":53}},{"type":"SUPPORT","position":{"x":13,"y":56}},
           {"type":"FRAME","position":{"x":32,"y":55}},{"type":"LIGHTS","position":{"x":98,"y":54}},
@@ -3725,7 +3150,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.FORD,
-    image: FORD_1842T_IMG,
+    image: 'FORD_1842T.png',
     parts: [{"type":"BRAKES","position":{"x":55,"y":69}},{"type":"SUSPENSION","position":{"x":57,"y":56}},
             {"type":"WHEELS","position":{"x":64,"y":70}},{"type":"BODY","position":{"x":15,"y":43}},
             {"type":"INTERIOR","position":{"x":30,"y":29}},{"type":"FRAME","position":{"x":17,"y":71}},
@@ -3740,7 +3165,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.FORD,
-    image: FORD_1833_IMG,
+    image: 'FORD_1833.png',
     parts: [{"type":"BRAKES","position":{"x":41,"y":71}},{"type":"WHEELS","position":{"x":48,"y":75}},
         {"type":"SUSPENSION","position":{"x":42,"y":59}},{"type":"BODY","position":{"x":24,"y":52}},
         {"type":"FRAME","position":{"x":23,"y":70}},{"type":"INTERIOR","position":{"x":29,"y":40}},
@@ -3756,7 +3181,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T8x4,
     brand: EBrand.FORD,
-    image: FORD_4142D_IMG,
+    image: 'FORD_4142D.png',
     parts: [{"type":"BRAKES","position":{"x":42,"y":69}},{"type":"WHEELS","position":{"x":50,"y":78}},
           {"type":"SUSPENSION","position":{"x":45,"y":62}},{"type":"BODY","position":{"x":8,"y":53}},
           {"type":"FRAME","position":{"x":14,"y":69}},{"type":"INTERIOR","position":{"x":20,"y":38}},
@@ -3772,7 +3197,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.FORD,
-    image: FORD_FMAX_IMG,
+    image: 'FORD_FMAX.png',
     parts: [{"type":"BRAKES","position":{"x":47,"y":77}},{"type":"SUSPENSION","position":{"x":54,"y":65}},
           {"type":"WHEELS","position":{"x":56,"y":77}},{"type":"BODY","position":{"x":42,"y":53}},
           {"type":"FRAME","position":{"x":42,"y":83}},{"type":"INTERIOR","position":{"x":29,"y":36}},
@@ -3787,7 +3212,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L2H2,
     brand: EBrand.FORD,
-    image: FORD_TRANSIT_L2H2_IMG,
+    image: 'FORD_TRANSIT_L2H2.png',
     parts: [{"type":"BRAKES","position":{"x":44,"y":75}},{"type":"SUSPENSION","position":{"x":40,"y":63}},
             {"type":"WHEELS","position":{"x":32,"y":75}},{"type":"INTERIOR","position":{"x":49,"y":41}},
             {"type":"BODY","position":{"x":32,"y":56}},{"type":"FRAME","position":{"x":27,"y":75}},
@@ -3802,7 +3227,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1BODY,
     brand: EBrand.FORD,
-    image: FORD_TRANSIT_L1H1_FRAME_IMG,
+    image: 'FORD_TRANSIT_L1H1_FRAME.png',
     parts: [{"type":"BRAKES","position":{"x":46,"y":75}},{"type":"SUSPENSION","position":{"x":41,"y":63}},
             {"type":"WHEELS","position":{"x":35,"y":74}},{"type":"INTERIOR","position":{"x":44,"y":37}},
             {"type":"FRAME","position":{"x":21,"y":70}},{"type":"BODY","position":{"x":28,"y":53}},
@@ -3816,7 +3241,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.FREIGHTLINER,
-    image: FREIGHTLINER_CASCADIA_DAY_IMG,
+    image: 'FREIGHTLINER_CASCADIA_DAY.png',
     parts: [{"type":"BRAKES","position":{"x":43,"y":75}},{"type":"SUSPENSION","position":{"x":45,"y":63}},
             {"type":"WHEELS","position":{"x":53,"y":78}},{"type":"INTERIOR","position":{"x":40,"y":41}},
             {"type":"FRAME","position":{"x":29,"y":78}},{"type":"BODY","position":{"x":23,"y":49}},
@@ -3831,7 +3256,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.FREIGHTLINER,
-    image: FREIGHTLINER_CASCADIA_SLEEPER_IMG,
+    image: 'FREIGHTLINER_CASCADIA_SLEEPER.png',
     parts: [{"type":"BRAKES","position":{"x":39,"y":69}},{"type":"SUSPENSION","position":{"x":40,"y":58}},
             {"type":"WHEELS","position":{"x":48,"y":67}},{"type":"BODY","position":{"x":30,"y":43}},
             {"type":"FRAME","position":{"x":23,"y":70}},{"type":"INTERIOR","position":{"x":40,"y":37}},
@@ -3846,7 +3271,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_big,
     brand: EBrand.FREIGHTLINER,
-    image: FREIGHTLINER_M2_106_IMG,
+    image: 'FREIGHTLINER_M2_106.png',
     parts: [{"type":"BRAKES","position":{"x":32,"y":61}},{"type":"WHEELS","position":{"x":39,"y":65}},
           {"type":"SUSPENSION","position":{"x":36,"y":53}},{"type":"INTERIOR","position":{"x":28,"y":41}},
           {"type":"FRAME","position":{"x":23,"y":63}},{"type":"BODY","position":{"x":19,"y":47}},
@@ -3861,7 +3286,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2_big,
     brand: EBrand.FREIGHTLINER,
-    image: FREIGHTLINER_M2_112_IMG,
+    image: 'FREIGHTLINER_M2_112.png',
     parts: [{"type":"BRAKES","position":{"x":63,"y":72}},{"type":"WHEELS","position":{"x":51,"y":72}},
           {"type":"SUSPENSION","position":{"x":61,"y":66}},{"type":"INTERIOR","position":{"x":58,"y":40}},
           {"type":"FRAME","position":{"x":70,"y":72}},{"type":"BODY","position":{"x":74,"y":57}},
@@ -3876,7 +3301,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2_big,
     brand: EBrand.FREIGHTLINER,
-    image: FREIGHTLINER_114SD_IMG,
+    image: 'FREIGHTLINER_114SD.png',
     parts: [{"type":"BRAKES","position":{"x":24,"y":64}},{"type":"SUSPENSION","position":{"x":28,"y":56}},
           {"type":"WHEELS","position":{"x":31,"y":64}},{"type":"FRAME","position":{"x":18,"y":66}},
           {"type":"BODY","position":{"x":28,"y":48}},{"type":"INTERIOR","position":{"x":42,"y":40}},
@@ -3891,7 +3316,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2_big,
     brand: EBrand.FREIGHTLINER,
-    image: FREIGHTLINER_122SD_IMG,
+    image: 'FREIGHTLINER_122SD.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":78}},{"type":"SUSPENSION","position":{"x":40,"y":59}},
           {"type":"WHEELS","position":{"x":30,"y":79}},{"type":"BODY","position":{"x":50,"y":46}},
           {"type":"FRAME","position":{"x":61,"y":81}},{"type":"INTERIOR","position":{"x":45,"y":31}},
@@ -3906,7 +3331,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1BODY,
     brand: EBrand.FUSO,
-    image: FUSO_CANTER_L1_FRAME_IMG,
+    image: 'FUSO_CANTER_L1_FRAME.png',
     parts: [{"type":"BRAKES","position":{"x":56,"y":73}},{"type":"SUSPENSION","position":{"x":58,"y":58}},
           {"type":"WHEELS","position":{"x":66,"y":73}},{"type":"INTERIOR","position":{"x":34,"y":37}},
           {"type":"FRAME","position":{"x":35,"y":76}},{"type":"BODY","position":{"x":38,"y":49}},
@@ -3920,7 +3345,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1_TIPPER,
     brand: EBrand.FUSO,
-    image: FUSO_CANTER_L1_TIPPER_IMG,
+    image: 'FUSO_CANTER_L1_TIPPER.png',
     parts: [{"type":"BRAKES","position":{"x":55,"y":80}},{"type":"SUSPENSION","position":{"x":62,"y":64}},
           {"type":"WHEELS","position":{"x":67,"y":78}},{"type":"BODY","position":{"x":50,"y":57}},
           {"type":"INTERIOR","position":{"x":40,"y":40}},{"type":"FRAME","position":{"x":44,"y":82}},
@@ -3934,7 +3359,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_small,
     brand: EBrand.FUSO,
-    image: FUSO_SHOGUN_6x4_IMG,
+    image: 'FUSO_SHOGUN_6x4.png',
     parts: [{"type":"BRAKES","position":{"x":47,"y":75}},{"type":"WHEELS","position":{"x":55,"y":73}},
           {"type":"SUSPENSION","position":{"x":52,"y":61}},{"type":"BODY","position":{"x":41,"y":51}},
           {"type":"INTERIOR","position":{"x":38,"y":32}},{"type":"FRAME","position":{"x":43,"y":73}},
@@ -3949,7 +3374,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T8x4_small,
     brand: EBrand.FUSO,
-    image: FUSO_SHOGUN_8x4_IMG,
+    image: 'FUSO_SHOGUN_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":74}},{"type":"WHEELS","position":{"x":53,"y":73}},
             {"type":"SUSPENSION","position":{"x":50,"y":61}},{"type":"BODY","position":{"x":39,"y":51}},
             {"type":"FRAME","position":{"x":40,"y":75}},{"type":"INTERIOR","position":{"x":33,"y":29}},
@@ -3964,7 +3389,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_small,
     brand: EBrand.FUSO,
-    image: FUSO_FIGHTER_6x4_IMG,
+    image: 'FUSO_FIGHTER_6x4.png',
     parts: [{"type":"BRAKES","position":{"x":47,"y":68}},{"type":"SUSPENSION","position":{"x":53,"y":53}},
           {"type":"WHEELS","position":{"x":58,"y":65}},{"type":"BODY","position":{"x":40,"y":50}},
           {"type":"FRAME","position":{"x":41,"y":66}},{"type":"INTERIOR","position":{"x":33,"y":35}},
@@ -3979,7 +3404,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM_TRAILER].FLATBED_1_2_AXLES,
     brand: EBrand.GOLDHOFER,
-    image: GOLDHOFER_TU_IMG,
+    image: 'GOLDHOFER_TU.png',
     parts: [{"type":"BRAKES","position":{"x":70,"y":58}},{"type":"WHEELS","position":{"x":76,"y":62}},
           {"type":"SUSPENSION","position":{"x":78,"y":54}},{"type":"FRAME","position":{"x":51,"y":63}},
           {"type":"LIGHTS","position":{"x":92,"y":50}},{"type":"LOAD","position":{"x":56,"y":55}},
@@ -3990,7 +3415,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM_TRAILER].FLATBED_2_3_AXLES,
     brand: EBrand.GOLDHOFER,
-    image: GOLDHOFER_TN_L_IMG,
+    image: 'GOLDHOFER_TN_L.png',
     parts: [{"type":"BRAKES","position":{"x":69,"y":57}},{"type":"WHEELS","position":{"x":75,"y":59}},
             {"type":"SUSPENSION","position":{"x":73,"y":51}},{"type":"FRAME","position":{"x":59,"y":59}},
             {"type":"LIGHTS","position":{"x":92,"y":47}},{"type":"LOAD","position":{"x":52,"y":53}},
@@ -4001,7 +3426,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_2_AXLES,
     brand: EBrand.GREAT_DANE,
-    image: GREAT_DANE_EVEREST_SINGLE_TEMP_IMG,
+    image: 'GREAT_DANE_EVEREST_SINGLE_TEMP.png',
     parts: [{"type":"BRAKES","position":{"x":80,"y":64}},{"type":"WHEELS","position":{"x":85,"y":70}},
           {"type":"SUSPENSION","position":{"x":84,"y":60}},{"type":"FRAME","position":{"x":57,"y":62}},
           {"type":"BODY","position":{"x":58,"y":47}},{"type":"SUPPORT","position":{"x":47,"y":73}},
@@ -4014,7 +3439,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_2_AXLES,
     brand: EBrand.GREAT_DANE,
-    image: GREAT_DANE_EVEREST_MULTI_TEMP_IMG,
+    image: 'GREAT_DANE_EVEREST_MULTI_TEMP.png',
     parts: [{"type":"BRAKES","position":{"x":83,"y":65}},{"type":"SUSPENSION","position":{"x":87,"y":60}},
             {"type":"WHEELS","position":{"x":88,"y":68}},{"type":"BODY","position":{"x":59,"y":49}},
             {"type":"FRAME","position":{"x":51,"y":65}},{"type":"SUPPORT","position":{"x":54,"y":72}},
@@ -4027,7 +3452,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].FRIGO_T4x2,
     brand: EBrand.GREAT_DANE,
-    image: GREAT_DANE_ALPINE_IMG,
+    image: 'GREAT_DANE_ALPINE.png',
     parts: [{"type":"BRAKES","position":{"x":56,"y":72}},{"type":"SUSPENSION","position":{"x":53,"y":65}},
           {"type":"WHEELS","position":{"x":47,"y":74}},{"type":"BODY","position":{"x":20,"y":48}},
           {"type":"FRAME","position":{"x":27,"y":66}},{"type":"INTERIOR","position":{"x":11,"y":51}},
@@ -4043,7 +3468,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.GREAT_DANE,
-    image: GREAT_DANE_CHAMPION_SP2_IMG,
+    image: 'GREAT_DANE_CHAMPION_SP2.png',
     parts: [{"type":"BRAKES","position":{"x":16,"y":61}},{"type":"SUSPENSION","position":{"x":12,"y":57}},
           {"type":"WHEELS","position":{"x":11,"y":62}},{"type":"BODY","position":{"x":25,"y":50}},
           {"type":"FRAME","position":{"x":27,"y":59}},{"type":"SUPPORT","position":{"x":45,"y":67}},
@@ -4055,7 +3480,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.GREAT_DANE,
-    image: GREAT_DANE_CHAMPION_CP_IMG,
+    image: 'GREAT_DANE_CHAMPION_CP.png',
     parts: [{"type":"BRAKES","position":{"x":17,"y":60}},{"type":"SUSPENSION","position":{"x":14,"y":57}},
             {"type":"WHEELS","position":{"x":12,"y":62}},{"type":"BODY","position":{"x":35,"y":53}},
             {"type":"FRAME","position":{"x":37,"y":59}},{"type":"SUPPORT","position":{"x":52,"y":66}},
@@ -4067,7 +3492,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_big,
     brand: EBrand.GREAT_DANE,
-    image: GREAT_DANE_SAHARA_S_IMG,
+    image: 'GREAT_DANE_SAHARA_S.png',
     parts: [{"type":"BRAKES","position":{"x":57,"y":71}},{"type":"SUSPENSION","position":{"x":57,"y":64}},
           {"type":"WHEELS","position":{"x":46,"y":69}},{"type":"BODY","position":{"x":29,"y":54}},
           {"type":"FRAME","position":{"x":32,"y":65}},{"type":"INTERIOR","position":{"x":12,"y":49}},
@@ -4082,7 +3507,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_big,
     brand: EBrand.GREAT_DANE,
-    image: GREAT_DANE_SAHARA_C_IMG,
+    image: 'GREAT_DANE_SAHARA_C.png',
     parts: [{"type":"BRAKES","position":{"x":55,"y":69}},{"type":"SUSPENSION","position":{"x":56,"y":63}},
           {"type":"WHEELS","position":{"x":47,"y":72}},{"type":"BODY","position":{"x":29,"y":55}},
           {"type":"FRAME","position":{"x":30,"y":64}},{"type":"INTERIOR","position":{"x":12,"y":54}},
@@ -4097,7 +3522,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.GREAT_DANE,
-    image: GREAT_DANE_FREEDOM_LT_IMG,
+    image: 'GREAT_DANE_FREEDOM_LT.png',
     parts: [{"type":"BRAKES","position":{"x":71,"y":60}},{"type":"WHEELS","position":{"x":60,"y":61}},
           {"type":"SUSPENSION","position":{"x":67,"y":52}},{"type":"FRAME","position":{"x":36,"y":46}},
           {"type":"SUPPORT","position":{"x":16,"y":54}},{"type":"LIGHTS","position":{"x":74,"y":50}},
@@ -4108,7 +3533,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_2_AXLES,
     brand: EBrand.GREAT_DANE,
-    image: GREAT_DANE_FREEDOM_SE_IMG,
+    image: 'GREAT_DANE_FREEDOM_SE.png',
     parts: [{"type":"BRAKES","position":{"x":52,"y":57}},{"type":"SUSPENSION","position":{"x":46,"y":47}},
           {"type":"WHEELS","position":{"x":41,"y":57}},{"type":"FRAME","position":{"x":23,"y":48}},
           {"type":"SUPPORT","position":{"x":13,"y":54}},{"type":"LIGHTS","position":{"x":72,"y":48}},
@@ -4119,7 +3544,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.GREAT_DANE,
-    image: GREAT_DANE_FREEDOM_XP_IMG,
+    image: 'GREAT_DANE_FREEDOM_XP.png',
     parts: [{"type":"BRAKES","position":{"x":66,"y":54}},{"type":"SUSPENSION","position":{"x":56,"y":48}},
           {"type":"WHEELS","position":{"x":52,"y":63}},{"type":"FRAME","position":{"x":33,"y":43}},
           {"type":"SUPPORT","position":{"x":11,"y":46}},{"type":"LIGHTS","position":{"x":66,"y":44}},
@@ -4130,7 +3555,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_2_AXLES,
     brand: EBrand.HEIL,
-    image: HEIL_STANDARD_DUTY_9500_LTD_D4_IMG,
+    image: 'HEIL_STANDARD_DUTY_9500_LTD_D4.png',
     parts: [{"type":"BRAKES","position":{"x":36,"y":63}},{"type":"SUSPENSION","position":{"x":35,"y":56}},
           {"type":"WHEELS","position":{"x":43,"y":64}},{"type":"BODY","position":{"x":48,"y":42}},
           {"type":"FRAME","position":{"x":54,"y":53}},{"type":"SUPPORT","position":{"x":81,"y":57}},
@@ -4142,7 +3567,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_2_AXLES,
     brand: EBrand.HEIL,
-    image: HEIL_STANDARD_DUTY_9300_DT_S4_IMG,
+    image: 'HEIL_STANDARD_DUTY_9300_DT_S4.png',
     parts: [{"type":"BRAKES","position":{"x":44,"y":63}},{"type":"SUSPENSION","position":{"x":49,"y":56}},
             {"type":"WHEELS","position":{"x":52,"y":61}},{"type":"BODY","position":{"x":37,"y":43}},
             {"type":"FRAME","position":{"x":64,"y":55}},{"type":"SUPPORT","position":{"x":82,"y":57}},
@@ -4154,7 +3579,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_2_AXLES,
     brand: EBrand.HEIL,
-    image: HEIL_8500_E_DOUBLE_CONICAL_S1_DOT_TC407_IMG,
+    image: 'HEIL_8500_E_DOUBLE_CONICAL_S1_DOT_TC407.png',
     parts: [{"type":"BRAKES","position":{"x":12,"y":61}},{"type":"SUSPENSION","position":{"x":5,"y":56}},
           {"type":"WHEELS","position":{"x":4,"y":63}},{"type":"BODY","position":{"x":33,"y":53}},
           {"type":"SUPPORT","position":{"x":58,"y":65}},{"type":"FRAME","position":{"x":26,"y":57}},
@@ -4166,7 +3591,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_2_AXLES,
     brand: EBrand.HEIL,
-    image: HEIL_ST_7000_316L_SSSR_JS1_IMG,
+    image: 'HEIL_ST_7000_316L_SSSR_JS1.png',
     parts: [{"type":"BRAKES","position":{"x":32,"y":62}},{"type":"SUSPENSION","position":{"x":34,"y":55}},
             {"type":"WHEELS","position":{"x":37,"y":63}},{"type":"BODY","position":{"x":36,"y":44}},
             {"type":"FRAME","position":{"x":46,"y":52}},{"type":"SUPPORT","position":{"x":75,"y":60}},
@@ -4178,7 +3603,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_2_AXLES,
     brand: EBrand.HERCULES_CHASSIS,
-    image: HERCURLES_CHASSIS_CONTAINER_IMG,
+    image: 'HERCURLES_CHASSIS_CONTAINER.png',
     parts: [{"type":"BRAKES","position":{"x":33,"y":60}},{"type":"SUSPENSION","position":{"x":37,"y":50}},
           {"type":"WHEELS","position":{"x":43,"y":62}},{"type":"FRAME","position":{"x":50,"y":42}},
           {"type":"SUPPORT","position":{"x":83,"y":44}},{"type":"LIGHTS","position":{"x":29,"y":53}},
@@ -4189,7 +3614,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_2_AXLES,
     brand: EBrand.HERCULES_CHASSIS,
-    image: HERCULES_CHASSIS_LOWBED_IMG,
+    image: 'HERCULES_CHASSIS_LOWBED.png',
     parts: [{"type":"BRAKES","position":{"x":35,"y":60}},{"type":"SUSPENSION","position":{"x":40,"y":47}},
             {"type":"WHEELS","position":{"x":44,"y":56}},{"type":"FRAME","position":{"x":67,"y":48}},
             {"type":"SUPPORT","position":{"x":92,"y":46}},{"type":"LIGHTS","position":{"x":33,"y":47}},
@@ -4200,7 +3625,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.HINO_MOTORS,
-    image: HINO_300_IMG,
+    image: 'HINO_300.png',
     parts: [{"type":"BRAKES","position":{"x":42,"y":68}},{"type":"SUSPENSION","position":{"x":48,"y":57}},
             {"type":"WHEELS","position":{"x":51,"y":66}},{"type":"BODY","position":{"x":24,"y":48}},
             {"type":"FRAME","position":{"x":28,"y":66}},{"type":"INTERIOR","position":{"x":36,"y":39}},
@@ -4214,7 +3639,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.HINO_MOTORS,
-    image: HINO_500_4x2_IMG,
+    image: 'HINO_500_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":41,"y":70}},{"type":"SUSPENSION","position":{"x":48,"y":61}},
             {"type":"WHEELS","position":{"x":51,"y":69}},{"type":"BODY","position":{"x":33,"y":55}},
             {"type":"FRAME","position":{"x":31,"y":71}},{"type":"INTERIOR","position":{"x":36,"y":45}},
@@ -4228,7 +3653,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.HINO_MOTORS,
-    image: HINO_500_6x2_IMG,
+    image: 'HINO_500_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":44,"y":72}},{"type":"WHEELS","position":{"x":52,"y":69}},
             {"type":"SUSPENSION","position":{"x":49,"y":57}},{"type":"BODY","position":{"x":36,"y":47}},
             {"type":"FRAME","position":{"x":28,"y":67}},{"type":"INTERIOR","position":{"x":35,"y":36}},
@@ -4243,7 +3668,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2_big,
     brand: EBrand.HINO_MOTORS,
-    image: HINO_600_IMG,
+    image: 'HINO_600.png',
     parts: [{"type":"BRAKES","position":{"x":34,"y":75}},{"type":"SUSPENSION","position":{"x":40,"y":61}},
             {"type":"WHEELS","position":{"x":45,"y":73}},{"type":"BODY","position":{"x":31,"y":51}},
             {"type":"FRAME","position":{"x":28,"y":75}},{"type":"INTERIOR","position":{"x":40,"y":41}},
@@ -4258,7 +3683,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.HINO_MOTORS,
-    image: HINO_700_IMG,
+    image: 'HINO_700.png',
     parts: [{"type":"BRAKES","position":{"x":46,"y":72}},{"type":"WHEELS","position":{"x":55,"y":69}},
             {"type":"SUSPENSION","position":{"x":52,"y":56}},{"type":"BODY","position":{"x":38,"y":46}},
             {"type":"INTERIOR","position":{"x":36,"y":34}},{"type":"FRAME","position":{"x":28,"y":74}},
@@ -4273,7 +3698,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1_TIPPER,
     brand: EBrand.HYUNDAI,
-    image: HYUNDAI_H36L_IMG,
+    image: 'HYUNDAI_H36L.png',
     parts: [{"type":"BRAKES","position":{"x":38,"y":69}},{"type":"SUSPENSION","position":{"x":42,"y":59}},
             {"type":"WHEELS","position":{"x":45,"y":68}},{"type":"BODY","position":{"x":33,"y":53}},
             {"type":"FRAME","position":{"x":35,"y":66}},{"type":"INTERIOR","position":{"x":35,"y":37}},
@@ -4287,7 +3712,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L2_TIPPER,
     brand: EBrand.HYUNDAI,
-    image: HYUNDAI_H120_IMG,
+    image: 'HYUNDAI_H120.png',
     parts: [{"type":"BRAKES","position":{"x":36,"y":67}},{"type":"SUSPENSION","position":{"x":42,"y":58}},
             {"type":"WHEELS","position":{"x":42,"y":65}},{"type":"BODY","position":{"x":37,"y":51}},
             {"type":"FRAME","position":{"x":32,"y":68}},{"type":"INTERIOR","position":{"x":33,"y":38}},
@@ -4301,7 +3726,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1_TIPPER,
     brand: EBrand.HYUNDAI,
-    image: HYUNDAI_HD35_IMG,
+    image: 'HYUNDAI_HD35.png',
     parts: [{"type":"BRAKES","position":{"x":49,"y":68}},{"type":"WHEELS","position":{"x":57,"y":71}},
             {"type":"SUSPENSION","position":{"x":51,"y":55}},{"type":"BODY","position":{"x":10,"y":51}},
             {"type":"FRAME","position":{"x":14,"y":65}},{"type":"INTERIOR","position":{"x":25,"y":31}},
@@ -4315,7 +3740,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T4x2,
     brand: EBrand.HYUNDAI,
-    image: HYUNDAI_HD170_IMG,
+    image: 'HYUNDAI_HD170.png',
     parts: [{"type":"BRAKES","position":{"x":30,"y":67}},{"type":"SUSPENSION","position":{"x":32,"y":58}},
           {"type":"WHEELS","position":{"x":37,"y":65}},{"type":"BODY","position":{"x":3,"y":51}},
           {"type":"FRAME","position":{"x":5,"y":65}},{"type":"INTERIOR","position":{"x":12,"y":44}},
@@ -4329,7 +3754,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2_small,
     brand: EBrand.HYUNDAI,
-    image: HYUNDAI_PAVISE_IMG,
+    image: 'HYUNDAI_PAVISE.png',
     parts: [{"type":"BRAKES","position":{"x":73,"y":84}},{"type":"WHEELS","position":{"x":82,"y":86}},
           {"type":"SUSPENSION","position":{"x":78,"y":63}},{"type":"BODY","position":{"x":15,"y":53}},
           {"type":"FRAME","position":{"x":20,"y":87}},{"type":"INTERIOR","position":{"x":26,"y":29}},
@@ -4344,7 +3769,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.HYUNDAI,
-    image: HYUNDAI_XCIENT_IMG,
+    image: 'HYUNDAI_XCIENT.png',
     parts: [{"type":"BRAKES","position":{"x":49,"y":81}},{"type":"WHEELS","position":{"x":57,"y":77}},
             {"type":"SUSPENSION","position":{"x":52,"y":63}},{"type":"BODY","position":{"x":4,"y":57}},
             {"type":"FRAME","position":{"x":7,"y":78}},{"type":"INTERIOR","position":{"x":19,"y":40}},
@@ -4359,7 +3784,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.ISUZU,
-    image: ISUZU_EXR_IMG,
+    image: 'ISUZU_EXR.png',
     parts: [{"type":"BRAKES","position":{"x":56,"y":74}},{"type":"SUSPENSION","position":{"x":61,"y":61}},
           {"type":"WHEELS","position":{"x":64,"y":74}},{"type":"BODY","position":{"x":12,"y":53}},
           {"type":"FRAME","position":{"x":16,"y":75}},{"type":"INTERIOR","position":{"x":27,"y":37}},
@@ -4374,7 +3799,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.ISUZU,
-    image: ISUZU_EXZ_IMG,
+    image: 'ISUZU_EXZ.png',
     parts: [{"type":"BRAKES","position":{"x":37,"y":88}},{"type":"SUSPENSION","position":{"x":32,"y":69}},
           {"type":"WHEELS","position":{"x":25,"y":84}},{"type":"BODY","position":{"x":31,"y":51}},
           {"type":"FRAME","position":{"x":40,"y":87}},{"type":"INTERIOR","position":{"x":33,"y":32}},
@@ -4389,7 +3814,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.ISUZU,
-    image: ISUZU_FRR_IMG,
+    image: 'ISUZU_FRR.png',
     parts: [{"type":"BRAKES","position":{"x":66,"y":71}},{"type":"SUSPENSION","position":{"x":58,"y":58}},
           {"type":"WHEELS","position":{"x":57,"y":68}},{"type":"BODY","position":{"x":56,"y":48}},
           {"type":"INTERIOR","position":{"x":63,"y":38}},{"type":"FRAME","position":{"x":49,"y":62}},
@@ -4403,7 +3828,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.ISUZU,
-    image: ISUZU_FSR_IMG,
+    image: 'ISUZU_FSR.png',
     parts: [{"type":"BRAKES","position":{"x":33,"y":84}},{"type":"SUSPENSION","position":{"x":24,"y":69}},
     {"type":"WHEELS","position":{"x":22,"y":82}},{"type":"BODY","position":{"x":24,"y":54}},
     {"type":"INTERIOR","position":{"x":39,"y":39}},{"type":"FRAME","position":{"x":40,"y":83}},
@@ -4417,7 +3842,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TANK_T6x2_small,
     brand: EBrand.ISUZU,
-    image: ISUZU_FVZ_IMG,
+    image: 'ISUZU_FVZ.png',
     parts: [{"type":"BRAKES","position":{"x":43,"y":73}},{"type":"SUSPENSION","position":{"x":51,"y":60}},
     {"type":"WHEELS","position":{"x":53,"y":71}},{"type":"BODY","position":{"x":50,"y":47}},
     {"type":"FRAME","position":{"x":39,"y":70}},{"type":"INTERIOR","position":{"x":33,"y":33}},
@@ -4431,7 +3856,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.ISUZU,
-    image: ISUZU_FYH_IMG,
+    image: 'ISUZU_FYH.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":74}},{"type":"SUSPENSION","position":{"x":35,"y":64}},
           {"type":"WHEELS","position":{"x":38,"y":75}},{"type":"BODY","position":{"x":37,"y":48}},
           {"type":"FRAME","position":{"x":51,"y":73}},{"type":"INTERIOR","position":{"x":51,"y":35}},
@@ -4446,7 +3871,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.ISUZU,
-    image: ISUZU_GXZ_IMG,
+    image: 'ISUZU_GXZ.png',
     parts: [{"type":"BRAKES","position":{"x":25,"y":87}},{"type":"SUSPENSION","position":{"x":18,"y":78}},
           {"type":"WHEELS","position":{"x":19,"y":89}},{"type":"BODY","position":{"x":18,"y":51}},
           {"type":"FRAME","position":{"x":29,"y":84}},{"type":"INTERIOR","position":{"x":31,"y":30}},
@@ -4461,7 +3886,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.ISUZU,
-    image: ISUZU_NLR_IMG,
+    image: 'ISUZU_NLR.png',
     parts: [{"type":"BRAKES","position":{"x":33,"y":81}},{"type":"SUSPENSION","position":{"x":27,"y":68}},
           {"type":"BODY","position":{"x":25,"y":61}},{"type":"FRAME","position":{"x":39,"y":81}},
           {"type":"INTERIOR","position":{"x":33,"y":34}},{"type":"BATTERY","position":{"x":23,"y":67}},
@@ -4475,7 +3900,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.ISUZU,
-    image: ISUZU_NMR_IMG,
+    image: 'ISUZU_NMR.png',
     parts: [{"type":"BRAKES","position":{"x":66,"y":70}},{"type":"SUSPENSION","position":{"x":56,"y":60}},
             {"type":"WHEELS","position":{"x":55,"y":70}},{"type":"BODY","position":{"x":55,"y":50}},
             {"type":"INTERIOR","position":{"x":60,"y":44}},{"type":"FRAME","position":{"x":49,"y":69}},
@@ -4489,7 +3914,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.ISUZU,
-    image: ISUZU_NPR_IMG,
+    image: 'ISUZU_NPR.png',
     parts: [{"type":"BRAKES","position":{"x":52,"y":74}},{"type":"WHEELS","position":{"x":42,"y":72}},
         {"type":"SUSPENSION","position":{"x":45,"y":61}},{"type":"BODY","position":{"x":45,"y":52}},
         {"type":"FRAME","position":{"x":48,"y":69}},{"type":"INTERIOR","position":{"x":50,"y":39}},
@@ -4503,7 +3928,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.ISUZU,
-    image: ISUZU_NPS_IMG,
+    image: 'ISUZU_NPS.png',
     parts: [{"type":"BRAKES","position":{"x":32,"y":83}},{"type":"SUSPENSION","position":{"x":20,"y":70}},
           {"type":"WHEELS","position":{"x":23,"y":82}},{"type":"BODY","position":{"x":22,"y":56}},
           {"type":"FRAME","position":{"x":32,"y":77}},{"type":"INTERIOR","position":{"x":37,"y":34}},
@@ -4517,7 +3942,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L3H2,
     brand: EBrand.IVECO,
-    image: IVECO_DAILY_L3H2_IMG,
+    image: 'IVECO_DAILY_L3H2.png',
     parts: [{"type":"BRAKES","position":{"x":38,"y":75}},{"type":"SUSPENSION","position":{"x":43,"y":64}},
           {"type":"WHEELS","position":{"x":48,"y":75}},{"type":"BODY","position":{"x":68,"y":60}},
           {"type":"FRAME","position":{"x":64,"y":68}},{"type":"INTERIOR","position":{"x":39,"y":44}},
@@ -4532,7 +3957,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.IVECO,
-    image: IVECO_EUROCARGO_IMG,
+    image: 'IVECO_EUROCARGO.png',
     parts: [{"type":"BRAKES","position":{"x":42,"y":70}},{"type":"WHEELS","position":{"x":50,"y":69}},
           {"type":"SUSPENSION","position":{"x":45,"y":60}},{"type":"BODY","position":{"x":40,"y":52}},
           {"type":"FRAME","position":{"x":35,"y":70}},{"type":"INTERIOR","position":{"x":28,"y":40}},
@@ -4547,7 +3972,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.IVECO,
-    image: IVECO_S_WAY_IMG,
+    image: 'IVECO_S_WAY.png',
     parts: [{"type":"BRAKES","position":{"x":55,"y":77}},{"type":"SUSPENSION","position":{"x":62,"y":63}},
           {"type":"WHEELS","position":{"x":66,"y":75}},{"type":"BODY","position":{"x":49,"y":49}},
           {"type":"FRAME","position":{"x":48,"y":78}},{"type":"INTERIOR","position":{"x":38,"y":36}},
@@ -4562,7 +3987,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.IVECO,
-    image: IVECO_S_WAY_TANDEM_IMG,
+    image: 'IVECO_S_WAY_TANDEM.png',
     parts: [{"type":"BRAKES","position":{"x":39,"y":63}},{"type":"SUSPENSION","position":{"x":45,"y":56}},
             {"type":"WHEELS","position":{"x":46,"y":64}},{"type":"BODY","position":{"x":28,"y":47}},
             {"type":"FRAME","position":{"x":29,"y":65}},{"type":"INTERIOR","position":{"x":25,"y":35}},
@@ -4577,7 +4002,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.IVECO,
-    image: Iveco_Stralis_4x2_IMG,
+    image: 'Iveco_Stralis_4x2.png',
     parts: [{"type":"BATTERY","position":{"x":19,"y":68}},{"type":"ELECTRONIC","position":{"x":35,"y":56}},
             {"type":"LIGHTS","position":{"x":11,"y":72}},{"type":"FIFTH_WHEEL","position":{"x":69,"y":56}},
             {"type":"GEARBOX","position":{"x":48,"y":70}},{"type":"ENGINE","position":{"x":35,"y":72}},
@@ -4592,7 +4017,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.IVECO,
-    image: Iveco_Stralis_6x2_IMG,
+    image: 'Iveco_Stralis_6x2.png',
     parts: [{"type":"GEARBOX","position":{"x":50,"y":68}},{"type":"ENGINE","position":{"x":36,"y":69}},
             {"type":"COMPRESSOR","position":{"x":22,"y":66}},{"type":"EXHAUST","position":{"x":70,"y":72}},
             {"type":"FUEL","position":{"x":35,"y":59}},{"type":"FIFTH_WHEEL","position":{"x":70,"y":60}},
@@ -4607,7 +4032,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.IVECO,
-    image: Iveco_Stralis_Hiway_4x2_IMG,
+    image: 'Iveco_Stralis_Hiway_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":52,"y":78}},{"type":"WHEELS","position":{"x":59,"y":80}},
             {"type":"SUSPENSION","position":{"x":58,"y":67}},{"type":"BODY","position":{"x":19,"y":53}},
             {"type":"FRAME","position":{"x":17,"y":81}},{"type":"FRAME","position":{"x":23,"y":39}},
@@ -4622,7 +4047,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.IVECO,
-    image: Iveco_Stralis_Hiway_6x2_IMG,
+    image: 'Iveco_Stralis_Hiway_6x2.png',
     parts: [{"type":"WHEELS","position":{"x":57,"y":78}},{"type":"SUSPENSION","position":{"x":55,"y":67}},
             {"type":"BRAKES","position":{"x":51,"y":77}},{"type":"BODY","position":{"x":14,"y":52}},
             {"type":"FRAME","position":{"x":16,"y":80}},{"type":"INTERIOR","position":{"x":26,"y":41}},
@@ -4637,7 +4062,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T8x4,
     brand: EBrand.IVECO,
-    image: IVECO_TRAKKER_IMG,
+    image: 'IVECO_TRAKKER.png',
     parts: [{"type":"BRAKES","position":{"x":46,"y":82}},{"type":"SUSPENSION","position":{"x":30,"y":67}},
           {"type":"WHEELS","position":{"x":27,"y":81}},{"type":"BODY","position":{"x":31,"y":47}},
           {"type":"FRAME","position":{"x":40,"y":75}},{"type":"INTERIOR","position":{"x":48,"y":29}},
@@ -4652,7 +4077,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_2_AXLES,
     brand: EBrand.J_J_BODIES,
-    image: J_J_BODIES_210_LARGE_DT_IMG,
+    image: 'J_J_BODIES_210_LARGE_DT.png',
     parts: [{"type":"BRAKES","position":{"x":64,"y":56}},{"type":"SUSPENSION","position":{"x":58,"y":45}},
           {"type":"WHEELS","position":{"x":51,"y":57}},{"type":"FRAME","position":{"x":38,"y":49}},
           {"type":"BODY","position":{"x":32,"y":36}},{"type":"LIGHTS","position":{"x":76,"y":45}},
@@ -4664,7 +4089,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_2_AXLES,
     brand: EBrand.J_J_BODIES,
-    image: J_J_BODIES_211_LARGE_DT_FTA_IMG,
+    image: 'J_J_BODIES_211_LARGE_DT_FTA.png',
     parts: [{"type":"BRAKES","position":{"x":81,"y":60}},{"type":"WHEELS","position":{"x":89,"y":61}},
           {"type":"SUSPENSION","position":{"x":83,"y":53}},{"type":"FRAME","position":{"x":56,"y":52}},
           {"type":"BODY","position":{"x":59,"y":41}},{"type":"LIGHTS","position":{"x":94,"y":53}},
@@ -4676,7 +4101,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_1_1_AXLES,
     brand: EBrand.J_J_BODIES,
-    image: J_J_BODIES_267_LARGE_DT_FL_IMG,
+    image: 'J_J_BODIES_267_LARGE_DT_FL.png',
     parts: [{"type":"BRAKES","position":{"x":32,"y":62}},{"type":"WHEELS","position":{"x":23,"y":66}},
         {"type":"SUSPENSION","position":{"x":21,"y":57}},{"type":"BODY","position":{"x":39,"y":45}},
         {"type":"FRAME","position":{"x":46,"y":51}},{"type":"LIGHTS","position":{"x":9,"y":65}},
@@ -4688,7 +4113,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_2_AXLES,
     brand: EBrand.J_J_BODIES,
-    image: J_J_BODIES_266_LARGE_TT_LFEVO_IMG,
+    image: 'J_J_BODIES_266_LARGE_TT_LFEVO.png',
     parts: [{"type":"BRAKES","position":{"x":87,"y":54}},{"type":"WHEELS","position":{"x":92,"y":55}},
           {"type":"SUSPENSION","position":{"x":87,"y":48}},{"type":"BODY","position":{"x":55,"y":40}},
           {"type":"FRAME","position":{"x":54,"y":51}},{"type":"LIGHTS","position":{"x":96,"y":48}},
@@ -4700,7 +4125,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_2_AXLES,
     brand: EBrand.J_J_BODIES,
-    image: J_J_BODIES_215_LARGE_TT_AT_IMG,
+    image: 'J_J_BODIES_215_LARGE_TT_AT.png',
     parts: [{"type":"BRAKES","position":{"x":30,"y":58}},{"type":"SUSPENSION","position":{"x":31,"y":50}},
           {"type":"WHEELS","position":{"x":38,"y":55}},{"type":"FRAME","position":{"x":52,"y":50}},
           {"type":"BODY","position":{"x":50,"y":36}},{"type":"LIGHTS","position":{"x":17,"y":52}},
@@ -4712,7 +4137,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T6x2,
     brand: EBrand.J_J_BODIES,
-    image: J_J_BODIES_697_MH_EVO_IMG,
+    image: 'J_J_BODIES_697_MH_EVO.png',
     parts: [{"type":"BRAKES","position":{"x":39,"y":63}},{"type":"SUSPENSION","position":{"x":45,"y":56}},
             {"type":"WHEELS","position":{"x":46,"y":64}},{"type":"BODY","position":{"x":28,"y":47}},
             {"type":"FRAME","position":{"x":29,"y":65}},{"type":"INTERIOR","position":{"x":25,"y":35}},
@@ -4727,7 +4152,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.KAMAZ,
-    image: KAMAZ_5490_IMG,
+    image: 'KAMAZ_5490.png',
     parts: [{"type":"BRAKES","position":{"x":56,"y":88}},{"type":"SUSPENSION","position":{"x":61,"y":72}},
         {"type":"WHEELS","position":{"x":68,"y":84}},{"type":"BODY","position":{"x":10,"y":50}},
         {"type":"FRAME","position":{"x":9,"y":81}},{"type":"INTERIOR","position":{"x":27,"y":39}},
@@ -4742,7 +4167,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_BOX_DRY_K_SBT_20_12_27_IMG,
+    image: 'KASSBOHRER_BOX_DRY_K_SBT_20_12_27.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":80}},{"type":"WHEELS","position":{"x":36,"y":81}},
     {"type":"SUSPENSION","position":{"x":43,"y":71}},{"type":"BODY","position":{"x":23,"y":50}},
     {"type":"FRAME","position":{"x":21,"y":66}},{"type":"SUPPORT","position":{"x":15,"y":73}},
@@ -4754,7 +4179,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_CONTAINER_EXTENDABLE_K_SHG_AH_45_12_27_IMG,
+    image: 'KASSBOHRER_CONTAINER_EXTENDABLE_K_SHG_AH_45_12_27.png',
     parts: [{"type":"BRAKES","position":{"x":38,"y":53}},{"type":"WHEELS","position":{"x":30,"y":54}},
     {"type":"SUSPENSION","position":{"x":35,"y":46}},{"type":"FRAME","position":{"x":22,"y":35}},
     {"type":"SUPPORT","position":{"x":11,"y":39}},{"type":"LIGHTS","position":{"x":57,"y":68}},
@@ -4765,7 +4190,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_CONTAINER_EXTENDABLE_K_SHG_AMH_40_12_27_IMG,
+    image: 'KASSBOHRER_CONTAINER_EXTENDABLE_K_SHG_AMH_40_12_27.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":57}},{"type":"WHEELS","position":{"x":40,"y":59}},
     {"type":"SUSPENSION","position":{"x":53,"y":59}},{"type":"FRAME","position":{"x":38,"y":44}},
     {"type":"SUPPORT","position":{"x":17,"y":43}},{"type":"LIGHTS","position":{"x":66,"y":62}},
@@ -4776,7 +4201,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_3_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_FLATBED_LIGHT_K_SFS_X_PLUS_90_12_27_IMG,
+    image: 'KASSBOHRER_FLATBED_LIGHT_K_SFS_X_PLUS_90_12_27.png',
     parts: [{"type":"BRAKES","position":{"x":41,"y":62}},{"type":"WHEELS","position":{"x":33,"y":57}},
     {"type":"SUSPENSION","position":{"x":40,"y":56}},{"type":"FRAME","position":{"x":21,"y":50}},
     {"type":"SUPPORT","position":{"x":12,"y":53}},{"type":"LIGHTS","position":{"x":61,"y":60}},
@@ -4787,7 +4212,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_3_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_FLATBED_LIGHT_K_SPS_3_0N_12_27_IMG,
+    image: 'KASSBOHRER_FLATBED_LIGHT_K_SPS_3_0N_12_27.png',
     parts: [{"type":"BRAKES","position":{"x":43,"y":60}},{"type":"WHEELS","position":{"x":34,"y":60}},
     {"type":"SUSPENSION","position":{"x":44,"y":55}},{"type":"FRAME","position":{"x":31,"y":48}},
     {"type":"SUPPORT","position":{"x":12,"y":49}},{"type":"LIGHTS","position":{"x":65,"y":56}},
@@ -4798,7 +4223,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_LIGHT_K_SCL_X_PLUS_150_12_27_IMG,
+    image: 'KASSBOHRER_LIGHT_K_SCL_X_PLUS_150_12_27.png',
     parts: [{"type":"BRAKES","position":{"x":53,"y":73}},{"type":"SUSPENSION","position":{"x":51,"y":68}},
     {"type":"WHEELS","position":{"x":45,"y":74}},{"type":"BODY","position":{"x":32,"y":51}},
     {"type":"FRAME","position":{"x":29,"y":64}},{"type":"SUPPORT","position":{"x":15,"y":64}},
@@ -4810,7 +4235,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_LOWBED_K_SLS_3_0N_12_27_IMG,
+    image: 'KASSBOHRER_LOWBED_K_SLS_3_0N_12_27.png',
     parts: [{"type":"BRAKES","position":{"x":53,"y":68}},{"type":"WHEELS","position":{"x":44,"y":69}},
     {"type":"SUSPENSION","position":{"x":48,"y":65}},{"type":"FRAME","position":{"x":33,"y":61}},
     {"type":"SUPPORT","position":{"x":15,"y":64}},{"type":"LIGHTS","position":{"x":67,"y":72}},
@@ -4822,7 +4247,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_3_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_REEFER_STANDARD_K_SRI_C_10_12_27_IMG,
+    image: 'KASSBOHRER_REEFER_STANDARD_K_SRI_C_10_12_27.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":80}},{"type":"SUSPENSION","position":{"x":45,"y":74}},
     {"type":"WHEELS","position":{"x":38,"y":79}},{"type":"FRAME","position":{"x":26,"y":70}},
     {"type":"BODY","position":{"x":34,"y":55}},{"type":"SUPPORT","position":{"x":16,"y":71}},
@@ -4835,7 +4260,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_3_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_SILO_TIPPING_K_SSK_40_3_10_24_IMG,
+    image: 'KASSBOHRER_SILO_TIPPING_K_SSK_40_3_10_24.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":78}},{"type":"SUSPENSION","position":{"x":44,"y":72}},
     {"type":"WHEELS","position":{"x":36,"y":76}},{"type":"BODY","position":{"x":27,"y":45}},
     {"type":"FRAME","position":{"x":24,"y":64}},{"type":"SUPPORT","position":{"x":12,"y":67}},
@@ -4847,7 +4272,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_3_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_SILO_TIPPING_K_SSK_60_5_10_24_IMG,
+    image: 'KASSBOHRER_SILO_TIPPING_K_SSK_60_5_10_24.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":73}},{"type":"WHEELS","position":{"x":43,"y":76}},
     {"type":"SUSPENSION","position":{"x":50,"y":67}},{"type":"BODY","position":{"x":25,"y":48}},
     {"type":"FRAME","position":{"x":26,"y":63}},{"type":"SUPPORT","position":{"x":16,"y":69}},
@@ -4859,7 +4284,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_STANDARD_K_SCD_M_90_12_27_IMG,
+    image: 'KASSBOHRER_STANDARD_K_SCD_M_90_12_27.png',
     parts: [{"type":"BRAKES","position":{"x":47,"y":79}},{"type":"WHEELS","position":{"x":39,"y":79}},
     {"type":"SUSPENSION","position":{"x":42,"y":74}},{"type":"BODY","position":{"x":25,"y":57}},
     {"type":"SUPPORT","position":{"x":14,"y":72}},{"type":"FRAME","position":{"x":23,"y":70}},
@@ -4871,7 +4296,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_STANDARD_K_SCX_X_125_12_27_IMG,
+    image: 'KASSBOHRER_STANDARD_K_SCX_X_125_12_27.png',
     parts: [{"type":"BRAKES","position":{"x":42,"y":76}},{"type":"WHEELS","position":{"x":34,"y":75}},
     {"type":"SUSPENSION","position":{"x":45,"y":72}},{"type":"BODY","position":{"x":34,"y":46}},
     {"type":"FRAME","position":{"x":20,"y":64}},{"type":"SUPPORT","position":{"x":11,"y":64}},
@@ -4883,7 +4308,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_3_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_TANK_DANGEROUS_K_STB_E_39_5_11_24_IMG,
+    image: 'KASSBOHRER_TANK_DANGEROUS_K_STB_E_39_5_11_24.png',
     parts: [{"type":"BRAKES","position":{"x":56,"y":72}},{"type":"WHEELS","position":{"x":48,"y":71}},
     {"type":"SUSPENSION","position":{"x":55,"y":66}},{"type":"BODY","position":{"x":19,"y":50}},
     {"type":"FRAME","position":{"x":26,"y":58}},{"type":"SUPPORT","position":{"x":13,"y":68}},
@@ -4895,7 +4320,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_3_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_TANK_DANGEROUS_K_STS_32_1_10_24_IMG,
+    image: 'KASSBOHRER_TANK_DANGEROUS_K_STS_32_1_10_24.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":73}},{"type":"SUSPENSION","position":{"x":53,"y":70}},
     {"type":"WHEELS","position":{"x":41,"y":71}},{"type":"BODY","position":{"x":31,"y":49}},
     {"type":"FRAME","position":{"x":26,"y":62}},{"type":"SUPPORT","position":{"x":18,"y":69}},
@@ -4907,7 +4332,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_3_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_TANK_FOOD_K_STL_30_3_10_24_IMG,
+    image: 'KASSBOHRER_TANK_FOOD_K_STL_30_3_10_24.png',
     parts: [{"type":"BRAKES","position":{"x":52,"y":76}},{"type":"WHEELS","position":{"x":43,"y":75}},
     {"type":"SUSPENSION","position":{"x":53,"y":72}},{"type":"BODY","position":{"x":23,"y":51}},
     {"type":"FRAME","position":{"x":17,"y":61}},{"type":"SUPPORT","position":{"x":15,"y":72}},
@@ -4919,7 +4344,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_3_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_TIPPER_ALU_K_SKA_B_26_12_27_IMG,
+    image: 'KASSBOHRER_TIPPER_ALU_K_SKA_B_26_12_27.png',
     parts: [{"type":"BRAKES","position":{"x":55,"y":70}},{"type":"WHEELS","position":{"x":47,"y":68}},
     {"type":"SUSPENSION","position":{"x":58,"y":65}},{"type":"BODY","position":{"x":19,"y":43}},
     {"type":"FRAME","position":{"x":22,"y":54}},{"type":"SUPPORT","position":{"x":15,"y":58}},
@@ -4931,7 +4356,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_2_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_TIPPER_STEEL_K_SKS_B_24_15_18_IMG,
+    image: 'KASSBOHRER_TIPPER_STEEL_K_SKS_B_24_15_18.png',
     parts: [{"type":"BRAKES","position":{"x":52,"y":70}},{"type":"WHEELS","position":{"x":41,"y":66}},
     {"type":"SUSPENSION","position":{"x":56,"y":66}},{"type":"BODY","position":{"x":37,"y":39}},
     {"type":"FRAME","position":{"x":36,"y":55}},{"type":"SUPPORT","position":{"x":25,"y":59}},
@@ -4943,7 +4368,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_3_AXLES,
     brand: EBrand.KASSBOHRER,
-    image: KASSBOHRER_TIPPER_STEEL_K_SKS_BS_24_12_27_IMG,
+    image: 'KASSBOHRER_TIPPER_STEEL_K_SKS_BS_24_12_27.png',
     parts: [{"type":"BRAKES","position":{"x":58,"y":68}},{"type":"SUSPENSION","position":{"x":60,"y":65}},
     {"type":"WHEELS","position":{"x":45,"y":69}},{"type":"BODY","position":{"x":31,"y":42}},
     {"type":"FRAME","position":{"x":26,"y":53}},{"type":"SUPPORT","position":{"x":20,"y":58}},
@@ -4955,7 +4380,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.KENTUCKY_TRAILER,
-    image: KENTUCKY_TRAILER_53_COMPOSITE_STRAIGHT_FLOOR_IMG,
+    image: 'KENTUCKY_TRAILER_53_COMPOSITE_STRAIGHT_FLOOR.png',
     parts: [{"type":"BRAKES","position":{"x":21,"y":69}},{"type":"SUSPENSION","position":{"x":21,"y":64}},
     {"type":"WHEELS","position":{"x":18,"y":66}},{"type":"BODY","position":{"x":33,"y":49}},
     {"type":"FRAME","position":{"x":33,"y":63}},{"type":"SUPPORT","position":{"x":54,"y":72}},
@@ -4967,7 +4392,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.KENTUCKY_TRAILER,
-    image: KENTUCKY_TRAILER_BEVERAGE_IMG,
+    image: 'KENTUCKY_TRAILER_BEVERAGE.png',
     parts: [{"type":"BRAKES","position":{"x":41,"y":71}},{"type":"SUSPENSION","position":{"x":41,"y":67}},
     {"type":"WHEELS","position":{"x":32,"y":68}},{"type":"BODY","position":{"x":23,"y":41}},
     {"type":"FRAME","position":{"x":19,"y":61}},{"type":"SUPPORT","position":{"x":12,"y":67}},
@@ -4979,7 +4404,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_big,
     brand: EBrand.KENTUCKY_TRAILER,
-    image: KENTUCKY_TRAILER_MOVING_IMG,
+    image: 'KENTUCKY_TRAILER_MOVING.png',
     parts: [{"type":"BRAKES","position":{"x":29,"y":63}},{"type":"SUSPENSION","position":{"x":28,"y":60}},
     {"type":"WHEELS","position":{"x":23,"y":64}},{"type":"BODY","position":{"x":27,"y":38}},
     {"type":"FRAME","position":{"x":46,"y":62}},{"type":"INTERIOR","position":{"x":70,"y":49}},
@@ -4994,7 +4419,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.KENWORTH,
-    image: KENWORTH_C500_IMG,
+    image: 'KENWORTH_C500.png',
     parts: [{"type":"BRAKES","position":{"x":75,"y":68}},{"type":"SUSPENSION","position":{"x":80,"y":59}},
     {"type":"WHEELS","position":{"x":86,"y":68}},{"type":"BODY","position":{"x":61,"y":47}},
     {"type":"FRAME","position":{"x":65,"y":69}},{"type":"INTERIOR","position":{"x":44,"y":34}},
@@ -5008,7 +4433,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.KENWORTH,
-    image: KENWORTH_K270_IMG,
+    image: 'KENWORTH_K270.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":80}},{"type":"SUSPENSION","position":{"x":45,"y":68}},
     {"type":"WHEELS","position":{"x":39,"y":78}},{"type":"BODY","position":{"x":41,"y":57}},
     {"type":"FRAME","position":{"x":37,"y":67}},{"type":"INTERIOR","position":{"x":52,"y":40}},
@@ -5023,7 +4448,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.KENWORTH,
-    image: KENWORTH_T660_IMG,
+    image: 'KENWORTH_T660.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":84}},{"type":"SUSPENSION","position":{"x":58,"y":66}},
     {"type":"WHEELS","position":{"x":61,"y":76}},{"type":"BODY","position":{"x":57,"y":53}},
     {"type":"INTERIOR","position":{"x":53,"y":34}},{"type":"FRAME","position":{"x":70,"y":80}},
@@ -5038,7 +4463,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.KENWORTH,
-    image: KENWORTH_T800_IMG,
+    image: 'KENWORTH_T800.png',
     parts: [{"type":"BRAKES","position":{"x":29,"y":74}},{"type":"SUSPENSION","position":{"x":39,"y":63}},
     {"type":"WHEELS","position":{"x":41,"y":74}},{"type":"BODY","position":{"x":35,"y":55}},
     {"type":"FRAME","position":{"x":32,"y":69}},{"type":"INTERIOR","position":{"x":43,"y":42}},
@@ -5052,7 +4477,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.KENWORTH,
-    image: KENWORTH_W990_IMG,
+    image: 'KENWORTH_W990.png',
     parts: [{"type":"BRAKES","position":{"x":40,"y":80}},{"type":"SUSPENSION","position":{"x":45,"y":66}},
     {"type":"WHEELS","position":{"x":47,"y":78}},{"type":"BODY","position":{"x":72,"y":61}},
     {"type":"FRAME","position":{"x":61,"y":75}},{"type":"INTERIOR","position":{"x":53,"y":42}},
@@ -5067,7 +4492,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.KENWORTH,
-    image: KENWORTH_W900_IMG,
+    image: 'KENWORTH_W900.png',
     parts: [{"type":"BRAKES","position":{"x":61,"y":72}},{"type":"SUSPENSION","position":{"x":58,"y":61}},
     {"type":"WHEELS","position":{"x":56,"y":71}},{"type":"BODY","position":{"x":27,"y":58}},
     {"type":"FRAME","position":{"x":29,"y":62}},{"type":"INTERIOR","position":{"x":41,"y":45}},
@@ -5082,7 +4507,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T8x4_big,
     brand: EBrand.KENWORTH,
-    image: KENWORTH_W990_3_IMG,
+    image: 'KENWORTH_W990_3.png',
     parts: [{"type":"BRAKES","position":{"x":32,"y":70}},{"type":"SUSPENSION","position":{"x":40,"y":59}},
     {"type":"WHEELS","position":{"x":45,"y":70}},{"type":"BODY","position":{"x":56,"y":54}},
     {"type":"FRAME","position":{"x":52,"y":65}},{"type":"INTERIOR","position":{"x":42,"y":40}},
@@ -5097,7 +4522,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_3_AXLES,
     brand: EBrand.KOGEL,
-    image: KOGEL_BOX_IMG,
+    image: 'KOGEL_BOX.png',
     parts: [{"type":"BRAKES","position":{"x":58,"y":76}},{"type":"WHEELS","position":{"x":45,"y":76}},
     {"type":"SUSPENSION","position":{"x":54,"y":68}},{"type":"BODY","position":{"x":45,"y":56}},
     {"type":"FRAME","position":{"x":20,"y":67}},{"type":"SUPPORT","position":{"x":15,"y":75}},
@@ -5109,7 +4534,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_3_AXLES,
     brand: EBrand.KOGEL,
-    image: KOGEL_FLATBED_IMG,
+    image: 'KOGEL_FLATBED.png',
     parts: [{"type":"BRAKES","position":{"x":33,"y":64}},{"type":"SUSPENSION","position":{"x":37,"y":60}},
     {"type":"WHEELS","position":{"x":46,"y":64}},{"type":"FRAME","position":{"x":71,"y":57}},
     {"type":"SUPPORT","position":{"x":83,"y":63}},{"type":"BODY","position":{"x":48,"y":49}},
@@ -5121,7 +4546,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_3_AXLES,
     brand: EBrand.KOGEL,
-    image: KOGEL_TIPPER_IMG,
+    image: 'KOGEL_TIPPER.png',
     parts: [{"type":"BRAKES","position":{"x":29,"y":71}},{"type":"WHEELS","position":{"x":20,"y":70}},
     {"type":"SUSPENSION","position":{"x":29,"y":63}},{"type":"BODY","position":{"x":39,"y":48}},
     {"type":"FRAME","position":{"x":44,"y":58}},{"type":"SUPPORT","position":{"x":52,"y":73}},
@@ -5133,7 +4558,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.KOGEL,
-    image: KOGEL_TRAILER_IMG,
+    image: 'KOGEL_TRAILER.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":71}},{"type":"SUSPENSION","position":{"x":51,"y":64}},
     {"type":"WHEELS","position":{"x":42,"y":69}},{"type":"BODY","position":{"x":28,"y":46}},
     {"type":"FRAME","position":{"x":29,"y":66}},{"type":"SUPPORT","position":{"x":15,"y":67}},
@@ -5145,7 +4570,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.KRONE,
-    image: KRONE_BOX_LINER_IMG,
+    image: 'KRONE_BOX_LINER.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":65}},{"type":"SUSPENSION","position":{"x":51,"y":60}},
     {"type":"WHEELS","position":{"x":46,"y":66}},{"type":"FRAME","position":{"x":35,"y":58}},
     {"type":"SUPPORT","position":{"x":23,"y":61}},{"type":"LIGHTS","position":{"x":78,"y":67}},
@@ -5156,7 +4581,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_3_AXLES,
     brand: EBrand.KRONE,
-    image: KRONE_COOL_LINER_IMG,
+    image: 'KRONE_COOL_LINER.png',
     parts: [{"type":"BRAKES","position":{"x":46,"y":71}},{"type":"SUSPENSION","position":{"x":45,"y":66}},
     {"type":"WHEELS","position":{"x":51,"y":72}},{"type":"BODY","position":{"x":63,"y":49}},
     {"type":"FRAME","position":{"x":59,"y":62}},{"type":"FRAME","position":{"x":84,"y":66}},
@@ -5169,7 +4594,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.KRONE,
-    image: KRONE_MEGA_LINER_IMG,
+    image: 'KRONE_MEGA_LINER.png',
     parts: [{"type":"BRAKES","position":{"x":47,"y":70}},{"type":"SUSPENSION","position":{"x":43,"y":68}},
     {"type":"WHEELS","position":{"x":54,"y":70}},{"type":"BODY","position":{"x":58,"y":50}},
     {"type":"FRAME","position":{"x":63,"y":63}},{"type":"SUPPORT","position":{"x":84,"y":61}},
@@ -5181,7 +4606,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].FRIGO_T6x2,
     brand: EBrand.LAMBERET,
-    image: LAMBERET_DAF_CF_PORTEUR_IMG,
+    image: 'LAMBERET_DAF_CF_PORTEUR.png',
     parts: [{"type":"BRAKES","position":{"x":61,"y":76}},{"type":"SUSPENSION","position":{"x":50,"y":63}},
     {"type":"WHEELS","position":{"x":48,"y":74}},{"type":"BODY","position":{"x":51,"y":48}},
     {"type":"FRAME","position":{"x":40,"y":73}},{"type":"INTERIOR","position":{"x":65,"y":38}},
@@ -5197,7 +4622,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].FRIGO_T4x2,
     brand: EBrand.LAMBERET,
-    image: LAMBERET_FRIGOLINE_CITY_IMG,
+    image: 'LAMBERET_FRIGOLINE_CITY.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":76}},{"type":"WHEELS","position":{"x":63,"y":75}},
     {"type":"SUSPENSION","position":{"x":53,"y":67}},{"type":"BODY","position":{"x":66,"y":55}},
     {"type":"FRAME","position":{"x":74,"y":69}},{"type":"INTERIOR","position":{"x":90,"y":49}},
@@ -5213,7 +4638,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].FRIGO_T4x2,
     brand: EBrand.LAMBERET,
-    image: LAMBERET_RENAULT_DCab_Frigoline_City_IMG,
+    image: 'LAMBERET_RENAULT_DCab_Frigoline_City.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":77}},{"type":"WHEELS","position":{"x":43,"y":78}},
     {"type":"SUSPENSION","position":{"x":43,"y":67}},{"type":"BODY","position":{"x":52,"y":62}},
     {"type":"FRAME","position":{"x":57,"y":80}},{"type":"INTERIOR","position":{"x":60,"y":46}},
@@ -5229,7 +4654,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_3_AXLES,
     brand: EBrand.LAMBERET,
-    image: LAMBERET_SR2_green_liner_IMG,
+    image: 'LAMBERET_SR2_green_liner.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":75}},{"type":"SUSPENSION","position":{"x":49,"y":67}},
     {"type":"WHEELS","position":{"x":57,"y":72}},{"type":"BODY","position":{"x":65,"y":48}},
     {"type":"FRAME","position":{"x":74,"y":62}},{"type":"SUPPORT","position":{"x":82,"y":73}},
@@ -5242,7 +4667,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_3_AXLES,
     brand: EBrand.LAMBERET,
-    image: LAMBERET_SR2_HD_IMG,
+    image: 'LAMBERET_SR2_HD.png',
     parts: [{"type":"BRAKES","position":{"x":48,"y":74}},{"type":"SUSPENSION","position":{"x":53,"y":65}},
     {"type":"WHEELS","position":{"x":55,"y":78}},{"type":"BODY","position":{"x":68,"y":42}},
     {"type":"FRAME","position":{"x":67,"y":64}},{"type":"SUPPORT","position":{"x":78,"y":77}},
@@ -5255,7 +4680,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_3_AXLES,
     brand: EBrand.LAMBERET,
-    image: LAMBERET_SR2_super_duplex_IMG,
+    image: 'LAMBERET_SR2_super_duplex.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":74}},{"type":"SUSPENSION","position":{"x":47,"y":67}},
     {"type":"WHEELS","position":{"x":59,"y":67}},{"type":"BODY","position":{"x":74,"y":45}},
     {"type":"FRAME","position":{"x":72,"y":60}},{"type":"SUPPORT","position":{"x":83,"y":69}},
@@ -5268,7 +4693,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.LANDOLL,
-    image: LANDOLL_LOWBED_IMG,
+    image: 'LANDOLL_LOWBED.png',
     parts: [{"type":"BRAKES","position":{"x":83,"y":51}},{"type":"SUSPENSION","position":{"x":86,"y":49}},
     {"type":"WHEELS","position":{"x":86,"y":53}},{"type":"FRAME","position":{"x":47,"y":55}},
     {"type":"SUPPORT","position":{"x":33,"y":56}},{"type":"LIGHTS","position":{"x":96,"y":51}},
@@ -5279,7 +4704,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.LAWRENCE_DAVID,
-    image: LAWRENCE_DAVID_BOX_TRAILER_IMG,
+    image: 'LAWRENCE_DAVID_BOX_TRAILER.png',
     parts: [{"type":"BRAKES","position":{"x":59,"y":61}},{"type":"SUSPENSION","position":{"x":64,"y":60}},
     {"type":"WHEELS","position":{"x":61,"y":64}},{"type":"BODY","position":{"x":33,"y":46}},
     {"type":"FRAME","position":{"x":32,"y":59}},{"type":"SUPPORT","position":{"x":31,"y":66}},
@@ -5291,7 +4716,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.LAWRENCE_DAVID,
-    image: LAWRENCE_DAVID_CURTAIN_TANDEM_IMG,
+    image: 'LAWRENCE_DAVID_CURTAIN_TANDEM.png',
     parts: [{"type":"BRAKES","position":{"x":61,"y":62}},{"type":"SUSPENSION","position":{"x":70,"y":60}},
     {"type":"WHEELS","position":{"x":69,"y":67}},{"type":"BODY","position":{"x":43,"y":50}},
     {"type":"FRAME","position":{"x":42,"y":61}},{"type":"INTERIOR","position":{"x":13,"y":50}},
@@ -5306,7 +4731,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.LAWRENCE_DAVID,
-    image: LAWRENCE_DAVID_CURTAIN_TANDEM_2_IMG,
+    image: 'LAWRENCE_DAVID_CURTAIN_TANDEM_2.png',
     parts: [{"type":"BRAKES","position":{"x":69,"y":60}},{"type":"SUSPENSION","position":{"x":75,"y":59}},
     {"type":"WHEELS","position":{"x":72,"y":63}},{"type":"BODY","position":{"x":38,"y":51}},
     {"type":"FRAME","position":{"x":27,"y":59}},{"type":"INTERIOR","position":{"x":12,"y":46}},
@@ -5321,7 +4746,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.LAWRENCE_DAVID,
-    image: LAWRENCE_DAVID_CURTAIN_TRAILER_IMG,
+    image: 'LAWRENCE_DAVID_CURTAIN_TRAILER.png',
     parts: [{"type":"BRAKES","position":{"x":62,"y":63}},{"type":"SUSPENSION","position":{"x":57,"y":59}},
     {"type":"WHEELS","position":{"x":56,"y":65}},{"type":"BODY","position":{"x":34,"y":48}},
     {"type":"FRAME","position":{"x":37,"y":60}},{"type":"SUPPORT","position":{"x":28,"y":65}},
@@ -5334,7 +4759,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_3_AXLES,
     brand: EBrand.LAWRENCE_DAVID,
-    image: LAWRENCE_DAVID_FLATBED_TRAILER_IMG,
+    image: 'LAWRENCE_DAVID_FLATBED_TRAILER.png',
     parts: [{"type":"BRAKES","position":{"x":64,"y":61}},{"type":"WHEELS","position":{"x":60,"y":64}},
     {"type":"SUSPENSION","position":{"x":54,"y":59}},{"type":"FRAME","position":{"x":40,"y":59}},
     {"type":"SUPPORT","position":{"x":28,"y":63}},{"type":"LIGHTS","position":{"x":94,"y":60}},
@@ -5345,7 +4770,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L2_BOX,
     brand: EBrand.LAWRENCE_DAVID,
-    image: LAWRENCE_DAVID_RIGID_BOX_VAN_IMG,
+    image: 'LAWRENCE_DAVID_RIGID_BOX_VAN.png',
     parts: [{"type":"BRAKES","position":{"x":77,"y":66}},{"type":"SUSPENSION","position":{"x":66,"y":66}},
     {"type":"WHEELS","position":{"x":74,"y":73}},{"type":"BODY","position":{"x":45,"y":53}},
     {"type":"FRAME","position":{"x":41,"y":67}},{"type":"INTERIOR","position":{"x":26,"y":44}},
@@ -5360,7 +4785,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_2_AXLES,
     brand: EBrand.MAC_TRAILER,
-    image: MAC_TRAILER_TANK_IMG,
+    image: 'MAC_TRAILER_TANK.png',
     parts: [{"type":"BRAKES","position":{"x":12,"y":63}},{"type":"SUSPENSION","position":{"x":6,"y":58}},
     {"type":"WHEELS","position":{"x":5,"y":65}},{"type":"BODY","position":{"x":41,"y":45}},
     {"type":"FRAME","position":{"x":40,"y":56}},{"type":"SUPPORT","position":{"x":60,"y":67}},
@@ -5372,7 +4797,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.MACK,
-    image: MACK_ANTHEM_48_SLEEPER_IMG,
+    image: 'MACK_ANTHEM_48_SLEEPER.png',
     parts: [{"type":"BRAKES","position":{"x":57,"y":79}},{"type":"WHEELS","position":{"x":49,"y":81}},
           {"type":"SUSPENSION","position":{"x":50,"y":66}},{"type":"BODY","position":{"x":32,"y":60}},
           {"type":"FRAME","position":{"x":36,"y":70}},{"type":"INTERIOR","position":{"x":42,"y":46}},
@@ -5387,7 +4812,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.MACK,
-    image: MACK_ANTHEM_70_SLEEPER_IMG,
+    image: 'MACK_ANTHEM_70_SLEEPER.png',
     parts: [{"type":"BRAKES","position":{"x":56,"y":81}},{"type":"SUSPENSION","position":{"x":49,"y":67}},
     {"type":"WHEELS","position":{"x":50,"y":76}},{"type":"BODY","position":{"x":26,"y":60}},
     {"type":"INTERIOR","position":{"x":41,"y":43}},{"type":"FRAME","position":{"x":27,"y":68}},
@@ -5402,7 +4827,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.MACK,
-    image: MACK_ANTHEM_DAYCAB_IMG,
+    image: 'MACK_ANTHEM_DAYCAB.png',
     parts: [{"type":"BRAKES","position":{"x":53,"y":78}},{"type":"SUSPENSION","position":{"x":46,"y":67}},
     {"type":"WHEELS","position":{"x":44,"y":83}},{"type":"BODY","position":{"x":38,"y":61}},
     {"type":"INTERIOR","position":{"x":40,"y":45}},{"type":"FRAME","position":{"x":37,"y":67}},
@@ -5417,7 +4842,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.MACK,
-    image: MACK_GRANITE_SEMI_6x4_IMG,
+    image: 'MACK_GRANITE_SEMI_6x4.png',
     parts: [{"type":"BRAKES","position":{"x":65,"y":67}},{"type":"SUSPENSION","position":{"x":61,"y":57}},
     {"type":"WHEELS","position":{"x":59,"y":67}},{"type":"BODY","position":{"x":45,"y":54}},
     {"type":"FRAME","position":{"x":43,"y":60}},{"type":"INTERIOR","position":{"x":47,"y":43}},
@@ -5432,7 +4857,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T6x2_big,
     brand: EBrand.MACK,
-    image: MACK_GRANITE_TIPPER_6x4_IMG,
+    image: 'MACK_GRANITE_TIPPER_6x4.png',
     parts: [{"type":"BRAKES","position":{"x":67,"y":71}},{"type":"SUSPENSION","position":{"x":62,"y":60}},
     {"type":"WHEELS","position":{"x":59,"y":70}},{"type":"BODY","position":{"x":45,"y":56}},
     {"type":"INTERIOR","position":{"x":51,"y":44}},{"type":"FRAME","position":{"x":47,"y":67}},
@@ -5448,7 +4873,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1_CREW_TIPPER,
     brand: EBrand.MAN,
-    image: MAN_TGE_CAB_TIPPER_IMG,
+    image: 'MAN_TGE_CAB_TIPPER.png',
     parts: [{"type":"BRAKES","position":{"x":47,"y":69}},{"type":"SUSPENSION","position":{"x":51,"y":58}},
     {"type":"WHEELS","position":{"x":56,"y":68}},{"type":"BODY","position":{"x":65,"y":54}},
     {"type":"FRAME","position":{"x":64,"y":67}},{"type":"INTERIOR","position":{"x":56,"y":36}},
@@ -5462,7 +4887,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L2H2,
     brand: EBrand.MAN,
-    image: MAN_TGE_L2H2_IMG,
+    image: 'MAN_TGE_L2H2.png',
     parts: [{"type":"BRAKES","position":{"x":48,"y":69}},{"type":"SUSPENSION","position":{"x":53,"y":55}},
     {"type":"WHEELS","position":{"x":58,"y":66}},{"type":"BODY","position":{"x":64,"y":50}},
     {"type":"FRAME","position":{"x":66,"y":68}},{"type":"INTERIOR","position":{"x":46,"y":37}},
@@ -5477,7 +4902,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1_TIPPER,
     brand: EBrand.MAN,
-    image: MAN_TGE_TIPPER_IMG,
+    image: 'MAN_TGE_TIPPER.png',
     parts: [{"type":"BRAKES","position":{"x":47,"y":68}},{"type":"SUSPENSION","position":{"x":54,"y":56}},
     {"type":"WHEELS","position":{"x":58,"y":66}},{"type":"BODY","position":{"x":59,"y":48}},
     {"type":"FRAME","position":{"x":61,"y":69}},{"type":"INTERIOR","position":{"x":47,"y":35}},
@@ -5491,7 +4916,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.MAN,
-    image: MAN_TGL_TANDEM_4x2_IMG,
+    image: 'MAN_TGL_TANDEM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":48,"y":79}},{"type":"SUSPENSION","position":{"x":43,"y":67}},
     {"type":"WHEELS","position":{"x":41,"y":80}},{"type":"BODY","position":{"x":31,"y":59}},
     {"type":"FRAME","position":{"x":28,"y":70}},{"type":"INTERIOR","position":{"x":47,"y":46}},
@@ -5506,7 +4931,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.MAN,
-    image: MAN_TGS_4x2_IMG,
+    image: 'MAN_TGS_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":55,"y":78}},{"type":"WHEELS","position":{"x":63,"y":79}},
     {"type":"SUSPENSION","position":{"x":60,"y":65}},{"type":"BODY","position":{"x":48,"y":60}},
     {"type":"FRAME","position":{"x":50,"y":86}},{"type":"INTERIOR","position":{"x":42,"y":41}},
@@ -5521,7 +4946,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.MAN,
-    image: MAN_TGS_4x2_TALL_IMG,
+    image: 'MAN_TGS_4x2_TALL.png',
     parts: [{"type":"BRAKES","position":{"x":52,"y":79}},{"type":"SUSPENSION","position":{"x":58,"y":67}},
     {"type":"WHEELS","position":{"x":62,"y":77}},{"type":"BODY","position":{"x":42,"y":58}},
     {"type":"FRAME","position":{"x":45,"y":78}},{"type":"INTERIOR","position":{"x":38,"y":36}},
@@ -5536,7 +4961,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.MAN,
-    image: MAN_TGS_TANDEM_4x2_IMG,
+    image: 'MAN_TGS_TANDEM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":40,"y":71}},{"type":"SUSPENSION","position":{"x":44,"y":62}},
     {"type":"WHEELS","position":{"x":46,"y":68}},{"type":"BODY","position":{"x":31,"y":57}},
     {"type":"FRAME","position":{"x":35,"y":74}},{"type":"INTERIOR","position":{"x":21,"y":41}},
@@ -5551,7 +4976,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.MAN,
-    image: MAN_TGS_TANDEM_4x2_TALL_IMG,
+    image: 'MAN_TGS_TANDEM_4x2_TALL.png',
     parts: [{"type":"BRAKES","position":{"x":44,"y":77}},{"type":"SUSPENSION","position":{"x":48,"y":67}},
     {"type":"WHEELS","position":{"x":53,"y":73}},{"type":"BODY","position":{"x":46,"y":42}},
     {"type":"INTERIOR","position":{"x":28,"y":39}},{"type":"FRAME","position":{"x":62,"y":73}},
@@ -5566,7 +4991,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.MAN,
-    image: MAN_TGS_TANDEM_6x4_IMG,
+    image: 'MAN_TGS_TANDEM_6x4.png',
     parts: [{"type":"BRAKES","position":{"x":43,"y":76}},{"type":"SUSPENSION","position":{"x":49,"y":67}},
     {"type":"WHEELS","position":{"x":51,"y":72}},{"type":"BODY","position":{"x":46,"y":55}},
     {"type":"FRAME","position":{"x":60,"y":73}},{"type":"INTERIOR","position":{"x":27,"y":41}},
@@ -5581,7 +5006,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.MAN,
-    image: MAN_TGS_TANDEM_6x4_TALL_IMG,
+    image: 'MAN_TGS_TANDEM_6x4_TALL.png',
     parts: [{"type":"BRAKES","position":{"x":43,"y":74}},{"type":"SUSPENSION","position":{"x":46,"y":63}},
     {"type":"WHEELS","position":{"x":49,"y":74}},{"type":"BODY","position":{"x":45,"y":48}},
     {"type":"FRAME","position":{"x":56,"y":72}},{"type":"INTERIOR","position":{"x":24,"y":39}},
@@ -5596,7 +5021,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.MAN,
-    image: MAN_TGS_TANDEM_8x4_IMG,
+    image: 'MAN_TGS_TANDEM_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":75}},{"type":"SUSPENSION","position":{"x":50,"y":64}},
     {"type":"WHEELS","position":{"x":52,"y":75}},{"type":"BODY","position":{"x":44,"y":58}},
     {"type":"FRAME","position":{"x":41,"y":79}},{"type":"INTERIOR","position":{"x":30,"y":45}},
@@ -5611,7 +5036,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.MAN,
-    image: MAN_TGX_1_4x2_IMG,
+    image: 'MAN_TGX_1_4x2.png',
     parts: [{"type":"ENGINE","position":{"x":30,"y":73}},{"type":"EXHAUST","position":{"x":67,"y":78}},
             {"type":"FUEL","position":{"x":70,"y":64}},{"type":"GEARBOX","position":{"x":34,"y":68}},
             {"type":"COMPRESSOR","position":{"x":20,"y":73}},{"type":"FIFTH_WHEEL","position":{"x":71,"y":58}},
@@ -5626,7 +5051,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.MAN,
-    image: MAN_TGX_1_6x2_IMG,
+    image: 'MAN_TGX_1_6x2.png',
     parts: [{"type":"EXHAUST","position":{"x":67,"y":73}},{"type":"FUEL","position":{"x":61,"y":60}},
     {"type":"GEARBOX","position":{"x":36,"y":66}},{"type":"ENGINE","position":{"x":28,"y":72}},
     {"type":"COMPRESSOR","position":{"x":21,"y":71}},{"type":"FIFTH_WHEEL","position":{"x":70,"y":56}},
@@ -5641,7 +5066,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.MAN,
-    image: MAN_TGX_2_4x2_IMG,
+    image: 'MAN_TGX_2_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":52,"y":78}},{"type":"WHEELS","position":{"x":57,"y":81}},
             {"type":"SUSPENSION","position":{"x":54,"y":69}},{"type":"BODY","position":{"x":18,"y":52}},
             {"type":"FRAME","position":{"x":19,"y":81}},{"type":"INTERIOR","position":{"x":28,"y":41}},
@@ -5656,7 +5081,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.MAN,
-    image: MAN_TGX_2_6x2_IMG,
+    image: 'MAN_TGX_2_6x2.png',
     parts: [{"type":"COMPRESSOR","position":{"x":16,"y":68}},{"type":"ENGINE","position":{"x":25,"y":74}},
             {"type":"EXHAUST","position":{"x":69,"y":73}},{"type":"GEARBOX","position":{"x":39,"y":69}},
             {"type":"FUEL","position":{"x":35,"y":63}},{"type":"FIFTH_WHEEL","position":{"x":71,"y":58}},
@@ -5671,7 +5096,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.MAN,
-    image: MAN_TGX_3_4x2_IMG,
+    image: 'MAN_TGX_3_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":56,"y":81}},{"type":"SUSPENSION","position":{"x":61,"y":70}},
     {"type":"WHEELS","position":{"x":64,"y":78}},{"type":"BODY","position":{"x":57,"y":56}},
     {"type":"FRAME","position":{"x":51,"y":84}},{"type":"INTERIOR","position":{"x":43,"y":37}},
@@ -5686,7 +5111,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.MAN,
-    image: MAN_TGX_3_4x2_TALL_IMG,
+    image: 'MAN_TGX_3_4x2_TALL.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":87}},{"type":"SUSPENSION","position":{"x":61,"y":72}},
     {"type":"WHEELS","position":{"x":63,"y":85}},{"type":"BODY","position":{"x":47,"y":56}},
     {"type":"FRAME","position":{"x":42,"y":87}},{"type":"INTERIOR","position":{"x":27,"y":38}},
@@ -5701,7 +5126,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.MAN,
-    image: MAN_TGX_TANDEM_4x2_IMG,
+    image: 'MAN_TGX_TANDEM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":39,"y":74}},{"type":"SUSPENSION","position":{"x":40,"y":65}},
     {"type":"WHEELS","position":{"x":44,"y":74}},{"type":"BODY","position":{"x":48,"y":56}},
     {"type":"FRAME","position":{"x":55,"y":72}},{"type":"INTERIOR","position":{"x":20,"y":48}},
@@ -5716,7 +5141,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.MAN,
-    image: MAN_TGX_TANDEM_6x4_IMG,
+    image: 'MAN_TGX_TANDEM_6x4.png',
     parts: [{"type":"BRAKES","position":{"x":49,"y":74}},{"type":"SUSPENSION","position":{"x":51,"y":64}},
     {"type":"WHEELS","position":{"x":56,"y":72}},{"type":"BODY","position":{"x":51,"y":47}},
     {"type":"FRAME","position":{"x":64,"y":74}},{"type":"INTERIOR","position":{"x":31,"y":41}},
@@ -5731,7 +5156,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.MAN,
-    image: MAN_TGX_TANDEM_6x4_TALL_IMG,
+    image: 'MAN_TGX_TANDEM_6x4_TALL.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":81}},{"type":"SUSPENSION","position":{"x":53,"y":68}},
     {"type":"WHEELS","position":{"x":60,"y":79}},{"type":"BODY","position":{"x":54,"y":54}},
     {"type":"FRAME","position":{"x":67,"y":76}},{"type":"INTERIOR","position":{"x":29,"y":36}},
@@ -5746,7 +5171,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.MAN,
-    image: MAN_TGX_TANDEM_8x4_IMG,
+    image: 'MAN_TGX_TANDEM_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":43,"y":74}},{"type":"SUSPENSION","position":{"x":47,"y":64}},
     {"type":"WHEELS","position":{"x":50,"y":74}},{"type":"BODY","position":{"x":47,"y":49}},
     {"type":"FRAME","position":{"x":54,"y":75}},{"type":"INTERIOR","position":{"x":21,"y":41}},
@@ -5761,7 +5186,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_3_AXLES,
     brand: EBrand.MANAC,
-    image: MANAC_ALU_TIPPER_IMG,
+    image: 'MANAC_ALU_TIPPER.png',
     parts: [{"type":"BRAKES","position":{"x":39,"y":61}},{"type":"SUSPENSION","position":{"x":42,"y":55}},
     {"type":"WHEELS","position":{"x":48,"y":61}},{"type":"BODY","position":{"x":77,"y":47}},
     {"type":"FRAME","position":{"x":64,"y":55}},{"type":"SUPPORT","position":{"x":78,"y":56}},
@@ -5773,7 +5198,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.MANAC,
-    image: MANAC_BOX_IMG,
+    image: 'MANAC_BOX.png',
     parts: [{"type":"BRAKES","position":{"x":38,"y":69}},{"type":"SUSPENSION","position":{"x":47,"y":65}},
     {"type":"WHEELS","position":{"x":46,"y":75}},{"type":"BODY","position":{"x":63,"y":51}},
     {"type":"FRAME","position":{"x":61,"y":64}},{"type":"SUPPORT","position":{"x":82,"y":67}},
@@ -5785,7 +5210,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.MANAC,
-    image: MANAC_BOX_2_IMG,
+    image: 'MANAC_BOX_2.png',
     parts: [{"type":"BRAKES","position":{"x":37,"y":66}},{"type":"SUSPENSION","position":{"x":42,"y":63}},
     {"type":"WHEELS","position":{"x":40,"y":71}},{"type":"BODY","position":{"x":58,"y":49}},
     {"type":"FRAME","position":{"x":52,"y":62}},{"type":"SUPPORT","position":{"x":80,"y":63}},
@@ -5797,7 +5222,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.MANAC,
-    image: MANAC_FLATBED_IMG,
+    image: 'MANAC_FLATBED.png',
     parts: [{"type":"BRAKES","position":{"x":63,"y":54}},{"type":"WHEELS","position":{"x":74,"y":54}},
     {"type":"SUSPENSION","position":{"x":69,"y":45}},{"type":"BODY","position":{"x":60,"y":39}},
     {"type":"FRAME","position":{"x":79,"y":43}},{"type":"SUPPORT","position":{"x":86,"y":47}},
@@ -5809,7 +5234,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.MANAC,
-    image: MANAC_FLATBED_2_IMG,
+    image: 'MANAC_FLATBED_2.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":56}},{"type":"SUSPENSION","position":{"x":47,"y":48}},
     {"type":"WHEELS","position":{"x":63,"y":52}},{"type":"BODY","position":{"x":53,"y":41}},
     {"type":"FRAME","position":{"x":65,"y":44}},{"type":"SUPPORT","position":{"x":81,"y":46}},
@@ -5821,7 +5246,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_2_AXLES,
     brand: EBrand.MANAC,
-    image: MANAC_FLATBED_3_IMG,
+    image: 'MANAC_FLATBED_3.png',
     parts: [{"type":"BRAKES","position":{"x":53,"y":61}},{"type":"SUSPENSION","position":{"x":53,"y":51}},
     {"type":"WHEELS","position":{"x":62,"y":56}},{"type":"BODY","position":{"x":63,"y":44}},
     {"type":"FRAME","position":{"x":70,"y":48}},{"type":"SUPPORT","position":{"x":87,"y":46}},
@@ -5833,7 +5258,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.MANAC,
-    image: MANAC_LOWBED_IMG,
+    image: 'MANAC_LOWBED.png',
     parts: [{"type":"BRAKES","position":{"x":83,"y":47}},{"type":"SUSPENSION","position":{"x":89,"y":44}},
     {"type":"WHEELS","position":{"x":88,"y":50}},{"type":"FRAME","position":{"x":52,"y":56}},
     {"type":"SUPPORT","position":{"x":44,"y":58}},{"type":"LIGHTS","position":{"x":96,"y":45}},
@@ -5844,7 +5269,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_2_AXLES,
     brand: EBrand.MANAC,
-    image: MANAC_LOWBED_2_IMG,
+    image: 'MANAC_LOWBED_2.png',
     parts: [{"type":"BRAKES","position":{"x":33,"y":53}},{"type":"SUSPENSION","position":{"x":40,"y":48}},
     {"type":"WHEELS","position":{"x":42,"y":55}},{"type":"FRAME","position":{"x":57,"y":53}},
     {"type":"SUPPORT","position":{"x":88,"y":50}},{"type":"LIGHTS","position":{"x":18,"y":47}},
@@ -5855,7 +5280,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_3_AXLES,
     brand: EBrand.MANAC,
-    image: MANAC_REEFER_IMG,
+    image: 'MANAC_REEFER.png',
     parts: [{"type":"BRAKES","position":{"x":81,"y":69}},{"type":"SUSPENSION","position":{"x":83,"y":63}},
     {"type":"WHEELS","position":{"x":86,"y":69}},{"type":"BODY","position":{"x":47,"y":57}},
     {"type":"FRAME","position":{"x":66,"y":69}},{"type":"SUPPORT","position":{"x":66,"y":78}},
@@ -5868,7 +5293,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_2_AXLES,
     brand: EBrand.MANAC,
-    image: MANAC_STEEL_TIPPER_IMG,
+    image: 'MANAC_STEEL_TIPPER.png',
     parts: [{"type":"BRAKES","position":{"x":40,"y":70}},{"type":"SUSPENSION","position":{"x":43,"y":63}},
     {"type":"WHEELS","position":{"x":47,"y":71}},{"type":"BODY","position":{"x":55,"y":47}},
     {"type":"FRAME","position":{"x":59,"y":60}},{"type":"SUPPORT","position":{"x":87,"y":63}},
@@ -5880,7 +5305,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.MAXITRANS,
-    image: MAXI_TRANS_Freighter_SafeTliner_IMG,
+    image: 'MAXI_TRANS_Freighter_SafeTliner.png',
     parts: [{"type":"SUSPENSION","position":{"x":33,"y":58}},{"type":"BRAKES","position":{"x":31,"y":64}},
     {"type":"WHEELS","position":{"x":38,"y":61}},{"type":"BODY","position":{"x":60,"y":48}},
     {"type":"FRAME","position":{"x":59,"y":56}},{"type":"SUPPORT","position":{"x":75,"y":60}},
@@ -5892,7 +5317,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.MAXITRANS,
-    image: MAXI_TRANS_Freighter_skel_2_IMG,
+    image: 'MAXI_TRANS_Freighter_skel_2.png',
     parts: [{"type":"BRAKES","position":{"x":37,"y":51}},{"type":"WHEELS","position":{"x":30,"y":52}},
     {"type":"SUSPENSION","position":{"x":35,"y":41}},{"type":"FRAME","position":{"x":27,"y":35}},
     {"type":"SUPPORT","position":{"x":12,"y":41}},{"type":"LIGHTS","position":{"x":67,"y":39}},
@@ -5903,7 +5328,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.MAXITRANS,
-    image: MAXI_TRANS_Freighter_Ultra_Lo_Skel_IMG,
+    image: 'MAXI_TRANS_Freighter_Ultra_Lo_Skel.png',
     parts: [{"type":"BRAKES","position":{"x":76,"y":49}},{"type":"SUSPENSION","position":{"x":80,"y":47}},
     {"type":"WHEELS","position":{"x":81,"y":50}},{"type":"FRAME","position":{"x":50,"y":44}},
     {"type":"SUPPORT","position":{"x":43,"y":54}},{"type":"LIGHTS","position":{"x":94,"y":45}},
@@ -5914,7 +5339,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_3_AXLES,
     brand: EBrand.MAXITRANS,
-    image: MAXI_TRANS_HxW_semi_tipper_IMG,
+    image: 'MAXI_TRANS_HxW_semi_tipper.png',
     parts: [{"type":"BRAKES","position":{"x":37,"y":75}},{"type":"SUSPENSION","position":{"x":45,"y":71}},
     {"type":"WHEELS","position":{"x":42,"y":80}},{"type":"BODY","position":{"x":42,"y":50}},
     {"type":"FRAME","position":{"x":67,"y":70}},{"type":"SUPPORT","position":{"x":65,"y":80}},
@@ -5927,7 +5352,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_3_AXLES,
     brand: EBrand.MAXITRANS,
-    image: MAXI_TRANS_Maxi_CUBE_Classic_2_IMG,
+    image: 'MAXI_TRANS_Maxi_CUBE_Classic_2.png',
     parts: [{"type":"BRAKES","position":{"x":16,"y":75}},{"type":"SUSPENSION","position":{"x":11,"y":68}},
     {"type":"WHEELS","position":{"x":9,"y":74}},{"type":"BODY","position":{"x":33,"y":53}},
     {"type":"FRAME","position":{"x":37,"y":68}},{"type":"SUPPORT","position":{"x":42,"y":76}},
@@ -5940,7 +5365,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_3_AXLES,
     brand: EBrand.MAXITRANS,
-    image: MAXI_TRANS_Maxi_CUBE_DryFreight_3_IMG,
+    image: 'MAXI_TRANS_Maxi_CUBE_DryFreight_3.png',
     parts: [{"type":"BRAKES","position":{"x":71,"y":62}},{"type":"SUSPENSION","position":{"x":75,"y":58}},
     {"type":"WHEELS","position":{"x":76,"y":64}},{"type":"BODY","position":{"x":39,"y":47}},
     {"type":"FRAME","position":{"x":48,"y":58}},{"type":"SUPPORT","position":{"x":41,"y":63}},
@@ -5952,7 +5377,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.MAZ,
-    image: MAZ_5440C_IMG,
+    image: 'MAZ_5440C.png',
     parts: [{"type":"BRAKES","position":{"x":46,"y":81}},{"type":"SUSPENSION","position":{"x":56,"y":66}},
     {"type":"WHEELS","position":{"x":59,"y":77}},{"type":"BODY","position":{"x":34,"y":59}},
     {"type":"FRAME","position":{"x":40,"y":84}},{"type":"INTERIOR","position":{"x":35,"y":28}},
@@ -5967,7 +5392,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.MAZ,
-    image: MAZ_5440E_IMG,
+    image: 'MAZ_5440E.png',
     parts: [{"type":"BRAKES","position":{"x":56,"y":89}},{"type":"SUSPENSION","position":{"x":64,"y":70}},
     {"type":"WHEELS","position":{"x":70,"y":82}},{"type":"BODY","position":{"x":54,"y":62}},
     {"type":"FRAME","position":{"x":48,"y":86}},{"type":"INTERIOR","position":{"x":44,"y":39}},
@@ -5982,7 +5407,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.MAZ,
-    image: MAZ_6430C_IMG,
+    image: 'MAZ_6430C.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":79}},{"type":"SUSPENSION","position":{"x":41,"y":64}},
     {"type":"WHEELS","position":{"x":38,"y":78}},{"type":"BODY","position":{"x":48,"y":53}},
     {"type":"FRAME","position":{"x":60,"y":78}},{"type":"INTERIOR","position":{"x":50,"y":35}},
@@ -5997,7 +5422,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.MERCEDES,
-    image: MERCEDES_ACTROS_MP3_4x2_IMG,
+    image: 'MERCEDES_ACTROS_MP3_4x2.png',
     parts: [{"type":"WHEELS","position":{"x":62,"y":78}},{"type":"SUSPENSION","position":{"x":55,"y":66}},
             {"type":"BRAKES","position":{"x":50,"y":76}},{"type":"BODY","position":{"x":16,"y":49}},
             {"type":"FRAME","position":{"x":18,"y":79}},{"type":"INTERIOR","position":{"x":27,"y":36}},
@@ -6012,7 +5437,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.MERCEDES,
-    image: MERCEDES_ACTROS_MP3_6x2_IMG,
+    image: 'MERCEDES_ACTROS_MP3_6x2.png',
     parts: [{"type":"GEARBOX","position":{"x":40,"y":68}},{"type":"FUEL","position":{"x":71,"y":62}},
             {"type":"EXHAUST","position":{"x":62,"y":68}},{"type":"ENGINE","position":{"x":21,"y":71}},
             {"type":"COMPRESSOR","position":{"x":14,"y":70}},{"type":"FIFTH_WHEEL","position":{"x":70,"y":57}},
@@ -6027,7 +5452,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.MERCEDES,
-    image: MERCEDES_ACTROS_MP4_4x2_IMG,
+    image: 'MERCEDES_ACTROS_MP4_4x2.png',
     parts: [{"type":"BODY","position":{"x":15,"y":54}},{"type":"FRAME","position":{"x":20,"y":79}},
             {"type":"INTERIOR","position":{"x":24,"y":39}},{"type":"WHEELS","position":{"x":56,"y":78}},
             {"type":"SUSPENSION","position":{"x":51,"y":66}},{"type":"BRAKES","position":{"x":49,"y":76}},
@@ -6042,7 +5467,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.MERCEDES,
-    image: MERCEDES_ACTROS_MP4_6x2_IMG,
+    image: 'MERCEDES_ACTROS_MP4_6x2.png',
     parts: [{"type":"FUEL","position":{"x":69,"y":69}},{"type":"GEARBOX","position":{"x":44,"y":68}},
             {"type":"EXHAUST","position":{"x":61,"y":70}},{"type":"ENGINE","position":{"x":27,"y":74}},
             {"type":"COMPRESSOR","position":{"x":19,"y":70}},{"type":"FIFTH_WHEEL","position":{"x":72,"y":59}},
@@ -6057,7 +5482,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.MERCEDES,
-    image: MERCEDES_ACTROS_MP5_4x2_IMG,
+    image: 'MERCEDES_ACTROS_MP5_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":61,"y":91}},{"type":"SUSPENSION","position":{"x":67,"y":77}},
     {"type":"WHEELS","position":{"x":71,"y":85}},{"type":"BODY","position":{"x":59,"y":60}},
     {"type":"FRAME","position":{"x":54,"y":93}},{"type":"INTERIOR","position":{"x":49,"y":30}},
@@ -6072,7 +5497,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T8x4,
     brand: EBrand.MERCEDES,
-    image: MERCEDES_ACTROS_MP5_SLT_IMG,
+    image: 'MERCEDES_ACTROS_MP5_SLT.png',
     parts: [{"type":"BRAKES","position":{"x":41,"y":88}},{"type":"SUSPENSION","position":{"x":34,"y":72}},
     {"type":"WHEELS","position":{"x":33,"y":84}},{"type":"BODY","position":{"x":38,"y":61}},
     {"type":"FRAME","position":{"x":46,"y":92}},{"type":"INTERIOR","position":{"x":48,"y":35}},
@@ -6087,7 +5512,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.MERCEDES,
-    image: MERCEDES_ACTROS_TANDEM_6x2_IMG,
+    image: 'MERCEDES_ACTROS_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":54,"y":83}},{"type":"SUSPENSION","position":{"x":58,"y":69}},
     {"type":"WHEELS","position":{"x":61,"y":79}},{"type":"BODY","position":{"x":75,"y":46}},
     {"type":"FRAME","position":{"x":72,"y":77}},{"type":"INTERIOR","position":{"x":49,"y":41}},
@@ -6102,7 +5527,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.MERCEDES,
-    image: MERCEDES_AROCS_4x2_IMG,
+    image: 'MERCEDES_AROCS_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":36,"y":87}},{"type":"SUSPENSION","position":{"x":28,"y":68}},
     {"type":"WHEELS","position":{"x":22,"y":83}},{"type":"BODY","position":{"x":27,"y":52}},
     {"type":"FRAME","position":{"x":43,"y":87}},{"type":"INTERIOR","position":{"x":55,"y":24}},
@@ -6117,7 +5542,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T8x4,
     brand: EBrand.MERCEDES,
-    image: MERCEDES_AROCS_8x4_IMG,
+    image: 'MERCEDES_AROCS_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":41,"y":87}},{"type":"SUSPENSION","position":{"x":33,"y":66}},
     {"type":"WHEELS","position":{"x":29,"y":84}},{"type":"BODY","position":{"x":31,"y":52}},
     {"type":"FRAME","position":{"x":38,"y":82}},{"type":"INTERIOR","position":{"x":54,"y":31}},
@@ -6132,7 +5557,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.MERCEDES,
-    image: MERCEDES_ATEGO_TANDEM_4x2_IMG,
+    image: 'MERCEDES_ATEGO_TANDEM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":52,"y":80}},{"type":"SUSPENSION","position":{"x":59,"y":66}},
     {"type":"WHEELS","position":{"x":60,"y":75}},{"type":"BODY","position":{"x":53,"y":51}},
     {"type":"FRAME","position":{"x":48,"y":78}},{"type":"INTERIOR","position":{"x":36,"y":45}},
@@ -6147,7 +5572,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1BODY,
     brand: EBrand.MERCEDES,
-    image: MERCEDES_SPRINTER_FRAME_IMG,
+    image: 'MERCEDES_SPRINTER_FRAME.png',
     parts: [{"type":"BRAKES","position":{"x":56,"y":74}},{"type":"SUSPENSION","position":{"x":51,"y":62}},
     {"type":"WHEELS","position":{"x":46,"y":72}},{"type":"BODY","position":{"x":42,"y":57}},
     {"type":"FRAME","position":{"x":36,"y":71}},{"type":"INTERIOR","position":{"x":56,"y":36}},
@@ -6161,7 +5586,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L3H2,
     brand: EBrand.MERCEDES,
-    image: MERCEDES_SPRINTER_L3H2_IMG,
+    image: 'MERCEDES_SPRINTER_L3H2.png',
     parts: [{"type":"BRAKES","position":{"x":58,"y":73}},{"type":"SUSPENSION","position":{"x":52,"y":58}},
     {"type":"WHEELS","position":{"x":49,"y":72}},{"type":"BODY","position":{"x":39,"y":53}},
     {"type":"FRAME","position":{"x":41,"y":71}},{"type":"INTERIOR","position":{"x":56,"y":37}},
@@ -6176,7 +5601,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L2_TIPPER,
     brand: EBrand.MERCEDES,
-    image: MERCEDES_SPRINTER_TIPPER_IMG,
+    image: 'MERCEDES_SPRINTER_TIPPER.png',
     parts: [{"type":"BRAKES","position":{"x":60,"y":72}},{"type":"SUSPENSION","position":{"x":52,"y":60}},
     {"type":"WHEELS","position":{"x":50,"y":70}},{"type":"BODY","position":{"x":36,"y":60}},
     {"type":"FRAME","position":{"x":41,"y":69}},{"type":"INTERIOR","position":{"x":59,"y":37}},
@@ -6190,7 +5615,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1H1,
     brand: EBrand.MERCEDES,
-    image: MERCEDES_VITO_L1H1_IMG,
+    image: 'MERCEDES_VITO_L1H1.png',
     parts: [{"type":"BRAKES","position":{"x":53,"y":75}},{"type":"SUSPENSION","position":{"x":48,"y":56}},
     {"type":"WHEELS","position":{"x":46,"y":66}},{"type":"BODY","position":{"x":35,"y":53}},
     {"type":"FRAME","position":{"x":34,"y":71}},{"type":"INTERIOR","position":{"x":55,"y":35}},
@@ -6205,7 +5630,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_DURASTAR_BOX_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_DURASTAR_BOX.png',
     parts: [{"type":"BRAKES","position":{"x":36,"y":69}},{"type":"SUSPENSION","position":{"x":29,"y":60}},
     {"type":"WHEELS","position":{"x":27,"y":71}},{"type":"BODY","position":{"x":44,"y":55}},
     {"type":"FRAME","position":{"x":43,"y":65}},{"type":"INTERIOR","position":{"x":31,"y":48}},
@@ -6220,7 +5645,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_DURASTAR_SEMI_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_DURASTAR_SEMI.png',
     parts: [{"type":"BRAKES","position":{"x":43,"y":67}},{"type":"SUSPENSION","position":{"x":37,"y":58}},
     {"type":"WHEELS","position":{"x":34,"y":65}},{"type":"BODY","position":{"x":59,"y":53}},
     {"type":"FRAME","position":{"x":58,"y":62}},{"type":"INTERIOR","position":{"x":43,"y":38}},
@@ -6235,7 +5660,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_HV_SEMI_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_HV_SEMI.png',
     parts: [{"type":"BRAKES","position":{"x":29,"y":65}},{"type":"SUSPENSION","position":{"x":34,"y":58}},
     {"type":"WHEELS","position":{"x":42,"y":68}},{"type":"BODY","position":{"x":54,"y":48}},
     {"type":"FRAME","position":{"x":62,"y":65}},{"type":"INTERIOR","position":{"x":39,"y":34}},
@@ -6250,7 +5675,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T4x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_HV_TIPPER_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_HV_TIPPER.png',
     parts: [{"type":"BRAKES","position":{"x":28,"y":67}},{"type":"SUSPENSION","position":{"x":33,"y":58}},
     {"type":"WHEELS","position":{"x":36,"y":65}},{"type":"BODY","position":{"x":49,"y":51}},
     {"type":"FRAME","position":{"x":57,"y":63}},{"type":"INTERIOR","position":{"x":37,"y":38}},
@@ -6265,7 +5690,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_HX_SEMI_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_HX_SEMI.png',
     parts: [{"type":"BRAKES","position":{"x":24,"y":71}},{"type":"SUSPENSION","position":{"x":33,"y":59}},
     {"type":"WHEELS","position":{"x":36,"y":70}},{"type":"BODY","position":{"x":42,"y":52}},
     {"type":"FRAME","position":{"x":44,"y":61}},{"type":"INTERIOR","position":{"x":31,"y":38}},
@@ -6280,7 +5705,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T6x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_HX_TIPPER_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_HX_TIPPER.png',
     parts: [{"type":"BRAKES","position":{"x":24,"y":70}},{"type":"SUSPENSION","position":{"x":30,"y":61}},
     {"type":"WHEELS","position":{"x":31,"y":68}},{"type":"BODY","position":{"x":42,"y":54}},
     {"type":"FRAME","position":{"x":56,"y":60}},{"type":"INTERIOR","position":{"x":30,"y":40}},
@@ -6295,7 +5720,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_LONESTAR_DAYCAB_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_LONESTAR_DAYCAB.png',
     parts: [{"type":"BRAKES","position":{"x":24,"y":73}},{"type":"SUSPENSION","position":{"x":28,"y":64}},
     {"type":"WHEELS","position":{"x":34,"y":70}},{"type":"BODY","position":{"x":51,"y":58}},
     {"type":"FRAME","position":{"x":51,"y":61}},{"type":"INTERIOR","position":{"x":36,"y":40}},
@@ -6310,7 +5735,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_LONESTAR_HIGH_SLEEPER_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_LONESTAR_HIGH_SLEEPER.png',
     parts: [{"type":"BRAKES","position":{"x":26,"y":70}},{"type":"SUSPENSION","position":{"x":28,"y":62}},
     {"type":"WHEELS","position":{"x":32,"y":68}},{"type":"BODY","position":{"x":58,"y":59}},
     {"type":"FRAME","position":{"x":69,"y":63}},{"type":"INTERIOR","position":{"x":34,"y":45}},
@@ -6325,7 +5750,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_LONESTAR_LOW_SLEEPER_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_LONESTAR_LOW_SLEEPER.png',
     parts: [{"type":"BRAKES","position":{"x":26,"y":70}},{"type":"SUSPENSION","position":{"x":28,"y":62}},
     {"type":"BODY","position":{"x":58,"y":59}},{"type":"FRAME","position":{"x":69,"y":63}},
     {"type":"INTERIOR","position":{"x":34,"y":45}},{"type":"LIGHTS","position":{"x":22,"y":59}},
@@ -6340,7 +5765,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_LT_DAYCAB_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_LT_DAYCAB.png',
     parts: [{"type":"INTERIOR","position":{"x":34,"y":45}},{"type":"ELECTRONIC","position":{"x":33,"y":52}},
     {"type":"FIFTH_WHEEL","position":{"x":76,"y":58}},{"type":"COMPRESSOR","position":{"x":7,"y":64}},
     {"type":"ENGINE","position":{"x":13,"y":58}},{"type":"GEARBOX","position":{"x":12,"y":68}},
@@ -6355,7 +5780,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_LT_HIGH_SLEEPER_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_LT_HIGH_SLEEPER.png',
     parts: [{"type":"BRAKES","position":{"x":24,"y":73}},{"type":"SUSPENSION","position":{"x":30,"y":63}},
     {"type":"WHEELS","position":{"x":34,"y":71}},{"type":"BODY","position":{"x":48,"y":57}},
     {"type":"FRAME","position":{"x":44,"y":66}},{"type":"INTERIOR","position":{"x":35,"y":44}},
@@ -6370,7 +5795,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_LT_LOW_SLEEPER_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_LT_LOW_SLEEPER.png',
     parts: [{"type":"BRAKES","position":{"x":24,"y":73}},{"type":"SUSPENSION","position":{"x":30,"y":63}},
     {"type":"WHEELS","position":{"x":34,"y":71}},{"type":"BODY","position":{"x":48,"y":57}},
     {"type":"FRAME","position":{"x":44,"y":66}},{"type":"INTERIOR","position":{"x":35,"y":44}},
@@ -6385,7 +5810,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_MV_BOX_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_MV_BOX.png',
     parts: [{"type":"BRAKES","position":{"x":24,"y":73}},{"type":"SUSPENSION","position":{"x":30,"y":63}},
     {"type":"WHEELS","position":{"x":34,"y":71}},{"type":"INTERIOR","position":{"x":35,"y":44}},
     {"type":"BATTERY","position":{"x":34,"y":54}},{"type":"ELECTRONIC","position":{"x":30,"y":51}},
@@ -6400,7 +5825,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_MV_SEMI_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_MV_SEMI.png',
     parts: [{"type":"BRAKES","position":{"x":26,"y":66}},{"type":"SUSPENSION","position":{"x":35,"y":56}},
     {"type":"WHEELS","position":{"x":40,"y":64}},{"type":"BODY","position":{"x":55,"y":43}},
     {"type":"FRAME","position":{"x":57,"y":55}},{"type":"INTERIOR","position":{"x":37,"y":38}},
@@ -6415,7 +5840,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T4x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_MV_TIPPER_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_MV_TIPPER.png',
     parts: [{"type":"BRAKES","position":{"x":26,"y":66}},{"type":"SUSPENSION","position":{"x":35,"y":56}},
     {"type":"FRAME","position":{"x":57,"y":55}},{"type":"INTERIOR","position":{"x":37,"y":38}},
     {"type":"COMPRESSOR","position":{"x":4,"y":57}},{"type":"ENGINE","position":{"x":15,"y":50}},
@@ -6430,7 +5855,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_PROSTAR_DAYCAB_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_PROSTAR_DAYCAB.png',
     parts: [{"type":"BRAKES","position":{"x":26,"y":77}},{"type":"SUSPENSION","position":{"x":34,"y":63}},
     {"type":"WHEELS","position":{"x":35,"y":75}},{"type":"BODY","position":{"x":55,"y":58}},
     {"type":"FRAME","position":{"x":53,"y":66}},{"type":"INTERIOR","position":{"x":44,"y":40}},
@@ -6445,7 +5870,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_PROSTAR_HIGH_SLEEPER_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_PROSTAR_HIGH_SLEEPER.png',
     parts: [{"type":"BRAKES","position":{"x":25,"y":68}},{"type":"SUSPENSION","position":{"x":32,"y":58}},
     {"type":"WHEELS","position":{"x":33,"y":67}},{"type":"BODY","position":{"x":57,"y":50}},
     {"type":"FRAME","position":{"x":56,"y":58}},{"type":"INTERIOR","position":{"x":38,"y":38}},
@@ -6460,7 +5885,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_PROSTAR_LOW_SLEEPER_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_PROSTAR_LOW_SLEEPER.png',
     parts: [{"type":"BRAKES","position":{"x":25,"y":66}},{"type":"SUSPENSION","position":{"x":35,"y":57}},
     {"type":"WHEELS","position":{"x":37,"y":64}},{"type":"BODY","position":{"x":57,"y":48}},
     {"type":"FRAME","position":{"x":59,"y":55}},{"type":"INTERIOR","position":{"x":39,"y":38}},
@@ -6475,7 +5900,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_RH_DAYCAB_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_RH_DAYCAB.png',
     parts: [{"type":"BRAKES","position":{"x":30,"y":73}},{"type":"SUSPENSION","position":{"x":38,"y":61}},
     {"type":"WHEELS","position":{"x":36,"y":72}},{"type":"BODY","position":{"x":46,"y":53}},
     {"type":"FRAME","position":{"x":49,"y":61}},{"type":"INTERIOR","position":{"x":33,"y":41}},
@@ -6490,7 +5915,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_RH_HIGH_SLEEPER_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_RH_HIGH_SLEEPER.png',
     parts: [{"type":"BRAKES","position":{"x":30,"y":73}},{"type":"SUSPENSION","position":{"x":38,"y":61}},
     {"type":"WHEELS","position":{"x":36,"y":72}},{"type":"BODY","position":{"x":46,"y":53}},
     {"type":"FRAME","position":{"x":49,"y":61}},{"type":"INTERIOR","position":{"x":33,"y":41}},
@@ -6505,7 +5930,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_RH_LOW_SLEEPER_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_RH_LOW_SLEEPER.png',
     parts: [{"type":"BRAKES","position":{"x":30,"y":73}},{"type":"SUSPENSION","position":{"x":38,"y":61}},
     {"type":"BODY","position":{"x":46,"y":53}},{"type":"BATTERY","position":{"x":37,"y":52}},
     {"type":"ELECTRONIC","position":{"x":31,"y":49}},{"type":"ENGINE","position":{"x":11,"y":58}},
@@ -6520,7 +5945,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_WORKSTAR_4x2_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_WORKSTAR_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":22,"y":65}},{"type":"SUSPENSION","position":{"x":32,"y":54}},
     {"type":"WHEELS","position":{"x":33,"y":63}},{"type":"BODY","position":{"x":50,"y":47}},
     {"type":"FRAME","position":{"x":54,"y":57}},{"type":"INTERIOR","position":{"x":34,"y":35}},
@@ -6535,7 +5960,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_WORKSTAR_6x4_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_WORKSTAR_6x4.png',
     parts: [{"type":"WHEELS","position":{"x":33,"y":63}},{"type":"BODY","position":{"x":50,"y":47}},
     {"type":"INTERIOR","position":{"x":34,"y":35}},{"type":"BATTERY","position":{"x":38,"y":45}},
     {"type":"ELECTRONIC","position":{"x":33,"y":43}},{"type":"LIGHTS","position":{"x":21,"y":50}},
@@ -6550,7 +5975,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4_big,
     brand: EBrand.NAVISTAR,
-    image: NAVISTAR_INTERNATIONAL_WORKSTAR_8x6_IMG,
+    image: 'NAVISTAR_INTERNATIONAL_WORKSTAR_8x6.png',
     parts: [{"type":"WHEELS","position":{"x":33,"y":63}},{"type":"BODY","position":{"x":50,"y":47}},
     {"type":"INTERIOR","position":{"x":34,"y":35}},{"type":"BATTERY","position":{"x":38,"y":45}},
     {"type":"ELECTRONIC","position":{"x":33,"y":43}},{"type":"LIGHTS","position":{"x":21,"y":50}},
@@ -6565,7 +5990,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.NIKOLA,
-    image: NIKOLA_ONE_IMG,
+    image: 'NIKOLA_ONE.png',
     parts: [{"type":"BRAKES","position":{"x":22,"y":64}},{"type":"SUSPENSION","position":{"x":26,"y":58}},
     {"type":"WHEELS","position":{"x":28,"y":65}},{"type":"BODY","position":{"x":45,"y":52}},
     {"type":"FRAME","position":{"x":47,"y":58}},{"type":"INTERIOR","position":{"x":31,"y":42}},
@@ -6579,7 +6004,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2_big,
     brand: EBrand.NIKOLA,
-    image: NIKOLA_TRE_IMG,
+    image: 'NIKOLA_TRE.png',
     parts: [{"type":"BRAKES","position":{"x":28,"y":70}},{"type":"SUSPENSION","position":{"x":35,"y":62}},
     {"type":"WHEELS","position":{"x":38,"y":71}},{"type":"BODY","position":{"x":44,"y":56}},
     {"type":"FRAME","position":{"x":48,"y":70}},{"type":"INTERIOR","position":{"x":27,"y":38}},
@@ -6593,7 +6018,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.NIKOLA,
-    image: NIKOLA_TWO_IMG,
+    image: 'NIKOLA_TWO.png',
     parts: [{"type":"BRAKES","position":{"x":21,"y":65}},{"type":"SUSPENSION","position":{"x":26,"y":60}},
     {"type":"WHEELS","position":{"x":28,"y":66}},{"type":"BODY","position":{"x":45,"y":54}},
     {"type":"FRAME","position":{"x":47,"y":59}},{"type":"INTERIOR","position":{"x":31,"y":44}},
@@ -6607,7 +6032,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1_BOX,
     brand: EBrand.NISSAN,
-    image: NISSAN_CABSTAR_BOX_IMG,
+    image: 'NISSAN_CABSTAR_BOX.png',
     parts: [{"type":"BRAKES","position":{"x":57,"y":80}},{"type":"SUSPENSION","position":{"x":49,"y":68}},
     {"type":"WHEELS","position":{"x":48,"y":78}},{"type":"BODY","position":{"x":42,"y":58}},
     {"type":"FRAME","position":{"x":41,"y":71}},{"type":"INTERIOR","position":{"x":57,"y":45}},
@@ -6622,7 +6047,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1_TIPPER,
     brand: EBrand.NISSAN,
-    image: NISSAN_CABSTAR_TIPPER_IMG,
+    image: 'NISSAN_CABSTAR_TIPPER.png',
     parts: [{"type":"BRAKES","position":{"x":43,"y":72}},{"type":"SUSPENSION","position":{"x":45,"y":62}},
     {"type":"WHEELS","position":{"x":50,"y":74}},{"type":"BODY","position":{"x":41,"y":56}},
     {"type":"FRAME","position":{"x":38,"y":63}},{"type":"INTERIOR","position":{"x":62,"y":41}},
@@ -6636,7 +6061,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1H1,
     brand: EBrand.NISSAN,
-    image: NISSAN_NV300_L1H1_IMG,
+    image: 'NISSAN_NV300_L1H1.png',
     parts: [{"type":"BRAKES","position":{"x":41,"y":69}},{"type":"SUSPENSION","position":{"x":44,"y":60}},
     {"type":"WHEELS","position":{"x":48,"y":69}},{"type":"BODY","position":{"x":33,"y":56}},
     {"type":"FRAME","position":{"x":36,"y":64}},{"type":"INTERIOR","position":{"x":44,"y":37}},
@@ -6651,7 +6076,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L3H3,
     brand: EBrand.NISSAN,
-    image: NISSAN_NV400_L3H3_IMG,
+    image: 'NISSAN_NV400_L3H3.png',
     parts: [{"type":"BRAKES","position":{"x":56,"y":75}},{"type":"SUSPENSION","position":{"x":52,"y":65}},
     {"type":"WHEELS","position":{"x":50,"y":71}},{"type":"BODY","position":{"x":44,"y":58}},
     {"type":"FRAME","position":{"x":40,"y":71}},{"type":"INTERIOR","position":{"x":53,"y":36}},
@@ -6666,7 +6091,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1_CREW_TIPPER,
     brand: EBrand.OPEL,
-    image: OPEL_MOVANO_L1_CAB_TIPPER_IMG,
+    image: 'OPEL_MOVANO_L1_CAB_TIPPER.png',
     parts: [{"type":"BRAKES","position":{"x":66,"y":66}},{"type":"SUSPENSION","position":{"x":58,"y":57}},
     {"type":"WHEELS","position":{"x":57,"y":66}},{"type":"BODY","position":{"x":46,"y":51}},
     {"type":"FRAME","position":{"x":45,"y":66}},{"type":"INTERIOR","position":{"x":49,"y":40}},
@@ -6680,7 +6105,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1BODY,
     brand: EBrand.OPEL,
-    image: OPEL_MOVANO_L1_FRAME_IMG,
+    image: 'OPEL_MOVANO_L1_FRAME.png',
     parts: [{"type":"BRAKES","position":{"x":78,"y":67}},{"type":"WHEELS","position":{"x":84,"y":65}},
     {"type":"SUSPENSION","position":{"x":81,"y":60}},{"type":"BODY","position":{"x":61,"y":59}},
     {"type":"FRAME","position":{"x":59,"y":66}},{"type":"INTERIOR","position":{"x":67,"y":47}},
@@ -6694,7 +6119,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L2H2,
     brand: EBrand.OPEL,
-    image: OPEL_MOVANO_L2H2_IMG,
+    image: 'OPEL_MOVANO_L2H2.png',
     parts: [{"type":"BRAKES","position":{"x":76,"y":66}},{"type":"SUSPENSION","position":{"x":84,"y":59}},
     {"type":"WHEELS","position":{"x":86,"y":66}},{"type":"BODY","position":{"x":66,"y":55}},
     {"type":"FRAME","position":{"x":64,"y":67}},{"type":"INTERIOR","position":{"x":67,"y":43}},
@@ -6709,7 +6134,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L4H2,
     brand: EBrand.OPEL,
-    image: OPEL_MOVANO_L4H2_IMG,
+    image: 'OPEL_MOVANO_L4H2.png',
     parts: [{"type":"BODY","position":{"x":66,"y":55}},{"type":"FRAME","position":{"x":64,"y":67}},
     {"type":"INTERIOR","position":{"x":67,"y":43}},{"type":"BATTERY","position":{"x":84,"y":47}},
     {"type":"ELECTRONIC","position":{"x":87,"y":49}},{"type":"LIGHTS","position":{"x":96,"y":54}},
@@ -6724,7 +6149,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1H1,
     brand: EBrand.OPEL,
-    image: OPEL_VIVARO_IMG,
+    image: 'OPEL_VIVARO.png',
     parts: [{"type":"BRAKES","position":{"x":60,"y":69}},{"type":"SUSPENSION","position":{"x":54,"y":58}},
     {"type":"WHEELS","position":{"x":53,"y":67}},{"type":"BODY","position":{"x":68,"y":49}},
     {"type":"FRAME","position":{"x":66,"y":66}},{"type":"INTERIOR","position":{"x":48,"y":33}},
@@ -6739,7 +6164,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.PETERBILT,
-    image: PETERBILT_220_IMG,
+    image: 'PETERBILT_220.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":79}},{"type":"SUSPENSION","position":{"x":59,"y":63}},
     {"type":"WHEELS","position":{"x":60,"y":75}},{"type":"BODY","position":{"x":56,"y":54}},
     {"type":"FRAME","position":{"x":51,"y":71}},{"type":"INTERIOR","position":{"x":37,"y":35}},
@@ -6754,7 +6179,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_big,
     brand: EBrand.PETERBILT,
-    image: PETERBILT_325_IMG,
+    image: 'PETERBILT_325.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":73}},{"type":"SUSPENSION","position":{"x":41,"y":59}},
     {"type":"WHEELS","position":{"x":38,"y":71}},{"type":"BODY","position":{"x":40,"y":49}},
     {"type":"FRAME","position":{"x":35,"y":56}},{"type":"INTERIOR","position":{"x":53,"y":33}},
@@ -6769,7 +6194,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_big,
     brand: EBrand.PETERBILT,
-    image: PETERBILT_330_IMG,
+    image: 'PETERBILT_330.png',
     parts: [{"type":"BRAKES","position":{"x":54,"y":81}},{"type":"SUSPENSION","position":{"x":46,"y":69}},
     {"type":"WHEELS","position":{"x":47,"y":77}},{"type":"BODY","position":{"x":41,"y":63}},
     {"type":"FRAME","position":{"x":37,"y":65}},{"type":"INTERIOR","position":{"x":51,"y":46}},
@@ -6784,7 +6209,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_big,
     brand: EBrand.PETERBILT,
-    image: PETERBILT_337_IMG,
+    image: 'PETERBILT_337.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":85}},{"type":"SUSPENSION","position":{"x":59,"y":67}},
     {"type":"WHEELS","position":{"x":63,"y":80}},{"type":"BODY","position":{"x":69,"y":56}},
     {"type":"FRAME","position":{"x":72,"y":65}},{"type":"INTERIOR","position":{"x":55,"y":36}},
@@ -6799,7 +6224,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T6x2_big,
     brand: EBrand.PETERBILT,
-    image: PETERBILT_348_IMG,
+    image: 'PETERBILT_348.png',
     parts: [{"type":"BRAKES","position":{"x":42,"y":74}},{"type":"SUSPENSION","position":{"x":55,"y":55}},
     {"type":"WHEELS","position":{"x":54,"y":70}},{"type":"BODY","position":{"x":62,"y":47}},
     {"type":"FRAME","position":{"x":64,"y":60}},{"type":"INTERIOR","position":{"x":45,"y":34}},
@@ -6814,7 +6239,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2_big,
     brand: EBrand.PETERBILT,
-    image: PETERBILT_365_IMG,
+    image: 'PETERBILT_365.png',
     parts: [{"type":"BRAKES","position":{"x":42,"y":74}},{"type":"SUSPENSION","position":{"x":53,"y":62}},
     {"type":"WHEELS","position":{"x":51,"y":71}},{"type":"BODY","position":{"x":56,"y":51}},
     {"type":"FRAME","position":{"x":60,"y":61}},{"type":"INTERIOR","position":{"x":40,"y":38}},
@@ -6829,7 +6254,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T6x2_big,
     brand: EBrand.PETERBILT,
-    image: PETERBILT_367_IMG,
+    image: 'PETERBILT_367.png',
     parts: [{"type":"BRAKES","position":{"x":54,"y":77}},{"type":"SUSPENSION","position":{"x":64,"y":63}},
     {"type":"WHEELS","position":{"x":66,"y":75}},{"type":"BODY","position":{"x":70,"y":53}},
     {"type":"INTERIOR","position":{"x":54,"y":36}},{"type":"FRAME","position":{"x":67,"y":60}},
@@ -6844,7 +6269,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.PETERBILT,
-    image: PETERBILT_389_IMG,
+    image: 'PETERBILT_389.png',
     parts: [{"type":"BRAKES","position":{"x":43,"y":73}},{"type":"SUSPENSION","position":{"x":47,"y":61}},
     {"type":"WHEELS","position":{"x":49,"y":68}},{"type":"BODY","position":{"x":58,"y":55}},
     {"type":"FRAME","position":{"x":57,"y":63}},{"type":"INTERIOR","position":{"x":45,"y":44}},
@@ -6859,7 +6284,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T6x2_big,
     brand: EBrand.PETERBILT,
-    image: PETERBILT_567_IMG,
+    image: 'PETERBILT_567.png',
     parts: [{"type":"BRAKES","position":{"x":46,"y":71}},{"type":"SUSPENSION","position":{"x":51,"y":58}},
     {"type":"WHEELS","position":{"x":54,"y":69}},{"type":"BODY","position":{"x":60,"y":52}},
     {"type":"FRAME","position":{"x":63,"y":57}},{"type":"INTERIOR","position":{"x":52,"y":34}},
@@ -6874,7 +6299,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.PETERBILT,
-    image: PETERBILT_579_IMG,
+    image: 'PETERBILT_579.png',
     parts: [{"type":"BRAKES","position":{"x":32,"y":73}},{"type":"SUSPENSION","position":{"x":40,"y":58}},
     {"type":"WHEELS","position":{"x":39,"y":68}},{"type":"BODY","position":{"x":53,"y":55}},
     {"type":"FRAME","position":{"x":55,"y":60}},{"type":"INTERIOR","position":{"x":41,"y":41}},
@@ -6889,7 +6314,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1H1,
     brand: EBrand.PEUGEOT,
-    image: PEUGEOT_BOXER_L1H1_IMG,
+    image: 'PEUGEOT_BOXER_L1H1.png',
     parts: [{"type":"BRAKES","position":{"x":55,"y":81}},{"type":"SUSPENSION","position":{"x":44,"y":64}},
     {"type":"WHEELS","position":{"x":47,"y":78}},{"type":"BODY","position":{"x":32,"y":60}},
     {"type":"INTERIOR","position":{"x":44,"y":41}},{"type":"FRAME","position":{"x":33,"y":72}},
@@ -6904,7 +6329,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L2H2,
     brand: EBrand.PEUGEOT,
-    image: PEUGEOT_BOXER_L2H2_IMG,
+    image: 'PEUGEOT_BOXER_L2H2.png',
     parts: [{"type":"BRAKES","position":{"x":55,"y":77}},{"type":"SUSPENSION","position":{"x":47,"y":62}},
     {"type":"WHEELS","position":{"x":46,"y":74}},{"type":"BODY","position":{"x":34,"y":60}},
     {"type":"FRAME","position":{"x":35,"y":70}},{"type":"INTERIOR","position":{"x":52,"y":41}},
@@ -6919,7 +6344,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1H1,
     brand: EBrand.PEUGEOT,
-    image: PEUGEOT_EXPERT_IMG,
+    image: 'PEUGEOT_EXPERT.png',
     parts: [{"type":"BRAKES","position":{"x":53,"y":72}},{"type":"SUSPENSION","position":{"x":46,"y":59}},
     {"type":"WHEELS","position":{"x":42,"y":70}},{"type":"BODY","position":{"x":31,"y":57}},
     {"type":"FRAME","position":{"x":32,"y":67}},{"type":"INTERIOR","position":{"x":51,"y":35}},
@@ -6934,7 +6359,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_2_AXLES,
     brand: EBrand.PITTS,
-    image: PITTS_FLATBED_LB35_IMG,
+    image: 'PITTS_FLATBED_LB35.png',
     parts: [{"type":"BRAKES","position":{"x":56,"y":59}},{"type":"WHEELS","position":{"x":49,"y":58}},
     {"type":"SUSPENSION","position":{"x":54,"y":53}},{"type":"FRAME","position":{"x":34,"y":51}},
     {"type":"SUPPORT","position":{"x":14,"y":50}},{"type":"LIGHTS","position":{"x":86,"y":61}},
@@ -6946,7 +6371,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_2_AXLES,
     brand: EBrand.PITTS,
-    image: PITTS_LOWBED_LB35_DC_IMG,
+    image: 'PITTS_LOWBED_LB35_DC.png',
     parts: [{"type":"BRAKES","position":{"x":88,"y":49}},{"type":"SUSPENSION","position":{"x":91,"y":45}},
     {"type":"WHEELS","position":{"x":92,"y":49}},{"type":"FRAME","position":{"x":72,"y":51}},
     {"type":"SUPPORT","position":{"x":49,"y":60}},{"type":"LIGHTS","position":{"x":95,"y":46}},
@@ -6957,7 +6382,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.PITTS,
-    image: PITTS_LOWBED_LB51_DC_IMG,
+    image: 'PITTS_LOWBED_LB51_DC.png',
     parts: [{"type":"BRAKES","position":{"x":87,"y":44}},{"type":"SUSPENSION","position":{"x":91,"y":41}},
     {"type":"WHEELS","position":{"x":92,"y":47}},{"type":"FRAME","position":{"x":58,"y":54}},
     {"type":"SUPPORT","position":{"x":44,"y":58}},{"type":"LIGHTS","position":{"x":96,"y":42}},
@@ -6968,7 +6393,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.PITTS,
-    image: PITTS_LOWBED_LB55_DC_IMG,
+    image: 'PITTS_LOWBED_LB55_DC.png',
     parts: [{"type":"BRAKES","position":{"x":89,"y":48}},{"type":"SUSPENSION","position":{"x":92,"y":44}},
     {"type":"WHEELS","position":{"x":93,"y":50}},{"type":"FRAME","position":{"x":67,"y":56}},
     {"type":"SUPPORT","position":{"x":58,"y":62}},{"type":"LIGHTS","position":{"x":98,"y":47}},
@@ -6979,7 +6404,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_2_AXLES,
     brand: EBrand.POLAR_TANK,
-    image: POLAR_TANK_CHEMICAL_IMG,
+    image: 'POLAR_TANK_CHEMICAL.png',
     parts: [{"type":"BRAKES","position":{"x":34,"y":64}},{"type":"SUSPENSION","position":{"x":40,"y":55}},
     {"type":"WHEELS","position":{"x":41,"y":61}},{"type":"BODY","position":{"x":45,"y":39}},
     {"type":"FRAME","position":{"x":57,"y":52}},{"type":"SUPPORT","position":{"x":82,"y":60}},
@@ -6991,7 +6416,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_2_AXLES,
     brand: EBrand.POLAR_TANK,
-    image: POLAR_TANK_DEEP_DROP_IMG,
+    image: 'POLAR_TANK_DEEP_DROP.png',
     parts: [{"type":"BRAKES","position":{"x":34,"y":60}},{"type":"SUSPENSION","position":{"x":37,"y":53}},
     {"type":"WHEELS","position":{"x":42,"y":59}},{"type":"BODY","position":{"x":50,"y":38}},
     {"type":"FRAME","position":{"x":55,"y":49}},{"type":"SUPPORT","position":{"x":81,"y":58}},
@@ -7003,7 +6428,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_2_AXLES,
     brand: EBrand.POLAR_TANK,
-    image: POLAR_TANK_ENERGY_IMG,
+    image: 'POLAR_TANK_ENERGY.png',
     parts: [{"type":"BRAKES","position":{"x":31,"y":64}},{"type":"SUSPENSION","position":{"x":36,"y":55}},
     {"type":"WHEELS","position":{"x":40,"y":61}},{"type":"BODY","position":{"x":48,"y":41}},
     {"type":"FRAME","position":{"x":56,"y":50}},{"type":"SUPPORT","position":{"x":81,"y":59}},
@@ -7015,7 +6440,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_2_AXLES,
     brand: EBrand.POLAR_TANK,
-    image: POLAR_TANK_FOOD_IMG,
+    image: 'POLAR_TANK_FOOD.png',
     parts: [{"type":"BRAKES","position":{"x":36,"y":62}},{"type":"SUSPENSION","position":{"x":39,"y":54}},
     {"type":"WHEELS","position":{"x":42,"y":60}},{"type":"BODY","position":{"x":51,"y":41}},
     {"type":"FRAME","position":{"x":60,"y":52}},{"type":"SUPPORT","position":{"x":82,"y":57}},
@@ -7027,7 +6452,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_2_AXLES,
     brand: EBrand.POLAR_TANK,
-    image: POLAR_TANK_HOT_IMG,
+    image: 'POLAR_TANK_HOT.png',
     parts: [{"type":"BRAKES","position":{"x":34,"y":61}},{"type":"SUSPENSION","position":{"x":42,"y":55}},
     {"type":"WHEELS","position":{"x":41,"y":62}},{"type":"BODY","position":{"x":45,"y":43}},
     {"type":"FRAME","position":{"x":53,"y":51}},{"type":"SUPPORT","position":{"x":82,"y":57}},
@@ -7040,7 +6465,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_2_AXLES,
     brand: EBrand.POLAR_TANK,
-    image: POLAR_TANK_PETROLEUM_IMG,
+    image: 'POLAR_TANK_PETROLEUM.png',
     parts: [{"type":"BRAKES","position":{"x":31,"y":62}},{"type":"WHEELS","position":{"x":43,"y":61}},
     {"type":"SUSPENSION","position":{"x":34,"y":55}},{"type":"BODY","position":{"x":56,"y":43}},
     {"type":"FRAME","position":{"x":54,"y":48}},{"type":"SUPPORT","position":{"x":82,"y":59}},
@@ -7052,7 +6477,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_2_AXLES,
     brand: EBrand.PRATT,
-    image: PRATT_CONTAINER_CC242_IMG,
+    image: 'PRATT_CONTAINER_CC242.png',
     parts: [{"type":"BRAKES","position":{"x":63,"y":60}},{"type":"SUSPENSION","position":{"x":57,"y":48}},
     {"type":"WHEELS","position":{"x":52,"y":58}},{"type":"FRAME","position":{"x":42,"y":44}},
     {"type":"SUPPORT","position":{"x":25,"y":58}},{"type":"LIGHTS","position":{"x":88,"y":49}},
@@ -7063,7 +6488,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.PRATT,
-    image: PRATT_CONTAINER_CC243_IMG,
+    image: 'PRATT_CONTAINER_CC243.png',
     parts: [{"type":"BRAKES","position":{"x":39,"y":54}},{"type":"SUSPENSION","position":{"x":38,"y":42}},
     {"type":"WHEELS","position":{"x":30,"y":54}},{"type":"FRAME","position":{"x":29,"y":38}},
     {"type":"SUPPORT","position":{"x":17,"y":36}},{"type":"LIGHTS","position":{"x":55,"y":43}},
@@ -7074,7 +6499,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.PRATT,
-    image: PRATT_CONTAINER_D3141_IMG,
+    image: 'PRATT_CONTAINER_D3141.png',
     parts: [{"type":"BRAKES","position":{"x":23,"y":49}},{"type":"SUSPENSION","position":{"x":21,"y":42}},
     {"type":"WHEELS","position":{"x":18,"y":48}},{"type":"FRAME","position":{"x":32,"y":48}},
     {"type":"SUPPORT","position":{"x":39,"y":65}},{"type":"LIGHTS","position":{"x":10,"y":36}},
@@ -7085,7 +6510,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.PRATT,
-    image: PRATT_CONTAINER_GN2040EZ_IMG,
+    image: 'PRATT_CONTAINER_GN2040EZ.png',
     parts: [{"type":"BRAKES","position":{"x":55,"y":54}},{"type":"SUSPENSION","position":{"x":52,"y":48}},
     {"type":"WHEELS","position":{"x":45,"y":53}},{"type":"FRAME","position":{"x":34,"y":41}},
     {"type":"SUPPORT","position":{"x":20,"y":41}},{"type":"LIGHTS","position":{"x":70,"y":52}},
@@ -7096,7 +6521,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_2_AXLES,
     brand: EBrand.PRATT,
-    image: PRATT_FLATBED_FB472SA_IMG,
+    image: 'PRATT_FLATBED_FB472SA.png',
     parts: [{"type":"BRAKES","position":{"x":82,"y":48}},{"type":"SUSPENSION","position":{"x":87,"y":43}},
     {"type":"WHEELS","position":{"x":86,"y":48}},{"type":"FRAME","position":{"x":62,"y":50}},
     {"type":"SUPPORT","position":{"x":47,"y":61}},{"type":"LIGHTS","position":{"x":94,"y":41}},
@@ -7107,7 +6532,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_2_AXLES,
     brand: EBrand.PRATT,
-    image: PRATT_FLATBED_FB533_IMG,
+    image: 'PRATT_FLATBED_FB533.png',
     parts: [{"type":"BRAKES","position":{"x":76,"y":49}},{"type":"SUSPENSION","position":{"x":78,"y":43}},
     {"type":"WHEELS","position":{"x":80,"y":46}},{"type":"FRAME","position":{"x":47,"y":48}},
     {"type":"SUPPORT","position":{"x":55,"y":56}},{"type":"LIGHTS","position":{"x":91,"y":39}},
@@ -7118,7 +6543,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_2_AXLES,
     brand: EBrand.PRATT,
-    image: PRATT_FLATBED_FB4228P_IMG,
+    image: 'PRATT_FLATBED_FB4228P.png',
     parts: [{"type":"BRAKES","position":{"x":42,"y":58}},{"type":"SUSPENSION","position":{"x":40,"y":49}},
     {"type":"WHEELS","position":{"x":31,"y":58}},{"type":"FRAME","position":{"x":23,"y":39}},
     {"type":"SUPPORT","position":{"x":12,"y":37}},{"type":"LIGHTS","position":{"x":58,"y":56}},
@@ -7129,7 +6554,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.PRATT,
-    image: PRATT_LOWBED_LB5374_40_IMG,
+    image: 'PRATT_LOWBED_LB5374_40.png',
     parts: [{"type":"BRAKES","position":{"x":64,"y":55}},{"type":"SUSPENSION","position":{"x":60,"y":51}},
     {"type":"WHEELS","position":{"x":57,"y":57}},{"type":"FRAME","position":{"x":18,"y":45}},
     {"type":"SUPPORT","position":{"x":11,"y":43}},{"type":"LIGHTS","position":{"x":87,"y":58}},
@@ -7140,7 +6565,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_3_AXLES,
     brand: EBrand.PRATT,
-    image: PRATT_LOWBED_MD482A_IMG,
+    image: 'PRATT_LOWBED_MD482A.png',
     parts: [{"type":"BRAKES","position":{"x":54,"y":57}},{"type":"SUSPENSION","position":{"x":52,"y":52}},
     {"type":"WHEELS","position":{"x":49,"y":55}},{"type":"FRAME","position":{"x":32,"y":47}},
     {"type":"SUPPORT","position":{"x":14,"y":39}},{"type":"LIGHTS","position":{"x":77,"y":62}},
@@ -7151,7 +6576,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].LOWBED_2_AXLES,
     brand: EBrand.PRATT,
-    image: PRATT_LOWBED_MDE48702A_IMG,
+    image: 'PRATT_LOWBED_MDE48702A.png',
     parts: [{"type":"BRAKES","position":{"x":71,"y":60}},{"type":"SUSPENSION","position":{"x":67,"y":57}},
     {"type":"WHEELS","position":{"x":64,"y":63}},{"type":"FRAME","position":{"x":26,"y":45}},
     {"type":"SUPPORT","position":{"x":6,"y":38}},{"type":"LIGHTS","position":{"x":78,"y":60}},
@@ -7162,7 +6587,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.REINKE,
-    image: REINKE_FLATBED_IMG,
+    image: 'REINKE_FLATBED.png',
     parts: [{"type":"BRAKES","position":{"x":60,"y":53}},{"type":"WHEELS","position":{"x":68,"y":56}},
     {"type":"SUSPENSION","position":{"x":66,"y":47}},{"type":"FRAME","position":{"x":80,"y":44}},
     {"type":"SUPPORT","position":{"x":89,"y":47}},{"type":"LIGHTS","position":{"x":35,"y":52}},
@@ -7173,7 +6598,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.RENAULT,
-    image: RENAULT_MAGNUM_4x2_IMG,
+    image: 'RENAULT_MAGNUM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":48,"y":77}},{"type":"SUSPENSION","position":{"x":52,"y":68}},
             {"type":"WHEELS","position":{"x":57,"y":78}},{"type":"BODY","position":{"x":20,"y":49}},
             {"type":"FRAME","position":{"x":23,"y":79}},{"type":"INTERIOR","position":{"x":34,"y":39}},
@@ -7188,7 +6613,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.RENAULT,
-    image: RENAULT_MAGNUM_6x2_IMG,
+    image: 'RENAULT_MAGNUM_6x2.png',
     parts: [{"type":"FUEL","position":{"x":74,"y":70}},{"type":"GEARBOX","position":{"x":48,"y":65}},
             {"type":"EXHAUST","position":{"x":64,"y":76}},{"type":"ENGINE","position":{"x":34,"y":75}},
             {"type":"COMPRESSOR","position":{"x":26,"y":75}},{"type":"FIFTH_WHEEL","position":{"x":72,"y":61}},
@@ -7203,7 +6628,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L2_BOX,
     brand: EBrand.RENAULT,
-    image: RENAULT_MASTER_BOX_L2_IMG,
+    image: 'RENAULT_MASTER_BOX_L2.png',
     parts: [{"type":"BRAKES","position":{"x":79,"y":66}},{"type":"SUSPENSION","position":{"x":81,"y":60}},
     {"type":"WHEELS","position":{"x":84,"y":64}},{"type":"FRAME","position":{"x":63,"y":65}},
     {"type":"INTERIOR","position":{"x":71,"y":51}},{"type":"BODY","position":{"x":69,"y":59}},
@@ -7218,7 +6643,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L2BODY,
     brand: EBrand.RENAULT,
-    image: RENAULT_MASTER_FRAME_L2_IMG,
+    image: 'RENAULT_MASTER_FRAME_L2.png',
     parts: [{"type":"BRAKES","position":{"x":80,"y":62}},{"type":"SUSPENSION","position":{"x":85,"y":57}},
     {"type":"WHEELS","position":{"x":88,"y":64}},{"type":"BODY","position":{"x":69,"y":57}},
     {"type":"FRAME","position":{"x":67,"y":64}},{"type":"INTERIOR","position":{"x":69,"y":42}},
@@ -7232,7 +6657,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L2H2,
     brand: EBrand.RENAULT,
-    image: RENAULT_MASTER_L2H2_IMG,
+    image: 'RENAULT_MASTER_L2H2.png',
     parts: [{"type":"BRAKES","position":{"x":42,"y":69}},{"type":"SUSPENSION","position":{"x":45,"y":59}},
     {"type":"WHEELS","position":{"x":49,"y":64}},{"type":"BODY","position":{"x":59,"y":53}},
     {"type":"INTERIOR","position":{"x":47,"y":43}},{"type":"FRAME","position":{"x":58,"y":66}},
@@ -7247,7 +6672,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L2_TIPPER,
     brand: EBrand.RENAULT,
-    image: RENAULT_MASTER_TIPPER_L2_IMG,
+    image: 'RENAULT_MASTER_TIPPER_L2.png',
     parts: [{"type":"BRAKES","position":{"x":81,"y":64}},{"type":"SUSPENSION","position":{"x":85,"y":56}},
     {"type":"WHEELS","position":{"x":86,"y":62}},{"type":"BODY","position":{"x":65,"y":56}},
     {"type":"FRAME","position":{"x":66,"y":64}},{"type":"INTERIOR","position":{"x":67,"y":45}},
@@ -7261,7 +6686,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.RENAULT,
-    image: RENAULT_PREMIUM_4x2_IMG,
+    image: 'RENAULT_PREMIUM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":74}},{"type":"WHEELS","position":{"x":60,"y":78}},
             {"type":"SUSPENSION","position":{"x":52,"y":64}},{"type":"BODY","position":{"x":15,"y":54}},
             {"type":"FRAME","position":{"x":24,"y":79}},{"type":"INTERIOR","position":{"x":26,"y":40}},
@@ -7276,7 +6701,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.RENAULT,
-    image: RENAULT_PREMIUM_6x2_IMG,
+    image: 'RENAULT_PREMIUM_6x2.png',
     parts: [{"type":"WHEELS","position":{"x":54,"y":78}},{"type":"SUSPENSION","position":{"x":50,"y":65}},
             {"type":"BRAKES","position":{"x":46,"y":76}},{"type":"INTERIOR","position":{"x":27,"y":44}},
             {"type":"FRAME","position":{"x":24,"y":80}},{"type":"BODY","position":{"x":19,"y":51}},
@@ -7291,7 +6716,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.RENAULT,
-    image: RENAULT_RANGE_T_4x2_IMG,
+    image: 'RENAULT_RANGE_T_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":76}},{"type":"SUSPENSION","position":{"x":53,"y":67}},
     {"type":"WHEELS","position":{"x":57,"y":81}},{"type":"BODY","position":{"x":15,"y":54}},
     {"type":"FRAME","position":{"x":18,"y":80}},{"type":"INTERIOR","position":{"x":28,"y":34}},
@@ -7306,7 +6731,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.RENAULT,
-    image: RENAULT_RANGE_T_6x2_IMG,
+    image: 'RENAULT_RANGE_T_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":47,"y":76}},{"type":"SUSPENSION","position":{"x":50,"y":65}},
             {"type":"WHEELS","position":{"x":58,"y":77}},{"type":"BODY","position":{"x":17,"y":52}},
             {"type":"FRAME","position":{"x":20,"y":78}},{"type":"INTERIOR","position":{"x":33,"y":38}},
@@ -7321,7 +6746,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1H1,
     brand: EBrand.RENAULT,
-    image: RENAULT_TRAFIC_IMG,
+    image: 'RENAULT_TRAFIC.png',
     parts: [{"type":"BRAKES","position":{"x":53,"y":70}},{"type":"SUSPENSION","position":{"x":62,"y":57}},
     {"type":"WHEELS","position":{"x":63,"y":69}},{"type":"BODY","position":{"x":70,"y":50}},
     {"type":"FRAME","position":{"x":76,"y":70}},{"type":"INTERIOR","position":{"x":45,"y":36}},
@@ -7336,7 +6761,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_G_DAYCAB_SEMI_4x2_IMG,
+    image: 'SCANIA_G_DAYCAB_SEMI_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":52,"y":78}},{"type":"SUSPENSION","position":{"x":58,"y":58}},
     {"type":"WHEELS","position":{"x":60,"y":73}},{"type":"BODY","position":{"x":47,"y":53}},
     {"type":"FRAME","position":{"x":45,"y":78}},{"type":"INTERIOR","position":{"x":38,"y":31}},
@@ -7351,7 +6776,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_G_DAYCAB_SEMI_6x2_IMG,
+    image: 'SCANIA_G_DAYCAB_SEMI_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":77}},{"type":"SUSPENSION","position":{"x":56,"y":60}},
     {"type":"WHEELS","position":{"x":60,"y":70}},{"type":"BODY","position":{"x":54,"y":52}},
     {"type":"FRAME","position":{"x":42,"y":75}},{"type":"INTERIOR","position":{"x":35,"y":33}},
@@ -7366,7 +6791,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_G_DAYCAB_TANDEM_4x2_IMG,
+    image: 'SCANIA_G_DAYCAB_TANDEM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":44,"y":72}},{"type":"SUSPENSION","position":{"x":52,"y":57}},
     {"type":"WHEELS","position":{"x":54,"y":67}},{"type":"BODY","position":{"x":40,"y":54}},
     {"type":"FRAME","position":{"x":41,"y":72}},{"type":"INTERIOR","position":{"x":35,"y":37}},
@@ -7381,7 +6806,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_G_DAYCAB_TANDEM_6x2_IMG,
+    image: 'SCANIA_G_DAYCAB_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":48,"y":75}},{"type":"SUSPENSION","position":{"x":53,"y":60}},
     {"type":"WHEELS","position":{"x":56,"y":72}},{"type":"BODY","position":{"x":39,"y":55}},
     {"type":"FRAME","position":{"x":43,"y":74}},{"type":"INTERIOR","position":{"x":30,"y":34}},
@@ -7396,7 +6821,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.SCANIA,
-    image: SCANIA_G_DAYCAB_TANDEM_8x4_IMG,
+    image: 'SCANIA_G_DAYCAB_TANDEM_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":71}},{"type":"SUSPENSION","position":{"x":51,"y":57}},
     {"type":"WHEELS","position":{"x":53,"y":68}},{"type":"BODY","position":{"x":37,"y":53}},
     {"type":"FRAME","position":{"x":40,"y":71}},{"type":"INTERIOR","position":{"x":27,"y":36}},
@@ -7411,7 +6836,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_G_SLEEPER_SEMI_4x2_IMG,
+    image: 'SCANIA_G_SLEEPER_SEMI_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":83}},{"type":"SUSPENSION","position":{"x":59,"y":66}},
     {"type":"WHEELS","position":{"x":61,"y":77}},{"type":"BODY","position":{"x":45,"y":56}},
     {"type":"FRAME","position":{"x":46,"y":82}},{"type":"INTERIOR","position":{"x":38,"y":37}},
@@ -7426,7 +6851,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_G_SLEEPER_SEMI_6x2_IMG,
+    image: 'SCANIA_G_SLEEPER_SEMI_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":84}},{"type":"SUSPENSION","position":{"x":56,"y":67}},
     {"type":"WHEELS","position":{"x":59,"y":79}},{"type":"BODY","position":{"x":45,"y":61}},
     {"type":"FRAME","position":{"x":44,"y":81}},{"type":"INTERIOR","position":{"x":33,"y":39}},
@@ -7441,7 +6866,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_G_SLEEPER_TANDEM_4x2_IMG,
+    image: 'SCANIA_G_SLEEPER_TANDEM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":76}},{"type":"SUSPENSION","position":{"x":50,"y":63}},
     {"type":"WHEELS","position":{"x":51,"y":72}},{"type":"BODY","position":{"x":39,"y":59}},
     {"type":"FRAME","position":{"x":42,"y":77}},{"type":"INTERIOR","position":{"x":33,"y":43}},
@@ -7456,7 +6881,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_G_SLEEPER_TANDEM_6x2_IMG,
+    image: 'SCANIA_G_SLEEPER_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":49,"y":78}},{"type":"SUSPENSION","position":{"x":55,"y":65}},
     {"type":"WHEELS","position":{"x":57,"y":74}},{"type":"BODY","position":{"x":40,"y":59}},
     {"type":"FRAME","position":{"x":44,"y":79}},{"type":"INTERIOR","position":{"x":26,"y":42}},
@@ -7471,7 +6896,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.SCANIA,
-    image: SCANIA_G_SLEEPER_TANDEM_8x4_IMG,
+    image: 'SCANIA_G_SLEEPER_TANDEM_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":46,"y":78}},{"type":"SUSPENSION","position":{"x":53,"y":63}},
     {"type":"WHEELS","position":{"x":54,"y":74}},{"type":"BODY","position":{"x":38,"y":57}},
     {"type":"INTERIOR","position":{"x":24,"y":40}},{"type":"FRAME","position":{"x":42,"y":77}},
@@ -7486,7 +6911,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2_small,
     brand: EBrand.SCANIA,
-    image: SCANIA_L_SEMI_4x2_IMG,
+    image: 'SCANIA_L_SEMI_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":53,"y":75}},{"type":"SUSPENSION","position":{"x":62,"y":63}},
     {"type":"WHEELS","position":{"x":63,"y":71}},{"type":"BODY","position":{"x":43,"y":60}},
     {"type":"FRAME","position":{"x":49,"y":75}},{"type":"INTERIOR","position":{"x":36,"y":42}},
@@ -7501,7 +6926,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_small,
     brand: EBrand.SCANIA,
-    image: SCANIA_L_SEMI_6x2_IMG,
+    image: 'SCANIA_L_SEMI_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":53,"y":76}},{"type":"SUSPENSION","position":{"x":59,"y":60}},
     {"type":"WHEELS","position":{"x":63,"y":71}},{"type":"BODY","position":{"x":42,"y":58}},
     {"type":"FRAME","position":{"x":44,"y":73}},{"type":"INTERIOR","position":{"x":33,"y":42}},
@@ -7516,7 +6941,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.SCANIA,
-    image: SCANIA_L_TANDEM_4x2_IMG,
+    image: 'SCANIA_L_TANDEM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":49,"y":70}},{"type":"SUSPENSION","position":{"x":53,"y":58}},
     {"type":"WHEELS","position":{"x":54,"y":68}},{"type":"BODY","position":{"x":35,"y":56}},
     {"type":"FRAME","position":{"x":41,"y":71}},{"type":"INTERIOR","position":{"x":29,"y":44}},
@@ -7531,7 +6956,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2_small,
     brand: EBrand.SCANIA,
-    image: SCANIA_L_TANDEM_6x2_IMG,
+    image: 'SCANIA_L_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":70}},{"type":"SUSPENSION","position":{"x":58,"y":57}},
     {"type":"WHEELS","position":{"x":60,"y":70}},{"type":"BODY","position":{"x":39,"y":57}},
     {"type":"FRAME","position":{"x":41,"y":71}},{"type":"INTERIOR","position":{"x":28,"y":44}},
@@ -7546,7 +6971,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_G_DAYCAB_SEMI_6x2_IMG,
+    image: 'SCANIA_OR_G_DAYCAB_SEMI_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":76}},{"type":"SUSPENSION","position":{"x":58,"y":59}},
     {"type":"WHEELS","position":{"x":59,"y":74}},{"type":"BODY","position":{"x":44,"y":52}},
     {"type":"INTERIOR","position":{"x":33,"y":34}},{"type":"FRAME","position":{"x":44,"y":71}},
@@ -7561,7 +6986,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_G_DAYCAB_TANDEM_6x2_IMG,
+    image: 'SCANIA_OR_G_DAYCAB_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":49,"y":73}},{"type":"SUSPENSION","position":{"x":54,"y":59}},
     {"type":"WHEELS","position":{"x":56,"y":70}},{"type":"BODY","position":{"x":40,"y":51}},
     {"type":"FRAME","position":{"x":41,"y":70}},{"type":"INTERIOR","position":{"x":25,"y":32}},
@@ -7576,7 +7001,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_G_DAYCAB_TANDEM_8x4_IMG,
+    image: 'SCANIA_OR_G_DAYCAB_TANDEM_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":47,"y":71}},{"type":"SUSPENSION","position":{"x":53,"y":58}},
     {"type":"WHEELS","position":{"x":54,"y":67}},{"type":"BODY","position":{"x":39,"y":52}},
     {"type":"FRAME","position":{"x":41,"y":69}},{"type":"INTERIOR","position":{"x":29,"y":36}},
@@ -7591,7 +7016,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_G_SLEEPER_SEMI_6x2_IMG,
+    image: 'SCANIA_OR_G_SLEEPER_SEMI_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":48,"y":81}},{"type":"SUSPENSION","position":{"x":59,"y":64}},
     {"type":"WHEELS","position":{"x":58,"y":74}},{"type":"BODY","position":{"x":46,"y":58}},
     {"type":"FRAME","position":{"x":45,"y":77}},{"type":"INTERIOR","position":{"x":36,"y":41}},
@@ -7606,7 +7031,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_G_SLEEPER_TANDEM_6x2_IMG,
+    image: 'SCANIA_OR_G_SLEEPER_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":47,"y":78}},{"type":"SUSPENSION","position":{"x":55,"y":64}},
     {"type":"WHEELS","position":{"x":57,"y":77}},{"type":"BODY","position":{"x":40,"y":59}},
     {"type":"FRAME","position":{"x":42,"y":75}},{"type":"INTERIOR","position":{"x":25,"y":38}},
@@ -7621,7 +7046,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_G_SLEEPER_TANDEM_8x4_IMG,
+    image: 'SCANIA_OR_G_SLEEPER_TANDEM_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":44,"y":75}},{"type":"SUSPENSION","position":{"x":52,"y":62}},
     {"type":"WHEELS","position":{"x":53,"y":73}},{"type":"BODY","position":{"x":40,"y":57}},
     {"type":"FRAME","position":{"x":41,"y":75}},{"type":"INTERIOR","position":{"x":24,"y":38}},
@@ -7636,7 +7061,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_P_DAYCAB_SEMI_6x2_IMG,
+    image: 'SCANIA_OR_P_DAYCAB_SEMI_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":75}},{"type":"SUSPENSION","position":{"x":58,"y":57}},
     {"type":"WHEELS","position":{"x":59,"y":71}},{"type":"BODY","position":{"x":41,"y":51}},
     {"type":"FRAME","position":{"x":44,"y":71}},{"type":"INTERIOR","position":{"x":37,"y":34}},
@@ -7651,7 +7076,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_P_DAYCAB_TANDEM_6x2_IMG,
+    image: 'SCANIA_OR_P_DAYCAB_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":46,"y":71}},{"type":"SUSPENSION","position":{"x":53,"y":57}},
     {"type":"WHEELS","position":{"x":58,"y":70}},{"type":"BODY","position":{"x":42,"y":50}},
     {"type":"FRAME","position":{"x":44,"y":69}},{"type":"INTERIOR","position":{"x":23,"y":36}},
@@ -7666,7 +7091,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_P_DAYCAB_TANDEM_8x4_IMG,
+    image: 'SCANIA_OR_P_DAYCAB_TANDEM_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":48,"y":67}},{"type":"SUSPENSION","position":{"x":52,"y":58}},
     {"type":"WHEELS","position":{"x":55,"y":64}},{"type":"BODY","position":{"x":36,"y":51}},
     {"type":"FRAME","position":{"x":39,"y":67}},{"type":"INTERIOR","position":{"x":19,"y":36}},
@@ -7681,7 +7106,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_P_SLEEPER_SEMI_6x2_IMG,
+    image: 'SCANIA_OR_P_SLEEPER_SEMI_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":48,"y":80}},{"type":"SUSPENSION","position":{"x":59,"y":61}},
     {"type":"WHEELS","position":{"x":55,"y":74}},{"type":"BODY","position":{"x":41,"y":55}},
     {"type":"FRAME","position":{"x":42,"y":76}},{"type":"INTERIOR","position":{"x":38,"y":38}},
@@ -7696,7 +7121,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_P_SLEEPER_TANDEM_6x2_IMG,
+    image: 'SCANIA_OR_P_SLEEPER_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":46,"y":76}},{"type":"SUSPENSION","position":{"x":53,"y":64}},
     {"type":"WHEELS","position":{"x":58,"y":75}},{"type":"BODY","position":{"x":39,"y":57}},
     {"type":"FRAME","position":{"x":41,"y":74}},{"type":"INTERIOR","position":{"x":19,"y":41}},
@@ -7711,7 +7136,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_P_SLEEPER_TANDEM_8x4_IMG,
+    image: 'SCANIA_OR_P_SLEEPER_TANDEM_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":76}},{"type":"SUSPENSION","position":{"x":52,"y":62}},
     {"type":"WHEELS","position":{"x":54,"y":73}},{"type":"BODY","position":{"x":35,"y":53}},
     {"type":"FRAME","position":{"x":40,"y":73}},{"type":"INTERIOR","position":{"x":23,"y":43}},
@@ -7726,7 +7151,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_R_DAYCAB_SEMI_6x2_IMG,
+    image: 'SCANIA_OR_R_DAYCAB_SEMI_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":75}},{"type":"SUSPENSION","position":{"x":56,"y":60}},
     {"type":"WHEELS","position":{"x":60,"y":71}},{"type":"BODY","position":{"x":41,"y":53}},
     {"type":"FRAME","position":{"x":43,"y":73}},{"type":"INTERIOR","position":{"x":28,"y":32}},
@@ -7741,7 +7166,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_R_DAYCAB_TANDEM_6x2_IMG,
+    image: 'SCANIA_OR_R_DAYCAB_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":48,"y":73}},{"type":"SUSPENSION","position":{"x":57,"y":60}},
     {"type":"WHEELS","position":{"x":54,"y":71}},{"type":"BODY","position":{"x":40,"y":56}},
     {"type":"INTERIOR","position":{"x":24,"y":32}},{"type":"FRAME","position":{"x":41,"y":72}},
@@ -7756,7 +7181,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_R_DAYCAB_TANDEM_8x4_IMG,
+    image: 'SCANIA_OR_R_DAYCAB_TANDEM_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":47,"y":71}},{"type":"SUSPENSION","position":{"x":51,"y":60}},
     {"type":"WHEELS","position":{"x":52,"y":67}},{"type":"BODY","position":{"x":37,"y":53}},
     {"type":"FRAME","position":{"x":42,"y":70}},{"type":"INTERIOR","position":{"x":20,"y":32}},
@@ -7771,7 +7196,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_R_SLEEPER_SEMI_6x2_IMG,
+    image: 'SCANIA_OR_R_SLEEPER_SEMI_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":48,"y":81}},{"type":"SUSPENSION","position":{"x":54,"y":65}},
     {"type":"WHEELS","position":{"x":58,"y":76}},{"type":"BODY","position":{"x":44,"y":60}},
     {"type":"FRAME","position":{"x":42,"y":74}},{"type":"INTERIOR","position":{"x":38,"y":36}},
@@ -7786,7 +7211,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_R_SLEEPER_TANDEM_6x2_IMG,
+    image: 'SCANIA_OR_R_SLEEPER_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":46,"y":77}},{"type":"SUSPENSION","position":{"x":53,"y":66}},
     {"type":"WHEELS","position":{"x":56,"y":77}},{"type":"BODY","position":{"x":39,"y":60}},
     {"type":"FRAME","position":{"x":40,"y":77}},{"type":"INTERIOR","position":{"x":23,"y":38}},
@@ -7801,7 +7226,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_R_SLEEPER_TANDEM_8x4_IMG,
+    image: 'SCANIA_OR_R_SLEEPER_TANDEM_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":46,"y":77}},{"type":"SUSPENSION","position":{"x":52,"y":65}},
     {"type":"WHEELS","position":{"x":53,"y":77}},{"type":"BODY","position":{"x":40,"y":59}},
     {"type":"FRAME","position":{"x":41,"y":76}},{"type":"INTERIOR","position":{"x":22,"y":37}},
@@ -7816,7 +7241,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_S_SEMI_6x2_IMG,
+    image: 'SCANIA_OR_S_SEMI_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":49,"y":81}},{"type":"SUSPENSION","position":{"x":56,"y":69}},
     {"type":"WHEELS","position":{"x":57,"y":78}},{"type":"BODY","position":{"x":42,"y":58}},
     {"type":"FRAME","position":{"x":44,"y":77}},{"type":"INTERIOR","position":{"x":38,"y":37}},
@@ -7831,7 +7256,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_S_TANDEM_6x2_IMG,
+    image: 'SCANIA_OR_S_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":48,"y":78}},{"type":"SUSPENSION","position":{"x":55,"y":66}},
     {"type":"WHEELS","position":{"x":56,"y":77}},{"type":"BODY","position":{"x":39,"y":62}},
     {"type":"FRAME","position":{"x":43,"y":77}},{"type":"INTERIOR","position":{"x":25,"y":37}},
@@ -7846,7 +7271,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.SCANIA,
-    image: SCANIA_OR_S_TANDEM_8x4_IMG,
+    image: 'SCANIA_OR_S_TANDEM_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":46,"y":76}},{"type":"SUSPENSION","position":{"x":52,"y":67}},
     {"type":"WHEELS","position":{"x":53,"y":76}},{"type":"BODY","position":{"x":37,"y":63}},
     {"type":"INTERIOR","position":{"x":23,"y":37}},{"type":"FRAME","position":{"x":39,"y":77}},
@@ -7861,7 +7286,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_P_DAYCAB_SEMI_4x2_IMG,
+    image: 'SCANIA_P_DAYCAB_SEMI_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":52,"y":76}},{"type":"SUSPENSION","position":{"x":63,"y":58}},
     {"type":"WHEELS","position":{"x":60,"y":70}},{"type":"BODY","position":{"x":42,"y":54}},
     {"type":"FRAME","position":{"x":44,"y":75}},{"type":"INTERIOR","position":{"x":34,"y":36}},
@@ -7876,7 +7301,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_P_DAYCAB_SEMI_6x2_IMG,
+    image: 'SCANIA_P_DAYCAB_SEMI_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":49,"y":73}},{"type":"SUSPENSION","position":{"x":58,"y":60}},
     {"type":"WHEELS","position":{"x":59,"y":70}},{"type":"BODY","position":{"x":42,"y":55}},
     {"type":"FRAME","position":{"x":43,"y":76}},{"type":"INTERIOR","position":{"x":33,"y":34}},
@@ -7891,7 +7316,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_P_DAYCAB_TANDEM_4x2_IMG,
+    image: 'SCANIA_P_DAYCAB_TANDEM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":68}},{"type":"SUSPENSION","position":{"x":51,"y":58}},
     {"type":"WHEELS","position":{"x":54,"y":67}},{"type":"BODY","position":{"x":33,"y":57}},
     {"type":"FRAME","position":{"x":41,"y":70}},{"type":"INTERIOR","position":{"x":21,"y":38}},
@@ -7906,7 +7331,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_P_DAYCAB_TANDEM_6x2_IMG,
+    image: 'SCANIA_P_DAYCAB_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":70}},{"type":"SUSPENSION","position":{"x":56,"y":57}},
     {"type":"WHEELS","position":{"x":57,"y":68}},{"type":"BODY","position":{"x":39,"y":55}},
     {"type":"FRAME","position":{"x":40,"y":71}},{"type":"INTERIOR","position":{"x":27,"y":38}},
@@ -7921,7 +7346,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.SCANIA,
-    image: SCANIA_P_DAYCAB_TANDEM_8x4_IMG,
+    image: 'SCANIA_P_DAYCAB_TANDEM_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":70}},{"type":"SUSPENSION","position":{"x":51,"y":59}},
     {"type":"WHEELS","position":{"x":52,"y":66}},{"type":"BODY","position":{"x":34,"y":57}},
     {"type":"FRAME","position":{"x":41,"y":69}},{"type":"INTERIOR","position":{"x":23,"y":35}},
@@ -7936,7 +7361,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_P_SLEEPER_SEMI_4x2_IMG,
+    image: 'SCANIA_P_SLEEPER_SEMI_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":53,"y":82}},{"type":"SUSPENSION","position":{"x":59,"y":66}},
     {"type":"WHEELS","position":{"x":63,"y":76}},{"type":"BODY","position":{"x":45,"y":57}},
     {"type":"FRAME","position":{"x":44,"y":81}},{"type":"INTERIOR","position":{"x":36,"y":41}},
@@ -7951,7 +7376,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_P_SLEEPER_SEMI_6x2_IMG,
+    image: 'SCANIA_P_SLEEPER_SEMI_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":82}},{"type":"SUSPENSION","position":{"x":58,"y":64}},
     {"type":"WHEELS","position":{"x":59,"y":76}},{"type":"BODY","position":{"x":45,"y":56}},
     {"type":"FRAME","position":{"x":44,"y":79}},{"type":"INTERIOR","position":{"x":35,"y":37}},
@@ -7966,7 +7391,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_P_SLEEPER_TANDEM_4x2_IMG,
+    image: 'SCANIA_P_SLEEPER_TANDEM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":73}},{"type":"SUSPENSION","position":{"x":49,"y":63}},
     {"type":"WHEELS","position":{"x":51,"y":70}},{"type":"BODY","position":{"x":35,"y":58}},
     {"type":"FRAME","position":{"x":38,"y":76}},{"type":"INTERIOR","position":{"x":20,"y":40}},
@@ -7981,7 +7406,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_P_SLEEPER_TANDEM_6x2_IMG,
+    image: 'SCANIA_P_SLEEPER_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":48,"y":76}},{"type":"SUSPENSION","position":{"x":55,"y":63}},
     {"type":"WHEELS","position":{"x":56,"y":72}},{"type":"BODY","position":{"x":38,"y":61}},
     {"type":"INTERIOR","position":{"x":22,"y":41}},{"type":"FRAME","position":{"x":39,"y":77}},
@@ -7996,7 +7421,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.SCANIA,
-    image: SCANIA_P_SLEEPER_TANDEM_8x4_IMG,
+    image: 'SCANIA_P_SLEEPER_TANDEM_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":46,"y":72}},{"type":"SUSPENSION","position":{"x":51,"y":64}},
     {"type":"WHEELS","position":{"x":54,"y":72}},{"type":"BODY","position":{"x":35,"y":58}},
     {"type":"FRAME","position":{"x":39,"y":76}},{"type":"INTERIOR","position":{"x":22,"y":42}},
@@ -8011,7 +7436,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_R_DAYCAB_SEMI_4x2_IMG,
+    image: 'SCANIA_R_DAYCAB_SEMI_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":54,"y":80}},{"type":"SUSPENSION","position":{"x":62,"y":65}},
     {"type":"WHEELS","position":{"x":60,"y":75}},{"type":"BODY","position":{"x":46,"y":59}},
     {"type":"FRAME","position":{"x":44,"y":82}},{"type":"INTERIOR","position":{"x":38,"y":38}},
@@ -8026,7 +7451,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_R_DAYCAB_SEMI_6x2_IMG,
+    image: 'SCANIA_R_DAYCAB_SEMI_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":52,"y":81}},{"type":"SUSPENSION","position":{"x":55,"y":64}},
     {"type":"WHEELS","position":{"x":59,"y":74}},{"type":"BODY","position":{"x":43,"y":52}},
     {"type":"INTERIOR","position":{"x":27,"y":32}},{"type":"FRAME","position":{"x":45,"y":80}},
@@ -8041,7 +7466,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_R_DAYCAB_TANDEM_4x2_IMG,
+    image: 'SCANIA_R_DAYCAB_TANDEM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":74}},{"type":"SUSPENSION","position":{"x":50,"y":64}},
     {"type":"WHEELS","position":{"x":53,"y":71}},{"type":"BODY","position":{"x":33,"y":60}},
     {"type":"FRAME","position":{"x":40,"y":76}},{"type":"INTERIOR","position":{"x":21,"y":40}},
@@ -8056,7 +7481,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_R_DAYCAB_TANDEM_6x2_IMG,
+    image: 'SCANIA_R_DAYCAB_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":71}},{"type":"SUSPENSION","position":{"x":53,"y":61}},
     {"type":"WHEELS","position":{"x":58,"y":69}},{"type":"BODY","position":{"x":37,"y":57}},
     {"type":"FRAME","position":{"x":43,"y":75}},{"type":"INTERIOR","position":{"x":24,"y":35}},
@@ -8071,7 +7496,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.SCANIA,
-    image: SCANIA_R_DAYCAB_TANDEM_8x4_IMG,
+    image: 'SCANIA_R_DAYCAB_TANDEM_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":71}},{"type":"SUSPENSION","position":{"x":53,"y":60}},
     {"type":"WHEELS","position":{"x":52,"y":70}},{"type":"BODY","position":{"x":37,"y":59}},
     {"type":"FRAME","position":{"x":39,"y":74}},{"type":"INTERIOR","position":{"x":17,"y":35}},
@@ -8086,7 +7511,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_R_PRT1_4x2_IMG,
+    image: 'SCANIA_R_PRT1_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":49,"y":76}},{"type":"SUSPENSION","position":{"x":50,"y":66}},
             {"type":"WHEELS","position":{"x":58,"y":75}},{"type":"BODY","position":{"x":12,"y":58}},
             {"type":"FRAME","position":{"x":23,"y":79}},{"type":"INTERIOR","position":{"x":27,"y":42}},
@@ -8101,7 +7526,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_R_PRT1_6x2_IMG,
+    image: 'SCANIA_R_PRT1_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":79}},{"type":"WHEELS","position":{"x":56,"y":81}},
             {"type":"SUSPENSION","position":{"x":51,"y":67}},{"type":"BODY","position":{"x":12,"y":56}},
             {"type":"FRAME","position":{"x":22,"y":80}},{"type":"INTERIOR","position":{"x":24,"y":39}},
@@ -8116,7 +7541,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_R_SLEEPER_SEMI_4x2_IMG,
+    image: 'SCANIA_R_SLEEPER_SEMI_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":81}},{"type":"SUSPENSION","position":{"x":58,"y":65}},
     {"type":"WHEELS","position":{"x":60,"y":78}},{"type":"BODY","position":{"x":43,"y":61}},
     {"type":"FRAME","position":{"x":45,"y":82}},{"type":"INTERIOR","position":{"x":36,"y":38}},
@@ -8131,7 +7556,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_R_SLEEPER_SEMI_6x2_IMG,
+    image: 'SCANIA_R_SLEEPER_SEMI_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":82}},{"type":"SUSPENSION","position":{"x":55,"y":65}},
     {"type":"WHEELS","position":{"x":58,"y":78}},{"type":"BODY","position":{"x":44,"y":60}},
     {"type":"FRAME","position":{"x":45,"y":81}},{"type":"INTERIOR","position":{"x":31,"y":33}},
@@ -8146,7 +7571,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_R_SLEEPER_TANDEM_4x2_IMG,
+    image: 'SCANIA_R_SLEEPER_TANDEM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":73}},{"type":"SUSPENSION","position":{"x":50,"y":65}},
     {"type":"WHEELS","position":{"x":54,"y":74}},{"type":"BODY","position":{"x":35,"y":61}},
     {"type":"FRAME","position":{"x":39,"y":77}},{"type":"INTERIOR","position":{"x":23,"y":39}},
@@ -8161,7 +7586,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_R_SLEEPER_TANDEM_6x2_IMG,
+    image: 'SCANIA_R_SLEEPER_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":48,"y":77}},{"type":"SUSPENSION","position":{"x":54,"y":65}},
     {"type":"WHEELS","position":{"x":56,"y":74}},{"type":"BODY","position":{"x":37,"y":64}},
     {"type":"FRAME","position":{"x":42,"y":79}},{"type":"INTERIOR","position":{"x":26,"y":36}},
@@ -8176,7 +7601,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.SCANIA,
-    image: SCANIA_R_SLEEPER_TANDEM_8x4_IMG,
+    image: 'SCANIA_R_SLEEPER_TANDEM_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":44,"y":74}},{"type":"SUSPENSION","position":{"x":49,"y":64}},
     {"type":"WHEELS","position":{"x":53,"y":74}},{"type":"BODY","position":{"x":38,"y":60}},
     {"type":"FRAME","position":{"x":40,"y":79}},{"type":"INTERIOR","position":{"x":21,"y":39}},
@@ -8191,7 +7616,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_S_SEMI_4x2_IMG,
+    image: 'SCANIA_S_SEMI_4x2.png',
     parts: [{"type":"SUSPENSION","position":{"x":59,"y":68}},{"type":"WHEELS","position":{"x":61,"y":78}},
     {"type":"BRAKES","position":{"x":53,"y":78}},{"type":"BODY","position":{"x":47,"y":57}},
     {"type":"FRAME","position":{"x":48,"y":81}},{"type":"INTERIOR","position":{"x":34,"y":38}},
@@ -8206,7 +7631,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_S_SEMI_6x2_IMG,
+    image: 'SCANIA_S_SEMI_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":53,"y":79}},{"type":"SUSPENSION","position":{"x":57,"y":67}},
     {"type":"WHEELS","position":{"x":58,"y":75}},{"type":"BODY","position":{"x":42,"y":60}},
     {"type":"FRAME","position":{"x":45,"y":83}},{"type":"INTERIOR","position":{"x":30,"y":33}},
@@ -8221,7 +7646,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_S_TANDEM_4x2_IMG,
+    image: 'SCANIA_S_TANDEM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":47,"y":76}},{"type":"SUSPENSION","position":{"x":50,"y":67}},
     {"type":"WHEELS","position":{"x":53,"y":74}},{"type":"BODY","position":{"x":35,"y":59}},
     {"type":"FRAME","position":{"x":38,"y":79}},{"type":"INTERIOR","position":{"x":23,"y":34}},
@@ -8236,7 +7661,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.SCANIA,
-    image: SCANIA_S_TANDEM_6x2_IMG,
+    image: 'SCANIA_S_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":46,"y":77}},{"type":"SUSPENSION","position":{"x":50,"y":66}},
     {"type":"WHEELS","position":{"x":51,"y":73}},{"type":"BODY","position":{"x":34,"y":62}},
     {"type":"FRAME","position":{"x":37,"y":79}},{"type":"INTERIOR","position":{"x":21,"y":39}},
@@ -8251,7 +7676,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.SCANIA,
-    image: SCANIA_S_TANDEM_8x4_IMG,
+    image: 'SCANIA_S_TANDEM_8x4.png',
     parts: [{"type":"SUSPENSION","position":{"x":50,"y":66}},{"type":"BRAKES","position":{"x":43,"y":74}},
     {"type":"WHEELS","position":{"x":51,"y":76}},{"type":"BODY","position":{"x":34,"y":62}},
     {"type":"FRAME","position":{"x":41,"y":78}},{"type":"INTERIOR","position":{"x":24,"y":38}},
@@ -8266,7 +7691,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_3_AXLES,
     brand: EBrand.SCHMITZ_CARGOBULL,
-    image: SCHMITZ_CARGOBULL_SEMI_REEFER_IMG,
+    image: 'SCHMITZ_CARGOBULL_SEMI_REEFER.png',
     parts: [{"type":"BRAKES","position":{"x":77,"y":71}},{"type":"SUSPENSION","position":{"x":81,"y":66}},
     {"type":"WHEELS","position":{"x":82,"y":71}},{"type":"BODY","position":{"x":55,"y":48}},
     {"type":"FRAME","position":{"x":49,"y":69}},{"type":"SUPPORT","position":{"x":59,"y":78}},
@@ -8279,7 +7704,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM_TRAILER].TRAILER_2_MID_AXLES,
     brand: EBrand.SCHMITZ_CARGOBULL,
-    image: SCHMITZ_CARGOBULL_TANDEM_CURTAIN_IMG,
+    image: 'SCHMITZ_CARGOBULL_TANDEM_CURTAIN.png',
     parts: [{"type":"BRAKES","position":{"x":40,"y":79}},{"type":"SUSPENSION","position":{"x":33,"y":73}},
     {"type":"WHEELS","position":{"x":32,"y":77}},{"type":"BODY","position":{"x":47,"y":54}},
     {"type":"SUPPORT","position":{"x":63,"y":82}},{"type":"FRAME","position":{"x":40,"y":72}},
@@ -8291,7 +7716,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_FLATBED_3_IMG,
+    image: 'SCHWARZMUELLER_FLATBED_3.png',
     parts: [{"type":"BRAKES","position":{"x":43,"y":71}},{"type":"SUSPENSION","position":{"x":49,"y":65}},
     {"type":"WHEELS","position":{"x":50,"y":70}},{"type":"FRAME","position":{"x":66,"y":61}},
     {"type":"SUPPORT","position":{"x":89,"y":61}},{"type":"LIGHTS","position":{"x":19,"y":67}},
@@ -8303,7 +7728,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_FLATBED_3_1_IMG,
+    image: 'SCHWARZMUELLER_FLATBED_3_1.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":74}},{"type":"SUSPENSION","position":{"x":45,"y":67}},
     {"type":"WHEELS","position":{"x":42,"y":75}},{"type":"FRAME","position":{"x":18,"y":63}},
     {"type":"SUPPORT","position":{"x":13,"y":67}},{"type":"LIGHTS","position":{"x":74,"y":66}},
@@ -8315,7 +7740,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_FLATBED_3_2_IMG,
+    image: 'SCHWARZMUELLER_FLATBED_3_2.png',
     parts: [{"type":"BRAKES","position":{"x":72,"y":59}},{"type":"SUSPENSION","position":{"x":76,"y":54}},
     {"type":"WHEELS","position":{"x":77,"y":58}},{"type":"FRAME","position":{"x":45,"y":56}},
     {"type":"SUPPORT","position":{"x":43,"y":63}},{"type":"LIGHTS","position":{"x":91,"y":49}},
@@ -8327,7 +7752,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM_TRAILER].FLATBED_2_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_FLATBED_TANDEM_IMG,
+    image: 'SCHWARZMUELLER_FLATBED_TANDEM.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":62}},{"type":"SUSPENSION","position":{"x":52,"y":54}},
     {"type":"WHEELS","position":{"x":58,"y":60}},{"type":"FRAME","position":{"x":67,"y":53}},
     {"type":"LIGHTS","position":{"x":90,"y":51}},{"type":"LOAD","position":{"x":64,"y":49}},
@@ -8338,7 +7763,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM_TRAILER].FLATBED_1_2_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_FLATBED_TANDEM_1_IMG,
+    image: 'SCHWARZMUELLER_FLATBED_TANDEM_1.png',
     parts: [{"type":"BRAKES","position":{"x":41,"y":69}},{"type":"SUSPENSION","position":{"x":44,"y":58}},
     {"type":"WHEELS","position":{"x":48,"y":66}},{"type":"FRAME","position":{"x":57,"y":56}},
     {"type":"LIGHTS","position":{"x":98,"y":53}},{"type":"LOAD","position":{"x":65,"y":55}},
@@ -8349,7 +7774,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM_TRAILER].FLATBED_2_2_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_FLATBED_TANDEM_2_IMG,
+    image: 'SCHWARZMUELLER_FLATBED_TANDEM_2.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":62}},{"type":"SUSPENSION","position":{"x":45,"y":55}},
     {"type":"WHEELS","position":{"x":44,"y":61}},{"type":"FRAME","position":{"x":31,"y":54}},
     {"type":"LIGHTS","position":{"x":6,"y":47}},{"type":"LOAD","position":{"x":37,"y":52}},
@@ -8360,7 +7785,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM_TRAILER].FLATBED_1_2_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_FLATBED_TANDEM_3_IMG,
+    image: 'SCHWARZMUELLER_FLATBED_TANDEM_3.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":69}},{"type":"SUSPENSION","position":{"x":49,"y":64}},
     {"type":"WHEELS","position":{"x":53,"y":69}},{"type":"FRAME","position":{"x":66,"y":60}},
     {"type":"LIGHTS","position":{"x":13,"y":63}},{"type":"LOAD","position":{"x":53,"y":57}},
@@ -8371,7 +7796,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM_TRAILER].FLATBED_1_2_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_FLATBED_TANDEM_4_IMG,
+    image: 'SCHWARZMUELLER_FLATBED_TANDEM_4.png',
     parts: [{"type":"BRAKES","position":{"x":33,"y":67}},{"type":"SUSPENSION","position":{"x":40,"y":59}},
     {"type":"WHEELS","position":{"x":41,"y":66}},{"type":"FRAME","position":{"x":51,"y":58}},
     {"type":"LIGHTS","position":{"x":89,"y":50}},{"type":"LOAD","position":{"x":61,"y":56}},
@@ -8382,7 +7807,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_FLATBED_TANDEM_5_IMG,
+    image: 'SCHWARZMUELLER_FLATBED_TANDEM_5.png',
     parts: [{"type":"BRAKES","position":{"x":43,"y":65}},{"type":"SUSPENSION","position":{"x":49,"y":57}},
     {"type":"WHEELS","position":{"x":51,"y":65}},{"type":"FRAME","position":{"x":65,"y":56}},
     {"type":"LIGHTS","position":{"x":85,"y":50}},{"type":"LOAD","position":{"x":68,"y":53}},
@@ -8393,7 +7818,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_FLATBED_TANDEM_6_IMG,
+    image: 'SCHWARZMUELLER_FLATBED_TANDEM_6.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":66}},{"type":"SUSPENSION","position":{"x":54,"y":57}},
     {"type":"WHEELS","position":{"x":58,"y":64}},{"type":"FRAME","position":{"x":71,"y":56}},
     {"type":"LIGHTS","position":{"x":87,"y":47}},{"type":"LOAD","position":{"x":65,"y":52}},
@@ -8404,7 +7829,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_REEFER_IMG,
+    image: 'SCHWARZMUELLER_SEMI_REEFER.png',
     parts: [{"type":"BRAKES","position":{"x":21,"y":70}},{"type":"SUSPENSION","position":{"x":17,"y":65}},
     {"type":"WHEELS","position":{"x":16,"y":69}},{"type":"BODY","position":{"x":41,"y":60}},
     {"type":"FRAME","position":{"x":35,"y":66}},{"type":"SUPPORT","position":{"x":39,"y":75}},
@@ -8417,7 +7842,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_2_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TIPPER_2_ALU_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TIPPER_2_ALU.png',
     parts: [{"type":"TRAILER_ATTACHMENT","position":{"x":20,"y":59}},{"type":"BRAKES","position":{"x":66,"y":73}},
     {"type":"SUSPENSION","position":{"x":73,"y":63}},{"type":"WHEELS","position":{"x":76,"y":72}},
     {"type":"BODY","position":{"x":48,"y":48}},{"type":"FRAME","position":{"x":34,"y":57}},
@@ -8429,7 +7854,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_2_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TIPPER_2_ALU_1_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TIPPER_2_ALU_1.png',
     parts: [{"type":"BRAKES","position":{"x":47,"y":68}},{"type":"SUSPENSION","position":{"x":50,"y":60}},
     {"type":"WHEELS","position":{"x":54,"y":65}},{"type":"BODY","position":{"x":58,"y":41}},
     {"type":"FRAME","position":{"x":55,"y":54}},{"type":"SUPPORT","position":{"x":66,"y":70}},
@@ -8441,7 +7866,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_2_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TIPPER_2_STEEL_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TIPPER_2_STEEL.png',
     parts: [{"type":"BRAKES","position":{"x":71,"y":69}},{"type":"SUSPENSION","position":{"x":75,"y":60}},
     {"type":"WHEELS","position":{"x":78,"y":66}},{"type":"BODY","position":{"x":44,"y":48}},
     {"type":"FRAME","position":{"x":40,"y":59}},{"type":"SUPPORT","position":{"x":68,"y":76}},
@@ -8453,7 +7878,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_2_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TIPPER_2_STEEL_1_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TIPPER_2_STEEL_1.png',
     parts: [{"type":"BRAKES","position":{"x":55,"y":69}},{"type":"SUSPENSION","position":{"x":58,"y":60}},
     {"type":"WHEELS","position":{"x":64,"y":66}},{"type":"BODY","position":{"x":52,"y":43}},
     {"type":"FRAME","position":{"x":62,"y":53}},{"type":"SUPPORT","position":{"x":74,"y":70}},
@@ -8465,7 +7890,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TIPPER_3_ALU_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TIPPER_3_ALU.png',
     parts: [{"type":"BRAKES","position":{"x":71,"y":67}},{"type":"SUSPENSION","position":{"x":76,"y":57}},
     {"type":"WHEELS","position":{"x":78,"y":63}},{"type":"BODY","position":{"x":51,"y":44}},
     {"type":"FRAME","position":{"x":38,"y":54}},{"type":"SUPPORT","position":{"x":62,"y":77}},
@@ -8477,7 +7902,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TIPPER_3_STEEL_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TIPPER_3_STEEL.png',
     parts: [{"type":"BRAKES","position":{"x":63,"y":64}},{"type":"SUSPENSION","position":{"x":66,"y":56}},
     {"type":"WHEELS","position":{"x":70,"y":61}},{"type":"BODY","position":{"x":45,"y":45}},
     {"type":"FRAME","position":{"x":36,"y":53}},{"type":"SUPPORT","position":{"x":57,"y":69}},
@@ -8489,7 +7914,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TIPPER_HOLLOW_3_ALU_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TIPPER_HOLLOW_3_ALU.png',
     parts: [{"type":"BRAKES","position":{"x":75,"y":64}},{"type":"SUSPENSION","position":{"x":79,"y":58}},
     {"type":"WHEELS","position":{"x":81,"y":63}},{"type":"BODY","position":{"x":54,"y":43}},
     {"type":"FRAME","position":{"x":41,"y":58}},{"type":"SUPPORT","position":{"x":56,"y":72}},
@@ -8501,7 +7926,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TIPPER_HOLLOW_3_ALU_1_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TIPPER_HOLLOW_3_ALU_1.png',
     parts: [{"type":"BRAKES","position":{"x":36,"y":66}},{"type":"SUSPENSION","position":{"x":40,"y":59}},
     {"type":"WHEELS","position":{"x":43,"y":64}},{"type":"BODY","position":{"x":46,"y":44}},
     {"type":"FRAME","position":{"x":63,"y":56}},{"type":"SUPPORT","position":{"x":63,"y":66}},
@@ -8513,7 +7938,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TRAILER_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TRAILER.png',
     parts: [{"type":"BRAKES","position":{"x":68,"y":63}},{"type":"SUSPENSION","position":{"x":75,"y":58}},
     {"type":"WHEELS","position":{"x":74,"y":62}},{"type":"BODY","position":{"x":43,"y":50}},
     {"type":"FRAME","position":{"x":52,"y":59}},{"type":"SUPPORT","position":{"x":45,"y":69}},
@@ -8525,7 +7950,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TRAILER_1_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TRAILER_1.png',
     parts: [{"type":"BRAKES","position":{"x":73,"y":62}},{"type":"SUSPENSION","position":{"x":75,"y":57}},
     {"type":"WHEELS","position":{"x":78,"y":61}},{"type":"BODY","position":{"x":45,"y":51}},
     {"type":"FRAME","position":{"x":52,"y":58}},{"type":"SUPPORT","position":{"x":42,"y":68}},
@@ -8537,7 +7962,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TRAILER_JUMBO_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TRAILER_JUMBO.png',
     parts: [{"type":"BRAKES","position":{"x":70,"y":64}},{"type":"SUSPENSION","position":{"x":72,"y":60}},
     {"type":"WHEELS","position":{"x":74,"y":63}},{"type":"BODY","position":{"x":59,"y":48}},
     {"type":"FRAME","position":{"x":50,"y":62}},{"type":"SUPPORT","position":{"x":37,"y":66}},
@@ -8549,7 +7974,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TRAILER_MEGA_COIL_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TRAILER_MEGA_COIL.png',
     parts: [{"type":"BRAKES","position":{"x":62,"y":61}},{"type":"SUSPENSION","position":{"x":66,"y":58}},
     {"type":"WHEELS","position":{"x":67,"y":62}},{"type":"BODY","position":{"x":44,"y":48}},
     {"type":"FRAME","position":{"x":45,"y":60}},{"type":"SUPPORT","position":{"x":38,"y":67}},
@@ -8561,7 +7986,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TRAILER_MEGA_COIL_1_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TRAILER_MEGA_COIL_1.png',
     parts: [{"type":"BRAKES","position":{"x":65,"y":63}},{"type":"SUSPENSION","position":{"x":68,"y":58}},
     {"type":"WHEELS","position":{"x":70,"y":62}},{"type":"BODY","position":{"x":44,"y":45}},
     {"type":"FRAME","position":{"x":52,"y":59}},{"type":"SUPPORT","position":{"x":45,"y":68}},
@@ -8573,7 +7998,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TRAILER_PIGGYBACK_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TRAILER_PIGGYBACK.png',
     parts: [{"type":"BRAKES","position":{"x":58,"y":64}},{"type":"SUSPENSION","position":{"x":53,"y":58}},
     {"type":"WHEELS","position":{"x":52,"y":63}},{"type":"BODY","position":{"x":40,"y":51}},
     {"type":"FRAME","position":{"x":36,"y":57}},{"type":"SUPPORT","position":{"x":20,"y":62}},
@@ -8585,7 +8010,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TRAILER_PIGGYBACK_1_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TRAILER_PIGGYBACK_1.png',
     parts: [{"type":"BRAKES","position":{"x":70,"y":66}},{"type":"SUSPENSION","position":{"x":71,"y":60}},
     {"type":"WHEELS","position":{"x":73,"y":63}},{"type":"BODY","position":{"x":45,"y":58}},
     {"type":"FRAME","position":{"x":54,"y":63}},{"type":"SUPPORT","position":{"x":47,"y":69}},
@@ -8597,7 +8022,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TRAILER_PIGGYBACK_2_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TRAILER_PIGGYBACK_2.png',
     parts: [{"type":"BRAKES","position":{"x":76,"y":67}},{"type":"SUSPENSION","position":{"x":78,"y":61}},
     {"type":"WHEELS","position":{"x":80,"y":66}},{"type":"BODY","position":{"x":55,"y":51}},
     {"type":"FRAME","position":{"x":66,"y":66}},{"type":"SUPPORT","position":{"x":51,"y":73}},
@@ -8609,7 +8034,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TRAILER_STANDARD_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TRAILER_STANDARD.png',
     parts: [{"type":"BRAKES","position":{"x":25,"y":69}},{"type":"SUSPENSION","position":{"x":20,"y":64}},
     {"type":"WHEELS","position":{"x":21,"y":70}},{"type":"BODY","position":{"x":35,"y":57}},
     {"type":"FRAME","position":{"x":33,"y":68}},{"type":"SUPPORT","position":{"x":47,"y":76}},
@@ -8621,7 +8046,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TRAILER_STANDARD_1_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TRAILER_STANDARD_1.png',
     parts: [{"type":"BRAKES","position":{"x":56,"y":68}},{"type":"SUSPENSION","position":{"x":60,"y":60}},
     {"type":"WHEELS","position":{"x":61,"y":66}},{"type":"BODY","position":{"x":59,"y":53}},
     {"type":"FRAME","position":{"x":73,"y":63}},{"type":"SUPPORT","position":{"x":85,"y":64}},
@@ -8633,7 +8058,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT.png',
     parts: [{"type":"BRAKES","position":{"x":52,"y":69}},{"type":"SUSPENSION","position":{"x":57,"y":61}},
     {"type":"WHEELS","position":{"x":58,"y":66}},{"type":"BODY","position":{"x":63,"y":50}},
     {"type":"FRAME","position":{"x":69,"y":63}},{"type":"SUPPORT","position":{"x":81,"y":67}},
@@ -8645,7 +8070,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_1_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_1.png',
     parts: [{"type":"BRAKES","position":{"x":76,"y":71}},{"type":"SUSPENSION","position":{"x":79,"y":65}},
     {"type":"WHEELS","position":{"x":81,"y":69}},{"type":"BODY","position":{"x":66,"y":54}},
     {"type":"SUPPORT","position":{"x":56,"y":76}},{"type":"FRAME","position":{"x":69,"y":67}},
@@ -8657,7 +8082,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_2_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_2.png',
     parts: [{"type":"BRAKES","position":{"x":68,"y":64}},{"type":"SUSPENSION","position":{"x":71,"y":60}},
     {"type":"WHEELS","position":{"x":73,"y":65}},{"type":"BODY","position":{"x":58,"y":54}},
     {"type":"FRAME","position":{"x":59,"y":60}},{"type":"SUPPORT","position":{"x":43,"y":69}},
@@ -8669,7 +8094,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_3_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_3.png',
     parts: [{"type":"BRAKES","position":{"x":44,"y":69}},{"type":"SUSPENSION","position":{"x":50,"y":62}},
     {"type":"WHEELS","position":{"x":48,"y":68}},{"type":"BODY","position":{"x":61,"y":48}},
     {"type":"FRAME","position":{"x":67,"y":61}},{"type":"SUPPORT","position":{"x":79,"y":65}},
@@ -8681,7 +8106,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_MEGA_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_MEGA.png',
     parts: [{"type":"BRAKES","position":{"x":52,"y":64}},{"type":"SUSPENSION","position":{"x":48,"y":58}},
     {"type":"WHEELS","position":{"x":46,"y":63}},{"type":"BODY","position":{"x":38,"y":48}},
     {"type":"FRAME","position":{"x":33,"y":58}},{"type":"SUPPORT","position":{"x":18,"y":62}},
@@ -8693,7 +8118,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_MEGA_1_IMG,
+    image: 'SCHWARZMUELLER_SEMI_TRAILER_ULTRALIGHT_MEGA_1.png',
     parts: [{"type":"BRAKES","position":{"x":48,"y":72}},{"type":"SUSPENSION","position":{"x":50,"y":65}},
     {"type":"WHEELS","position":{"x":53,"y":69}},{"type":"BODY","position":{"x":44,"y":46}},
     {"type":"FRAME","position":{"x":67,"y":63}},{"type":"SUPPORT","position":{"x":87,"y":67}},
@@ -8705,7 +8130,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANDEM_4x2_IMG,
+    image: 'SCHWARZMUELLER_TANDEM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":55,"y":75}},{"type":"SUSPENSION","position":{"x":57,"y":68}},
     {"type":"WHEELS","position":{"x":61,"y":74}},{"type":"BODY","position":{"x":58,"y":43}},
     {"type":"FRAME","position":{"x":70,"y":68}},{"type":"INTERIOR","position":{"x":88,"y":47}},
@@ -8721,7 +8146,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANDEM_6x2_IMG,
+    image: 'SCHWARZMUELLER_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":56,"y":76}},{"type":"SUSPENSION","position":{"x":49,"y":67}},
     {"type":"WHEELS","position":{"x":48,"y":73}},{"type":"BODY","position":{"x":38,"y":49}},
     {"type":"FRAME","position":{"x":29,"y":67}},{"type":"INTERIOR","position":{"x":7,"y":50}},
@@ -8737,7 +8162,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T4x2,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANDEM_TIPPER_2A_IMG,
+    image: 'SCHWARZMUELLER_TANDEM_TIPPER_2A.png',
     parts: [{"type":"BRAKES","position":{"x":55,"y":71}},{"type":"SUSPENSION","position":{"x":53,"y":58}},
     {"type":"WHEELS","position":{"x":41,"y":66}},{"type":"BODY","position":{"x":23,"y":42}},
     {"type":"FRAME","position":{"x":35,"y":58}},{"type":"INTERIOR","position":{"x":7,"y":33}},
@@ -8752,7 +8177,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T4x2,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANDEM_TIPPER_2A_1_IMG,
+    image: 'SCHWARZMUELLER_TANDEM_TIPPER_2A_1.png',
     parts: [{"type":"BRAKES","position":{"x":47,"y":69}},{"type":"SUSPENSION","position":{"x":59,"y":58}},
     {"type":"WHEELS","position":{"x":58,"y":66}},{"type":"BODY","position":{"x":72,"y":47}},
     {"type":"FRAME","position":{"x":65,"y":63}},{"type":"INTERIOR","position":{"x":90,"y":38}},
@@ -8767,7 +8192,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T6x2,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANDEM_TIPPER_3A_IMG,
+    image: 'SCHWARZMUELLER_TANDEM_TIPPER_3A.png',
     parts: [{"type":"BRAKES","position":{"x":71,"y":68}},{"type":"SUSPENSION","position":{"x":61,"y":57}},
     {"type":"WHEELS","position":{"x":59,"y":69}},{"type":"BODY","position":{"x":30,"y":47}},
     {"type":"FRAME","position":{"x":34,"y":63}},{"type":"INTERIOR","position":{"x":9,"y":43}},
@@ -8782,7 +8207,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T6x2,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANDEM_TIPPER_3A_1_IMG,
+    image: 'SCHWARZMUELLER_TANDEM_TIPPER_3A_1.png',
     parts: [{"type":"BRAKES","position":{"x":61,"y":63}},{"type":"SUSPENSION","position":{"x":53,"y":55}},
     {"type":"WHEELS","position":{"x":52,"y":62}},{"type":"BODY","position":{"x":31,"y":43}},
     {"type":"FRAME","position":{"x":31,"y":57}},{"type":"INTERIOR","position":{"x":9,"y":39}},
@@ -8797,7 +8222,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T8x4,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANDEM_TIPPER_3A_ALU_IMG,
+    image: 'SCHWARZMUELLER_TANDEM_TIPPER_3A_ALU.png',
     parts: [{"type":"BRAKES","position":{"x":53,"y":68}},{"type":"SUSPENSION","position":{"x":48,"y":57}},
     {"type":"WHEELS","position":{"x":43,"y":66}},{"type":"BODY","position":{"x":27,"y":47}},
     {"type":"FRAME","position":{"x":34,"y":62}},{"type":"INTERIOR","position":{"x":9,"y":42}},
@@ -8813,7 +8238,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T8x4,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANDEM_TIPPER_4A_IMG,
+    image: 'SCHWARZMUELLER_TANDEM_TIPPER_4A.png',
     parts: [{"type":"BRAKES","position":{"x":53,"y":66}},{"type":"SUSPENSION","position":{"x":58,"y":56}},
     {"type":"WHEELS","position":{"x":60,"y":65}},{"type":"BODY","position":{"x":56,"y":41}},
     {"type":"FRAME","position":{"x":65,"y":62}},{"type":"INTERIOR","position":{"x":94,"y":39}},
@@ -8829,7 +8254,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T8x4,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANDEM_TIPPER_4A_STEEL_IMG,
+    image: 'SCHWARZMUELLER_TANDEM_TIPPER_4A_STEEL.png',
     parts: [{"type":"BRAKES","position":{"x":46,"y":66}},{"type":"SUSPENSION","position":{"x":48,"y":56}},
     {"type":"WHEELS","position":{"x":54,"y":64}},{"type":"BODY","position":{"x":73,"y":45}},
     {"type":"FRAME","position":{"x":73,"y":53}},{"type":"INTERIOR","position":{"x":88,"y":36}},
@@ -8845,7 +8270,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANDEM_TRUCK_2A_IMG,
+    image: 'SCHWARZMUELLER_TANDEM_TRUCK_2A.png',
     parts: [{"type":"BRAKES","position":{"x":41,"y":79}},{"type":"SUSPENSION","position":{"x":47,"y":68}},
     {"type":"WHEELS","position":{"x":50,"y":75}},{"type":"BODY","position":{"x":41,"y":47}},
     {"type":"FRAME","position":{"x":57,"y":71}},{"type":"INTERIOR","position":{"x":87,"y":46}},
@@ -8860,7 +8285,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANDEM_TRUCK_2A_1_IMG,
+    image: 'SCHWARZMUELLER_TANDEM_TRUCK_2A_1.png',
     parts: [{"type":"BRAKES","position":{"x":57,"y":73}},{"type":"SUSPENSION","position":{"x":50,"y":65}},
     {"type":"WHEELS","position":{"x":46,"y":70}},{"type":"BODY","position":{"x":40,"y":53}},
     {"type":"FRAME","position":{"x":38,"y":66}},{"type":"INTERIOR","position":{"x":12,"y":43}},
@@ -8875,7 +8300,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANDEM_TRUCK_3A_IMG,
+    image: 'SCHWARZMUELLER_TANDEM_TRUCK_3A.png',
     parts: [{"type":"BRAKES","position":{"x":53,"y":70}},{"type":"SUSPENSION","position":{"x":44,"y":63}},
     {"type":"WHEELS","position":{"x":43,"y":70}},{"type":"BODY","position":{"x":38,"y":52}},
     {"type":"FRAME","position":{"x":39,"y":69}},{"type":"INTERIOR","position":{"x":14,"y":49}},
@@ -8890,7 +8315,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANDEM_TRUCK_MEDIUM_IMG,
+    image: 'SCHWARZMUELLER_TANDEM_TRUCK_MEDIUM.png',
     parts: [{"type":"BRAKES","position":{"x":40,"y":78}},{"type":"SUSPENSION","position":{"x":46,"y":71}},
     {"type":"WHEELS","position":{"x":47,"y":76}},{"type":"BODY","position":{"x":62,"y":44}},
     {"type":"FRAME","position":{"x":63,"y":68}},{"type":"INTERIOR","position":{"x":89,"y":50}},
@@ -8905,7 +8330,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANK_SEMI_IMG,
+    image: 'SCHWARZMUELLER_TANK_SEMI.png',
     parts: [{"type":"BRAKES","position":{"x":24,"y":65}},{"type":"SUSPENSION","position":{"x":21,"y":56}},
     {"type":"WHEELS","position":{"x":18,"y":62}},{"type":"BODY","position":{"x":39,"y":46}},
     {"type":"FRAME","position":{"x":35,"y":61}},{"type":"SUPPORT","position":{"x":50,"y":71}},
@@ -8917,7 +8342,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANK_SEMI_1_IMG,
+    image: 'SCHWARZMUELLER_TANK_SEMI_1.png',
     parts: [{"type":"BRAKES","position":{"x":43,"y":73}},{"type":"SUSPENSION","position":{"x":51,"y":59}},
     {"type":"WHEELS","position":{"x":53,"y":67}},{"type":"BODY","position":{"x":54,"y":39}},
     {"type":"FRAME","position":{"x":69,"y":52}},{"type":"SUPPORT","position":{"x":88,"y":59}},
@@ -8929,7 +8354,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_3_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANK_SEMI_2_IMG,
+    image: 'SCHWARZMUELLER_TANK_SEMI_2.png',
     parts: [{"type":"BRAKES","position":{"x":16,"y":64}},{"type":"SUSPENSION","position":{"x":20,"y":57}},
     {"type":"WHEELS","position":{"x":21,"y":65}},{"type":"BODY","position":{"x":48,"y":45}},
     {"type":"FRAME","position":{"x":55,"y":55}},{"type":"SUPPORT","position":{"x":77,"y":64}},
@@ -8941,7 +8366,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM_TRAILER].TANK_1_2_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANK_TANDEM_IMG,
+    image: 'SCHWARZMUELLER_TANK_TANDEM.png',
     parts: [{"type":"BRAKES","position":{"x":73,"y":61}},{"type":"SUSPENSION","position":{"x":78,"y":52}},
     {"type":"WHEELS","position":{"x":79,"y":57}},{"type":"BODY","position":{"x":52,"y":46}},
     {"type":"FRAME","position":{"x":53,"y":54}},{"type":"LIGHTS","position":{"x":95,"y":52}},
@@ -8953,7 +8378,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM_TRAILER].TANK_1_2_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANK_TANDEM_1_IMG,
+    image: 'SCHWARZMUELLER_TANK_TANDEM_1.png',
     parts: [{"type":"BRAKES","position":{"x":84,"y":68}},{"type":"SUSPENSION","position":{"x":88,"y":57}},
     {"type":"WHEELS","position":{"x":89,"y":62}},{"type":"BODY","position":{"x":56,"y":40}},
     {"type":"FRAME","position":{"x":68,"y":57}},{"type":"LIGHTS","position":{"x":97,"y":58}},
@@ -8965,7 +8390,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM_TRAILER].TANK_1_1_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANK_TANDEM_2_IMG,
+    image: 'SCHWARZMUELLER_TANK_TANDEM_2.png',
     parts: [{"type":"BRAKES","position":{"x":34,"y":73}},{"type":"SUSPENSION","position":{"x":39,"y":59}},
     {"type":"WHEELS","position":{"x":44,"y":69}},{"type":"BODY","position":{"x":50,"y":40}},
     {"type":"FRAME","position":{"x":55,"y":61}},{"type":"LIGHTS","position":{"x":24,"y":67}},
@@ -8977,7 +8402,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM_TRAILER].TANK_1_1_AXLES,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANK_TANDEM_3_IMG,
+    image: 'SCHWARZMUELLER_TANK_TANDEM_3.png',
     parts: [{"type":"BRAKES","position":{"x":59,"y":78}},{"type":"SUSPENSION","position":{"x":67,"y":61}},
     {"type":"WHEELS","position":{"x":68,"y":70}},{"type":"BODY","position":{"x":73,"y":46}},
     {"type":"FRAME","position":{"x":76,"y":62}},{"type":"LIGHTS","position":{"x":96,"y":59}},
@@ -8989,7 +8414,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TANK_T4x2,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANK_TANDEM_TRUCK_IMG,
+    image: 'SCHWARZMUELLER_TANK_TANDEM_TRUCK.png',
     parts: [{"type":"BRAKES","position":{"x":22,"y":67}},{"type":"SUSPENSION","position":{"x":30,"y":58}},
     {"type":"WHEELS","position":{"x":31,"y":66}},{"type":"BODY","position":{"x":46,"y":42}},
     {"type":"FRAME","position":{"x":41,"y":60}},{"type":"LIGHTS","position":{"x":94,"y":57}},
@@ -9004,7 +8429,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TANK_T4x2,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANK_TANDEM_TRUCK_1_IMG,
+    image: 'SCHWARZMUELLER_TANK_TANDEM_TRUCK_1.png',
     parts: [{"type":"BRAKES","position":{"x":61,"y":77}},{"type":"SUSPENSION","position":{"x":66,"y":59}},
     {"type":"WHEELS","position":{"x":72,"y":73}},{"type":"BODY","position":{"x":61,"y":47}},
     {"type":"FRAME","position":{"x":72,"y":54}},{"type":"BATTERY","position":{"x":84,"y":50}},
@@ -9019,7 +8444,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TANK_T6x2,
     brand: EBrand.SCHWARZMUELLER,
-    image: SCHWARZMUELLER_TANK_TANDEM_TRUCK_2_IMG,
+    image: 'SCHWARZMUELLER_TANK_TANDEM_TRUCK_2.png',
     parts: [{"type":"BRAKES","position":{"x":50,"y":74}},{"type":"SUSPENSION","position":{"x":57,"y":62}},
     {"type":"WHEELS","position":{"x":59,"y":68}},{"type":"BODY","position":{"x":45,"y":45}},
     {"type":"FRAME","position":{"x":44,"y":76}},{"type":"BATTERY","position":{"x":85,"y":50}},
@@ -9034,7 +8459,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_BOXVAN_ALU_IMG,
+    image: 'SDC_BOXVAN_ALU.png',
     parts: [{"type":"BRAKES","position":{"x":79,"y":74}},{"type":"SUSPENSION","position":{"x":81,"y":67}},
     {"type":"WHEELS","position":{"x":85,"y":71}},{"type":"BODY","position":{"x":41,"y":58}},
     {"type":"FRAME","position":{"x":65,"y":70}},{"type":"SUPPORT","position":{"x":56,"y":78}},
@@ -9046,7 +8471,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_BOXVAN_DOUBLE_DECK_IMG,
+    image: 'SDC_BOXVAN_DOUBLE_DECK.png',
     parts: [{"type":"BRAKES","position":{"x":17,"y":80}},{"type":"SUSPENSION","position":{"x":11,"y":75}},
     {"type":"WHEELS","position":{"x":11,"y":81}},{"type":"BODY","position":{"x":23,"y":59}},
     {"type":"FRAME","position":{"x":26,"y":77}},{"type":"SUPPORT","position":{"x":35,"y":87}},
@@ -9058,7 +8483,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_BOXVAN_GRP_IMG,
+    image: 'SDC_BOXVAN_GRP.png',
     parts: [{"type":"BRAKES","position":{"x":49,"y":79}},{"type":"SUSPENSION","position":{"x":56,"y":70}},
     {"type":"WHEELS","position":{"x":57,"y":78}},{"type":"BODY","position":{"x":53,"y":58}},
     {"type":"FRAME","position":{"x":47,"y":71}},{"type":"SUPPORT","position":{"x":87,"y":74}},
@@ -9071,7 +8496,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_BOXVAN_URBAN_IMG,
+    image: 'SDC_BOXVAN_URBAN.png',
     parts: [{"type":"BRAKES","position":{"x":48,"y":82}},{"type":"SUSPENSION","position":{"x":57,"y":74}},
     {"type":"WHEELS","position":{"x":59,"y":82}},{"type":"BODY","position":{"x":62,"y":53}},
     {"type":"FRAME","position":{"x":68,"y":73}},{"type":"SUPPORT","position":{"x":86,"y":74}},
@@ -9084,7 +8509,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_CURTAIN_IMG,
+    image: 'SDC_CURTAIN.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":78}},{"type":"SUSPENSION","position":{"x":60,"y":67}},
     {"type":"WHEELS","position":{"x":61,"y":77}},{"type":"BODY","position":{"x":58,"y":41}},
     {"type":"FRAME","position":{"x":47,"y":70}},{"type":"SUPPORT","position":{"x":88,"y":71}},
@@ -9096,7 +8521,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_CURTAIN_CHIPLINER_IMG,
+    image: 'SDC_CURTAIN_CHIPLINER.png',
     parts: [{"type":"BRAKES","position":{"x":19,"y":77}},{"type":"SUSPENSION","position":{"x":16,"y":69}},
     {"type":"WHEELS","position":{"x":14,"y":75}},{"type":"BODY","position":{"x":21,"y":55}},
     {"type":"FRAME","position":{"x":28,"y":72}},{"type":"SUPPORT","position":{"x":38,"y":82}},
@@ -9108,7 +8533,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_CURTAIN_COILWELL_IMG,
+    image: 'SDC_CURTAIN_COILWELL.png',
     parts: [{"type":"BRAKES","position":{"x":68,"y":80}},{"type":"SUSPENSION","position":{"x":73,"y":69}},
     {"type":"WHEELS","position":{"x":76,"y":78}},{"type":"BODY","position":{"x":70,"y":37}},
     {"type":"FRAME","position":{"x":65,"y":71}},{"type":"SUPPORT","position":{"x":85,"y":72}},
@@ -9120,7 +8545,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_CURTAIN_DOUBLE_DECK_IMG,
+    image: 'SDC_CURTAIN_DOUBLE_DECK.png',
     parts: [{"type":"BRAKES","position":{"x":78,"y":73}},{"type":"SUSPENSION","position":{"x":84,"y":67}},
     {"type":"WHEELS","position":{"x":83,"y":73}},{"type":"BODY","position":{"x":41,"y":42}},
     {"type":"FRAME","position":{"x":62,"y":73}},{"type":"SUPPORT","position":{"x":53,"y":78}},
@@ -9132,7 +8557,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_CURTAIN_EUROLINER_IMG,
+    image: 'SDC_CURTAIN_EUROLINER.png',
     parts: [{"type":"BRAKES","position":{"x":29,"y":70}},{"type":"SUSPENSION","position":{"x":25,"y":63}},
     {"type":"WHEELS","position":{"x":24,"y":68}},{"type":"BODY","position":{"x":20,"y":54}},
     {"type":"FRAME","position":{"x":39,"y":63}},{"type":"SUPPORT","position":{"x":56,"y":73}},
@@ -9144,7 +8569,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_CURTAIN_INSULINER_IMG,
+    image: 'SDC_CURTAIN_INSULINER.png',
     parts: [{"type":"BRAKES","position":{"x":18,"y":78}},{"type":"SUSPENSION","position":{"x":15,"y":70}},
     {"type":"WHEELS","position":{"x":10,"y":77}},{"type":"BODY","position":{"x":24,"y":58}},
     {"type":"FRAME","position":{"x":32,"y":73}},{"type":"SUPPORT","position":{"x":38,"y":86}},
@@ -9157,7 +8582,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_CURTAIN_MEGA_IMG,
+    image: 'SDC_CURTAIN_MEGA.png',
     parts: [{"type":"BRAKES","position":{"x":38,"y":77}},{"type":"SUSPENSION","position":{"x":31,"y":70}},
     {"type":"WHEELS","position":{"x":30,"y":76}},{"type":"BODY","position":{"x":24,"y":57}},
     {"type":"FRAME","position":{"x":19,"y":70}},{"type":"SUPPORT","position":{"x":15,"y":76}},
@@ -9169,7 +8594,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_CURTAIN_URBAN_IMG,
+    image: 'SDC_CURTAIN_URBAN.png',
     parts: [{"type":"BRAKES","position":{"x":48,"y":82}},{"type":"SUSPENSION","position":{"x":39,"y":69}},
     {"type":"WHEELS","position":{"x":40,"y":78}},{"type":"BODY","position":{"x":28,"y":53}},
     {"type":"FRAME","position":{"x":31,"y":66}},{"type":"SUPPORT","position":{"x":18,"y":76}},
@@ -9181,7 +8606,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_PLATFORM_IMG,
+    image: 'SDC_PLATFORM.png',
     parts: [{"type":"BRAKES","position":{"x":85,"y":72}},{"type":"SUSPENSION","position":{"x":89,"y":65}},
     {"type":"WHEELS","position":{"x":92,"y":71}},{"type":"FRAME","position":{"x":68,"y":62}},
     {"type":"SUPPORT","position":{"x":75,"y":81}},{"type":"LIGHTS","position":{"x":97,"y":65}},
@@ -9192,7 +8617,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_PLATFORM_EXTENDABLE_IMG,
+    image: 'SDC_PLATFORM_EXTENDABLE.png',
     parts: [{"type":"BRAKES","position":{"x":87,"y":52}},{"type":"SUSPENSION","position":{"x":90,"y":48}},
     {"type":"WHEELS","position":{"x":92,"y":53}},{"type":"FRAME","position":{"x":53,"y":57}},
     {"type":"SUPPORT","position":{"x":52,"y":69}},{"type":"LIGHTS","position":{"x":96,"y":46}},
@@ -9203,7 +8628,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_PLATFORM_OIL_SPEC_IMG,
+    image: 'SDC_PLATFORM_OIL_SPEC.png',
     parts: [{"type":"BRAKES","position":{"x":58,"y":59}},{"type":"SUSPENSION","position":{"x":65,"y":47}},
     {"type":"WHEELS","position":{"x":66,"y":56}},{"type":"FRAME","position":{"x":80,"y":46}},
     {"type":"SUPPORT","position":{"x":86,"y":57}},{"type":"LIGHTS","position":{"x":36,"y":55}},
@@ -9214,7 +8639,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_PLATFORM_PSK_IMG,
+    image: 'SDC_PLATFORM_PSK.png',
     parts: [{"type":"BRAKES","position":{"x":75,"y":59}},{"type":"SUSPENSION","position":{"x":80,"y":52}},
     {"type":"WHEELS","position":{"x":81,"y":56}},{"type":"FRAME","position":{"x":38,"y":57}},
     {"type":"SUPPORT","position":{"x":57,"y":67}},{"type":"LIGHTS","position":{"x":95,"y":52}},
@@ -9225,7 +8650,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_PLATFORM_STEP_FRAME_IMG,
+    image: 'SDC_PLATFORM_STEP_FRAME.png',
     parts: [{"type":"BRAKES","position":{"x":16,"y":60}},{"type":"SUSPENSION","position":{"x":12,"y":54}},
     {"type":"WHEELS","position":{"x":11,"y":60}},{"type":"FRAME","position":{"x":22,"y":54}},
     {"type":"SUPPORT","position":{"x":30,"y":67}},{"type":"LIGHTS","position":{"x":5,"y":53}},
@@ -9236,7 +8661,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_SKELETAL_EXTANDABLE_IMG,
+    image: 'SDC_SKELETAL_EXTANDABLE.png',
     parts: [{"type":"BRAKES","position":{"x":61,"y":57}},{"type":"SUSPENSION","position":{"x":69,"y":52}},
     {"type":"WHEELS","position":{"x":67,"y":61}},{"type":"FRAME","position":{"x":31,"y":43}},
     {"type":"SUPPORT","position":{"x":16,"y":47}},{"type":"LIGHTS","position":{"x":85,"y":61}},
@@ -9247,7 +8672,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_SKELETAL_FIXED_IMG,
+    image: 'SDC_SKELETAL_FIXED.png',
     parts: [{"type":"BRAKES","position":{"x":79,"y":58}},{"type":"WHEELS","position":{"x":84,"y":56}},
     {"type":"SUSPENSION","position":{"x":80,"y":51}},{"type":"FRAME","position":{"x":33,"y":50}},
     {"type":"LIGHTS","position":{"x":95,"y":51}},{"type":"SUPPORT","position":{"x":56,"y":63}},
@@ -9258,7 +8683,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_SKELETAL_FIXED_GOOSENECK_IMG,
+    image: 'SDC_SKELETAL_FIXED_GOOSENECK.png',
     parts: [{"type":"BRAKES","position":{"x":83,"y":58}},{"type":"SUSPENSION","position":{"x":85,"y":51}},
     {"type":"WHEELS","position":{"x":90,"y":53}},{"type":"FRAME","position":{"x":58,"y":46}},
     {"type":"SUPPORT","position":{"x":61,"y":65}},{"type":"LIGHTS","position":{"x":98,"y":49}},
@@ -9269,7 +8694,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_SKELETAL_GOOSENECK_EXTENDING_IMG,
+    image: 'SDC_SKELETAL_GOOSENECK_EXTENDING.png',
     parts: [{"type":"BRAKES","position":{"x":53,"y":61}},{"type":"SUSPENSION","position":{"x":51,"y":56}},
     {"type":"WHEELS","position":{"x":66,"y":61}},{"type":"FRAME","position":{"x":59,"y":42}},
     {"type":"SUPPORT","position":{"x":86,"y":37}},{"type":"LIGHTS","position":{"x":41,"y":73}},
@@ -9280,7 +8705,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_SKELETAL_ISO_TANK_IMG,
+    image: 'SDC_SKELETAL_ISO_TANK.png',
     parts: [{"type":"BRAKES","position":{"x":60,"y":56}},{"type":"SUSPENSION","position":{"x":63,"y":47}},
     {"type":"WHEELS","position":{"x":69,"y":53}},{"type":"FRAME","position":{"x":67,"y":36}},
     {"type":"SUPPORT","position":{"x":86,"y":41}},{"type":"LIGHTS","position":{"x":33,"y":65}},
@@ -9291,7 +8716,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.SDC_TRAILERS,
-    image: SDC_SKELETAL_TIPPING_IMG,
+    image: 'SDC_SKELETAL_TIPPING.png',
     parts: [{"type":"BRAKES","position":{"x":56,"y":65}},{"type":"SUSPENSION","position":{"x":55,"y":55}},
     {"type":"WHEELS","position":{"x":67,"y":62}},{"type":"FRAME","position":{"x":59,"y":42}},
     {"type":"SUPPORT","position":{"x":89,"y":50}},{"type":"LIGHTS","position":{"x":29,"y":64}},
@@ -9302,7 +8727,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_3_AXLES,
     brand: EBrand.STAS,
-    image: STAS_TIPPER_AGGREGATE_STAR_IMG,
+    image: 'STAS_TIPPER_AGGREGATE_STAR.png',
     parts: [{"type":"BRAKES","position":{"x":49,"y":70}},{"type":"SUSPENSION","position":{"x":49,"y":64}},
     {"type":"WHEELS","position":{"x":55,"y":67}},{"type":"BODY","position":{"x":55,"y":51}},
     {"type":"FRAME","position":{"x":63,"y":57}},{"type":"SUPPORT","position":{"x":80,"y":69}},
@@ -9315,7 +8740,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_3_AXLES,
     brand: EBrand.STAS,
-    image: STAS_TIPPER_BUILD_STARX_IMG,
+    image: 'STAS_TIPPER_BUILD_STARX.png',
     parts: [{"type":"BRAKES","position":{"x":19,"y":72}},{"type":"SUSPENSION","position":{"x":15,"y":66}},
     {"type":"WHEELS","position":{"x":13,"y":70}},{"type":"BODY","position":{"x":33,"y":49}},
     {"type":"FRAME","position":{"x":28,"y":59}},{"type":"SUPPORT","position":{"x":32,"y":79}},
@@ -9328,7 +8753,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_3_AXLES,
     brand: EBrand.STAS,
-    image: STAS_TIPPER_ROCK_STAR_IMG,
+    image: 'STAS_TIPPER_ROCK_STAR.png',
     parts: [{"type":"BRAKES","position":{"x":27,"y":68}},{"type":"SUSPENSION","position":{"x":19,"y":60}},
     {"type":"WHEELS","position":{"x":20,"y":66}},{"type":"BODY","position":{"x":25,"y":41}},
     {"type":"FRAME","position":{"x":32,"y":53}},{"type":"SUPPORT","position":{"x":38,"y":75}},
@@ -9341,7 +8766,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_3_AXLES,
     brand: EBrand.STAS,
-    image: STAS_TIPPER_U_ROCKSTAR_IMG,
+    image: 'STAS_TIPPER_U_ROCKSTAR.png',
     parts: [{"type":"BRAKES","position":{"x":24,"y":68}},{"type":"SUSPENSION","position":{"x":18,"y":59}},
     {"type":"WHEELS","position":{"x":17,"y":67}},{"type":"FRAME","position":{"x":32,"y":52}},
     {"type":"BODY","position":{"x":34,"y":43}},{"type":"SUPPORT","position":{"x":39,"y":73}},
@@ -9354,7 +8779,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_2_AXLES,
     brand: EBrand.STOUGHTON,
-    image: STOUGHTON_TRAILERS_CHASSIS_IMG,
+    image: 'STOUGHTON_TRAILERS_CHASSIS.png',
     parts: [{"type":"BRAKES","position":{"x":88,"y":37}},{"type":"SUSPENSION","position":{"x":88,"y":33}},
     {"type":"WHEELS","position":{"x":93,"y":36}},{"type":"FRAME","position":{"x":64,"y":43}},
     {"type":"SUPPORT","position":{"x":54,"y":62}},{"type":"LIGHTS","position":{"x":96,"y":29}},
@@ -9365,7 +8790,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_2_AXLES,
     brand: EBrand.STOUGHTON,
-    image: STOUGHTON_TRAILERS_REEFER_PUREBLUE_IMG,
+    image: 'STOUGHTON_TRAILERS_REEFER_PUREBLUE.png',
     parts: [{"type":"BRAKES","position":{"x":41,"y":72}},{"type":"SUSPENSION","position":{"x":43,"y":65}},
     {"type":"WHEELS","position":{"x":48,"y":70}},{"type":"BODY","position":{"x":36,"y":52}},
     {"type":"FRAME","position":{"x":55,"y":61}},{"type":"SUPPORT","position":{"x":87,"y":66}},
@@ -9378,7 +8803,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.STOUGHTON,
-    image: STOUGHTON_TRAILERS_SEMI_TRAILER_EXTRA_WIDE_IMG,
+    image: 'STOUGHTON_TRAILERS_SEMI_TRAILER_EXTRA_WIDE.png',
     parts: [{"type":"BRAKES","position":{"x":41,"y":73}},{"type":"SUSPENSION","position":{"x":44,"y":63}},
     {"type":"WHEELS","position":{"x":53,"y":70}},{"type":"BODY","position":{"x":59,"y":39}},
     {"type":"FRAME","position":{"x":69,"y":62}},{"type":"SUPPORT","position":{"x":87,"y":68}},
@@ -9390,7 +8815,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.STOUGHTON,
-    image: STOUGHTON_TRAILERS_SEMI_TRAILER_TOUGH_PLATE_IMG,
+    image: 'STOUGHTON_TRAILERS_SEMI_TRAILER_TOUGH_PLATE.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":77}},{"type":"SUSPENSION","position":{"x":42,"y":70}},
     {"type":"WHEELS","position":{"x":38,"y":76}},{"type":"BODY","position":{"x":40,"y":60}},
     {"type":"FRAME","position":{"x":28,"y":65}},{"type":"SUPPORT","position":{"x":9,"y":70}},
@@ -9402,7 +8827,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.STOUGHTON,
-    image: STOUGHTON_TRAILERS_SEMI_TRAILER_Z_PLATE_IMG,
+    image: 'STOUGHTON_TRAILERS_SEMI_TRAILER_Z_PLATE.png',
     parts: [{"type":"BRAKES","position":{"x":24,"y":59}},{"type":"SUSPENSION","position":{"x":20,"y":57}},
     {"type":"WHEELS","position":{"x":19,"y":61}},{"type":"BODY","position":{"x":31,"y":50}},
     {"type":"FRAME","position":{"x":41,"y":53}},{"type":"SUPPORT","position":{"x":76,"y":62}},
@@ -9414,7 +8839,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.STRICK,
-    image: STRICK_TRAILERS_SEMI_TRAILER_COMPOSITE_IMG,
+    image: 'STRICK_TRAILERS_SEMI_TRAILER_COMPOSITE.png',
     parts: [{"type":"BRAKES","position":{"x":12,"y":61}},{"type":"SUSPENSION","position":{"x":9,"y":57}},
     {"type":"WHEELS","position":{"x":7,"y":61}},{"type":"BODY","position":{"x":27,"y":53}},
     {"type":"FRAME","position":{"x":28,"y":58}},{"type":"SUPPORT","position":{"x":59,"y":68}},
@@ -9426,7 +8851,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.STRICK,
-    image: STRICK_TRAILERS_SEMI_TRAILER_SHEET_POST_IMG,
+    image: 'STRICK_TRAILERS_SEMI_TRAILER_SHEET_POST.png',
     parts: [{"type":"BRAKES","position":{"x":23,"y":64}},{"type":"SUSPENSION","position":{"x":19,"y":60}},
     {"type":"WHEELS","position":{"x":17,"y":63}},{"type":"BODY","position":{"x":40,"y":52}},
     {"type":"FRAME","position":{"x":38,"y":57}},{"type":"SUPPORT","position":{"x":64,"y":67}},
@@ -9438,7 +8863,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_big,
     brand: EBrand.STRICK,
-    image: STRICK_TRAILERS_TANDEM_4x2_IMG,
+    image: 'STRICK_TRAILERS_TANDEM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":84,"y":60}},{"type":"SUSPENSION","position":{"x":89,"y":53}},
     {"type":"WHEELS","position":{"x":90,"y":59}},{"type":"BODY","position":{"x":75,"y":44}},
     {"type":"INTERIOR","position":{"x":52,"y":40}},{"type":"FRAME","position":{"x":79,"y":53}},
@@ -9453,7 +8878,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.TATA,
-    image: TATA_1821_TANDEM_6x2_IMG,
+    image: 'TATA_1821_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":75,"y":65}},{"type":"SUSPENSION","position":{"x":76,"y":53}},
     {"type":"WHEELS","position":{"x":83,"y":62}},{"type":"BODY","position":{"x":57,"y":49}},
     {"type":"FRAME","position":{"x":58,"y":57}},{"type":"INTERIOR","position":{"x":51,"y":32}},
@@ -9468,7 +8893,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.TATA,
-    image: TATA_1918T_TANDEM_4x2_IMG,
+    image: 'TATA_1918T_TANDEM_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":77,"y":65}},{"type":"SUSPENSION","position":{"x":77,"y":58}},
     {"type":"WHEELS","position":{"x":86,"y":63}},{"type":"BODY","position":{"x":57,"y":48}},
     {"type":"FRAME","position":{"x":65,"y":59}},{"type":"INTERIOR","position":{"x":46,"y":35}},
@@ -9483,7 +8908,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T4x2,
     brand: EBrand.TATA,
-    image: TATA_1923_TANDEM_TIPPER_4x2_IMG,
+    image: 'TATA_1923_TANDEM_TIPPER_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":76,"y":68}},{"type":"SUSPENSION","position":{"x":83,"y":56}},
     {"type":"WHEELS","position":{"x":85,"y":63}},{"type":"BODY","position":{"x":63,"y":45}},
     {"type":"FRAME","position":{"x":72,"y":57}},{"type":"INTERIOR","position":{"x":43,"y":28}},
@@ -9499,7 +8924,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.TATA,
-    image: TATA_2818_TANDEM_6x2_IMG,
+    image: 'TATA_2818_TANDEM_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":71,"y":64}},{"type":"SUSPENSION","position":{"x":75,"y":56}},
     {"type":"WHEELS","position":{"x":81,"y":62}},{"type":"BODY","position":{"x":57,"y":50}},
     {"type":"FRAME","position":{"x":61,"y":56}},{"type":"INTERIOR","position":{"x":50,"y":33}},
@@ -9514,7 +8939,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T6x2,
     brand: EBrand.TATA,
-    image: TATA_2823_TANDEM_TIPPER_6x2_IMG,
+    image: 'TATA_2823_TANDEM_TIPPER_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":73,"y":73}},{"type":"SUSPENSION","position":{"x":80,"y":64}},
     {"type":"WHEELS","position":{"x":83,"y":71}},{"type":"BODY","position":{"x":54,"y":51}},
     {"type":"FRAME","position":{"x":62,"y":66}},{"type":"INTERIOR","position":{"x":42,"y":36}},
@@ -9530,7 +8955,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T6x2,
     brand: EBrand.TATA,
-    image: TATA_2825_TANDEM_TIPPER_6x2_IMG,
+    image: 'TATA_2825_TANDEM_TIPPER_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":75,"y":69}},{"type":"SUSPENSION","position":{"x":74,"y":61}},
     {"type":"WHEELS","position":{"x":83,"y":68}},{"type":"BODY","position":{"x":52,"y":46}},
     {"type":"FRAME","position":{"x":64,"y":59}},{"type":"INTERIOR","position":{"x":49,"y":35}},
@@ -9546,7 +8971,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.TATA,
-    image: TATA_3518_TANDEM_8x4_IMG,
+    image: 'TATA_3518_TANDEM_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":69,"y":64}},{"type":"SUSPENSION","position":{"x":74,"y":57}},
     {"type":"WHEELS","position":{"x":73,"y":71}},{"type":"BODY","position":{"x":52,"y":48}},
     {"type":"FRAME","position":{"x":59,"y":58}},{"type":"INTERIOR","position":{"x":46,"y":36}},
@@ -9561,7 +8986,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T8x4,
     brand: EBrand.TATA,
-    image: TATA_3521_TANDEM_8x4_IMG,
+    image: 'TATA_3521_TANDEM_8x4.png',
     parts: [{"type":"BRAKES","position":{"x":67,"y":68}},{"type":"SUSPENSION","position":{"x":73,"y":58}},
     {"type":"WHEELS","position":{"x":75,"y":66}},{"type":"FRAME","position":{"x":58,"y":62}},
     {"type":"BODY","position":{"x":56,"y":43}},{"type":"INTERIOR","position":{"x":47,"y":35}},
@@ -9576,7 +9001,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.TATA,
-    image: TATA_4018_SEMI_4x2_IMG,
+    image: 'TATA_4018_SEMI_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":80,"y":67}},{"type":"SUSPENSION","position":{"x":80,"y":56}},
     {"type":"WHEELS","position":{"x":93,"y":62}},{"type":"BODY","position":{"x":53,"y":47}},
     {"type":"FRAME","position":{"x":65,"y":65}},{"type":"INTERIOR","position":{"x":57,"y":28}},
@@ -9591,7 +9016,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.TATA,
-    image: TATA_4625_SEMI_4x2_IMG,
+    image: 'TATA_4625_SEMI_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":80,"y":67}},{"type":"SUSPENSION","position":{"x":80,"y":56}},
     {"type":"WHEELS","position":{"x":93,"y":62}},{"type":"BODY","position":{"x":53,"y":47}},
     {"type":"FRAME","position":{"x":65,"y":65}},{"type":"INTERIOR","position":{"x":57,"y":28}},
@@ -9606,7 +9031,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.TATA,
-    image: TATA_5530_SEMI_6x2_IMG,
+    image: 'TATA_5530_SEMI_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":26,"y":69}},{"type":"SUSPENSION","position":{"x":19,"y":59}},
     {"type":"WHEELS","position":{"x":17,"y":68}},{"type":"BODY","position":{"x":43,"y":49}},
     {"type":"FRAME","position":{"x":39,"y":62}},{"type":"INTERIOR","position":{"x":44,"y":35}},
@@ -9621,7 +9046,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_3_AXLES,
     brand: EBrand.TRAIL_KING_IND,
-    image: TRAIL_KING_TIPPER_IMG,
+    image: 'TRAIL_KING_TIPPER.png',
     parts: [{"type":"BRAKES","position":{"x":48,"y":61}},{"type":"SUSPENSION","position":{"x":47,"y":54}},
     {"type":"WHEELS","position":{"x":43,"y":59}},{"type":"BODY","position":{"x":44,"y":41}},
     {"type":"FRAME","position":{"x":39,"y":52}},{"type":"SUPPORT","position":{"x":18,"y":60}},
@@ -9634,7 +9059,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TIPPER_3_AXLES,
     brand: EBrand.TRAIL_KING_IND,
-    image: TRAIL_KING_TIPPER_1_IMG,
+    image: 'TRAIL_KING_TIPPER_1.png',
     parts: [{"type":"BRAKES","position":{"x":44,"y":67}},{"type":"SUSPENSION","position":{"x":42,"y":56}},
     {"type":"WHEELS","position":{"x":37,"y":67}},{"type":"BODY","position":{"x":26,"y":43}},
     {"type":"FRAME","position":{"x":32,"y":53}},{"type":"SUPPORT","position":{"x":19,"y":67}},
@@ -9647,7 +9072,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_2_AXLES,
     brand: EBrand.TRANSCRAFT,
-    image: TRANSCRAFT_FLATBED_COMBO_IMG,
+    image: 'TRANSCRAFT_FLATBED_COMBO.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":56}},{"type":"SUSPENSION","position":{"x":34,"y":41}},
     {"type":"WHEELS","position":{"x":30,"y":51}},{"type":"FRAME","position":{"x":22,"y":37}},
     {"type":"SUPPORT","position":{"x":10,"y":39}},{"type":"LIGHTS","position":{"x":54,"y":45}},
@@ -9658,7 +9083,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_2_AXLES,
     brand: EBrand.TRANSCRAFT,
-    image: TRANSCRAFT_FLATBED_DROP_DECK_COMBO_IMG,
+    image: 'TRANSCRAFT_FLATBED_DROP_DECK_COMBO.png',
     parts: [{"type":"BRAKES","position":{"x":85,"y":47}},{"type":"SUSPENSION","position":{"x":86,"y":42}},
     {"type":"WHEELS","position":{"x":90,"y":46}},{"type":"FRAME","position":{"x":66,"y":48}},
     {"type":"SUPPORT","position":{"x":51,"y":64}},{"type":"LIGHTS","position":{"x":95,"y":41}},
@@ -9669,7 +9094,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_2_AXLES,
     brand: EBrand.TRANSCRAFT,
-    image: TRANSCRAFT_FLATBED_DROP_DECK_STEEL_IMG,
+    image: 'TRANSCRAFT_FLATBED_DROP_DECK_STEEL.png',
     parts: [{"type":"BRAKES","position":{"x":90,"y":46}},{"type":"SUSPENSION","position":{"x":92,"y":40}},
     {"type":"WHEELS","position":{"x":94,"y":49}},{"type":"FRAME","position":{"x":73,"y":49}},
     {"type":"SUPPORT","position":{"x":53,"y":63}},{"type":"LIGHTS","position":{"x":98,"y":42}},
@@ -9680,7 +9105,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_2_AXLES,
     brand: EBrand.TRANSCRAFT,
-    image: TRANSCRAFT_FLATBED_STEEL_IMG,
+    image: 'TRANSCRAFT_FLATBED_STEEL.png',
     parts: [{"type":"BRAKES","position":{"x":35,"y":57}},{"type":"SUSPENSION","position":{"x":37,"y":45}},
     {"type":"WHEELS","position":{"x":29,"y":52}},{"type":"FRAME","position":{"x":20,"y":38}},
     {"type":"SUPPORT","position":{"x":11,"y":36}},{"type":"LIGHTS","position":{"x":61,"y":57}},
@@ -9691,7 +9116,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.UTM_CORPORATE,
-    image: UTM_FLATBED_4000AE_IMG,
+    image: 'UTM_FLATBED_4000AE.png',
     parts: [{"type":"BRAKES","position":{"x":23,"y":62}},{"type":"SUSPENSION","position":{"x":23,"y":51}},
     {"type":"WHEELS","position":{"x":18,"y":59}},{"type":"FRAME","position":{"x":16,"y":40}},
     {"type":"SUPPORT","position":{"x":12,"y":48}},{"type":"LIGHTS","position":{"x":37,"y":51}},
@@ -9702,7 +9127,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.UTM_CORPORATE,
-    image: UTM_FLATBED_4000AE_DROP_DECK_IMG,
+    image: 'UTM_FLATBED_4000AE_DROP_DECK.png',
     parts: [{"type":"BRAKES","position":{"x":45,"y":56}},{"type":"SUSPENSION","position":{"x":50,"y":51}},
     {"type":"WHEELS","position":{"x":55,"y":57}},{"type":"FRAME","position":{"x":66,"y":38}},
     {"type":"SUPPORT","position":{"x":92,"y":36}},{"type":"LIGHTS","position":{"x":28,"y":62}},
@@ -9713,7 +9138,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.UTM_CORPORATE,
-    image: UTM_FLATBED_DROP_DECK_IMG,
+    image: 'UTM_FLATBED_DROP_DECK.png',
     parts: [{"type":"BRAKES","position":{"x":44,"y":62}},{"type":"SUSPENSION","position":{"x":37,"y":56}},
     {"type":"WHEELS","position":{"x":35,"y":63}},{"type":"FRAME","position":{"x":31,"y":52}},
     {"type":"SUPPORT","position":{"x":18,"y":56}},{"type":"LIGHTS","position":{"x":60,"y":64}},
@@ -9724,7 +9149,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_2_AXLES,
     brand: EBrand.UTM_CORPORATE,
-    image: UTM_TRAILER_3000R_IMG,
+    image: 'UTM_TRAILER_3000R.png',
     parts: [{"type":"BRAKES","position":{"x":36,"y":83}},{"type":"SUSPENSION","position":{"x":34,"y":73}},
     {"type":"WHEELS","position":{"x":23,"y":79}},{"type":"BODY","position":{"x":21,"y":54}},
     {"type":"FRAME","position":{"x":17,"y":72}},{"type":"SUPPORT","position":{"x":9,"y":82}},
@@ -9737,7 +9162,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_2_AXLES,
     brand: EBrand.UTM_CORPORATE,
-    image: UTM_TRAILER_3000R_MULTI_TEMP_IMG,
+    image: 'UTM_TRAILER_3000R_MULTI_TEMP.png',
     parts: [{"type":"BRAKES","position":{"x":29,"y":66}},{"type":"SUSPENSION","position":{"x":27,"y":58}},
     {"type":"WHEELS","position":{"x":22,"y":65}},{"type":"BODY","position":{"x":18,"y":42}},
     {"type":"FRAME","position":{"x":17,"y":55}},{"type":"SUPPORT","position":{"x":16,"y":60}},
@@ -9750,7 +9175,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.UTM_CORPORATE,
-    image: UTM_TRAILER_4000D_IMG,
+    image: 'UTM_TRAILER_4000D.png',
     parts: [{"type":"BRAKES","position":{"x":58,"y":79}},{"type":"SUSPENSION","position":{"x":46,"y":70}},
     {"type":"WHEELS","position":{"x":45,"y":80}},{"type":"BODY","position":{"x":35,"y":37}},
     {"type":"FRAME","position":{"x":33,"y":64}},{"type":"SUPPORT","position":{"x":10,"y":76}},
@@ -9762,7 +9187,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.UTM_CORPORATE,
-    image: UTM_TRAILER_4000D_X_COMPOSITE_IMG,
+    image: 'UTM_TRAILER_4000D_X_COMPOSITE.png',
     parts: [{"type":"BRAKES","position":{"x":40,"y":74}},{"type":"SUSPENSION","position":{"x":38,"y":68}},
     {"type":"WHEELS","position":{"x":34,"y":74}},{"type":"BODY","position":{"x":25,"y":44}},
     {"type":"FRAME","position":{"x":23,"y":65}},{"type":"SUPPORT","position":{"x":10,"y":71}},
@@ -9774,7 +9199,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.UTM_CORPORATE,
-    image: UTM_TRAILER_4000D_X_COMPOSITE_100_IMG,
+    image: 'UTM_TRAILER_4000D_X_COMPOSITE_100.png',
     parts: [{"type":"BRAKES","position":{"x":37,"y":73}},{"type":"SUSPENSION","position":{"x":33,"y":66}},
     {"type":"WHEELS","position":{"x":31,"y":74}},{"type":"BODY","position":{"x":23,"y":56}},
     {"type":"FRAME","position":{"x":23,"y":65}},{"type":"SUPPORT","position":{"x":10,"y":68}},
@@ -9786,7 +9211,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.UTM_CORPORATE,
-    image: UTM_TRAILER_4000D_X_COMPOSITE_TBR_IMG,
+    image: 'UTM_TRAILER_4000D_X_COMPOSITE_TBR.png',
     parts: [{"type":"BRAKES","position":{"x":32,"y":78}},{"type":"SUSPENSION","position":{"x":29,"y":71}},
     {"type":"WHEELS","position":{"x":26,"y":79}},{"type":"BODY","position":{"x":15,"y":45}},
     {"type":"FRAME","position":{"x":17,"y":65}},{"type":"SUPPORT","position":{"x":8,"y":73}},
@@ -9798,7 +9223,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.UTM_CORPORATE,
-    image: UTM_TRAILER_TAUTLINER_IMG,
+    image: 'UTM_TRAILER_TAUTLINER.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":74}},{"type":"SUSPENSION","position":{"x":50,"y":66}},
     {"type":"WHEELS","position":{"x":43,"y":74}},{"type":"BODY","position":{"x":38,"y":50}},
     {"type":"FRAME","position":{"x":35,"y":63}},{"type":"SUPPORT","position":{"x":16,"y":73}},
@@ -9810,7 +9235,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_1_1_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_CIE_20_40_CITYCOMBO_WS_TANDEM_IMG,
+    image: 'VANGUARD_CIE_20_40_CITYCOMBO_WS_TANDEM.png',
     parts: [{"type":"BRAKES","position":{"x":74,"y":49}},{"type":"SUSPENSION","position":{"x":76,"y":45}},
     {"type":"WHEELS","position":{"x":80,"y":48}},{"type":"FRAME","position":{"x":53,"y":45}},
     {"type":"SUPPORT","position":{"x":44,"y":59}},{"type":"LIGHTS","position":{"x":96,"y":40}},
@@ -9821,7 +9246,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_1_1_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_CIE_20_40_SL_COMBO_TANDEM_WS_IMG,
+    image: 'VANGUARD_CIE_20_40_SL_COMBO_TANDEM_WS.png',
     parts: [{"type":"BRAKES","position":{"x":76,"y":49}},{"type":"SUSPENSION","position":{"x":77,"y":45}},
     {"type":"WHEELS","position":{"x":82,"y":49}},{"type":"FRAME","position":{"x":54,"y":45}},
     {"type":"SUPPORT","position":{"x":44,"y":58}},{"type":"LIGHTS","position":{"x":95,"y":44}},
@@ -9832,7 +9257,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_CIE_20_40_SL_COMBO_TRIDEM_IMG,
+    image: 'VANGUARD_CIE_20_40_SL_COMBO_TRIDEM.png',
     parts: [{"type":"BRAKES","position":{"x":76,"y":49}},{"type":"SUSPENSION","position":{"x":77,"y":45}},
     {"type":"WHEELS","position":{"x":82,"y":49}},{"type":"FRAME","position":{"x":54,"y":45}},
     {"type":"SUPPORT","position":{"x":44,"y":58}},{"type":"LIGHTS","position":{"x":95,"y":44}},
@@ -9843,7 +9268,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_2_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_CIE_23_5_TANDEM_IMG,
+    image: 'VANGUARD_CIE_23_5_TANDEM.png',
     parts: [{"type":"BRAKES","position":{"x":76,"y":49}},{"type":"SUSPENSION","position":{"x":77,"y":45}},
     {"type":"WHEELS","position":{"x":82,"y":49}},{"type":"FRAME","position":{"x":54,"y":45}},
     {"type":"LIGHTS","position":{"x":95,"y":44}},{"type":"TRAILER_ATTACHMENT","position":{"x":19,"y":48}},
@@ -9854,7 +9279,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_CIE_33_LIGHTWEIGHT_TRIDEM_IMG,
+    image: 'VANGUARD_CIE_33_LIGHTWEIGHT_TRIDEM.png',
     parts: [{"type":"BRAKES","position":{"x":74,"y":50}},{"type":"SUSPENSION","position":{"x":74,"y":44}},
     {"type":"WHEELS","position":{"x":79,"y":49}},{"type":"FRAME","position":{"x":55,"y":47}},
     {"type":"SUPPORT","position":{"x":40,"y":60}},{"type":"LIGHTS","position":{"x":97,"y":45}},
@@ -9865,7 +9290,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_CIE_33_SLIDER_TRIDEM_IMG,
+    image: 'VANGUARD_CIE_33_SLIDER_TRIDEM.png',
     parts: [{"type":"BRAKES","position":{"x":74,"y":50}},{"type":"SUSPENSION","position":{"x":76,"y":45}},
     {"type":"WHEELS","position":{"x":81,"y":49}},{"type":"FRAME","position":{"x":61,"y":43}},
     {"type":"SUPPORT","position":{"x":39,"y":59}},{"type":"LIGHTS","position":{"x":95,"y":45}},
@@ -9876,7 +9301,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_2_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_CIE_40_45_EXTANDABLE_IMG,
+    image: 'VANGUARD_CIE_40_45_EXTANDABLE.png',
     parts: [{"type":"SUSPENSION","position":{"x":86,"y":44}},{"type":"BRAKES","position":{"x":83,"y":47}},
     {"type":"WHEELS","position":{"x":90,"y":48}},{"type":"FRAME","position":{"x":52,"y":47}},
     {"type":"SUPPORT","position":{"x":42,"y":57}},{"type":"LIGHTS","position":{"x":97,"y":42}},
@@ -9887,7 +9312,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_CIE_40_53_EXTENDABLE_TRIDEM_IMG,
+    image: 'VANGUARD_CIE_40_53_EXTENDABLE_TRIDEM.png',
     parts: [{"type":"BRAKES","position":{"x":75,"y":50}},{"type":"SUSPENSION","position":{"x":75,"y":46}},
     {"type":"WHEELS","position":{"x":80,"y":49}},{"type":"SUPPORT","position":{"x":41,"y":57}},
     {"type":"FRAME","position":{"x":46,"y":47}},{"type":"LIGHTS","position":{"x":93,"y":42}},
@@ -9898,7 +9323,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_2_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_CIE_40_GOOSENECK_LIGHTWEIGHT_IMG,
+    image: 'VANGUARD_CIE_40_GOOSENECK_LIGHTWEIGHT.png',
     parts: [{"type":"BRAKES","position":{"x":82,"y":49}},{"type":"SUSPENSION","position":{"x":82,"y":44}},
     {"type":"WHEELS","position":{"x":89,"y":48}},{"type":"FRAME","position":{"x":56,"y":46}},
     {"type":"SUPPORT","position":{"x":46,"y":60}},{"type":"LIGHTS","position":{"x":93,"y":42}},
@@ -9909,7 +9334,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_2_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_CIE_40_GOOSENECK_TANDEM_IMG,
+    image: 'VANGUARD_CIE_40_GOOSENECK_TANDEM.png',
     parts: [{"type":"BRAKES","position":{"x":85,"y":51}},{"type":"SUSPENSION","position":{"x":84,"y":46}},
     {"type":"WHEELS","position":{"x":90,"y":48}},{"type":"FRAME","position":{"x":51,"y":46}},
     {"type":"SUPPORT","position":{"x":45,"y":57}},{"type":"LIGHTS","position":{"x":97,"y":43}},
@@ -9920,7 +9345,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_3_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_CIE_40_GOOSENECK_TRIDEM_IMG,
+    image: 'VANGUARD_CIE_40_GOOSENECK_TRIDEM.png',
     parts: [{"type":"BRAKES","position":{"x":75,"y":51}},{"type":"SUSPENSION","position":{"x":77,"y":46}},
     {"type":"WHEELS","position":{"x":81,"y":48}},{"type":"SUPPORT","position":{"x":46,"y":59}},
     {"type":"FRAME","position":{"x":53,"y":45}},{"type":"LIGHTS","position":{"x":97,"y":43}},
@@ -9931,7 +9356,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_1_1_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_CIE_43_DROP_FRAME_IMG,
+    image: 'VANGUARD_CIE_43_DROP_FRAME.png',
     parts: [{"type":"BRAKES","position":{"x":75,"y":47}},{"type":"SUSPENSION","position":{"x":78,"y":43}},
     {"type":"WHEELS","position":{"x":82,"y":49}},{"type":"FRAME","position":{"x":57,"y":44}},
     {"type":"SUPPORT","position":{"x":38,"y":57}},{"type":"LIGHTS","position":{"x":96,"y":42}},
@@ -9942,7 +9367,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].CONTAINER_2_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_CIE_53_GOOSENECK_IMG,
+    image: 'VANGUARD_CIE_53_GOOSENECK.png',
     parts: [{"type":"BRAKES","position":{"x":85,"y":51}},{"type":"SUSPENSION","position":{"x":84,"y":46}},
     {"type":"WHEELS","position":{"x":88,"y":49}},{"type":"FRAME","position":{"x":50,"y":48}},
     {"type":"SUPPORT","position":{"x":37,"y":58}},{"type":"LIGHTS","position":{"x":95,"y":44}},
@@ -9953,7 +9378,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_MAXCUBE_IMG,
+    image: 'VANGUARD_MAXCUBE.png',
     parts: [{"type":"BRAKES","position":{"x":88,"y":64}},{"type":"SUSPENSION","position":{"x":90,"y":60}},
     {"type":"WHEELS","position":{"x":94,"y":63}},{"type":"BODY","position":{"x":32,"y":57}},
     {"type":"FRAME","position":{"x":40,"y":60}},{"type":"SUPPORT","position":{"x":44,"y":72}},
@@ -9965,7 +9390,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_2_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_REEFER_IMG,
+    image: 'VANGUARD_REEFER.png',
     parts: [{"type":"BRAKES","position":{"x":13,"y":67}},{"type":"SUSPENSION","position":{"x":11,"y":62}},
     {"type":"WHEELS","position":{"x":9,"y":66}},{"type":"BODY","position":{"x":20,"y":52}},
     {"type":"FRAME","position":{"x":25,"y":63}},{"type":"SUPPORT","position":{"x":44,"y":76}},
@@ -9978,7 +9403,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_2_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_VAF_IMG,
+    image: 'VANGUARD_VAF.png',
     parts: [{"type":"BRAKES","position":{"x":85,"y":53}},{"type":"SUSPENSION","position":{"x":89,"y":45}},
     {"type":"WHEELS","position":{"x":93,"y":52}},{"type":"FRAME","position":{"x":65,"y":43}},
     {"type":"SUPPORT","position":{"x":63,"y":63}},{"type":"LIGHTS","position":{"x":99,"y":49}},
@@ -9989,7 +9414,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_VIP_4000_IMG,
+    image: 'VANGUARD_VIP_4000.png',
     parts: [{"type":"BRAKES","position":{"x":83,"y":65}},{"type":"SUSPENSION","position":{"x":84,"y":61}},
     {"type":"WHEELS","position":{"x":89,"y":64}},{"type":"BODY","position":{"x":40,"y":52}},
     {"type":"FRAME","position":{"x":50,"y":61}},{"type":"SUPPORT","position":{"x":44,"y":72}},
@@ -10001,7 +9426,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_VSF_IMG,
+    image: 'VANGUARD_VSF.png',
     parts: [{"type":"BRAKES","position":{"x":82,"y":48}},{"type":"SUSPENSION","position":{"x":86,"y":41}},
     {"type":"WHEELS","position":{"x":88,"y":49}},{"type":"FRAME","position":{"x":55,"y":42}},
     {"type":"SUPPORT","position":{"x":47,"y":58}},{"type":"LIGHTS","position":{"x":98,"y":43}},
@@ -10012,7 +9437,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.VANGUARD,
-    image: VANGUARD_VXP_IMG,
+    image: 'VANGUARD_VXP.png',
     parts: [{"type":"BRAKES","position":{"x":87,"y":62}},{"type":"SUSPENSION","position":{"x":88,"y":57}},
     {"type":"WHEELS","position":{"x":92,"y":61}},{"type":"BODY","position":{"x":39,"y":50}},
     {"type":"FRAME","position":{"x":50,"y":60}},{"type":"SUPPORT","position":{"x":44,"y":71}},
@@ -10024,7 +9449,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CONSTELLATION_15190_ROBUST_IMG,
+    image: 'VOLKSWAGEN_CONSTELLATION_15190_ROBUST.png',
     parts: [{"type":"BRAKES","position":{"x":21,"y":61}},{"type":"SUSPENSION","position":{"x":17,"y":55}},
     {"type":"WHEELS","position":{"x":12,"y":63}},{"type":"FRAME","position":{"x":27,"y":58}},
     {"type":"INTERIOR","position":{"x":60,"y":48}},{"type":"BODY","position":{"x":54,"y":47}},
@@ -10039,7 +9464,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CONSTELLATION_17190_IMG,
+    image: 'VOLKSWAGEN_CONSTELLATION_17190.png',
     parts: [{"type":"BRAKES","position":{"x":16,"y":61}},{"type":"SUSPENSION","position":{"x":13,"y":52}},
     {"type":"WHEELS","position":{"x":10,"y":61}},{"type":"BODY","position":{"x":53,"y":44}},
     {"type":"FRAME","position":{"x":35,"y":58}},{"type":"INTERIOR","position":{"x":60,"y":42}},
@@ -10054,7 +9479,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CONSTELLATION_17230_ROBUST_IMG,
+    image: 'VOLKSWAGEN_CONSTELLATION_17230_ROBUST.png',
     parts: [{"type":"BODY","position":{"x":53,"y":44}},{"type":"FRAME","position":{"x":35,"y":58}},
     {"type":"INTERIOR","position":{"x":60,"y":42}},{"type":"ELECTRONIC","position":{"x":73,"y":42}},
     {"type":"LIGHTS","position":{"x":75,"y":52}},{"type":"LOAD","position":{"x":26,"y":53}},
@@ -10069,7 +9494,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CONSTELLATION_17280_IMG,
+    image: 'VOLKSWAGEN_CONSTELLATION_17280.png',
     parts: [{"type":"BRAKES","position":{"x":24,"y":62}},{"type":"WHEELS","position":{"x":14,"y":64}},
     {"type":"SUSPENSION","position":{"x":17,"y":55}},{"type":"FRAME","position":{"x":30,"y":56}},
     {"type":"INTERIOR","position":{"x":67,"y":40}},{"type":"BODY","position":{"x":54,"y":48}},
@@ -10084,7 +9509,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CONSTELLATION_17280_TRACTOR_IMG,
+    image: 'VOLKSWAGEN_CONSTELLATION_17280_TRACTOR.png',
     parts: [{"type":"BRAKES","position":{"x":18,"y":72}},{"type":"SUSPENSION","position":{"x":12,"y":63}},
     {"type":"WHEELS","position":{"x":5,"y":69}},{"type":"BODY","position":{"x":38,"y":51}},
     {"type":"FRAME","position":{"x":35,"y":61}},{"type":"INTERIOR","position":{"x":49,"y":32}},
@@ -10099,7 +9524,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CONSTELLATION_19330_IMG,
+    image: 'VOLKSWAGEN_CONSTELLATION_19330.png',
     parts: [{"type":"WHEELS","position":{"x":14,"y":64}},{"type":"FRAME","position":{"x":30,"y":56}},
     {"type":"INTERIOR","position":{"x":67,"y":40}},{"type":"BODY","position":{"x":54,"y":48}},
     {"type":"BATTERY","position":{"x":53,"y":54}},{"type":"ELECTRONIC","position":{"x":75,"y":47}},
@@ -10114,7 +9539,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CONSTELLATION_19360_IMG,
+    image: 'VOLKSWAGEN_CONSTELLATION_19360.png',
     parts: [{"type":"BRAKES","position":{"x":23,"y":75}},{"type":"SUSPENSION","position":{"x":15,"y":61}},
     {"type":"WHEELS","position":{"x":12,"y":71}},{"type":"BODY","position":{"x":39,"y":51}},
     {"type":"FRAME","position":{"x":35,"y":62}},{"type":"INTERIOR","position":{"x":52,"y":36}},
@@ -10129,7 +9554,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CONSTELLATION_19420_VTRONIC_IMG,
+    image: 'VOLKSWAGEN_CONSTELLATION_19420_VTRONIC.png',
     parts: [{"type":"BRAKES","position":{"x":18,"y":76}},{"type":"SUSPENSION","position":{"x":12,"y":65}},
     {"type":"WHEELS","position":{"x":6,"y":73}},{"type":"BODY","position":{"x":39,"y":47}},
     {"type":"FRAME","position":{"x":33,"y":62}},{"type":"INTERIOR","position":{"x":54,"y":33}},
@@ -10144,7 +9569,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CONSTELLATION_25360_IMG,
+    image: 'VOLKSWAGEN_CONSTELLATION_25360.png',
     parts: [{"type":"BRAKES","position":{"x":22,"y":81}},{"type":"SUSPENSION","position":{"x":15,"y":64}},
     {"type":"WHEELS","position":{"x":12,"y":76}},{"type":"BODY","position":{"x":42,"y":49}},
     {"type":"FRAME","position":{"x":35,"y":74}},{"type":"INTERIOR","position":{"x":51,"y":37}},
@@ -10159,7 +9584,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CONSTELLATION_25420_VTRONIC_IMG,
+    image: 'VOLKSWAGEN_CONSTELLATION_25420_VTRONIC.png',
     parts: [{"type":"BRAKES","position":{"x":25,"y":75}},{"type":"SUSPENSION","position":{"x":14,"y":66}},
     {"type":"WHEELS","position":{"x":16,"y":73}},{"type":"BODY","position":{"x":46,"y":45}},
     {"type":"FRAME","position":{"x":39,"y":71}},{"type":"INTERIOR","position":{"x":53,"y":41}},
@@ -10174,7 +9599,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CONSTELLATION_26280_6x4_IMG,
+    image: 'VOLKSWAGEN_CONSTELLATION_26280_6x4.png',
     parts: [{"type":"BRAKES","position":{"x":21,"y":71}},{"type":"SUSPENSION","position":{"x":13,"y":60}},
     {"type":"WHEELS","position":{"x":11,"y":68}},{"type":"BODY","position":{"x":42,"y":47}},
     {"type":"FRAME","position":{"x":29,"y":65}},{"type":"INTERIOR","position":{"x":48,"y":40}},
@@ -10189,7 +9614,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CONSTELLATION_26420_VTRONIC_6x4_IMG,
+    image: 'VOLKSWAGEN_CONSTELLATION_26420_VTRONIC_6x4.png',
     parts: [{"type":"BRAKES","position":{"x":27,"y":78}},{"type":"SUSPENSION","position":{"x":16,"y":63}},
     {"type":"WHEELS","position":{"x":12,"y":74}},{"type":"BODY","position":{"x":41,"y":47}},
     {"type":"FRAME","position":{"x":36,"y":65}},{"type":"INTERIOR","position":{"x":53,"y":40}},
@@ -10204,7 +9629,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CONSTELLATION_31280_6x4_IMG,
+    image: 'VOLKSWAGEN_CONSTELLATION_31280_6x4.png',
     parts: [{"type":"BRAKES","position":{"x":25,"y":69}},{"type":"SUSPENSION","position":{"x":15,"y":61}},
     {"type":"WHEELS","position":{"x":11,"y":70}},{"type":"BODY","position":{"x":43,"y":42}},
     {"type":"FRAME","position":{"x":33,"y":63}},{"type":"INTERIOR","position":{"x":62,"y":29}},
@@ -10219,7 +9644,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T6x2,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CONSTELLATION_31330_IMG,
+    image: 'VOLKSWAGEN_CONSTELLATION_31330.png',
     parts: [{"type":"BRAKES","position":{"x":24,"y":82}},{"type":"SUSPENSION","position":{"x":19,"y":65}},
     {"type":"WHEELS","position":{"x":11,"y":77}},{"type":"BODY","position":{"x":39,"y":54}},
     {"type":"FRAME","position":{"x":33,"y":71}},{"type":"INTERIOR","position":{"x":46,"y":40}},
@@ -10234,7 +9659,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L3BODY,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CRAFTER_FRAME_L3_IMG,
+    image: 'VOLKSWAGEN_CRAFTER_FRAME_L3.png',
     parts: [{"type":"BRAKES","position":{"x":79,"y":69}},{"type":"SUSPENSION","position":{"x":78,"y":61}},
     {"type":"WHEELS","position":{"x":88,"y":65}},{"type":"BODY","position":{"x":72,"y":54}},
     {"type":"FRAME","position":{"x":74,"y":59}},{"type":"INTERIOR","position":{"x":53,"y":33}},
@@ -10248,7 +9673,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L4BODY,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CRAFTER_FRAME_L4_IMG,
+    image: 'VOLKSWAGEN_CRAFTER_FRAME_L4.png',
     parts: [{"type":"BRAKES","position":{"x":82,"y":63}},{"type":"SUSPENSION","position":{"x":81,"y":59}},
     {"type":"WHEELS","position":{"x":90,"y":62}},{"type":"BODY","position":{"x":69,"y":47}},
     {"type":"FRAME","position":{"x":74,"y":58}},{"type":"INTERIOR","position":{"x":47,"y":34}},
@@ -10262,7 +9687,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L4BODY,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CRAFTER_FRAME_L5_IMG,
+    image: 'VOLKSWAGEN_CRAFTER_FRAME_L5.png',
     parts: [{"type":"BRAKES","position":{"x":80,"y":64}},{"type":"SUSPENSION","position":{"x":78,"y":59}},
     {"type":"WHEELS","position":{"x":91,"y":62}},{"type":"BODY","position":{"x":67,"y":47}},
     {"type":"FRAME","position":{"x":74,"y":58}},{"type":"INTERIOR","position":{"x":50,"y":36}},
@@ -10276,7 +9701,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L3H3,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CRAFTER_L3H3_IMG,
+    image: 'VOLKSWAGEN_CRAFTER_L3H3.png',
     parts: [{"type":"BRAKES","position":{"x":85,"y":73}},{"type":"SUSPENSION","position":{"x":89,"y":61}},
     {"type":"WHEELS","position":{"x":91,"y":70}},{"type":"BODY","position":{"x":78,"y":52}},
     {"type":"FRAME","position":{"x":76,"y":73}},{"type":"INTERIOR","position":{"x":51,"y":39}},
@@ -10291,7 +9716,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L4H3,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CRAFTER_L4H3_IMG,
+    image: 'VOLKSWAGEN_CRAFTER_L4H3.png',
     parts: [{"type":"BRAKES","position":{"x":85,"y":67}},{"type":"SUSPENSION","position":{"x":89,"y":58}},
     {"type":"WHEELS","position":{"x":92,"y":65}},{"type":"BODY","position":{"x":77,"y":37}},
     {"type":"FRAME","position":{"x":75,"y":70}},{"type":"INTERIOR","position":{"x":40,"y":38}},
@@ -10306,7 +9731,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L4H3,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_CRAFTER_L5H3_IMG,
+    image: 'VOLKSWAGEN_CRAFTER_L5H3.png',
     parts: [{"type":"BRAKES","position":{"x":83,"y":68}},{"type":"SUSPENSION","position":{"x":89,"y":58}},
     {"type":"WHEELS","position":{"x":88,"y":64}},{"type":"BODY","position":{"x":73,"y":48}},
     {"type":"FRAME","position":{"x":78,"y":69}},{"type":"INTERIOR","position":{"x":49,"y":35}},
@@ -10321,7 +9746,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_DELIVERY_6160_IMG,
+    image: 'VOLKSWAGEN_DELIVERY_6160.png',
     parts: [{"type":"BRAKES","position":{"x":78,"y":68}},{"type":"SUSPENSION","position":{"x":82,"y":61}},
     {"type":"WHEELS","position":{"x":86,"y":68}},{"type":"BODY","position":{"x":47,"y":48}},
     {"type":"FRAME","position":{"x":61,"y":60}},{"type":"INTERIOR","position":{"x":24,"y":41}},
@@ -10335,7 +9760,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_DELIVERY_9170_IMG,
+    image: 'VOLKSWAGEN_DELIVERY_9170.png',
     parts: [{"type":"SUSPENSION","position":{"x":82,"y":61}},{"type":"BODY","position":{"x":47,"y":48}},
     {"type":"FRAME","position":{"x":61,"y":60}},{"type":"INTERIOR","position":{"x":24,"y":41}},
     {"type":"LIGHTS","position":{"x":29,"y":63}},{"type":"BATTERY","position":{"x":51,"y":56}},
@@ -10349,7 +9774,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TRAILER_T4x2_small,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_DELIVERY_11180_IMG,
+    image: 'VOLKSWAGEN_DELIVERY_11180.png',
     parts: [{"type":"SUSPENSION","position":{"x":82,"y":61}},{"type":"BODY","position":{"x":47,"y":48}},
     {"type":"FRAME","position":{"x":61,"y":60}},{"type":"INTERIOR","position":{"x":24,"y":41}},
     {"type":"LIGHTS","position":{"x":29,"y":63}},{"type":"BATTERY","position":{"x":51,"y":56}},
@@ -10363,7 +9788,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L1H1,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_TRANSPORTER_L1_IMG,
+    image: 'VOLKSWAGEN_TRANSPORTER_L1.png',
     parts: [{"type":"BRAKES","position":{"x":85,"y":67}},{"type":"SUSPENSION","position":{"x":91,"y":56}},
     {"type":"WHEELS","position":{"x":93,"y":66}},{"type":"BODY","position":{"x":83,"y":50}},
     {"type":"FRAME","position":{"x":82,"y":68}},{"type":"INTERIOR","position":{"x":56,"y":30}},
@@ -10378,7 +9803,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.VAN,
     subType: EEquipmentModelSubType[EEquipmentModelType.VAN].L2H1,
     brand: EBrand.VOLKSWAGEN,
-    image: VOLKSWAGEN_TRANSPORTER_L2_IMG,
+    image: 'VOLKSWAGEN_TRANSPORTER_L2.png',
     parts: [{"type":"BRAKES","position":{"x":85,"y":67}},{"type":"SUSPENSION","position":{"x":91,"y":56}},
     {"type":"WHEELS","position":{"x":93,"y":66}},{"type":"BODY","position":{"x":83,"y":50}},
     {"type":"FRAME","position":{"x":82,"y":68}},{"type":"INTERIOR","position":{"x":56,"y":30}},
@@ -10393,7 +9818,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.VOLVO,
-    image: VOLVO_FH_2_4x2_IMG,
+    image: 'VOLVO_FH_2_4x2.png',
     parts: [{"type":"SUSPENSION","position":{"x":53,"y":67}},{"type":"WHEELS","position":{"x":60,"y":76}},
             {"type":"BRAKES","position":{"x":53,"y":76}},{"type":"BATTERY","position":{"x":28,"y":66}},
             {"type":"LIGHTS","position":{"x":10,"y":68}},{"type":"ELECTRONIC","position":{"x":34,"y":60}},
@@ -10408,7 +9833,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.VOLVO,
-    image: VOLVO_FH_2_6x2_IMG,
+    image: 'VOLVO_FH_2_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":46,"y":75}},{"type":"WHEELS","position":{"x":55,"y":76}},
           {"type":"SUSPENSION","position":{"x":50,"y":67}},{"type":"BODY","position":{"x":10,"y":52}},
           {"type":"FRAME","position":{"x":24,"y":80}},{"type":"INTERIOR","position":{"x":26,"y":43}},
@@ -10423,7 +9848,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.VOLVO,
-    image: VOLVO_FH_3_4x2_IMG,
+    image: 'VOLVO_FH_3_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":49,"y":75}},{"type":"WHEELS","position":{"x":59,"y":77}},
             {"type":"SUSPENSION","position":{"x":54,"y":67}},{"type":"BODY","position":{"x":11,"y":61}},
             {"type":"FRAME","position":{"x":20,"y":81}},{"type":"INTERIOR","position":{"x":25,"y":41}},
@@ -10438,7 +9863,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2,
     brand: EBrand.VOLVO,
-    image: VOLVO_FH_3_6x2_IMG,
+    image: 'VOLVO_FH_3_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":47,"y":77}},{"type":"WHEELS","position":{"x":56,"y":80}},
             {"type":"SUSPENSION","position":{"x":51,"y":68}},{"type":"BODY","position":{"x":8,"y":60}},
             {"type":"FRAME","position":{"x":19,"y":85}},{"type":"INTERIOR","position":{"x":28,"y":40}},
@@ -10453,7 +9878,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2,
     brand: EBrand.VOLVO,
-    image: VOLVO_FH_4_IMG,
+    image: 'VOLVO_FH_4.png',
     parts: [{"type":"BRAKES","position":{"x":72,"y":91}},{"type":"SUSPENSION","position":{"x":75,"y":73}},
     {"type":"WHEELS","position":{"x":81,"y":90}},{"type":"BODY","position":{"x":79,"y":59}},
     {"type":"FRAME","position":{"x":77,"y":94}},{"type":"INTERIOR","position":{"x":71,"y":29}},
@@ -10468,7 +9893,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.TANDEM,
     subType: EEquipmentModelSubType[EEquipmentModelType.TANDEM].TIPPER_T8x4,
     brand: EBrand.VOLVO,
-    image: VOLVO_FMX_IMG,
+    image: 'VOLVO_FMX.png',
     parts: [{"type":"BRAKES","position":{"x":79,"y":74}},{"type":"SUSPENSION","position":{"x":85,"y":64}},
     {"type":"WHEELS","position":{"x":88,"y":72}},{"type":"BODY","position":{"x":61,"y":46}},
     {"type":"FRAME","position":{"x":66,"y":74}},{"type":"INTERIOR","position":{"x":39,"y":29}},
@@ -10484,7 +9909,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2_big,
     brand: EBrand.VOLVO,
-    image: VOLVO_VNL_300_4x2_IMG,
+    image: 'VOLVO_VNL_300_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":81,"y":83}},{"type":"SUSPENSION","position":{"x":86,"y":71}},
     {"type":"WHEELS","position":{"x":91,"y":81}},{"type":"BODY","position":{"x":73,"y":55}},
     {"type":"FRAME","position":{"x":74,"y":84}},{"type":"INTERIOR","position":{"x":52,"y":45}},
@@ -10499,7 +9924,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.VOLVO,
-    image: VOLVO_VNL_300_6x2_IMG,
+    image: 'VOLVO_VNL_300_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":86,"y":77}},{"type":"SUSPENSION","position":{"x":82,"y":69}},
     {"type":"WHEELS","position":{"x":92,"y":74}},{"type":"BODY","position":{"x":65,"y":55}},
     {"type":"FRAME","position":{"x":68,"y":81}},{"type":"INTERIOR","position":{"x":42,"y":46}},
@@ -10514,7 +9939,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.VOLVO,
-    image: VOLVO_VNL_400_IMG,
+    image: 'VOLVO_VNL_400.png',
     parts: [{"type":"BRAKES","position":{"x":73,"y":72}},{"type":"SUSPENSION","position":{"x":78,"y":63}},
     {"type":"WHEELS","position":{"x":82,"y":70}},{"type":"BODY","position":{"x":70,"y":55}},
     {"type":"FRAME","position":{"x":67,"y":72}},{"type":"INTERIOR","position":{"x":45,"y":39}},
@@ -10529,7 +9954,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.VOLVO,
-    image: VOLVO_VNL_740_6x2_IMG,
+    image: 'VOLVO_VNL_740_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":79,"y":71}},{"type":"SUSPENSION","position":{"x":80,"y":64}},
     {"type":"WHEELS","position":{"x":84,"y":70}},{"type":"BODY","position":{"x":71,"y":49}},
     {"type":"INTERIOR","position":{"x":42,"y":40}},{"type":"FRAME","position":{"x":72,"y":73}},
@@ -10544,7 +9969,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.VOLVO,
-    image: VOLVO_VNL_760_IMG,
+    image: 'VOLVO_VNL_760.png',
     parts: [{"type":"BRAKES","position":{"x":77,"y":75}},{"type":"SUSPENSION","position":{"x":80,"y":69}},
     {"type":"WHEELS","position":{"x":85,"y":73}},{"type":"BODY","position":{"x":73,"y":58}},
     {"type":"FRAME","position":{"x":72,"y":77}},{"type":"INTERIOR","position":{"x":38,"y":42}},
@@ -10559,7 +9984,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.VOLVO,
-    image: VOLVO_VNL_860_IMG,
+    image: 'VOLVO_VNL_860.png',
     parts: [{"type":"BRAKES","position":{"x":77,"y":74}},{"type":"SUSPENSION","position":{"x":79,"y":69}},
     {"type":"WHEELS","position":{"x":83,"y":73}},{"type":"BODY","position":{"x":73,"y":56}},
     {"type":"FRAME","position":{"x":74,"y":77}},{"type":"INTERIOR","position":{"x":39,"y":45}},
@@ -10574,7 +9999,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T4x2_big,
     brand: EBrand.VOLVO,
-    image: VOLVO_VNR_300_4x2_IMG,
+    image: 'VOLVO_VNR_300_4x2.png',
     parts: [{"type":"BRAKES","position":{"x":84,"y":70}},{"type":"SUSPENSION","position":{"x":86,"y":62}},
     {"type":"WHEELS","position":{"x":91,"y":68}},{"type":"BODY","position":{"x":67,"y":50}},
     {"type":"FRAME","position":{"x":64,"y":73}},{"type":"INTERIOR","position":{"x":47,"y":27}},
@@ -10589,7 +10014,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.VOLVO,
-    image: VOLVO_VNR_300_6x2_IMG,
+    image: 'VOLVO_VNR_300_6x2.png',
     parts: [{"type":"BRAKES","position":{"x":73,"y":70}},{"type":"SUSPENSION","position":{"x":76,"y":61}},
     {"type":"WHEELS","position":{"x":81,"y":66}},{"type":"BODY","position":{"x":58,"y":49}},
     {"type":"FRAME","position":{"x":55,"y":69}},{"type":"INTERIOR","position":{"x":29,"y":36}},
@@ -10604,7 +10029,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.VOLVO,
-    image: VOLVO_VNR_400_IMG,
+    image: 'VOLVO_VNR_400.png',
     parts: [{"type":"BRAKES","position":{"x":74,"y":71}},{"type":"SUSPENSION","position":{"x":78,"y":61}},
     {"type":"WHEELS","position":{"x":81,"y":66}},{"type":"BODY","position":{"x":70,"y":52}},
     {"type":"FRAME","position":{"x":55,"y":71}},{"type":"INTERIOR","position":{"x":30,"y":37}},
@@ -10619,7 +10044,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.VOLVO,
-    image: VOLVO_VNR_640_IMG,
+    image: 'VOLVO_VNR_640.png',
     parts: [{"type":"BRAKES","position":{"x":74,"y":70}},{"type":"SUSPENSION","position":{"x":74,"y":64}},
     {"type":"WHEELS","position":{"x":80,"y":70}},{"type":"BODY","position":{"x":67,"y":49}},
     {"type":"FRAME","position":{"x":56,"y":73}},{"type":"INTERIOR","position":{"x":33,"y":40}},
@@ -10634,7 +10059,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.WABASH,
-    image: WABASH_FLATBED_ALU_IMG,
+    image: 'WABASH_FLATBED_ALU.png',
     parts: [{"type":"BRAKES","position":{"x":30,"y":52}},{"type":"SUSPENSION","position":{"x":25,"y":40}},
     {"type":"WHEELS","position":{"x":18,"y":48}},{"type":"FRAME","position":{"x":16,"y":35}},
     {"type":"SUPPORT","position":{"x":11,"y":41}},{"type":"LIGHTS","position":{"x":51,"y":53}},
@@ -10645,7 +10070,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FLATBED_1_1_AXLES,
     brand: EBrand.WABASH,
-    image: WABASH_FLATBED_ALU_DROP_DECK_IMG,
+    image: 'WABASH_FLATBED_ALU_DROP_DECK.png',
     parts: [{"type":"BRAKES","position":{"x":85,"y":49}},{"type":"SUSPENSION","position":{"x":87,"y":44}},
     {"type":"WHEELS","position":{"x":90,"y":51}},{"type":"FRAME","position":{"x":60,"y":55}},
     {"type":"SUPPORT","position":{"x":49,"y":65}},{"type":"LIGHTS","position":{"x":96,"y":43}},
@@ -10656,7 +10081,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_2_AXLES,
     brand: EBrand.WABASH,
-    image: WABASH_REEFER_ARCTIC_LITE_IMG,
+    image: 'WABASH_REEFER_ARCTIC_LITE.png',
     parts: [{"type":"BRAKES","position":{"x":55,"y":74}},{"type":"SUSPENSION","position":{"x":52,"y":66}},
     {"type":"WHEELS","position":{"x":48,"y":72}},{"type":"BODY","position":{"x":19,"y":53}},
     {"type":"FRAME","position":{"x":22,"y":61}},{"type":"SUPPORT","position":{"x":14,"y":67}},
@@ -10669,7 +10094,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].FRIGO_2_AXLES,
     brand: EBrand.WABASH,
-    image: WABASH_REEFER_MSC_IMG,
+    image: 'WABASH_REEFER_MSC.png',
     parts: [{"type":"BRAKES","position":{"x":39,"y":73}},{"type":"SUSPENSION","position":{"x":37,"y":64}},
     {"type":"WHEELS","position":{"x":33,"y":70}},{"type":"BODY","position":{"x":26,"y":44}},
     {"type":"SUPPORT","position":{"x":12,"y":68}},{"type":"FRAME","position":{"x":13,"y":59}},
@@ -10682,7 +10107,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_2_AXLES,
     brand: EBrand.WABASH,
-    image: WABASH_TANK_3A_SANITARY_IMG,
+    image: 'WABASH_TANK_3A_SANITARY.png',
     parts: [{"type":"BRAKES","position":{"x":49,"y":67}},{"type":"SUSPENSION","position":{"x":51,"y":57}},
     {"type":"WHEELS","position":{"x":56,"y":63}},{"type":"BODY","position":{"x":52,"y":41}},
     {"type":"FRAME","position":{"x":72,"y":49}},{"type":"SUPPORT","position":{"x":81,"y":61}},
@@ -10694,7 +10119,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_2_AXLES,
     brand: EBrand.WABASH,
-    image: WABASH_TANK_ALU_DRY_BULK_IMG,
+    image: 'WABASH_TANK_ALU_DRY_BULK.png',
     parts: [{"type":"BRAKES","position":{"x":53,"y":70}},{"type":"SUSPENSION","position":{"x":55,"y":60}},
     {"type":"WHEELS","position":{"x":60,"y":68}},{"type":"BODY","position":{"x":28,"y":50}},
     {"type":"FRAME","position":{"x":27,"y":62}},{"type":"SUPPORT","position":{"x":17,"y":74}},
@@ -10706,7 +10131,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_2_AXLES,
     brand: EBrand.WABASH,
-    image: WABASH_TANK_ALU_PETROLEUM_IMG,
+    image: 'WABASH_TANK_ALU_PETROLEUM.png',
     parts: [{"type":"BRAKES","position":{"x":35,"y":64}},{"type":"SUSPENSION","position":{"x":41,"y":56}},
     {"type":"WHEELS","position":{"x":42,"y":65}},{"type":"BODY","position":{"x":50,"y":42}},
     {"type":"FRAME","position":{"x":52,"y":55}},{"type":"SUPPORT","position":{"x":79,"y":65}},
@@ -10718,7 +10143,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_2_AXLES,
     brand: EBrand.WABASH,
-    image: WABASH_TANK_DEF_IMG,
+    image: 'WABASH_TANK_DEF.png',
     parts: [{"type":"BRAKES","position":{"x":49,"y":67}},{"type":"SUSPENSION","position":{"x":48,"y":56}},
     {"type":"WHEELS","position":{"x":55,"y":63}},{"type":"BODY","position":{"x":55,"y":42}},
     {"type":"FRAME","position":{"x":62,"y":50}},{"type":"SUPPORT","position":{"x":80,"y":64}},
@@ -10730,7 +10155,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TANK_2_AXLES,
     brand: EBrand.WABASH,
-    image: WABASH_TANK_FOOD_IMG,
+    image: 'WABASH_TANK_FOOD.png',
     parts: [{"type":"BRAKES","position":{"x":49,"y":65}},{"type":"SUSPENSION","position":{"x":50,"y":56}},
     {"type":"WHEELS","position":{"x":55,"y":62}},{"type":"BODY","position":{"x":59,"y":41}},
     {"type":"FRAME","position":{"x":63,"y":55}},{"type":"SUPPORT","position":{"x":75,"y":68}},
@@ -10742,7 +10167,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.WABASH,
-    image: WABASH_TRAILER_DURAPLATE_IMG,
+    image: 'WABASH_TRAILER_DURAPLATE.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":74}},{"type":"SUSPENSION","position":{"x":47,"y":65}},
     {"type":"WHEELS","position":{"x":43,"y":72}},{"type":"FRAME","position":{"x":34,"y":62}},
     {"type":"BODY","position":{"x":28,"y":51}},{"type":"SUPPORT","position":{"x":14,"y":73}},
@@ -10754,7 +10179,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRAILER,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRAILER].TRAILER_2_AXLES,
     brand: EBrand.WABASH,
-    image: WABASH_TRAILER_DURAPLATE_HD_IMG,
+    image: 'WABASH_TRAILER_DURAPLATE_HD.png',
     parts: [{"type":"BRAKES","position":{"x":51,"y":71}},{"type":"SUSPENSION","position":{"x":46,"y":64}},
     {"type":"WHEELS","position":{"x":45,"y":72}},{"type":"BODY","position":{"x":31,"y":37}},
     {"type":"FRAME","position":{"x":21,"y":59}},{"type":"SUPPORT","position":{"x":14,"y":67}},
@@ -10766,7 +10191,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.WESTERN_STAR_TRUCKS,
-    image: WESTERN_STAR_TRUCKS_5700_FE_IMG,
+    image: 'WESTERN_STAR_TRUCKS_5700_FE.png',
     parts: [{"type":"BRAKES","position":{"x":82,"y":67}},{"type":"SUSPENSION","position":{"x":82,"y":60}},
     {"type":"WHEELS","position":{"x":86,"y":66}},{"type":"BODY","position":{"x":80,"y":52}},
     {"type":"FRAME","position":{"x":78,"y":64}},{"type":"INTERIOR","position":{"x":55,"y":36}},
@@ -10781,7 +10206,7 @@ export const EEquipmentModelDetails = {
     type: EEquipmentModelType.SEMI_TRUCK,
     subType: EEquipmentModelSubType[EEquipmentModelType.SEMI_TRUCK].T6x2_big,
     brand: EBrand.WESTERN_STAR_TRUCKS,
-    image: WESTERN_STAR_TRUCKS_5800_FE_IMG,
+    image: 'WESTERN_STAR_TRUCKS_5800_FE.png',
     parts: [{"type":"BRAKES","position":{"x":28,"y":71}},{"type":"SUSPENSION","position":{"x":22,"y":64}},
     {"type":"WHEELS","position":{"x":19,"y":69}},{"type":"BODY","position":{"x":31,"y":53}},
     {"type":"FRAME","position":{"x":34,"y":71}},{"type":"INTERIOR","position":{"x":46,"y":40}},
