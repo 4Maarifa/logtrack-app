@@ -55,7 +55,7 @@ const Home = () => {
         ))}
         <span className="functionalities-advice">
           <Icon source="fa" icon={faInfoCircle} />
-          Some functionalities may not be limited / not available according to the selected plan. <Link to="/pricing">See Pricing.</Link>
+          Some functionalities may be limited / not available according to the selected plan. <Link to="/pricing">See Pricing.</Link>
         </span>
       </div>
     </div>

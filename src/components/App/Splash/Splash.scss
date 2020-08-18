@@ -140,7 +140,7 @@
       align-items: center;
       border-radius: var(--border-radius);
       position: absolute;
-      background-color: rgba(0, 0, 0, .3);
+      background-color: rgba(0, 0, 0, .4);
       top: 0;
       padding: 0 1rem;
       box-sizing: border-box;
@@ -253,6 +253,13 @@
       & + a {
         margin-left: 2rem;
       }
+    }
+  }
+
+  .FAQ {
+    .Accordion {
+      width: 60%;
+      margin: 2rem auto;
     }
   }
 
