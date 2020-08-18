@@ -54,7 +54,7 @@ const Pricing = () => {
           (1) Support by Phone is not available yet and will begin after early access<br/>
           (2) Activated during early access<br/>
           (3) If the user's device is compatible<br/>
-          (4) After early access, you will have to choose your definitive plan &amp; options before charges apply
+          (4) After early access, you will have to choose your plan &amp; options before charges apply
         </span>
       </div>
 
