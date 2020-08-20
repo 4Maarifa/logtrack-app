@@ -47,6 +47,13 @@ const FormTextarea = ({ value,
     <div className={'FormTextarea '
         + (fieldName ? 'input-' + fieldName : '')}>
 
+      {/* Input validator */}
+      <input
+        className="input-validator"
+        type="text"
+        required={inputRequired}
+        defaultValue={value ? 'valid' : ''} />
+
       {/* Text area element */}
       <textarea
         id={INPUT_ID}

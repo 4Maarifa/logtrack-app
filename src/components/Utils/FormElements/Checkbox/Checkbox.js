@@ -28,7 +28,7 @@ const Checkbox = ({ value,
                     onValueChange }) => {
 
   // at each change, call the callback with the new value and the unique fieldName
-  const onChange = newValue => onValueChange && onValueChange(newValue, fieldName);
+  const onChange = newValue => !inputDisabled && onValueChange && onValueChange(newValue, fieldName);
 
   /**
    * RENDER
@@ -38,6 +38,13 @@ const Checkbox = ({ value,
   return (
     <div className={'Checkbox '
         + (fieldName ? 'input-' + fieldName : '') + (!label ? ' input--nolabel' : '')}>
+
+      {/* Input validator */}
+      <input
+        className="input-validator"
+        type="text"
+        required={inputRequired}
+        defaultValue={value ? 'valid' : ''} />
 
       {/* Real checkbox, always hidden */}
       <input

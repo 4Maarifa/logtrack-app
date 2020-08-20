@@ -11,7 +11,7 @@ import './Radio.scss';
  * Component: Checkbox
  * Form component that can be checked and unchecked
  * 
- * value: boolean | default value of the checkbox
+ * value: string | key of the radio
  * fieldName: string | a specific string that will be passed at each call of the callback onValueChange
  * inputName: string | unique input name (put other Radio components with the same name to have an radio input group)
  * inputDisabled: boolean | Should the input be blocked
@@ -27,8 +27,8 @@ const Radio = ({ value,
                 label,
                 onValueChange }) => {
 
-  // at each change, call the callback with the new value and the unique fieldName
-  const onChange = newValue => onValueChange && onValueChange(newValue, fieldName);
+  // at each change, call the callback with the new value and the unique inputName (radio group name)
+  const onChange = newValue => !inputDisabled && onValueChange && onValueChange(newValue, inputName);
 
   /**
    * RENDER

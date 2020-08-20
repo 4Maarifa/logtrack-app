@@ -232,6 +232,7 @@ const RoleOffer = ({ match }) => {
                   items={ROLE_DETAILS}
                   fieldName="roleType"
                   onSelectionChange={setRoleType}
+                  selectionRequired
                   isVertical />
               </Fragment>
             : <span>Please select a user first!</span>

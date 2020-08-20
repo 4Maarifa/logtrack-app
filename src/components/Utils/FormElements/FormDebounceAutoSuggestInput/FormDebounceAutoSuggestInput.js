@@ -88,6 +88,13 @@ const FormDebounceAutoSuggestInput = ({ value,
       + (isValid() ? 'input--valid ' : 'input--invalid ')
       + (fieldName ? 'input-' + fieldName : '')}>
 
+      {/* Input Validator */}
+      <input
+        className="input-validator"
+        type="text"
+        required={inputRequired}
+        defaultValue={selectedItemKey} />
+
       {/* If no item is selected, show the search input */}
       {!selectedItemKey ?
         <DelayInput

@@ -70,6 +70,13 @@ const FormInputFile = ({ accept: defaultAccept,
   return (
     <div className="FormInputFile">
 
+      {/* Input Validator */}
+      <input
+        className="input-validator"
+        type="text"
+        required={inputRequired}
+        defaultValue={value? value.url : ''} />
+
       {/* Input fake label */}
       {label && <span className="fake-label">
         {label}
@@ -81,8 +88,7 @@ const FormInputFile = ({ accept: defaultAccept,
         type="file"
         ref={REF_FILE}
         onChange={onChange}
-        accept={accept}
-        required={inputRequired} />
+        accept={accept} />
 
       {/* input actions */}
       <div className="FormInputFile-actions">

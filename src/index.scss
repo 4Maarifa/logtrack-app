@@ -135,6 +135,16 @@
   }
 }
 
+:global(input.input-validator) {
+  opacity: 0;
+  height: 1px;
+  width: 1px;
+  display: inline-block;
+  overflow: hidden;
+  flex: 0 0 1px;
+  position: absolute;
+}
+
 :global(.tooltip-parent)  {
   position: relative;
 }

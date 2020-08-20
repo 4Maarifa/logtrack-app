@@ -53,6 +53,13 @@ const FormInput = ({ value,
     <div className={'FormInput '
         + (fieldName ? 'input-' + fieldName : '')}>
 
+      {/* Input validator */}
+      <input
+        className="input-validator"
+        type="text"
+        required={inputRequired}
+        defaultValue={value ? 'valid' : ''} />
+
       {/* Corresponding input */}
       <input
         id={INPUT_ID}
