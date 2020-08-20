@@ -23,16 +23,19 @@ export const EXTABLE_VIEWS = {
 // elementClass: class to apply on extable items
 export const EXTABLE_VIEWS_DETAILS = {
   [EXTABLE_VIEWS.ITEMS]: {
-    cssClass: 'Extable--items',
+    name: 'Items',
+    cssClass: 'ExTable--items',
     icon: faThLarge,
     elementClass: 'Element--tile'
   },
   [EXTABLE_VIEWS.LIST]: {
+    name: 'List',
     cssClass: 'ExTable--list',
     icon: faThList,
     elementClass: 'Element--row'
   },
   [EXTABLE_VIEWS.CONDENSED]: {
+    name: 'Condensed',
     cssClass: 'ExTable--condensed',
     icon: faAlignJustify,
     elementClass: 'Element--condensed'
@@ -198,7 +201,7 @@ const ExTable = ({ header, loading, items, renderItem, isNoFrame, fss, defaultVi
 
               {/* Filter content */}
               <span className={'ExTable-fss-input ' + (fssDeployed === EXTABLE_FSS.FILTER ? 'ExTable-fss-input--deployed' : '')}>
-                <select value={activeFilter} onChange={e => setActiveFilter(e.target.value)}>
+                <select value={activeFilter} onChange={e => setActiveFilter(e.target.value)} title="Change Filter">
                   <option value="" disabled>Filter...</option>
                   {Object.keys(fss.filter).map(filterKey => <option key={filterKey} value={filterKey}>{fss.filter[filterKey].title}</option>)}
                 </select>
@@ -243,7 +246,11 @@ const ExTable = ({ header, loading, items, renderItem, isNoFrame, fss, defaultVi
         {/* View switcher, permits the user to switch between view modes */}
         <div className="view-switcher">
           {Object.keys(EXTABLE_VIEWS).map(viewKey => (
-            <span key={viewKey} className={'view ' + (view === viewKey ? 'view--active' : '')} onClick={() => setView(viewKey)}>
+            <span key={viewKey}
+                  title={EXTABLE_VIEWS_DETAILS[viewKey].name}
+                  className={'view ' + (view === viewKey ? 'view--active' : '')}
+                  onClick={() => setView(viewKey)}>
+
               <Icon source="fa" icon={EXTABLE_VIEWS_DETAILS[viewKey].icon} />
             </span>
           ))}

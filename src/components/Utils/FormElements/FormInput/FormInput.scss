@@ -45,7 +45,7 @@
     }
   }
 
-  input {
+  input:not(.input-validator) {
     flex: 1;
     position: relative;
     height: 2rem;

@@ -74,7 +74,7 @@ const FormAutoSuggestInput = ({ value,
   // Important: a user that entered some text in the search input without selecting an item is not considered as a value!
   // BUT : If you need this, you can still put this component as not required by passing inputRequired = false,
   // and you have access to the search value wiht the onValueChange callback calls when it is modified.
-  const isValid = () => !inputRequired || selectedItem;
+  const IS_VALID = () => !inputRequired || selectedItem;
 
   /**
    * RENDER
@@ -83,8 +83,15 @@ const FormAutoSuggestInput = ({ value,
 
   return (
     <div className={'FormAutoSuggestInput ' 
-      + (isValid() ? 'input--valid ' : 'input--invalid ')
+      + (IS_VALID() ? 'input--valid ' : 'input--invalid ')
       + (fieldName ? 'input-' + fieldName : '')}>
+
+      {/* Input Validator */}
+      <input
+        className="input-validator"
+        type="text"
+        required={inputRequired}
+        defaultValue={selectedItemKey} />
       
       {/* If no item is selected, show the search input */}
       {!selectedItemKey &&
@@ -108,12 +115,12 @@ const FormAutoSuggestInput = ({ value,
         </div> : null
       }
 
-      {/* Generating a hidden input for validation purposes */}
+      {/* Generating an input for validation purposes */}
       <input 
-        className={(!selectedItem ? 'input--empty' : '')}
-        type="hidden" 
+        className="input-validator"
+        type="text" 
         required={inputRequired} 
-        value={selectedItemKey} />
+        defaultValue={selectedItemKey} />
 
       {/* If no item is selected and some items are proposed, show also the possible items */}
       {!selectedItemKey && possibleItems && Object.keys(possibleItems).length ? 

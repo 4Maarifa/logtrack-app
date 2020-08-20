@@ -126,9 +126,19 @@ const Choose = ({ selection,
     </li>;
   };
 
+  const IS_VALID = multiple ? selection && selection.length >=1 : !!selection;
+
   // render choose component, along with the item list
   return (
     <div className={'Choose ' + (isVertical ? 'Choose--vertical' : '')}>
+
+      {/* Generating a hidden input for validation purposes */}
+      <input 
+        className="input-validator"
+        type="text" 
+        required={selectionRequired} 
+        defaultValue={IS_VALID ? 'valid' : ''} />
+
       <ul role="listbox" tabIndex="0" aria-activedescendant={selection} aria-multiselectable={multiple}>
         {Object.keys(items).map(renderItem)}
       </ul>

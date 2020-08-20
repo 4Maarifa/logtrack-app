@@ -231,6 +231,7 @@ const RoleAdd = ({ match }) => {
                   items={ROLE_DETAILS}
                   multiple={false} 
                   fieldName="roleType"
+                  selectionRequired
                   onSelectionChange={setRoleType}
                   isVertical />
               </Fragment>
