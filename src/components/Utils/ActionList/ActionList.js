@@ -51,7 +51,7 @@ const ActionList = ({ actions, isFlatten, isHideLabels }) => {
       </ul> : null}
 
       {/* Main button for triggering the list */}
-      {actions && actions.length ? <span className="trigger" onClick={() => setDeployed(!isDeployed)}>
+      {actions && actions.length ? <span className="trigger" data-testid="trigger" onClick={() => setDeployed(!isDeployed)}>
         <Icon source="fa" icon={faEllipsisV} />
       </span> : null}
     </div>

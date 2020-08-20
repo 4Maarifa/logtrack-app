@@ -258,7 +258,7 @@ const ExTable = ({ header, loading, items, renderItem, isNoFrame, fss, defaultVi
       </div>
       <ul>
         {/* If loading, print a loader */}
-        {loading ? <li className="loader">
+        {loading ? <li className="loader" data-testid="loader">
           <Loader />
         </li> : null}
 
