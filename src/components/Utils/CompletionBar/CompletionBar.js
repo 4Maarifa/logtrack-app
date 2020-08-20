@@ -18,7 +18,7 @@ const CompletionBar = ({ title, details, percentage }) => (
     </h1>
     <div className="bar">
       {/* Width of the bar is computed from the percentage */}
-      <i style={{width: (percentage > 100 ? 100 : percentage) + '%'}}></i>
+      <i data-testid="bar" style={{width: (percentage > 100 ? 100 : percentage) + '%'}}></i>
     </div>
   </div>
 );
