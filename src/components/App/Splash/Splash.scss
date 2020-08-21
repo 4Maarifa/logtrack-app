@@ -8,115 +8,115 @@
     text-align: center;
   }
 
-.plan-selection {
-  margin: 1.5rem 0 1rem 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-
-  &-mentions {
-    margin-top: 2rem;
-    font-size: .7rem;
-    color: var(--gray);
-  }
-
-  &-content {
+  .plan-selection {
+    margin: 1.5rem 0 1rem 0;
     width: 100%;
     display: flex;
-    flex-direction: row;
-    padding: .5rem;
-    margin-top: 1rem;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
 
-    & > div {
-      flex: 1;
+    &-mentions {
+      margin-top: 2rem;
+      font-size: .7rem;
+      color: var(--gray);
+    }
+
+    &-content {
+      width: 100%;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      background-color: var(--inverse);
-      position: relative;
-      z-index: 1;
+      flex-direction: row;
+      padding: .5rem;
+      margin-top: 1rem;
 
-      &:nth-child(2) {
-        z-index: 2;
-        transform: scale(1.1);
-      }
-
-      &:nth-child(4) {
-        z-index: 0;
-        transform: scale(.9);
-        margin-left: -1rem;
-      }
-
-      .plan-icon {
-        font-size: 300%;
-        padding: .5rem 0;
-        color: var(--theme);
-      }
-
-      .plan-name {
-        margin-top: 1rem;
-      }
-
-      .plan-info {
-        display: block;
-        font-size: .7rem;
-        color: var(--gray);
-      }
-
-      .plan-price {
-        width: calc(100% - 4rem);
-        margin: .5rem 1rem;
-        border-top: 2px solid var(--theme);
-
-        &-amount {
-          display: block;
-          font-size: 200%;
-          color: var(--theme);
-          margin-bottom: -.5rem;
-        }
-      }
-
-      ul {
-        font-size: 85%;
-        margin: .5rem 1rem;
-        padding: 0;
+      & > div {
         flex: 1;
-        list-style-type: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        background-color: var(--inverse);
+        position: relative;
+        z-index: 1;
 
-        li {
-          padding: .2rem 0;
+        &:nth-child(2) {
+          z-index: 2;
+          transform: scale(1.1);
+        }
 
-          &:first-child {
-            margin-bottom: 1rem;
+        &:nth-child(4) {
+          z-index: 0;
+          transform: scale(.9);
+          margin-left: -1rem;
+        }
+
+        .plan-icon {
+          font-size: 300%;
+          padding: .5rem 0;
+          color: var(--theme);
+        }
+
+        .plan-name {
+          margin-top: 1rem;
+        }
+
+        .plan-info {
+          display: block;
+          font-size: .7rem;
+          color: var(--gray);
+        }
+
+        .plan-price {
+          width: calc(100% - 4rem);
+          margin: .5rem 1rem;
+          border-top: 2px solid var(--theme);
+
+          &-amount {
+            display: block;
+            font-size: 200%;
+            color: var(--theme);
+            margin-bottom: -.5rem;
           }
         }
 
-        span {
+        ul {
+          font-size: 85%;
+          margin: .5rem 1rem;
+          padding: 0;
+          flex: 1;
+          list-style-type: none;
 
-          .included {
-            color: var(--green);
+          li {
+            padding: .2rem 0;
+
+            &:first-child {
+              margin-bottom: 1rem;
+            }
           }
 
-          .optional {
-            color: var(--orange);
-          }
+          span {
 
-          .not-included {
-            color: var(--red);
+            .included {
+              color: var(--green);
+            }
+
+            .optional {
+              color: var(--orange);
+            }
+
+            .not-included {
+              color: var(--red);
+            }
           }
         }
-      }
 
-      span.button {
-        margin: .5rem;
+        span.button {
+          margin: .5rem;
+        }
       }
     }
   }
-}
 
   .name-container {
     position: relative;
@@ -146,19 +146,20 @@
       box-sizing: border-box;
       overflow: hidden;
 
-      svg {
-        max-height: 80%;
-        max-width: 100%;
-        object-fit: contain;
-        fill: var(--inverse);
+      .AnimatedLogo {
+        color: var(--inverse);
+        width: 80%;
       }
 
       .headline {
         text-transform: uppercase;
         font-size: 140%;
         font-weight: bold;
+        text-align: center;
         color: var(--inverse);
-        margin-top: 1rem;
+        position: relative;
+        top: -3rem;
+        display: block;
         letter-spacing: .15rem;
       }
     }

@@ -1,15 +1,24 @@
 import React from 'react';
-import { faImage, faPalette, faFill, faCode } from '@fortawesome/pro-solid-svg-icons';
+import { faImage, faPalette, faFill, faCode, faPlay } from '@fortawesome/pro-solid-svg-icons';
 
 import { DEFAULT_THEME_COLOR, DEFAULT_MAIN_COLOR, TEXT_COLOR, LIGHT_GRAY, GRAY, EPalette, 
   EDarkPaletteDetails, EMediumPaletteDetails, ELightPaletteDetails, EVeryLightPaletteDetails } from './../../../../services/color.service';
 import ModalService from './../../../../services/modal.service';
+
+import AnimatedLogo from './../../AnimatedLogo/AnimatedLogo';
 
 import Icon from './../../../Utils/Icon/Icon';
 
 const DevDocIdentityTab = () => {
 
   return <div className="DevDocIdentityTab">
+    <div className="DevDoc-section section-animated">
+      <h1 className="section-title">
+        <Icon source="fa" icon={faPlay} />
+        Animated Logo
+      </h1>
+      <AnimatedLogo />
+    </div>
     <div className="DevDoc-section section-colors">
       <h1 className="section-title">
         <Icon source="fa" icon={faFill} />
