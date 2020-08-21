@@ -16,7 +16,9 @@ const Terms = () => {
    */
   return <div className="Terms">
     <h1>Terms</h1>
-    <span className="sub">Last Updated: 21, Aug 2020</span>
+    <span className="sub">Last Updated: 21, Aug 2020</span><br/>
+    <span>LogTrack is a project entirely designed and developed by Bertrand Choubert (<a href="https://chbe.fr" target="_blank" rel="noopener noreferrer">His website</a>).<br/>
+        It's a Saas solution for every company directly or indirectly involved in Logistics: Shipping, Hauling, Maintenance, Repairs, Operator, Insurance, Accountance...</span>
     <ol>
       <li>
         <span className="title">Contact and Questions</span>
