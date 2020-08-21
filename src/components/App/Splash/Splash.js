@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import Terms from './../../Utils/Terms/Terms';
 import Home from './pages/Home';
-import Credits from './pages/Credits';
 import Pricing from './pages/Pricing';
 import Contact from './pages/Contact';
 import FAQ from './pages/FAQ';
@@ -21,8 +20,6 @@ const renderPage = page => {
   switch(page) {
     case 'terms':
       return <Terms />;
-    case 'credits':
-      return <Credits />;
     case 'pricing':
       return <Pricing />;
     case 'contact':
@@ -42,7 +39,6 @@ const renderFooter = () => {
     <Link to='/'>Home</Link>
     <Link to='/pricing'>Pricing</Link>
     <Link to='/terms'>Terms &amp; Conditions</Link>
-    <Link to='/credits'>Credits</Link>
     <Link to='/faq'>FAQ</Link>
     <Link to='/changelog'>ChangeLog</Link>
     <Link to='/contact'>Contact Us</Link>
