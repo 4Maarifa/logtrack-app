@@ -14,12 +14,7 @@
   #pathR { animation: pathR 16s linear infinite; }
   #pathA { animation: pathA 16s linear infinite; }
   #pathC { animation: pathC 16s linear infinite; }
-  #pathK { animation: pathK 16s linear infinite;
-      clip-path: polygon(-1% -1%, 25% -1%, 25% 50%, 85% 20%, 101% 35%, 101% 88%, 101% 101%, 80% 101%, 25% 75%, 25% 101%, -1% 101%);
-      clip-path: polygon(-1% -1%, 25% -1%, 25% 50%, 85% 20%, 101% 35%, 58% 58%, 46% 65%, 35% 70%, 25% 75%, 25% 101%, -1% 101%);
-      clip-path: polygon(-1% -1%, 25% -1%, 25% 50%, 25% 50%, 25% 75%, 25% 75%, 25% 75%, 25% 75%, 25% 75%, 25% 101%, -1% 101%);
-      clip-path: polygon(-1% -1%, 25% -1%, 25% -1%, 25% -1%, 25% -1%, 25% -1%, 25% -1%, 25% -1%, 25% -1%, 25% -1%, -1% -1%);
-  }
+  #pathK { animation: pathK 16s linear infinite; }
 }
 
 @keyframes logo {

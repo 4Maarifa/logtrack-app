@@ -62,7 +62,7 @@ const Navigation = () => {
 
   // Render the active role menu item
   const renderActiveRole = () => {
-    if(!computed.activeRole) {
+    if(!computed.activeRole || !computed.activeRoleCompany) {
       return (<NavLink activeClassName="nav--active" to={`/roles`} exact>
         <Icon containerclassname="nav-icon--inactive" source="fa" icon={faTag} />
         <Icon containerclassname="nav-icon--active" source="fa" icon={faTagSolid} />
