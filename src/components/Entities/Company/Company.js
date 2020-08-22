@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faBuilding, faUserTag, faEdit } from '@fortawesome/pro-light-svg-icons';
+import { faBuilding, faUserTag, faEdit, faHandshakeAlt } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
@@ -43,6 +43,11 @@ const Company = ({ company, isPage }) => {
   // Put edit link if the user has rights to do so
   if(computed.activeRole.role === ERole.MANAGER && computed.activeRole.companyId === COMPANY_ID) {
     ACTIONS.unshift({ title: 'Edit', icon: <Icon source="fa" icon={faEdit} />, link: `/company-edit/${COMPANY_ID}` });
+  }
+
+  // Propose a contract link
+  if(computed.activeRole.role === ERole.MANAGER && computed.activeRole.companyId !== COMPANY_ID) {
+    ACTIONS.unshift({ title: 'Propose Contract', icon: <Icon source="fa" icon={faHandshakeAlt} />, link: `/contract-add/${COMPANY_ID}` })
   }
 
   // Don't put the page link if the user is already on page!

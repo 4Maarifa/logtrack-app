@@ -200,6 +200,7 @@ const renderApp = () => {
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contracts" component={Contracts} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contract/:contractid" component={ContractPage} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contract-add" component={ContractAdd} />
+                    <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contract-add/:companyid" component={ContractAdd} />
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/contract-edit/:contractid" component={ContractAdd} />
 
                     <RoleLimitedRoute roles={[ERole.MANAGER]} exact path="/invoices" component={Invoices} />
