@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import { faCog, faClock, faMapMarker, faBuilding, faTag, faChevronRight,
   faTruck, faUsers, faWarehouseAlt, faThermometerHalf, faBullhorn } from '@fortawesome/pro-light-svg-icons';
-
-import Icon from './../../Utils/Icon/Icon';
-
+  
 import DataService from './../../../services/data.service';
 import ErrorService from './../../../services/error.service';
 import WeatherService, { EWeatherIcons } from './../../../services/weather.service';
@@ -12,17 +10,21 @@ import PermissionService from './../../../services/permission.service';
 import SettingsService, { ESettings } from './../../../services/settings.service';
 import ModalService from './../../../services/modal.service';
 import DateService from './../../../services/date.service';
+import ColorService from './../../../services/color.service';
 
 import { ERole, ERoleDetails } from './../../../classes/Role';
-
+import { ELogTrackActivityDetails, ELogTrackCategoryDetails } from './../../../classes/LogTrack';
+  
+import Icon from './../../Utils/Icon/Icon';
 import LogTracks from './../LogTracks/LogTracks';
 import Map from './../../Utils/Map/Map';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 
+import News from './../News/News';
+
 import { v4 as uuid } from 'uuid';
 
 import './Dashboard.scss';
-import News from '../News/News';
 
 /**
  * Component: Dashboard
@@ -83,6 +85,86 @@ const Dashboard = () => {
   /**
    * RENDER
    */
+
+  // Render top right corner according to Role
+  const renderRoleCornerActions = () => {
+
+    let logTrackData = null;
+
+    if(computed.employee && computed.employee.currentLogTrack) {
+      logTrackData = computed.employee.currentLogTrack[Object.keys(computed.employee.currentLogTrack)[0]];
+    }
+
+    switch(computed.activeRole.role) {
+      case ERole.MANAGER:
+        return <div className="company-details-corner-container">
+          <div className="company-details-stat">
+            <span className="company-details-stat-icon">
+              <Icon source="fa" icon={faWarehouseAlt} />
+            </span>
+            <span className="company-details-stat-content">
+              <span>Warehouses</span>
+              {computed.activeRole.role === ERole.MANAGER && <NavLink className="manage-link" to={`/warehouses`}>
+                Manage
+                <Icon source="fa" icon={faChevronRight} />
+              </NavLink>}
+            </span>
+          </div>
+          <div className="company-details-stat">
+            <span className="company-details-stat-icon">
+              <Icon source="fa" icon={faUsers} />
+            </span>
+            <span className="company-details-stat-content">
+              <span>Employees</span>
+              {computed.activeRole.role === ERole.MANAGER && <NavLink className="manage-link" to={`/employees`}>
+                Manage
+                <Icon source="fa" icon={faChevronRight} />
+              </NavLink>}
+            </span>
+          </div>
+          <div className="company-details-stat">
+            <span className="company-details-stat-icon">
+              <Icon source="fa" icon={faTruck} />
+            </span>
+            <span className="company-details-stat-content">
+              <span>Equipments</span>
+              {computed.activeRole.role === ERole.MANAGER && <NavLink className="manage-link" to={`/equipments`}>
+                Manage
+                <Icon source="fa" icon={faChevronRight} />
+              </NavLink>}
+            </span>
+          </div>
+        </div>;
+      case ERole.MECHANIC:
+      case ERole.DRIVER:
+        return <div className="company-details-corner-container">
+          {logTrackData ?
+            <Fragment>
+              <h3>Currently</h3>
+              <div className="company-details-stat">
+                <span className="company-details-stat-icon" style={{
+                  backgroundColor: ColorService.getPaletteForColor(ELogTrackCategoryDetails[ELogTrackActivityDetails[logTrackData.activity].parent].color).medium.color
+                }}>
+                  <Icon source="fa" icon={ELogTrackActivityDetails[logTrackData.activity].icon} />
+                </span>
+                <span className="company-details-stat-content">
+                  <h3>{ELogTrackActivityDetails[logTrackData.activity].text}</h3>
+                  <NavLink className="manage-link" to={`/logtracks`}>
+                    Modify
+                    <Icon source="fa" icon={faChevronRight} />
+                  </NavLink>
+                </span>
+              </div>
+            </Fragment>
+          : <span>No current LogTrack</span>}
+        </div>;
+      default: 
+        return <div className="company-details-corner-container"></div>;
+    }
+
+    
+  };
+
   // Render dashboard according to role
   const renderRolePart = () => {
     return <div className="role-container">
@@ -105,44 +187,7 @@ const Dashboard = () => {
           <h1 className="company-details-name-container">
             <PageLink type={PageLinkType.COMPANY} entityId={computed.activeRole.companyId} entityData={computed.activeRoleCompany} />
           </h1>
-          <div className="company-details-stats-container">
-            <div className="company-details-stat">
-              <span className="company-details-stat-icon">
-                <Icon source="fa" icon={faWarehouseAlt} />
-              </span>
-              <span className="company-details-stat-content">
-                <span>Warehouses</span>
-                {computed.activeRole.role === ERole.MANAGER && <NavLink className="manage-link" to={`/warehouses`}>
-                  Manage
-                  <Icon source="fa" icon={faChevronRight} />
-                </NavLink>}
-              </span>
-            </div>
-            <div className="company-details-stat">
-              <span className="company-details-stat-icon">
-                <Icon source="fa" icon={faUsers} />
-              </span>
-              <span className="company-details-stat-content">
-                <span>Employees</span>
-                {computed.activeRole.role === ERole.MANAGER && <NavLink className="manage-link" to={`/employees`}>
-                  Manage
-                  <Icon source="fa" icon={faChevronRight} />
-                </NavLink>}
-              </span>
-            </div>
-            <div className="company-details-stat">
-              <span className="company-details-stat-icon">
-                <Icon source="fa" icon={faTruck} />
-              </span>
-              <span className="company-details-stat-content">
-                <span>Equipments</span>
-                {computed.activeRole.role === ERole.MANAGER && <NavLink className="manage-link" to={`/equipments`}>
-                  Manage
-                  <Icon source="fa" icon={faChevronRight} />
-                </NavLink>}
-              </span>
-            </div>
-          </div>
+          {renderRoleCornerActions()}
           <Icon containerclassname="icon-overlay" source="fa" icon={faBuilding} />
         </div>}
       </div>
