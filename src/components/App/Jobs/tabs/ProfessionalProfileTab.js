@@ -1,5 +1,4 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import DateTimePicker from 'react-datetime-picker';
 import { faArrowAltToRight, faArrowAltFromLeft, faCalendarAlt, faClipboardUser, faInfoCircle, 
   faBuilding, faAward, faUserTie } from '@fortawesome/pro-light-svg-icons';
 
@@ -17,6 +16,7 @@ import Choose from './../../../Utils/FormElements/Choose/Choose';
 import FormInput from './../../../Utils/FormElements/FormInput/FormInput';
 import Switch from './../../../Utils/FormElements/Switch/Switch';
 import FormTextarea from './../../../Utils/FormElements/FormTextarea/FormTextarea';
+import FormDateTimeInput from './../../../Utils/FormElements/FormDateTimeInput/FormDateTimeInput';
 
 import { ERoleDetails, ERoleStatus } from './../../../../classes/Role';
 
@@ -264,8 +264,8 @@ const ProfessionalProfileTab = () => {
           <Icon source="fa" icon={faCalendarAlt} />
           Date
         </span>
-        <DateTimePicker
-          onChange={setCertificateDate}
+        <FormDateTimeInput
+          onValueChange={setCertificateDate}
           value={certificateDate}
           clearIcon={null}
           calendarIcon={<Icon source="fa" icon={faCalendarAlt} />}
@@ -352,8 +352,8 @@ const ProfessionalProfileTab = () => {
           <Icon source="fa" icon={faArrowAltFromLeft} />
           Experience Start Date
         </span>
-        <DateTimePicker
-          onChange={setExperienceStartDate}
+        <FormDateTimeInput
+          onValueChange={setExperienceStartDate}
           value={experienceStartDate}
           clearIcon={null}
           calendarIcon={<Icon source="fa" icon={faCalendarAlt} />}
@@ -370,8 +370,8 @@ const ProfessionalProfileTab = () => {
           <Icon source="fa" icon={faArrowAltToRight} />
           Experience End Date (Optional)
         </span>
-        <DateTimePicker
-          onChange={setExperienceEndDate}
+        <FormDateTimeInput
+          onValueChange={setExperienceEndDate}
           value={experienceEndDate}
           clearIcon={null}
           calendarIcon={<Icon source="fa" icon={faCalendarAlt} />}

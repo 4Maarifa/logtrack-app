@@ -25,6 +25,7 @@ import CompletionBar from './../../../Utils/CompletionBar/CompletionBar';
 import Debug from './../../../Utils/Debug/Debug';
 import ExTable, { EXTABLE_VIEWS } from './../../../Utils/ExTable/ExTable';
 import FormAutoSuggestInput from './../../../Utils/FormElements/FormAutoSuggestInput/FormAutoSuggestInput';
+import FormDateTimeInput from './../../../Utils/FormElements/FormDateTimeInput/FormDateTimeInput';
 import FormDebounceAutoSuggestInput from './../../../Utils/FormElements/FormDebounceAutoSuggestInput/FormDebounceAutoSuggestInput';
 import FormDebounceInput from './../../../Utils/FormElements/FormDebounceInput/FormDebounceInput';
 import FormInput from './../../../Utils/FormElements/FormInput/FormInput';
@@ -60,6 +61,7 @@ const DevDocComponentsTab = () => {
   const [imageFileValue, setImageFileValue] = useState(null);
 
   const [formStringValue, setFormStringValue] = useState('value');
+  const [formDateValue, setFormDateValue] = useState(new Date());
   const [possibleItems, setPossibleItems] = useState({});
   const [selectedItemKey, setSelectedItemKey] = useState('');
   const [selectedItem, setSelectedItem] = useState(null);
@@ -900,6 +902,41 @@ const DevDocComponentsTab = () => {
               Once set, the possible items are displayed. When the user clicks one, the value and possibleItems are reset, and the selectedItem is now fulfilled.<br/>
               Of course, you can set the possible items asyncrhonously when you receive a new value from the input. For aynschronous API calls, formDebounceAutoSuggestInput is recommended!
             </span>
+          </div>
+        </div>
+      },
+
+      formDateTimeInput: {
+        name: ({ isActive }) => <span>
+          <Icon source="fa" icon={isActive ? faClockSolid : faClock} />
+          <span>Date Input</span>
+        </span>,
+        content: () => <div>
+          <h1><Icon source="fa" icon={faClockSolid} /> Form DateTime Input</h1>
+          <ul className="doc-tags">
+            <li>Date</li>
+            <li>Time</li>
+            <li>Calendar</li>
+          </ul>
+          <h3>Props</h3>
+          <table className="doc-props" border="1">
+            <thead><tr><th>Name</th><th>Required</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>value</td><td><Icon source="fa" icon={faCheck} /></td><td>Value of the field</td></tr>
+              <tr><td>onChange</td><td><Icon source="fa" icon={faCheck} /></td><td>onChange callback when the value changed</td></tr>
+              <tr><td>otherProps</td><td><Icon source="fa" icon={faTimes} /></td><td>Other props to the DateTimePicker</td></tr>
+            </tbody>
+          </table>
+          <div className="doc-example">
+            <h3>Example</h3>
+            <div className="doc-example-exec">
+              <div>Value: {formDateValue ? formDateValue.toString() : 'No value'}</div>
+              <FormDateTimeInput value={formDateValue} onValueChange={setFormDateValue} />
+            </div>
+            <div className="doc-code">
+              <span className="doc-code-indicator">JavaScript</span>
+              <Code language="jsx" codeSnippet={`<FormDateTimeInput value={formDateValue} onValueChange={setFormDateValue} />`} />
+            </div>
           </div>
         </div>
       },

@@ -2,7 +2,6 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { faUser, faRectangleWide, faBars, faMapMarker,
   faArrowAltToRight, faCalendarAlt, faArrowAltFromLeft, faCheck,
   faPalette, faInfoCircle } from '@fortawesome/pro-light-svg-icons';
-import DateTimePicker from 'react-datetime-picker';
 
 import DataService from './../../../services/data.service';
 import { EPalette, EMediumPaletteDetails } from './../../../services/color.service';
@@ -17,6 +16,7 @@ import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
 import FormTextarea from './../../Utils/FormElements/FormTextarea/FormTextarea';
 import Switch from './../../Utils/FormElements/Switch/Switch';
+import FormDateTimeInput from './../../Utils/FormElements/FormDateTimeInput/FormDateTimeInput';
 
 import RT_userMessage, { ERT_userMessageDetails, ERT_userMessage } from './../../../classes/RT_userMessage';
 
@@ -211,8 +211,8 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
           <Icon source="fa" icon={faArrowAltFromLeft} />
           Start Date
         </span>
-        <DateTimePicker
-          onChange={setStartDateTime}
+        <FormDateTimeInput
+          onValueChange={setStartDateTime}
           value={startDateTime}
           clearIcon={null}
           calendarIcon={<Icon source="fa" icon={faCalendarAlt} />}
@@ -234,8 +234,8 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
           <Icon source="fa" icon={faArrowAltToRight} />
           End Date
         </span>
-        <DateTimePicker
-          onChange={setEndDateTime}
+        <FormDateTimeInput
+          onValueChange={setEndDateTime}
           value={endDateTime}
           clearIcon={null}
           calendarIcon={<Icon source="fa" icon={faCalendarAlt} />}
