@@ -115,13 +115,6 @@ const FormAutoSuggestInput = ({ value,
         </div> : null
       }
 
-      {/* Generating an input for validation purposes */}
-      <input 
-        className="input-validator"
-        type="text" 
-        required={inputRequired} 
-        defaultValue={selectedItemKey} />
-
       {/* If no item is selected and some items are proposed, show also the possible items */}
       {!selectedItemKey && possibleItems && Object.keys(possibleItems).length ? 
         <ul className="items">
