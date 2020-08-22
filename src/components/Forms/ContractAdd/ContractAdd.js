@@ -30,6 +30,7 @@ import './ContractAdd.scss';
  */
 const ContractAdd = ({ match }) => {
   const CURRENT_CONTRACT_ID = match.params.contractid;
+  const OTHER_COMPANY_ID = match.params.companyid;
 
   // Current contract, populated on load with edition
   const [currentContract, setCurrentContract] = useState(null);
@@ -100,7 +101,7 @@ const ContractAdd = ({ match }) => {
       return;
     }
 
-    // TODO: Contract detils: merchandise? goal? date? price?
+    // TODO: Contract details: merchandise? goal? date? price?
 
     // On edition, just update the contract with new identification
     // Because only that field can be edited
@@ -176,6 +177,19 @@ const ContractAdd = ({ match }) => {
         // otherwise, on add, just set the creator as current user
         setCreatorId(computed.user.uid);
         setCreator(computed.employee);
+
+        // If a companyid is passed, fetch it and set it as the selected company
+        if(OTHER_COMPANY_ID) {
+          CompanyService.get(OTHER_COMPANY_ID)
+            .then(companyDoc => {
+              setSelectedCompanyItem({
+                content: <PageLink noLink type={PageLinkType.COMPANY} entityId={OTHER_COMPANY_ID} entityData={companyDoc.data()} />,
+                value: companyDoc.data()
+              });
+              setSelectedCompanyId(OTHER_COMPANY_ID);
+            })
+            .catch(ErrorService.manageError);
+        }
       }
     }
   }, [computed]);
