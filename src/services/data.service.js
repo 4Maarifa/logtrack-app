@@ -111,6 +111,12 @@ const DataService = {
             else {
                 // If no user is signed in, we have finished to load computed values
 
+                // Reinitialize computed data
+                DataService.computed.user = null;
+                DataService.computed.employee = null;
+                DataService.computed.activeRole = null;
+                DataService.computed.activeRoleCompany = null;
+
                 // mark the temp memory as initialized
                 DataService.computed.initialized = true;
 
