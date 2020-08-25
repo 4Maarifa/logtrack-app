@@ -33,6 +33,9 @@ export const ERights = {
   // Tells if the user can use analytics
   APP_CAN_USE_ANALYTICS: 'APP_CAN_USE_ANALYTICS',
 
+  // Tells if the user can use Forms
+  APP_CAN_USE_FORMS: 'APP_CAN_USE_FORMS',
+
   // Tells if the user can use Job offers management
   APP_CAN_USE_JOBOFFERS_MANAGEMENT: 'APP_CAN_USE_JOBOFFERS_MANAGEMENT',
   
@@ -152,7 +155,14 @@ export const ERights = {
   RIGHT_WEATHER_GET: 'RIGHT_WEATHER_GET',
   RIGHT_WEATHER_LIST: 'RIGHT_WEATHER_LIST',
   RIGHT_WEATHER_UPDATE: 'RIGHT_WEATHER_UPDATE',
-  RIGHT_WEATHER_DELETE: 'RIGHT_WEATHER_DELETE'
+  RIGHT_WEATHER_DELETE: 'RIGHT_WEATHER_DELETE',
+
+  // FORM ENTITY RIGHTS
+  RIGHT_FORM_CREATE: 'RIGHT_FORM_CREATE',
+  RIGHT_FORM_GET: 'RIGHT_FORM_GET',
+  RIGHT_FORM_LIST: 'RIGHT_FORM_LIST',
+  RIGHT_FORM_UPDATE: 'RIGHT_FORM_UPDATE',
+  RIGHT_FORM_DELETE: 'RIGHT_FORM_DELETE'
 };
 
 /**
@@ -199,6 +209,12 @@ const RightService = {
         right === ERights.APP_CAN_USE_ANALYTICS) {
 
       return DataService.computed.activeRole.role === ERole.MANAGER;
+    }
+
+    // Forms
+    if(right === ERights.APP_CAN_USE_FORMS) {
+      return DataService.computed.activeRole.role === ERole.MANAGER
+        || DataService.computed.activeRole.role === ERole.INSURER;
     }
 
     // Job Offers management is for manager and recruiters

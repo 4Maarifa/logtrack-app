@@ -3,14 +3,15 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { faTachometerFast, faHome, faSignIn, faUserPlus, faUserCog, faUsers,
   faTruck, faTag, faCompass, faAnalytics, faMapPin, faBuilding, faSearch,
   faWarehouseAlt, faBars, faTimes, faHandshakeAlt, faSuitcase, faPortrait, faCrown,
-  faFolders, faReceipt, faWrench } from '@fortawesome/pro-light-svg-icons';
+  faFolders, faReceipt, faWrench, faClipboardCheck } from '@fortawesome/pro-light-svg-icons';
 import { faTag as faTagSolid, faCompass as faCompassSolid, faMapPin as faMapPinSolid,
   faTruck as faTruckSolid, faWarehouseAlt as faWarehouseAltSolid, faAnalytics as faAnalyticsSolid,
   faPortrait as faPortraitSolid, faHandshakeAlt as faHandshakeAltSolid, faUserCog as faUserCogSolid,
   faCrown as faCrownSolid, faUsers as faUsersSolid, faTachometerFast as faTachometerFastSolid,
   faHome as faHomeSolid, faUserPlus as faUserPlusSolid, faSuitcase as faSuitcaseSolid,
   faSignIn as faSignInSolid, faSearch as faSearchSolid, faFolders as faFoldersSolid,
-  faBuilding as faBuildingSolid, faReceipt as faReceiptSolid, faWrench as faWrenchSolid } from '@fortawesome/pro-solid-svg-icons';
+  faBuilding as faBuildingSolid, faReceipt as faReceiptSolid, faWrench as faWrenchSolid,
+  faClipboardCheck as faClipboardCheckSolid } from '@fortawesome/pro-solid-svg-icons';
 
 import Icon from './../../Utils/Icon/Icon';
 
@@ -175,6 +176,12 @@ const Navigation = () => {
           <Icon containerclassname="nav-icon--inactive" source="fa" icon={faPortrait} />
           <Icon containerclassname="nav-icon--active" source="fa" icon={faPortraitSolid} />
           <span className="nav-title">Job Offers</span>
+        </NavLink>,
+      [ERights.APP_CAN_USE_FORMS] :
+        <NavLink key="forms" activeClassName="nav--active" to={`/forms`}>
+          <Icon containerclassname="nav-icon--inactive" source="fa" icon={faClipboardCheck} />
+          <Icon containerclassname="nav-icon--active" source="fa" icon={faClipboardCheckSolid} />
+          <span className="nav-title">Forms</span>
         </NavLink>
     };
 

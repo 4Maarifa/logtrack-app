@@ -124,6 +124,19 @@ service cloud.firestore {
           request.resource.data.companyId);
       allow delete: if false;
     }
+
+    match /forms/{formId} {
+      allow get: if isSignedIn(request);
+      allow create: if isSignedIn(request) &&
+        isActiveRoleEqualsForCompany(
+          getActiveRoleId(request.auth.uid),
+          request.resource.data.companyId);
+      allow list: if isSignedIn(request) &&
+        isActiveRoleEqualsForCompany(
+          getActiveRoleId(request.auth.uid),
+          resource.data.companyId);
+      allow delete, update: if false;
+    }
     
     match /jobOffers/{jobOfferId} {
     	allow delete: if false;

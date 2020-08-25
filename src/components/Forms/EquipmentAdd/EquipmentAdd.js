@@ -125,7 +125,7 @@ const EquipmentAdd = ({ match }) => {
   };
 
   useEffect(() => {
-    if(computed.initialized && computed.activeRole){
+    if(computed.initialized && computed.activeRole) {
 
       // set company owner
       setCompanyId(computed.activeRole.companyId);

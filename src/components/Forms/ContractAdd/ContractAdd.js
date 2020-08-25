@@ -107,7 +107,7 @@ const ContractAdd = ({ match }) => {
     // Because only that field can be edited
     // Then set new contract id to redirect user
     if(CURRENT_CONTRACT_ID) {
-      ContractService.updateField(CURRENT_CONTRACT_ID, {identification})
+      ContractService.updateField(CURRENT_CONTRACT_ID, { identification })
         .then(() => setNewContractId(CURRENT_CONTRACT_ID))
         .catch(ErrorService.manageError);
     }

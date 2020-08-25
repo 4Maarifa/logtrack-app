@@ -16,6 +16,7 @@ export const PageLinkType = {
   CONTRACT: 'CONTRACT',
   EMPLOYEE: 'EMPLOYEE',
   EQUIPMENT: 'EQUIPMENT',
+  FORM: 'FORM',
   JOBOFFER: 'JOBOFFER',
   WAREHOUSE: 'WAREHOUSE'
 };
@@ -56,6 +57,12 @@ const PageLinkTypeDetails = {
   }),
   [PageLinkType.EQUIPMENT]: ({ entityId, entityData }) => ({
     link: `/equipment/${entityId}`,
+    content: <Fragment>
+      <span>{entityData.identification}</span>
+    </Fragment>
+  }),
+  [PageLinkType.FORM]: ({ entityId, entityData }) => ({
+    link: `/forms/detail/${entityId}`,
     content: <Fragment>
       <span>{entityData.identification}</span>
     </Fragment>

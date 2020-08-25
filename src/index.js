@@ -26,6 +26,9 @@ import AuthHandler from './components/Auth/AuthHandler/AuthHandler';
 
 import Profile from './components/App/Profile/Profile';
 
+import Forms from './components/App/Forms/Forms';
+import FormAdd from './components/Forms/FormAdd/FormAdd';
+
 import CompanyAdd from './components/Forms/CompanyAdd/CompanyAdd';
 import CompanyPage from './components/Pages/CompanyPage/CompanyPage';
 
@@ -163,6 +166,10 @@ const renderApp = () => {
                     <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
                     <PrivateRoute exact path="/profile" component={Profile} />
+
+                    <RoleLimitedRoute roles={[ERole.MANAGER, ERole.INSURER]} exact path="/forms" component={Forms} />
+                    <RoleLimitedRoute roles={[ERole.MANAGER, ERole.INSURER]} exact path="/form-add" component={FormAdd} />
+                    <RoleLimitedRoute roles={[ERole.MANAGER, ERole.INSURER]} exact path="/form-edit/:formid" component={FormAdd} />
 
                     <Route exact path="/signin" component={SignIn} />
                     <Route exact path="/signup" component={SignUp} />
