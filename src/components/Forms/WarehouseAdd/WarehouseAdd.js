@@ -1,19 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { faRectangleWide, faMapMarker, faUser, faBuilding, faWarehouse } from '@fortawesome/pro-light-svg-icons';
 
-import Map from './../../Utils/Map/Map';
 import Icon from './../../Utils/Icon/Icon';
 import FormInput from './../../Utils/FormElements/FormInput/FormInput';
 import Range from './../../Utils/FormElements/Range/Range';
 import PageLink, { PageLinkType } from './../../Utils/PageLink/PageLink';
-import FormDebouceAutoSuggestInput from './../../Utils/FormElements/FormDebounceAutoSuggestInput/FormDebounceAutoSuggestInput';
+import FormLocationInput from './../../Utils/FormElements/FormLocationInput/FormLocationInput';
 
 import DataService from './../../../services/data.service';
 import DateService from './../../../services/date.service';
 import ErrorService from './../../../services/error.service';
 import WarehouseService from './../../../services/entities/warehouse.service';
-import GeoService from './../../../services/geo.service';
 import EmployeeService from './../../../services/entities/employee.service';
 
 import Warehouse from './../../../classes/Warehouse';
@@ -45,101 +43,19 @@ const WarehouseAdd = ({ match }) => {
   const [identification, setIdentification] = useState('');
   const [nbLoadingDocks, setNbLoadingDocks] = useState(0);
 
-  // warehouse location autosuugest input
-  const [possibleLocationsInput, setPossibleLocationsInput] = useState('');
-  const [possibleLocations, setPossibleLocations] = useState({});
   // selected location
   const [selectedLocationKey, setSelectedLocationKey] = useState('');
   const [selectedLocationItem, setSelectedLocationItem] = useState(null);
-
-  // if of the map marker that points to a location
-  const [locationMarkerId, setLocationMarkerId] = useState(null);
-
-  // Reference to the map component
-  const REF_MAP = useRef(null);
 
   const OBSERVER_KEY = uuid();
   
   const [computed, setComputed] = useState(DataService.computed.getDefaultComputedValues());
 
-  // Autosuggest location function
-  const onLocationAutoCompleteChange = inputValue => {
-
-    // save input value
-    setPossibleLocationsInput(inputValue);
-
-    // search for places
-    GeoService.searchPlaces(inputValue, { addressdetails: 0 })
-      .then(values => {
-
-        // parse results
-        const NEW_POSSIBLE_LOCATIONS = {};
-        values.forEach(value => {
-
-          // parse coordinates
-          value.coordinates = GeoService.transformCoordinates([
-            parseFloat(value.lon),
-            parseFloat(value.lat)
-          ]);
-
-          // parse values to be printed into autosuggest input
-          NEW_POSSIBLE_LOCATIONS[value.osm_id] = {
-            content: <span>
-              {value.display_name}
-            </span>,
-            value: value
-          };
-        });
-
-        // set data for autosuggest input to print values
-        setPossibleLocations(NEW_POSSIBLE_LOCATIONS);
-      })
-      .catch(ErrorService.manageError);
-  };
-
-  // When a new location is selected
-  const onSelectedLocationItem = (selectedLocationKey, _, selectedLocationItem) => {
-
-    // save it as selected location
+  // When the location item changed
+  const onLocationChange = (selectedLocationKey, _, selectedLocationItem) => {
     setSelectedLocationKey(selectedLocationKey);
     setSelectedLocationItem(selectedLocationItem);
-
-    if(!selectedLocationItem) {
-
-      // If location was removed, delete marker and marker reference
-      REF_MAP.current.deleteMarker(locationMarkerId);
-      setLocationMarkerId(null);
-      return;
-    }
-    // else, if new location is selected
-
-    // If a marker is already present
-    if(locationMarkerId) {
-
-      // move the marker to the new place, with new content
-      REF_MAP.current.switchMarker(
-        locationMarkerId,
-        selectedLocationItem.value.coordinates[0],
-        selectedLocationItem.value.coordinates[1],
-        selectedLocationItem.value.display_name);
-
-      // then center the map on the moved marker
-      centerOnLocationMarker();
-    }
-    else {
-
-      // otherwise, if no marker is present, create a new marker
-      // The map will center itself automatically on the newly created marker
-      // Then, save the unique marker id for further reference
-      setLocationMarkerId(REF_MAP.current.addMarker(
-        selectedLocationItem.value.coordinates[0],
-        selectedLocationItem.value.coordinates[1],
-        selectedLocationItem.value.display_name));
-    }
   };
-
-  // Center on marker
-  const centerOnLocationMarker = () => locationMarkerId && REF_MAP.current.centerOnMarker(locationMarkerId);
 
   // Form handler
   const handleSubmit = event => {
@@ -183,11 +99,6 @@ const WarehouseAdd = ({ match }) => {
       ).catch(ErrorService.manageError);
     }
   };
-  
-  // When the marker id is changed, center automatically the map
-  useEffect(() => {
-    centerOnLocationMarker()
-  }, [locationMarkerId]);
 
   useEffect(() => {
     if(computed.initialized) {
@@ -207,7 +118,7 @@ const WarehouseAdd = ({ match }) => {
             setNbLoadingDocks(warehouseDoc.data().nbLoadingDocks);
   
             // Also, save the current location, as well as create the location marker
-            onSelectedLocationItem('CURRENT', null, {
+            onLocationChange('CURRENT', null, {
               content: <span>{warehouseDoc.data().address}</span>,
               value: {
                 display_name: warehouseDoc.data().address,
@@ -294,26 +205,21 @@ const WarehouseAdd = ({ match }) => {
           onValueChange={setIdentification} />
 
         {/* Location */}
-        <FormDebouceAutoSuggestInput
-          value={possibleLocationsInput}
+        <FormLocationInput
+          selectedItemKey={selectedLocationKey}
+          selectedItem={selectedLocationItem}
+          onSelectedItemChange={onLocationChange}
           label={
             <span>
               <Icon source="fa" icon={faMapMarker} />
               Location
             </span>
           }
-          possibleItems={possibleLocations}
-          onValueChange={onLocationAutoCompleteChange}
-          onSelectedItemChange={onSelectedLocationItem}
-          inputAutoComplete="off"
           inputRequired
           fieldName="location"
-          selectedItemKey={selectedLocationKey}
-          selectedItem={selectedLocationItem}
           instructions={
             <span>Pick a location</span>
           } />
-        <Map ref={REF_MAP} />
 
         {/* Nb Loading Docks */}
         <div className="input-container">

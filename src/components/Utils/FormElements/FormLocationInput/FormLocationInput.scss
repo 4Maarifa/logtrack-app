@@ -1,0 +1,20 @@
+.FormLocationInput {
+
+  .Map {
+    height: 10rem;
+    margin-bottom: 1rem;
+
+    .leaflet-container {
+      border-radius: 0 0 var(--border-radius) var(--border-radius);
+    }
+  }
+
+  .FormDebounceAutoSuggestInput {
+    margin-bottom: 0;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+
+    .indicator {
+      border-radius: 0;
+    }
+  }
+}
