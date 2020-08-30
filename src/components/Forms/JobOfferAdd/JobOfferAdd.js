@@ -171,6 +171,7 @@ const JobOfferAdd = ({ match }) => {
               Title
             </span>
           }
+          isBig
           inputRequired
           inputPattern=".{3,}"
           instructions={

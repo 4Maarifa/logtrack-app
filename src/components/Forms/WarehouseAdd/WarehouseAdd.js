@@ -194,6 +194,7 @@ const WarehouseAdd = ({ match }) => {
             </span>
           }
           inputRequired
+          isBig
           inputPattern=".{3,}"
           instructions={
             <span>

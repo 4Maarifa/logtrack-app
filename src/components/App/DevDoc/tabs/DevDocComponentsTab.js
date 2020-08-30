@@ -984,6 +984,7 @@ const DevDocComponentsTab = () => {
               <tr><td>fieldName</td><td><Icon source="fa" icon={faTimes} /></td><td>Unique name passed to onValueChange callback to identify the input</td></tr>
               <tr><td>inputName</td><td><Icon source="fa" icon={faTimes} /></td><td>Name of the input</td></tr>
               <tr><td>label</td><td><Icon source="fa" icon={faTimes} /></td><td>Label of the input (HTML is possible - default is no label, even if it's not advised)</td></tr>
+              <tr><td>isBig</td><td><Icon source="fa" icon={faTimes} /></td><td>Should the input be presented bigger than normal</td></tr>
               <tr><td>inputAutocomplete</td><td><Icon source="fa" icon={faTimes} /></td><td>Autocomplete of the input, as HTML specifications</td></tr>
               <tr><td>inputRequired</td><td><Icon source="fa" icon={faTimes} /></td><td>Tells if the input is required (default false)</td></tr>
               <tr><td>instructions</td><td><Icon source="fa" icon={faTimes} /></td><td>Instructions to the user to fulfill the input</td></tr>
@@ -1114,6 +1115,7 @@ const DevDocComponentsTab = () => {
               <tr><td>inputDisabled</td><td><Icon source="fa" icon={faTimes} /></td><td>Tells if the input is disabled or not (default false)</td></tr>
               <tr><td>noValidation</td><td><Icon source="fa" icon={faTimes} /></td><td>Hides the validation indicator</td></tr>
               <tr><td>label</td><td><Icon source="fa" icon={faTimes} /></td><td>Label of the input (HTML is possible - default is no label, even if it's not advised)</td></tr>
+              <tr><td>isBig</td><td><Icon source="fa" icon={faTimes} /></td><td>Should the input be presented bigger than normal</td></tr>
               <tr><td>instructions</td><td><Icon source="fa" icon={faTimes} /></td><td>Instructions to the user to fulfill the input</td></tr>
               <tr><td>onValueChange</td><td><Icon source="fa" icon={faCheck} /></td><td>Callback when value changes: calls with (value, fieldName)</td></tr>
             </tbody>

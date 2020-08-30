@@ -35,6 +35,7 @@ const FormInput = ({ value,
                     inputDisabled,
                     noValidation,
                     label,
+                    isBig,
                     instructions,
                     onValueChange }) => {
 
@@ -51,6 +52,7 @@ const FormInput = ({ value,
 
   return (
     <div className={'FormInput '
+        + (isBig ? ' FormInput--big ' : '')
         + (fieldName ? 'input-' + fieldName : '')}>
 
       {/* Input validator */}

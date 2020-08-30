@@ -306,6 +306,30 @@ const EquipmentAdd = ({ match }) => {
 
       {/* Equipment add form */}
       <form onSubmit={handleSubmit}>
+
+        {/* Identification */}
+        <FormInput
+          value={identification}
+          inputType="text"
+          fieldName="identification"
+          label={
+            <span>
+              <Icon source="fa" icon={faRectangleWide} />
+              Identification
+            </span>
+          }
+          isBig
+          inputRequired
+          inputPattern=".{3,}"
+          instructions={
+            <span>
+              The identification is required<br/>
+              The identification must be 3 characters minimum<br/>
+              It can be the number plate, serial number...
+            </span>
+          }
+          onValueChange={setIdentification} />
+
         {/* Model */}
         {CURRENT_EQUIPMENT_ID && currentEquipment ? 
           <div className="model-selection--done">
@@ -328,28 +352,6 @@ const EquipmentAdd = ({ match }) => {
               </div>
             </div>
           </div> : renderModels()}
-
-        {/* Identification */}
-        <FormInput
-          value={identification}
-          inputType="text"
-          fieldName="identification"
-          label={
-            <span>
-              <Icon source="fa" icon={faRectangleWide} />
-              Identification
-            </span>
-          }
-          inputRequired
-          inputPattern=".{3,}"
-          instructions={
-            <span>
-              The identification is required<br/>
-              The identification must be 3 characters minimum<br/>
-              It can be the number plate, serial number...
-            </span>
-          }
-          onValueChange={setIdentification} />
 
         {/* Company */}
         <div className="input-container">

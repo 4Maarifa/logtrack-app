@@ -4,6 +4,26 @@
   margin: 1rem 0;
   min-width: 0;
 
+  &.FormInput--big {
+    margin-top: 3rem;
+
+    input:not(.input-validator) {
+      font-size: 125%;
+      height: 2.5rem;
+
+      &~label {
+        font-size: 125%;
+      }
+
+      &:active ~ label,
+      &:focus ~ label,
+      &:not(.input--empty) ~ label {
+        top: -1.8rem;
+        font-size: 125%;
+      }
+    }
+  }
+
   label {
     position: absolute;
     z-index: 2;

@@ -195,6 +195,7 @@ const CalendarEventAdd = ({ calendarEventId: currentCalendarEventId, calendarEve
             Title
           </span>
         }
+        isBig
         inputRequired
         inputPattern=".{3,}"
         instructions={
