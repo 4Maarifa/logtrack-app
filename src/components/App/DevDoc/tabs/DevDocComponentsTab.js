@@ -2,7 +2,7 @@ import React, { useState, Fragment, useRef } from 'react';
 
 import { faChevronSquareDown, faDotCircle, faCheckSquare, faChevronCircleUp, faHandPointer, 
   faEllipsisV, faPercentage, faBug, faTable, faShapes, faSpinner, faHistory, faMap, faWindow, 
-  faFileImport, faFolder, faFileSignature, faCommentAltLines, faBallotCheck, faCommentDots, faClock, faFileUpload, faAlignJustify, faSlidersH, faToggleOn, faDiceOne, faPlus, faDiceTwo, faExternalLink } from '@fortawesome/pro-light-svg-icons';
+  faFileImport, faFolder, faFileSignature, faCommentAltLines, faBallotCheck, faCommentDots, faClock, faFileUpload, faAlignJustify, faSlidersH, faToggleOn, faDiceOne, faPlus, faDiceTwo, faExternalLink, faCompass } from '@fortawesome/pro-light-svg-icons';
 
 import { faChevronSquareDown as faChevronSquareDownSolid, faDotCircle as faDotCircleSolid,
   faCheckSquare as faCheckSquareSolid, faChevronCircleUp as faChevronCircleUpSolid,
@@ -12,7 +12,8 @@ import { faChevronSquareDown as faChevronSquareDownSolid, faDotCircle as faDotCi
   faFolder as faFolderSolid, faFileSignature as faFileSignatureSolid, faCommentAltLines as faCommentAltLinesSolid,
   faBallotCheck as faBallotCheckSolid, faCommentDots as faCommentDotsSolid, faICursor,
   faClock as faClockSolid, faICursor as faICursorSolid, faFileUpload as faFileUploadSolid,
-  faAlignJustify as faAlignJustifySolid, faSlidersH as faSlidersHSolid, faToggleOn as faToggleOnSolid, faCheck, faTimes, faEnvelope, faImage } from '@fortawesome/pro-solid-svg-icons';
+  faAlignJustify as faAlignJustifySolid, faSlidersH as faSlidersHSolid, faToggleOn as faToggleOnSolid, 
+  faCompass as faCompassSolid, faCheck, faTimes, faEnvelope, faImage } from '@fortawesome/pro-solid-svg-icons';
 
 import Accordion from './../../../Utils/Accordion/Accordion';
 import ActionButton from './../../../Utils/ActionButton/ActionButton';
@@ -30,6 +31,7 @@ import FormDebounceAutoSuggestInput from './../../../Utils/FormElements/FormDebo
 import FormDebounceInput from './../../../Utils/FormElements/FormDebounceInput/FormDebounceInput';
 import FormInput from './../../../Utils/FormElements/FormInput/FormInput';
 import FormInputFile from './../../../Utils/FormElements/FormInputFile/FormInputFile';
+import FormLocationInput from './../../../Utils/FormElements/FormLocationInput/FormLocationInput';
 import FormTextarea from './../../../Utils/FormElements/FormTextarea/FormTextarea';
 import Icon, { CUSTOM_ICONS } from './../../../Utils/Icon/Icon';
 import Loader from './../../../Utils/Loader/Loader';
@@ -65,6 +67,9 @@ const DevDocComponentsTab = () => {
   const [possibleItems, setPossibleItems] = useState({});
   const [selectedItemKey, setSelectedItemKey] = useState('');
   const [selectedItem, setSelectedItem] = useState(null);
+
+  const [locationSelectedItemKey, setLocationSelectedItemKey] = useState('');
+  const [locationSelectedItem, setLocationSelectedItem] = useState(null);
 
   const [tooltipHover, setTooltipHover] = useState(false);
 
@@ -1203,6 +1208,59 @@ const DevDocComponentsTab = () => {
   accept="image/*"
   imagePreview
   instructions={<span>Please upload your user's profile picture</span>} />`} />
+            </div>
+          </div>
+        </div>
+      },
+
+      formLocation: {
+        name: ({ isActive }) => <span>
+          <Icon source="fa" icon={isActive ? faCompassSolid : faCompass} />
+          <span>Location Input</span>
+        </span>,
+        content: () => <div>
+          <h1><Icon source="fa" icon={faCompassSolid} /> Form Location Input</h1>
+          <span className="doc-desc">Form Input component to search locations.</span>
+          <ul className="doc-tags">
+            <li>Location</li>
+            <li>Places</li>
+            <li>Input</li>
+          </ul>
+          <h3>Props</h3>
+          <table className="doc-props" border="1">
+            <thead><tr><th>Name</th><th>Required</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>selectedItem</td><td><Icon source="fa" icon={faCheck} /></td><td>Value of the selected item (null if there's no selected item)</td></tr>
+              <tr><td>selectedItemKey</td><td><Icon source="fa" icon={faCheck} /></td><td>Key of the selected item. Pass '' if no item is selected</td></tr>
+              <tr><td>onSelectedItemChange</td><td><Icon source="fa" icon={faCheck} /></td><td>Callback when the selection changes: calls with (itemKey, fieldName, itemData)</td></tr>
+              <tr><td>fieldName</td><td><Icon source="fa" icon={faTimes} /></td><td>Unique name passed to onValueChange callback to identify the input</td></tr>
+              <tr><td>label</td><td><Icon source="fa" icon={faTimes} /></td><td>Label of the input (HTML is possible - default is no label, even if it's not advised)</td></tr>
+              <tr><td>inputName</td><td><Icon source="fa" icon={faTimes} /></td><td>Name of the input</td></tr>
+              <tr><td>inputRequired</td><td><Icon source="fa" icon={faTimes} /></td><td>Tells if the input is required (default false)</td></tr>
+              <tr><td>instructions</td><td><Icon source="fa" icon={faTimes} /></td><td>Instructions to the user to fulfill the input</td></tr>
+              <tr><td>onValueChange</td><td><Icon source="fa" icon={faTimes} /></td><td>Callback when value changes: calls with (value, fieldName)</td></tr>
+              <tr><td>onMarkerPrinted</td><td><Icon source="fa" icon={faTimes} /></td><td>Callback when a marker is added, modified or removed</td></tr>
+            </tbody>
+          </table>
+          <div className="doc-example">
+            <h3>Example</h3>
+            <div className="doc-example-exec">
+              <div>Value: {locationSelectedItem ? locationSelectedItem.value.display_name : null}</div>
+              <FormLocationInput selectedItem={locationSelectedItem}
+                                  selectedItemKey={locationSelectedItemKey}
+                                  onSelectedItemChange={(key, _, item) => {
+                                    setLocationSelectedItemKey(key);
+                                    setLocationSelectedItem(item);
+                                  }} />
+            </div>
+            <div className="doc-code">
+              <span className="doc-code-indicator">JavaScript</span>
+              <Code language="jsx" codeSnippet={`<FormLocationInput selectedItem={locationSelectedItem}
+  selectedItemKey={locationSelectedItemKey}
+  onSelectedItemChange={(key, _, item) => {
+    setLocationSelectedItemKey(key);
+    setLocationSelectedItem(item);
+  }} />`} />
             </div>
           </div>
         </div>

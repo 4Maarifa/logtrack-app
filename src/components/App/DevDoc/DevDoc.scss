@@ -176,17 +176,14 @@
       position: absolute;
     }
 
-    .Tabs.Tabs--horizontal, .Map {
+    .Tabs.Tabs--horizontal, .Map, .FormLocationInput {
       min-height: 30rem;
     }
 
     .Range, .ExTable, .FormTextarea, .FormInput, .FormAutoSuggestInput, .FormDebounceInput, 
-      .FormDebounceAutoSuggestInput, .Accordion, .FormInputFile, .Tabs, .Map, .LogTrackTimeline {
+      .FormDebounceAutoSuggestInput, .Accordion, .FormInputFile, .Tabs, .Map, .LogTrackTimeline,
+      .FormLocationInput {
       width: 90%;
-    }
-
-    .ExTable, .Map {
-      margin-top: 1rem;
     }
 
     .Map ~ button {

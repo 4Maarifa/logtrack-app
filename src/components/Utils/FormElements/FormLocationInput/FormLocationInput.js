@@ -22,15 +22,19 @@ import './FormLocationInput.scss';
  * inputName: string | identifier of the field in the form
  * inputRequired: boolean | tells if the fact that the user selects a location is mandatory
  * instructions | HTML | instructions to the user
+ * onValueChange: function(value, fieldName) | optional callback when text changes
+ * onMarkerPrinted: function() | optional callback when the marker is changed, removed or added
  * 
  * Behaviour:
  * 1. The user enters a search term
- * 2. at each change, the possible locations are computed
- * 3. the item proposes the different locations
- * 4. The user selects an item
- * 5. the callback onSelectedItemChange is called with the item data
- * 6. YOU save the values and pass them back
- * 7. The input shows the selected item
+ * 2. The optional onValueChange callback is called
+ * 3. at each change, the possible locations are computed
+ * 4. the item proposes the different locations
+ * 5. The user selects an item
+ * 6. the callback onSelectedItemChange is called with the item data
+ * 7. YOU save the values and pass them back
+ * 8. The input shows the selected item and displays the marker on the map
+ * 9. The optional callback onMarkerPrinted is called
  */
 const FormLocationInput = ({ selectedItem,
                             selectedItemKey,
@@ -39,7 +43,9 @@ const FormLocationInput = ({ selectedItem,
                             label,
                             inputName,
                             inputRequired,
-                            instructions }) => {
+                            instructions,
+                            onValueChange,
+                            onMarkerPrinted }) => {
 
   // Possible locations
   const [possibleLocationsInput, setPossibleLocationsInput] = useState('');
@@ -56,6 +62,9 @@ const FormLocationInput = ({ selectedItem,
 
     // save input value
     setPossibleLocationsInput(inputValue);
+
+    // call callback if present
+    onValueChange && onValueChange(inputValue, fieldName);
 
     // search for places
     GeoService.searchPlaces(inputValue, { addressdetails: 0 })
@@ -100,9 +109,12 @@ const FormLocationInput = ({ selectedItem,
         // If location was removed, and marker is present, delete marker and marker reference
         REF_MAP.current.deleteMarker(locationMarkerId);
         setLocationMarkerId(null);
+
+        onMarkerPrinted && onMarkerPrinted('REMOVE');
       }
       return;
     }
+
     // else, if new location is selected
 
     // If a marker is already present
@@ -117,9 +129,10 @@ const FormLocationInput = ({ selectedItem,
 
       // then center the map on the moved marker
       centerOnLocationMarker();
+
+      onMarkerPrinted && onMarkerPrinted('SWITCH');
     }
     else {
-
       // otherwise, if no marker is present, create a new marker
       // The map will center itself automatically on the newly created marker
       // Then, save the unique marker id for further reference
@@ -127,6 +140,8 @@ const FormLocationInput = ({ selectedItem,
         selectedItem.value.coordinates[0],
         selectedItem.value.coordinates[1],
         selectedItem.value.display_name));
+
+      onMarkerPrinted && onMarkerPrinted('ADDED');
     }
   }, [selectedItemKey, selectedItem]);
   
