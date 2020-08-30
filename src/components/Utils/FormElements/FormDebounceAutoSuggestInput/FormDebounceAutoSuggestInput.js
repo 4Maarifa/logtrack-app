@@ -46,6 +46,7 @@ const FormDebounceAutoSuggestInput = ({ value,
                                         fieldName,
                                         inputName,
                                         label,
+                                        isBig,
                                         inputAutoComplete,
                                         inputRequired,
                                         instructions,
@@ -85,6 +86,7 @@ const FormDebounceAutoSuggestInput = ({ value,
 
   return (
     <div className={'FormDebounceAutoSuggestInput '
+      + (isBig ? 'FormDebounceAutoSuggestInput--big ' : '')
       + (isValid() ? 'input--valid ' : 'input--invalid ')
       + (fieldName ? 'input-' + fieldName : '')}>
 

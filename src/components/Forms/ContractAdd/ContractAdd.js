@@ -249,6 +249,7 @@ const ContractAdd = ({ match }) => {
               Identification
             </span>
           }
+          isBig
           inputRequired
           inputPattern=".{3,}"
           instructions={

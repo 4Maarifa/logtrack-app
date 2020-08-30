@@ -7,6 +7,32 @@
   border-radius: var(--border-radius);
   transition: border-color .5s;
 
+  &.FormDebounceAutoSuggestInput--big {
+    margin-top: 3rem;
+    height: 2.5rem;
+
+    .selected-item {
+      font-size: 125%;
+      height: 2.5rem;
+    }
+
+    input:not([type="hidden"]):not(.input-validator) {
+      font-size: 125%;
+      height: 2.5rem;
+
+      &~label {
+        font-size: 125%;
+      }
+
+      &:active ~ label,
+      &:focus ~ label,
+      &:not(.input--empty) ~ label {
+        top: -1.8rem;
+        font-size: 125%;
+      }
+    }
+  }
+
   &.input--valid {
     border: 1px solid var(--green);
 

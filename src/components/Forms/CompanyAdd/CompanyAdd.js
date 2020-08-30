@@ -264,6 +264,7 @@ const CompanyAdd = ({ match }) => {
               Name
             </span>
           }
+          isBig
           inputRequired
           inputPattern=".{3,}"
           instructions={

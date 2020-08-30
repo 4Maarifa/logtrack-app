@@ -196,6 +196,7 @@ const RoleAdd = ({ match }) => {
               Company
             </span>
           }
+          isBig
           possibleItems={possibleCompanies}
           onValueChange={onCompanyAutoCompleteChange}
           onSelectedItemChange={(selectedCompanyId, _, selectedCompanyItem) => {

@@ -197,6 +197,7 @@ const RoleOffer = ({ match }) => {
               User
             </span>
           }
+          isBig
           possibleItems={possibleUsers}
           onValueChange={onUserAutoCompleteChange}
           onSelectedItemChange={(selectedUserId, _, selectedUserItem) => {
