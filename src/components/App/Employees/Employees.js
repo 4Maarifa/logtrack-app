@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faUsers } from '@fortawesome/pro-light-svg-icons';
+import { faUsers, faPlus, faUserPlus } from '@fortawesome/pro-light-svg-icons';
 
 import Map from './../../Utils/Map/Map';
 import ExTable from './../../Utils/ExTable/ExTable';
@@ -17,6 +17,8 @@ import { employeesExTableFSS } from './../../Entities/Employee/Employee';
 import { v4 as uuid } from 'uuid';
 
 import './Employees.scss';
+import { ERole } from '../../../classes/Role';
+import ActionButton from '../../Utils/ActionButton/ActionButton';
 
 /**
  * Component: Employees
@@ -87,6 +89,12 @@ const Employees = () => {
                 renderItem={renderRoleEmployee}
                 header={<span><Icon source="fa" icon={faUsers} /> Employees</span>}
                 loading={isCompanyEmployeesLoading} />
+                
+      {computed.activeRole && computed.activeRole.role === ERole.MANAGER ?
+        <ActionButton icon={<Icon source="fa" icon={faPlus} />} actions={[
+          { title: 'Offer a role', icon: <Icon source="fa" icon={faUserPlus} />, link: `/role-offer` }
+        ]} />
+      : null}
     </div>
   );
 };
