@@ -22,6 +22,8 @@ import './FormInput.scss';
  * inputDisabled: boolean | If disabled, the input value could not be modified
  * noValidation: boolean | tells to not print the input validation indicator
  * label: HTML | label of the input
+ * onFocus: function | onFocus function
+ * onBlur: function | onBlur function
  * instructions: HTML | instructions for the user
  * onValueChange: function(value, fieldName) | callback when the input value is modified
  */
@@ -35,6 +37,8 @@ const FormInput = ({ value,
                     inputDisabled,
                     noValidation,
                     label,
+                    onFocus,
+                    onBlur,
                     isBig,
                     instructions,
                     onValueChange }) => {
@@ -71,6 +75,8 @@ const FormInput = ({ value,
         name={inputName}
         autoComplete={inputAutoComplete}
         pattern={inputPattern}
+        onFocus={onFocus}
+        onBlur={onBlur}
         disabled={inputDisabled}
         onChange={e => onChange(e.target.value)}
         required={inputRequired} />
