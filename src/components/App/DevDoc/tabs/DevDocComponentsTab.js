@@ -2,7 +2,7 @@ import React, { useState, Fragment, useRef } from 'react';
 
 import { faChevronSquareDown, faDotCircle, faCheckSquare, faChevronCircleUp, faHandPointer, 
   faEllipsisV, faPercentage, faBug, faTable, faShapes, faSpinner, faHistory, faMap, faWindow, 
-  faFileImport, faFolder, faFileSignature, faCommentAltLines, faBallotCheck, faCommentDots, faClock, faFileUpload, faAlignJustify, faSlidersH, faToggleOn, faDiceOne, faPlus, faDiceTwo, faExternalLink, faCompass, faChevronDown } from '@fortawesome/pro-light-svg-icons';
+  faFileImport, faFolder, faFileSignature, faCommentAltLines, faBallotCheck, faCommentDots, faClock, faFileUpload, faAlignJustify, faSlidersH, faToggleOn, faDiceOne, faPlus, faDiceTwo, faExternalLink, faCompass, faChevronDown, faFlag } from '@fortawesome/pro-light-svg-icons';
 
 import { faChevronSquareDown as faChevronSquareDownSolid, faDotCircle as faDotCircleSolid,
   faCheckSquare as faCheckSquareSolid, faChevronCircleUp as faChevronCircleUpSolid,
@@ -13,7 +13,8 @@ import { faChevronSquareDown as faChevronSquareDownSolid, faDotCircle as faDotCi
   faBallotCheck as faBallotCheckSolid, faCommentDots as faCommentDotsSolid, faICursor,
   faClock as faClockSolid, faICursor as faICursorSolid, faFileUpload as faFileUploadSolid,
   faAlignJustify as faAlignJustifySolid, faSlidersH as faSlidersHSolid, faToggleOn as faToggleOnSolid, 
-  faCompass as faCompassSolid, faChevronDown as faChevronDownSolid, faCheck, faTimes, faEnvelope, faImage } from '@fortawesome/pro-solid-svg-icons';
+  faCompass as faCompassSolid, faChevronDown as faChevronDownSolid, faFlag as faFlagSolid,
+  faCheck, faTimes, faEnvelope, faImage } from '@fortawesome/pro-solid-svg-icons';
 
 import Accordion from './../../../Utils/Accordion/Accordion';
 import ActionButton from './../../../Utils/ActionButton/ActionButton';
@@ -23,6 +24,7 @@ import Checkbox from './../../../Utils/FormElements/Checkbox/Checkbox';
 import Choose from './../../../Utils/FormElements/Choose/Choose';
 import Code from './../../../Utils/Code/Code';
 import CompletionBar from './../../../Utils/CompletionBar/CompletionBar';
+import CountrySelect from '../../../Utils/FormElements/CountrySelect/CountrySelect';
 import Debug from './../../../Utils/Debug/Debug';
 import ExTable, { EXTABLE_VIEWS } from './../../../Utils/ExTable/ExTable';
 import FormAutoSuggestInput from './../../../Utils/FormElements/FormAutoSuggestInput/FormAutoSuggestInput';
@@ -74,6 +76,9 @@ const DevDocComponentsTab = () => {
 
   const [selectSelectedItemKey, setSelectSelectedItemKey] = useState('');
   const [selectSelectedItem, setSelectSelectedItem] = useState(null);
+
+  const [selectedCountryKey, setSelectedCountryKey] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
   const [tooltipHover, setTooltipHover] = useState(false);
 
@@ -610,6 +615,57 @@ const DevDocComponentsTab = () => {
   percentage={numValue}
   title={<span>Graph Value</span>}
   details={<span>Details</span>} />`} />
+            </div>
+          </div>
+        </div>
+      },
+
+      countrySelect: {
+        name: ({ isActive }) => <span>
+          <Icon source="fa" icon={isActive ? faFlagSolid : faFlag} />
+          <span>Country Select</span>
+        </span>,
+        content: () => <div>
+          <h1><Icon source="fa" icon={faFlagSolid} /> Country Select</h1>
+          <span className="doc-desc">Component to select a country.</span>
+          <ul className="doc-tags">
+            <li>Country</li>
+            <li>Select</li>
+          </ul>
+          <h3>Props</h3>
+          <table className="doc-props" border="1">
+            <thead><tr><th>Name</th><th>Required</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>selectedItemKey</td><td><Icon source="fa" icon={faCheck} /></td><td>Key of the selected item. Pass '' if no item is selected</td></tr>
+              <tr><td>selectedItem</td><td><Icon source="fa" icon={faCheck} /></td><td>Value of the selected item (null if there's no selected item)</td></tr>
+              <tr><td>onSelectedItemChange</td><td><Icon source="fa" icon={faCheck} /></td><td>Callback when the selection changes: calls with (itemKey, fieldName, itemData)</td></tr>
+              <tr><td>inputRequired</td><td><Icon source="fa" icon={faTimes} /></td><td>Tells if the input is required (default false)</td></tr>
+              <tr><td>label</td><td><Icon source="fa" icon={faTimes} /></td><td>Label of the input (HTML is possible - default is no label, even if it's not advised)</td></tr>
+              <tr><td>instructions</td><td><Icon source="fa" icon={faTimes} /></td><td>Instructions to the user to fulfill the input</td></tr>
+              <tr><td>fieldName</td><td><Icon source="fa" icon={faTimes} /></td><td>Unique name passed to onSelectedItemChange callback to identify the input</td></tr>
+            </tbody>
+          </table>
+          <div className="doc-example">
+            <h3>Example</h3>
+            <div className="doc-example-exec">
+              <div>Value: {selectedCountryKey ? 
+                <span>{selectedCountry.country.cca2} - {selectedCountryKey}</span>
+              : null}</div>
+              <CountrySelect selectedItemKey={selectedCountryKey}
+                            selectedItem={selectedCountry}
+                            onSelectedItemChange={(key, _, item) => {
+                              setSelectedCountryKey(key);
+                              setSelectedCountry(item);
+                            }} />
+            </div>
+            <div className="doc-code">
+              <span className="doc-code-indicator">JavaScript</span>
+              <Code language="jsx" codeSnippet={`<CountrySelect selectedItemKey={selectedCountryKey}
+  selectedItem={selectedCountry}
+  onSelectedItemChange={(key, _, item) => {
+    setSelectedCountryKey(key);
+    setSelectedCountry(item);
+  }} />`} />
             </div>
           </div>
         </div>

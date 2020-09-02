@@ -52,6 +52,10 @@ const Select = ({ possibleItems,
 
   // When an item is clicked
   const onItemChange = itemKey => {
+    // Clear search value
+    setSearchValue('');
+
+    // Call the callback
     onSelectedItemChange && onSelectedItemChange(itemKey, fieldName, possibleItems[itemKey]);
   };
 
@@ -69,7 +73,7 @@ const Select = ({ possibleItems,
    */
   const INPUT_ID = uuid();
 
-  let filtered_keys = Object.keys(possibleItems || {});
+  let filtered_keys = Object.keys(possibleItems || {}).sort();
 
   // Apply search
   if(searchFn && searchValue) {
