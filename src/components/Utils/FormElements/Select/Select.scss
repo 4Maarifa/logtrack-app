@@ -20,7 +20,7 @@
     }
   }
 
-  &:not(.input--empty) label {
+  &:not(.input--empty) > label {
     top: -1.2rem;
     left: 0;
     font-size: 85%;
@@ -112,7 +112,7 @@
     align-items: center;
     padding: 0 .5rem;
 
-    *:first-child {
+    & > *:first-child {
       flex: 1;
     }
 
